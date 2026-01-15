@@ -14,7 +14,10 @@ import {
   calculateSubconsciousSelf,
   calculateBridge,
   calculateChallenges,
-  calculateCycles
+  calculateCycles,
+  generateCareerForecast,
+  calculateDeepChallenges,
+  calculatePlaceVibration
 } from '@/lib/numerology/engine';
 import PersonalityRadar from './PersonalityRadar';
 import InclusionGridViz from './InclusionGridViz';
@@ -41,7 +44,10 @@ export default function ReportView({ userData }: ReportViewProps) {
       const subconsciousSelf = calculateSubconsciousSelf(inclusionGrid);
       const bridgeNumber = calculateBridge(lifePath, nameNumbers.expression);
       const challenges = calculateChallenges(userData.birthDate);
-      const cycles = calculateCycles(userData.birthDate); // returns {cycle1, cycle2, cycle3, cycle4} - need to adapt to interface if needed
+      const cycles = calculateCycles(userData.birthDate); // returns {cycle1, cycle2, cycle3, cycle4}
+      const deepChallenges = calculateDeepChallenges(userData.birthDate);
+      const birthPlaceVibration = calculatePlaceVibration(userData.birthPlace || "");
+      const careerForecast = generateCareerForecast(userData.birthDate, 2026);
 
       setResults({
         lifePath,
@@ -62,8 +68,14 @@ export default function ReportView({ userData }: ReportViewProps) {
         cycles: {
             cycle1: cycles.cycle1,
             cycle2: cycles.cycle2,
-            cycle3: cycles.cycle3
-        }
+            cycle3: cycles.cycle3,
+            cycle4: cycles.cycle4
+        },
+        deepChallenges,
+        astroResonance: {
+            birthPlaceVibration
+        },
+        careerForecast
       });
     }
   }, [userData]);

@@ -15,7 +15,10 @@ import {
   calculateSubconsciousSelf,
   calculateBridge,
   calculateChallenges,
-  calculateCycles
+  calculateCycles,
+  calculateDeepChallenges,
+  calculatePlaceVibration,
+  generateCareerForecast
 } from '@/lib/numerology/engine';
 
 function PrintContent() {
@@ -39,6 +42,9 @@ function PrintContent() {
         const subconsciousSelf = calculateSubconsciousSelf(inclusionGrid);
         const bridgeNumber = calculateBridge(lifePath, nameNumbers.expression);
         const challenges = calculateChallenges(userData.birthDate);
+        const deepChallenges = calculateDeepChallenges(userData.birthDate);
+        const birthPlaceVibration = calculatePlaceVibration(userData.birthPlace || "");
+        const careerForecast = generateCareerForecast(userData.birthDate, 2026);
         const cycles = calculateCycles(userData.birthDate);
 
         setData({
@@ -60,10 +66,16 @@ function PrintContent() {
                major2: challenges.challenge4
              },
              cycles: {
-               cycle1: cycles.cycle1,
-               cycle2: cycles.cycle2,
-               cycle3: cycles.cycle3
-             }
+                cycle1: cycles.cycle1,
+                cycle2: cycles.cycle2,
+                cycle3: cycles.cycle3,
+                cycle4: cycles.cycle4
+              },
+             deepChallenges,
+             astroResonance: {
+               birthPlaceVibration
+             },
+             careerForecast
           }
         });
         

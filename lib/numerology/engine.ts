@@ -287,3 +287,40 @@ export function calculateCycles(birthDate: string) {
 
   return { cycle1, cycle2, cycle3, cycle4 };
 }
+
+/**
+ * Calculates Deep Challenges (Défis Profonds) - Module 3.
+ * Based on subtraction of birth components.
+ * Often similar to the "Challenges" function but let's ensure we return the array as requested.
+ */
+export function calculateDeepChallenges(birthDate: string): number[] {
+  const { challenge1, challenge2, challengeMajor, challenge4 } = calculateChallenges(birthDate);
+  return [challenge1, challenge2, challengeMajor, challenge4];
+}
+
+/**
+ * Calculates the Numerological Vibration of a Place Name (Module 2).
+ */
+export function calculatePlaceVibration(placeName: string): number {
+  if (!placeName) return 0;
+  const clean = normalizeString(placeName);
+  let sum = 0;
+  for (const char of clean) {
+    sum += GEMATRIA[char] || 0;
+  }
+  return reduceNumber(sum);
+}
+
+/**
+ * Generates a 10-year forecast (Module 4).
+ */
+export function generateCareerForecast(birthDate: string, startYear: number = 2026): { year: number, personalYear: number }[] {
+  const forecast = [];
+  for (let i = 0; i < 10; i++) {
+    const year = startYear + i;
+    const py = calculatePersonalYear(birthDate, year);
+    forecast.push({ year, personalYear: py });
+  }
+  return forecast;
+}
+

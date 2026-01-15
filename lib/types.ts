@@ -40,5 +40,14 @@ export interface NumerologyResult {
     cycle1: number;
     cycle2: number;
     cycle3: number;
+    cycle4: number; // Added cycle 4
   };
+  
+  // Advanced Modules
+  deepChallenges: number[]; // From Module 3
+  astroResonance: {
+    birthPlaceVibration: number;
+    // We can add more here if we had map data
+  };
+  careerForecast: { year: number, personalYear: number }[]; // For 10 years
 }

@@ -1,0 +1,31 @@
+
+{
+  "lifePath": {
+    "1": "Le Chef né. Vous êtes ici pour apprendre l'indépendance et l'initiative.",
+    "2": "Le Diplomate. Vous cherchez l'harmonie et la collaboration.",
+    "3": "Le Communicant. Votre voie est celle de l'expression créative.",
+    "4": "Le Bâtisseur. Vous apportez structure et stabilité.",
+    "5": "L'Aventurier. La liberté et le changement sont vos moteurs.",
+    "6": "L'Harmonisateur. La responsabilité et la famille sont centrales.",
+    "7": "Le Chercheur. Vous quêtez la vérité et la sagesse intérieure.",
+    "8": "Le Stratège. L'ambition et la réalisation matérielle.",
+    "9": "L'Humaniste. La compassion et le service universel.",
+    "11": "L'Inspirateur. Une haute vibration d'intuition.",
+    "22": "Le Maître Bâtisseur. Capacité de réaliser de grands rêves.",
+    "33": "Le Guide. L'amour inconditionnel en action."
+  },
+  "expression": {
+    "1": "Vous vous exprimez avec autorité et originalité.",
+    "2": "Vous vous exprimez avec douceur et tact.",
+    "3": "Vous rayonnez de joie et d'optimisme.",
+    "4": "Vous êtes précis, loyal et organisé.",
+    "5": "Vous êtes magnétique et polyvalent.",
+    "6": "Vous êtes protecteur et artistique.",
+    "7": "Vous êtes mystérieux et analytique.",
+    "8": "Vous imposez le respect et l'efficacité.",
+    "9": "Vous êtes généreux et idéaliste.",
+    "11": "Vous inspirez les autres par vos idéaux.",
+    "22": "Vous avez une vision pragmatique et grandiose.",
+    "33": "Vous êtes un canal de bienveillance."
+  }
+}

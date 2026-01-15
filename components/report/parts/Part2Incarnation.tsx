@@ -1,0 +1,211 @@
+
+import { UserData, NumerologyResult } from '@/lib/types';
+import PageContainer from './PageContainer';
+import PersonalityRadar from '../PersonalityRadar';
+import { 
+  getLifePathContent, 
+  getDayOfBirthContent, 
+  getExpressionContent, 
+  getSoulUrgeContent, 
+  getPersonalityContent 
+} from '@/lib/numerology/contentGenerator';
+
+export default function Part2Incarnation({ userData, results }: { userData: UserData, results: NumerologyResult }) {
+  const lpContent = getLifePathContent(results.lifePath);
+  const dayContent = getDayOfBirthContent(parseInt(userData.birthDate.split('-')[2]));
+  const expContent = getExpressionContent(results.expression);
+  const soulContent = getSoulUrgeContent(results.soulUrge);
+  const persContent = getPersonalityContent(results.personality);
+
+  return (
+    <>
+      {/* PAGE 8: INTRO INCARNATION */}
+      <PageContainer className="p-16 justify-center bg-[#1c1917]">
+        <h2 className="text-5xl font-serif text-[#fef3c7] mb-8 text-center">L'Incarnation</h2>
+        <p className="text-xl text-[#fbbf24] text-center max-w-3xl mx-auto leading-relaxed">
+          "L'âme ne choisit pas sa date de naissance au hasard. Le moment de votre premier souffle a déterminé la qualité de l'énergie avec laquelle vous allez sculpter votre réalité."
+        </p>
+      </PageContainer>
+
+      {/* PAGE 9-10: CHEMIN DE VIE */}
+      <PageContainer className="p-16">
+        <h2 className="text-4xl font-serif text-[#fef3c7] mb-12 border-b-2 border-[#fbbf24] pb-4 inline-block">
+          {lpContent.title}
+        </h2>
+        <div className="grid grid-cols-2 gap-12">
+          <div className="prose text-[#d6d3d1]">
+            <h3 className="text-2xl font-serif text-[#fbbf24] mb-4">La Mission</h3>
+            <p className="leading-relaxed mb-6 whitespace-pre-wrap">
+              {lpContent.extendedDesc}
+            </p>
+            <h4 className="font-bold text-[#fbbf24] mt-6 mb-2 uppercase tracking-wide">Défi Majeur</h4>
+            <p className="text-[#d6d3d1] italic">
+              {lpContent.challenge}
+            </p>
+          </div>
+          <div className="flex flex-col gap-8">
+            <div className="bg-[#292524] p-8 text-[#fdfbf7] flex flex-col justify-center items-center border border-[#fbbf24]/20 rounded-xl">
+              <div className="text-9xl font-serif text-[#fbbf24] mb-4">{results.lifePath}</div>
+              <div className="uppercase tracking-widest text-sm text-[#a8a29e]">Vibration Majeure</div>
+            </div>
+            <div className="bg-[#1c1917] p-8 border border-[#fbbf24]/10 rounded-xl">
+              <h4 className="font-bold text-[#fbbf24] mb-4 uppercase tracking-wide text-sm">Conseils Clés</h4>
+              <ul className="space-y-3">
+                {lpContent.keyAdvice?.map((advice, i) => (
+                  <li key={i} className="flex gap-3 text-[#d6d3d1]">
+                    <span className="text-[#fbbf24]">•</span>
+                    <span>{advice}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </PageContainer>
+
+      <PageContainer className="p-16">
+        <h2 className="text-4xl font-serif text-[#fef3c7] mb-12 border-b-2 border-[#fbbf24] pb-4 inline-block">
+          Alignement du Chemin
+        </h2>
+        <div className="grid grid-cols-1 gap-8">
+          <div className="p-8 bg-[#292524] border border-[#fbbf24]/30 rounded-lg shadow-lg">
+            <h4 className="font-bold text-[#fbbf24] mb-4 uppercase tracking-wide text-xl flex items-center gap-3">
+              <span className="text-2xl">⚡</span> Potentiel & Talents
+            </h4>
+            <p className="text-[#d6d3d1] leading-relaxed whitespace-pre-wrap">
+              {lpContent.work}
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-8">
+            <div className="p-6 bg-[#1c1917] border border-[#fbbf24]/20 rounded-lg">
+              <h4 className="font-bold text-[#fcd34d] mb-2 uppercase tracking-wide">En Lumière</h4>
+              <p className="text-[#d6d3d1]">
+                {lpContent.positive}
+              </p>
+            </div>
+            <div className="p-6 bg-[#1c1917] border border-red-900/30 rounded-lg">
+              <h4 className="font-bold text-red-400 mb-2 uppercase tracking-wide">En Ombre</h4>
+              <p className="text-red-200/80">
+                {lpContent.negative}
+              </p>
+            </div>
+          </div>
+        </div>
+      </PageContainer>
+
+      {/* PAGE 11: JOUR DE NAISSANCE */}
+      <PageContainer className="p-16">
+        <h2 className="text-4xl font-serif text-[#fef3c7] mb-12 border-b-2 border-[#fbbf24] pb-4 inline-block">
+          Le Jour de Naissance
+        </h2>
+        <p className="text-lg text-[#d6d3d1] mb-8 italic">
+          "Si le Chemin de Vie est la route, le Jour de Naissance est la voiture. C'est votre outil inné."
+        </p>
+        <div className="flex gap-12 bg-[#292524] p-12 shadow-sm border border-[#fbbf24]/20 rounded-xl items-start">
+           <div className="text-9xl font-serif text-[#fbbf24] leading-none">{userData.birthDate.split('-')[2]}</div>
+           <div className="prose text-[#d6d3d1] flex-1">
+             <h3 className="text-3xl font-serif mb-6 text-[#fef3c7]">{dayContent.title}</h3>
+             <p className="whitespace-pre-wrap leading-relaxed mb-6">
+               {dayContent.extendedDesc}
+             </p>
+             <div className="p-4 bg-[#1c1917] border-l-4 border-[#fbbf24]">
+               <h4 className="font-bold text-[#fbbf24] mb-1">Votre Don Naturel</h4>
+               <p className="text-sm">{dayContent.desc}</p>
+             </div>
+           </div>
+        </div>
+      </PageContainer>
+
+      {/* PAGE 12-13: NOMBRE D'EXPRESSION */}
+      <PageContainer className="p-16">
+        <h2 className="text-4xl font-serif text-[#fef3c7] mb-12 border-b-2 border-[#fbbf24] pb-4 inline-block">
+          Nombre d'Expression {results.expression}
+        </h2>
+        <div className="grid grid-cols-2 gap-12 mb-12 h-full">
+           <div className="prose text-[#d6d3d1]">
+             <h3 className="text-2xl font-serif text-[#fbbf24] mb-4">{expContent.title}</h3>
+             <p className="leading-relaxed whitespace-pre-wrap mb-6">
+               {expContent.extendedDesc}
+             </p>
+             <h4 className="text-xl font-serif text-[#fbbf24] mb-3 mt-8">Réalisation Professionnelle</h4>
+             <p className="leading-relaxed whitespace-pre-wrap text-sm">
+               {expContent.work}
+             </p>
+           </div>
+           <div className="flex flex-col gap-8">
+             <div className="h-64 w-full bg-[#292524] rounded-xl p-4 border border-[#fbbf24]/10">
+               <PersonalityRadar data={results} />
+             </div>
+             <div className="bg-[#292524] p-6 rounded-xl border border-[#fbbf24]/20">
+                <h4 className="font-bold text-[#fbbf24] mb-4">Mots-Clés de votre Expression</h4>
+                <div className="flex flex-wrap gap-2">
+                  {expContent.keywords?.map((k, i) => (
+                    <span key={i} className="px-3 py-1 bg-[#1c1917] text-[#d6d3d1] rounded-full text-sm border border-[#fbbf24]/30">
+                      {k}
+                    </span>
+                  ))}
+                </div>
+             </div>
+           </div>
+        </div>
+      </PageContainer>
+
+      {/* PAGE 14-15: ELAN SPIRITUEL */}
+      <PageContainer className="p-16">
+        <h2 className="text-4xl font-serif text-[#fdfbf7] mb-12 border-b-2 border-[#fbbf24] pb-4 inline-block">
+          L'Élan Spirituel {results.soulUrge}
+        </h2>
+        <p className="text-xl font-light mb-12 italic text-[#d6d3d1]">
+          "Ce que votre cœur réclame secrètement quand personne ne regarde."
+        </p>
+        <div className="grid grid-cols-1 gap-8">
+           <div className="p-8 border border-[#fbbf24]/30 rounded-xl bg-[#292524]">
+             <h3 className="text-2xl font-serif text-[#fbbf24] mb-4">{soulContent.title}</h3>
+             <p className="leading-relaxed text-[#d6d3d1] whitespace-pre-wrap mb-8">
+               {soulContent.extendedDesc}
+             </p>
+             
+             <div className="grid grid-cols-2 gap-8 mt-8 border-t border-[#fbbf24]/10 pt-8">
+               <div>
+                 <h4 className="font-bold text-[#fbbf24] mb-3 uppercase tracking-wide">Vie Affective</h4>
+                 <p className="text-[#d6d3d1] text-sm leading-relaxed whitespace-pre-wrap">
+                   {soulContent.love}
+                 </p>
+               </div>
+               <div>
+                 <h4 className="font-bold text-[#fbbf24] mb-3 uppercase tracking-wide">Quête de Sens</h4>
+                 <p className="text-[#d6d3d1] text-sm leading-relaxed whitespace-pre-wrap">
+                   {soulContent.spiritual}
+                 </p>
+               </div>
+             </div>
+           </div>
+        </div>
+      </PageContainer>
+
+      {/* PAGE 16: MOI INTIME */}
+      <PageContainer className="p-16">
+        <h2 className="text-4xl font-serif text-[#fef3c7] mb-12 border-b-2 border-[#fbbf24] pb-4 inline-block">
+          Le Moi Intime {results.personality}
+        </h2>
+        <div className="flex gap-12 items-center">
+           <div className="w-1/3 text-center">
+             <div className="text-9xl font-serif text-[#292524] text-stroke-gold">{results.personality}</div>
+             <div className="mt-4 text-[#fbbf24] uppercase tracking-widest">Image Sociale</div>
+           </div>
+           <div className="w-2/3 prose text-[#d6d3d1]">
+             <h3 className="text-2xl font-serif text-[#fbbf24] mb-4">{persContent.title}</h3>
+             <p className="whitespace-pre-wrap leading-relaxed">
+               {persContent.extendedDesc}
+             </p>
+             <div className="mt-8 p-6 bg-[#292524] rounded-lg border border-[#fbbf24]/20">
+               <p className="italic text-[#a8a29e]">
+                 "{persContent.desc}"
+               </p>
+             </div>
+           </div>
+        </div>
+      </PageContainer>
+    </>
+  );
+}

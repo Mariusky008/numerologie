@@ -1,10 +1,38 @@
 
+import { useEffect, useState } from 'react';
 import PageContainer from './PageContainer';
 import { UserData, NumerologyResult } from '@/lib/types';
+import { getNameAnalysis as getFallbackAnalysis } from '@/lib/numerology/etymology';
+import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
 
 export default function Part1Identity({ userData, results }: { userData: UserData, results: NumerologyResult }) {
-  const firstNames = userData.firstName.split(' ');
+  const firstNames = userData.firstName.split(' ').filter(n => n.trim().length > 0);
   const lastName = userData.lastName;
+  const [analyses, setAnalyses] = useState<Record<string, any>>({});
+
+  useEffect(() => {
+    async function loadData() {
+      const newAnalyses: Record<string, any> = {};
+      
+      for (const name of firstNames) {
+        // Try DB first
+        const dbData = await fetchNameAnalysis(name);
+        
+        if (dbData) {
+          newAnalyses[name] = {
+            origin: dbData.origin,
+            meaning: dbData.meaning,
+            vibration: dbData.spiritual || "Vibration spirituelle élevée."
+          };
+        } else {
+          // Fallback to local algo
+          newAnalyses[name] = getFallbackAnalysis(name);
+        }
+      }
+      setAnalyses(newAnalyses);
+    }
+    loadData();
+  }, [userData.firstName]);
 
   return (
     <>
@@ -20,16 +48,26 @@ export default function Part1Identity({ userData, results }: { userData: UserDat
           </p>
           
           <div className="grid grid-cols-1 gap-6">
-            {firstNames.map((name, i) => (
-              <div key={i} className="bg-[#292524] p-6 rounded-xl border border-[#fbbf24]/20">
-                <h3 className="text-xl md:text-2xl font-serif text-[#fbbf24] mb-2">{name}</h3>
-                <div className="text-sm md:text-base text-[#a8a29e] mb-4 uppercase tracking-wide">Prénom {i + 1}</div>
-                <p className="text-[#d6d3d1] mb-4 text-sm md:text-base">
-                  Ce prénom porte une vibration spécifique qui influence votre manière d'entrer en relation. 
-                  (L'analyse étymologique détaillée nécessite une connexion à la base de données linguistique).
-                </p>
-              </div>
-            ))}
+            {firstNames.map((name, i) => {
+              const analysis = analyses[name] || getFallbackAnalysis(name); // Immediate fallback while loading
+              
+              return (
+                <div key={i} className="bg-[#292524] p-6 rounded-xl border border-[#fbbf24]/20">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl md:text-2xl font-serif text-[#fbbf24] capitalize">{name}</h3>
+                    <span className="text-xs text-[#a8a29e] border border-[#a8a29e]/30 px-2 py-1 rounded max-w-[50%] text-right truncate">
+                      {analysis.origin}
+                    </span>
+                  </div>
+                  <div className="text-sm md:text-base text-[#fef3c7] mb-2 italic">
+                    "{analysis.meaning}"
+                  </div>
+                  <p className="text-[#d6d3d1] text-sm md:text-base leading-relaxed">
+                    {analysis.vibration}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </PageContainer>

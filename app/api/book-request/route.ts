@@ -56,13 +56,18 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
+    // Debug info
+    console.log('Reading from:', DATA_FILE_PATH);
+    
     if (!fs.existsSync(DATA_FILE_PATH)) {
+      console.log('File does not exist');
       return NextResponse.json([]);
     }
     const fileContent = fs.readFileSync(DATA_FILE_PATH, 'utf-8');
     const requests = JSON.parse(fileContent);
     return NextResponse.json(requests);
   } catch (error) {
+     console.error('Error reading file:', error);
      return NextResponse.json([]);
   }
 }

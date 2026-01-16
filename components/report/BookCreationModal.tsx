@@ -19,7 +19,11 @@ export default function BookCreationModal({ isOpen, onClose, userData, reportRes
     moves: '',
     relationships: '',
     majorEvents: '',
-    childhoodMemories: ''
+    childhoodMemories: '',
+    passions: '',
+    dreams: '',
+    mentors: '',
+    dailyRituals: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);

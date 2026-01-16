@@ -72,10 +72,15 @@ Date de Naissance: ${req.userData.birthDate}
 
 Chemin de Vie: ${req.reportResults.lifePath}
 Nombre d'Expression: ${req.reportResults.expression}
+Élan Spirituel: ${req.reportResults.soulUrge}
+Moi Intime: ${req.reportResults.personality}
 Année Personnelle: ${req.reportResults.personalYear}
 
+Grille d'Inclusion: ${Object.entries(req.reportResults.inclusionGrid).map(([k, v]) => `${k}:${v}`).join(', ')}
 Dettes Karmiques (Manques): ${req.reportResults.missingNumbers?.join(', ') || 'Aucune'}
 Forces (Excès): ${req.reportResults.excessNumbers?.join(', ') || 'Aucune'}
+Moi Subconscient: ${req.reportResults.subconsciousSelf}
+Le Pont: ${req.reportResults.bridgeNumber}
 
 Cycles de Vie:
 - Cycle 1 (Formatif): ${req.reportResults.cycles.cycle1}
@@ -88,6 +93,12 @@ Défis de Vie:
 - Mineur 2: ${req.reportResults.challenges.minor2}
 - Majeur: ${req.reportResults.challenges.major}
 - Ultime: ${req.reportResults.challenges.major2}
+
+Défis Profonds (Module 3): ${req.reportResults.deepChallenges?.join(', ') || 'Non calculé'}
+Vibration Lieu de Naissance: ${req.reportResults.astroResonance.birthPlaceVibration}
+
+Prévisions Carrière (10 ans):
+${req.reportResults.careerForecast.map(f => `- ${f.year}: AP ${f.personalYear}`).join('\n')}
 
 --- ÉLÉMENTS BIOGRAPHIQUES (SOUVENIRS) ---
 Lieux de vie: ${req.lifeDetails.placesLived}

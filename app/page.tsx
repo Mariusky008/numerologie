@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import LandingPage from '@/components/landing/LandingPage';
+import LandingPage from '../components/landing/LandingPage';
 import OnboardingFlow from '@/components/onboarding/OnboardingFlow';
 import ReportView from '@/components/report/ReportView';
 import { UserData } from '@/lib/types';

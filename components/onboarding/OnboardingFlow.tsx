@@ -255,7 +255,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                 </div>
               </div>
               
-              <div className="space-y-2">
+              <div className="space-y-4 w-full">
                 <motion.h3 
                   className="text-2xl font-serif text-[#78350f]"
                   animate={{ opacity: [0.5, 1, 0.5] }}
@@ -263,7 +263,18 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                 >
                   Alignement des constellations...
                 </motion.h3>
-                <p className="text-[#d97706]/80 max-w-md">
+                
+                {/* Progress Bar */}
+                <div className="w-full bg-[#f5f5f4] rounded-full h-2 overflow-hidden relative">
+                  <motion.div 
+                    className="absolute top-0 left-0 h-full bg-[#d97706]"
+                    initial={{ width: "0%" }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 3.5, ease: "easeInOut" }}
+                  />
+                </div>
+                
+                <p className="text-[#d97706]/80 text-sm">
                   Calcul de votre Grille d'Inclusion et analyse de vos dettes karmiques.
                 </p>
               </div>

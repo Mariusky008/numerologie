@@ -2,18 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight, Star, Scroll, Clock } from 'lucide-react';
 
-import InclusionGridViz from '../report/InclusionGridViz';
-
 interface LandingPageProps {
   onStart: () => void;
 }
 
 export default function LandingPage({ onStart }: LandingPageProps) {
-  // Sample data for preview
-  const sampleGrid = { 1: 2, 2: 1, 3: 0, 4: 1, 5: 3, 6: 0, 7: 1, 8: 2, 9: 1 };
-  const sampleMissing = [3, 6];
-  const sampleExcess = [5];
-
   return (
     <div className="min-h-screen bg-[#fffbf0] text-[#57534e] overflow-hidden">
       {/* Navbar Simple */}
@@ -22,6 +15,12 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           <Star className="w-6 h-6 text-[#d97706] fill-[#d97706]" />
           Numérologie
         </div>
+        <button 
+          onClick={onStart}
+          className="px-6 py-2 rounded-full border border-[#d97706]/30 text-[#78350f] hover:bg-[#d97706]/5 transition-colors text-sm font-medium"
+        >
+          Connexion
+        </button>
       </nav>
 
       {/* Hero Section */}
@@ -35,27 +34,44 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             <span className="inline-block px-4 py-1 rounded-full bg-[#fef3c7] text-[#d97706] text-xs font-bold tracking-widest uppercase mb-6 border border-[#d97706]/20">
               Architecture de l'Âme
             </span>
-            <h1 className="text-5xl md:text-7xl font-serif text-[#78350f] mb-8 leading-tight">
-              Découvrez le Plan Invisible <br />
-              <span className="italic text-[#d97706]">de votre Destinée</span>
+            <h1 className="text-4xl md:text-6xl font-serif text-[#78350f] mb-8 leading-tight">
+              Et si votre nom n'était pas un hasard ? <br />
+              <span className="italic text-[#d97706] text-3xl md:text-5xl block mt-2">Accédez au mode d'emploi de votre vie en 30 secondes.</span>
             </h1>
-            <p className="text-lg md:text-xl text-[#57534e] max-w-2xl mx-auto mb-12 leading-relaxed">
-              Votre date de naissance et votre nom ne sont pas un hasard. Ils forment un code unique qui révèle vos talents, vos défis et votre mission de vie.
-            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-3xl mx-auto mb-12 bg-white/60 p-6 rounded-2xl border border-[#d97706]/10 backdrop-blur-sm">
+               <div className="flex gap-3 items-start">
+                 <span className="text-2xl">🗝️</span>
+                 <p className="text-sm text-[#78350f] font-medium">Quelle est la peur inconsciente qui bloque votre carrière ?</p>
+               </div>
+               <div className="flex gap-3 items-start">
+                 <span className="text-2xl">✨</span>
+                 <p className="text-sm text-[#78350f] font-medium">Quel est le talent caché que vous possédez depuis l'enfance ?</p>
+               </div>
+               <div className="flex gap-3 items-start">
+                 <span className="text-2xl">🔮</span>
+                 <p className="text-sm text-[#78350f] font-medium">Pourquoi certains schémas se répètent-ils dans vos relations ?</p>
+               </div>
+            </div>
             
             <div className="flex flex-col md:flex-row items-center justify-center gap-4">
               <button 
                 onClick={onStart}
-                className="group relative px-8 py-4 bg-[#d97706] text-white rounded-full font-medium text-lg shadow-lg shadow-[#d97706]/30 hover:bg-[#b45309] transition-all hover:scale-105"
+                className="group relative px-8 py-4 bg-[#ea580c] text-white rounded-full font-medium text-lg shadow-xl shadow-[#ea580c]/30 hover:bg-[#c2410c] transition-all hover:scale-105"
               >
                 <span className="flex items-center gap-2">
-                  Commencer l'Analyse Gratuite
+                  Révéler mon Profil maintenant
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
-              <p className="text-sm text-[#a8a29e] mt-4 md:mt-0">
-                Lecture immédiate • Sans inscription requise
-              </p>
+              <div className="flex items-center gap-2 text-sm text-[#a8a29e] mt-4 md:mt-0 bg-white/80 px-4 py-2 rounded-full border border-stone-100">
+                <span className="flex -space-x-2">
+                  {[1,2,3].map(i => (
+                    <div key={i} className="w-6 h-6 rounded-full bg-stone-200 border-2 border-white"></div>
+                  ))}
+                </span>
+                <span>+1 200 analyses générées cette semaine</span>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -63,6 +79,30 @@ export default function LandingPage({ onStart }: LandingPageProps) {
         {/* Background Elements */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#d97706]/5 rounded-full blur-3xl -z-10 pointer-events-none" />
       </header>
+
+      {/* Social Proof Section */}
+      <section className="py-12 bg-[#fff7ed] border-y border-[#d97706]/10">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h2 className="text-2xl font-serif text-[#78350f] mb-8">Ils ont découvert leur plan de vie</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <TestimonialCard 
+              name="Julie R." 
+              role="Entrepreneure"
+              text="J'étais sceptique, mais le rapport a mis des mots précis sur des blocages que je ressentais depuis 10 ans. Bluffant de précision sur mes cycles de vie."
+            />
+            <TestimonialCard 
+              name="Marc D." 
+              role="En transition pro"
+              text="L'analyse de mon Pont de Réconciliation a été le déclic. J'ai enfin compris pourquoi je tournais en rond. C'est bien plus qu'un horoscope."
+            />
+            <TestimonialCard 
+              name="Sophie L." 
+              role="Thérapeute"
+              text="La grille d'inclusion est un outil incroyable. La visualisation graphique m'a permis de voir mes carences et mes excès en un coup d'œil."
+            />
+          </div>
+        </div>
+      </section>
 
       {/* Features Section */}
       <section className="py-20 px-4 bg-white/50 border-y border-[#d97706]/10">
@@ -120,18 +160,13 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                 <div className="w-8 h-8 rounded-full bg-[#fef3c7] text-[#d97706] flex items-center justify-center font-serif font-bold">7</div>
               </div>
               <div className="space-y-4 mb-8">
-                <div className="w-full bg-[#fffbf0] rounded-lg border border-[#d97706]/10 p-4">
-                  <div className="text-[#d97706] font-serif text-sm mb-2 text-center">Graphique d'Inclusion</div>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[3, 1, 9, 2, 5, 8, 4, 7, 6].map((num, i) => (
-                      <div key={i} className={`
-                        aspect-square rounded flex items-center justify-center text-sm font-bold
-                        ${[0, 2, 4, 6, 8].includes(i) ? 'bg-[#d97706]/10 text-[#d97706]' : 'bg-white text-[#a8a29e] border border-stone-100'}
-                      `}>
-                        {num}
-                      </div>
-                    ))}
-                  </div>
+                <div className="w-full">
+                  <InclusionGridViz 
+                    grid={sampleGrid}
+                    missing={sampleMissing}
+                    excess={sampleExcess}
+                    className="!bg-[#fffbf0] !border-[#d97706]/10 !shadow-none !p-2"
+                  />
                 </div>
                 <div className="space-y-2">
                    <div className="w-full h-3 bg-[#f5f5f4] rounded"></div>
@@ -166,6 +201,21 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           </button>
         </div>
       </section>
+    </div>
+  );
+}
+
+function TestimonialCard({ name, role, text }: { name: string, role: string, text: string }) {
+  return (
+    <div className="bg-white p-6 rounded-xl shadow-sm border border-[#d97706]/10 text-left">
+      <div className="flex gap-1 text-[#d97706] mb-3">
+        {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-current" />)}
+      </div>
+      <p className="text-[#57534e] italic mb-4 text-sm leading-relaxed">"{text}"</p>
+      <div>
+        <div className="font-bold text-[#78350f]">{name}</div>
+        <div className="text-xs text-[#a8a29e]">{role}</div>
+      </div>
     </div>
   );
 }

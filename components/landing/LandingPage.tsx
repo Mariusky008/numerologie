@@ -2,11 +2,18 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight, Star, Scroll, Clock } from 'lucide-react';
 
+import InclusionGridViz from '../report/InclusionGridViz';
+
 interface LandingPageProps {
   onStart: () => void;
 }
 
 export default function LandingPage({ onStart }: LandingPageProps) {
+  // Sample data for preview
+  const sampleGrid = { 1: 2, 2: 1, 3: 0, 4: 1, 5: 3, 6: 0, 7: 1, 8: 2, 9: 1 };
+  const sampleMissing = [3, 6];
+  const sampleExcess = [5];
+
   return (
     <div className="min-h-screen bg-[#fffbf0] text-[#57534e] overflow-hidden">
       {/* Navbar Simple */}
@@ -15,12 +22,6 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           <Star className="w-6 h-6 text-[#d97706] fill-[#d97706]" />
           Numérologie
         </div>
-        <button 
-          onClick={onStart}
-          className="px-6 py-2 rounded-full border border-[#d97706]/30 text-[#78350f] hover:bg-[#d97706]/5 transition-colors text-sm font-medium"
-        >
-          Connexion
-        </button>
       </nav>
 
       {/* Hero Section */}
@@ -119,12 +120,18 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                 <div className="w-8 h-8 rounded-full bg-[#fef3c7] text-[#d97706] flex items-center justify-center font-serif font-bold">7</div>
               </div>
               <div className="space-y-4 mb-8">
-                <div className="w-full bg-[#fffbf0] rounded-lg border border-[#d97706]/10 p-2 overflow-hidden">
-                  <img 
-                    src="/grille.jpg" 
-                    alt="Grille d'Inclusion Exemple" 
-                    className="w-full h-auto object-cover rounded shadow-sm opacity-90 hover:opacity-100 transition-opacity"
-                  />
+                <div className="w-full bg-[#fffbf0] rounded-lg border border-[#d97706]/10 p-4">
+                  <div className="text-[#d97706] font-serif text-sm mb-2 text-center">Graphique d'Inclusion</div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[3, 1, 9, 2, 5, 8, 4, 7, 6].map((num, i) => (
+                      <div key={i} className={`
+                        aspect-square rounded flex items-center justify-center text-sm font-bold
+                        ${[0, 2, 4, 6, 8].includes(i) ? 'bg-[#d97706]/10 text-[#d97706]' : 'bg-white text-[#a8a29e] border border-stone-100'}
+                      `}>
+                        {num}
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 <div className="space-y-2">
                    <div className="w-full h-3 bg-[#f5f5f4] rounded"></div>

@@ -16,7 +16,7 @@ interface FullReportProps {
 
 export default function FullReport({ userData, results }: FullReportProps) {
   return (
-    <div className="w-full max-w-[210mm] mx-auto bg-[#1c1917] text-[#fdfbf7] shadow-2xl print:shadow-none">
+    <div className="w-full max-w-[210mm] mx-auto bg-[#fffbf0] text-[#44403c] shadow-2xl print:shadow-none font-sans">
       <Part1Intro userData={userData} results={results} />
       <Part1Identity userData={userData} results={results} />
       <Part2Incarnation userData={userData} results={results} />

@@ -29,23 +29,23 @@ export default function PersonalityRadar({ data }: PersonalityRadarProps) {
   ];
 
   return (
-    <div className="w-full h-[350px] md:h-[400px] bg-stone-900/50 rounded-xl border border-amber-900/30 p-2 md:p-4 flex flex-col overflow-hidden">
-      <h3 className="text-lg md:text-xl font-serif text-amber-100 text-center mb-2 md:mb-4 shrink-0">Radar de Personnalité</h3>
+    <div className="w-full h-[350px] md:h-[400px] bg-white rounded-xl border border-stone-200 shadow-sm p-2 md:p-4 flex flex-col overflow-hidden">
+      <h3 className="text-lg md:text-xl font-serif text-[#78350f] text-center mb-2 md:mb-4 shrink-0">Radar de Personnalité</h3>
       <div className="flex-1 min-h-0 relative">
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart cx="50%" cy="50%" outerRadius="60%" data={chartData}>
-            <PolarGrid stroke="#78350f" />
+            <PolarGrid stroke="#e7e5e4" />
             <PolarAngleAxis 
               dataKey="subject" 
-              tick={{ fill: '#fcd34d', fontSize: 12, dy: 4 }} 
+              tick={{ fill: '#78350f', fontSize: 12, dy: 4 }} 
             />
             <PolarRadiusAxis angle={30} domain={[0, 9]} tick={false} axisLine={false} />
             <Radar
               name="Profil"
               dataKey="A"
-              stroke="#f59e0b"
+              stroke="#d97706"
               strokeWidth={2}
-              fill="#f59e0b"
+              fill="#d97706"
               fillOpacity={0.3}
             />
           </RadarChart>

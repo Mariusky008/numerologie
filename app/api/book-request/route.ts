@@ -2,9 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-const DATA_FILE_PATH = process.env.NODE_ENV === 'production' 
-  ? path.join('/tmp', 'book-requests.json')
-  : path.join(process.cwd(), 'data', 'book-requests.json');
+const DATA_FILE_PATH = path.join('/tmp', 'book-requests.json');
 
 export async function POST(request: Request) {
   try {

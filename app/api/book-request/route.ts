@@ -44,8 +44,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, id: newRequest.id });
   } catch (error) {
     console.error('Error processing book request:', error);
+    // Return detailed error in development
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'Internal Server Error', details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }

@@ -41,10 +41,14 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             <span className="inline-block px-4 py-1 rounded-full bg-[#fef3c7] text-[#d97706] text-xs font-bold tracking-widest uppercase mb-6 border border-[#d97706]/20">
               Architecture de l'Âme
             </span>
-            <h1 className="text-4xl md:text-6xl font-serif text-[#78350f] mb-8 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-serif text-[#78350f] mb-6 leading-tight">
               Et si votre nom n'était pas un hasard ? <br />
               <span className="italic text-[#d97706] text-3xl md:text-5xl block mt-2">Accédez au mode d'emploi de votre vie en 30 secondes.</span>
             </h1>
+            
+            <p className="text-lg md:text-xl text-[#78350f] font-medium mb-12 max-w-2xl mx-auto">
+              Obtenez immédiatement une analyse personnalisée de votre Chemin de Vie, vos Dettes Karmiques et vos cycles annuels.
+            </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-3xl mx-auto mb-12 bg-white/60 p-6 rounded-2xl border border-[#d97706]/10 backdrop-blur-sm">
                <div className="flex gap-3 items-start">
@@ -87,6 +91,21 @@ export default function LandingPage({ onStart }: LandingPageProps) {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#d97706]/5 rounded-full blur-3xl -z-10 pointer-events-none" />
       </header>
 
+      {/* Services Detail Section */}
+      <section className="py-12 border-b border-[#d97706]/10">
+         <div className="max-w-6xl mx-auto px-4">
+            <h2 className="text-center text-xl font-serif text-[#78350f] mb-8">Ce que votre analyse révèle</h2>
+            <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+               <ServicePill icon="📊" text="Chemin de Vie" />
+               <ServicePill icon="🌟" text="Mission de Vie" />
+               <ServicePill icon="⚖️" text="Dettes Karmiques" />
+               <ServicePill icon="📆" text="Prévisions 12 mois" />
+               <ServicePill icon="🧩" text="Grille d'Inclusion" />
+               <ServicePill icon="🔮" text="Défis de Vie" />
+            </div>
+         </div>
+      </section>
+
       {/* Social Proof Section */}
       <section className="py-12 bg-[#fff7ed] border-y border-[#d97706]/10">
         <div className="max-w-6xl mx-auto px-4 text-center">
@@ -114,6 +133,10 @@ export default function LandingPage({ onStart }: LandingPageProps) {
       {/* Features Section */}
       <section className="py-20 px-4 bg-white/50 border-y border-[#d97706]/10">
         <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-serif text-[#78350f] mb-4">Comment ça marche ?</h2>
+            <p className="text-[#57534e]">Une méthodologie unique alliant tradition pythagoricienne et algorithmes modernes.</p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <FeatureCard 
               icon={<Sparkles className="w-8 h-8 text-[#d97706]" />}
@@ -138,6 +161,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
       <section className="py-24 px-4 overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
           <div className="flex-1 space-y-8">
+            <span className="text-[#d97706] font-bold tracking-widest text-sm uppercase">Aperçu du Résultat</span>
             <h2 className="text-3xl md:text-5xl font-serif text-[#78350f]">
               Plus qu'un horoscope, <br />
               <span className="text-[#d97706]">une carte routière précise.</span>
@@ -208,6 +232,15 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           </button>
         </div>
       </section>
+    </div>
+  );
+}
+
+function ServicePill({ icon, text }: { icon: string, text: string }) {
+  return (
+    <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-[#d97706]/20 shadow-sm text-[#78350f] text-sm font-medium">
+      <span>{icon}</span>
+      <span>{text}</span>
     </div>
   );
 }

@@ -17,8 +17,8 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "Numérologie & Lecture d'Âme",
-  description: "Étude numérologique personnalisée",
+  title: "Numérologie Personnalisée | Découvrez votre Chemin de Vie & Cycles",
+  description: "Obtenez votre analyse numérologique complète : Chemin de Vie, Dettes Karmiques, et Prévisions Annuelles. Une méthode précise alliant tradition et modernité.",
 };
 
 export default function RootLayout({

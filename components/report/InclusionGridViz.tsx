@@ -52,6 +52,7 @@ export default function InclusionGridViz({ grid, missing, excess, className }: I
         </div>
         {isMissing && <div className="text-[10px] uppercase tracking-widest text-red-500 mt-1">Dette</div>}
         {isExcess && <div className="text-[10px] uppercase tracking-widest text-amber-600 mt-1">Force</div>}
+        {!isMissing && !isExcess && <div className="text-[10px] uppercase tracking-widest text-emerald-600/70 mt-1">Équilibré</div>}
       </div>
     );
   };

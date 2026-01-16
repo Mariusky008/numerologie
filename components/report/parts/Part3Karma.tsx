@@ -2,9 +2,11 @@
 import { UserData, NumerologyResult } from '@/lib/types';
 import PageContainer from './PageContainer';
 import InclusionGridViz from '../InclusionGridViz';
-import { getKarmicLessonContent, getExcessNumberContent } from '@/lib/numerology/contentGenerator';
+import { getKarmicLessonContent, getExcessNumberContent, getBridgeContent } from '@/lib/numerology/contentGenerator';
 
 export default function Part3Karma({ userData, results }: { userData: UserData, results: NumerologyResult }) {
+  const bridgeContent = getBridgeContent(results.bridgeNumber);
+
   return (
     <>
       {/* PAGE 17: GRILLE D'INCLUSION VISUELLE */}

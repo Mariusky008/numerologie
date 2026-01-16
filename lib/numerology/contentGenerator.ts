@@ -263,6 +263,24 @@ export const getPersonalityContent = (num: number) => {
   };
 };
 
+export const getBridgeContent = (num: number) => {
+  const arch = getNumberArchetype(num);
+  return {
+    title: `Le Pont ${num}`,
+    desc: `Le Pont ${num} est la solution pour aligner votre Chemin de Vie et votre Expression. Pour vous sentir unifié, vous devez cultiver : ${arch.keywords[0]} et ${arch.keywords[1]}.`,
+    advice: `Quand vous vous sentez bloqué ou tiraillé, adoptez l'attitude du ${num} : ${arch.desc} C'est votre porte de sortie vers l'harmonie.`
+  };
+};
+
+export const getCycleContent = (num: number) => {
+  const arch = getNumberArchetype(num);
+  return {
+    title: `Cycle en vibration ${num}`,
+    desc: `Ce cycle vous invite à développer l'énergie du ${num}. C'est une période propice pour : ${arch.keywords.join(', ')}.`,
+    detailed: `Durant cette phase de votre vie, l'univers vous demande d'incarner les qualités du ${num}. ${arch.extendedDesc.split('\n')[0]}` // First paragraph of extended desc
+  };
+};
+
 export const getPersonalYearContent = (num: number) => {
   const texts: Record<number, string> = {
     1: "C'est l'année du commencement. Tout est neuf. C'est le moment de planter, d'oser, de démarrer des projets. L'énergie est masculine et rapide.\n\nC'est une période d'indépendance et d'initiative. Ne comptez que sur vous-même. Les décisions prises cette année influenceront les 9 prochaines années. Osez sortir de votre zone de confort. C'est le moment de dire 'J'existe' et de lancer ce projet qui vous tient à cœur.",

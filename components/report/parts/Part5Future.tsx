@@ -1,10 +1,36 @@
 
 import { UserData, NumerologyResult } from '@/lib/types';
 import PageContainer from './PageContainer';
-import { getPersonalYearContent } from '@/lib/numerology/contentGenerator';
+import { getPersonalYearContent, getCycleContent } from '@/lib/numerology/contentGenerator';
 
 export default function Part5Future({ userData, results }: { userData: UserData, results: NumerologyResult }) {
   const pyContent = getPersonalYearContent(results.personalYear);
+  
+  // Calculate Cycle Ranges
+  const birthYear = new Date(userData.birthDate).getFullYear();
+  const currentYear = new Date().getFullYear();
+  const age = currentYear - birthYear;
+  
+  const c1End = 36 - results.lifePath;
+  const c2End = c1End + 27;
+  
+  // Determine Current Cycle
+  let currentCycleNum = results.cycles.cycle1;
+  let currentCycleName = "Cycle Formatif";
+  
+  if (age > c1End && age <= c2End) {
+    currentCycleNum = results.cycles.cycle2;
+    currentCycleName = "Cycle Productif";
+  } else if (age > c2End) {
+    currentCycleNum = results.cycles.cycle3; // Assuming cycle3 corresponds to the last cycle in the results object structure if available, otherwise fallback logic
+    // Actually results.cycles usually has cycle1, cycle2, cycle3. Let's assume standard 3 cycles.
+    // Wait, type definition says cycle1, cycle2, cycle3, cycle4? 
+    // Standard is 3 Major Cycles. 
+    currentCycleNum = results.cycles.cycle3;
+    currentCycleName = "Cycle de Sagesse";
+  }
+  
+  const cycleContent = getCycleContent(currentCycleNum);
 
   return (
     <>
@@ -14,33 +40,38 @@ export default function Part5Future({ userData, results }: { userData: UserData,
           Vos Cycles de Vie
         </h2>
         <div className="space-y-8 md:space-y-12">
-          <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center">
-            <div className="w-32 text-left md:text-right font-serif text-[#57534e]">0 - 28 ans</div>
+          <div className={`flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center ${age <= c1End ? 'opacity-100' : 'opacity-50'}`}>
+            <div className="w-32 text-left md:text-right font-serif text-[#57534e]">0 - {c1End} ans</div>
             <div className="flex-1 w-full md:w-auto h-2 bg-stone-200 rounded-full relative">
-              <div className="absolute top-0 left-0 h-full w-1/3 bg-[#f59e0b] rounded-full"></div>
+              <div className="absolute top-0 left-0 h-full w-full bg-[#f59e0b] rounded-full"></div>
             </div>
-            <div className="w-32 font-bold text-[#d97706]">Cycle Formatif</div>
+            <div className="w-32 font-bold text-[#d97706]">Cycle Formatif ({results.cycles.cycle1})</div>
           </div>
-          <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center">
-            <div className="w-32 text-left md:text-right font-serif text-[#57534e]">28 - 56 ans</div>
+          <div className={`flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center ${age > c1End && age <= c2End ? 'opacity-100' : 'opacity-50'}`}>
+            <div className="w-32 text-left md:text-right font-serif text-[#57534e]">{c1End} - {c2End} ans</div>
             <div className="flex-1 w-full md:w-auto h-2 bg-stone-200 rounded-full relative">
-              <div className="absolute top-0 left-1/3 h-full w-1/3 bg-[#ea580c] rounded-full"></div>
+              <div className="absolute top-0 left-0 h-full w-full bg-[#ea580c] rounded-full"></div>
             </div>
-            <div className="w-32 font-bold text-[#d97706]">Cycle Productif</div>
+            <div className="w-32 font-bold text-[#d97706]">Cycle Productif ({results.cycles.cycle2})</div>
           </div>
-          <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center">
-            <div className="w-32 text-left md:text-right font-serif text-[#57534e]">56+ ans</div>
+          <div className={`flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center ${age > c2End ? 'opacity-100' : 'opacity-50'}`}>
+            <div className="w-32 text-left md:text-right font-serif text-[#57534e]">{c2End}+ ans</div>
             <div className="flex-1 w-full md:w-auto h-2 bg-stone-200 rounded-full relative">
-              <div className="absolute top-0 left-2/3 h-full w-1/3 bg-[#78350f] rounded-full"></div>
+              <div className="absolute top-0 left-0 h-full w-full bg-[#78350f] rounded-full"></div>
             </div>
-            <div className="w-32 font-bold text-[#d97706]">Cycle Sagesse</div>
+            <div className="w-32 font-bold text-[#d97706]">Cycle Sagesse ({results.cycles.cycle3})</div>
           </div>
         </div>
-        <div className="mt-8 md:mt-12 p-6 md:p-8 bg-white border border-stone-200 rounded-xl shadow-sm">
-          <h3 className="text-xl md:text-2xl font-serif text-[#d97706] mb-4">Votre Cycle Actuel</h3>
-          <p className="text-[#57534e] text-sm md:text-base">
-            Vous êtes actuellement dans une phase influencée par la vibration du nombre {results.cycles.cycle2}.
-            C'est un temps pour construire et consolider. (Texte générique, à enrichir avec logique de cycles).
+        
+        <div className="mt-8 md:mt-12 p-6 md:p-8 bg-white border border-[#d97706]/20 rounded-xl shadow-sm relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-2 h-full bg-[#d97706]"></div>
+          <h3 className="text-xl md:text-2xl font-serif text-[#d97706] mb-2">Vous êtes ici : {currentCycleName}</h3>
+          <h4 className="text-lg font-bold text-[#78350f] mb-4">{cycleContent.title}</h4>
+          <p className="text-[#57534e] text-sm md:text-base mb-4 leading-relaxed">
+            {cycleContent.desc}
+          </p>
+           <p className="text-[#57534e] text-sm md:text-base italic bg-[#fffbf0] p-4 rounded-lg">
+            {cycleContent.detailed}
           </p>
         </div>
       </PageContainer>

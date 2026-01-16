@@ -221,14 +221,70 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           <p className="text-[#d6d3d1] text-lg">
             Commencez par la lecture essentielle offerte. Vous pourrez ensuite choisir d'approfondir avec l'étude complète.
           </p>
-          <button 
-            onClick={onStart}
-            className="px-10 py-5 bg-[#fffbf0] text-[#78350f] rounded-full font-bold text-lg hover:bg-[#fef3c7] transition-colors shadow-xl"
-          >
-            Obtenir mon rapport personnalisé (gratuit et immédiat)
-          </button>
+          <div className="flex flex-col items-center gap-4">
+             <button 
+               onClick={onStart}
+               className="px-10 py-5 bg-[#fffbf0] text-[#78350f] rounded-full font-bold text-lg hover:bg-[#fef3c7] transition-colors shadow-xl"
+             >
+               Obtenir mon rapport personnalisé (gratuit et immédiat)
+             </button>
+             <button 
+               onClick={() => document.getElementById('preview-section')?.scrollIntoView({ behavior: 'smooth' })}
+               className="text-[#d6d3d1] hover:text-white underline text-sm mt-2"
+             >
+               Voir un exemple de rapport
+             </button>
+          </div>
         </div>
       </section>
+
+      {/* Footer Legal */}
+      <footer className="bg-[#573c28] text-[#d6d3d1] py-12 px-4 border-t border-[#d6d3d1]/10 text-sm">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+           <div className="space-y-4">
+              <div className="flex items-center gap-2 text-white font-serif text-lg font-bold">
+                 <Star className="w-5 h-5 text-[#d97706] fill-[#d97706]" />
+                 Numérologie
+              </div>
+              <p className="opacity-80 leading-relaxed">
+                 Une approche moderne de la numérologie traditionnelle pour vous aider à décoder votre potentiel et naviguer vos cycles de vie avec confiance.
+              </p>
+           </div>
+           
+           <div>
+              <h4 className="text-white font-bold mb-4">Navigation</h4>
+              <ul className="space-y-2">
+                 <li><button onClick={onStart} className="hover:text-white transition-colors">Commencer l'analyse</button></li>
+                 <li><button onClick={() => document.getElementById('preview-section')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-white transition-colors">Exemple de rapport</button></li>
+                 <li><a href="#" className="hover:text-white transition-colors">Blog (Bientôt)</a></li>
+              </ul>
+           </div>
+           
+           <div>
+              <h4 className="text-white font-bold mb-4">Légal</h4>
+              <ul className="space-y-2">
+                 <li><a href="#" className="hover:text-white transition-colors">CGV / CGU</a></li>
+                 <li><a href="#" className="hover:text-white transition-colors">Politique de Confidentialité</a></li>
+                 <li><a href="#" className="hover:text-white transition-colors">Mentions Légales</a></li>
+                 <li><a href="#" className="hover:text-white transition-colors">Gestion des cookies</a></li>
+              </ul>
+           </div>
+
+           <div>
+              <h4 className="text-white font-bold mb-4">Contact</h4>
+              <p className="opacity-80 mb-2">Une question ?</p>
+              <a href="mailto:contact@numerologie.app" className="text-[#d97706] hover:text-[#fbbf24] transition-colors">contact@numerologie.app</a>
+              <div className="mt-4 flex gap-4">
+                 {/* Social placeholders */}
+                 <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 cursor-pointer transition-colors">IG</div>
+                 <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 cursor-pointer transition-colors">FB</div>
+              </div>
+           </div>
+        </div>
+        <div className="pt-8 border-t border-white/10 text-center opacity-60">
+           &copy; {new Date().getFullYear()} Numérologie. Tous droits réservés.
+        </div>
+      </footer>
     </div>
   );
 }

@@ -94,12 +94,12 @@ Lieux de vie: ${req.lifeDetails.placesLived}
 Déménagements: ${req.lifeDetails.moves}
 Vie Sentimentale: ${req.lifeDetails.relationships}
 Événements Majeurs: ${req.lifeDetails.majorEvents}
-Souvenirs d'Enfance: ${req.lifeDetails.childhoodMemories}
-Passions: ${req.lifeDetails.passions}
-Rêves & Regrets: ${req.lifeDetails.dreams}
-Mentors: ${req.lifeDetails.mentors}
-Rituels: ${req.lifeDetails.dailyRituals}
-Peurs: ${req.lifeDetails.fears}
+Souvenirs d'Enfance: ${req.lifeDetails.childhoodMemories || '-'}
+Passions: ${req.lifeDetails.passions || '-'}
+Rêves & Regrets: ${req.lifeDetails.dreams || '-'}
+Mentors: ${req.lifeDetails.mentors || '-'}
+Rituels: ${req.lifeDetails.dailyRituals || '-'}
+Peurs: ${req.lifeDetails.fears || '-'}
 
 --- CONSIGNE ---
 Écris le premier chapitre d'un roman à la troisième personne centré sur ce personnage.

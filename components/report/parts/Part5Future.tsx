@@ -96,42 +96,42 @@ export default function Part5Future({ userData, results }: { userData: UserData,
         </div>
       </PageContainer>
 
-      {/* PAGE 35-36: ORIENTATION PRO */}
+      {/* PAGE 35: ORIENTATION PRO & ENVIRONNEMENT (Consolidated) */}
       <PageContainer className="p-4 md:p-16">
-        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-12 border-b-2 border-[#d97706] pb-4 inline-block">
+        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 border-b-2 border-[#d97706] pb-4 inline-block">
           Orientation Professionnelle
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {results.professionalAxes.map((axis, i) => (
-            <div key={i} className="p-8 border border-stone-200 rounded-xl hover:bg-white hover:shadow-md transition-all bg-[#fffbf0]">
-              <h3 className="text-xl md:text-2xl font-serif text-[#78350f] mb-4">{axis}</h3>
-              <p className="text-[#57534e] text-sm md:text-base">
+            <div key={i} className="p-6 border border-stone-200 rounded-xl hover:bg-white hover:shadow-md transition-all bg-[#fffbf0]">
+              <h3 className="text-lg md:text-xl font-serif text-[#78350f] mb-2">{axis}</h3>
+              <p className="text-[#57534e] text-xs md:text-sm">
                 Ce secteur résonne naturellement avec vos nombres. Vous y trouverez fluidité et reconnaissance.
               </p>
             </div>
           ))}
         </div>
-      </PageContainer>
-      
-      <PageContainer className="p-4 md:p-16 bg-[#f0f9ff] border-l-[8px] md:border-l-[12px] border-[#0ea5e9]">
-         <h2 className="text-2xl md:text-4xl font-serif text-[#0369a1] mb-8 md:mb-12">Environnement Idéal</h2>
-         <p className="text-base md:text-lg text-[#0284c7] mb-8">
-           Pour vous épanouir pleinement, votre environnement de travail doit respecter ces critères :
-         </p>
-         <ul className="grid grid-cols-1 gap-4">
-           <li className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm border border-[#0ea5e9]/20">
-             <div className="w-2 h-2 bg-[#0ea5e9] rounded-full"></div>
-             <span className="text-[#334155] text-sm md:text-base">Autonomie dans la gestion du temps (Besoin du {results.lifePath})</span>
-           </li>
-           <li className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm border border-[#0ea5e9]/20">
-             <div className="w-2 h-2 bg-[#0ea5e9] rounded-full"></div>
-             <span className="text-[#334155] text-sm md:text-base">Possibilité d'exprimer vos idées (Besoin du {results.expression})</span>
-           </li>
-           <li className="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm border border-[#0ea5e9]/20">
-             <div className="w-2 h-2 bg-[#0ea5e9] rounded-full"></div>
-             <span className="text-[#334155] text-sm md:text-base">Sens et contribution éthique (Besoin du {results.soulUrge})</span>
-           </li>
-         </ul>
+
+        <div className="bg-[#f0f9ff] p-6 rounded-xl border border-[#0ea5e9]/20">
+           <h3 className="text-xl font-serif text-[#0369a1] mb-4">Environnement Idéal</h3>
+           <p className="text-sm text-[#0284c7] mb-4">
+             Pour vous épanouir pleinement, votre environnement de travail doit respecter ces critères :
+           </p>
+           <ul className="grid grid-cols-1 gap-3">
+             <li className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-[#0ea5e9]/20">
+               <div className="w-1.5 h-1.5 bg-[#0ea5e9] rounded-full"></div>
+               <span className="text-[#334155] text-xs md:text-sm">Autonomie dans la gestion du temps (Besoin du {results.lifePath})</span>
+             </li>
+             <li className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-[#0ea5e9]/20">
+               <div className="w-1.5 h-1.5 bg-[#0ea5e9] rounded-full"></div>
+               <span className="text-[#334155] text-xs md:text-sm">Possibilité d'exprimer vos idées (Besoin du {results.expression})</span>
+             </li>
+             <li className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm border border-[#0ea5e9]/20">
+               <div className="w-1.5 h-1.5 bg-[#0ea5e9] rounded-full"></div>
+               <span className="text-[#334155] text-xs md:text-sm">Sens et contribution éthique (Besoin du {results.soulUrge})</span>
+             </li>
+           </ul>
+        </div>
       </PageContainer>
     </>
   );

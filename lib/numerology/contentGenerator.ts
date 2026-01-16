@@ -267,8 +267,10 @@ export const getBridgeContent = (num: number) => {
   const arch = getNumberArchetype(num);
   return {
     title: `Le Pont ${num}`,
-    desc: `Le Pont ${num} est la solution pour aligner votre Chemin de Vie et votre Expression. Pour vous sentir unifié, vous devez cultiver : ${arch.keywords[0]} et ${arch.keywords[1]}.`,
-    advice: `Quand vous vous sentez bloqué ou tiraillé, adoptez l'attitude du ${num} : ${arch.desc} C'est votre porte de sortie vers l'harmonie.`
+    desc: `Le Pont ${num} est la solution pour aligner votre Chemin de Vie et votre Expression.`,
+    symptoms: `Vous avez besoin de ce pont si vous ressentez un décalage entre vos aspirations profondes et votre réalité quotidienne, ou si vous avez l'impression de "tourner en rond" sans avancer.`,
+    action: `Pour activer ce pont, incarnez l'énergie du ${num} : ${arch.keywords[0]} et ${arch.keywords[1]}. ${arch.keyAdvice[0]}`,
+    mantra: `Mantra : "J'active en moi la force du ${num} pour unir mon être."`
   };
 };
 

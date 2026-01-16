@@ -8,9 +8,10 @@ interface InclusionGridVizProps {
   grid: InclusionGrid;
   missing: number[];
   excess: number[];
+  className?: string;
 }
 
-export default function InclusionGridViz({ grid, missing, excess }: InclusionGridVizProps) {
+export default function InclusionGridViz({ grid, missing, excess, className }: InclusionGridVizProps) {
   // Grid layout 3x3
   // 3 6 9
   // 2 5 8

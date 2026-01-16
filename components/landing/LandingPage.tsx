@@ -47,7 +47,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             </h1>
             
             <p className="text-lg md:text-xl text-[#78350f] font-medium mb-12 max-w-2xl mx-auto">
-              Obtenez immédiatement une analyse personnalisée de votre Chemin de Vie, vos Dettes Karmiques et vos cycles annuels.
+              Obtenez un rapport de numérologie personnalisé à partir de votre nom et de votre date de naissance, incluant vos principaux nombres, leur signification et une lecture de vos cycles personnels.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-3xl mx-auto mb-12 bg-white/60 p-6 rounded-2xl border border-[#d97706]/10 backdrop-blur-sm">
@@ -112,17 +112,17 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           <h2 className="text-2xl font-serif text-[#78350f] mb-8">Ils ont découvert leur plan de vie</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <TestimonialCard 
-              name="Julie R." 
-              role="Entrepreneure"
-              text="J'étais sceptique, mais le rapport a mis des mots précis sur des blocages que je ressentais depuis 10 ans. Bluffant de précision sur mes cycles de vie."
+              name="Julie, 34 ans" 
+              role="Consultante"
+              text="Le rapport m’a permis de comprendre pourquoi certaines situations professionnelles se répétaient et à quel moment agir plutôt que forcer."
             />
             <TestimonialCard 
-              name="Marc D." 
-              role="En transition pro"
-              text="L'analyse de mon Pont de Réconciliation a été le déclic. J'ai enfin compris pourquoi je tournais en rond. C'est bien plus qu'un horoscope."
+              name="Marc, 41 ans" 
+              role="Entrepreneur"
+              text="La lecture des cycles m’a aidé à mieux planifier mes décisions importantes au lieu d’agir au hasard."
             />
             <TestimonialCard 
-              name="Sophie L." 
+              name="Sophie, 29 ans" 
               role="Thérapeute"
               text="La grille d'inclusion est un outil incroyable. La visualisation graphique m'a permis de voir mes carences et mes excès en un coup d'œil."
             />
@@ -141,17 +141,17 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             <FeatureCard 
               icon={<Sparkles className="w-8 h-8 text-[#d97706]" />}
               title="Identité Vibratoire"
-              desc="Décodez la puissance de vos prénoms et la structure de votre âme à travers la symbolique des nombres."
+              desc="Analyse des nombres issus de votre identité (nom et prénom) pour comprendre vos traits dominants, vos forces naturelles et vos zones de tension."
             />
             <FeatureCard 
               icon={<Scroll className="w-8 h-8 text-[#d97706]" />}
               title="Mission de Vie"
-              desc="Comprenez pourquoi vous êtes ici. Identifiez vos dettes karmiques et les talents innés pour les dépasser."
+              desc="Interprétation du nombre central lié à votre date de naissance, indiquant les grands axes d’évolution et les apprentissages majeurs de votre parcours."
             />
             <FeatureCard 
               icon={<Clock className="w-8 h-8 text-[#d97706]" />}
               title="Météo Temporelle"
-              desc="Ne nagez plus à contre-courant. Découvrez votre Année Personnelle et alignez vos actions sur les cycles universels."
+              desc="Lecture des cycles personnels actuels pour situer les périodes favorables, les phases de transition et les moments de vigilance."
             />
           </div>
         </div>
@@ -232,6 +232,18 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           </button>
         </div>
       </section>
+    </div>
+  );
+}
+
+function Step({ number, title, desc }: { number: string, title: string, desc: string }) {
+  return (
+    <div className="flex flex-col items-center text-center max-w-xs">
+      <div className="w-12 h-12 rounded-full bg-[#d97706] text-white flex items-center justify-center font-bold text-xl mb-4 shadow-lg shadow-[#d97706]/30">
+        {number}
+      </div>
+      <h3 className="font-bold text-[#78350f] mb-2">{title}</h3>
+      <p className="text-sm text-[#57534e]">{desc}</p>
     </div>
   );
 }

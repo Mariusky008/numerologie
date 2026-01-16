@@ -226,32 +226,56 @@ export default function ReportView({ userData }: ReportViewProps) {
         </motion.div>
 
         {/* CTA */}
-        <div className="flex flex-col items-center gap-6 pt-8 pb-12">
-          <button 
-            onClick={() => {
-              const dataStr = encodeURIComponent(JSON.stringify(userData));
-              window.open(`/report/print?data=${dataStr}`, '_blank');
-            }}
-            className="flex items-center gap-3 px-8 py-4 bg-[#d97706] hover:bg-[#b45309] text-white rounded-full transition-colors shadow-lg shadow-[#d97706]/20"
-          >
-            <Download className="w-5 h-5" />
-            <span>Générer l'Étude Complète (PDF)</span>
-          </button>
+        <div className="flex flex-col items-center gap-12 pt-8 pb-12">
+          
+          {/* Step 1: PDF */}
+          <div className="text-center space-y-4">
+            <h3 className="text-xl font-serif text-[#78350f]">1. Conservez votre analyse</h3>
+            <button 
+              onClick={() => {
+                const dataStr = encodeURIComponent(JSON.stringify(userData));
+                window.open(`/report/print?data=${dataStr}`, '_blank');
+              }}
+              className="flex items-center gap-3 px-8 py-4 bg-white text-[#78350f] border-2 border-[#78350f] rounded-full hover:bg-[#fffbf0] transition-colors shadow-sm"
+            >
+              <Download className="w-5 h-5" />
+              <span>Télécharger le PDF complet</span>
+            </button>
+          </div>
 
-          <div className="w-full max-w-2xl bg-gradient-to-br from-[#78350f] to-[#573c28] p-8 rounded-2xl shadow-xl text-center text-[#fffbf0] relative overflow-hidden group">
+          {/* Separator */}
+          <div className="w-full flex items-center gap-4 max-w-md opacity-50">
+            <div className="h-px bg-[#78350f] flex-1"></div>
+            <span className="text-[#78350f] font-serif italic">Pour aller plus loin</span>
+            <div className="h-px bg-[#78350f] flex-1"></div>
+          </div>
+
+          {/* Step 2: Book */}
+          <div className="w-full max-w-3xl bg-gradient-to-br from-[#78350f] to-[#573c28] p-8 md:p-10 rounded-2xl shadow-xl text-center text-[#fffbf0] relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-            <div className="relative z-10 space-y-4">
-              <h3 className="text-2xl font-serif font-bold">Et si vous deveniez le héros de votre propre histoire ?</h3>
-              <p className="text-[#d6d3d1]">
-                Imaginez un roman unique, écrit sur-mesure par une IA, où le personnage principal (Vous) vit une épopée basée sur vos véritables nombres et votre vécu.
+            <div className="relative z-10 space-y-6">
+              <div className="inline-block px-4 py-1 rounded-full bg-[#d97706] text-white text-xs font-bold tracking-widest uppercase mb-2">
+                Nouveau & Exclusif
+              </div>
+              <h3 className="text-3xl md:text-4xl font-serif font-bold leading-tight">
+                Vivez votre numérologie <br/> comme un roman.
+              </h3>
+              <p className="text-[#d6d3d1] text-lg max-w-xl mx-auto leading-relaxed">
+                Ne vous contentez pas de lire votre avenir, incarnez-le. <br/>
+                Notre IA écrit pour vous un livre de 100 pages où vous êtes le héros d'une aventure basée sur vos véritables cycles de vie.
               </p>
-              <button
-                onClick={() => setShowBookModal(true)}
-                className="mt-4 inline-flex items-center gap-3 px-8 py-4 bg-[#fffbf0] text-[#78350f] rounded-full font-bold hover:bg-[#fef3c7] transition-all transform hover:scale-105 shadow-lg"
-              >
-                <BookOpen className="w-5 h-5" />
-                <span>Créer mon Roman de Vie</span>
-              </button>
+              <div className="pt-4">
+                <button
+                  onClick={() => setShowBookModal(true)}
+                  className="inline-flex items-center gap-3 px-10 py-5 bg-[#fffbf0] text-[#78350f] rounded-full font-bold text-lg hover:bg-[#fef3c7] transition-all transform hover:scale-105 shadow-2xl shadow-black/20"
+                >
+                  <BookOpen className="w-6 h-6" />
+                  <span>Commencer l'écriture de mon Roman</span>
+                </button>
+              </div>
+              <p className="text-xs text-[#d6d3d1]/60 mt-4">
+                Basé sur vos 7 nombres clés et vos souvenirs personnels.
+              </p>
             </div>
           </div>
         </div>

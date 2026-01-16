@@ -2,11 +2,18 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight, Star, Scroll, Clock } from 'lucide-react';
 
+import InclusionGridViz from '../report/InclusionGridViz';
+
 interface LandingPageProps {
   onStart: () => void;
 }
 
+// Optimized Landing Page with high conversion elements
 export default function LandingPage({ onStart }: LandingPageProps) {
+  // Sample data for preview
+  const sampleGrid = { 1: 2, 2: 1, 3: 0, 4: 1, 5: 3, 6: 0, 7: 1, 8: 2, 9: 1 };
+  const sampleMissing = [3, 6];
+  const sampleExcess = [5];
   return (
     <div className="min-h-screen bg-[#fffbf0] text-[#57534e] overflow-hidden">
       {/* Navbar Simple */}

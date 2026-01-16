@@ -263,10 +263,14 @@ export default function LandingPage({ onStart }: LandingPageProps) {
            <div>
               <h4 className="text-white font-bold mb-4">Légal</h4>
               <ul className="space-y-2">
-                 <li><a href="#" className="hover:text-white transition-colors">CGV / CGU</a></li>
-                 <li><a href="#" className="hover:text-white transition-colors">Politique de Confidentialité</a></li>
-                 <li><a href="#" className="hover:text-white transition-colors">Mentions Légales</a></li>
-                 <li><a href="#" className="hover:text-white transition-colors">Gestion des cookies</a></li>
+                 <li>
+                   <Link href="/legal/cgv" className="hover:text-white transition-colors">CGV</Link>
+                   <span className="mx-2">/</span>
+                   <Link href="/legal/cgu" className="hover:text-white transition-colors">CGU</Link>
+                 </li>
+                 <li><Link href="/legal/privacy" className="hover:text-white transition-colors">Politique de Confidentialité</Link></li>
+                 <li><Link href="/legal/mentions" className="hover:text-white transition-colors">Mentions Légales</Link></li>
+                 <li><Link href="/legal/cookies" className="hover:text-white transition-colors">Gestion des cookies</Link></li>
               </ul>
            </div>
 

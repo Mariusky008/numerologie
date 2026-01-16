@@ -241,7 +241,25 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                         <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                           <Sparkles className="w-3 h-3" /> Majeur
                         </span>
-                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.majorEvents}</p>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.majorEvents || "-"}</p>
+                      </div>
+                      <div>
+                        <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
+                          <Star className="w-3 h-3" /> Enfance
+                        </span>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.childhoodMemories || "-"}</p>
+                      </div>
+                      <div>
+                        <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
+                          <Music className="w-3 h-3" /> Passions
+                        </span>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.passions || "-"}</p>
+                      </div>
+                      <div>
+                        <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
+                          <Compass className="w-3 h-3" /> Rêves
+                        </span>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.dreams || "-"}</p>
                       </div>
                     </div>
                   </div>

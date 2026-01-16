@@ -119,12 +119,24 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                 <div className="w-8 h-8 rounded-full bg-[#fef3c7] text-[#d97706] flex items-center justify-center font-serif font-bold">7</div>
               </div>
               <div className="space-y-4 mb-8">
-                <div className="w-full h-32 bg-[#fffbf0] rounded-lg border border-[#d97706]/10 flex items-center justify-center">
-                  <div className="text-[#d97706]/40 font-serif">Graphique d'Inclusion</div>
+                <div className="w-full bg-[#fffbf0] rounded-lg border border-[#d97706]/10 p-4">
+                  <div className="text-[#d97706] font-serif text-sm mb-2 text-center">Graphique d'Inclusion</div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[3, 1, 9, 2, 5, 8, 4, 7, 6].map((num, i) => (
+                      <div key={i} className={`
+                        aspect-square rounded flex items-center justify-center text-sm font-bold
+                        ${[0, 2, 4, 6, 8].includes(i) ? 'bg-[#d97706]/10 text-[#d97706]' : 'bg-white text-[#a8a29e] border border-stone-100'}
+                      `}>
+                        {num}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="w-full h-4 bg-[#f5f5f4] rounded"></div>
-                <div className="w-3/4 h-4 bg-[#f5f5f4] rounded"></div>
-                <div className="w-5/6 h-4 bg-[#f5f5f4] rounded"></div>
+                <div className="space-y-2">
+                   <div className="w-full h-3 bg-[#f5f5f4] rounded"></div>
+                   <div className="w-5/6 h-3 bg-[#f5f5f4] rounded"></div>
+                   <div className="w-4/6 h-3 bg-[#f5f5f4] rounded"></div>
+                </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-1 h-20 bg-[#f0f9ff] rounded-lg border border-[#0ea5e9]/20"></div>

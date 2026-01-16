@@ -263,7 +263,15 @@ export const getPersonalityContent = (num: number) => {
   };
 };
 
-export const getBridgeContent = (num: number) => {
+export interface BridgeContent {
+  title: string;
+  desc: string;
+  symptoms: string;
+  action: string;
+  mantra: string;
+}
+
+export const getBridgeContent = (num: number): BridgeContent => {
   const arch = getNumberArchetype(num);
   return {
     title: `Le Pont ${num}`,

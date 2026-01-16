@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock, Music, Compass, Star } from 'lucide-react';
+import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock, Music, Compass, Star, TrendingUp, AlertTriangle, GitBranch } from 'lucide-react';
 import { UserData, NumerologyResult } from '@/lib/types';
 
 export interface BookRequest {
@@ -144,6 +144,28 @@ export default function AdminDashboard() {
                         <span className="text-sm font-bold text-red-500">
                           {req.reportResults.missingNumbers?.join(', ') || 'Aucune'}
                         </span>
+                      </div>
+                    </div>
+
+                    {/* Extended Details */}
+                    <div className="mt-4 pt-4 border-t border-[#d97706]/10 grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span className="flex items-center gap-2 font-bold text-[#78350f] mb-1">
+                          <TrendingUp className="w-3 h-3" /> Cycles
+                        </span>
+                        <div className="text-xs space-y-1 text-stone-600">
+                          <p>C1: {req.reportResults.cycles.cycle1} | C2: {req.reportResults.cycles.cycle2}</p>
+                          <p>C3: {req.reportResults.cycles.cycle3} | C4: {req.reportResults.cycles.cycle4}</p>
+                        </div>
+                      </div>
+                      <div>
+                        <span className="flex items-center gap-2 font-bold text-[#78350f] mb-1">
+                          <AlertTriangle className="w-3 h-3" /> Défis
+                        </span>
+                        <div className="text-xs space-y-1 text-stone-600">
+                          <p>Min1: {req.reportResults.challenges.minor1} | Min2: {req.reportResults.challenges.minor2}</p>
+                          <p>Maj: {req.reportResults.challenges.major} | Ult: {req.reportResults.challenges.major2}</p>
+                        </div>
                       </div>
                     </div>
                   </div>

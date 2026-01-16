@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock } from 'lucide-react';
+import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock, Music, Star, Compass } from 'lucide-react';
 import { UserData, NumerologyResult } from '@/lib/types';
 
-interface BookRequest {
+export interface BookRequest {
   id: string;
   date: string;
   status: 'pending' | 'generating' | 'completed';

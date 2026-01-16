@@ -133,10 +133,10 @@ export default function Part2Incarnation({ userData, results }: { userData: User
              </p>
            </div>
            <div className="flex flex-col gap-8">
-             <div className="h-64 w-full bg-[#292524] rounded-xl p-4 border border-[#fbbf24]/10">
-               <PersonalityRadar data={results} />
-             </div>
-             <div className="bg-[#292524] p-6 rounded-xl border border-[#fbbf24]/20">
+            <div className="w-full bg-[#292524] rounded-xl p-0 md:p-4 border border-[#fbbf24]/10">
+              <PersonalityRadar data={results} />
+            </div>
+            <div className="bg-[#292524] p-6 rounded-xl border border-[#fbbf24]/20">
                 <h4 className="font-bold text-[#fbbf24] mb-4">Mots-Clés de votre Expression</h4>
                 <div className="flex flex-wrap gap-2">
                   {expContent.keywords?.map((k, i) => (

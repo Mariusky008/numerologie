@@ -87,7 +87,7 @@ export default function ReportView({ userData }: ReportViewProps) {
   const expressionText = (interpretations.expression as any)[results.expression.toString()] || "Expression unique.";
 
   return (
-    <div className="min-h-screen bg-stone-900 text-cream-50 p-4 md:p-8">
+    <div className="min-h-screen bg-[#fffbf0] text-[#57534e] p-4 md:p-8">
       <div className="max-w-4xl mx-auto space-y-12">
         
         {/* Header */}
@@ -95,12 +95,12 @@ export default function ReportView({ userData }: ReportViewProps) {
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl font-serif text-amber-100"
+            className="text-5xl font-serif text-[#78350f]"
           >
             {userData.firstName} {userData.lastName}
           </motion.h1>
-          <p className="text-amber-200/60 uppercase tracking-widest text-sm">Étude Numérologique - Lecture d'Âme</p>
-          <div className="inline-block px-4 py-1 rounded-full bg-amber-900/30 text-amber-200 text-xs border border-amber-500/20 uppercase tracking-widest">
+          <p className="text-[#d97706]/80 uppercase tracking-widest text-sm">Étude Numérologique - Lecture d'Âme</p>
+          <div className="inline-block px-4 py-1 rounded-full bg-[#fef3c7] text-[#d97706] text-xs border border-[#d97706]/20 uppercase tracking-widest">
             Focus : {userData.focus}
           </div>
         </header>
@@ -112,13 +112,13 @@ export default function ReportView({ userData }: ReportViewProps) {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-stone-800/50 p-6 rounded-xl border border-amber-900/30"
+            className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm"
           >
-            <h2 className="text-2xl font-serif text-amber-100 mb-2">Chemin de Vie {results.lifePath}</h2>
-            <p className="text-stone-300 italic mb-4">{lifePathText}</p>
+            <h2 className="text-2xl font-serif text-[#78350f] mb-2">Chemin de Vie {results.lifePath}</h2>
+            <p className="text-[#57534e] italic mb-4">{lifePathText}</p>
             <div className="flex items-center gap-4">
-              <div className="text-6xl font-bold text-amber-500/20">{results.lifePath}</div>
-              <div className="text-sm text-stone-400">
+              <div className="text-6xl font-bold text-[#d97706]/10">{results.lifePath}</div>
+              <div className="text-sm text-[#a8a29e]">
                 Calculé à partir du {userData.birthDate}
               </div>
             </div>
@@ -129,13 +129,13 @@ export default function ReportView({ userData }: ReportViewProps) {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-stone-800/50 p-6 rounded-xl border border-amber-900/30"
+            className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm"
           >
-            <h2 className="text-2xl font-serif text-amber-100 mb-2">Nombre d'Expression {results.expression}</h2>
-            <p className="text-stone-300 italic mb-4">{expressionText}</p>
+            <h2 className="text-2xl font-serif text-[#78350f] mb-2">Nombre d'Expression {results.expression}</h2>
+            <p className="text-[#57534e] italic mb-4">{expressionText}</p>
             <div className="flex items-center gap-4">
-              <div className="text-6xl font-bold text-amber-500/20">{results.expression}</div>
-              <div className="text-sm text-stone-400">
+              <div className="text-6xl font-bold text-[#d97706]/10">{results.expression}</div>
+              <div className="text-sm text-[#a8a29e]">
                 Basé sur votre nom complet
               </div>
             </div>
@@ -158,20 +158,20 @@ export default function ReportView({ userData }: ReportViewProps) {
              transition={{ delay: 0.5 }}
              className="space-y-6"
           >
-            <div className="bg-stone-800/50 p-6 rounded-xl border border-amber-900/30">
-              <h3 className="text-xl font-serif text-amber-100 mb-4">Axes Professionnels</h3>
+            <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
+              <h3 className="text-xl font-serif text-[#78350f] mb-4">Axes Professionnels</h3>
               <div className="flex flex-wrap gap-2">
                 {results.professionalAxes.map((axis, i) => (
-                  <span key={i} className="px-3 py-1 bg-amber-900/30 text-amber-200 rounded-full text-sm border border-amber-500/20">
+                  <span key={i} className="px-3 py-1 bg-[#fffbf0] text-[#d97706] rounded-full text-sm border border-[#d97706]/20">
                     {axis}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="bg-stone-800/50 p-6 rounded-xl border border-amber-900/30">
-              <h3 className="text-xl font-serif text-amber-100 mb-4">Année Personnelle {results.personalYear}</h3>
-              <p className="text-stone-300">
+            <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
+              <h3 className="text-xl font-serif text-[#78350f] mb-4">Année Personnelle {results.personalYear}</h3>
+              <p className="text-[#57534e]">
                 Votre vibration pour l'année en cours. Une période propice à l'alignement avec vos objectifs profonds.
               </p>
             </div>
@@ -183,31 +183,31 @@ export default function ReportView({ userData }: ReportViewProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="bg-stone-800/30 p-8 rounded-2xl border border-stone-800"
+          className="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
              <div>
-               <h3 className="text-2xl font-serif text-amber-100 mb-4">Grille d'Inclusion</h3>
-               <p className="text-stone-400 mb-6">
+               <h3 className="text-2xl font-serif text-[#78350f] mb-4">Grille d'Inclusion</h3>
+               <p className="text-[#57534e] mb-6">
                  Cette matrice révèle la répartition de vos énergies. Les cases vides indiquent des dettes karmiques (leçons à apprendre), tandis que les cases chargées révèlent vos forces innées.
                </p>
                <div className="space-y-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-red-900/20 border border-red-900/50 flex items-center justify-center text-red-400 font-bold">
+                    <div className="w-12 h-12 rounded-lg bg-red-50 border border-red-200 flex items-center justify-center text-red-600 font-bold">
                       {results.missingNumbers?.length || 0}
                     </div>
                     <div>
-                      <div className="text-amber-100 font-medium">Dettes Karmiques</div>
-                      <div className="text-sm text-stone-500">Nombres manquants</div>
+                      <div className="text-[#78350f] font-medium">Dettes Karmiques</div>
+                      <div className="text-sm text-[#a8a29e]">Nombres manquants</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-amber-900/20 border border-amber-500/50 flex items-center justify-center text-amber-400 font-bold">
+                    <div className="w-12 h-12 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 font-bold">
                       {results.excessNumbers?.length || 0}
                     </div>
                     <div>
-                      <div className="text-amber-100 font-medium">Forces Acquises</div>
-                      <div className="text-sm text-stone-500">Nombres en excès</div>
+                      <div className="text-[#78350f] font-medium">Forces Acquises</div>
+                      <div className="text-sm text-[#a8a29e]">Nombres en excès</div>
                     </div>
                   </div>
                </div>
@@ -229,7 +229,7 @@ export default function ReportView({ userData }: ReportViewProps) {
               const dataStr = encodeURIComponent(JSON.stringify(userData));
               window.open(`/report/print?data=${dataStr}`, '_blank');
             }}
-            className="flex items-center gap-3 px-8 py-4 bg-amber-600 hover:bg-amber-500 text-white rounded-full transition-colors shadow-lg shadow-amber-900/20"
+            className="flex items-center gap-3 px-8 py-4 bg-[#d97706] hover:bg-[#b45309] text-white rounded-full transition-colors shadow-lg shadow-[#d97706]/20"
           >
             <Download className="w-5 h-5" />
             <span>Générer l'Étude Complète (PDF)</span>

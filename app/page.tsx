@@ -10,7 +10,7 @@ export default function Home() {
   const [userData, setUserData] = useState<UserData | null>(null);
 
   return (
-    <main className="min-h-screen bg-stone-900 text-cream-50">
+    <main className="min-h-screen bg-[#fffbf0] text-[#57534e]">
       {!userData ? (
         <OnboardingFlow onComplete={setUserData} />
       ) : (

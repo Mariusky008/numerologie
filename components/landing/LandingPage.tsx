@@ -42,7 +42,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             </h1>
             
             <p className="text-lg md:text-xl text-[#78350f] font-medium mb-12 max-w-2xl mx-auto">
-              Notre algorithme combine des méthodes traditionnelles de numérologie et d’astrologie pour générer une interprétation structurée de votre profil.
+              Notre méthode combine des méthodes traditionnelles de numérologie et d’astrologie pour générer une interprétation structurée de votre profil.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-3xl mx-auto mb-12 bg-white/60 p-6 rounded-2xl border border-[#d97706]/10 backdrop-blur-sm">
@@ -130,7 +130,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-serif text-[#78350f] mb-4">Comment ça marche ?</h2>
-            <p className="text-[#57534e]">Une méthodologie unique alliant tradition pythagoricienne et algorithmes modernes.</p>
+            <p className="text-[#57534e]">Une méthodologie unique alliant tradition pythagoricienne et méthodes modernes.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <FeatureCard 

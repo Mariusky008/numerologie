@@ -27,7 +27,7 @@ export default function PrivacyPolicy() {
       <ul>
         <li>Générer vos analyses numérologiques personnalisées.</li>
         <li>Vous envoyer votre rapport par email.</li>
-        <li>Améliorer nos algorithmes de calcul (données anonymisées).</li>
+        <li>Améliorer nos méthodes de calcul (données anonymisées).</li>
       </ul>
       <p>
         <strong>Nous ne revendons jamais vos données personnelles à des tiers.</strong>

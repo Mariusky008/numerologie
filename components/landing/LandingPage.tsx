@@ -141,17 +141,17 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             <FeatureCard 
               icon={<Sparkles className="w-8 h-8 text-[#d97706]" />}
               title="Identité Vibratoire"
-              desc="Interprétation de vos nombres personnels pour mieux comprendre vos forces et vos défis."
+              desc="Décryptage de vos nombres liés à votre nom et prénom."
             />
             <FeatureCard 
               icon={<Scroll className="w-8 h-8 text-[#d97706]" />}
               title="Mission de Vie"
-              desc="Identification des axes principaux de votre développement personnel selon votre date de naissance."
+              desc="Lecture de vos principaux axes de développement selon votre date de naissance."
             />
             <FeatureCard 
               icon={<Clock className="w-8 h-8 text-[#d97706]" />}
               title="Météo Temporelle"
-              desc="Analyse des cycles temporels pour vous aider à planifier vos décisions."
+              desc="Analyse de vos cycles personnels pour les 12 mois à venir."
             />
           </div>
         </div>
@@ -167,7 +167,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
               <span className="text-[#d97706]">une carte routière précise.</span>
             </h2>
             <p className="text-lg text-[#57534e] leading-relaxed">
-              Notre algorithme combine plusieurs traditions numérologiques pour générer une interprétation structurée de vos nombres.
+              Un rapport clair et structuré présentant vos principaux nombres, leurs significations et une lecture synthétique de vos cycles personnels.
             </p>
             <ul className="space-y-4">
               <ListItem text="Analyse de votre Chemin de Vie et Expression" />
@@ -228,7 +228,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             onClick={onStart}
             className="px-10 py-5 bg-[#fffbf0] text-[#78350f] rounded-full font-bold text-lg hover:bg-[#fef3c7] transition-colors shadow-xl"
           >
-            Révéler mon Profil maintenant
+            Obtenir mon rapport personnalisé (gratuit et immédiat)
           </button>
         </div>
       </section>

@@ -37,7 +37,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             </span>
             <h1 className="text-4xl md:text-6xl font-serif text-[#78350f] mb-6 leading-tight">
               Et si votre nom n'était pas un hasard ? <br />
-              <span className="italic text-[#d97706] text-3xl md:text-5xl block mt-2">Accédez au mode d'emploi de votre vie en 30 secondes.</span>
+              <span className="italic text-[#d97706] text-3xl md:text-5xl block mt-2">Accédez au mode d'emploi de votre vie.</span>
             </h1>
             
             <p className="text-lg md:text-xl text-[#78350f] font-medium mb-12 max-w-2xl mx-auto">
@@ -75,7 +75,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                     <div key={i} className="w-6 h-6 rounded-full bg-stone-200 border-2 border-white"></div>
                   ))}
                 </span>
-                <span>+1 200 analyses générées cette semaine</span>
+                <span>+1 200 analyses générées</span>
               </div>
             </div>
           </motion.div>

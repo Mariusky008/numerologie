@@ -57,7 +57,7 @@ export default function InclusionGridViz({ grid, missing, excess, className }: I
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-4 bg-white rounded-xl border border-stone-200 shadow-sm">
+    <div className={clsx("w-full bg-white rounded-xl border border-stone-200 shadow-sm p-4", className)}>
       <h3 className="text-center font-serif text-[#78350f] mb-6 text-xl">Grille d'Inclusion</h3>
       <div className="grid grid-cols-3 gap-3">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => renderCell(num))}

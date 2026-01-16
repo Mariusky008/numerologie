@@ -17,8 +17,8 @@ export default function Part3Karma({ userData, results }: { userData: UserData, 
         <p className="text-base md:text-xl font-light mb-12 max-w-2xl text-[#57534e]">
           La Grille d'Inclusion est la radiographie de votre âme. Elle montre ce que vous avez emporté dans vos valises pour cette vie.
         </p>
-        <div className="flex justify-center overflow-x-auto">
-          <div className="scale-100 md:scale-125 origin-top p-4">
+        <div className="flex justify-center">
+          <div className="w-full max-w-2xl">
             <InclusionGridViz 
               grid={results.inclusionGrid} 
               missing={results.missingNumbers} 

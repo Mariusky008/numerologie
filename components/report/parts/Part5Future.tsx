@@ -1,10 +1,11 @@
 
 import { UserData, NumerologyResult } from '@/lib/types';
 import PageContainer from './PageContainer';
-import { getPersonalYearContent, getCycleContent } from '@/lib/numerology/contentGenerator';
+import { getPersonalYearContent, getCycleContent, getExpressionContent } from '@/lib/numerology/contentGenerator';
 
 export default function Part5Future({ userData, results }: { userData: UserData, results: NumerologyResult }) {
   const pyContent = getPersonalYearContent(results.personalYear);
+  const expContent = getExpressionContent(results.expression);
   
   // Calculate Cycle Ranges
   const birthYear = new Date(userData.birthDate).getFullYear();

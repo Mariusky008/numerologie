@@ -22,12 +22,6 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           <Star className="w-6 h-6 text-[#d97706] fill-[#d97706]" />
           Numérologie
         </div>
-        <button 
-          onClick={onStart}
-          className="px-6 py-2 rounded-full border border-[#d97706]/30 text-[#78350f] hover:bg-[#d97706]/5 transition-colors text-sm font-medium"
-        >
-          Connexion
-        </button>
       </nav>
 
       {/* Hero Section */}

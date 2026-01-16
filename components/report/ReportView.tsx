@@ -22,7 +22,8 @@ import {
 import PersonalityRadar from './PersonalityRadar';
 import InclusionGridViz from './InclusionGridViz';
 import interpretations from '@/lib/numerology/interpretations.json';
-import { Download } from 'lucide-react';
+import { Download, BookOpen } from 'lucide-react';
+import BookCreationModal from './BookCreationModal';
 
 interface ReportViewProps {
   userData: UserData;
@@ -30,6 +31,7 @@ interface ReportViewProps {
 
 export default function ReportView({ userData }: ReportViewProps) {
   const [results, setResults] = useState<NumerologyResult | null>(null);
+  const [showBookModal, setShowBookModal] = useState(false);
 
   useEffect(() => {
     if (userData) {
@@ -223,7 +225,7 @@ export default function ReportView({ userData }: ReportViewProps) {
         </motion.div>
 
         {/* CTA */}
-        <div className="flex justify-center pt-8 pb-12">
+        <div className="flex flex-col items-center gap-6 pt-8 pb-12">
           <button 
             onClick={() => {
               const dataStr = encodeURIComponent(JSON.stringify(userData));
@@ -234,7 +236,31 @@ export default function ReportView({ userData }: ReportViewProps) {
             <Download className="w-5 h-5" />
             <span>Générer l'Étude Complète (PDF)</span>
           </button>
+
+          <div className="w-full max-w-2xl bg-gradient-to-br from-[#78350f] to-[#573c28] p-8 rounded-2xl shadow-xl text-center text-[#fffbf0] relative overflow-hidden group">
+            <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+            <div className="relative z-10 space-y-4">
+              <h3 className="text-2xl font-serif font-bold">Et si vous deveniez le héros de votre propre histoire ?</h3>
+              <p className="text-[#d6d3d1]">
+                Imaginez un roman unique, écrit sur-mesure par une IA, où le personnage principal (Vous) vit une épopée basée sur vos véritables nombres et votre vécu.
+              </p>
+              <button
+                onClick={() => setShowBookModal(true)}
+                className="mt-4 inline-flex items-center gap-3 px-8 py-4 bg-[#fffbf0] text-[#78350f] rounded-full font-bold hover:bg-[#fef3c7] transition-all transform hover:scale-105 shadow-lg"
+              >
+                <BookOpen className="w-5 h-5" />
+                <span>Créer mon Roman de Vie</span>
+              </button>
+            </div>
+          </div>
         </div>
+
+        <BookCreationModal 
+          isOpen={showBookModal} 
+          onClose={() => setShowBookModal(false)}
+          userData={userData}
+          reportResults={results}
+        />
 
       </div>
     </div>

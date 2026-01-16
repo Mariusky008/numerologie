@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Sparkles, ArrowRight, Star, Scroll, Clock } from 'lucide-react';
+import { Sparkles, ArrowRight, Star, Scroll, Clock, BookOpen, User as UserIcon, MapPin as MapPinIcon } from 'lucide-react';
 
 import InclusionGridViz from '../report/InclusionGridViz';
 
@@ -148,6 +148,82 @@ export default function LandingPage({ onStart }: LandingPageProps) {
               title="Météo Temporelle"
               desc="Analyse des cycles temporels pour vous aider à planifier vos décisions."
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Book Novel Section */}
+      <section className="py-24 px-4 bg-[#292524] text-[#fffbf0] relative overflow-hidden">
+        {/* Background Texture */}
+        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
+        
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16 relative z-10">
+          <div className="flex-1 space-y-8">
+            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[#d97706]/20 text-[#d97706] text-xs font-bold tracking-widest uppercase border border-[#d97706]/30">
+              <Sparkles className="w-3 h-3" />
+              Exclusivité Mondiale
+            </div>
+            <h2 className="text-4xl md:text-5xl font-serif leading-tight">
+              Devenez le héros <br />
+              <span className="text-[#d97706] italic">de votre propre roman.</span>
+            </h2>
+            <p className="text-[#d6d3d1] text-lg leading-relaxed">
+              Une fois votre analyse numérologique terminée, notre Intelligence Artificielle peut écrire pour vous un livre unique de 100 pages.
+            </p>
+            <p className="text-[#d6d3d1] text-lg leading-relaxed">
+              Un roman captivant où le personnage principal (Vous) vit une aventure façonnée par vos véritables nombres, vos souvenirs et vos défis de vie.
+            </p>
+            
+            <ul className="space-y-4 pt-4">
+              <li className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#d97706]/20 flex items-center justify-center text-[#d97706]">
+                  <UserIcon className="w-4 h-4" />
+                </div>
+                <span>Un protagoniste qui possède votre caractère et votre vécu.</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#d97706]/20 flex items-center justify-center text-[#d97706]">
+                  <MapPinIcon className="w-4 h-4" />
+                </div>
+                <span>Vos lieux de vie réels intégrés à l'intrigue.</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#d97706]/20 flex items-center justify-center text-[#d97706]">
+                  <BookOpen className="w-4 h-4" />
+                </div>
+                <span>Une histoire qui vous aide à comprendre votre destin.</span>
+              </li>
+            </ul>
+
+            <button 
+              onClick={onStart}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[#d97706] text-white rounded-full font-bold text-lg hover:bg-[#b45309] transition-colors shadow-lg shadow-[#d97706]/20 mt-4"
+            >
+              <BookOpen className="w-5 h-5" />
+              Commencer mon analyse pour créer mon livre
+            </button>
+          </div>
+
+          <div className="flex-1 flex justify-center relative">
+             <div className="relative w-[300px] md:w-[400px] aspect-[2/3] bg-[#fffbf0] rounded-r-2xl rounded-l-md shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-700 border-l-8 border-[#78350f] flex flex-col overflow-hidden">
+                <div className="h-full p-8 flex flex-col items-center justify-center text-center border-r border-t border-b border-[#d97706]/20 rounded-r-xl bg-[url('https://www.transparenttextures.com/patterns/paper.png')]">
+                   <div className="text-[#d97706] text-xs tracking-[0.3em] uppercase mb-4">Le Roman de</div>
+                   <h3 className="font-serif text-4xl text-[#78350f] mb-2">Votre Vie</h3>
+                   <div className="w-12 h-1 bg-[#d97706] my-6"></div>
+                   <p className="text-[#57534e] text-sm italic max-w-[200px]">
+                     "Une épopée où le destin n'est plus un mystère, mais une carte à jouer."
+                   </p>
+                   <div className="mt-auto pt-12 text-[#a8a29e] text-xs uppercase tracking-widest">
+                     Édition Unique - Numérotée
+                   </div>
+                </div>
+                {/* Book Spine Effect */}
+                <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-r from-[#573c28] to-[#854d0e] opacity-80"></div>
+                <div className="absolute left-2 top-0 bottom-0 w-1 bg-black/10"></div>
+             </div>
+             
+             {/* Background Glow */}
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#d97706]/20 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
           </div>
         </div>
       </section>

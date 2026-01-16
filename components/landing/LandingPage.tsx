@@ -47,7 +47,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             </h1>
             
             <p className="text-lg md:text-xl text-[#78350f] font-medium mb-12 max-w-2xl mx-auto">
-              Notre algorithme combine plusieurs traditions numérologiques pour générer une interprétation structurée de vos nombres.
+              Notre algorithme combine des méthodes traditionnelles de numérologie et d’astrologie pour générer une interprétation structurée de votre profil.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-3xl mx-auto mb-12 bg-white/60 p-6 rounded-2xl border border-[#d97706]/10 backdrop-blur-sm">
@@ -141,17 +141,17 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             <FeatureCard 
               icon={<Sparkles className="w-8 h-8 text-[#d97706]" />}
               title="Identité Vibratoire"
-              desc="Décryptage de vos nombres liés à votre nom et prénom."
+              desc="Interprétation de vos nombres personnels pour mieux comprendre vos forces et vos défis."
             />
             <FeatureCard 
               icon={<Scroll className="w-8 h-8 text-[#d97706]" />}
               title="Mission de Vie"
-              desc="Lecture de vos principaux axes de développement selon votre date de naissance."
+              desc="Identification des axes principaux de votre développement personnel selon votre date de naissance."
             />
             <FeatureCard 
               icon={<Clock className="w-8 h-8 text-[#d97706]" />}
               title="Météo Temporelle"
-              desc="Analyse de vos cycles personnels pour les 12 mois à venir."
+              desc="Analyse des cycles temporels pour vous aider à planifier vos décisions."
             />
           </div>
         </div>
@@ -167,7 +167,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
               <span className="text-[#d97706]">une carte routière précise.</span>
             </h2>
             <p className="text-lg text-[#57534e] leading-relaxed">
-              Un rapport clair et structuré présentant vos principaux nombres, leurs significations et une lecture synthétique de vos cycles personnels.
+              Recevez une analyse personnalisée de vos nombres, avec interprétation claire et conseils pour les prochains mois.
             </p>
             <ul className="space-y-4">
               <ListItem text="Analyse de votre Chemin de Vie et Expression" />
@@ -184,6 +184,9 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           </div>
           
           <div className="flex-1 relative">
+            <p className="text-center text-sm text-[#78350f] mb-4 italic">
+              Ci-dessous, un aperçu synthétique de vos nombres personnels : chaque ligne représente une dimension de votre profil numérologique.
+            </p>
             {/* Abstract Report Preview UI */}
             <div className="relative z-10 bg-white rounded-2xl shadow-2xl border border-[#d97706]/20 p-6 md:p-8 max-w-md mx-auto rotate-3 hover:rotate-0 transition-transform duration-500">
               <div className="flex justify-between items-center mb-8 border-b border-[#f5f5f4] pb-4">

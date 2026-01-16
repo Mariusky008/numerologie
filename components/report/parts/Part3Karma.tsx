@@ -111,20 +111,56 @@ export default function Part3Karma({ userData, results }: { userData: UserData, 
         <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block">
           Le Pont de Réconciliation
         </h2>
-        <div className="flex flex-col items-center gap-8">
-          <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 text-xl md:text-2xl font-serif text-[#a8a29e]">
-            <span>Chemin {results.lifePath}</span>
-            <span className="hidden md:block h-px w-16 bg-[#d97706]"></span>
-            <span className="md:hidden text-[#d97706]">↓</span>
-            <span>Expression {results.expression}</span>
+        
+        <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+          
+          {/* Left Column: Visual & Number */}
+          <div className="flex-1 flex flex-col items-center">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 text-xl md:text-2xl font-serif text-[#a8a29e] mb-8">
+              <span>Chemin {results.lifePath}</span>
+              <span className="hidden md:block h-px w-16 bg-[#d97706]"></span>
+              <span className="md:hidden text-[#d97706]">↓</span>
+              <span>Expression {results.expression}</span>
+            </div>
+            
+            <div className="relative">
+              <div className="absolute inset-0 bg-[#d97706] blur-2xl opacity-10 rounded-full"></div>
+              <div className="relative p-12 border-2 border-[#d97706] rounded-full w-48 h-48 flex items-center justify-center bg-white shadow-lg">
+                <span className="text-6xl font-bold text-[#d97706]">{results.bridgeNumber}</span>
+              </div>
+            </div>
+            
+            <div className="mt-8 text-center">
+              <h3 className="text-2xl font-serif text-[#78350f] mb-2">{bridgeContent.title}</h3>
+              <p className="text-[#d97706] font-medium italic">{bridgeContent.mantra}</p>
+            </div>
           </div>
-          <div className="p-8 border-2 border-[#d97706] rounded-full w-32 h-32 md:w-48 md:h-48 flex items-center justify-center bg-white shadow-sm">
-            <span className="text-4xl md:text-6xl font-bold text-[#d97706]">{results.bridgeNumber}</span>
+
+          {/* Right Column: Content */}
+          <div className="flex-1 space-y-6">
+            <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
+              <h4 className="font-bold text-[#78350f] mb-2 flex items-center gap-2">
+                <span className="text-xl">⚠️</span> Quand l'utiliser ?
+              </h4>
+              <p className="text-[#57534e] text-sm md:text-base leading-relaxed">
+                {bridgeContent.symptoms}
+              </p>
+            </div>
+
+            <div className="bg-[#fff7ed] p-6 rounded-xl border border-[#d97706]/30">
+              <h4 className="font-bold text-[#d97706] mb-2 flex items-center gap-2">
+                <span className="text-xl">🔑</span> La Solution
+              </h4>
+              <p className="text-[#78350f] text-sm md:text-base leading-relaxed">
+                {bridgeContent.desc} {bridgeContent.action}
+              </p>
+            </div>
+            
+            <p className="text-sm text-[#a8a29e] italic border-l-2 border-[#a8a29e] pl-4">
+              "Le nombre du Pont est la pièce manquante qui transforme la friction entre ce que vous êtes et ce que vous vivez en une force propulsive."
+            </p>
           </div>
-          <p className="text-center max-w-xl text-[#57534e] text-sm md:text-base">
-            Le nombre {results.bridgeNumber} est l'attitude à adopter pour harmoniser votre mission de vie et votre personnalité.
-            C'est la clé qui permet de fluidifier votre avancement.
-          </p>
+
         </div>
       </PageContainer>
     </>

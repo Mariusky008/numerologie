@@ -47,7 +47,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             </h1>
             
             <p className="text-lg md:text-xl text-[#78350f] font-medium mb-12 max-w-2xl mx-auto">
-              Obtenez un rapport de numérologie personnalisé à partir de votre nom et de votre date de naissance, incluant vos principaux nombres, leur signification et une lecture de vos cycles personnels.
+              Notre algorithme combine plusieurs traditions numérologiques pour générer une interprétation structurée de vos nombres.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left max-w-3xl mx-auto mb-12 bg-white/60 p-6 rounded-2xl border border-[#d97706]/10 backdrop-blur-sm">
@@ -141,33 +141,33 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             <FeatureCard 
               icon={<Sparkles className="w-8 h-8 text-[#d97706]" />}
               title="Identité Vibratoire"
-              desc="Analyse des nombres issus de votre identité (nom et prénom) pour comprendre vos traits dominants, vos forces naturelles et vos zones de tension."
+              desc="Interprétation de vos nombres personnels pour mieux comprendre vos forces et vos défis."
             />
             <FeatureCard 
               icon={<Scroll className="w-8 h-8 text-[#d97706]" />}
               title="Mission de Vie"
-              desc="Interprétation du nombre central lié à votre date de naissance, indiquant les grands axes d’évolution et les apprentissages majeurs de votre parcours."
+              desc="Identification des axes principaux de votre développement personnel selon votre date de naissance."
             />
             <FeatureCard 
               icon={<Clock className="w-8 h-8 text-[#d97706]" />}
               title="Météo Temporelle"
-              desc="Lecture des cycles personnels actuels pour situer les périodes favorables, les phases de transition et les moments de vigilance."
+              desc="Analyse des cycles temporels pour vous aider à planifier vos décisions."
             />
           </div>
         </div>
       </section>
 
       {/* Preview Section */}
-      <section className="py-24 px-4 overflow-hidden">
+      <section id="preview-section" className="py-24 px-4 overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16">
           <div className="flex-1 space-y-8">
-            <span className="text-[#d97706] font-bold tracking-widest text-sm uppercase">Aperçu du Résultat</span>
+            <span className="text-[#d97706] font-bold tracking-widest text-sm uppercase">Ce que vous recevez</span>
             <h2 className="text-3xl md:text-5xl font-serif text-[#78350f]">
               Plus qu'un horoscope, <br />
               <span className="text-[#d97706]">une carte routière précise.</span>
             </h2>
             <p className="text-lg text-[#57534e] leading-relaxed">
-              Notre algorithme unique croise l'astrologie, la numérologie pythagoricienne et l'étymologie pour générer un rapport d'une précision troublante.
+              Notre algorithme combine plusieurs traditions numérologiques pour générer une interprétation structurée de vos nombres.
             </p>
             <ul className="space-y-4">
               <ListItem text="Analyse de votre Chemin de Vie et Expression" />
@@ -232,18 +232,6 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           </button>
         </div>
       </section>
-    </div>
-  );
-}
-
-function Step({ number, title, desc }: { number: string, title: string, desc: string }) {
-  return (
-    <div className="flex flex-col items-center text-center max-w-xs">
-      <div className="w-12 h-12 rounded-full bg-[#d97706] text-white flex items-center justify-center font-bold text-xl mb-4 shadow-lg shadow-[#d97706]/30">
-        {number}
-      </div>
-      <h3 className="font-bold text-[#78350f] mb-2">{title}</h3>
-      <p className="text-sm text-[#57534e]">{desc}</p>
     </div>
   );
 }

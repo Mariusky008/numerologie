@@ -150,19 +150,37 @@ export default function AdminDashboard() {
                         <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                           <MapPin className="w-3 h-3" /> Lieux
                         </span>
-                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.placesLived}</p>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.placesLived || "-"}</p>
                       </div>
                       <div>
                         <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                           <Heart className="w-3 h-3" /> Cœur
                         </span>
-                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.relationships}</p>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.relationships || "-"}</p>
                       </div>
                       <div>
                         <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                           <Sparkles className="w-3 h-3" /> Majeur
                         </span>
-                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.majorEvents}</p>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.majorEvents || "-"}</p>
+                      </div>
+                      <div>
+                        <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
+                          <Star className="w-3 h-3" /> Enfance
+                        </span>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.childhoodMemories || "-"}</p>
+                      </div>
+                      <div>
+                        <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
+                          <Music className="w-3 h-3" /> Passions
+                        </span>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.passions || "-"}</p>
+                      </div>
+                      <div>
+                        <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
+                          <Compass className="w-3 h-3" /> Rêves
+                        </span>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.dreams || "-"}</p>
                       </div>
                     </div>
                   </div>

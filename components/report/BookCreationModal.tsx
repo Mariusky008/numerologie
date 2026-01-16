@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, BookOpen, Heart, MapPin, Home, Briefcase } from 'lucide-react';
+import { X, BookOpen, Heart, MapPin, Home, Briefcase, Users, Star, Compass, Music, Coffee } from 'lucide-react';
 import { UserData, NumerologyResult } from '@/lib/types';
 
 interface BookCreationModalProps {
@@ -112,7 +112,6 @@ export default function BookCreationModal({ isOpen, onClose, userData, reportRes
                       Lieux de vie marquants
                     </label>
                     <textarea
-                      required
                       className="w-full p-3 rounded-lg border border-[#d97706]/20 focus:ring-2 focus:ring-[#d97706]/50 outline-none bg-white min-h-[80px]"
                       placeholder="Paris, Rome, la maison de votre enfance en Bretagne..."
                       value={formData.placesLived}
@@ -126,7 +125,6 @@ export default function BookCreationModal({ isOpen, onClose, userData, reportRes
                       Déménagements ou changements de cap
                     </label>
                     <textarea
-                      required
                       className="w-full p-3 rounded-lg border border-[#d97706]/20 focus:ring-2 focus:ring-[#d97706]/50 outline-none bg-white min-h-[80px]"
                       placeholder="Un départ précipité à 18 ans ? Une mutation professionnelle ?"
                       value={formData.moves}
@@ -140,7 +138,6 @@ export default function BookCreationModal({ isOpen, onClose, userData, reportRes
                       Vie sentimentale (Ruptures & Coups de cœur)
                     </label>
                     <textarea
-                      required
                       className="w-full p-3 rounded-lg border border-[#d97706]/20 focus:ring-2 focus:ring-[#d97706]/50 outline-none bg-white min-h-[80px]"
                       placeholder="Le premier amour, une séparation douloureuse, une rencontre inattendue..."
                       value={formData.relationships}
@@ -158,6 +155,71 @@ export default function BookCreationModal({ isOpen, onClose, userData, reportRes
                       placeholder="Un accident, une réussite fulgurante, une perte..."
                       value={formData.majorEvents}
                       onChange={(e) => setFormData({ ...formData, majorEvents: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="flex items-center gap-2 text-[#78350f] font-bold mb-2">
+                      <Star className="w-4 h-4" />
+                      Souvenirs d'enfance marquants
+                    </label>
+                    <textarea
+                      className="w-full p-3 rounded-lg border border-[#d97706]/20 focus:ring-2 focus:ring-[#d97706]/50 outline-none bg-white min-h-[80px]"
+                      placeholder="L'odeur des gâteaux de grand-mère, une cachette secrète..."
+                      value={formData.childhoodMemories}
+                      onChange={(e) => setFormData({ ...formData, childhoodMemories: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="flex items-center gap-2 text-[#78350f] font-bold mb-2">
+                      <Music className="w-4 h-4" />
+                      Passions & Talents cachés
+                    </label>
+                    <textarea
+                      className="w-full p-3 rounded-lg border border-[#d97706]/20 focus:ring-2 focus:ring-[#d97706]/50 outline-none bg-white min-h-[80px]"
+                      placeholder="Peinture, chant, mécanique, écriture..."
+                      value={formData.passions}
+                      onChange={(e) => setFormData({ ...formData, passions: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="flex items-center gap-2 text-[#78350f] font-bold mb-2">
+                      <Compass className="w-4 h-4" />
+                      Plus grand rêve ou regret
+                    </label>
+                    <textarea
+                      className="w-full p-3 rounded-lg border border-[#d97706]/20 focus:ring-2 focus:ring-[#d97706]/50 outline-none bg-white min-h-[80px]"
+                      placeholder="Faire le tour du monde, ne pas avoir dit je t'aime..."
+                      value={formData.dreams}
+                      onChange={(e) => setFormData({ ...formData, dreams: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="flex items-center gap-2 text-[#78350f] font-bold mb-2">
+                      <Users className="w-4 h-4" />
+                      Mentors ou Figures inspirantes
+                    </label>
+                    <textarea
+                      className="w-full p-3 rounded-lg border border-[#d97706]/20 focus:ring-2 focus:ring-[#d97706]/50 outline-none bg-white min-h-[80px]"
+                      placeholder="Un professeur, un parent, un auteur..."
+                      value={formData.mentors}
+                      onChange={(e) => setFormData({ ...formData, mentors: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="flex items-center gap-2 text-[#78350f] font-bold mb-2">
+                      <Coffee className="w-4 h-4" />
+                      Petits rituels du quotidien
+                    </label>
+                    <textarea
+                      className="w-full p-3 rounded-lg border border-[#d97706]/20 focus:ring-2 focus:ring-[#d97706]/50 outline-none bg-white min-h-[80px]"
+                      placeholder="Le café du matin, la marche en forêt, l'écriture..."
+                      value={formData.dailyRituals}
+                      onChange={(e) => setFormData({ ...formData, dailyRituals: e.target.value })}
                     />
                   </div>
                 </div>

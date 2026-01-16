@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock, Music, Compass, Star, TrendingUp, AlertTriangle, GitBranch } from 'lucide-react';
+import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock, Music, Compass, Star, TrendingUp, AlertTriangle, GitBranch, Copy, FileJson } from 'lucide-react';
 import { UserData, NumerologyResult } from '@/lib/types';
 
 export interface BookRequest {
@@ -58,6 +58,57 @@ export default function AdminDashboard() {
     ));
     setGeneratingId(null);
     alert("Livre généré avec succès ! Le manuscrit a été envoyé à l'utilisateur.");
+  };
+
+  const copyToClipboard = (req: BookRequest) => {
+    const prompt = `
+Agis comme un écrivain biographe expert en numérologie.
+Voici le profil complet du sujet pour écrire son "Roman de Vie".
+
+--- PROFIL NUMÉROLOGIQUE ---
+Prénom: ${req.userData.firstName}
+Nom: ${req.userData.lastName}
+Date de Naissance: ${req.userData.birthDate}
+
+Chemin de Vie: ${req.reportResults.lifePath}
+Nombre d'Expression: ${req.reportResults.expression}
+Année Personnelle: ${req.reportResults.personalYear}
+
+Dettes Karmiques (Manques): ${req.reportResults.missingNumbers?.join(', ') || 'Aucune'}
+Forces (Excès): ${req.reportResults.excessNumbers?.join(', ') || 'Aucune'}
+
+Cycles de Vie:
+- Cycle 1 (Formatif): ${req.reportResults.cycles.cycle1}
+- Cycle 2 (Productif): ${req.reportResults.cycles.cycle2}
+- Cycle 3 (Moisson): ${req.reportResults.cycles.cycle3}
+- Cycle 4 (Sagesse): ${req.reportResults.cycles.cycle4}
+
+Défis de Vie:
+- Mineur 1: ${req.reportResults.challenges.minor1}
+- Mineur 2: ${req.reportResults.challenges.minor2}
+- Majeur: ${req.reportResults.challenges.major}
+- Ultime: ${req.reportResults.challenges.major2}
+
+--- ÉLÉMENTS BIOGRAPHIQUES (SOUVENIRS) ---
+Lieux de vie: ${req.lifeDetails.placesLived}
+Déménagements: ${req.lifeDetails.moves}
+Vie Sentimentale: ${req.lifeDetails.relationships}
+Événements Majeurs: ${req.lifeDetails.majorEvents}
+Souvenirs d'Enfance: ${req.lifeDetails.childhoodMemories}
+Passions: ${req.lifeDetails.passions}
+Rêves & Regrets: ${req.lifeDetails.dreams}
+Mentors: ${req.lifeDetails.mentors}
+Rituels: ${req.lifeDetails.dailyRituals}
+Peurs: ${req.lifeDetails.fears}
+
+--- CONSIGNE ---
+Écris le premier chapitre d'un roman à la troisième personne centré sur ce personnage.
+Utilise les cycles et les défis pour structurer l'intrigue et les éléments biographiques pour donner de la chair à l'histoire.
+Le ton doit être inspirant, mystérieux et profondément psychologique.
+    `;
+    
+    navigator.clipboard.writeText(prompt);
+    alert("Prompt complet copié dans le presse-papier !");
   };
 
   return (
@@ -197,7 +248,15 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Actions */}
-                <div className="p-4 bg-stone-50 border-t border-stone-100 flex justify-end">
+                <div className="p-4 bg-stone-50 border-t border-stone-100 flex justify-end gap-3">
+                  <button
+                    onClick={() => copyToClipboard(req)}
+                    className="flex items-center gap-2 px-4 py-3 bg-stone-200 text-stone-700 rounded-lg hover:bg-stone-300 transition-colors font-medium text-sm"
+                  >
+                    <Copy className="w-4 h-4" />
+                    Copier Prompt IA
+                  </button>
+                  
                   {req.status !== 'completed' && (
                     <button
                       onClick={() => handleGenerate(req.id)}
@@ -207,12 +266,12 @@ export default function AdminDashboard() {
                       {generatingId === req.id ? (
                         <>
                           <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></div>
-                          Écriture par l'IA en cours...
+                          Écriture...
                         </>
                       ) : (
                         <>
                           <Sparkles className="w-5 h-5" />
-                          Générer le Roman (IA)
+                          Générer (Simu)
                         </>
                       )}
                     </button>

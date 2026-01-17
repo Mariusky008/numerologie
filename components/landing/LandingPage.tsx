@@ -66,7 +66,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                 className="group relative px-8 py-4 bg-[#ea580c] text-white rounded-full font-medium text-lg shadow-xl shadow-[#ea580c]/30 hover:bg-[#c2410c] transition-all hover:scale-105"
               >
                 <span className="flex items-center gap-2">
-                  Révéler mon Profil maintenant
+                  Révéler mon Profil (v2)
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>

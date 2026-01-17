@@ -38,7 +38,16 @@ export default function AdminDashboard() {
       const res = await fetch('/api/book-request');
       if (res.ok) {
         const data = await res.json();
-        setRequests(data.reverse()); // Show newest first
+        // Map Supabase data to BookRequest
+        const mappedData = data.map((item: any) => ({
+          id: item.id,
+          date: item.created_at,
+          status: item.status,
+          userData: item.user_data,
+          reportResults: item.numerology_result.reportResults,
+          lifeDetails: item.numerology_result.lifeDetails
+        }));
+        setRequests(mappedData);
       }
     } catch (error) {
       console.error('Failed to fetch requests', error);
@@ -49,15 +58,35 @@ export default function AdminDashboard() {
 
   const handleGenerate = async (id: string) => {
     setGeneratingId(id);
-    // Simulation of AI Generation
+    
+    // Simulate generation time
     await new Promise(resolve => setTimeout(resolve, 3000));
     
-    // Update local state to show completed
-    setRequests(requests.map(req => 
-      req.id === id ? { ...req, status: 'completed' } : req
-    ));
-    setGeneratingId(null);
-    alert("Livre généré avec succès ! Le manuscrit a été envoyé à l'utilisateur.");
+    try {
+      // Call API to update status in DB
+      const res = await fetch('/api/book-request', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, status: 'completed' }),
+      });
+
+      if (res.ok) {
+        // Update local state to show completed
+        setRequests(requests.map(req => 
+          req.id === id ? { ...req, status: 'completed' } : req
+        ));
+        alert("Livre généré avec succès ! Statut mis à jour.");
+      } else {
+        alert("Erreur lors de la mise à jour du statut.");
+      }
+    } catch (error) {
+      console.error('Error updating status:', error);
+      alert("Erreur réseau.");
+    } finally {
+      setGeneratingId(null);
+    }
   };
 
   const copyToClipboard = (req: BookRequest) => {

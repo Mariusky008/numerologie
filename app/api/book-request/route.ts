@@ -1,50 +1,30 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-
-const DATA_FILE_PATH = path.join('/tmp', 'book-requests.json');
+import { supabase } from '@/lib/supabase';
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { userData, reportResults, lifeDetails } = body;
 
-    const newRequest = {
-      id: Date.now().toString(),
-      date: new Date().toISOString(),
-      status: 'pending', // pending, generating, completed
-      userData,
-      reportResults,
-      lifeDetails
-    };
+    const { data, error } = await supabase
+      .from('book_requests')
+      .insert([
+        {
+          user_data: userData,
+          numerology_result: { reportResults, lifeDetails },
+          status: 'pending'
+        }
+      ])
+      .select();
 
-    // Ensure data directory exists
-    const dataDir = path.dirname(DATA_FILE_PATH);
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir, { recursive: true });
+    if (error) {
+      console.error('Supabase error:', error);
+      throw error;
     }
 
-    // Read existing data
-    let requests = [];
-    if (fs.existsSync(DATA_FILE_PATH)) {
-      const fileContent = fs.readFileSync(DATA_FILE_PATH, 'utf-8');
-      try {
-        requests = JSON.parse(fileContent);
-      } catch (e) {
-        console.error('Error parsing JSON:', e);
-      }
-    }
-
-    // Add new request
-    requests.push(newRequest);
-
-    // Write back to file
-    fs.writeFileSync(DATA_FILE_PATH, JSON.stringify(requests, null, 2));
-
-    return NextResponse.json({ success: true, id: newRequest.id });
+    return NextResponse.json({ success: true, id: data[0].id });
   } catch (error) {
     console.error('Error processing book request:', error);
-    // Return detailed error in development
     return NextResponse.json(
       { error: 'Internal Server Error', details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
@@ -54,18 +34,43 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
-    // Debug info
-    console.log('Reading from:', DATA_FILE_PATH);
-    
-    if (!fs.existsSync(DATA_FILE_PATH)) {
-      console.log('File does not exist');
-      return NextResponse.json([]);
+    const { data, error } = await supabase
+      .from('book_requests')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      throw error;
     }
-    const fileContent = fs.readFileSync(DATA_FILE_PATH, 'utf-8');
-    const requests = JSON.parse(fileContent);
-    return NextResponse.json(requests);
+
+    return NextResponse.json(data);
   } catch (error) {
-     console.error('Error reading file:', error);
+     console.error('Error fetching requests:', error);
      return NextResponse.json([]);
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, status } = body;
+
+    const { data, error } = await supabase
+      .from('book_requests')
+      .update({ status })
+      .eq('id', id)
+      .select();
+
+    if (error) {
+      throw error;
+    }
+
+    return NextResponse.json({ success: true, data });
+  } catch (error) {
+    console.error('Error updating request:', error);
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }

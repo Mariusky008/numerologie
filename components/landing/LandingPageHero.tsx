@@ -189,6 +189,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                 <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> <strong>Livre Complet (~100 pages)</strong></li>
                 <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> Structure Narrative Héroïque</li>
                 <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> PDF Haute Qualité (Imprimable)</li>
+                <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> <strong className="text-[#5B4B8A]">Inclus : Analyse Numérologique & Astrale Complète (PDF)</strong></li>
                 <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> Bonus: Carte du Ciel Détaillée</li>
                 <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> <span className="text-[#2C2F4A] font-medium">Livraison immédiate par email</span></li>
               </ul>

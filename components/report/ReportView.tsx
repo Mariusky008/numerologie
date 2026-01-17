@@ -20,6 +20,7 @@ import {
   calculatePlaceVibration,
   getAdvancedProfile // New import
 } from '@/lib/numerology/engine';
+import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
 import PersonalityRadar from './PersonalityRadar';
 import InclusionGridViz from './InclusionGridViz';
 import interpretations from '@/lib/numerology/interpretations.json';
@@ -33,10 +34,16 @@ interface ReportViewProps {
 
 export default function ReportView({ userData }: ReportViewProps) {
   const [results, setResults] = useState<NumerologyResult | null>(null);
+  const [etymology, setEtymology] = useState<NameData | null>(null);
   const [showBookModal, setShowBookModal] = useState(false);
 
   useEffect(() => {
     if (userData) {
+      // Async fetch for etymology
+      fetchNameAnalysis(userData.firstName.split(' ')[0]).then(data => {
+        if (data) setEtymology(data);
+      });
+
       const lifePath = calculateLifePath(userData.birthDate);
       const nameNumbers = calculateNameNumbers(userData.firstName + userData.lastName);
       const personalYear = calculatePersonalYear(userData.birthDate);
@@ -263,6 +270,90 @@ export default function ReportView({ userData }: ReportViewProps) {
              </div>
           </div>
         </motion.div>
+
+        {/* SECTION VII: Architecture Astrale */}
+        {results.advancedProfile && (
+           <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.7 }}
+             className="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm"
+           >
+             <h3 className="text-2xl font-serif text-[#78350f] mb-6 flex items-center gap-3">
+               <span className="text-[#d97706]">VII.</span> Architecture Astrale
+             </h3>
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Zodiac */}
+                <div className="bg-[#fffbf0] p-6 rounded-xl border border-[#d97706]/10">
+                   <div className="flex items-center gap-4 mb-4">
+                     <div className="text-4xl">♈</div>
+                     <div>
+                       <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Signe Solaire</div>
+                       <div className="text-xl font-serif text-[#78350f] font-bold">{zodiac}</div>
+                     </div>
+                   </div>
+                   {results.advancedProfile.mcData && (
+                     <div className="space-y-3 text-sm text-[#57534e]">
+                       <p><strong>Image Publique :</strong> {results.advancedProfile.mcData.image_publique}</p>
+                       <p><strong>Vocation :</strong> {results.advancedProfile.mcData.vocation}</p>
+                       <p className="italic text-[#d97706]">"{results.advancedProfile.mcData.cle_reussite}"</p>
+                     </div>
+                   )}
+                </div>
+
+                {/* Planet */}
+                <div className="bg-[#fffbf0] p-6 rounded-xl border border-[#d97706]/10">
+                   <div className="flex items-center gap-4 mb-4">
+                     <div className="text-4xl">🪐</div>
+                     <div>
+                       <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Planète Dominante</div>
+                       <div className="text-xl font-serif text-[#78350f] font-bold">{planet}</div>
+                     </div>
+                   </div>
+                   <p className="text-sm text-[#57534e] leading-relaxed">
+                     Votre Chemin de Vie {results.lifePath} est gouverné par {planet}. 
+                     Cette influence colore votre destinée d'une énergie particulière, 
+                     vous poussant à exprimer les qualités de cet astre dans votre quotidien.
+                   </p>
+                </div>
+             </div>
+           </motion.div>
+        )}
+
+        {/* SECTION VIII: Échos Étymologiques */}
+        {etymology && (
+           <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.8 }}
+             className="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm relative overflow-hidden"
+           >
+             <div className="absolute top-0 right-0 w-32 h-32 bg-[#d97706]/5 rounded-full blur-3xl -z-10"></div>
+             
+             <h3 className="text-2xl font-serif text-[#78350f] mb-6 flex items-center gap-3">
+               <span className="text-[#d97706]">VIII.</span> Échos Étymologiques
+             </h3>
+             
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+               <div className="space-y-2">
+                 <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Origine</div>
+                 <div className="font-serif text-lg text-[#78350f]">{etymology.origin}</div>
+               </div>
+               
+               <div className="space-y-2 md:col-span-2">
+                 <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Signification</div>
+                 <p className="text-[#57534e] italic">"{etymology.meaning}"</p>
+               </div>
+               
+               {etymology.spiritual && (
+                 <div className="md:col-span-3 pt-4 border-t border-[#d97706]/10">
+                   <div className="text-xs uppercase tracking-widest text-[#a8a29e] mb-2">Dimension Spirituelle</div>
+                   <p className="text-[#57534e] leading-relaxed">{etymology.spiritual}</p>
+                 </div>
+               )}
+             </div>
+           </motion.div>
+        )}
 
         {/* CTA */}
         <div className="flex flex-col items-center gap-12 pt-8 pb-12">

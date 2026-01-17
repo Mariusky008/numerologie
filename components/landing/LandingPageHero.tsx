@@ -277,7 +277,15 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
 
       {/* Footer Minimal with Disclaimer Light */}
       <footer className="py-12 px-4 text-center text-[#2C2F4A]/60 text-xs border-t border-[#EFEDE9] bg-[#FAF9F7]">
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-4xl mx-auto space-y-8">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-6 text-[#5B4B8A] font-medium">
+            <Link href="/cgv" className="hover:text-[#2C2F4A] transition-colors">CGV</Link>
+            <span className="hidden md:inline text-[#C9A24D]">•</span>
+            <Link href="/cgu" className="hover:text-[#2C2F4A] transition-colors">CGU</Link>
+            <span className="hidden md:inline text-[#C9A24D]">•</span>
+            <Link href="/mentions-legales" className="hover:text-[#2C2F4A] transition-colors">Mentions Légales</Link>
+          </div>
+
           <p>&copy; {new Date().getFullYear()} Roman de Vie. Une expérience Numérologie.app</p>
           
           <div className="border-t border-[#EFEDE9] pt-6 max-w-2xl mx-auto">

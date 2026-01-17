@@ -100,7 +100,6 @@ function PrintContent() {
 
   if (!data) return <div className="p-12 text-center text-stone-500">Chargement de l'étude...</div>;
 
-  // @ts-ignore - Ignore prop type error until FullReport is updated
   return <FullReport userData={data.userData} results={data.results} etymology={data.etymology} />;
 }
 

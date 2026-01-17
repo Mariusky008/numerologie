@@ -93,7 +93,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
                 <StepCard num="01" title="L'Analyse" desc="Nous décodons votre ADN numérologique complet." />
-                <StepCard num="02" title="Le Roman" desc="Une IA rédige votre biographie épique sur-mesure." />
+                <StepCard num="02" title="Le Roman" desc="Notre plume narrative transcrit votre biographie épique sur-mesure." />
               </div>
             </div>
             
@@ -124,6 +124,11 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                   {/* Glow behind book */}
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[80%] bg-[#C9A24D]/20 blur-3xl -z-10 group-hover:bg-[#C9A24D]/30 transition-colors"></div>
                </div>
+               
+               {/* Note d'adaptation */}
+               <p className="text-center text-xs text-[#2C2F4A]/50 mt-4 italic">
+                 * Exemple basé sur le profil de Thomas. Votre livre sera unique.
+               </p>
                
                {/* Page intérieure preview (Tangibilité) */}
                <div className="absolute -bottom-10 -right-10 w-48 h-64 bg-white shadow-xl rounded-lg border border-stone-200 rotate-12 p-5 hidden md:block">
@@ -176,8 +181,8 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             </div>
             
             {/* Premium Tier */}
-            <div className="p-8 md:p-12 bg-white relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-[#C9A24D] text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest">Recommandé</div>
+            <div className="p-8 md:p-12 bg-white relative overflow-hidden ring-4 ring-[#C9A24D]/10">
+              <div className="absolute top-0 right-0 bg-[#C9A24D] text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest">Choix le plus populaire</div>
               <h3 className="text-xl font-bold text-[#5B4B8A] mb-2">Le Roman de Vie</h3>
               <div className="text-3xl font-serif text-[#C9A24D] mb-6">49€ <span className="text-sm text-stone-400 font-sans font-normal line-through">89€</span></div>
               <ul className="space-y-4 text-sm text-[#2C2F4A]/80">
@@ -185,8 +190,9 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                 <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> Structure Narrative Héroïque</li>
                 <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> PDF Haute Qualité (Imprimable)</li>
                 <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> Bonus: Carte du Ciel Détaillée</li>
+                <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> <span className="text-[#2C2F4A] font-medium">Livraison immédiate par email</span></li>
               </ul>
-              <button onClick={onStart} className="w-full mt-8 py-3 px-6 rounded-lg bg-[#5B4B8A] text-white font-bold hover:bg-[#6A5FA8] transition-colors shadow-lg shadow-[#5B4B8A]/20">
+              <button onClick={onStart} className="w-full mt-8 py-4 px-6 rounded-lg bg-[#5B4B8A] text-white font-bold text-lg hover:bg-[#6A5FA8] transition-all transform hover:scale-[1.02] shadow-xl shadow-[#5B4B8A]/30">
                 Créer mon Roman
               </button>
             </div>
@@ -285,7 +291,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               author="Sarah, 42 ans"
             />
             <ImpactCard 
-              quote="Voir mes défauts incarnés par un personnage attachant m'a aidé à les accepter. Je ne me suis jamais senti aussi compris que par ce livre écrit par une machine."
+              quote="Voir mes défauts incarnés par un personnage attachant m'a aidé à les accepter. Je ne me suis jamais senti aussi compris que par ce livre écrit avec une telle précision."
               author="Thomas, 35 ans"
             />
             <ImpactCard 

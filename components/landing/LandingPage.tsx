@@ -168,7 +168,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
               <span className="text-[#d97706] italic">de votre propre roman.</span>
             </h2>
             <p className="text-[#d6d3d1] text-lg leading-relaxed">
-              Une fois votre analyse numérologique terminée, notre Intelligence Artificielle peut écrire pour vous un livre unique de 100 pages.
+              Une fois votre analyse numérologique terminée, nous écrirons pour vous un livre unique de 100 pages.
             </p>
             <p className="text-[#d6d3d1] text-lg leading-relaxed">
               Un roman captivant où le personnage principal (Vous) vit une aventure façonnée par vos véritables nombres, vos souvenirs et vos défis de vie.

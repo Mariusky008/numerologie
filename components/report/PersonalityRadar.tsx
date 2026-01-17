@@ -31,9 +31,9 @@ export default function PersonalityRadar({ data }: PersonalityRadarProps) {
   return (
     <div className="w-full h-[350px] md:h-[400px] bg-white rounded-xl border border-stone-200 shadow-sm p-2 md:p-4 flex flex-col overflow-hidden">
       <h3 className="text-lg md:text-xl font-serif text-[#78350f] text-center mb-2 md:mb-4 shrink-0">Radar de Personnalité</h3>
-      <div className="flex-1 min-h-0 relative w-full">
-        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-          <RadarChart cx="50%" cy="50%" outerRadius="60%" data={chartData}>
+      <div className="flex-1 min-h-[250px] relative w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <RadarChart cx="50%" cy="50%" outerRadius="70%" data={chartData}>
             <PolarGrid stroke="#e7e5e4" />
             <PolarAngleAxis 
               dataKey="subject" 

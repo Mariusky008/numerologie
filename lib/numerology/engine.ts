@@ -138,6 +138,89 @@ export function calculateChallenges(birthDate: string) {
 // --- NEW ADDITIONS FOR ADDENDUM ---
 
 import { InclusionGrid } from '../types';
+import { ADVANCED_DATA } from './advanced-data';
+
+// Zodiac calculation
+export function getZodiacSign(day: number, month: number): string {
+  if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return "belier";
+  if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return "taureau";
+  if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return "gemeaux";
+  if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return "cancer";
+  if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return "lion";
+  if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return "vierge";
+  if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return "balance";
+  if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return "scorpion";
+  if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return "sagittaire";
+  if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return "capricorne";
+  if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return "verseau";
+  return "poissons";
+}
+
+// Life Path dominant planet mapping (Chaldean/Modern mix)
+export function getDominantPlanet(lifePath: number): string {
+  const mapping: Record<number, string> = {
+    1: "soleil",
+    2: "lune",
+    3: "jupiter",
+    4: "saturne", // or Uranus in modern
+    5: "mercure",
+    6: "venus",
+    7: "neptune", // or Moon/Saturn mix
+    8: "saturne", // or Mars in some systems
+    9: "mars",
+    11: "uranus", // Higher octave of 4
+    22: "pluton", // Higher octave of 4/8
+    33: "neptune" // Higher octave of 6
+  };
+  return mapping[lifePath] || "soleil";
+}
+
+export function getAdvancedProfile(lifePath: number, birthDate: string) {
+  let day: number, month: number;
+
+  try {
+    // Attempt standard YYYY-MM-DD format first
+    if (birthDate.includes('-')) {
+      const parts = birthDate.split('-');
+      if (parts.length === 3) {
+        // YYYY-MM-DD
+        month = parseInt(parts[1]);
+        day = parseInt(parts[2]);
+      } else {
+         throw new Error("Invalid format");
+      }
+    } else {
+       // Fallback for Date object string or other formats if needed
+       const dateObj = new Date(birthDate);
+       if (isNaN(dateObj.getTime())) throw new Error("Invalid Date");
+       day = dateObj.getDate();
+       month = dateObj.getMonth() + 1; // 0-indexed
+    }
+
+    const zodiac = getZodiacSign(day, month);
+    const planet = getDominantPlanet(lifePath);
+    
+    // Safe access to data with fallback
+    const pathData = (ADVANCED_DATA.chemins_vie as any)[lifePath] || null;
+    const mcData = (ADVANCED_DATA.milieu_du_ciel as any)[zodiac] || null;
+    
+    return {
+      zodiac,
+      dominantPlanet: planet,
+      pathData,
+      mcData
+    };
+  } catch (e) {
+    console.error("Error calculating advanced profile:", e);
+    // Return safe default to prevent crash
+    return {
+      zodiac: "inconnu",
+      dominantPlanet: "inconnue",
+      pathData: null,
+      mcData: null
+    };
+  }
+}
 
 /**
  * Calculates the Inclusion Grid (Grille d'Inclusion).

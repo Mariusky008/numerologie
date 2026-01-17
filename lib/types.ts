@@ -50,4 +50,12 @@ export interface NumerologyResult {
     // We can add more here if we had map data
   };
   careerForecast: { year: number, personalYear: number }[]; // For 10 years
+  
+  // Advanced Profile (New Algorithm)
+  advancedProfile?: {
+    zodiac: string;
+    dominantPlanet: string;
+    pathData: any; // Using any for flexibility with large JSON structure
+    mcData: any;
+  };
 }

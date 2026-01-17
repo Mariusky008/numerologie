@@ -17,7 +17,8 @@ import {
   calculateCycles,
   generateCareerForecast,
   calculateDeepChallenges,
-  calculatePlaceVibration
+  calculatePlaceVibration,
+  getAdvancedProfile // New import
 } from '@/lib/numerology/engine';
 import PersonalityRadar from './PersonalityRadar';
 import InclusionGridViz from './InclusionGridViz';
@@ -51,6 +52,10 @@ export default function ReportView({ userData }: ReportViewProps) {
       const deepChallenges = calculateDeepChallenges(userData.birthDate);
       const birthPlaceVibration = calculatePlaceVibration(userData.birthPlace || "");
       const careerForecast = generateCareerForecast(userData.birthDate, 2026);
+      
+      // Advanced Profile
+      const advancedProfile = getAdvancedProfile(lifePath, userData.birthDate);
+      console.log("Calculated Advanced Profile:", advancedProfile); // Debug Log
 
       setResults({
         lifePath,
@@ -78,7 +83,8 @@ export default function ReportView({ userData }: ReportViewProps) {
         astroResonance: {
             birthPlaceVibration
         },
-        careerForecast
+        careerForecast,
+        advancedProfile
       });
     }
   }, [userData]);
@@ -86,8 +92,13 @@ export default function ReportView({ userData }: ReportViewProps) {
   if (!results) return null;
 
   // Type assertion for interpretations
-  const lifePathText = (interpretations.lifePath as any)[results.lifePath.toString()] || "Chemin unique.";
+  const lifePathText = results.advancedProfile?.pathData?.essence || (interpretations.lifePath as any)[results.lifePath.toString()] || "Chemin unique.";
   const expressionText = (interpretations.expression as any)[results.expression.toString()] || "Expression unique.";
+
+  // Advanced data display helpers
+  const zodiac = results.advancedProfile?.zodiac ? results.advancedProfile.zodiac.charAt(0).toUpperCase() + results.advancedProfile.zodiac.slice(1) : "";
+  const planet = results.advancedProfile?.dominantPlanet ? results.advancedProfile.dominantPlanet.charAt(0).toUpperCase() + results.advancedProfile.dominantPlanet.slice(1) : "";
+  const pathTitle = results.advancedProfile?.pathData?.titre || `Chemin de Vie ${results.lifePath}`;
 
   return (
     <div className="min-h-screen bg-[#fffbf0] text-[#57534e] p-4 md:p-8">
@@ -102,7 +113,13 @@ export default function ReportView({ userData }: ReportViewProps) {
           >
             {userData.firstName} {userData.lastName}
           </motion.h1>
-          <p className="text-[#d97706]/80 uppercase tracking-widest text-sm">Étude Numérologique - Lecture d'Âme</p>
+          <div className="flex items-center justify-center gap-4 text-[#d97706]/80 text-sm tracking-widest uppercase">
+            <span>Chemin {results.lifePath}</span>
+            <span>•</span>
+            <span>{zodiac}</span>
+            <span>•</span>
+            <span>{planet}</span>
+          </div>
           <div className="inline-block px-4 py-1 rounded-full bg-[#fef3c7] text-[#d97706] text-xs border border-[#d97706]/20 uppercase tracking-widest">
             Focus : {userData.focus}
           </div>
@@ -117,11 +134,25 @@ export default function ReportView({ userData }: ReportViewProps) {
             transition={{ delay: 0.2 }}
             className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm"
           >
-            <h2 className="text-2xl font-serif text-[#78350f] mb-2">Chemin de Vie {results.lifePath}</h2>
-            <p className="text-[#57534e] italic mb-4">{lifePathText}</p>
-            <div className="flex items-center gap-4">
-              <div className="text-6xl font-bold text-[#d97706]/10">{results.lifePath}</div>
-              <div className="text-sm text-[#a8a29e]">
+            <h2 className="text-xl font-serif text-[#78350f] mb-2">{pathTitle}</h2>
+            <p className="text-[#57534e] italic mb-4 text-sm leading-relaxed">{lifePathText}</p>
+            
+            {results.advancedProfile?.pathData && (
+               <div className="space-y-3 mt-4 pt-4 border-t border-stone-100">
+                 <div>
+                   <span className="text-xs font-bold text-[#d97706] uppercase tracking-wider block mb-1">Forces Majeures</span>
+                   <p className="text-xs text-stone-600">{results.advancedProfile.pathData.forces_majeures}</p>
+                 </div>
+                 <div>
+                   <span className="text-xs font-bold text-[#d97706] uppercase tracking-wider block mb-1">Clé d'Alignement</span>
+                   <p className="text-xs text-stone-600 italic">"{results.advancedProfile.pathData.cle_alignement}"</p>
+                 </div>
+               </div>
+            )}
+
+            <div className="flex items-center gap-4 mt-4 pt-4 border-t border-stone-100">
+              <div className="text-5xl font-bold text-[#d97706]/10">{results.lifePath}</div>
+              <div className="text-xs text-[#a8a29e]">
                 Calculé à partir du {userData.birthDate}
               </div>
             </div>

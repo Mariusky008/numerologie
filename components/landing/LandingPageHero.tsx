@@ -131,7 +131,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                </p>
                
                {/* Page intérieure preview (Tangibilité) */}
-               <div className="absolute -bottom-10 -right-10 w-48 h-64 bg-white shadow-xl rounded-lg border border-stone-200 rotate-12 p-5 hidden md:block">
+               <div className="absolute -bottom-10 -right-10 w-48 h-64 bg-white shadow-xl rounded-lg border border-stone-200 rotate-12 p-5 block md:block">
                   <div className="w-full h-full overflow-hidden font-serif">
                     <div className="flex justify-between text-[4px] text-stone-400 mb-2 border-b border-stone-100 pb-1">
                       <span>CHAPITRE I</span>

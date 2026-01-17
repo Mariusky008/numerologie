@@ -21,6 +21,7 @@ import {
   getAdvancedProfile // New import
 } from '@/lib/numerology/engine';
 import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
+import { PLANET_INFLUENCES, ZODIAC_DETAILS } from '@/lib/numerology/interpretations-astro-geo';
 import PersonalityRadar from './PersonalityRadar';
 import InclusionGridViz from './InclusionGridViz';
 import interpretations from '@/lib/numerology/interpretations.json';
@@ -103,8 +104,15 @@ export default function ReportView({ userData }: ReportViewProps) {
   const expressionText = (interpretations.expression as any)[results.expression.toString()] || "Expression unique.";
 
   // Advanced data display helpers
-  const zodiac = results.advancedProfile?.zodiac ? results.advancedProfile.zodiac.charAt(0).toUpperCase() + results.advancedProfile.zodiac.slice(1) : "";
-  const planet = results.advancedProfile?.dominantPlanet ? results.advancedProfile.dominantPlanet.charAt(0).toUpperCase() + results.advancedProfile.dominantPlanet.slice(1) : "";
+  const zodiacKey = results.advancedProfile?.zodiac?.toLowerCase();
+  const planetKey = results.advancedProfile?.dominantPlanet?.toLowerCase();
+  
+  const zodiac = zodiacKey ? zodiacKey.charAt(0).toUpperCase() + zodiacKey.slice(1) : "";
+  const planet = planetKey ? planetKey.charAt(0).toUpperCase() + planetKey.slice(1) : "";
+  
+  const planetText = planetKey ? PLANET_INFLUENCES[planetKey] : "";
+  const zodiacInfo = zodiacKey ? ZODIAC_DETAILS[zodiacKey] : null;
+
   const pathTitle = results.advancedProfile?.pathData?.titre || `Chemin de Vie ${results.lifePath}`;
 
   return (
@@ -292,12 +300,26 @@ export default function ReportView({ userData }: ReportViewProps) {
                        <div className="text-xl font-serif text-[#78350f] font-bold">{zodiac}</div>
                      </div>
                    </div>
+
+                   {zodiacInfo && (
+                     <div className="flex gap-2 mb-4">
+                       <span className="px-3 py-1 bg-white text-stone-600 text-xs rounded-full uppercase tracking-wider font-bold border border-[#d97706]/10">{zodiacInfo.element}</span>
+                       <span className="px-3 py-1 bg-white text-stone-600 text-xs rounded-full uppercase tracking-wider font-bold border border-[#d97706]/10">{zodiacInfo.quality}</span>
+                     </div>
+                   )}
+
                    {results.advancedProfile.mcData && (
                      <div className="space-y-3 text-sm text-[#57534e]">
                        <p><strong>Image Publique :</strong> {results.advancedProfile.mcData.image_publique}</p>
                        <p><strong>Vocation :</strong> {results.advancedProfile.mcData.vocation}</p>
                        <p className="italic text-[#d97706]">"{results.advancedProfile.mcData.cle_reussite}"</p>
                      </div>
+                   )}
+
+                   {zodiacInfo && (
+                     <p className="mt-4 text-[#57534e] italic text-xs leading-relaxed border-t border-[#d97706]/10 pt-3">
+                       "{zodiacInfo.description}"
+                     </p>
                    )}
                 </div>
 
@@ -310,11 +332,13 @@ export default function ReportView({ userData }: ReportViewProps) {
                        <div className="text-xl font-serif text-[#78350f] font-bold">{planet}</div>
                      </div>
                    </div>
-                   <p className="text-sm text-[#57534e] leading-relaxed">
-                     Votre Chemin de Vie {results.lifePath} est gouverné par {planet}. 
-                     Cette influence colore votre destinée d'une énergie particulière, 
-                     vous poussant à exprimer les qualités de cet astre dans votre quotidien.
-                   </p>
+                   
+                   <div className="text-sm text-[#57534e] leading-relaxed space-y-3">
+                     <p className="font-medium text-[#78350f]">Maître du Chemin de Vie {results.lifePath}</p>
+                     <p>
+                       {planetText || `Votre Chemin de Vie ${results.lifePath} est gouverné par ${planet}. Cette influence colore votre destinée d'une énergie particulière.`}
+                     </p>
+                   </div>
                 </div>
              </div>
            </motion.div>

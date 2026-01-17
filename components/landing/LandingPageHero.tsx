@@ -53,7 +53,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             </h1>
             
             <p className="text-xl md:text-2xl text-[#2C2F4A]/80 font-light mb-12 max-w-3xl mx-auto leading-relaxed">
-              Notre technologie d'<strong>intelligence narrative</strong> utilise vos données sacrées pour tisser un récit littéraire unique, avec la plume d'un romancier.
+              Nous<strong>utilisons</strong> vos données sacrées pour tisser un récit littéraire unique, avec la plume d'un romancier.
             </p>
             
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
@@ -126,11 +126,35 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                </div>
                
                {/* Page intérieure preview (Tangibilité) */}
-               <div className="absolute -bottom-10 -right-10 w-48 h-64 bg-white shadow-xl rounded-lg border border-stone-200 rotate-12 p-4 hidden md:block">
-                  <div className="w-full h-full overflow-hidden text-[6px] text-justify leading-relaxed text-stone-500 font-serif">
-                    <span className="text-4xl float-left mr-1 mt-[-6px] text-[#5B4B8A]">I</span>l était une fois, dans une année personnelle 4 marquée par la rigueur, un héros qui cherchait sa voie. Les astres s'alignaient pour lui offrir une opportunité unique de transformation...
-                    <div className="w-full h-20 bg-stone-100 mt-2 mb-2 rounded flex items-center justify-center text-stone-300">Illustration IA</div>
-                    Le chemin serait long, mais la récompense immense.
+               <div className="absolute -bottom-10 -right-10 w-48 h-64 bg-white shadow-xl rounded-lg border border-stone-200 rotate-12 p-5 hidden md:block">
+                  <div className="w-full h-full overflow-hidden font-serif">
+                    <div className="flex justify-between text-[4px] text-stone-400 mb-2 border-b border-stone-100 pb-1">
+                      <span>CHAPITRE I</span>
+                      <span>14</span>
+                    </div>
+                    <div className="text-[5px] text-justify leading-relaxed text-stone-600 space-y-2">
+                      <p>
+                        <span className="text-3xl float-left mr-1 mt-[-4px] text-[#5B4B8A] font-bold">I</span>
+                        l était une fois, dans une année personnelle 4 marquée par la rigueur, un héros qui cherchait sa voie. Les astres s'alignaient pour lui offrir une opportunité unique de transformation. Le soleil en Lion lui donnait la force de rugir face à l'adversité, tandis que son ascendant Vierge analysait chaque détail du chemin.
+                      </p>
+                      <p>
+                        La forêt des ombres s'étendait devant lui, dense et impénétrable. C'était là que résidait son défi majeur : apprendre à faire confiance à son intuition plutôt qu'à sa logique implacable.
+                      </p>
+                      
+                      <div className="w-full h-24 bg-stone-100 my-3 rounded-sm flex flex-col items-center justify-center border border-stone-200">
+                        <div className="w-8 h-8 text-stone-300 mb-1">
+                          <Feather className="w-full h-full" />
+                        </div>
+                        <span className="text-[4px] text-stone-400 uppercase tracking-widest">Illustration IA : La Forêt des Ombres</span>
+                      </div>
+
+                      <p>
+                        "Qui va là ?" tonna une voix venue des profondeurs de la terre. C'était le Gardien, une manifestation de son nombre d'expression 7, exigeant vérité et sagesse avant tout passage. Le héros serra la poignée de son épée, non pas pour combattre, mais pour puiser en lui la réponse que son âme connaissait déjà.
+                      </p>
+                      <p className="blur-[1px] opacity-70">
+                        La réponse ne résidait pas dans les livres qu'il avait lus, ni dans les cartes qu'il avait tracées. Elle était gravée dans la mémoire de ses ancêtres, dans ce cycle de vie qui touchait à sa fin pour laisser place à la renaissance.
+                      </p>
+                    </div>
                   </div>
                </div>
             </div>

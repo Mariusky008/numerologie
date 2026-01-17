@@ -134,20 +134,17 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                     </div>
                     <div className="text-[5px] text-justify leading-relaxed text-stone-600 space-y-2 font-serif">
                         <p>
-                          <span className="text-3xl float-left mr-1 mt-[-4px] text-[#5B4B8A] font-bold">I</span>
-                          l était une fois, dans une année personnelle 4 marquée par la rigueur, un héros qui cherchait sa voie. Les astres s'alignaient pour lui offrir une opportunité unique de transformation. Le soleil en Lion lui donnait la force de rugir face à l'adversité, tandis que son ascendant Vierge analysait chaque détail du chemin.
+                          <span className="text-3xl float-left mr-1 mt-[-4px] text-[#5B4B8A] font-bold">L</span>
+                          ’air de la pièce semblait s’être figé, comme si le temps lui-même attendait une permission pour reprendre sa course. Thomas fixa le reflet dans le miroir, mais ce n'était plus tout à fait le sien. Ce matin-là, les lignes de son visage semblaient dessiner une carte qu'il avait longtemps refusé de lire.
                         </p>
                         <p>
-                          La forêt des ombres s'étendait devant lui, dense et impénétrable. C'était là que résidait son défi majeur : apprendre à faire confiance à son intuition plutôt qu'à sa logique implacable. Chaque arbre semblait murmurer des vérités oubliées, des secrets enfouis dans les racines de son histoire familiale.
+                          Il se souvint de ce vieux secret qu'il portait depuis l'enfance : cette sensation d'être né sous un ciel qui exigeait trop de lui. Le nombre 14 n'était pas qu'une simple date sur son état civil ; c'était un rythme, une oscillation constante entre le besoin de tout détruire et l'envie de tout construire. Pour d'autres, c'était un mardi ordinaire. Pour lui, c'était le code source de son instabilité chronique et de son génie foudroyant.
                         </p>
                         <p>
-                          "Qui va là ?" tonna une voix venue des profondeurs de la terre. C'était le Gardien, une manifestation de son nombre d'expression 7, exigeant vérité et sagesse avant tout passage. Le héros serra la poignée de son épée, non pas pour combattre, mais pour puiser en lui la réponse que son âme connaissait déjà.
-                        </p>
-                        <p>
-                          Il se souvint alors de la prophétie de sa naissance, inscrite dans les étoiles. Mercure rétrograde n'était pas une malédiction, mais une invitation à regarder en arrière pour mieux sauter. Il ferma les yeux, respira l'air frais de la montagne invisible, et prononça le mot de passe : "Acceptation".
+                          Soudain, une lueur dorée traversa la fenêtre, illuminant une vieille boussole posée sur son bureau. Thomas comprit alors ce que les cycles tentaient de lui dire depuis des mois. Il arrivait au bout de la Neuvième Terre. Tout ce qu'il avait bâti ces dernières années s'effritait, non pas par échec, mais pour laisser place à la suite. Les dragons qu'il avait combattus — ce doute persistant sur sa légitimité, cette peur de l'ombre — n'étaient en réalité que des gardiens. Ils ne voulaient pas le dévorer, ils vérifiaient s'il était prêt pour la Grande Transition.
                         </p>
                         <p className="blur-[1px] opacity-70">
-                          Soudain, le sentier s'illumina. Ce n'était pas la fin du voyage, mais le véritable commencement. Les ombres s'écartèrent pour révéler un pont d'or, fragile mais magnifique, menant vers la Citadelle de Soi. Le héros s'avança, le cœur battant, prêt à écrire la suite de sa légende...
+                          Le manuscrit de sa destinée était ouvert sur la table. La page était blanche, mais sous la lumière, des lettres de feu commençaient à apparaître, traçant son nom d'une manière qu'il n'avait jamais vue. Le récit ne faisait que commencer, et pour la première fois, Thomas ne craignait plus de tourner la page. Il savait enfin que son nom n'était pas un hasard. C'était un ordre de mission.
                         </p>
                       </div>
                   </div>

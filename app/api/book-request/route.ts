@@ -74,3 +74,31 @@ export async function PATCH(request: Request) {
     );
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ error: 'Missing id' }, { status: 400 });
+    }
+
+    const { error } = await supabase
+      .from('book_requests')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      throw error;
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting request:', error);
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
+}

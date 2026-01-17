@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock, Music, Compass, Star, TrendingUp, AlertTriangle, GitBranch, Copy, FileJson } from 'lucide-react';
+import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock, Music, Compass, Star, TrendingUp, AlertTriangle, GitBranch, Copy, FileJson, Trash2 } from 'lucide-react';
 import { UserData, NumerologyResult } from '@/lib/types';
 
 export interface BookRequest {
@@ -149,6 +149,28 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
     
     navigator.clipboard.writeText(prompt);
     alert("Prompt complet copié dans le presse-papier !");
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Êtes-vous sûr de vouloir supprimer cette demande ? Cette action est irréversible.")) {
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/book-request?id=${id}`, {
+        method: 'DELETE',
+      });
+
+      if (res.ok) {
+        setRequests(requests.filter(req => req.id !== id));
+        alert("Demande supprimée avec succès.");
+      } else {
+        alert("Erreur lors de la suppression.");
+      }
+    } catch (error) {
+      console.error('Failed to delete request', error);
+      alert("Erreur réseau.");
+    }
   };
 
   return (
@@ -306,34 +328,44 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                 </div>
 
                 {/* Actions */}
-                <div className="p-4 bg-stone-50 border-t border-stone-100 flex justify-end gap-3">
+                <div className="p-4 bg-stone-50 border-t border-stone-100 flex justify-between gap-3">
                   <button
-                    onClick={() => copyToClipboard(req)}
-                    className="flex items-center gap-2 px-4 py-3 bg-stone-200 text-stone-700 rounded-lg hover:bg-stone-300 transition-colors font-medium text-sm"
+                    onClick={() => handleDelete(req.id)}
+                    className="flex items-center gap-2 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium text-sm"
+                    title="Supprimer la demande"
                   >
-                    <Copy className="w-4 h-4" />
-                    Copier Prompt IA
+                    <Trash2 className="w-4 h-4" />
                   </button>
                   
-                  {req.status !== 'completed' && (
+                  <div className="flex gap-3">
                     <button
-                      onClick={() => handleGenerate(req.id)}
-                      disabled={generatingId === req.id}
-                      className="flex items-center gap-2 px-6 py-3 bg-[#78350f] text-white rounded-lg hover:bg-[#573c28] transition-colors shadow-lg disabled:opacity-70 disabled:cursor-wait"
+                      onClick={() => copyToClipboard(req)}
+                      className="flex items-center gap-2 px-4 py-3 bg-stone-200 text-stone-700 rounded-lg hover:bg-stone-300 transition-colors font-medium text-sm"
                     >
-                      {generatingId === req.id ? (
-                        <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></div>
-                          Écriture...
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="w-5 h-5" />
-                          Générer (Simu)
-                        </>
-                      )}
+                      <Copy className="w-4 h-4" />
+                      Copier Prompt IA
                     </button>
-                  )}
+                    
+                    {req.status !== 'completed' && (
+                      <button
+                        onClick={() => handleGenerate(req.id)}
+                        disabled={generatingId === req.id}
+                        className="flex items-center gap-2 px-6 py-3 bg-[#78350f] text-white rounded-lg hover:bg-[#573c28] transition-colors shadow-lg disabled:opacity-70 disabled:cursor-wait"
+                      >
+                        {generatingId === req.id ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></div>
+                            Écriture...
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="w-5 h-5" />
+                            Générer (Simu)
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}

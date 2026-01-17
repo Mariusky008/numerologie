@@ -1,8 +1,9 @@
 
 import PageContainer from './PageContainer';
 import { UserData, NumerologyResult } from '@/lib/types';
+import { NameData } from '@/lib/numerology/db_etymology';
 
-export default function PartAstro({ userData, results }: { userData: UserData, results: NumerologyResult }) {
+export default function PartAstro({ userData, results, etymology }: { userData: UserData, results: NumerologyResult, etymology?: NameData | null }) {
   const birthPlace = userData.birthPlace || "Lieu Inconnu";
   const vibration = results.astroResonance.birthPlaceVibration;
 
@@ -10,12 +11,84 @@ export default function PartAstro({ userData, results }: { userData: UserData, r
   const resonance = (vibration + results.lifePath) % 9 || 9;
   const isHarmonious = [1, 3, 5, 6, 9].includes(resonance);
 
+  // Advanced Profile Data
+  const zodiac = results.advancedProfile?.zodiac ? results.advancedProfile.zodiac.charAt(0).toUpperCase() + results.advancedProfile.zodiac.slice(1) : "";
+  const planet = results.advancedProfile?.dominantPlanet ? results.advancedProfile.dominantPlanet.charAt(0).toUpperCase() + results.advancedProfile.dominantPlanet.slice(1) : "";
+
   return (
     <PageContainer className="p-4 md:p-16">
       <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block">
-        Astrocartographie Numérologique
+        Architecture Astrale & Résonance
       </h2>
 
+      {/* 1. ASTROLOGIE */}
+      {results.advancedProfile && (
+        <div className="mb-12">
+          <h3 className="text-xl md:text-2xl font-serif text-[#d97706] mb-6">VII. Alignement Céleste</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white p-6 rounded-xl border border-[#d97706]/20 shadow-sm">
+               <div className="flex items-center gap-4 mb-4">
+                 <div className="text-4xl">♈</div>
+                 <div>
+                   <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Signe Solaire</div>
+                   <div className="text-xl font-serif text-[#78350f] font-bold">{zodiac}</div>
+                 </div>
+               </div>
+               {results.advancedProfile.mcData && (
+                 <div className="space-y-3 text-sm text-[#57534e]">
+                   <p><strong>Image Publique :</strong> {results.advancedProfile.mcData.image_publique}</p>
+                   <p><strong>Vocation :</strong> {results.advancedProfile.mcData.vocation}</p>
+                   <p className="italic text-[#d97706]">"{results.advancedProfile.mcData.cle_reussite}"</p>
+                 </div>
+               )}
+            </div>
+
+            <div className="bg-white p-6 rounded-xl border border-[#d97706]/20 shadow-sm">
+               <div className="flex items-center gap-4 mb-4">
+                 <div className="text-4xl">🪐</div>
+                 <div>
+                   <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Planète Dominante</div>
+                   <div className="text-xl font-serif text-[#78350f] font-bold">{planet}</div>
+                 </div>
+               </div>
+               <p className="text-sm text-[#57534e] leading-relaxed">
+                 Votre Chemin de Vie {results.lifePath} est gouverné par {planet}. 
+                 Cette influence colore votre destinée d'une énergie particulière.
+               </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 2. ETYMOLOGIE */}
+      {etymology && (
+        <div className="mb-12">
+          <h3 className="text-xl md:text-2xl font-serif text-[#d97706] mb-6">VIII. Échos Étymologiques</h3>
+          <div className="bg-white p-8 rounded-xl border border-[#d97706]/20 shadow-sm relative overflow-hidden">
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+               <div className="space-y-2">
+                 <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Origine</div>
+                 <div className="font-serif text-lg text-[#78350f]">{etymology.origin}</div>
+               </div>
+               <div className="space-y-2 md:col-span-2">
+                 <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Signification</div>
+                 <p className="text-[#57534e] italic text-lg">"{etymology.meaning}"</p>
+               </div>
+               {etymology.spiritual && (
+                 <div className="md:col-span-3 pt-4 border-t border-[#d97706]/10 mt-2">
+                   <div className="text-xs uppercase tracking-widest text-[#a8a29e] mb-2">Dimension Spirituelle</div>
+                   <p className="text-[#57534e] leading-relaxed">{etymology.spiritual}</p>
+                 </div>
+               )}
+             </div>
+             <div className="absolute top-0 right-0 w-48 h-48 bg-[#d97706]/5 rounded-full blur-3xl -z-0"></div>
+          </div>
+        </div>
+      )}
+
+      {/* 3. ASTROCARTOGRAPHIE (Original) */}
+      <div>
+        <h3 className="text-xl md:text-2xl font-serif text-[#d97706] mb-6">IX. Ancrage Terrestre</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
         <div className="space-y-6">
           <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
@@ -52,6 +125,7 @@ export default function PartAstro({ userData, results }: { userData: UserData, r
             </p>
           </div>
         </div>
+      </div>
       </div>
     </PageContainer>
   );

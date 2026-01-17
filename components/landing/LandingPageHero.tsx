@@ -109,7 +109,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                     
                     <h3 className="font-serif text-4xl text-[#2C2F4A] mb-2 tracking-tight leading-none">
                       L'Épopée de<br/>
-                      <span className="text-[#5B4B8A] italic">Jean-Philippe</span>
+                      <span className="text-[#5B4B8A] italic">Thomas</span>
                     </h3>
                     
                     <div className="w-16 h-[1px] bg-[#C9A24D] my-6"></div>

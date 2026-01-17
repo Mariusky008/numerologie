@@ -23,6 +23,8 @@ import {
 } from '@/lib/numerology/engine';
 import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
 
+export const dynamic = 'force-dynamic'; // Force dynamic rendering to avoid caching old versions
+
 function PrintContent() {
   const searchParams = useSearchParams();
   const [data, setData] = useState<{userData: UserData, results: NumerologyResult, etymology?: NameData | null} | null>(null);

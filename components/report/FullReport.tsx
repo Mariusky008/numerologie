@@ -27,6 +27,9 @@ export default function FullReport({ userData, results, etymology }: FullReportP
       <Part4Focus userData={userData} results={results} />
       <Part5Future userData={userData} results={results} />
       <Part6Integration userData={userData} results={results} />
+      <div className="text-center p-8 text-xs text-stone-400 print:block hidden">
+        Généré le {new Date().toLocaleDateString()} - Version 2.1 (Astro-Enhanced)
+      </div>
     </div>
   );
 }

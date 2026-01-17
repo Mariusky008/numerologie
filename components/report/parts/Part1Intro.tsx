@@ -63,7 +63,9 @@ export default function Part1Intro({ userData, results }: { userData: UserData, 
             { id: 'III', title: "Le Miroir Karmique", page: '17' },
             { id: 'IV', title: `Focus : ${userData.focus}`, page: '24' },
             { id: 'V', title: "Visions Futures", page: '31' },
-            { id: 'VI', title: "Plan d'Action", page: '37' }
+            { id: 'VI', title: "Plan d'Action", page: '37' },
+            { id: 'VII', title: "Architecture Astrale", page: '42' },
+            { id: 'VIII', title: "Échos Étymologiques", page: '45' }
           ].map((item) => (
             <div key={item.id} className="flex justify-between items-baseline border-b border-[#d97706]/30 pb-2 md:pb-4">
               <span className="text-base md:text-xl font-serif text-[#d97706]">{item.id}. {item.title}</span>

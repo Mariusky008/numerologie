@@ -132,53 +132,24 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       <span>CHAPITRE I</span>
                       <span>14</span>
                     </div>
-                    <div className="text-[5px] text-justify leading-relaxed text-stone-600 space-y-2">
-                      <p>
-                        <span className="text-3xl float-left mr-1 mt-[-4px] text-[#5B4B8A] font-bold">I</span>
-                        l était une fois, dans une année personnelle 4 marquée par la rigueur, un héros qui cherchait sa voie. Les astres s'alignaient pour lui offrir une opportunité unique de transformation. Le soleil en Lion lui donnait la force de rugir face à l'adversité, tandis que son ascendant Vierge analysait chaque détail du chemin.
-                      </p>
-                      <p>
-                        La forêt des ombres s'étendait devant lui, dense et impénétrable. C'était là que résidait son défi majeur : apprendre à faire confiance à son intuition plutôt qu'à sa logique implacable.
-                      </p>
-                      
-                      <div className="w-full h-32 my-3 rounded-sm overflow-hidden border border-stone-200 relative group bg-stone-100">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <svg width="100%" height="100%" viewBox="0 0 200 100" preserveAspectRatio="none" className="opacity-60">
-                            <defs>
-                              <filter id="noise" x="0%" y="0%" width="100%" height="100%">
-                                <feTurbulence baseFrequency="0.6" numOctaves="3" result="noise"/>
-                                <feColorMatrix type="saturate" values="0"/>
-                                <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
-                              </filter>
-                            </defs>
-                            <rect width="100%" height="100%" fill="#f5f5f4" filter="url(#noise)" opacity="0.5"/>
-                            
-                            {/* Moon */}
-                            <circle cx="160" cy="25" r="12" fill="#C9A24D" opacity="0.8" />
-                            
-                            {/* Back Mountains */}
-                            <path d="M0,100 L30,50 L60,90 L90,40 L140,100 Z" fill="#5B4B8A" opacity="0.3" />
-                            <path d="M120,100 L160,30 L200,100 Z" fill="#5B4B8A" opacity="0.3" />
-                            
-                            {/* Front Forest */}
-                            <path d="M-10,100 L10,60 L30,100 L50,70 L70,100 L90,50 L110,100 L130,60 L150,100 L170,40 L190,100 L210,100 Z" fill="#2C2F4A" opacity="0.8" />
-                            
-                            {/* Fog */}
-                            <rect y="80" width="200" height="20" fill="white" opacity="0.2" filter="url(#noise)" />
-                          </svg>
-                        </div>
-                        <div className="absolute bottom-0 left-0 right-0 bg-white/90 py-[2px] text-center border-t border-stone-100">
-                          <span className="text-[4px] text-stone-500 uppercase tracking-widest font-bold">Fig. 1 : La Forêt des Ombres</span>
-                        </div>
+                    <div className="text-[5px] text-justify leading-relaxed text-stone-600 space-y-2 font-serif">
+                        <p>
+                          <span className="text-3xl float-left mr-1 mt-[-4px] text-[#5B4B8A] font-bold">I</span>
+                          l était une fois, dans une année personnelle 4 marquée par la rigueur, un héros qui cherchait sa voie. Les astres s'alignaient pour lui offrir une opportunité unique de transformation. Le soleil en Lion lui donnait la force de rugir face à l'adversité, tandis que son ascendant Vierge analysait chaque détail du chemin.
+                        </p>
+                        <p>
+                          La forêt des ombres s'étendait devant lui, dense et impénétrable. C'était là que résidait son défi majeur : apprendre à faire confiance à son intuition plutôt qu'à sa logique implacable. Chaque arbre semblait murmurer des vérités oubliées, des secrets enfouis dans les racines de son histoire familiale.
+                        </p>
+                        <p>
+                          "Qui va là ?" tonna une voix venue des profondeurs de la terre. C'était le Gardien, une manifestation de son nombre d'expression 7, exigeant vérité et sagesse avant tout passage. Le héros serra la poignée de son épée, non pas pour combattre, mais pour puiser en lui la réponse que son âme connaissait déjà.
+                        </p>
+                        <p>
+                          Il se souvint alors de la prophétie de sa naissance, inscrite dans les étoiles. Mercure rétrograde n'était pas une malédiction, mais une invitation à regarder en arrière pour mieux sauter. Il ferma les yeux, respira l'air frais de la montagne invisible, et prononça le mot de passe : "Acceptation".
+                        </p>
+                        <p className="blur-[1px] opacity-70">
+                          Soudain, le sentier s'illumina. Ce n'était pas la fin du voyage, mais le véritable commencement. Les ombres s'écartèrent pour révéler un pont d'or, fragile mais magnifique, menant vers la Citadelle de Soi. Le héros s'avança, le cœur battant, prêt à écrire la suite de sa légende...
+                        </p>
                       </div>
-
-                      <p>
-                        "Qui va là ?" tonna une voix venue des profondeurs de la terre. C'était le Gardien, une manifestation de son nombre d'expression 7, exigeant vérité et sagesse avant tout passage. Le héros serra la poignée de son épée, non pas pour combattre, mais pour puiser en lui la réponse que son âme connaissait déjà.
-                      </p>
-                      <p className="blur-[1px] opacity-70">
-                        La réponse ne résidait pas dans les livres qu'il avait lus, ni dans les cartes qu'il avait tracées. Elle était gravée dans la mémoire de ses ancêtres, dans ce cycle de vie qui touchait à sa fin pour laisser place à la renaissance.
-                      </p>
-                    </div>
                   </div>
                </div>
             </div>

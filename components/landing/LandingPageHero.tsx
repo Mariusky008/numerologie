@@ -143,9 +143,28 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       
                       <div className="w-full h-32 my-3 rounded-sm overflow-hidden border border-stone-200 relative group bg-stone-100">
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <svg width="100%" height="100%" viewBox="0 0 200 100" preserveAspectRatio="none" className="opacity-30">
-                            <path d="M0,100 L40,40 L80,100 L120,20 L160,100 L200,50 L200,100 Z" fill="#5B4B8A" />
-                            <circle cx="150" cy="30" r="10" fill="#C9A24D" />
+                          <svg width="100%" height="100%" viewBox="0 0 200 100" preserveAspectRatio="none" className="opacity-60">
+                            <defs>
+                              <filter id="noise" x="0%" y="0%" width="100%" height="100%">
+                                <feTurbulence baseFrequency="0.6" numOctaves="3" result="noise"/>
+                                <feColorMatrix type="saturate" values="0"/>
+                                <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
+                              </filter>
+                            </defs>
+                            <rect width="100%" height="100%" fill="#f5f5f4" filter="url(#noise)" opacity="0.5"/>
+                            
+                            {/* Moon */}
+                            <circle cx="160" cy="25" r="12" fill="#C9A24D" opacity="0.8" />
+                            
+                            {/* Back Mountains */}
+                            <path d="M0,100 L30,50 L60,90 L90,40 L140,100 Z" fill="#5B4B8A" opacity="0.3" />
+                            <path d="M120,100 L160,30 L200,100 Z" fill="#5B4B8A" opacity="0.3" />
+                            
+                            {/* Front Forest */}
+                            <path d="M-10,100 L10,60 L30,100 L50,70 L70,100 L90,50 L110,100 L130,60 L150,100 L170,40 L190,100 L210,100 Z" fill="#2C2F4A" opacity="0.8" />
+                            
+                            {/* Fog */}
+                            <rect y="80" width="200" height="20" fill="white" opacity="0.2" filter="url(#noise)" />
                           </svg>
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 bg-white/90 py-[2px] text-center border-t border-stone-100">

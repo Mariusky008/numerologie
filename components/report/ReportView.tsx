@@ -388,7 +388,8 @@ export default function ReportView({ userData }: ReportViewProps) {
             <button 
               onClick={() => {
                 const dataStr = encodeURIComponent(JSON.stringify(userData));
-                window.open(`/report/print?data=${dataStr}`, '_blank');
+                // Add timestamp to force fresh load (bypass cache)
+                window.open(`/report/print?data=${dataStr}&t=${Date.now()}`, '_blank');
               }}
               className="flex items-center gap-3 px-8 py-4 bg-white text-[#78350f] border-2 border-[#78350f] rounded-full hover:bg-[#fffbf0] transition-colors shadow-sm"
             >

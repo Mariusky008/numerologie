@@ -292,7 +292,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             <div className="bg-[#EFEDE9] p-4 rounded-lg">
               <p className="text-[#6B6B6B] leading-relaxed">
                 <strong>Avertissement Légal :</strong> Ce service est conçu à des fins de divertissement, d'introspection et de développement personnel uniquement. 
-                Les analyses numérologiques et les récits générés par intelligence artificielle ne constituent en aucun cas un conseil psychologique, médical, financier ou juridique. 
+                Les analyses numérologiques et les récits générés ne constituent en aucun cas un conseil psychologique, médical, financier ou juridique. 
                 L'option "Roman de Vie" est une œuvre de fiction personnalisée basée sur vos données.
               </p>
             </div>

@@ -141,11 +141,15 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                         La forêt des ombres s'étendait devant lui, dense et impénétrable. C'était là que résidait son défi majeur : apprendre à faire confiance à son intuition plutôt qu'à sa logique implacable.
                       </p>
                       
-                      <div className="w-full h-24 bg-stone-100 my-3 rounded-sm flex flex-col items-center justify-center border border-stone-200">
-                        <div className="w-8 h-8 text-stone-300 mb-1">
-                          <Feather className="w-full h-full" />
+                      <div className="w-full h-32 my-3 rounded-sm overflow-hidden border border-stone-200 relative group">
+                        <img 
+                          src="https://images.unsplash.com/photo-1448375240586-dfd8d395ea6c?q=80&w=600&auto=format&fit=crop" 
+                          alt="Forêt Mystique" 
+                          className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-white/90 py-[2px] text-center border-t border-stone-100">
+                          <span className="text-[4px] text-stone-500 uppercase tracking-widest font-bold">Fig. 1 : La Forêt des Ombres</span>
                         </div>
-                        <span className="text-[4px] text-stone-400 uppercase tracking-widest">Illustration IA : La Forêt des Ombres</span>
                       </div>
 
                       <p>

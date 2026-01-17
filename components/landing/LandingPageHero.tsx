@@ -47,13 +47,13 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               Une Expérience Littéraire Unique
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-serif text-[#2C2F4A] mb-8 leading-tight">
+            <h1 className="text-6xl md:text-8xl font-serif text-[#2C2F4A] mb-8 leading-tight">
               Ne lisez plus votre avenir. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5B4B8A] to-[#6A5FA8] italic">Incarnez-le.</span>
             </h1>
             
             <p className="text-xl md:text-2xl text-[#2C2F4A]/80 font-light mb-12 max-w-3xl mx-auto leading-relaxed">
-              Nous analysons votre numérologie pour créer le plan détaillé de votre destinée... puis nous transformons ce plan en un <strong className="text-[#5B4B8A] font-medium">roman d'aventure dont VOUS êtes le héros.</strong>
+              Notre technologie d'<strong>intelligence narrative</strong> utilise vos données sacrées pour tisser un récit littéraire unique, avec la plume d'un romancier.
             </p>
             
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
@@ -62,12 +62,12 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                 className="group relative px-10 py-5 bg-[#5B4B8A] text-white rounded-full font-bold text-lg shadow-[0_10px_40px_-10px_rgba(91,75,138,0.4)] hover:bg-[#6A5FA8] hover:shadow-[0_20px_60px_-10px_rgba(91,75,138,0.5)] transition-all transform hover:scale-105"
               >
                 <span className="flex items-center gap-3">
-                  Commencer mon Épopée
+                  Découvrir mon premier chapitre (Offert)
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
               <div className="text-left text-xs text-[#8FA6A0] uppercase tracking-widest space-y-1 font-bold">
-                <p>✓ Analyse Initiale Incluse</p>
+                <p>✓ Titre & Résumé Offerts</p>
                 <p>✓ Roman Complet en Option</p>
               </div>
             </div>
@@ -85,7 +85,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                 <span className="text-[#C9A24D]">Il ne reste qu'à la raconter.</span>
               </h2>
               <p className="text-lg text-[#2C2F4A]/80 leading-relaxed">
-                La numérologie classique vous donne des listes de qualités et de défauts. C'est utile, mais abstrait.
+                Votre signe solaire définit le caractère du héros, votre ascendant définit son armure, et vos planètes sont les alliés qui vous accompagnent dans votre quête.
               </p>
               <p className="text-lg text-[#2C2F4A]/80 leading-relaxed">
                 Notre approche est différente : nous utilisons vos nombres pour construire la <strong>structure narrative</strong> de votre existence. Vos défis deviennent des dragons à combattre, vos cycles deviennent des chapitres, et votre mission de vie devient la quête du Graal.
@@ -98,29 +98,88 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             </div>
             
             <div className="flex-1 relative">
-               {/* Book Mockup Light */}
-               <div className="relative w-[320px] mx-auto aspect-[2/3] bg-[#FAF9F7] rounded-r-xl rounded-l-sm shadow-2xl border-l-4 border-[#5B4B8A] transform rotate-[-5deg] hover:rotate-0 transition-transform duration-700 group">
+               {/* Book Mockup Light Premium */}
+               <div className="relative w-[340px] mx-auto aspect-[2/3] bg-[#FAF9F7] rounded-r-xl rounded-l-sm shadow-2xl border-l-4 border-[#5B4B8A] transform rotate-[-5deg] hover:rotate-0 transition-transform duration-700 group">
                   <div className="absolute inset-0 bg-gradient-to-br from-[#FAF9F7] to-[#EFEDE9] rounded-r-xl opacity-90"></div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center border border-[#C9A24D]/30 m-2 rounded-r-lg border-l-0">
-                    <div className="text-[#C9A24D] text-xs tracking-[0.4em] uppercase mb-8">Best-Seller Unique</div>
-                    <h3 className="font-serif text-5xl text-[#2C2F4A] mb-2 tracking-tighter">L'Élu(e)</h3>
-                    <p className="text-[#8FA6A0] text-sm italic mt-4">
-                      "Celui qui ne connaissait pas son nom..."
-                    </p>
-                    <div className="mt-auto w-16 h-16 rounded-full border border-[#C9A24D]/50 flex items-center justify-center text-[#C9A24D]">
+                  {/* Texture Papier */}
+                  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-40 rounded-r-xl"></div>
+                  
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center border-2 border-[#C9A24D] m-4 rounded-r-lg border-l-0">
+                    <div className="text-[#C9A24D] text-xs tracking-[0.4em] uppercase mb-8 font-bold">Roman de Vie</div>
+                    
+                    <h3 className="font-serif text-4xl text-[#2C2F4A] mb-2 tracking-tight leading-none">
+                      L'Épopée de<br/>
+                      <span className="text-[#5B4B8A] italic">Jean-Philippe</span>
+                    </h3>
+                    
+                    <div className="w-16 h-[1px] bg-[#C9A24D] my-6"></div>
+                    
+                    <h4 className="font-serif text-xl text-[#2C2F4A] mb-8">Le Gardien des Seuils</h4>
+                    
+                    <div className="mt-auto w-20 h-20 rounded-full border border-[#C9A24D]/50 flex items-center justify-center text-[#C9A24D] relative">
+                      <div className="absolute inset-0 border border-[#C9A24D]/30 rounded-full scale-125"></div>
                       <UserIcon className="w-8 h-8" />
                     </div>
                   </div>
                   {/* Glow behind book */}
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[80%] bg-[#C9A24D]/20 blur-3xl -z-10 group-hover:bg-[#C9A24D]/30 transition-colors"></div>
                </div>
+               
+               {/* Page intérieure preview (Tangibilité) */}
+               <div className="absolute -bottom-10 -right-10 w-48 h-64 bg-white shadow-xl rounded-lg border border-stone-200 rotate-12 p-4 hidden md:block">
+                  <div className="w-full h-full overflow-hidden text-[6px] text-justify leading-relaxed text-stone-500 font-serif">
+                    <span className="text-4xl float-left mr-1 mt-[-6px] text-[#5B4B8A]">I</span>l était une fois, dans une année personnelle 4 marquée par la rigueur, un héros qui cherchait sa voie. Les astres s'alignaient pour lui offrir une opportunité unique de transformation...
+                    <div className="w-full h-20 bg-stone-100 mt-2 mb-2 rounded flex items-center justify-center text-stone-300">Illustration IA</div>
+                    Le chemin serait long, mais la récompense immense.
+                  </div>
+               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Comparison Table (Psychologie) */}
+      <section className="py-20 px-4 bg-[#FAF9F7]">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-serif text-[#2C2F4A] text-center mb-12">Ce que vous allez recevoir</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-[#EFEDE9] rounded-2xl overflow-hidden shadow-lg bg-white">
+            {/* Free Tier */}
+            <div className="p-8 md:p-12 border-b md:border-b-0 md:border-r border-[#EFEDE9] bg-[#FAF9F7]/50">
+              <h3 className="text-xl font-bold text-[#2C2F4A] mb-2">Analyse Initiale</h3>
+              <div className="text-3xl font-serif text-[#8FA6A0] mb-6">Gratuit</div>
+              <ul className="space-y-4 text-sm text-[#2C2F4A]/80">
+                <li className="flex items-center gap-3"><span className="text-[#8FA6A0]">✓</span> Vos 7 Nombres Clés</li>
+                <li className="flex items-center gap-3"><span className="text-[#8FA6A0]">✓</span> Votre Profil Astral</li>
+                <li className="flex items-center gap-3"><span className="text-[#8FA6A0]">✓</span> Titre de votre Roman</li>
+                <li className="flex items-center gap-3"><span className="text-[#8FA6A0]">✓</span> Résumé (4ème de couv.)</li>
+              </ul>
+              <button onClick={onStart} className="w-full mt-8 py-3 px-6 rounded-lg border border-[#2C2F4A]/20 text-[#2C2F4A] font-bold hover:bg-[#2C2F4A] hover:text-white transition-colors">
+                Commencer Gratuitement
+              </button>
+            </div>
+            
+            {/* Premium Tier */}
+            <div className="p-8 md:p-12 bg-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-[#C9A24D] text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest">Recommandé</div>
+              <h3 className="text-xl font-bold text-[#5B4B8A] mb-2">Le Roman de Vie</h3>
+              <div className="text-3xl font-serif text-[#C9A24D] mb-6">49€ <span className="text-sm text-stone-400 font-sans font-normal line-through">89€</span></div>
+              <ul className="space-y-4 text-sm text-[#2C2F4A]/80">
+                <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> <strong>Livre Complet (~100 pages)</strong></li>
+                <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> Structure Narrative Héroïque</li>
+                <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> PDF Haute Qualité (Imprimable)</li>
+                <li className="flex items-center gap-3"><span className="text-[#C9A24D]">✓</span> Bonus: Carte du Ciel Détaillée</li>
+              </ul>
+              <button onClick={onStart} className="w-full mt-8 py-3 px-6 rounded-lg bg-[#5B4B8A] text-white font-bold hover:bg-[#6A5FA8] transition-colors shadow-lg shadow-[#5B4B8A]/20">
+                Créer mon Roman
+              </button>
             </div>
           </div>
         </div>
       </section>
 
       {/* Technical Reassurance Light */}
-      <section className="py-20 px-4 bg-[#FAF9F7]">
+      <section className="py-20 px-4 bg-[#FAF9F7] border-t border-[#EFEDE9]">
         <div className="max-w-4xl mx-auto text-center mb-16">
           <h2 className="text-2xl font-serif text-[#2C2F4A] mb-4">Une base scientifique solide</h2>
           <p className="text-[#2C2F4A]/70">

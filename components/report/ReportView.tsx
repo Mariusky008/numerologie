@@ -24,6 +24,7 @@ import InclusionGridViz from './InclusionGridViz';
 import interpretations from '@/lib/numerology/interpretations.json';
 import { Download, BookOpen } from 'lucide-react';
 import BookCreationModal from './BookCreationModal';
+import BookBackCover from './BookBackCover';
 
 interface ReportViewProps {
   userData: UserData;
@@ -251,32 +252,47 @@ export default function ReportView({ userData }: ReportViewProps) {
           </div>
 
           {/* Step 2: Book */}
-          <div className="w-full max-w-3xl bg-gradient-to-br from-[#78350f] to-[#573c28] p-8 md:p-10 rounded-2xl shadow-xl text-center text-[#fffbf0] relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-            <div className="relative z-10 space-y-6">
-              <div className="inline-block px-4 py-1 rounded-full bg-[#d97706] text-white text-xs font-bold tracking-widest uppercase mb-2">
-                Nouveau & Exclusif
-              </div>
-              <h3 className="text-3xl md:text-4xl font-serif font-bold leading-tight">
-                Vivez votre numérologie <br/> comme un roman.
-              </h3>
-              <p className="text-[#d6d3d1] text-lg max-w-xl mx-auto leading-relaxed">
-                Ne vous contentez pas de lire votre avenir, incarnez-le. <br/>
-                Notre IA écrit pour vous un livre de 100 pages où vous êtes le héros d'une aventure basée sur vos véritables cycles de vie.
-              </p>
-              <div className="pt-4">
-                <button
-                  onClick={() => setShowBookModal(true)}
-                  className="inline-flex items-center gap-3 px-10 py-5 bg-[#fffbf0] text-[#78350f] rounded-full font-bold text-lg hover:bg-[#fef3c7] transition-all transform hover:scale-105 shadow-2xl shadow-black/20"
-                >
-                  <BookOpen className="w-6 h-6" />
-                  <span>Commencer l'écriture de mon Roman</span>
-                </button>
-              </div>
-              <p className="text-xs text-[#d6d3d1]/60 mt-4">
-                Basé sur vos 7 nombres clés et vos souvenirs personnels.
-              </p>
-            </div>
+          <div className="w-full max-w-4xl bg-gradient-to-br from-[#78350f] to-[#573c28] rounded-2xl shadow-xl overflow-hidden relative group">
+             <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+             
+             <div className="flex flex-col md:flex-row items-center relative z-10">
+                {/* Left: Text Content */}
+                <div className="p-8 md:p-12 md:w-1/2 text-left space-y-6">
+                  <div className="inline-block px-4 py-1 rounded-full bg-[#d97706] text-white text-xs font-bold tracking-widest uppercase mb-2">
+                    Nouveau & Exclusif
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-serif font-bold leading-tight text-[#fffbf0]">
+                    Vivez votre numérologie <br/> comme un roman.
+                  </h3>
+                  <p className="text-[#d6d3d1] text-lg leading-relaxed">
+                    Ne vous contentez pas de lire votre avenir, incarnez-le. <br/>
+                    Notre IA écrit pour vous un livre de 100 pages où vous êtes le héros d'une aventure basée sur vos véritables cycles de vie.
+                  </p>
+                  
+                  <div className="pt-4">
+                    <button
+                      onClick={() => setShowBookModal(true)}
+                      className="w-full md:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#fffbf0] text-[#78350f] rounded-full font-bold text-lg hover:bg-[#fef3c7] transition-all transform hover:scale-105 shadow-2xl shadow-black/20"
+                    >
+                      <BookOpen className="w-6 h-6" />
+                      <span>Commencer l'écriture</span>
+                    </button>
+                    <p className="text-xs text-[#d6d3d1]/60 mt-4 text-center md:text-left">
+                      Basé sur vos 7 nombres clés et vos souvenirs personnels.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right: Back Cover Preview */}
+                <div className="p-8 md:p-12 md:w-1/2 bg-black/20 flex items-center justify-center w-full">
+                   <div className="transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                      <BookBackCover userData={userData} results={results} />
+                      <p className="text-center text-[#d6d3d1]/50 text-xs mt-4 italic">
+                        * Aperçu généré dynamiquement selon votre profil
+                      </p>
+                   </div>
+                </div>
+             </div>
           </div>
         </div>
 

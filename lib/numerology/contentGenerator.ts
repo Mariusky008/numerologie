@@ -1,5 +1,6 @@
 
 import { NumerologyResult } from '@/lib/types';
+import { INCLUSION_INTERPRETATIONS } from './interpretations-inclusion';
 
 interface NumberArchetype {
   title: string;
@@ -307,20 +308,43 @@ export const getPersonalYearContent = (num: number) => {
 };
 
 export const getKarmicLessonContent = (num: number) => {
+  const data = INCLUSION_INTERPRETATIONS.missing[num as keyof typeof INCLUSION_INTERPRETATIONS.missing];
+  if (data) {
+    return {
+      title: `Leçon Karmique ${num} : ${data.title}`,
+      desc: `Le nombre ${num} est absent de votre grille. C'est une énergie que vous êtes venu(e) découvrir.`,
+      lesson: data.description,
+      advice: data.advice
+    };
+  }
+  
+  // Fallback to generic archetype if no specific data
   const arch = getNumberArchetype(num);
   return {
     title: `Dette Karmique ${num}`,
-    desc: `Le nombre ${num} est manquant dans votre grille. Cela indique une méconnaissance de l'énergie : ${arch.keywords.join(', ')}.`,
-    lesson: `Votre âme a choisi d'apprendre cette vibration à partir de zéro. ${arch.challenge} Vous pouvez avoir tendance à fuir ou à mal gérer les situations demandant du ${arch.keywords[0]}.`,
+    desc: `Le nombre ${num} est manquant.`,
+    lesson: `Vous devez apprendre à maîtriser l'énergie de ${arch.keywords[0]}. ${arch.challenge}`,
     advice: arch.keyAdvice[0]
   };
 };
 
 export const getExcessNumberContent = (num: number) => {
+  const data = INCLUSION_INTERPRETATIONS.excess[num as keyof typeof INCLUSION_INTERPRETATIONS.excess];
+  if (data) {
+    const arch = getNumberArchetype(num);
+    return {
+      title: `Force Innée ${num}`,
+      desc: data,
+      potential: `C'est un atout majeur. Vous possédez naturellement les qualités de ${arch.keywords[0]} et ${arch.keywords[1]}.`,
+      warning: `Attention toutefois à ne pas basculer dans l'excès inverse.`
+    };
+  }
+
+  // Fallback
   const arch = getNumberArchetype(num);
   return {
     title: `Excès du Nombre ${num}`,
-    desc: `Le nombre ${num} est très présent. C'est un super-talent inné. Vous maîtrisez naturellement : ${arch.keywords.join(', ')}.`,
+    desc: `Le nombre ${num} est très présent. C'est un super-talent inné.`,
     potential: `Cette énergie est votre moteur. ${arch.desc}`,
     warning: `Attention à l'excès : ${arch.challenge}`
   };

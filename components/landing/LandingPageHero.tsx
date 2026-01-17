@@ -66,9 +66,10 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
-              <p className="text-xs text-[#78716c] uppercase tracking-widest">
-                Analyse Gratuite • Roman sur-mesure
-              </p>
+              <div className="text-left text-xs text-[#78716c] uppercase tracking-widest space-y-1">
+                <p>✓ Analyse Initiale Incluse</p>
+                <p>✓ Roman Complet en Option</p>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -274,9 +275,19 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         </div>
       </section>
 
-      {/* Footer Minimal */}
-      <footer className="py-8 text-center text-[#57534e] text-xs border-t border-[#292524]">
-        <p>&copy; {new Date().getFullYear()} Roman de Vie. Une expérience Numérologie.app</p>
+      {/* Footer Minimal with Disclaimer */}
+      <footer className="py-12 px-4 text-center text-[#57534e] text-xs border-t border-[#292524] bg-[#151413]">
+        <div className="max-w-4xl mx-auto space-y-6">
+          <p>&copy; {new Date().getFullYear()} Roman de Vie. Une expérience Numérologie.app</p>
+          
+          <div className="border-t border-[#292524] pt-6 max-w-2xl mx-auto">
+            <p className="text-[#44403c] leading-relaxed">
+              <strong>Avertissement Légal :</strong> Ce service est conçu à des fins de divertissement, d'introspection et de développement personnel uniquement. 
+              Les analyses numérologiques et les récits générés par intelligence artificielle ne constituent en aucun cas un conseil psychologique, médical, financier ou juridique. 
+              L'option "Roman de Vie" est une œuvre de fiction personnalisée basée sur vos données.
+            </p>
+          </div>
+        </div>
       </footer>
     </div>
   );

@@ -220,6 +220,42 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         </div>
       </section>
 
+      {/* Featured Testimonial - Long Form */}
+      <section className="py-24 px-4 bg-[#1c1917] border-y border-[#44403c] relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/black-felt.png')] opacity-20"></div>
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="flex flex-col md:flex-row gap-12 items-start">
+            <div className="md:w-1/3 text-center md:text-left">
+              <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-[#d97706] mx-auto md:mx-0 overflow-hidden mb-6 shadow-2xl">
+                <div className="w-full h-full bg-stone-800 flex items-center justify-center text-4xl">👨‍💼</div>
+              </div>
+              <h3 className="text-2xl font-serif text-[#e7e5e4] mb-2">Julien M.</h3>
+              <p className="text-[#d97706] font-bold text-sm tracking-widest uppercase mb-4">Entrepreneur, 41 ans</p>
+              <div className="flex gap-1 justify-center md:justify-start text-[#d97706]">
+                {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-current" />)}
+              </div>
+            </div>
+            
+            <div className="md:w-2/3">
+              <div className="relative">
+                <span className="absolute -top-8 -left-4 text-8xl text-[#292524] font-serif">"</span>
+                <blockquote className="text-lg md:text-xl text-[#d6d3d1] leading-relaxed space-y-6 font-light">
+                  <p>
+                    <span className="text-[#e7e5e4] font-medium">J'étais sceptique.</span> Je pensais recevoir un énième PDF générique avec des phrases bateau sur mon signe astrologique. Mais quand j'ai commencé à lire "Le Gardien des Seuils" (le titre de mon livre), j'ai eu des frissons dès la première page.
+                  </p>
+                  <p>
+                    Le héros, c'était moi. Pas un "moi" idéalisé, mais un moi profond, avec mes doutes réels que je n'avais jamais avoués à personne. L'IA a utilisé mon cycle de vie actuel (une année personnelle 4) pour construire une intrigue où le protagoniste devait justement apprendre à structurer le chaos.
+                  </p>
+                  <p>
+                    <span className="text-[#d97706] italic">C'était plus qu'une lecture, c'était une révélation.</span> Voir mes obstacles transformés en quête épique m'a redonné le pouvoir sur ma propre vie. J'ai compris que je n'étais pas "bloqué", mais en "préparation". Ce changement de perspective vaut tout l'or du monde.
+                  </p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="py-32 px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-[#d97706]/20 to-[#1c1917]"></div>

@@ -21,6 +21,7 @@ export interface BookRequest {
     dreams: string;
     mentors: string;
     dailyRituals: string;
+    otherNotes?: string;
   };
 }
 
@@ -141,6 +142,7 @@ Rêves & Regrets: ${req.lifeDetails.dreams || '-'}
 Mentors: ${req.lifeDetails.mentors || '-'}
 Rituels: ${req.lifeDetails.dailyRituals || '-'}
 Peurs: ${req.lifeDetails.fears || '-'}
+Notes Personnelles: ${req.lifeDetails.otherNotes || '-'}
 
 --- CONSIGNE ---
 Écris le premier chapitre d'un roman à la troisième personne centré sur ce personnage.
@@ -325,6 +327,17 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                         </span>
                         <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.dreams || "-"}</p>
                       </div>
+                      
+                      {req.lifeDetails.otherNotes && (
+                        <div className="col-span-full border-t border-stone-100 pt-3 mt-2">
+                          <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
+                            <FileJson className="w-3 h-3" /> Notes Personnelles
+                          </span>
+                          <p className="bg-amber-50 p-3 rounded text-stone-700 italic border border-amber-100">
+                            "{req.lifeDetails.otherNotes}"
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

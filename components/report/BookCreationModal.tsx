@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, BookOpen, Heart, MapPin, Home, Briefcase, Users, Star, Compass, Music, Coffee } from 'lucide-react';
+import { X, BookOpen, Heart, MapPin, Home, Briefcase, Users, Star, Compass, Music, Coffee, MessageSquare } from 'lucide-react';
 import { UserData, NumerologyResult } from '@/lib/types';
 
 interface BookCreationModalProps {
@@ -23,7 +23,8 @@ export default function BookCreationModal({ isOpen, onClose, userData, reportRes
     passions: '',
     dreams: '',
     mentors: '',
-    dailyRituals: ''
+    dailyRituals: '',
+    otherNotes: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -89,7 +90,7 @@ export default function BookCreationModal({ isOpen, onClose, userData, reportRes
                 </div>
                 <h3 className="text-2xl font-serif text-[#78350f]">Demande Reçue !</h3>
                 <p className="text-[#57534e] max-w-md mx-auto">
-                  Nous avons bien reçu vos informations. Notre intelligence artificielle va maintenant analyser votre profil numérologique et vos souvenirs pour tisser la trame de votre roman unique.
+                  Nous avons bien reçu vos informations. Nous allons maintenant analyser votre profil numérologique et vos souvenirs pour tisser la trame de votre roman unique.
                 </p>
                 <p className="text-sm text-[#a8a29e]">
                   Vous recevrez bientôt une notification pour découvrir le premier chapitre.
@@ -224,6 +225,19 @@ export default function BookCreationModal({ isOpen, onClose, userData, reportRes
                       placeholder="Le café du matin, la marche en forêt, l'écriture..."
                       value={formData.dailyRituals}
                       onChange={(e) => setFormData({ ...formData, dailyRituals: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="flex items-center gap-2 text-[#78350f] font-bold mb-2">
+                      <MessageSquare className="w-4 h-4" />
+                      Autres précisions / Notes personnelles
+                    </label>
+                    <textarea
+                      className="w-full p-3 rounded-lg border border-[#d97706]/20 focus:ring-2 focus:ring-[#d97706]/50 outline-none bg-white min-h-[120px]"
+                      placeholder="Imaginez un livre dont vous êtes le héros, mais où chaque épreuve, chaque victoire et chaque rencontre est dictée par les nombres qui régissent votre existence. Pour que la magie opère, confiez-nous quelques clés de votre parcours."
+                      value={formData.otherNotes}
+                      onChange={(e) => setFormData({ ...formData, otherNotes: e.target.value })}
                     />
                   </div>
                 </div>

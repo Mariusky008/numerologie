@@ -127,7 +127,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           </p>
         </div>
         
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           <TechCard 
             icon="📐" 
             title="Géométrie Sacrée" 
@@ -143,6 +143,80 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             title="Psychologie Profonde" 
             desc="Analyse de votre personnalité intime et de vos mécanismes inconscients."
           />
+        </div>
+
+        {/* Methodology Deep Dive */}
+        <div className="max-w-4xl mx-auto bg-[#292524] rounded-2xl p-8 md:p-12 border border-[#44403c] relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#d97706]/5 rounded-full blur-3xl -z-10"></div>
+          <h3 className="text-xl md:text-2xl font-serif text-[#e7e5e4] mb-6 text-center">
+            Comment nous garantissons la précision de votre profil
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+            <div className="space-y-4">
+              <div className="flex gap-3">
+                <span className="text-[#d97706] font-bold">01.</span>
+                <p className="text-[#d6d3d1] text-sm">
+                  <strong className="text-[#e7e5e4] block mb-1">Algorithme Multi-Couches</strong>
+                  Nous croisons votre Chemin de Vie (basé sur la date) avec votre Nombre d'Expression (basé sur le nom) pour détecter les conflits internes et les talents latents.
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <span className="text-[#d97706] font-bold">02.</span>
+                <p className="text-[#d6d3d1] text-sm">
+                  <strong className="text-[#e7e5e4] block mb-1">Grille d'Inclusion Exclusive</strong>
+                  Contrairement aux horoscopes génériques, nous calculons la répartition exacte de vos énergies (manques et excès) pour révéler vos dettes karmiques spécifiques.
+                </p>
+              </div>
+            </div>
+            <div className="space-y-4">
+              <div className="flex gap-3">
+                <span className="text-[#d97706] font-bold">03.</span>
+                <p className="text-[#d6d3d1] text-sm">
+                  <strong className="text-[#e7e5e4] block mb-1">Astrologie Structurelle</strong>
+                  Nous intégrons la vibration de votre lieu de naissance pour affiner l'analyse et comprendre l'influence de votre environnement d'origine.
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <span className="text-[#d97706] font-bold">04.</span>
+                <p className="text-[#d6d3d1] text-sm">
+                  <strong className="text-[#e7e5e4] block mb-1">Vérification Cohérente</strong>
+                  Chaque rapport est généré pour être logiquement cohérent : un cycle de vie ne peut pas contredire un défi majeur. Tout est lié.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Emotional Impact Section */}
+      <section className="py-24 px-4 bg-[#0c0a09] relative">
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="inline-block mb-4">
+            <Star className="w-6 h-6 text-[#d97706] fill-[#d97706] animate-pulse" />
+          </div>
+          <h2 className="text-3xl md:text-5xl font-serif text-[#e7e5e4] mb-8">
+            Une expérience émotionnelle <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fbbf24] to-[#d97706]">bouleversante.</span>
+          </h2>
+          <p className="text-xl text-[#a8a29e] mb-12 max-w-3xl mx-auto leading-relaxed">
+            Ce n'est pas juste un livre. C'est un miroir. <br/>
+            Découvrir sa vie transposée dans une fiction crée un déclic psychologique puissant.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <ImpactCard 
+              quote="J'ai pleuré en lisant le chapitre 3. C'était exactement ce que j'avais vécu à 20 ans, mais vu sous un angle héroïque qui m'a enfin permis de pardonner."
+              author="Sarah, 42 ans"
+            />
+            <ImpactCard 
+              quote="Voir mes défauts incarnés par un personnage attachant m'a aidé à les accepter. Je ne me suis jamais senti aussi compris que par ce livre écrit par une machine."
+              author="Thomas, 35 ans"
+            />
+            <ImpactCard 
+              quote="C'est étrange et magique. On sait que c'est une fiction, mais ça résonne tellement fort avec la réalité que ça en devient une thérapie."
+              author="Elena, 29 ans"
+            />
+          </div>
         </div>
       </section>
 
@@ -190,6 +264,23 @@ function TechCard({ icon, title, desc }: { icon: string, title: string, desc: st
       <div className="text-4xl mb-4">{icon}</div>
       <h3 className="text-lg font-bold text-[#e7e5e4] mb-2">{title}</h3>
       <p className="text-[#a8a29e] text-sm leading-relaxed">{desc}</p>
+    </div>
+  );
+}
+
+function ImpactCard({ quote, author }: { quote: string, author: string }) {
+  return (
+    <div className="p-6 rounded-xl bg-[#1c1917] border border-[#d97706]/20 hover:border-[#d97706]/40 transition-all group">
+      <div className="text-[#d97706] text-4xl font-serif mb-2 opacity-50">"</div>
+      <p className="text-[#d6d3d1] italic mb-6 leading-relaxed relative z-10">
+        {quote}
+      </p>
+      <div className="flex items-center gap-3">
+        <div className="w-8 h-8 rounded-full bg-[#d97706]/20 flex items-center justify-center text-[#d97706] text-xs font-bold">
+          {author.charAt(0)}
+        </div>
+        <span className="text-[#a8a29e] text-xs font-bold tracking-widest uppercase">{author}</span>
+      </div>
     </div>
   );
 }

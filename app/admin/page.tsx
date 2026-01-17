@@ -98,6 +98,7 @@ Voici le profil complet du sujet pour écrire son "Roman de Vie".
 Prénom: ${req.userData.firstName}
 Nom: ${req.userData.lastName}
 Date de Naissance: ${req.userData.birthDate}
+Focus de lecture: ${req.userData.focus || 'Non spécifié'}
 
 Chemin de Vie: ${req.reportResults.lifePath}
 Nombre d'Expression: ${req.reportResults.expression}
@@ -143,6 +144,7 @@ Peurs: ${req.lifeDetails.fears || '-'}
 
 --- CONSIGNE ---
 Écris le premier chapitre d'un roman à la troisième personne centré sur ce personnage.
+L'axe principal du récit doit être : ${req.userData.focus || 'Le développement personnel'}.
 Utilise les cycles et les défis pour structurer l'intrigue et les éléments biographiques pour donner de la chair à l'histoire.
 Le ton doit être inspirant, mystérieux et profondément psychologique.
     `;

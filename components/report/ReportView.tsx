@@ -106,6 +106,13 @@ export default function ReportView({ userData }: ReportViewProps) {
         
         {/* Header */}
         <header className="text-center space-y-4 pt-8">
+          
+          {/* TEMPORARY DEBUG: Check if advanced data is present */}
+          {/* <div className="bg-red-100 p-2 text-xs text-red-800 text-left overflow-auto max-h-32 mb-4 rounded border border-red-300">
+            <strong>DEBUG ADVANCED PROFILE:</strong>
+            <pre>{JSON.stringify(results.advancedProfile, null, 2)}</pre>
+          </div> */}
+
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}

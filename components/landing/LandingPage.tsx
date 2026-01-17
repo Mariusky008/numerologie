@@ -97,6 +97,8 @@ export default function LandingPage({ onStart }: LandingPageProps) {
                <ServicePill icon="📆" text="Prévisions 12 mois" />
                <ServicePill icon="🧩" text="Grille d'Inclusion" />
                <ServicePill icon="🔮" text="Défis de Vie" />
+               <ServicePill icon="♈" text="Signe Astrologique" />
+               <ServicePill icon="🪐" text="Planète Dominante" />
             </div>
          </div>
       </section>

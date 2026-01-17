@@ -76,11 +76,11 @@ Nombre d'Expression: ${req.reportResults.expression}
 Moi Intime: ${req.reportResults.personality}
 Année Personnelle: ${req.reportResults.personalYear}
 
-Grille d'Inclusion: ${Object.entries(req.reportResults.inclusionGrid).map(([k, v]) => `${k}:${v}`).join(', ')}
+Grille d'Inclusion: ${req.reportResults.inclusionGrid ? Object.entries(req.reportResults.inclusionGrid).map(([k, v]) => `${k}:${v}`).join(', ') : 'Non calculée'}
 Dettes Karmiques (Manques): ${req.reportResults.missingNumbers?.join(', ') || 'Aucune'}
 Forces (Excès): ${req.reportResults.excessNumbers?.join(', ') || 'Aucune'}
-Moi Subconscient: ${req.reportResults.subconsciousSelf}
-Le Pont: ${req.reportResults.bridgeNumber}
+Moi Subconscient: ${req.reportResults.subconsciousSelf || 'Non calculé'}
+Le Pont: ${req.reportResults.bridgeNumber || 'Non calculé'}
 
 Cycles de Vie:
 - Cycle 1 (Formatif): ${req.reportResults.cycles.cycle1}
@@ -95,10 +95,10 @@ Défis de Vie:
 - Ultime: ${req.reportResults.challenges.major2}
 
 Défis Profonds (Module 3): ${req.reportResults.deepChallenges?.join(', ') || 'Non calculé'}
-Vibration Lieu de Naissance: ${req.reportResults.astroResonance.birthPlaceVibration}
+Vibration Lieu de Naissance: ${req.reportResults.astroResonance?.birthPlaceVibration || 'Non calculé'}
 
 Prévisions Carrière (10 ans):
-${req.reportResults.careerForecast.map(f => `- ${f.year}: AP ${f.personalYear}`).join('\n')}
+${req.reportResults.careerForecast ? req.reportResults.careerForecast.map(f => `- ${f.year}: AP ${f.personalYear}`).join('\n') : 'Non calculé'}
 
 --- ÉLÉMENTS BIOGRAPHIQUES (SOUVENIRS) ---
 Lieux de vie: ${req.lifeDetails.placesLived}

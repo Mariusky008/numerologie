@@ -3,7 +3,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
-import FullReport from '@/components/report/FullReport';
+import FullReportV2 from '@/components/report/FullReportV2';
 import { UserData, NumerologyResult } from '@/lib/types';
 import { 
   calculateLifePath, 
@@ -102,7 +102,7 @@ function PrintContent() {
 
   if (!data) return <div className="p-12 text-center text-stone-500">Chargement de l'étude...</div>;
 
-  return <FullReport userData={data.userData} results={data.results} etymology={data.etymology} />;
+  return <FullReportV2 userData={data.userData} results={data.results} etymology={data.etymology} />;
 }
 
 export default function PrintPage() {

@@ -209,7 +209,7 @@ const archetypes: Record<number, NumberArchetype> = {
   }
 };
 
-const getNumberArchetype = (num: number): NumberArchetype => {
+export const getNumberArchetype = (num: number): NumberArchetype => {
   return archetypes[num as keyof typeof archetypes] || archetypes[1];
 };
 

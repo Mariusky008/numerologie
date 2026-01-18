@@ -394,7 +394,7 @@ export default function ReportView({ userData }: ReportViewProps) {
                 className="flex items-center gap-3 px-8 py-4 bg-white text-[#78350f] border-2 border-[#78350f] rounded-full hover:bg-[#fffbf0] transition-colors shadow-sm"
               >
                 <Download className="w-5 h-5" />
-                Télécharger le PDF complet
+                TÉLÉCHARGER LE RAPPORT V3
               </button>
             </div>
           </div>

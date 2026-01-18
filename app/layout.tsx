@@ -21,6 +21,8 @@ export const metadata: Metadata = {
   description: "Obtenez votre analyse numérologique complète : Chemin de Vie, Dettes Karmiques, et Prévisions Annuelles. Une méthode précise alliant tradition et modernité.",
 };
 
+export const revalidate = 0; // Disable static caching globally
+
 export default function RootLayout({
   children,
 }: Readonly<{

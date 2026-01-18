@@ -601,25 +601,7 @@ export default function ReportView({ userData }: ReportViewProps) {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
                 onClick={() => {
-                  console.log("Download Button Clicked");
                   trackEvent('download_click');
-                  const params = new URLSearchParams({
-                    fn: userData.firstName,
-                    ln: userData.lastName,
-                    bd: userData.birthDate,
-                    bp: userData.birthPlace || '',
-                    fo: userData.focus
-                  });
-                  window.open(`/pdf-report?${params.toString()}`, '_blank');
-                }}
-                className="flex items-center gap-3 px-8 py-4 bg-white text-[#78350f] border-2 border-[#78350f] rounded-full hover:bg-[#fffbf0] transition-colors shadow-sm"
-              >
-                <Download className="w-5 h-5" />
-                TÉLÉCHARGER LE RAPPORT V3
-              </button>
-
-              <button 
-                onClick={() => {
                   const params = new URLSearchParams({
                     fn: userData.firstName,
                     ln: userData.lastName,
@@ -632,7 +614,7 @@ export default function ReportView({ userData }: ReportViewProps) {
                 className="flex items-center gap-3 px-8 py-4 bg-[#1B263B] text-white border-2 border-[#1B263B] rounded-full hover:bg-[#0f172a] transition-colors shadow-sm"
               >
                 <Download className="w-5 h-5" />
-                TESTER LE RAPPORT V3 - A/B (NOUVEAU)
+                TÉLÉCHARGER MON RAPPORT COMPLET (V3)
               </button>
             </div>
           </div>

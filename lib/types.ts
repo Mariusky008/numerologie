@@ -76,6 +76,14 @@ export interface NumerologyResult {
   // Transits (Lettres de Passage)
   transits?: Transits;
 
+  // Planes of Expression (Plans d'Expression)
+  planesOfExpression?: {
+    mental: number;
+    physical: number;
+    emotional: number;
+    intuitive: number;
+  };
+
   // Real Astronomy Data
   realAstro?: {
     [key: string]: {

@@ -20,7 +20,8 @@ import {
   getAdvancedProfile,
   calculateLifePathDetailed,
   calculateNameNumbersDetailed,
-  calculateTransits
+  calculateTransits,
+  calculatePlanesOfExpression
 } from '@/lib/numerology/engine';
 import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
 import { calculerThemeAstral } from '@/lib/astro/engine';
@@ -282,6 +283,56 @@ export default function ReportView({ userData }: ReportViewProps) {
                 ))}
               </div>
             </div>
+
+            {results.planesOfExpression && (
+              <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
+                <h3 className="text-xl font-serif text-[#78350f] mb-4">Plans d'Expression</h3>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* Mental */}
+                    <div>
+                      <div className="flex justify-between text-[10px] uppercase tracking-widest mb-1">
+                        <span>Mental</span>
+                        <span className="font-bold text-[#d97706]">{results.planesOfExpression.mental}%</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-stone-100 rounded-full overflow-hidden">
+                        <motion.div initial={{ width: 0 }} animate={{ width: `${results.planesOfExpression.mental}%` }} className="h-full bg-blue-400" />
+                      </div>
+                    </div>
+                    {/* Physique */}
+                    <div>
+                      <div className="flex justify-between text-[10px] uppercase tracking-widest mb-1">
+                        <span>Physique</span>
+                        <span className="font-bold text-[#d97706]">{results.planesOfExpression.physical}%</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-stone-100 rounded-full overflow-hidden">
+                        <motion.div initial={{ width: 0 }} animate={{ width: `${results.planesOfExpression.physical}%` }} className="h-full bg-red-400" />
+                      </div>
+                    </div>
+                    {/* Émotionnel */}
+                    <div>
+                      <div className="flex justify-between text-[10px] uppercase tracking-widest mb-1">
+                        <span>Émotionnel</span>
+                        <span className="font-bold text-[#d97706]">{results.planesOfExpression.emotional}%</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-stone-100 rounded-full overflow-hidden">
+                        <motion.div initial={{ width: 0 }} animate={{ width: `${results.planesOfExpression.emotional}%` }} className="h-full bg-green-400" />
+                      </div>
+                    </div>
+                    {/* Intuitif */}
+                    <div>
+                      <div className="flex justify-between text-[10px] uppercase tracking-widest mb-1">
+                        <span>Intuitif</span>
+                        <span className="font-bold text-[#d97706]">{results.planesOfExpression.intuitive}%</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-stone-100 rounded-full overflow-hidden">
+                        <motion.div initial={{ width: 0 }} animate={{ width: `${results.planesOfExpression.intuitive}%` }} className="h-full bg-purple-400" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
               <h3 className="text-xl font-serif text-[#78350f] mb-4">Année Personnelle {results.personalYear}</h3>

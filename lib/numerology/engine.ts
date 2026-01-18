@@ -15,9 +15,6 @@ const GEMATRIA: Record<string, number> = {
 
 const VOWELS = new Set(['a', 'e', 'i', 'o', 'u', 'y']);
 
-/**
- * Normalizes a string: removes accents, converts to lowercase, removes non-alpha chars.
- */
 export function normalizeString(str: string): string {
   return str
     .normalize("NFD")
@@ -26,49 +23,69 @@ export function normalizeString(str: string): string {
     .replace(/[^a-z]/g, "");
 }
 
-/**
- * Reduces a number to a single digit (1-9) or Master Number (11, 22, 33).
- * Returns ONLY the final number.
- */
-export function reduceNumber(num: number): number {
-  if (num === 11 || num === 22 || num === 33) return num;
-  if (num < 10) return num;
-  const sum = num.toString().split('').reduce((acc, curr) => acc + parseInt(curr), 0);
-  return reduceNumber(sum);
+function reduceFinal(n: number): number {
+  return String(n).split('').reduce((a, b) => Number(a) + Number(b), 0);
 }
 
 /**
- * Detailed reduction that preserves the sub-number source.
- * Detects Karmic Debts: 13, 14, 16, 19.
+ * Expert Reduction Logic
+ * Detects Karmic Debts (13, 14, 16, 19) during the process.
  */
-export function reduceNumberDetailed(num: number): NumberDetail {
-  let current = num;
-  let subNumber = num;
-  
-  const karmicNumbers = new Set([13, 14, 16, 19]);
-  let karmicDebt: number | undefined = undefined;
+export function reduceNumberExpert(num: number): NumberDetail {
+  const dettesKarmiques = new Set([13, 14, 16, 19]);
+  const maitresNombres = new Set([11, 22, 33]);
 
-  // If the input itself is karmic
-  if (karmicNumbers.has(num)) karmicDebt = num;
-
-  while (current > 9 && current !== 11 && current !== 22 && current !== 33) {
-    if (karmicNumbers.has(current)) karmicDebt = current;
-    
-    subNumber = current;
-    current = current.toString().split('').reduce((acc, curr) => acc + parseInt(curr), 0);
+  // 1. Check direct input
+  if (dettesKarmiques.has(num)) {
+     return { 
+       value: reduceFinal(num), 
+       subNumber: num, 
+       isMaster: false, 
+       karmicDebt: num 
+     };
   }
-  
+  if (maitresNombres.has(num)) {
+    return { 
+      value: num, 
+      subNumber: num, 
+      isMaster: true 
+    };
+  }
+
+  let somme = num;
+  let lastSum = num;
+
+  // 2. Loop reduction
+  while (somme > 9 && !maitresNombres.has(somme)) {
+    // Check Karmic Debt "en route"
+    if (dettesKarmiques.has(somme)) {
+      return {
+        value: reduceFinal(somme),
+        subNumber: somme,
+        isMaster: false,
+        karmicDebt: somme
+      };
+    }
+    
+    lastSum = somme;
+    somme = String(somme).split('').reduce((a, b) => Number(a) + Number(b), 0);
+  }
+
   return {
-    value: current,
-    subNumber: subNumber,
-    isMaster: current === 11 || current === 22 || current === 33,
-    karmicDebt
+    value: somme,
+    subNumber: lastSum === somme ? num : lastSum,
+    isMaster: maitresNombres.has(somme)
   };
 }
 
-/**
- * Calculates the Life Path Number with Details.
- */
+// Alias for compatibility (replacing old reduceNumberDetailed)
+export const reduceNumberDetailed = reduceNumberExpert;
+
+// Simple reduction for basic needs
+export function reduceNumber(num: number): number {
+  return reduceNumberExpert(num).value;
+}
+
 export function calculateLifePathDetailed(birthDate: string): NumberDetail {
   const [yearStr, monthStr, dayStr] = birthDate.split('-');
   
@@ -80,7 +97,6 @@ export function calculateLifePathDetailed(birthDate: string): NumberDetail {
   return reduceNumberDetailed(total);
 }
 
-// Wrapper for backward compatibility
 export function calculateLifePath(birthDate: string): number {
   return calculateLifePathDetailed(birthDate).value;
 }
@@ -106,7 +122,6 @@ export function calculateNameNumbersDetailed(fullName: string) {
   };
 }
 
-// Wrapper for backward compatibility
 export function calculateNameNumbers(fullName: string) {
   const details = calculateNameNumbersDetailed(fullName);
   return {
@@ -116,9 +131,6 @@ export function calculateNameNumbers(fullName: string) {
   };
 }
 
-/**
- * Calculates Personal Year.
- */
 export function calculatePersonalYear(birthDate: string, currentYear: number = new Date().getFullYear()): number {
   const [_, monthStr, dayStr] = birthDate.split('-');
   const day = parseInt(dayStr);
@@ -128,9 +140,6 @@ export function calculatePersonalYear(birthDate: string, currentYear: number = n
   return reduceNumber(sum);
 }
 
-/**
- * Professional Mapping based on dominant numbers.
- */
 export function getProfessionalAxes(lifePath: number, expression: number): string[] {
   const axes: string[] = [];
   const numbers = new Set([lifePath, expression]);
@@ -151,9 +160,6 @@ export function getProfessionalAxes(lifePath: number, expression: number): strin
   return Array.from(new Set(axes));
 }
 
-/**
- * Calculates the Challenges (Défis).
- */
 export function calculateChallenges(birthDate: string) {
   const [yearStr, monthStr, dayStr] = birthDate.split('-');
   
@@ -174,7 +180,6 @@ export function calculateChallenges(birthDate: string) {
   };
 }
 
-// Zodiac calculation
 export function getZodiacSign(day: number, month: number): string {
   if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return "belier";
   if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return "taureau";
@@ -190,7 +195,6 @@ export function getZodiacSign(day: number, month: number): string {
   return "poissons";
 }
 
-// Life Path dominant planet mapping (Chaldean/Modern mix)
 export function getDominantPlanet(lifePath: number): string {
   const mapping: Record<number, string> = {
     1: "soleil",
@@ -251,9 +255,6 @@ export function getAdvancedProfile(lifePath: number, birthDate: string) {
   }
 }
 
-/**
- * Calculates the Inclusion Grid (Grille d'Inclusion).
- */
 export function calculateInclusionGrid(fullName: string): InclusionGrid {
   const cleanName = normalizeString(fullName);
   const grid: InclusionGrid = {
@@ -355,17 +356,10 @@ export function generateCareerForecast(birthDate: string, startYear: number = 20
   return forecast;
 }
 
-/**
- * Calculates Transits (Lettres de Passage) for a given year.
- * Physical Transit = Derived from First Name
- * Mental Transit = Derived from Last Name
- * Spiritual Transit = Derived from Full Name
- */
 export function calculateTransits(firstName: string, lastName: string, birthDate: string, targetYear: number = new Date().getFullYear()) {
   const birthYear = parseInt(birthDate.split('-')[0]);
   const age = targetYear - birthYear;
   
-  // Helper to find active letter
   const findActiveLetter = (sourceStr: string, targetAge: number): string => {
     const clean = normalizeString(sourceStr);
     if (!clean) return '?';
@@ -373,11 +367,9 @@ export function calculateTransits(firstName: string, lastName: string, birthDate
     let currentAge = 0;
     let index = 0;
     
-    // Loop until we reach the age
-    // Limit to 1000 iterations to prevent infinite loop
     for(let k=0; k<1000; k++) {
       const char = clean[index % clean.length];
-      const duration = GEMATRIA[char] || 1; // Default to 1 if unknown
+      const duration = GEMATRIA[char] || 1;
       
       if (currentAge <= targetAge && (currentAge + duration) > targetAge) {
         return char.toUpperCase();
@@ -393,5 +385,39 @@ export function calculateTransits(firstName: string, lastName: string, birthDate
     physical: findActiveLetter(firstName, age),
     mental: findActiveLetter(lastName, age),
     spiritual: findActiveLetter(firstName + lastName, age)
+  };
+}
+
+/**
+ * Calculates Planes of Expression (Mental, Physical, Emotional, Intuitive).
+ * Returns percentage distribution.
+ */
+export function calculatePlanesOfExpression(fullName: string) {
+  const cleanName = normalizeString(fullName);
+  let mental = 0;
+  let physical = 0;
+  let emotional = 0;
+  let intuitive = 0;
+  
+  const totalLetters = cleanName.length || 1;
+
+  for (const char of cleanName) {
+    const val = GEMATRIA[char] || 0;
+    
+    // Mental: 1, 8, 9
+    if ([1, 8, 9].includes(val)) mental++;
+    // Physique: 4, 5
+    else if ([4, 5].includes(val)) physical++;
+    // Émotionnel: 2, 3, 6
+    else if ([2, 3, 6].includes(val)) emotional++;
+    // Intuitif: 7 (et 11, 22 réduits)
+    else if (val === 7) intuitive++;
+  }
+
+  return {
+    mental: Math.round((mental / totalLetters) * 100),
+    physical: Math.round((physical / totalLetters) * 100),
+    emotional: Math.round((emotional / totalLetters) * 100),
+    intuitive: Math.round((intuitive / totalLetters) * 100)
   };
 }

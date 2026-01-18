@@ -125,7 +125,8 @@ function PrintContent() {
                },
                careerForecast,
                advancedProfile,
-               transits
+               transits,
+               planesOfExpression
             }
           });
         } catch (e) {

@@ -1,14 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-// Debug Log (First 5 chars only)
-if (typeof window !== 'undefined') {
-  console.log('Supabase Config:', {
-    url: supabaseUrl,
-    keyPrefix: supabaseAnonKey ? supabaseAnonKey.substring(0, 5) + '...' : 'UNDEFINED'
-  });
-}
+// HARDCODED KEYS (Temporary fix for Vercel env vars issue)
+const supabaseUrl = 'https://ymmepfqrvutjihubijtv.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdybmRmc3Z6anpneGVhZ215c3VrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY5MzYxODIsImV4cCI6MjA4MjUxMjE4Mn0.-8Pt0H9Ee2ETyjIRB1zt_ihIiXiA04Lar7iBf4mfyBM';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

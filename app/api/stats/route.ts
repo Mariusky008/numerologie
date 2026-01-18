@@ -3,11 +3,6 @@ import { supabase } from '@/lib/supabase';
 
 export async function GET() {
   try {
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-        console.warn("Missing Supabase env vars on server");
-        return NextResponse.json({});
-    }
-
     const { data, error } = await supabase
       .from('site_stats')
       .select('*');

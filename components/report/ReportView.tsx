@@ -23,6 +23,7 @@ import {
   calculateTransits
 } from '@/lib/numerology/engine';
 import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
+import { calculerThemeAstral } from '@/lib/astro/engine';
 import { PLANET_INFLUENCES, ZODIAC_DETAILS } from '@/lib/numerology/interpretations-astro-geo';
 import PersonalityRadar from './PersonalityRadar';
 import InclusionGridViz from './InclusionGridViz';
@@ -75,7 +76,6 @@ export default function ReportView({ userData }: ReportViewProps) {
       const advancedProfile = getAdvancedProfile(lifePath, userData.birthDate);
 
       // --- REAL ASTROLOGY CALCULATION ---
-      let realAstro = null;
       if (userData.birthPlace) {
         // We trigger this asynchronously to not block initial render
         fetch(`/api/geocode?city=${encodeURIComponent(userData.birthPlace)}`)
@@ -88,7 +88,6 @@ export default function ReportView({ userData }: ReportViewProps) {
           })
           .catch(err => console.error("Geocoding failed:", err));
       }
-      // -----------------------------------
 
       setResults({
         lifePath,
@@ -142,6 +141,7 @@ export default function ReportView({ userData }: ReportViewProps) {
   // Prefer Real Astro calculation if available
   const realZodiac = results.realAstro?.['Sun']?.signe;
   const realAscendant = results.realAstro?.['Ascendant']?.signe;
+  const realHouse = results.realAstro?.['Sun']?.maison;
   
   const zodiac = realZodiac || (zodiacKey ? zodiacKey.charAt(0).toUpperCase() + zodiacKey.slice(1) : "");
   const ascendant = realAscendant || "Inconnu (Heure nécessaire)";

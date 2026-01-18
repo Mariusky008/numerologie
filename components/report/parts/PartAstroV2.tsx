@@ -30,11 +30,20 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
   const zodiacKey = results.advancedProfile?.zodiac?.toLowerCase();
   const planetKey = results.advancedProfile?.dominantPlanet?.toLowerCase();
   
-  const zodiac = zodiacKey ? zodiacKey.charAt(0).toUpperCase() + zodiacKey.slice(1) : "";
+  // Prefer Real Astro calculation if available
+  const realZodiac = results.realAstro?.['Sun']?.signe;
+  const realAscendant = results.realAstro?.['Ascendant']?.signe;
+  const realHouse = results.realAstro?.['Sun']?.maison;
+
+  const zodiac = realZodiac || (zodiacKey ? zodiacKey.charAt(0).toUpperCase() + zodiacKey.slice(1) : "");
+  const ascendant = realAscendant || "Inconnu";
+
   const planet = planetKey ? planetKey.charAt(0).toUpperCase() + planetKey.slice(1) : "";
   
   const planetText = planetKey ? PLANET_INFLUENCES[planetKey] : "";
-  const zodiacInfo = zodiacKey ? ZODIAC_DETAILS[zodiacKey] : null;
+  // Use zodiac info based on real zodiac if available
+  const zodiacInfoKey = realZodiac ? realZodiac.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : zodiacKey;
+  const zodiacInfo = zodiacInfoKey ? ZODIAC_DETAILS[zodiacInfoKey] : null;
 
   return (
     <PageContainer className="p-4 md:p-16">

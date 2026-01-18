@@ -110,6 +110,61 @@ export default function Part1Identity({ userData, results }: { userData: UserDat
             </div>
           </div>
         </div>
+
+        {/* PLANS D'EXPRESSION */}
+        {results.planesOfExpression && (
+          <div className="mt-8 bg-white p-8 rounded-xl border border-[#d97706]/20 shadow-sm">
+            <h3 className="text-xl md:text-2xl font-serif text-[#78350f] mb-6 border-b border-[#d97706]/20 pb-2">
+              Vos Plans d'Expression
+            </h3>
+            <p className="text-[#57534e] text-sm md:text-base leading-relaxed mb-6 italic">
+              Comment votre énergie se manifeste-t-elle au quotidien ?
+            </p>
+            
+            <div className="grid grid-cols-2 gap-6">
+              {/* Mental */}
+              <div>
+                <div className="flex justify-between text-xs uppercase tracking-widest mb-1 text-[#57534e]">
+                  <span>Mental</span>
+                  <span className="font-bold text-[#d97706]">{results.planesOfExpression.mental}%</span>
+                </div>
+                <div className="h-2 w-full bg-stone-100 rounded-full overflow-hidden border border-stone-200">
+                  <div style={{ width: `${results.planesOfExpression.mental}%` }} className="h-full bg-blue-400 print:bg-blue-600" />
+                </div>
+              </div>
+              {/* Physique */}
+              <div>
+                <div className="flex justify-between text-xs uppercase tracking-widest mb-1 text-[#57534e]">
+                  <span>Physique</span>
+                  <span className="font-bold text-[#d97706]">{results.planesOfExpression.physical}%</span>
+                </div>
+                <div className="h-2 w-full bg-stone-100 rounded-full overflow-hidden border border-stone-200">
+                  <div style={{ width: `${results.planesOfExpression.physical}%` }} className="h-full bg-red-400 print:bg-red-600" />
+                </div>
+              </div>
+              {/* Émotionnel */}
+              <div>
+                <div className="flex justify-between text-xs uppercase tracking-widest mb-1 text-[#57534e]">
+                  <span>Émotionnel</span>
+                  <span className="font-bold text-[#d97706]">{results.planesOfExpression.emotional}%</span>
+                </div>
+                <div className="h-2 w-full bg-stone-100 rounded-full overflow-hidden border border-stone-200">
+                  <div style={{ width: `${results.planesOfExpression.emotional}%` }} className="h-full bg-green-400 print:bg-green-600" />
+                </div>
+              </div>
+              {/* Intuitif */}
+              <div>
+                <div className="flex justify-between text-xs uppercase tracking-widest mb-1 text-[#57534e]">
+                  <span>Intuitif</span>
+                  <span className="font-bold text-[#d97706]">{results.planesOfExpression.intuitive}%</span>
+                </div>
+                <div className="h-2 w-full bg-stone-100 rounded-full overflow-hidden border border-stone-200">
+                  <div style={{ width: `${results.planesOfExpression.intuitive}%` }} className="h-full bg-purple-400 print:bg-purple-600" />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </PageContainer>
     </>
   );

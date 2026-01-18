@@ -101,8 +101,8 @@ export interface NumerologyResult {
     astroTransits: {
       [key: string]: {
         signe: string;
-        position_degres: number;
-        retrograde: boolean;
+        position_degres?: number;
+        retrograde?: boolean;
       }
     };
   };

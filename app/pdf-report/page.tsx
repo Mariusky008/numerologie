@@ -21,10 +21,14 @@ import {
   getAdvancedProfile,
   calculateLifePathDetailed,
   calculateNameNumbersDetailed,
-  calculateTransits
+  calculateTransits,
+  calculatePlanesOfExpression,
+  calculatePersonalMonth,
+  calculatePersonalDay
 } from '@/lib/numerology/engine';
 import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
 import { trackEvent } from '@/lib/analytics';
+import { calculerThemeAstral, calculerTransits as calculerTransitsAstro } from '@/lib/astro/engine';
 
 export const dynamic = 'force-dynamic';
 
@@ -87,6 +91,29 @@ function PrintContent() {
           const advancedProfile = getAdvancedProfile(lifePath, userData.birthDate);
           
           const transits = calculateTransits(userData.firstName, userData.lastName, userData.birthDate);
+          const planesOfExpression = calculatePlanesOfExpression(userData.firstName + userData.lastName);
+
+          // Temporal Synthesis
+          const now = new Date();
+          const currentMonth = now.getMonth() + 1;
+          const currentDay = now.getDate();
+          const personalMonth = calculatePersonalMonth(personalYear, currentMonth);
+          const personalDay = calculatePersonalDay(personalMonth, currentDay);
+          const astroTransits = calculerTransitsAstro(now);
+
+          // Real Astro (Geocoding needed)
+          let realAstro = undefined;
+          if (userData.birthPlace) {
+             try {
+                const geoRes = await fetch(`/api/geocode?city=${encodeURIComponent(userData.birthPlace)}`);
+                const geoData = await geoRes.json();
+                if (geoData.lat && geoData.lng) {
+                   realAstro = calculerThemeAstral(userData.birthDate, undefined, geoData.lat, geoData.lng);
+                }
+             } catch (err) {
+                console.error("Geocoding failed for PDF", err);
+             }
+          }
 
           setData({
             userData,
@@ -126,7 +153,13 @@ function PrintContent() {
                careerForecast,
                advancedProfile,
                transits,
-               planesOfExpression
+               planesOfExpression,
+               realAstro,
+               previsions: {
+                  personalMonth,
+                  personalDay,
+                  astroTransits
+               }
             }
           });
         } catch (e) {

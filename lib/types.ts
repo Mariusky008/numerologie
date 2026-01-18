@@ -94,6 +94,19 @@ export interface NumerologyResult {
     }
   };
 
+  // Temporal Synthesis (Previsions)
+  previsions?: {
+    personalMonth: number;
+    personalDay: number;
+    astroTransits: {
+      [key: string]: {
+        signe: string;
+        position_degres: number;
+        retrograde: boolean;
+      }
+    };
+  };
+
   // Advanced Profile (New Algorithm)
   advancedProfile?: {
     zodiac: string;

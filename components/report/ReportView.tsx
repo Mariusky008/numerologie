@@ -21,10 +21,12 @@ import {
   calculateLifePathDetailed,
   calculateNameNumbersDetailed,
   calculateTransits,
-  calculatePlanesOfExpression
+  calculatePlanesOfExpression,
+  calculatePersonalMonth,
+  calculatePersonalDay
 } from '@/lib/numerology/engine';
 import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
-import { calculerThemeAstral } from '@/lib/astro/engine';
+import { calculerThemeAstral, calculerTransits as calculerTransitsAstro } from '@/lib/astro/engine';
 import { PLANET_INFLUENCES, ZODIAC_DETAILS } from '@/lib/numerology/interpretations-astro-geo';
 import PersonalityRadar from './PersonalityRadar';
 import InclusionGridViz from './InclusionGridViz';
@@ -75,6 +77,14 @@ export default function ReportView({ userData }: ReportViewProps) {
 
       // Advanced Profile
       const advancedProfile = getAdvancedProfile(lifePath, userData.birthDate);
+
+      // --- TEMPORAL SYNTHESIS (Weather of the Day) ---
+      const now = new Date();
+      const currentMonth = now.getMonth() + 1;
+      const currentDay = now.getDate();
+      const personalMonth = calculatePersonalMonth(personalYear, currentMonth);
+      const personalDay = calculatePersonalDay(personalMonth, currentDay);
+      const astroTransits = calculerTransitsAstro(now);
 
       // --- REAL ASTROLOGY CALCULATION ---
       if (userData.birthPlace) {
@@ -509,6 +519,75 @@ export default function ReportView({ userData }: ReportViewProps) {
                    <p className="text-[#57534e] leading-relaxed">{etymology.spiritual}</p>
                  </div>
                )}
+             </div>
+           </motion.div>
+        )}
+
+        {/* SECTION IX: Météo Temporelle (Prévisions) */}
+        {results.previsions && (
+           <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.9 }}
+             className="bg-gradient-to-br from-[#1B263B] to-[#0f172a] text-white p-8 rounded-2xl border border-[#1B263B] shadow-lg"
+           >
+             <h3 className="text-2xl font-serif text-[#fffbf0] mb-6 flex items-center gap-3">
+               <span className="text-[#d97706]">IX.</span> Météo Astrale & Numérologique
+             </h3>
+             
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Numerology Forecast */}
+                <div className="space-y-6">
+                   <div className="flex items-center gap-4">
+                     <div className="text-4xl text-[#d97706]">📅</div>
+                     <div>
+                       <div className="text-xs uppercase tracking-widest text-stone-400">Cycles Temporels</div>
+                       <div className="text-xl font-serif font-bold">Vibrations du Moment</div>
+                     </div>
+                   </div>
+                   
+                   <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
+                        <div className="text-3xl font-bold text-[#d97706] mb-1">{results.previsions.personalMonth}</div>
+                        <div className="text-xs uppercase tracking-widest text-stone-400">Mois Personnel</div>
+                      </div>
+                      <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
+                        <div className="text-3xl font-bold text-[#d97706] mb-1">{results.previsions.personalDay}</div>
+                        <div className="text-xs uppercase tracking-widest text-stone-400">Jour Personnel</div>
+                      </div>
+                   </div>
+                   <p className="text-sm text-stone-300 italic">
+                     "Votre Jour Personnel {results.previsions.personalDay} vous invite à l'action immédiate, porté par l'énergie de fond de votre Mois {results.previsions.personalMonth}."
+                   </p>
+                </div>
+
+                {/* Astro Transits */}
+                <div className="space-y-6">
+                   <div className="flex items-center gap-4">
+                     <div className="text-4xl text-[#d97706]">🌌</div>
+                     <div>
+                       <div className="text-xs uppercase tracking-widest text-stone-400">Ciel Actuel</div>
+                       <div className="text-xl font-serif font-bold">Transits Planétaires</div>
+                     </div>
+                   </div>
+
+                   <div className="grid grid-cols-2 gap-3 text-sm">
+                      {['Sun', 'Moon', 'Saturn', 'Jupiter'].map((planet) => {
+                        const p = results.previsions?.astroTransits[planet];
+                        if (!p) return null;
+                        const planetName = planet === 'Sun' ? 'Soleil' : planet === 'Moon' ? 'Lune' : planet === 'Saturn' ? 'Saturne' : 'Jupiter';
+                        return (
+                          <div key={planet} className="flex justify-between items-center bg-white/5 px-3 py-2 rounded border border-white/10">
+                            <span>{planetName}</span>
+                            <span className="font-bold text-[#d97706]">{p.signe}</span>
+                          </div>
+                        );
+                      })}
+                   </div>
+                   <p className="text-xs text-stone-400 mt-2">
+                     * Position actuelle des astres influençant votre thème.
+                   </p>
+                </div>
              </div>
            </motion.div>
         )}

@@ -91,3 +91,34 @@ export function calculerThemeAstral(dateInput: string, timeInput: string | undef
 
   return resultats;
 }
+
+export function calculerTransits(dateActuelle: Date): AstroData {
+  const resultats: AstroData = {};
+  const corpsCelestes = ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"];
+  
+  corpsCelestes.forEach(corpsName => {
+    const corps = corpsName as Astronomy.Body;
+    
+    // Vecteur Géocentrique (Suffisant pour les signes planétaires mondiaux)
+    const vector = Astronomy.GeoVector(corps, dateActuelle, true);
+    const ecliptic = Astronomy.Ecliptic(vector);
+    const signe = degresVersSigne(ecliptic.elon);
+    
+    // Rétrograde
+    const dateMoins1h = new Date(dateActuelle.getTime() - 3600000);
+    const vectorMoins1h = Astronomy.GeoVector(corps, dateMoins1h, true);
+    const eclipticMoins1h = Astronomy.Ecliptic(vectorMoins1h);
+    
+    let diff = ecliptic.elon - eclipticMoins1h.elon;
+    if (diff < -300) diff += 360;
+    if (diff > 300) diff -= 360;
+    
+    resultats[corpsName] = {
+      signe,
+      retrograde: diff < 0,
+      position_degres: ecliptic.elon
+    };
+  });
+  
+  return resultats;
+}

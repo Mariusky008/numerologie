@@ -140,6 +140,22 @@ export function calculatePersonalYear(birthDate: string, currentYear: number = n
   return reduceNumber(sum);
 }
 
+/**
+ * Calculates Personal Month.
+ * Personal Month = Personal Year + Calendar Month
+ */
+export function calculatePersonalMonth(personalYear: number, month: number): number {
+  return reduceNumber(personalYear + month);
+}
+
+/**
+ * Calculates Personal Day.
+ * Personal Day = Personal Month + Calendar Day
+ */
+export function calculatePersonalDay(personalMonth: number, day: number): number {
+  return reduceNumber(personalMonth + day);
+}
+
 export function getProfessionalAxes(lifePath: number, expression: number): string[] {
   const axes: string[] = [];
   const numbers = new Set([lifePath, expression]);

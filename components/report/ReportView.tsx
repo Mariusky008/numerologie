@@ -617,6 +617,23 @@ export default function ReportView({ userData }: ReportViewProps) {
                 <Download className="w-5 h-5" />
                 TÉLÉCHARGER LE RAPPORT V3
               </button>
+
+              <button 
+                onClick={() => {
+                  const params = new URLSearchParams({
+                    fn: userData.firstName,
+                    ln: userData.lastName,
+                    bd: userData.birthDate,
+                    bp: userData.birthPlace || '',
+                    fo: userData.focus
+                  });
+                  window.open(`/pdf-report-v2?${params.toString()}`, '_blank');
+                }}
+                className="flex items-center gap-3 px-8 py-4 bg-[#1B263B] text-white border-2 border-[#1B263B] rounded-full hover:bg-[#0f172a] transition-colors shadow-sm"
+              >
+                <Download className="w-5 h-5" />
+                TESTER LE RAPPORT V3 - A/B (NOUVEAU)
+              </button>
             </div>
           </div>
 

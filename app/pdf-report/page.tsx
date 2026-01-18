@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useSearchParams } from 'next/navigation';
@@ -19,11 +18,13 @@ import {
   calculateDeepChallenges,
   calculatePlaceVibration,
   generateCareerForecast,
-  getAdvancedProfile 
+  getAdvancedProfile,
+  calculateLifePathDetailed,
+  calculateNameNumbersDetailed
 } from '@/lib/numerology/engine';
 import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
 
-export const dynamic = 'force-dynamic'; // Force dynamic rendering to avoid caching old versions
+export const dynamic = 'force-dynamic';
 
 function PrintContent() {
   const searchParams = useSearchParams();
@@ -41,7 +42,6 @@ function PrintContent() {
           console.error("Error parsing data param", e);
         }
       } else {
-        // Try getting individual params
         const firstName = searchParams.get('fn');
         const lastName = searchParams.get('ln');
         const birthDate = searchParams.get('bd');
@@ -64,14 +64,14 @@ function PrintContent() {
 
           const lifePath = calculateLifePath(userData.birthDate);
           const lifePathDetails = calculateLifePathDetailed(userData.birthDate);
-
+          
           const nameNumbers = calculateNameNumbers(userData.firstName + userData.lastName);
           const nameNumbersDetails = calculateNameNumbersDetailed(userData.firstName + userData.lastName);
-
+          
           const personalYear = calculatePersonalYear(userData.birthDate);
           const axes = getProfessionalAxes(lifePath, nameNumbers.expression);
 
-          // Calculate all extended data for print view
+          // Extended data
           const inclusionGrid = calculateInclusionGrid(userData.firstName + userData.lastName);
           const { missing, excess } = analyzeInclusion(inclusionGrid);
           const subconsciousSelf = calculateSubconsciousSelf(inclusionGrid);
@@ -82,7 +82,6 @@ function PrintContent() {
           const careerForecast = generateCareerForecast(userData.birthDate, 2026);
           const cycles = calculateCycles(userData.birthDate);
           
-          // Advanced Profile Calculation for Print
           const advancedProfile = getAdvancedProfile(lifePath, userData.birthDate);
 
           setData({

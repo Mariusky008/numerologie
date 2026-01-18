@@ -1,3 +1,8 @@
+/**
+ * Core Numerology Engine
+ * Handles all calculations for Life Path, Expression, Cycles, etc.
+ * Updated with Karmic Debt Logic (13, 14, 16, 19)
+ */
 import { InclusionGrid, NumberDetail } from '../types';
 import { ADVANCED_DATA } from './advanced-data';
 

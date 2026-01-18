@@ -200,8 +200,8 @@ export function getAdvancedProfile(lifePath: number, birthDate: string) {
     const zodiac = getZodiacSign(day, month);
     const planet = getDominantPlanet(lifePath);
     
-    // Safe access to data with fallback
-    const pathData = (ADVANCED_DATA.chemins_vie as any)[lifePath] || null;
+    // Safe access to data with fallback (try number key, then string key)
+    const pathData = (ADVANCED_DATA.chemins_vie as any)[lifePath] || (ADVANCED_DATA.chemins_vie as any)[lifePath.toString()] || null;
     const mcData = (ADVANCED_DATA.milieu_du_ciel as any)[zodiac] || null;
     
     return {

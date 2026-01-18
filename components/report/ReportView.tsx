@@ -389,22 +389,12 @@ export default function ReportView({ userData }: ReportViewProps) {
               <button 
                 onClick={() => {
                   const dataStr = encodeURIComponent(JSON.stringify(userData));
-                  window.open(`/report/pdf?data=${dataStr}&t=${Date.now()}`, '_blank');
+                  window.open(`/pdf-report?data=${dataStr}&t=${Date.now()}`, '_blank');
                 }}
                 className="flex items-center gap-3 px-8 py-4 bg-white text-[#78350f] border-2 border-[#78350f] rounded-full hover:bg-[#fffbf0] transition-colors shadow-sm"
               >
                 <Download className="w-5 h-5" />
                 Télécharger le PDF complet
-              </button>
-
-              <button 
-                onClick={() => {
-                  const dataStr = encodeURIComponent(JSON.stringify(userData));
-                  window.open(`/report/debug?data=${dataStr}&t=${Date.now()}`, '_blank');
-                }}
-                className="flex items-center gap-3 px-4 py-4 bg-red-100 text-red-800 border-2 border-red-800 rounded-full hover:bg-red-200 transition-colors shadow-sm text-sm"
-              >
-                Test V2 (Debug)
               </button>
             </div>
           </div>

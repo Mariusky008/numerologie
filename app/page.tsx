@@ -23,7 +23,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#fffbf0] text-[#57534e]">
+    <main className="min-h-screen bg-[#FAF9F7] text-[#2C2F4A]">
       {!hasStarted ? (
         <LandingPage onStart={handleStart} />
       ) : !userData ? (

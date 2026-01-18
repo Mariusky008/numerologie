@@ -8,14 +8,14 @@ const VibrationalSignature = ({ name }: { name: string }) => {
   const chars = name.toUpperCase().split('').filter(c => c.match(/[A-Z]/));
   return (
     <div className="w-64 h-64 relative flex items-center justify-center">
-      <div className="absolute inset-0 border border-[#d97706]/20 rounded-full animate-spin-slow" style={{ animationDuration: '60s' }} />
+      <div className="absolute inset-0 border border-[#C9A24D]/20 rounded-full animate-spin-slow" style={{ animationDuration: '60s' }} />
       {chars.map((char, i) => {
         const rotation = (i / chars.length) * 360;
         const height = (char.charCodeAt(0) - 64) * 4; // A=1 -> 4px, Z=26 -> 104px
         return (
           <div 
             key={i}
-            className="absolute bottom-1/2 left-1/2 w-1 bg-[#d97706]/40 origin-bottom rounded-full"
+            className="absolute bottom-1/2 left-1/2 w-1 bg-[#C9A24D]/40 origin-bottom rounded-full"
             style={{ 
               height: `${height}px`,
               transform: `rotate(${rotation}deg) translateX(-50%)`,
@@ -23,8 +23,8 @@ const VibrationalSignature = ({ name }: { name: string }) => {
           />
         );
       })}
-      <div className="absolute w-32 h-32 border border-[#d97706]/40 rounded-full" />
-      <div className="absolute w-2 h-2 bg-[#d97706] rounded-full shadow-[0_0_20px_#d97706]" />
+      <div className="absolute w-32 h-32 border border-[#C9A24D]/40 rounded-full" />
+      <div className="absolute w-2 h-2 bg-[#C9A24D] rounded-full shadow-[0_0_20px_#C9A24D]" />
     </div>
   );
 };
@@ -33,29 +33,29 @@ export default function Part1Intro({ userData, results }: { userData: UserData, 
   return (
     <>
       {/* PAGE 1: COVER */}
-      <PageContainer className="items-center justify-center p-4 md:p-12 text-center bg-[#fffbf0] text-[#44403c]">
-        <div className="absolute inset-4 md:inset-8 border border-[#d97706]/30 pointer-events-none" />
-        <h1 className="text-4xl md:text-6xl font-serif text-[#78350f] mb-4 md:mb-6 break-words max-w-full px-4">
+      <PageContainer className="items-center justify-center p-4 md:p-12 text-center bg-[#FAF9F7] text-[#2C2F4A]">
+        <div className="absolute inset-4 md:inset-8 border border-[#C9A24D]/30 pointer-events-none" />
+        <h1 className="text-4xl md:text-6xl font-serif text-[#2C2F4A] mb-4 md:mb-6 break-words max-w-full px-4">
           {userData.firstName} <br className="hidden md:block" />
-          <span className="text-[#d97706] block md:inline mt-2 md:mt-0">{userData.lastName}</span>
+          <span className="text-[#C9A24D] block md:inline mt-2 md:mt-0">{userData.lastName}</span>
         </h1>
-        <div className="w-16 md:w-24 h-1 bg-[#d97706] mx-auto mb-6 md:mb-8" />
-        <h2 className="text-lg md:text-2xl font-light tracking-[0.2em] md:tracking-[0.3em] uppercase text-[#a8a29e] mb-8 md:mb-12">
+        <div className="w-16 md:w-24 h-1 bg-[#C9A24D] mx-auto mb-6 md:mb-8" />
+        <h2 className="text-lg md:text-2xl font-light tracking-[0.2em] md:tracking-[0.3em] uppercase text-[#8FA6A0] mb-8 md:mb-12">
           L'Odyssée Numérologique
         </h2>
         <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-[#78716c] text-xs md:text-sm tracking-widest uppercase">
-          <span className="flex items-center gap-2"><Star className="w-4 h-4 text-[#d97706]" /> Chemin de Vie {results.lifePath}</span>
+          <span className="flex items-center gap-2"><Star className="w-4 h-4 text-[#C9A24D]" /> Chemin de Vie {results.lifePath}</span>
           <span className="hidden md:block">•</span>
-          <span className="flex items-center gap-2 text-center"><MapPin className="w-4 h-4 text-[#d97706]" /> {userData.birthPlace}</span>
+          <span className="flex items-center gap-2 text-center"><MapPin className="w-4 h-4 text-[#C9A24D]" /> {userData.birthPlace}</span>
         </div>
-        <div className="absolute bottom-6 md:bottom-12 text-[#a8a29e] text-[10px] md:text-xs px-4">
+        <div className="absolute bottom-6 md:bottom-12 text-[#8FA6A0] text-[10px] md:text-xs px-4">
           Document Confidentiel • Généré pour l'âme de {userData.firstName}
         </div>
       </PageContainer>
 
       {/* PAGE 2: SOMMAIRE */}
       <PageContainer className="p-4 md:p-16 justify-center">
-        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-16 text-center">Architecture de la Lecture</h2>
+        <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8 md:mb-16 text-center">Architecture de la Lecture</h2>
         <div className="space-y-4 md:space-y-8 max-w-2xl mx-auto w-full px-4">
           {[
             { id: 'I', title: "Le Portail d'Entrée", page: '03' },
@@ -67,8 +67,8 @@ export default function Part1Intro({ userData, results }: { userData: UserData, 
             { id: 'VII', title: "Architecture Astrale", page: '42' },
             { id: 'VIII', title: "Échos Étymologiques", page: '45' }
           ].map((item) => (
-            <div key={item.id} className="flex justify-between items-baseline border-b border-[#d97706]/30 pb-2 md:pb-4">
-              <span className="text-base md:text-xl font-serif text-[#d97706]">{item.id}. {item.title}</span>
+            <div key={item.id} className="flex justify-between items-baseline border-b border-[#C9A24D]/30 pb-2 md:pb-4">
+              <span className="text-base md:text-xl font-serif text-[#C9A24D]">{item.id}. {item.title}</span>
               <span className="text-[#78716c] text-sm md:text-base">{item.page}</span>
             </div>
           ))}
@@ -77,11 +77,11 @@ export default function Part1Intro({ userData, results }: { userData: UserData, 
 
       {/* PAGE 3: AVANT-PROPOS */}
       <PageContainer className="p-4 md:p-16">
-        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block">
+        <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8 md:mb-12 border-b-2 border-[#C9A24D] pb-4 inline-block">
           Avant-Propos
         </h2>
-        <div className="prose prose-lg text-[#57534e] max-w-none text-sm md:text-base leading-relaxed">
-          <p className="text-base md:text-xl italic text-[#d97706] mb-6 md:mb-8">
+        <div className="prose prose-lg text-[#2C2F4A] max-w-none text-sm md:text-base leading-relaxed">
+          <p className="text-base md:text-xl italic text-[#C9A24D] mb-6 md:mb-8">
             "Les nombres sont le plus haut degré de la connaissance. Le nombre est la connaissance même." — Platon
           </p>
           <p className="mb-4">
@@ -99,10 +99,10 @@ export default function Part1Intro({ userData, results }: { userData: UserData, 
 
       {/* PAGE 4-5: ETYMOLOGIE & VIBRATION NOM */}
       
-      <PageContainer className="p-4 md:p-16 flex items-center justify-center bg-[#fffbf0] text-[#44403c]">
+      <PageContainer className="p-4 md:p-16 flex items-center justify-center bg-[#FAF9F7] text-[#2C2F4A]">
          <div className="text-center w-full">
-           <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-6 md:mb-8">La Signature Vibratoire</h2>
-           <p className="text-base md:text-xl text-[#57534e] max-w-2xl mx-auto mb-8 px-4">
+           <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-6 md:mb-8">La Signature Vibratoire</h2>
+           <p className="text-base md:text-xl text-[#2C2F4A] max-w-2xl mx-auto mb-8 px-4">
              Voici la représentation graphique unique de la fréquence sonore de votre identité complète.
            </p>
            <div className="mt-8 md:mt-12 flex justify-center scale-75 md:scale-100">
@@ -113,15 +113,15 @@ export default function Part1Intro({ userData, results }: { userData: UserData, 
 
       {/* PAGE 6-7: SIGNATURE ENERGETIQUE (Suite ou Visualisation) */}
        <PageContainer className="p-4 md:p-16">
-        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block">
+        <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8 md:mb-12 border-b-2 border-[#C9A24D] pb-4 inline-block">
           Résonance Intérieure
         </h2>
-        <div className="prose prose-lg text-[#57534e] text-sm md:text-base leading-relaxed">
+        <div className="prose prose-lg text-[#2C2F4A] text-sm md:text-base leading-relaxed">
            <p className="mb-8">
              Votre signature énergétique est unique. Elle agit comme un aimant, attirant à vous les expériences qui résonnent avec votre fréquence dominante : le nombre {results.expression}.
            </p>
-           <div className="my-8 md:my-12 p-6 md:p-8 bg-white border-l-4 border-[#d97706] rounded-r-lg shadow-sm">
-             <h3 className="text-lg md:text-xl font-bold mb-2 text-[#d97706]">Note de Fréquence</h3>
+           <div className="my-8 md:my-12 p-6 md:p-8 bg-white border-l-4 border-[#C9A24D] rounded-r-lg shadow-sm">
+             <h3 className="text-lg md:text-xl font-bold mb-2 text-[#C9A24D]">Note de Fréquence</h3>
              <p>
                Tout comme une note de musique, votre présence émet une vibration constante.
                Les gens ressentent cette "note" avant même que vous ne parliez. C'est votre charisme naturel.

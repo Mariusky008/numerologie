@@ -47,32 +47,32 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
 
   return (
     <PageContainer className="p-4 md:p-16">
-      <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block">
+      <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8 md:mb-12 border-b-2 border-[#C9A24D] pb-4 inline-block">
         Architecture Astrale & Résonance
       </h2>
 
       {/* 1. ASTROLOGIE */}
       {results.advancedProfile && (
         <div className="mb-16">
-          <h3 className="text-xl md:text-2xl font-serif text-[#d97706] mb-8 flex items-center gap-3">
-            <span className="w-8 h-8 rounded-full bg-[#d97706] text-white flex items-center justify-center text-sm font-bold">VII</span>
+          <h3 className="text-xl md:text-2xl font-serif text-[#C9A24D] mb-8 flex items-center gap-3">
+            <span className="w-8 h-8 rounded-full bg-[#C9A24D] text-white flex items-center justify-center text-sm font-bold">VII</span>
             Alignement Céleste
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* ZODIAC CARD */}
-            <div className="bg-white p-8 rounded-2xl border border-[#d97706]/20 shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
-               <div className="absolute top-0 right-0 p-4 opacity-10 text-9xl font-serif pointer-events-none text-[#78350f]">♈</div>
+            <div className="bg-white p-8 rounded-2xl border border-[#C9A24D]/20 shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
+               <div className="absolute top-0 right-0 p-4 opacity-10 text-9xl font-serif pointer-events-none text-[#2C2F4A]">♈</div>
                
                <div className="relative z-10">
                  <div className="flex items-center gap-4 mb-6">
-                   <div className="w-16 h-16 rounded-full bg-[#fffbf0] border-2 border-[#d97706] flex items-center justify-center text-3xl shadow-sm">
+                   <div className="w-16 h-16 rounded-full bg-[#FAF9F7] border-2 border-[#C9A24D] flex items-center justify-center text-3xl shadow-sm">
                      {/* Placeholder icon, could be dynamic based on sign */}
                      <span>☀️</span>
                    </div>
                    <div>
-                     <div className="text-xs uppercase tracking-widest text-[#a8a29e] font-bold">Signe Solaire</div>
-                     <div className="text-3xl font-serif text-[#78350f] font-bold">{zodiac}</div>
+                     <div className="text-xs uppercase tracking-widest text-[#8FA6A0] font-bold">Signe Solaire</div>
+                     <div className="text-3xl font-serif text-[#2C2F4A] font-bold">{zodiac}</div>
                    </div>
                  </div>
 
@@ -84,20 +84,20 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
                  )}
 
                  {results.advancedProfile.mcData && (
-                   <div className="space-y-4 text-sm text-[#57534e] bg-[#fffbf0] p-4 rounded-xl border border-[#d97706]/10">
+                   <div className="space-y-4 text-sm text-[#2C2F4A] bg-[#FAF9F7] p-4 rounded-xl border border-[#C9A24D]/10">
                      <div>
-                       <strong className="text-[#d97706] block mb-1">Image Publique</strong>
+                       <strong className="text-[#C9A24D] block mb-1">Image Publique</strong>
                        <p>{results.advancedProfile.mcData.image_publique}</p>
                      </div>
                      <div>
-                       <strong className="text-[#d97706] block mb-1">Vocation</strong>
+                       <strong className="text-[#C9A24D] block mb-1">Vocation</strong>
                        <p>{results.advancedProfile.mcData.vocation}</p>
                      </div>
                    </div>
                  )}
                  
                  {zodiacInfo && (
-                   <p className="mt-6 text-[#57534e] italic leading-relaxed border-l-2 border-[#d97706]/30 pl-4">
+                   <p className="mt-6 text-[#2C2F4A] italic leading-relaxed border-l-2 border-[#C9A24D]/30 pl-4">
                      "{zodiacInfo.description}"
                    </p>
                  )}
@@ -105,22 +105,22 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
             </div>
 
             {/* PLANET CARD */}
-            <div className="bg-white p-8 rounded-2xl border border-[#d97706]/20 shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
-               <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-[#d97706]/5 rounded-full blur-3xl"></div>
+            <div className="bg-white p-8 rounded-2xl border border-[#C9A24D]/20 shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
+               <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-[#C9A24D]/5 rounded-full blur-3xl"></div>
                
                <div className="relative z-10">
                  <div className="flex items-center gap-4 mb-6">
-                   <div className="w-16 h-16 rounded-full bg-[#fffbf0] border-2 border-[#d97706] flex items-center justify-center text-3xl shadow-sm">
+                   <div className="w-16 h-16 rounded-full bg-[#FAF9F7] border-2 border-[#C9A24D] flex items-center justify-center text-3xl shadow-sm">
                      <span>🪐</span>
                    </div>
                    <div>
-                     <div className="text-xs uppercase tracking-widest text-[#a8a29e] font-bold">Planète Dominante</div>
-                     <div className="text-3xl font-serif text-[#78350f] font-bold">{planet}</div>
+                     <div className="text-xs uppercase tracking-widest text-[#8FA6A0] font-bold">Planète Dominante</div>
+                     <div className="text-3xl font-serif text-[#2C2F4A] font-bold">{planet}</div>
                    </div>
                  </div>
 
                  <div className="prose prose-stone text-sm leading-relaxed">
-                   <p className="font-medium text-[#78350f] text-lg mb-4">
+                   <p className="font-medium text-[#2C2F4A] text-lg mb-4">
                      Maître du Chemin de Vie {results.lifePath}
                    </p>
                    <p>
@@ -142,32 +142,32 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
       {/* 2. ETYMOLOGIE */}
       {etymology && (
         <div className="mb-16">
-          <h3 className="text-xl md:text-2xl font-serif text-[#d97706] mb-8 flex items-center gap-3">
-            <span className="w-8 h-8 rounded-full bg-[#d97706] text-white flex items-center justify-center text-sm font-bold">VIII</span>
+          <h3 className="text-xl md:text-2xl font-serif text-[#C9A24D] mb-8 flex items-center gap-3">
+            <span className="w-8 h-8 rounded-full bg-[#C9A24D] text-white flex items-center justify-center text-sm font-bold">VIII</span>
             Échos Étymologiques
           </h3>
-          <div className="bg-[#fffbf0] p-8 md:p-10 rounded-2xl border border-[#d97706]/20 shadow-inner relative overflow-hidden">
+          <div className="bg-[#FAF9F7] p-8 md:p-10 rounded-2xl border border-[#C9A24D]/20 shadow-inner relative overflow-hidden">
              {/* Background decorative letter */}
-             <div className="absolute -top-10 -left-10 text-[12rem] font-serif text-[#d97706] opacity-5 select-none">
+             <div className="absolute -top-10 -left-10 text-[12rem] font-serif text-[#C9A24D] opacity-5 select-none">
                {userData.firstName.charAt(0)}
              </div>
 
              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
-               <div className="space-y-3 border-r border-[#d97706]/10 md:pr-8">
-                 <div className="text-xs uppercase tracking-widest text-[#a8a29e] font-bold">Origine</div>
-                 <div className="font-serif text-2xl text-[#78350f]">{etymology.origin}</div>
-                 <div className="w-12 h-1 bg-[#d97706] mt-2"></div>
+               <div className="space-y-3 border-r border-[#C9A24D]/10 md:pr-8">
+                 <div className="text-xs uppercase tracking-widest text-[#8FA6A0] font-bold">Origine</div>
+                 <div className="font-serif text-2xl text-[#2C2F4A]">{etymology.origin}</div>
+                 <div className="w-12 h-1 bg-[#C9A24D] mt-2"></div>
                </div>
                
                <div className="space-y-3 md:col-span-2">
-                 <div className="text-xs uppercase tracking-widest text-[#a8a29e] font-bold">Signification</div>
-                 <p className="text-[#57534e] text-xl font-serif italic">"{etymology.meaning}"</p>
+                 <div className="text-xs uppercase tracking-widest text-[#8FA6A0] font-bold">Signification</div>
+                 <p className="text-[#2C2F4A] text-xl font-serif italic">"{etymology.meaning}"</p>
                </div>
                
                {etymology.spiritual && (
-                 <div className="md:col-span-3 pt-6 border-t border-[#d97706]/10 mt-2">
-                   <div className="text-xs uppercase tracking-widest text-[#a8a29e] mb-3 font-bold">Dimension Spirituelle</div>
-                   <p className="text-[#57534e] leading-relaxed text-lg font-light">{etymology.spiritual}</p>
+                 <div className="md:col-span-3 pt-6 border-t border-[#C9A24D]/10 mt-2">
+                   <div className="text-xs uppercase tracking-widest text-[#8FA6A0] mb-3 font-bold">Dimension Spirituelle</div>
+                   <p className="text-[#2C2F4A] leading-relaxed text-lg font-light">{etymology.spiritual}</p>
                  </div>
                )}
              </div>
@@ -177,8 +177,8 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
 
       {/* 3. ANCRAGE TERRESTRE (Refondu) */}
       <div>
-        <h3 className="text-xl md:text-2xl font-serif text-[#d97706] mb-8 flex items-center gap-3" style={{ pageBreakBefore: 'always' }}>
-            <span className="w-8 h-8 rounded-full bg-[#d97706] text-white flex items-center justify-center text-sm font-bold">IX</span>
+        <h3 className="text-xl md:text-2xl font-serif text-[#C9A24D] mb-8 flex items-center gap-3" style={{ pageBreakBefore: 'always' }}>
+            <span className="w-8 h-8 rounded-full bg-[#C9A24D] text-white flex items-center justify-center text-sm font-bold">IX</span>
             Ancrage Terrestre
         </h3>
       
@@ -187,26 +187,26 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
         {/* VIBRATION CARD (Analysis) */}
         <div className="w-full space-y-8">
           <div className="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm">
-            <h3 className="text-lg font-bold text-[#d97706] mb-4 uppercase tracking-widest text-xs">Analyse du Lieu de Naissance</h3>
+            <h3 className="text-lg font-bold text-[#C9A24D] mb-4 uppercase tracking-widest text-xs">Analyse du Lieu de Naissance</h3>
             
-            <div className="flex flex-wrap items-center gap-2 mb-6 font-mono text-lg text-[#57534e] justify-center md:justify-start bg-stone-50 p-4 rounded-lg border border-stone-100">
+            <div className="flex flex-wrap items-center gap-2 mb-6 font-mono text-lg text-[#2C2F4A] justify-center md:justify-start bg-stone-50 p-4 rounded-lg border border-stone-100">
               {placeAnalysis.details.map((item, i) => (
                 <div key={i} className="flex flex-col items-center">
                   <span className="font-bold">{item.char}</span>
-                  <span className="text-xs text-[#a8a29e]">{item.val}</span>
+                  <span className="text-xs text-[#8FA6A0]">{item.val}</span>
                 </div>
               ))}
-              <span className="mx-2 text-[#d97706]">=</span>
-              <span className="font-bold text-[#d97706]">{placeAnalysis.sum}</span>
-              <span className="mx-2 text-[#d97706]">→</span>
-              <span className="w-8 h-8 rounded-full bg-[#d97706] text-white flex items-center justify-center font-bold shadow-md">
+              <span className="mx-2 text-[#C9A24D]">=</span>
+              <span className="font-bold text-[#C9A24D]">{placeAnalysis.sum}</span>
+              <span className="mx-2 text-[#C9A24D]">→</span>
+              <span className="w-8 h-8 rounded-full bg-[#C9A24D] text-white flex items-center justify-center font-bold shadow-md">
                 {placeAnalysis.reduced}
               </span>
             </div>
 
-            <h4 className="font-serif text-3xl text-[#78350f] mb-4">{birthPlace}</h4>
+            <h4 className="font-serif text-3xl text-[#2C2F4A] mb-4">{birthPlace}</h4>
             
-            <p className="text-[#57534e] leading-relaxed">
+            <p className="text-[#2C2F4A] leading-relaxed">
               {PLACE_VIBRATIONS[placeAnalysis.reduced] || "Ce lieu possède une vibration unique qui influence votre structure énergétique de base."}
             </p>
           </div>
@@ -215,7 +215,7 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
             <h3 className={`text-lg font-bold mb-3 flex items-center gap-2 ${isHarmonious ? 'text-green-800' : 'text-orange-800'}`}>
               {isHarmonious ? "✨ Résonance Harmonieuse" : "⚡ Résonance Dynamique"}
             </h3>
-            <p className="text-[#57534e] leading-relaxed">
+            <p className="text-[#2C2F4A] leading-relaxed">
               {isHarmonious 
                 ? RESONANCE_DETAILS["harmonie"] 
                 : RESONANCE_DETAILS["dynamique"]}
@@ -225,16 +225,16 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
 
         {/* VISUAL CARD (Replaces Map) - NOW FULL WIDTH BELOW */}
          <div className="w-full">
-            <div className="bg-[#292524] rounded-2xl p-8 text-[#fffbf0] flex flex-col justify-between relative shadow-2xl" style={{ pageBreakInside: 'avoid' }}>
+            <div className="bg-[#2C2F4A] rounded-2xl p-8 text-[#FAF9F7] flex flex-col justify-between relative shadow-2xl" style={{ pageBreakInside: 'avoid' }}>
                {/* Abstract decorative elements */}
                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#d97706]/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#C9A24D]/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
               
               <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
                   <div className="text-xs uppercase tracking-widest opacity-60 mb-2">Coordonnées Vibratoires</div>
                   <div className="text-5xl font-serif mb-1">{vibration}</div>
-                  <div className="w-12 h-1 bg-[#d97706] mb-8"></div>
+                  <div className="w-12 h-1 bg-[#C9A24D] mb-8"></div>
                 </div>
                 
                 <div className="space-y-6">

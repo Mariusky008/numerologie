@@ -20,7 +20,7 @@ interface FullReportProps {
 
 export default function FullReportV2({ userData, results, etymology }: FullReportProps) {
   return (
-    <div className="w-full max-w-[210mm] mx-auto bg-[#fffbf0] text-[#44403c] shadow-2xl print:shadow-none font-sans">
+    <div className="w-full max-w-[210mm] mx-auto bg-[#FAF9F7] text-[#2C2F4A] shadow-2xl print:shadow-none font-sans">
       <Part1IntroV2 userData={userData} results={results} />
       <Part1Identity userData={userData} results={results} />
       <Part2Incarnation userData={userData} results={results} />

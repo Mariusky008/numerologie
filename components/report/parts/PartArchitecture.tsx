@@ -56,8 +56,8 @@ export default function PartArchitecture({ userData, results }: PartArchitecture
   return (
     <>
       {/* PAGE DE GARDE V3 */}
-      <PageContainer className="items-center justify-center p-8 bg-[#fffbf0] text-[#44403c] relative overflow-hidden">
-        <div className="absolute inset-0 border-[20px] border-[#fffbf0] pointer-events-none z-10" />
+      <PageContainer className="items-center justify-center p-8 bg-[#FAF9F7] text-[#2C2F4A] relative overflow-hidden">
+        <div className="absolute inset-0 border-[20px] border-[#FAF9F7] pointer-events-none z-10" />
         <div className="absolute inset-0 flex items-center justify-center opacity-5">
            {/* Abstract Background Geometry */}
            <div className="w-[800px] h-[800px] border border-[#1B263B] rounded-full" />
@@ -85,7 +85,7 @@ export default function PartArchitecture({ userData, results }: PartArchitecture
         <h2 className="text-3xl font-serif text-[#1B263B] mb-8 border-l-4 border-[#E07A5F] pl-6">
           VOTRE MANUEL D'UTILISATION
         </h2>
-        <div className="prose prose-lg text-[#57534e] leading-relaxed">
+        <div className="prose prose-lg text-[#2C2F4A] leading-relaxed">
           <p>
             Bienvenue dans l'analyse de vos blocs énergétiques. Ce dossier n'est pas une simple lecture linéaire, 
             c'est une <strong>architecture</strong>. Nous allons construire, étage par étage, la compréhension de qui vous êtes.
@@ -209,7 +209,7 @@ export default function PartArchitecture({ userData, results }: PartArchitecture
 
 
       {/* III. LE SANCTUAIRE INTÉRIEUR */}
-      <PageContainer className="p-8 md:p-16 bg-[#fffbf0]">
+      <PageContainer className="p-8 md:p-16 bg-[#FAF9F7]">
         <div className="mb-12">
           <span className="text-[#E07A5F] font-bold tracking-widest uppercase text-sm">Partie 3</span>
           <h2 className="text-4xl font-serif text-[#1B263B] mt-2">LE SANCTUAIRE INTÉRIEUR</h2>
@@ -287,7 +287,7 @@ export default function PartArchitecture({ userData, results }: PartArchitecture
 
 
       {/* V. NAVIGATION TEMPORELLE */}
-      <PageContainer className="p-8 md:p-16 bg-[#fffbf0] relative">
+      <PageContainer className="p-8 md:p-16 bg-[#FAF9F7] relative">
          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#1B263B] via-[#E07A5F] to-[#D4A373]" />
          
          <div className="text-center mb-16">

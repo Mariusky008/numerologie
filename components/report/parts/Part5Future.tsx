@@ -37,73 +37,73 @@ export default function Part5Future({ userData, results }: { userData: UserData,
     <>
       {/* PAGE 31: CYCLES DE VIE */}
       <PageContainer className="p-4 md:p-16">
-        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block">
+        <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8 md:mb-12 border-b-2 border-[#C9A24D] pb-4 inline-block">
           Vos Cycles de Vie
         </h2>
         <div className="space-y-8 md:space-y-12">
           <div className={`flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center ${age <= c1End ? 'opacity-100' : 'opacity-50'}`}>
-            <div className="w-32 text-left md:text-right font-serif text-[#57534e]">0 - {c1End} ans</div>
+            <div className="w-32 text-left md:text-right font-serif text-[#2C2F4A]">0 - {c1End} ans</div>
             <div className="flex-1 w-full md:w-auto h-2 bg-stone-200 rounded-full relative">
               <div className="absolute top-0 left-0 h-full w-full bg-[#f59e0b] rounded-full"></div>
             </div>
-            <div className="w-32 font-bold text-[#d97706]">Cycle Formatif ({results.cycles.cycle1})</div>
+            <div className="w-32 font-bold text-[#C9A24D]">Cycle Formatif ({results.cycles.cycle1})</div>
           </div>
           <div className={`flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center ${age > c1End && age <= c2End ? 'opacity-100' : 'opacity-50'}`}>
-            <div className="w-32 text-left md:text-right font-serif text-[#57534e]">{c1End} - {c2End} ans</div>
+            <div className="w-32 text-left md:text-right font-serif text-[#2C2F4A]">{c1End} - {c2End} ans</div>
             <div className="flex-1 w-full md:w-auto h-2 bg-stone-200 rounded-full relative">
-              <div className="absolute top-0 left-0 h-full w-full bg-[#ea580c] rounded-full"></div>
+              <div className="absolute top-0 left-0 h-full w-full bg-[#C9A24D] rounded-full"></div>
             </div>
-            <div className="w-32 font-bold text-[#d97706]">Cycle Productif ({results.cycles.cycle2})</div>
+            <div className="w-32 font-bold text-[#C9A24D]">Cycle Productif ({results.cycles.cycle2})</div>
           </div>
           <div className={`flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center ${age > c2End ? 'opacity-100' : 'opacity-50'}`}>
-            <div className="w-32 text-left md:text-right font-serif text-[#57534e]">{c2End}+ ans</div>
+            <div className="w-32 text-left md:text-right font-serif text-[#2C2F4A]">{c2End}+ ans</div>
             <div className="flex-1 w-full md:w-auto h-2 bg-stone-200 rounded-full relative">
-              <div className="absolute top-0 left-0 h-full w-full bg-[#78350f] rounded-full"></div>
+              <div className="absolute top-0 left-0 h-full w-full bg-[#2C2F4A] rounded-full"></div>
             </div>
-            <div className="w-32 font-bold text-[#d97706]">Cycle Sagesse ({results.cycles.cycle3})</div>
+            <div className="w-32 font-bold text-[#C9A24D]">Cycle Sagesse ({results.cycles.cycle3})</div>
           </div>
         </div>
         
-        <div className="mt-8 md:mt-12 p-6 md:p-8 bg-white border border-[#d97706]/20 rounded-xl shadow-sm relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-2 h-full bg-[#d97706]"></div>
-          <h3 className="text-xl md:text-2xl font-serif text-[#d97706] mb-2">Vous êtes ici : {currentCycleName}</h3>
-          <h4 className="text-lg font-bold text-[#78350f] mb-4">{cycleContent.title}</h4>
-          <p className="text-[#57534e] text-sm md:text-base mb-4 leading-relaxed">
+        <div className="mt-8 md:mt-12 p-6 md:p-8 bg-white border border-[#C9A24D]/20 rounded-xl shadow-sm relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-2 h-full bg-[#C9A24D]"></div>
+          <h3 className="text-xl md:text-2xl font-serif text-[#C9A24D] mb-2">Vous êtes ici : {currentCycleName}</h3>
+          <h4 className="text-lg font-bold text-[#2C2F4A] mb-4">{cycleContent.title}</h4>
+          <p className="text-[#2C2F4A] text-sm md:text-base mb-4 leading-relaxed">
             {cycleContent.desc}
           </p>
-           <p className="text-[#57534e] text-sm md:text-base italic bg-[#fffbf0] p-4 rounded-lg">
+           <p className="text-[#2C2F4A] text-sm md:text-base italic bg-[#FAF9F7] p-4 rounded-lg">
             {cycleContent.detailed}
           </p>
         </div>
       </PageContainer>
 
       {/* PAGE 32: ANNEE PERSONNELLE */}
-      <PageContainer className="p-4 md:p-16 justify-center items-center text-center bg-[#fffbf0]">
-        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8">Année Personnelle</h2>
-        <div className="text-[8rem] md:text-[12rem] font-serif text-[#d97706] leading-none mb-8">{results.personalYear}</div>
-        <h3 className="text-xl md:text-2xl uppercase tracking-widest text-[#a8a29e] mb-8">Vibration {new Date().getFullYear()}</h3>
-        <p className="text-base md:text-xl max-w-4xl mx-auto text-[#57534e] whitespace-pre-wrap leading-relaxed">
+      <PageContainer className="p-4 md:p-16 justify-center items-center text-center bg-[#FAF9F7]">
+        <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8">Année Personnelle</h2>
+        <div className="text-[8rem] md:text-[12rem] font-serif text-[#C9A24D] leading-none mb-8">{results.personalYear}</div>
+        <h3 className="text-xl md:text-2xl uppercase tracking-widest text-[#8FA6A0] mb-8">Vibration {new Date().getFullYear()}</h3>
+        <p className="text-base md:text-xl max-w-4xl mx-auto text-[#2C2F4A] whitespace-pre-wrap leading-relaxed">
           {pyContent}
         </p>
 
         {results.transits && (
-          <div className="w-full max-w-4xl mt-12 pt-8 border-t border-[#d97706]/20">
-            <h3 className="text-xl md:text-2xl font-serif text-[#78350f] mb-6 text-center">Météo Vibratoire (Transits)</h3>
+          <div className="w-full max-w-4xl mt-12 pt-8 border-t border-[#C9A24D]/20">
+            <h3 className="text-xl md:text-2xl font-serif text-[#2C2F4A] mb-6 text-center">Météo Vibratoire (Transits)</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm text-center">
-                <div className="text-xs uppercase tracking-widest text-[#a8a29e] mb-2">Plan Physique</div>
-                <div className="text-4xl font-serif text-[#d97706] mb-2">{results.transits.physical}</div>
-                <p className="text-xs text-[#57534e]">Influence sur votre santé et vos actions concrètes.</p>
+                <div className="text-xs uppercase tracking-widest text-[#8FA6A0] mb-2">Plan Physique</div>
+                <div className="text-4xl font-serif text-[#C9A24D] mb-2">{results.transits.physical}</div>
+                <p className="text-xs text-[#2C2F4A]">Influence sur votre santé et vos actions concrètes.</p>
               </div>
               <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm text-center">
-                <div className="text-xs uppercase tracking-widest text-[#a8a29e] mb-2">Plan Mental</div>
-                <div className="text-4xl font-serif text-[#d97706] mb-2">{results.transits.mental}</div>
-                <p className="text-xs text-[#57534e]">Influence sur vos pensées et vos projets intellectuels.</p>
+                <div className="text-xs uppercase tracking-widest text-[#8FA6A0] mb-2">Plan Mental</div>
+                <div className="text-4xl font-serif text-[#C9A24D] mb-2">{results.transits.mental}</div>
+                <p className="text-xs text-[#2C2F4A]">Influence sur vos pensées et vos projets intellectuels.</p>
               </div>
               <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm text-center">
-                <div className="text-xs uppercase tracking-widest text-[#a8a29e] mb-2">Plan Spirituel</div>
-                <div className="text-4xl font-serif text-[#d97706] mb-2">{results.transits.spiritual}</div>
-                <p className="text-xs text-[#57534e]">Influence sur votre âme et votre évolution intérieure.</p>
+                <div className="text-xs uppercase tracking-widest text-[#8FA6A0] mb-2">Plan Spirituel</div>
+                <div className="text-4xl font-serif text-[#C9A24D] mb-2">{results.transits.spiritual}</div>
+                <p className="text-xs text-[#2C2F4A]">Influence sur votre âme et votre évolution intérieure.</p>
               </div>
             </div>
           </div>
@@ -112,25 +112,25 @@ export default function Part5Future({ userData, results }: { userData: UserData,
 
       {/* PAGE 33-34: TABLEAU PREVISIONNEL 10 ANS (Module 4) */}
       <PageContainer className="p-4 md:p-16">
-        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 border-b border-[#d97706] pb-4 inline-block">
+        <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8 border-b border-[#C9A24D] pb-4 inline-block">
           Vision Décennale (2026-2035)
         </h2>
         
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-[#d97706]/30 text-[#d97706]">
+              <tr className="border-b border-[#C9A24D]/30 text-[#C9A24D]">
                 <th className="p-4 font-serif text-lg">Année</th>
                 <th className="p-4 font-serif text-lg">Année Personnelle</th>
                 <th className="p-4 font-serif text-lg">Énergie Dominante</th>
               </tr>
             </thead>
-            <tbody className="text-[#57534e]">
+            <tbody className="text-[#2C2F4A]">
               {results.careerForecast?.map((item) => (
                 <tr key={item.year} className="border-b border-stone-200 hover:bg-stone-50 transition-colors">
                   <td className="p-4 font-bold">{item.year}</td>
                   <td className="p-4">
-                    <span className="inline-block w-8 h-8 rounded-full bg-[#fffbf0] text-[#d97706] text-center leading-8 font-bold border border-[#d97706]/30">
+                    <span className="inline-block w-8 h-8 rounded-full bg-[#FAF9F7] text-[#C9A24D] text-center leading-8 font-bold border border-[#C9A24D]/30">
                       {item.personalYear}
                     </span>
                   </td>
@@ -153,14 +153,14 @@ export default function Part5Future({ userData, results }: { userData: UserData,
 
       {/* PAGE 35: ORIENTATION PRO & ENVIRONNEMENT (Consolidated) */}
       <PageContainer className="p-4 md:p-16">
-        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 border-b-2 border-[#d97706] pb-4 inline-block">
+        <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8 border-b-2 border-[#C9A24D] pb-4 inline-block">
           Orientation Professionnelle
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {results.professionalAxes.map((axis, i) => (
-            <div key={i} className="p-6 border border-stone-200 rounded-xl hover:bg-white hover:shadow-md transition-all bg-[#fffbf0]">
-              <h3 className="text-lg md:text-xl font-serif text-[#78350f] mb-2">{axis}</h3>
-              <p className="text-[#57534e] text-xs md:text-sm">
+            <div key={i} className="p-6 border border-stone-200 rounded-xl hover:bg-white hover:shadow-md transition-all bg-[#FAF9F7]">
+              <h3 className="text-lg md:text-xl font-serif text-[#2C2F4A] mb-2">{axis}</h3>
+              <p className="text-[#2C2F4A] text-xs md:text-sm">
                 Ce secteur résonne naturellement avec vos nombres. Vous y trouverez fluidité et reconnaissance.
               </p>
             </div>

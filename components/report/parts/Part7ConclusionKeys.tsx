@@ -16,7 +16,7 @@ export default function Part7ConclusionKeys({ userData, results }: { userData: U
   const zodiacName = zodiacKey ? zodiacKey.charAt(0).toUpperCase() + zodiacKey.slice(1) : "Inconnu";
 
   return (
-    <PageContainer className="p-8 md:p-16 justify-center bg-[#fffbf0] text-[#1B263B] text-center print:break-before-page">
+    <PageContainer className="p-8 md:p-16 justify-center bg-[#FAF9F7] text-[#1B263B] text-center print:break-before-page">
       <h2 className="text-3xl md:text-5xl font-serif text-[#D4A373] mb-12 border-b-2 border-[#D4A373] pb-4 inline-block">
         VOS 3 CLÉS D'ACTIVATION
       </h2>

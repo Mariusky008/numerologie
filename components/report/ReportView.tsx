@@ -170,26 +170,33 @@ export default function ReportView({ userData }: ReportViewProps) {
   const pathTitle = results.advancedProfile?.pathData?.titre || `Chemin de Vie ${results.lifePath}`;
 
   return (
-    <div className="min-h-screen bg-[#fffbf0] text-[#57534e] p-4 md:p-8">
-      <div className="max-w-4xl mx-auto space-y-12">
+    <div className="min-h-screen bg-[#FAF9F7] text-[#2C2F4A] p-4 md:p-8 font-sans">
+      {/* Background Ambience */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-60"></div>
+          <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-[#C9A24D] rounded-full blur-[150px] opacity-5"></div>
+          <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#5B4B8A] rounded-full blur-[150px] opacity-5"></div>
+      </div>
+
+      <div className="max-w-4xl mx-auto space-y-12 relative z-10">
         
         {/* Header */}
         <header className="text-center space-y-4 pt-8">
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl font-serif text-[#78350f]"
+            className="text-5xl font-serif text-[#2C2F4A]"
           >
             {userData.firstName} {userData.lastName}
           </motion.h1>
-          <div className="flex items-center justify-center gap-4 text-[#d97706]/80 text-sm tracking-widest uppercase">
+          <div className="flex items-center justify-center gap-4 text-[#5B4B8A] text-sm tracking-widest uppercase font-bold">
             <span>Chemin {results.lifePath}</span>
             <span>•</span>
             <span>{zodiac}</span>
             <span>•</span>
             <span>{planet}</span>
           </div>
-          <div className="inline-block px-4 py-1 rounded-full bg-[#fef3c7] text-[#d97706] text-xs border border-[#d97706]/20 uppercase tracking-widest">
+          <div className="inline-block px-4 py-1 rounded-full bg-[#C9A24D]/10 text-[#C9A24D] text-xs border border-[#C9A24D]/20 uppercase tracking-widest font-bold">
             Focus : {userData.focus}
           </div>
         </header>
@@ -201,37 +208,37 @@ export default function ReportView({ userData }: ReportViewProps) {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm"
+            className="bg-white p-6 rounded-xl border border-[#EFEDE9] shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="flex justify-between items-start">
-              <h2 className="text-xl font-serif text-[#78350f] mb-2">{pathTitle}</h2>
+              <h2 className="text-xl font-serif text-[#2C2F4A] mb-2">{pathTitle}</h2>
               {results.details?.lifePath.karmicDebt && (
                 <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">
                   Dette {results.details.lifePath.karmicDebt}
                 </span>
               )}
             </div>
-            <p className="text-[#57534e] italic mb-4 text-sm leading-relaxed">{lifePathText}</p>
+            <p className="text-[#2C2F4A]/80 italic mb-4 text-sm leading-relaxed">{lifePathText}</p>
             
             {results.advancedProfile?.pathData && (
-               <div className="space-y-3 mt-4 pt-4 border-t border-stone-100">
+               <div className="space-y-3 mt-4 pt-4 border-t border-[#EFEDE9]">
                  <div>
-                   <span className="text-xs font-bold text-[#d97706] uppercase tracking-wider block mb-1">Forces Majeures</span>
-                   <p className="text-xs text-stone-600">{results.advancedProfile.pathData.forces_majeures}</p>
+                   <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider block mb-1">Forces Majeures</span>
+                   <p className="text-xs text-[#2C2F4A]/70">{results.advancedProfile.pathData.forces_majeures}</p>
                  </div>
                  <div>
-                   <span className="text-xs font-bold text-[#d97706] uppercase tracking-wider block mb-1">Clé d'Alignement</span>
-                   <p className="text-xs text-stone-600 italic">"{results.advancedProfile.pathData.cle_alignement}"</p>
+                   <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider block mb-1">Clé d'Alignement</span>
+                   <p className="text-xs text-[#2C2F4A]/70 italic">"{results.advancedProfile.pathData.cle_alignement}"</p>
                  </div>
                </div>
             )}
 
-            <div className="flex items-center gap-4 mt-4 pt-4 border-t border-stone-100">
-              <div className="text-5xl font-bold text-[#d97706]/10">{results.lifePath}</div>
-              <div className="text-xs text-[#a8a29e]">
+            <div className="flex items-center gap-4 mt-4 pt-4 border-t border-[#EFEDE9]">
+              <div className="text-5xl font-bold text-[#C9A24D]/20">{results.lifePath}</div>
+              <div className="text-xs text-[#8FA6A0]">
                 Calculé à partir du {userData.birthDate}
                 {results.details?.lifePath.subNumber && results.details.lifePath.subNumber !== results.lifePath && (
-                  <span className="block text-[#d97706]/60 font-mono mt-1">
+                  <span className="block text-[#C9A24D]/60 font-mono mt-1">
                     ({results.details.lifePath.subNumber} / {results.lifePath})
                   </span>
                 )}
@@ -244,23 +251,23 @@ export default function ReportView({ userData }: ReportViewProps) {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm"
+            className="bg-white p-6 rounded-xl border border-[#EFEDE9] shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="flex justify-between items-start">
-              <h2 className="text-2xl font-serif text-[#78350f] mb-2">Nombre d'Expression {results.expression}</h2>
+              <h2 className="text-2xl font-serif text-[#2C2F4A] mb-2">Nombre d'Expression {results.expression}</h2>
               {results.details?.expression.karmicDebt && (
                 <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">
                   Dette {results.details.expression.karmicDebt}
                 </span>
               )}
             </div>
-            <p className="text-[#57534e] italic mb-4">{expressionText}</p>
+            <p className="text-[#2C2F4A]/80 italic mb-4">{expressionText}</p>
             <div className="flex items-center gap-4">
-              <div className="text-6xl font-bold text-[#d97706]/10">{results.expression}</div>
-              <div className="text-sm text-[#a8a29e]">
+              <div className="text-6xl font-bold text-[#C9A24D]/20">{results.expression}</div>
+              <div className="text-sm text-[#8FA6A0]">
                 Basé sur votre nom complet
                 {results.details?.expression.subNumber && results.details.expression.subNumber !== results.expression && (
-                  <span className="block text-[#d97706]/60 font-mono mt-1">
+                  <span className="block text-[#C9A24D]/60 font-mono mt-1">
                     ({results.details.expression.subNumber} / {results.expression})
                   </span>
                 )}
@@ -286,11 +293,11 @@ export default function ReportView({ userData }: ReportViewProps) {
              transition={{ delay: 0.5 }}
              className="space-y-6"
           >
-            <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
-              <h3 className="text-xl font-serif text-[#78350f] mb-4">Axes Professionnels</h3>
+            <div className="bg-white p-6 rounded-xl border border-[#EFEDE9] shadow-sm">
+              <h3 className="text-xl font-serif text-[#2C2F4A] mb-4">Axes Professionnels</h3>
               <div className="flex flex-wrap gap-2">
                 {results.professionalAxes.map((axis, i) => (
-                  <span key={i} className="px-3 py-1 bg-[#fffbf0] text-[#d97706] rounded-full text-sm border border-[#d97706]/20">
+                  <span key={i} className="px-3 py-1 bg-[#FAF9F7] text-[#5B4B8A] rounded-full text-sm border border-[#5B4B8A]/20 font-medium">
                     {axis}
                   </span>
                 ))}
@@ -298,17 +305,17 @@ export default function ReportView({ userData }: ReportViewProps) {
             </div>
 
             {results.planesOfExpression && (
-              <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
-                <h3 className="text-xl font-serif text-[#78350f] mb-4">Plans d'Expression</h3>
+              <div className="bg-white p-6 rounded-xl border border-[#EFEDE9] shadow-sm">
+                <h3 className="text-xl font-serif text-[#2C2F4A] mb-4">Plans d'Expression</h3>
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     {/* Mental */}
                     <div>
                       <div className="flex justify-between text-[10px] uppercase tracking-widest mb-1">
                         <span>Mental</span>
-                        <span className="font-bold text-[#d97706]">{results.planesOfExpression.mental}%</span>
+                        <span className="font-bold text-[#5B4B8A]">{results.planesOfExpression.mental}%</span>
                       </div>
-                      <div className="h-1.5 w-full bg-stone-100 rounded-full overflow-hidden">
+                      <div className="h-1.5 w-full bg-[#EFEDE9] rounded-full overflow-hidden">
                         <motion.div initial={{ width: 0 }} animate={{ width: `${results.planesOfExpression.mental}%` }} className="h-full bg-blue-400" />
                       </div>
                     </div>
@@ -316,9 +323,9 @@ export default function ReportView({ userData }: ReportViewProps) {
                     <div>
                       <div className="flex justify-between text-[10px] uppercase tracking-widest mb-1">
                         <span>Physique</span>
-                        <span className="font-bold text-[#d97706]">{results.planesOfExpression.physical}%</span>
+                        <span className="font-bold text-[#5B4B8A]">{results.planesOfExpression.physical}%</span>
                       </div>
-                      <div className="h-1.5 w-full bg-stone-100 rounded-full overflow-hidden">
+                      <div className="h-1.5 w-full bg-[#EFEDE9] rounded-full overflow-hidden">
                         <motion.div initial={{ width: 0 }} animate={{ width: `${results.planesOfExpression.physical}%` }} className="h-full bg-red-400" />
                       </div>
                     </div>
@@ -326,9 +333,9 @@ export default function ReportView({ userData }: ReportViewProps) {
                     <div>
                       <div className="flex justify-between text-[10px] uppercase tracking-widest mb-1">
                         <span>Émotionnel</span>
-                        <span className="font-bold text-[#d97706]">{results.planesOfExpression.emotional}%</span>
+                        <span className="font-bold text-[#5B4B8A]">{results.planesOfExpression.emotional}%</span>
                       </div>
-                      <div className="h-1.5 w-full bg-stone-100 rounded-full overflow-hidden">
+                      <div className="h-1.5 w-full bg-[#EFEDE9] rounded-full overflow-hidden">
                         <motion.div initial={{ width: 0 }} animate={{ width: `${results.planesOfExpression.emotional}%` }} className="h-full bg-green-400" />
                       </div>
                     </div>
@@ -336,9 +343,9 @@ export default function ReportView({ userData }: ReportViewProps) {
                     <div>
                       <div className="flex justify-between text-[10px] uppercase tracking-widest mb-1">
                         <span>Intuitif</span>
-                        <span className="font-bold text-[#d97706]">{results.planesOfExpression.intuitive}%</span>
+                        <span className="font-bold text-[#5B4B8A]">{results.planesOfExpression.intuitive}%</span>
                       </div>
-                      <div className="h-1.5 w-full bg-stone-100 rounded-full overflow-hidden">
+                      <div className="h-1.5 w-full bg-[#EFEDE9] rounded-full overflow-hidden">
                         <motion.div initial={{ width: 0 }} animate={{ width: `${results.planesOfExpression.intuitive}%` }} className="h-full bg-purple-400" />
                       </div>
                     </div>
@@ -347,27 +354,27 @@ export default function ReportView({ userData }: ReportViewProps) {
               </div>
             )}
 
-            <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm">
-              <h3 className="text-xl font-serif text-[#78350f] mb-4">Année Personnelle {results.personalYear}</h3>
-              <p className="text-[#57534e]">
+            <div className="bg-white p-6 rounded-xl border border-[#EFEDE9] shadow-sm">
+              <h3 className="text-xl font-serif text-[#2C2F4A] mb-4">Année Personnelle {results.personalYear}</h3>
+              <p className="text-[#2C2F4A]/80">
                 Votre vibration pour l'année en cours. Une période propice à l'alignement avec vos objectifs profonds.
               </p>
 
               {results.transits && (
-                <div className="mt-6 pt-4 border-t border-stone-100">
-                  <h4 className="text-xs font-bold text-[#d97706] uppercase tracking-wider mb-3">Météo Vibratoire (Transits)</h4>
+                <div className="mt-6 pt-4 border-t border-[#EFEDE9]">
+                  <h4 className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider mb-3">Météo Vibratoire (Transits)</h4>
                   <div className="grid grid-cols-3 gap-2">
-                    <div className="bg-stone-50 p-2 rounded text-center">
-                       <span className="text-[10px] text-stone-400 block">Physique</span>
-                       <span className="text-xl font-bold text-stone-700">{results.transits.physical}</span>
+                    <div className="bg-[#FAF9F7] p-2 rounded text-center">
+                       <span className="text-[10px] text-[#8FA6A0] block">Physique</span>
+                       <span className="text-xl font-bold text-[#2C2F4A]">{results.transits.physical}</span>
                     </div>
-                    <div className="bg-stone-50 p-2 rounded text-center">
-                       <span className="text-[10px] text-stone-400 block">Mental</span>
-                       <span className="text-xl font-bold text-stone-700">{results.transits.mental}</span>
+                    <div className="bg-[#FAF9F7] p-2 rounded text-center">
+                       <span className="text-[10px] text-[#8FA6A0] block">Mental</span>
+                       <span className="text-xl font-bold text-[#2C2F4A]">{results.transits.mental}</span>
                     </div>
-                    <div className="bg-stone-50 p-2 rounded text-center">
-                       <span className="text-[10px] text-stone-400 block">Spirituel</span>
-                       <span className="text-xl font-bold text-stone-700">{results.transits.spiritual}</span>
+                    <div className="bg-[#FAF9F7] p-2 rounded text-center">
+                       <span className="text-[10px] text-[#8FA6A0] block">Spirituel</span>
+                       <span className="text-xl font-bold text-[#2C2F4A]">{results.transits.spiritual}</span>
                     </div>
                   </div>
                 </div>
@@ -381,12 +388,12 @@ export default function ReportView({ userData }: ReportViewProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm"
+          className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
              <div>
-               <h3 className="text-2xl font-serif text-[#78350f] mb-4">Grille d'Inclusion</h3>
-               <p className="text-[#57534e] mb-6">
+               <h3 className="text-2xl font-serif text-[#2C2F4A] mb-4">Grille d'Inclusion</h3>
+               <p className="text-[#2C2F4A]/80 mb-6">
                  Cette matrice révèle la répartition de vos énergies. Les cases vides indiquent des dettes karmiques (leçons à apprendre), tandis que les cases chargées révèlent vos forces innées.
                </p>
                <div className="space-y-4">
@@ -395,8 +402,8 @@ export default function ReportView({ userData }: ReportViewProps) {
                       {results.missingNumbers?.length || 0}
                     </div>
                     <div>
-                      <div className="text-[#78350f] font-medium">Dettes Karmiques</div>
-                      <div className="text-sm text-[#a8a29e]">Nombres manquants</div>
+                      <div className="text-[#2C2F4A] font-medium">Dettes Karmiques</div>
+                      <div className="text-sm text-[#8FA6A0]">Nombres manquants</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -404,8 +411,8 @@ export default function ReportView({ userData }: ReportViewProps) {
                       {results.excessNumbers?.length || 0}
                     </div>
                     <div>
-                      <div className="text-[#78350f] font-medium">Forces Acquises</div>
-                      <div className="text-sm text-[#a8a29e]">Nombres en excès</div>
+                      <div className="text-[#2C2F4A] font-medium">Forces Acquises</div>
+                      <div className="text-sm text-[#8FA6A0]">Nombres en excès</div>
                     </div>
                   </div>
                </div>
@@ -426,21 +433,21 @@ export default function ReportView({ userData }: ReportViewProps) {
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
              transition={{ delay: 0.7 }}
-             className="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm"
+             className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm"
            >
-             <h3 className="text-2xl font-serif text-[#78350f] mb-6 flex items-center gap-3">
-               <span className="text-[#d97706]">VII.</span> Architecture Astrale
+             <h3 className="text-2xl font-serif text-[#2C2F4A] mb-6 flex items-center gap-3">
+               <span className="text-[#C9A24D]">VII.</span> Architecture Astrale
              </h3>
              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Zodiac */}
-                <div className="bg-[#fffbf0] p-6 rounded-xl border border-[#d97706]/10">
+                <div className="bg-[#FAF9F7] p-6 rounded-xl border border-[#C9A24D]/10">
                    <div className="flex items-center gap-4 mb-4">
                      <div className="text-4xl">♈</div>
                      <div>
-                       <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Signe Solaire</div>
-                       <div className="text-xl font-serif text-[#78350f] font-bold">{zodiac}</div>
+                       <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Signe Solaire</div>
+                       <div className="text-xl font-serif text-[#2C2F4A] font-bold">{zodiac}</div>
                        {results.realAstro && (
-                         <div className="text-xs text-[#d97706] mt-1 space-y-1">
+                         <div className="text-xs text-[#C9A24D] mt-1 space-y-1">
                            <div>Ascendant : <span className="font-bold">{ascendant}</span></div>
                            {realHouse && <div>Maison {realHouse}</div>}
                          </div>
@@ -450,38 +457,38 @@ export default function ReportView({ userData }: ReportViewProps) {
 
                    {zodiacInfo && (
                      <div className="flex gap-2 mb-4">
-                       <span className="px-3 py-1 bg-white text-stone-600 text-xs rounded-full uppercase tracking-wider font-bold border border-[#d97706]/10">{zodiacInfo.element}</span>
-                       <span className="px-3 py-1 bg-white text-stone-600 text-xs rounded-full uppercase tracking-wider font-bold border border-[#d97706]/10">{zodiacInfo.quality}</span>
+                       <span className="px-3 py-1 bg-white text-[#5B4B8A] text-xs rounded-full uppercase tracking-wider font-bold border border-[#5B4B8A]/10">{zodiacInfo.element}</span>
+                       <span className="px-3 py-1 bg-white text-[#5B4B8A] text-xs rounded-full uppercase tracking-wider font-bold border border-[#5B4B8A]/10">{zodiacInfo.quality}</span>
                      </div>
                    )}
 
                    {results.advancedProfile.mcData && (
-                     <div className="space-y-3 text-sm text-[#57534e]">
+                     <div className="space-y-3 text-sm text-[#2C2F4A]/80">
                        <p><strong>Image Publique :</strong> {results.advancedProfile.mcData.image_publique}</p>
                        <p><strong>Vocation :</strong> {results.advancedProfile.mcData.vocation}</p>
-                       <p className="italic text-[#d97706]">"{results.advancedProfile.mcData.cle_reussite}"</p>
+                       <p className="italic text-[#C9A24D]">"{results.advancedProfile.mcData.cle_reussite}"</p>
                      </div>
                    )}
 
                    {zodiacInfo && (
-                     <p className="mt-4 text-[#57534e] italic text-xs leading-relaxed border-t border-[#d97706]/10 pt-3">
+                     <p className="mt-4 text-[#2C2F4A]/70 italic text-xs leading-relaxed border-t border-[#C9A24D]/10 pt-3">
                        "{zodiacInfo.description}"
                      </p>
                    )}
                 </div>
 
                 {/* Planet */}
-                <div className="bg-[#fffbf0] p-6 rounded-xl border border-[#d97706]/10">
+                <div className="bg-[#FAF9F7] p-6 rounded-xl border border-[#C9A24D]/10">
                    <div className="flex items-center gap-4 mb-4">
                      <div className="text-4xl">🪐</div>
                      <div>
-                       <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Planète Dominante</div>
-                       <div className="text-xl font-serif text-[#78350f] font-bold">{planet}</div>
+                       <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Planète Dominante</div>
+                       <div className="text-xl font-serif text-[#2C2F4A] font-bold">{planet}</div>
                      </div>
                    </div>
                    
-                   <div className="text-sm text-[#57534e] leading-relaxed space-y-3">
-                     <p className="font-medium text-[#78350f]">Maître du Chemin de Vie {results.lifePath}</p>
+                   <div className="text-sm text-[#2C2F4A]/80 leading-relaxed space-y-3">
+                     <p className="font-medium text-[#5B4B8A]">Maître du Chemin de Vie {results.lifePath}</p>
                      <p>
                        {planetText || `Votre Chemin de Vie ${results.lifePath} est gouverné par ${planet}. Cette influence colore votre destinée d'une énergie particulière.`}
                      </p>
@@ -497,29 +504,29 @@ export default function ReportView({ userData }: ReportViewProps) {
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
              transition={{ delay: 0.8 }}
-             className="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm relative overflow-hidden"
+             className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm relative overflow-hidden"
            >
-             <div className="absolute top-0 right-0 w-32 h-32 bg-[#d97706]/5 rounded-full blur-3xl -z-10"></div>
+             <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A24D]/5 rounded-full blur-3xl -z-10"></div>
              
-             <h3 className="text-2xl font-serif text-[#78350f] mb-6 flex items-center gap-3">
-               <span className="text-[#d97706]">VIII.</span> Échos Étymologiques
+             <h3 className="text-2xl font-serif text-[#2C2F4A] mb-6 flex items-center gap-3">
+               <span className="text-[#C9A24D]">VIII.</span> Échos Étymologiques
              </h3>
              
              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                <div className="space-y-2">
-                 <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Origine</div>
-                 <div className="font-serif text-lg text-[#78350f]">{etymology.origin}</div>
+                 <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Origine</div>
+                 <div className="font-serif text-lg text-[#2C2F4A]">{etymology.origin}</div>
                </div>
                
                <div className="space-y-2 md:col-span-2">
-                 <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Signification</div>
-                 <p className="text-[#57534e] italic">"{etymology.meaning}"</p>
+                 <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Signification</div>
+                 <p className="text-[#2C2F4A]/80 italic">"{etymology.meaning}"</p>
                </div>
                
                {etymology.spiritual && (
-                 <div className="md:col-span-3 pt-4 border-t border-[#d97706]/10">
-                   <div className="text-xs uppercase tracking-widest text-[#a8a29e] mb-2">Dimension Spirituelle</div>
-                   <p className="text-[#57534e] leading-relaxed">{etymology.spiritual}</p>
+                 <div className="md:col-span-3 pt-4 border-t border-[#C9A24D]/10">
+                   <div className="text-xs uppercase tracking-widest text-[#8FA6A0] mb-2">Dimension Spirituelle</div>
+                   <p className="text-[#2C2F4A]/80 leading-relaxed">{etymology.spiritual}</p>
                  </div>
                )}
              </div>
@@ -532,34 +539,34 @@ export default function ReportView({ userData }: ReportViewProps) {
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
              transition={{ delay: 0.9 }}
-             className="bg-gradient-to-br from-[#1B263B] to-[#0f172a] text-white p-8 rounded-2xl border border-[#1B263B] shadow-lg"
+             className="bg-gradient-to-br from-[#2C2F4A] to-[#1a1c2e] text-white p-8 rounded-2xl border border-[#2C2F4A] shadow-lg"
            >
-             <h3 className="text-2xl font-serif text-[#fffbf0] mb-6 flex items-center gap-3">
-               <span className="text-[#d97706]">IX.</span> Météo Astrale & Numérologique
+             <h3 className="text-2xl font-serif text-[#FAF9F7] mb-6 flex items-center gap-3">
+               <span className="text-[#C9A24D]">IX.</span> Météo Astrale & Numérologique
              </h3>
              
              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Numerology Forecast */}
                 <div className="space-y-6">
                    <div className="flex items-center gap-4">
-                     <div className="text-4xl text-[#d97706]">📅</div>
+                     <div className="text-4xl text-[#C9A24D]">📅</div>
                      <div>
-                       <div className="text-xs uppercase tracking-widest text-stone-400">Cycles Temporels</div>
+                       <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Cycles Temporels</div>
                        <div className="text-xl font-serif font-bold">Vibrations du Moment</div>
                      </div>
                    </div>
                    
                    <div className="grid grid-cols-2 gap-4">
                       <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
-                        <div className="text-3xl font-bold text-[#d97706] mb-1">{results.previsions.personalMonth}</div>
-                        <div className="text-xs uppercase tracking-widest text-stone-400">Mois Personnel</div>
+                        <div className="text-3xl font-bold text-[#C9A24D] mb-1">{results.previsions.personalMonth}</div>
+                        <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Mois Personnel</div>
                       </div>
                       <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
-                        <div className="text-3xl font-bold text-[#d97706] mb-1">{results.previsions.personalDay}</div>
-                        <div className="text-xs uppercase tracking-widest text-stone-400">Jour Personnel</div>
+                        <div className="text-3xl font-bold text-[#C9A24D] mb-1">{results.previsions.personalDay}</div>
+                        <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Jour Personnel</div>
                       </div>
                    </div>
-                   <p className="text-sm text-stone-300 italic">
+                   <p className="text-sm text-[#FAF9F7]/70 italic">
                      "Votre Jour Personnel {results.previsions.personalDay} vous invite à l'action immédiate, porté par l'énergie de fond de votre Mois {results.previsions.personalMonth}."
                    </p>
                 </div>
@@ -567,9 +574,9 @@ export default function ReportView({ userData }: ReportViewProps) {
                 {/* Astro Transits */}
                 <div className="space-y-6">
                    <div className="flex items-center gap-4">
-                     <div className="text-4xl text-[#d97706]">🌌</div>
+                     <div className="text-4xl text-[#C9A24D]">🌌</div>
                      <div>
-                       <div className="text-xs uppercase tracking-widest text-stone-400">Ciel Actuel</div>
+                       <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Ciel Actuel</div>
                        <div className="text-xl font-serif font-bold">Transits Planétaires</div>
                      </div>
                    </div>
@@ -582,12 +589,12 @@ export default function ReportView({ userData }: ReportViewProps) {
                         return (
                           <div key={planet} className="flex justify-between items-center bg-white/5 px-3 py-2 rounded border border-white/10">
                             <span>{planetName}</span>
-                            <span className="font-bold text-[#d97706]">{p.signe}</span>
+                            <span className="font-bold text-[#C9A24D]">{p.signe}</span>
                           </div>
                         );
                       })}
                    </div>
-                   <p className="text-xs text-stone-400 mt-2">
+                   <p className="text-xs text-[#8FA6A0] mt-2">
                      * Position actuelle des astres influençant votre thème.
                    </p>
                 </div>
@@ -600,7 +607,7 @@ export default function ReportView({ userData }: ReportViewProps) {
           
           {/* Step 1: PDF */}
           <div className="text-center space-y-4">
-            <h3 className="text-xl font-serif text-[#78350f]">1. Conservez votre analyse</h3>
+            <h3 className="text-xl font-serif text-[#2C2F4A]">1. Conservez votre analyse</h3>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
                 onClick={() => {
@@ -615,7 +622,7 @@ export default function ReportView({ userData }: ReportViewProps) {
                   });
                   router.push(`/checkout?${params.toString()}`);
                 }}
-                className="flex items-center gap-3 px-8 py-4 bg-[#1B263B] text-white border-2 border-[#1B263B] rounded-full hover:bg-[#0f172a] transition-colors shadow-sm"
+                className="flex items-center gap-3 px-8 py-4 bg-[#5B4B8A] text-white rounded-full hover:bg-[#6A5FA8] transition-all shadow-lg shadow-[#5B4B8A]/30 transform hover:scale-105"
               >
                 <Download className="w-5 h-5" />
                 TÉLÉCHARGER MON RAPPORT COMPLET (V3)
@@ -625,25 +632,25 @@ export default function ReportView({ userData }: ReportViewProps) {
 
           {/* Separator */}
           <div className="w-full flex items-center gap-4 max-w-md opacity-50">
-            <div className="h-px bg-[#78350f] flex-1"></div>
-            <span className="text-[#78350f] font-serif italic">Pour aller plus loin</span>
-            <div className="h-px bg-[#78350f] flex-1"></div>
+            <div className="h-px bg-[#2C2F4A] flex-1"></div>
+            <span className="text-[#2C2F4A] font-serif italic">Pour aller plus loin</span>
+            <div className="h-px bg-[#2C2F4A] flex-1"></div>
           </div>
 
           {/* Step 2: Book */}
-          <div className="w-full max-w-4xl bg-gradient-to-br from-[#78350f] to-[#573c28] rounded-2xl shadow-xl overflow-hidden relative group">
+          <div className="w-full max-w-4xl bg-gradient-to-br from-[#2C2F4A] to-[#1a1c2e] rounded-2xl shadow-xl overflow-hidden relative group border border-[#5B4B8A]/20">
              <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
              
              <div className="flex flex-col md:flex-row items-center relative z-10">
                 {/* Left: Text Content */}
                 <div className="p-8 md:p-12 md:w-1/2 text-left space-y-6">
-                  <div className="inline-block px-4 py-1 rounded-full bg-[#d97706] text-white text-xs font-bold tracking-widest uppercase mb-2">
+                  <div className="inline-block px-4 py-1 rounded-full bg-[#C9A24D] text-white text-xs font-bold tracking-widest uppercase mb-2">
                     Nouveau & Exclusif
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-serif font-bold leading-tight text-[#fffbf0]">
+                  <h3 className="text-3xl md:text-4xl font-serif font-bold leading-tight text-[#FAF9F7]">
                     Vivez votre numérologie <br/> comme un roman.
                   </h3>
-                  <p className="text-[#d6d3d1] text-lg leading-relaxed">
+                  <p className="text-[#8FA6A0] text-lg leading-relaxed">
                     Ne vous contentez pas de lire votre avenir, incarnez-le. <br/>
                     Notre IA écrit pour vous un livre de 100 pages où vous êtes le héros d'une aventure basée sur vos véritables cycles de vie.
                   </p>
@@ -663,12 +670,12 @@ export default function ReportView({ userData }: ReportViewProps) {
                           });
                         router.push(`/checkout?${params.toString()}`);
                       }}
-                      className="w-full md:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#fffbf0] text-[#78350f] rounded-full font-bold text-lg hover:bg-[#fef3c7] transition-all transform hover:scale-105 shadow-2xl shadow-black/20"
+                      className="w-full md:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#FAF9F7] text-[#2C2F4A] rounded-full font-bold text-lg hover:bg-white transition-all transform hover:scale-105 shadow-2xl shadow-black/20"
                     >
                       <BookOpen className="w-6 h-6" />
                       <span>Commencer l'écriture</span>
                     </button>
-                    <p className="text-xs text-[#d6d3d1]/60 mt-4 text-center md:text-left">
+                    <p className="text-xs text-[#8FA6A0] mt-4 text-center md:text-left">
                       Basé sur vos 7 nombres clés et vos souvenirs personnels.
                     </p>
                   </div>
@@ -678,7 +685,7 @@ export default function ReportView({ userData }: ReportViewProps) {
                 <div className="p-8 md:p-12 md:w-1/2 bg-black/20 flex items-center justify-center w-full">
                    <div className="transform rotate-1 hover:rotate-0 transition-transform duration-500">
                       <BookBackCover userData={userData} results={results} />
-                      <p className="text-center text-[#d6d3d1]/50 text-xs mt-4 italic">
+                      <p className="text-center text-[#8FA6A0] text-xs mt-4 italic">
                         * Aperçu généré dynamiquement selon votre profil
                       </p>
                    </div>

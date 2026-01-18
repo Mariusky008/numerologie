@@ -35,18 +35,18 @@ export default function InclusionGridViz({ grid, missing, excess, className }: I
       <div 
         key={num}
         className={clsx(
-          "relative h-24 flex flex-col items-center justify-center border border-stone-200 rounded-lg transition-all",
+          "relative h-24 flex flex-col items-center justify-center border border-[#C9A24D]/20 rounded-lg transition-all",
           isMissing ? "bg-red-50 border-red-200" : 
           isExcess ? "bg-amber-50 border-amber-200" : 
-          "bg-stone-50"
+          "bg-[#FAF9F7]"
         )}
       >
-        <div className="text-sm text-stone-500 font-serif mb-1">Nombre {num}</div>
+        <div className="text-sm text-[#2C2F4A]/60 font-serif mb-1">Nombre {num}</div>
         <div className={clsx(
           "text-3xl font-bold",
           isMissing ? "text-red-600" : 
           isExcess ? "text-amber-600" : 
-          "text-stone-600"
+          "text-[#2C2F4A]"
         )}>
           {count}
         </div>
@@ -58,8 +58,8 @@ export default function InclusionGridViz({ grid, missing, excess, className }: I
   };
 
   return (
-    <div className={clsx("w-full bg-white rounded-xl border border-stone-200 shadow-sm p-4", className)}>
-      <h3 className="text-center font-serif text-[#78350f] mb-6 text-xl">Grille d'Inclusion</h3>
+    <div className={clsx("w-full bg-white rounded-xl border border-[#C9A24D]/20 shadow-sm p-4", className)}>
+      <h3 className="text-center font-serif text-[#2C2F4A] mb-6 text-xl">Grille d'Inclusion</h3>
       <div className="grid grid-cols-3 gap-3">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => renderCell(num))}
       </div>

@@ -131,7 +131,7 @@ function CheckoutContent() {
                 <p className="text-sm text-[#8FA6A0] uppercase tracking-wider font-bold">L'Analyse Technique</p>
               </div>
               <div className="text-right">
-                <div className="text-3xl font-serif text-[#2C2F4A]">29€</div>
+                <div className="text-3xl font-serif text-[#2C2F4A] font-bold">29€</div>
               </div>
             </div>
 
@@ -147,7 +147,7 @@ function CheckoutContent() {
               </ul>
             </div>
 
-            <div className={`w-6 h-6 rounded-full border-2 absolute top-8 right-8 flex items-center justify-center transition-colors ${
+            <div className={`w-6 h-6 rounded-full border-2 absolute top-6 right-6 flex items-center justify-center transition-colors ${
               selectedPlan === 'report' ? 'border-[#5B4B8A]' : 'border-stone-300'
             }`}>
               {selectedPlan === 'report' && <div className="w-3 h-3 rounded-full bg-[#5B4B8A]" />}
@@ -179,7 +179,7 @@ function CheckoutContent() {
               </div>
               <div className="text-right">
                  <div className="text-sm text-[#2C2F4A]/40 line-through decoration-red-300">78€</div>
-                 <div className="text-4xl font-serif text-[#C9A24D]">49€</div>
+                 <div className="text-4xl font-serif text-[#C9A24D] font-bold">49€</div>
               </div>
             </div>
 
@@ -239,7 +239,7 @@ function CheckoutContent() {
                </motion.div>
             )}
 
-            <div className={`w-6 h-6 rounded-full border-2 absolute top-8 right-12 flex items-center justify-center transition-colors ${
+            <div className={`w-6 h-6 rounded-full border-2 absolute top-6 right-6 flex items-center justify-center transition-colors ${
               selectedPlan === 'bundle' ? 'border-[#C9A24D]' : 'border-stone-300'
             }`}>
               {selectedPlan === 'bundle' && <div className="w-3 h-3 rounded-full bg-[#C9A24D]" />}

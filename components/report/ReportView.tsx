@@ -425,6 +425,8 @@ export default function ReportView({ userData }: ReportViewProps) {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
                 onClick={() => {
+                  console.log("Download Button Clicked");
+                  trackEvent('download_click');
                   const params = new URLSearchParams({
                     fn: userData.firstName,
                     ln: userData.lastName,
@@ -486,7 +488,11 @@ export default function ReportView({ userData }: ReportViewProps) {
                   
                   <div className="pt-4">
                     <button
-                      onClick={() => setShowBookModal(true)}
+                      onClick={() => {
+                        console.log("Write Button Clicked");
+                        trackEvent('write_click');
+                        setShowBookModal(true);
+                      }}
                       className="w-full md:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#fffbf0] text-[#78350f] rounded-full font-bold text-lg hover:bg-[#fef3c7] transition-all transform hover:scale-105 shadow-2xl shadow-black/20"
                     >
                       <BookOpen className="w-6 h-6" />

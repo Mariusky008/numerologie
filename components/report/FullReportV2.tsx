@@ -1,7 +1,7 @@
 
 import { UserData, NumerologyResult } from '@/lib/types';
 import { NameData } from '@/lib/numerology/db_etymology';
-import Part1Intro from './parts/Part1Intro';
+import Part1IntroV2 from './parts/Part1IntroV2';
 import Part1Identity from './parts/Part1Identity';
 import PartAstroV2 from './parts/PartAstroV2';
 import Part2Incarnation from './parts/Part2Incarnation';
@@ -19,7 +19,7 @@ interface FullReportProps {
 export default function FullReportV2({ userData, results, etymology }: FullReportProps) {
   return (
     <div className="w-full max-w-[210mm] mx-auto bg-[#fffbf0] text-[#44403c] shadow-2xl print:shadow-none font-sans">
-      <Part1Intro userData={userData} results={results} />
+      <Part1IntroV2 userData={userData} results={results} />
       <Part1Identity userData={userData} results={results} />
       <Part2Incarnation userData={userData} results={results} />
       <PartAstroV2 userData={userData} results={results} etymology={etymology} />
@@ -28,7 +28,7 @@ export default function FullReportV2({ userData, results, etymology }: FullRepor
       <Part5Future userData={userData} results={results} />
       <Part6Integration userData={userData} results={results} />
       <div className="text-center p-8 text-xs text-stone-400 print:block hidden">
-        Généré le {new Date().toLocaleDateString()} - Version 2.1 (Astro-Enhanced)
+        Généré le {new Date().toLocaleDateString()} - Version 2.2 (Préambule V2)
       </div>
     </div>
   );

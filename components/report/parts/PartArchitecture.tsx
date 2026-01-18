@@ -195,32 +195,35 @@ export default function PartArchitecture({ userData, results }: PartArchitecture
       </PageContainer>
 
       {/* III. LE SANCTUAIRE INTÉRIEUR */}
-      <PageContainer className="p-8 md:p-16 bg-[#1B263B] text-white">
+      <PageContainer className="p-8 md:p-16 bg-[#fffbf0]">
         <div className="mb-12">
           <span className="text-[#E07A5F] font-bold tracking-widest uppercase text-sm">Partie 3</span>
-          <h2 className="text-4xl font-serif text-white mt-2">LE SANCTUAIRE INTÉRIEUR</h2>
-          <p className="text-white/60 italic mt-2">Cœur & Émotions : Élan Spirituel & Planète Maîtresse</p>
+          <h2 className="text-4xl font-serif text-[#1B263B] mt-2">LE SANCTUAIRE INTÉRIEUR</h2>
+          <p className="text-[#1B263B]/60 italic mt-2">Cœur & Émotions : Élan Spirituel & Planète Maîtresse</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
            <div className="space-y-6">
               <h3 className="text-[#D4A373] font-serif text-xl">Vos Besoins Profonds ({results.soulUrge})</h3>
-              <p className="text-white/80 leading-relaxed">
+              <p className="text-[#1B263B] leading-relaxed">
                 {soulArchetype.extendedDesc.split('\n')[0]}
               </p>
-              <p className="text-white/80 leading-relaxed">
-                {soulArchetype.love}
-              </p>
+              <div className="bg-white p-4 rounded-lg border border-[#D4A373]/20">
+                <span className="text-[#E07A5F] font-bold text-sm block mb-2">Vie Affective :</span>
+                <p className="text-[#1B263B]/80 text-sm leading-relaxed">
+                  {soulArchetype.love}
+                </p>
+              </div>
            </div>
            
-           <div className="space-y-6 border-l border-white/10 pl-8">
+           <div className="space-y-6 md:border-l border-[#1B263B]/10 md:pl-8">
               <h3 className="text-[#E07A5F] font-serif text-xl">Influence Planétaire ({planetName})</h3>
-              <p className="text-white/80 leading-relaxed">
+              <p className="text-[#1B263B] leading-relaxed">
                  La planète {planetName} gouverne votre chemin. {PLANET_INFLUENCES[planetKey as keyof typeof PLANET_INFLUENCES] || "Elle apporte une nuance particulière à votre sensibilité."}
               </p>
-              <div className="bg-white/10 p-4 rounded-lg">
+              <div className="bg-[#1B263B]/5 p-4 rounded-lg">
                 <span className="text-[#D4A373] font-bold text-sm block mb-2">Conseil d'Alignement :</span>
-                <p className="text-sm italic">
+                <p className="text-[#1B263B] italic text-sm">
                   "{soulArchetype.keyAdvice[1]}"
                 </p>
               </div>

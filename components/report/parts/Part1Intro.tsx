@@ -75,24 +75,51 @@ export default function Part1Intro({ userData, results }: { userData: UserData, 
         </div>
       </PageContainer>
 
-      {/* PAGE 3: AVANT-PROPOS */}
+      {/* PAGE 3: PREAMBULE */}
       <PageContainer className="p-4 md:p-16">
-        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block">
-          Avant-Propos
+        <h2 className="text-2xl md:text-3xl font-serif text-[#78350f] mb-6 border-b-2 border-[#d97706] pb-4 inline-block uppercase">
+          PRÉAMBULE — CE QUE VOUS TENEZ ENTRE LES MAINS
         </h2>
-        <div className="prose prose-lg text-[#57534e] max-w-none text-sm md:text-base leading-relaxed">
-          <p className="text-base md:text-xl italic text-[#d97706] mb-6 md:mb-8">
-            "Les nombres sont le plus haut degré de la connaissance. Le nombre est la connaissance même." — Platon
-          </p>
-          <p className="mb-4">
-            Bienvenue, {userData.firstName}, dans ce voyage au cœur de votre structure énergétique. 
-            Ce document n'est pas une simple lecture de caractère, c'est un miroir tendu à votre âme pour vous rappeler pourquoi vous avez choisi cette incarnation.
-          </p>
-          <p className="mb-4">
-            La numérologie n'est pas de la voyance. C'est une science sacrée des vibrations. Chaque lettre de votre nom, chaque chiffre de votre date de naissance est une fréquence que vous émettez en permanence.
-          </p>
+        
+        <div className="prose prose-lg text-[#57534e] max-w-none text-sm md:text-base leading-relaxed mb-8">
           <p>
-            En prenant conscience de ces fréquences, vous passez du statut de "joueur inconscient" à celui de "créateur conscient" de votre réalité.
+            Avant de plonger dans l’analyse de votre Équation Secrète, il est essentiel de préciser la nature exacte de ce dossier...
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 mb-8">
+          {/* Bloc 1 */}
+          <div className="bg-white p-6 rounded-lg shadow-sm border-l-4" style={{ borderColor: '#1B263B' }}>
+            <h3 className="font-serif text-xl mb-3" style={{ color: '#1B263B' }}>Une cartographie personnelle</h3>
+            <p className="text-[#57534e] text-sm md:text-base">
+              La partie numérologique propose une lecture structurante. Elle agit comme une carte topographique de votre fonctionnement...
+            </p>
+          </div>
+
+          {/* Bloc 2 */}
+          <div className="bg-white p-6 rounded-lg shadow-sm border-l-4" style={{ borderColor: '#E07A5F' }}>
+            <h3 className="font-serif text-xl mb-3" style={{ color: '#E07A5F' }}>Une lecture symbolique approfondie</h3>
+            <p className="text-[#57534e] text-sm md:text-base">
+              La partie astrologique explore la dimension psychologique et symbolique. Elle s’intéresse aux dynamiques internes...
+            </p>
+          </div>
+
+          {/* Bloc 3 */}
+          <div className="bg-white p-6 rounded-lg shadow-sm border-l-4" style={{ borderColor: '#D4A373' }}>
+            <h3 className="font-serif text-xl mb-3" style={{ color: '#D4A373' }}>Une synthèse orientée évolution</h3>
+            <p className="text-[#57534e] text-sm md:text-base">
+              Certaines sections croisent volontairement ces deux approches. C’est dans cette zone de convergence que se dessinent vos principaux leviers...
+            </p>
+          </div>
+        </div>
+
+        {/* Note Ethique */}
+        <div className="mt-8 p-6 bg-[#fff7ed] border border-[#d97706]/30 rounded-lg">
+          <h4 className="font-bold text-[#78350f] mb-2 uppercase text-sm tracking-wide">
+            Note sur le libre arbitre
+          </h4>
+          <p className="text-[#78350f] italic text-sm md:text-base">
+            "Cette analyse éclaire une direction, mais ne décide jamais de la destination. Vous restez l’unique acteur de vos choix..."
           </p>
         </div>
       </PageContainer>

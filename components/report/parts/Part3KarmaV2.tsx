@@ -30,7 +30,7 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
 
       {/* PAGE 18-19: FORCES ACQUISES */}
       <PageContainer className="p-4 md:p-16">
-        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block">
+        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block" style={{ pageBreakBefore: 'always' }}>
           Vos Forces Acquises
         </h2>
         <div className="space-y-8">
@@ -38,7 +38,7 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
             results.excessNumbers.map(n => {
               const content = getExcessNumberContent(n);
               return (
-                <div key={n} className="bg-white p-6 md:p-8 border-l-4 border-[#d97706] shadow-sm rounded-r-xl">
+                <div key={n} className="bg-white p-6 md:p-8 border-l-4 border-[#d97706] shadow-sm rounded-r-xl" style={{ pageBreakInside: 'avoid' }}>
                   <h3 className="text-xl md:text-2xl font-serif text-[#d97706] mb-2">{content.title}</h3>
                   <p className="text-[#57534e] mb-4 text-sm md:text-base">
                     {content.desc}
@@ -62,7 +62,7 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
 
       {/* PAGE 20-21: LEÇONS KARMIQUES */}
       <PageContainer className="p-4 md:p-16">
-        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-red-400 pb-4 inline-block">
+        <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-red-400 pb-4 inline-block" style={{ pageBreakBefore: 'always' }}>
           Les Leçons Karmiques
         </h2>
         <div className="space-y-8">
@@ -70,7 +70,7 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
             results.missingNumbers.map(n => {
               const content = getKarmicLessonContent(n);
               return (
-                <div key={n} className="bg-white p-6 md:p-8 border-l-4 border-red-400 shadow-sm rounded-r-xl">
+                <div key={n} className="bg-white p-6 md:p-8 border-l-4 border-red-400 shadow-sm rounded-r-xl" style={{ pageBreakInside: 'avoid' }}>
                   <h3 className="text-xl md:text-2xl font-serif text-red-500 mb-2">{content.title}</h3>
                   <p className="text-red-400 mb-4 font-bold text-sm md:text-base">
                     {content.desc}
@@ -86,7 +86,7 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
               );
             })
           ) : (
-            <div className="bg-white p-8 border-l-4 border-green-500 shadow-sm rounded-r-xl">
+            <div className="bg-white p-8 border-l-4 border-green-500 shadow-sm rounded-r-xl" style={{ pageBreakInside: 'avoid' }}>
               <h3 className="text-2xl font-serif text-green-600 mb-2">Karma Libre</h3>
               <p className="text-green-700">
                 Vous n'avez pas de dettes karmiques majeures dans votre grille d'inclusion. Vous êtes venu(e) perfectionner vos acquis plutôt que de combler des manques.

@@ -168,7 +168,7 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
 
       {/* 3. ANCRAGE TERRESTRE (Refondu) */}
       <div>
-        <h3 className="text-xl md:text-2xl font-serif text-[#d97706] mb-8 flex items-center gap-3">
+        <h3 className="text-xl md:text-2xl font-serif text-[#d97706] mb-8 flex items-center gap-3" style={{ pageBreakBefore: 'always' }}>
             <span className="w-8 h-8 rounded-full bg-[#d97706] text-white flex items-center justify-center text-sm font-bold">IX</span>
             Ancrage Terrestre
         </h3>

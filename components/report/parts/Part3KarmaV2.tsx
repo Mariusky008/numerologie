@@ -33,6 +33,13 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
         <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block" style={{ pageBreakBefore: 'always' }}>
           Vos Forces Acquises
         </h2>
+        
+        {/* DEBUG FORCE */}
+        <div className="text-xs font-mono text-red-500 mb-4 border border-red-500 p-2">
+          DEBUG FORCES: Count = {results.excessNumbers?.length ?? 'undefined'} <br/>
+          Values = {JSON.stringify(results.excessNumbers)}
+        </div>
+
         <div className="space-y-8">
           {results.excessNumbers && results.excessNumbers.length > 0 ? (
             results.excessNumbers.map(n => {
@@ -65,6 +72,12 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
         <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-red-400 pb-4 inline-block" style={{ pageBreakBefore: 'always' }}>
           Les Leçons Karmiques
         </h2>
+        
+        {/* DEBUG MISSING */}
+        <div className="text-xs font-mono text-red-500 mb-4 border border-red-500 p-2">
+          DEBUG MISSING: Count = {results.missingNumbers?.length ?? 'undefined'} <br/>
+          Values = {JSON.stringify(results.missingNumbers)}
+        </div>
         
         <div className="space-y-8">
           {results.missingNumbers && results.missingNumbers.length > 0 ? (

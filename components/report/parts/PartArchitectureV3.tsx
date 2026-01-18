@@ -25,6 +25,8 @@ export default function PartArchitectureV3({ userData, results }: PartArchitectu
   const zodiacInfo = zodiacKey ? ZODIAC_DETAILS[zodiacKey] : null;
   const zodiacName = zodiacKey ? zodiacKey.charAt(0).toUpperCase() + zodiacKey.slice(1) : "Inconnu";
 
+  const missionText = (lpArchetype as any).mission || lpArchetype.desc;
+
   // 2. Interface Sociale (Expression + Image Publique)
   const exprArchetype = getNumberArchetype(results.expression);
   // Fallback to zodiac element/quality if no specific Ascendant data
@@ -120,7 +122,7 @@ export default function PartArchitectureV3({ userData, results }: PartArchitectu
             <div className="text-5xl font-serif text-[#1B263B] mb-4">{results.lifePath}</div>
             <h4 className="text-xl font-serif text-[#1B263B] mb-2">{lpArchetype.title}</h4>
             <p className="text-sm text-[#1B263B]/80 leading-relaxed">
-              {lpArchetype.mission}
+              {missionText}
             </p>
           </div>
 

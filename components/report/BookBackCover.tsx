@@ -14,9 +14,18 @@ export default function BookBackCover({ userData, results }: BookBackCoverProps)
     const lifePath = results.lifePath;
     const focus = userData.focus || 'mission';
     
+    // --- NOUVEAU : Intégration Astro & Numéro Expert ---
+    const zodiacKey = results.advancedProfile?.zodiac?.toLowerCase();
+    const planetKey = results.advancedProfile?.dominantPlanet?.toLowerCase();
+    
+    const zodiac = results.realAstro?.['Sun']?.signe || (zodiacKey ? zodiacKey.charAt(0).toUpperCase() + zodiacKey.slice(1) : "Signe Inconnu");
+    const ascendant = results.realAstro?.['Ascendant']?.signe;
+    const planet = planetKey ? planetKey.charAt(0).toUpperCase() + planetKey.slice(1) : "";
+
     let opening = "";
     let conflict = "";
     let resolution = "";
+    let astroTouch = "";
 
     // 1. L'Accroche (Basée sur le Chemin de Vie)
     switch (lifePath) {
@@ -44,8 +53,17 @@ export default function BookBackCover({ userData, results }: BookBackCoverProps)
         default: conflict = `Mais le destin a d'autres plans. Une série d'événements inexplicables va l'obliger à sortir de sa zone de confort pour affronter ses dragons intérieurs.`;
     }
 
-    // 3. La Résolution / Promesse
-    resolution = `Entre passé karmique et futur à construire, ce récit initiatique nous entraîne dans les méandres d'une psychologie fascinante. ${name} devra faire un choix : rester le spectateur de sa vie ou en devenir enfin le héros.`;
+    // 3. La Touche Astrologique (NOUVEAU)
+    if (zodiac && ascendant) {
+       astroTouch = `Porté par la fougue du ${zodiac} et nuancé par un Ascendant ${ascendant}, `;
+    } else if (zodiac) {
+       astroTouch = `Sous l'influence ardente du ${zodiac}, `;
+    } else {
+       astroTouch = `Guidé par des forces célestes invisibles, `;
+    }
+
+    // 4. La Résolution / Promesse
+    resolution = `${astroTouch}ce récit initiatique nous entraîne dans les méandres d'une psychologie fascinante. Entre passé karmique et futur à construire, ${name} devra faire un choix : rester le spectateur de sa vie ou en devenir enfin le héros.`;
 
     return `${opening} ${conflict} ${resolution}`;
   };

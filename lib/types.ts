@@ -21,6 +21,12 @@ export interface NumberDetail {
   karmicDebt?: number; // (ex: 13 si c'est une dette)
 }
 
+export interface Transits {
+  physical: string;
+  mental: string;
+  spiritual: string;
+}
+
 export interface NumerologyResult {
   lifePath: number;
   expression: number;

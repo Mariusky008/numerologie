@@ -121,7 +121,8 @@ function PrintContent() {
                  birthPlaceVibration
                },
                careerForecast,
-               advancedProfile
+               advancedProfile,
+               transits
             }
           });
         } catch (e) {

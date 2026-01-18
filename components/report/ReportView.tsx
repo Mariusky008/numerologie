@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -20,7 +19,8 @@ import {
   calculatePlaceVibration,
   getAdvancedProfile,
   calculateLifePathDetailed,
-  calculateNameNumbersDetailed
+  calculateNameNumbersDetailed,
+  calculateTransits
 } from '@/lib/numerology/engine';
 import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
 import { PLANET_INFLUENCES, ZODIAC_DETAILS } from '@/lib/numerology/interpretations-astro-geo';
@@ -68,9 +68,11 @@ export default function ReportView({ userData }: ReportViewProps) {
       const birthPlaceVibration = calculatePlaceVibration(userData.birthPlace || "");
       const careerForecast = generateCareerForecast(userData.birthDate, 2026);
       
+      // Calculate Transits
+      const transits = calculateTransits(userData.firstName, userData.lastName, userData.birthDate);
+
       // Advanced Profile
       const advancedProfile = getAdvancedProfile(lifePath, userData.birthDate);
-      console.log("Calculated Advanced Profile:", advancedProfile); // Debug Log
 
       setResults({
         lifePath,
@@ -105,6 +107,7 @@ export default function ReportView({ userData }: ReportViewProps) {
             birthPlaceVibration
         },
         careerForecast,
+        transits,
         advancedProfile
       });
     }
@@ -134,13 +137,6 @@ export default function ReportView({ userData }: ReportViewProps) {
         
         {/* Header */}
         <header className="text-center space-y-4 pt-8">
-          
-          {/* TEMPORARY DEBUG: Check if advanced data is present */}
-          {/* <div className="bg-red-100 p-2 text-xs text-red-800 text-left overflow-auto max-h-32 mb-4 rounded border border-red-300">
-            <strong>DEBUG ADVANCED PROFILE:</strong>
-            <pre>{JSON.stringify(results.advancedProfile, null, 2)}</pre>
-          </div> */}
-
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -268,6 +264,26 @@ export default function ReportView({ userData }: ReportViewProps) {
               <p className="text-[#57534e]">
                 Votre vibration pour l'année en cours. Une période propice à l'alignement avec vos objectifs profonds.
               </p>
+
+              {results.transits && (
+                <div className="mt-6 pt-4 border-t border-stone-100">
+                  <h4 className="text-xs font-bold text-[#d97706] uppercase tracking-wider mb-3">Météo Vibratoire (Transits)</h4>
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="bg-stone-50 p-2 rounded text-center">
+                       <span className="text-[10px] text-stone-400 block">Physique</span>
+                       <span className="text-xl font-bold text-stone-700">{results.transits.physical}</span>
+                    </div>
+                    <div className="bg-stone-50 p-2 rounded text-center">
+                       <span className="text-[10px] text-stone-400 block">Mental</span>
+                       <span className="text-xl font-bold text-stone-700">{results.transits.mental}</span>
+                    </div>
+                    <div className="bg-stone-50 p-2 rounded text-center">
+                       <span className="text-[10px] text-stone-400 block">Spirituel</span>
+                       <span className="text-xl font-bold text-stone-700">{results.transits.spiritual}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </motion.div>
         </div>

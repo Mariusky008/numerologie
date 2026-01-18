@@ -67,6 +67,9 @@ export interface NumerologyResult {
   };
   careerForecast: { year: number, personalYear: number }[]; // For 10 years
   
+  // Transits (Lettres de Passage)
+  transits?: Transits;
+
   // Advanced Profile (New Algorithm)
   advancedProfile?: {
     zodiac: string;

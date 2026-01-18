@@ -354,3 +354,44 @@ export function generateCareerForecast(birthDate: string, startYear: number = 20
   }
   return forecast;
 }
+
+/**
+ * Calculates Transits (Lettres de Passage) for a given year.
+ * Physical Transit = Derived from First Name
+ * Mental Transit = Derived from Last Name
+ * Spiritual Transit = Derived from Full Name
+ */
+export function calculateTransits(firstName: string, lastName: string, birthDate: string, targetYear: number = new Date().getFullYear()) {
+  const birthYear = parseInt(birthDate.split('-')[0]);
+  const age = targetYear - birthYear;
+  
+  // Helper to find active letter
+  const findActiveLetter = (sourceStr: string, targetAge: number): string => {
+    const clean = normalizeString(sourceStr);
+    if (!clean) return '?';
+    
+    let currentAge = 0;
+    let index = 0;
+    
+    // Loop until we reach the age
+    // Limit to 1000 iterations to prevent infinite loop
+    for(let k=0; k<1000; k++) {
+      const char = clean[index % clean.length];
+      const duration = GEMATRIA[char] || 1; // Default to 1 if unknown
+      
+      if (currentAge <= targetAge && (currentAge + duration) > targetAge) {
+        return char.toUpperCase();
+      }
+      
+      currentAge += duration;
+      index++;
+    }
+    return clean[clean.length-1].toUpperCase();
+  };
+
+  return {
+    physical: findActiveLetter(firstName, age),
+    mental: findActiveLetter(lastName, age),
+    spiritual: findActiveLetter(firstName + lastName, age)
+  };
+}

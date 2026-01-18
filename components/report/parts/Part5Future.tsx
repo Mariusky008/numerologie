@@ -85,6 +85,29 @@ export default function Part5Future({ userData, results }: { userData: UserData,
         <p className="text-base md:text-xl max-w-4xl mx-auto text-[#57534e] whitespace-pre-wrap leading-relaxed">
           {pyContent}
         </p>
+
+        {results.transits && (
+          <div className="w-full max-w-4xl mt-12 pt-8 border-t border-[#d97706]/20">
+            <h3 className="text-xl md:text-2xl font-serif text-[#78350f] mb-6 text-center">Météo Vibratoire (Transits)</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm text-center">
+                <div className="text-xs uppercase tracking-widest text-[#a8a29e] mb-2">Plan Physique</div>
+                <div className="text-4xl font-serif text-[#d97706] mb-2">{results.transits.physical}</div>
+                <p className="text-xs text-[#57534e]">Influence sur votre santé et vos actions concrètes.</p>
+              </div>
+              <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm text-center">
+                <div className="text-xs uppercase tracking-widest text-[#a8a29e] mb-2">Plan Mental</div>
+                <div className="text-4xl font-serif text-[#d97706] mb-2">{results.transits.mental}</div>
+                <p className="text-xs text-[#57534e]">Influence sur vos pensées et vos projets intellectuels.</p>
+              </div>
+              <div className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm text-center">
+                <div className="text-xs uppercase tracking-widest text-[#a8a29e] mb-2">Plan Spirituel</div>
+                <div className="text-4xl font-serif text-[#d97706] mb-2">{results.transits.spiritual}</div>
+                <p className="text-xs text-[#57534e]">Influence sur votre âme et votre évolution intérieure.</p>
+              </div>
+            </div>
+          </div>
+        )}
       </PageContainer>
 
       {/* PAGE 33-34: TABLEAU PREVISIONNEL 10 ANS (Module 4) */}

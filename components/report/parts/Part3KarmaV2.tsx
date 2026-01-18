@@ -12,7 +12,7 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
       {/* PAGE 17: GRILLE D'INCLUSION VISUELLE */}
       <PageContainer className="p-4 md:p-16 bg-[#fffbf0]">
         <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 border-b-2 border-[#d97706] pb-4 inline-block">
-          Le Miroir Karmique
+          KARMA V3 (DEBUG)
         </h2>
         <p className="text-base md:text-xl font-light mb-12 max-w-2xl text-[#57534e]">
           La Grille d'Inclusion est la radiographie de votre âme. Elle montre ce que vous avez emporté dans vos valises pour cette vie.

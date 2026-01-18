@@ -39,7 +39,7 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
   return (
     <PageContainer className="p-4 md:p-16">
       <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block">
-        Architecture Astrale & Résonance
+        ARCHITECTURE ASTRALE V3 (DEBUG)
       </h2>
 
       {/* 1. ASTROLOGIE */}

@@ -7,6 +7,8 @@ import Part2Incarnation from './Part2Incarnation';
 import Part3KarmaV2 from './Part3KarmaV2';
 import Part5Future from './Part5Future';
 
+import Part7ConclusionKeys from './Part7ConclusionKeys';
+
 // Colors from the design system
 const COLORS = {
   blue: '#1B263B', // Structure / Numérologie
@@ -324,30 +326,7 @@ export default function PartArchitecture({ userData, results }: PartArchitecture
 
 
       {/* CONCLUSION: 3 CLÉS D'ACTIVATION */}
-      <PageContainer className="p-8 md:p-16 justify-center bg-[#fffbf0] text-[#1B263B] text-center">
-         <h2 className="text-3xl md:text-5xl font-serif text-[#D4A373] mb-12">VOS 3 CLÉS D'ACTIVATION</h2>
-         
-         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="p-6 border border-[#D4A373]/30 rounded-lg bg-white shadow-sm">
-               <div className="text-[#E07A5F] text-sm uppercase tracking-widest mb-4">Mental</div>
-               <p className="font-serif text-xl text-[#1B263B]">"{lpArchetype.keyAdvice[0]}"</p>
-            </div>
-            <div className="p-6 border border-[#D4A373]/30 rounded-lg bg-white shadow-sm">
-               <div className="text-[#E07A5F] text-sm uppercase tracking-widest mb-4">Émotionnel</div>
-               <p className="font-serif text-xl text-[#1B263B]">"Écoutez votre {soulArchetype.keywords[0]}"</p>
-            </div>
-            <div className="p-6 border border-[#D4A373]/30 rounded-lg bg-white shadow-sm">
-               <div className="text-[#E07A5F] text-sm uppercase tracking-widest mb-4">Action</div>
-               <p className="font-serif text-xl text-[#1B263B]">"{actionContent.keywords[0]}"</p>
-            </div>
-         </div>
-
-         <div className="mt-16 max-w-2xl mx-auto">
-            <p className="text-[#D4A373] italic text-lg">
-               "Je construis mon royaume avec la sagesse du {results.lifePath} et je rayonne comme un {zodiacName} pour éclairer les autres."
-            </p>
-         </div>
-      </PageContainer>
+      <Part7ConclusionKeys userData={userData} results={results} />
     </>
   );
 }

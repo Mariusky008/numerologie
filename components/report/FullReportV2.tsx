@@ -9,6 +9,7 @@ import Part3KarmaV2 from './parts/Part3KarmaV2';
 import Part4Focus from './parts/Part4Focus';
 import Part5Future from './parts/Part5Future';
 import Part6Integration from './parts/Part6Integration';
+import Part7ConclusionKeys from './parts/Part7ConclusionKeys';
 
 interface FullReportProps {
   userData: UserData;
@@ -27,8 +28,9 @@ export default function FullReportV2({ userData, results, etymology }: FullRepor
       <Part4Focus userData={userData} results={results} />
       <Part5Future userData={userData} results={results} />
       <Part6Integration userData={userData} results={results} />
+      <Part7ConclusionKeys userData={userData} results={results} />
       <div className="text-center p-8 text-xs text-stone-400 print:block hidden">
-        Généré le {new Date().toLocaleDateString()} - Version 2.2 (Préambule V2)
+        Généré le {new Date().toLocaleDateString()} - Version 2.3 (Conclusion Keys)
       </div>
     </div>
   );

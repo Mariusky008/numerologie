@@ -2,10 +2,17 @@
 import { UserData, NumerologyResult } from '@/lib/types';
 import PageContainer from './PageContainer';
 import InclusionGridViz from '../InclusionGridViz';
-import { getKarmicLessonContent, getExcessNumberContent, getBridgeContent } from '@/lib/numerology/contentGenerator';
+import { getKarmicLessonContent, getExcessNumberContent, getBridgeContent, getBalancedNumberContent } from '@/lib/numerology/contentGenerator';
 
 export default function Part3KarmaV2({ userData, results }: { userData: UserData, results: NumerologyResult }) {
   const bridgeContent = getBridgeContent(results.bridgeNumber);
+  
+  // Calculate balanced numbers (neither missing nor excess)
+  const allNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const balancedNumbers = allNumbers.filter(n => 
+    (!results.missingNumbers?.includes(n)) && 
+    (!results.excessNumbers?.includes(n))
+  );
 
   return (
     <>
@@ -33,12 +40,6 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
         <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block" style={{ pageBreakBefore: 'always' }}>
           Vos Forces Acquises
         </h2>
-        
-        {/* DEBUG FORCE */}
-        <div className="text-xs font-mono text-red-500 mb-4 border border-red-500 p-2">
-          DEBUG FORCES: Count = {results.excessNumbers?.length ?? 'undefined'} <br/>
-          Values = {JSON.stringify(results.excessNumbers)}
-        </div>
 
         <div className="space-y-8">
           {results.excessNumbers && results.excessNumbers.length > 0 ? (
@@ -67,17 +68,40 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
         </div>
       </PageContainer>
 
+      {/* NOMBRES ÉQUILIBRÉS */}
+      {balancedNumbers.length > 0 && (
+        <PageContainer className="p-4 md:p-16">
+          <h2 className="text-2xl md:text-4xl font-serif text-[#15803d] mb-8 md:mb-12 border-b-2 border-[#15803d] pb-4 inline-block" style={{ pageBreakBefore: 'always' }}>
+            Vos Zones d'Équilibre
+          </h2>
+          
+          <div className="space-y-8">
+            {balancedNumbers.map(n => {
+              const content = getBalancedNumberContent(n);
+              return (
+                <div key={n} className="bg-white p-6 md:p-8 border-l-4 border-[#15803d] shadow-sm rounded-r-xl" style={{ pageBreakInside: 'avoid' }}>
+                  <h3 className="text-xl md:text-2xl font-serif text-[#15803d] mb-2">{content.title}</h3>
+                  <p className="text-[#15803d] mb-4 font-medium text-sm md:text-base">
+                    {content.desc}
+                  </p>
+                  <p className="text-[#57534e] mb-4 leading-relaxed text-sm md:text-base">
+                    {content.meaning}
+                  </p>
+                  <p className="text-[#57534e] italic text-sm md:text-base">
+                    {content.benefit}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </PageContainer>
+      )}
+
       {/* PAGE 20-21: LEÇONS KARMIQUES */}
       <PageContainer className="p-4 md:p-16">
         <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-red-400 pb-4 inline-block" style={{ pageBreakBefore: 'always' }}>
           Les Leçons Karmiques
         </h2>
-        
-        {/* DEBUG MISSING */}
-        <div className="text-xs font-mono text-red-500 mb-4 border border-red-500 p-2">
-          DEBUG MISSING: Count = {results.missingNumbers?.length ?? 'undefined'} <br/>
-          Values = {JSON.stringify(results.missingNumbers)}
-        </div>
         
         <div className="space-y-8">
           {results.missingNumbers && results.missingNumbers.length > 0 ? (

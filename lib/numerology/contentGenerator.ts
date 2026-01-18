@@ -349,3 +349,13 @@ export const getExcessNumberContent = (num: number) => {
     warning: `Attention à l'excès : ${arch.challenge}`
   };
 };
+
+export const getBalancedNumberContent = (num: number) => {
+  const arch = getNumberArchetype(num);
+  return {
+    title: `Équilibre du Nombre ${num}`,
+    desc: `Vous maîtrisez bien l'énergie du ${num}. Elle circule de manière fluide en vous.`,
+    meaning: `Cela signifie que vous savez faire preuve de ${arch.keywords[0].toLowerCase()} et de ${arch.keywords[1].toLowerCase()} au bon moment, sans excès ni manque.`,
+    benefit: `C'est une zone de stabilité dans votre vie. Vous pouvez vous appuyer sur cette qualité : "${arch.desc}"`
+  };
+};

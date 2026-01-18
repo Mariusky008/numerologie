@@ -458,6 +458,15 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
             ))}
           </div>
         )}
+        {/* DEBUG STATS TABLE (TEMPORARY) */}
+        <div className="mt-12 p-6 bg-slate-100 rounded-xl border border-slate-300">
+          <h3 className="text-sm font-bold text-slate-500 uppercase mb-4">Debug: Données Brutes</h3>
+          <div className="overflow-x-auto">
+            <pre className="text-xs text-slate-600 font-mono">
+              {JSON.stringify(stats, null, 2)}
+            </pre>
+          </div>
+        </div>
       </main>
     </div>
   );

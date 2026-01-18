@@ -20,7 +20,8 @@ import {
   generateCareerForecast,
   getAdvancedProfile,
   calculateLifePathDetailed,
-  calculateNameNumbersDetailed
+  calculateNameNumbersDetailed,
+  calculateTransits
 } from '@/lib/numerology/engine';
 import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
 import { trackEvent } from '@/lib/analytics';
@@ -84,6 +85,8 @@ function PrintContent() {
           const cycles = calculateCycles(userData.birthDate);
           
           const advancedProfile = getAdvancedProfile(lifePath, userData.birthDate);
+          
+          const transits = calculateTransits(userData.firstName, userData.lastName, userData.birthDate);
 
           setData({
             userData,

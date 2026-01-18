@@ -27,6 +27,19 @@ function CheckoutContent() {
   // Option papier (disponible uniquement pour le bundle)
   const [paperOption, setPaperOption] = useState(false);
 
+  // Formulaire de livraison
+  const [deliveryInfo, setDeliveryInfo] = useState({
+    email: '',
+    address: '',
+    city: '',
+    zip: '',
+    country: 'France'
+  });
+
+  const handleDeliveryChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setDeliveryInfo({ ...deliveryInfo, [e.target.name]: e.target.value });
+  };
+
   // Prix
   const PRICE_REPORT = 29;
   const PRICE_BUNDLE = 49;
@@ -37,8 +50,18 @@ function CheckoutContent() {
     : PRICE_BUNDLE + (paperOption ? PRICE_PAPER : 0);
 
   const handlePayment = () => {
+    if (!deliveryInfo.email) {
+      alert("Merci de renseigner votre email pour recevoir vos documents.");
+      return;
+    }
+    
+    if (paperOption && (!deliveryInfo.address || !deliveryInfo.city || !deliveryInfo.zip)) {
+      alert("Merci de compléter votre adresse de livraison pour le livre papier.");
+      return;
+    }
+
     // TODO: Intégration Stripe ici
-    alert(`Redirection vers le paiement Stripe (${currentTotal}€)...\n\nPour le test, nous allons générer le PDF.`);
+    alert(`Redirection vers le paiement Stripe (${currentTotal}€)...\n\nEmail: ${deliveryInfo.email}\n${paperOption ? `Adresse: ${deliveryInfo.address}, ${deliveryInfo.zip} ${deliveryInfo.city}` : ''}`);
     
     const params = new URLSearchParams({
         fn: userData.firstName,
@@ -224,6 +247,101 @@ function CheckoutContent() {
           </motion.div>
 
         </div>
+
+        {/* Delivery Form Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="max-w-3xl mx-auto mt-12 bg-white rounded-2xl p-8 border border-[#EFEDE9] shadow-sm"
+        >
+          <h3 className="text-xl font-serif text-[#2C2F4A] mb-6 flex items-center gap-2">
+            <Feather className="w-5 h-5 text-[#5B4B8A]" />
+            Coordonnées de réception
+          </h3>
+          
+          <div className="space-y-6">
+             {/* Email Field (Always visible) */}
+             <div>
+               <label className="block text-sm font-bold text-[#2C2F4A] mb-2">Adresse Email <span className="text-red-400">*</span></label>
+               <input 
+                 type="email" 
+                 name="email"
+                 value={deliveryInfo.email}
+                 onChange={handleDeliveryChange}
+                 placeholder="Pour recevoir vos documents PDF"
+                 className="w-full p-4 rounded-lg bg-[#FAF9F7] border border-[#EFEDE9] focus:border-[#5B4B8A] focus:ring-1 focus:ring-[#5B4B8A] outline-none transition-all"
+               />
+             </div>
+
+             {/* Physical Address Fields (Conditional) */}
+             {paperOption && (
+               <motion.div 
+                 initial={{ opacity: 0, height: 0 }}
+                 animate={{ opacity: 1, height: 'auto' }}
+                 className="space-y-6 pt-4 border-t border-[#EFEDE9]"
+               >
+                 <div className="flex items-center gap-2 text-[#C9A24D] text-sm font-bold uppercase tracking-wide mb-2">
+                   <Package className="w-4 h-4" />
+                   Livraison du Livre Physique
+                 </div>
+                 
+                 <div>
+                   <label className="block text-sm font-bold text-[#2C2F4A] mb-2">Adresse Postale <span className="text-red-400">*</span></label>
+                   <input 
+                     type="text" 
+                     name="address"
+                     value={deliveryInfo.address}
+                     onChange={handleDeliveryChange}
+                     placeholder="Numéro et nom de rue"
+                     className="w-full p-4 rounded-lg bg-[#FAF9F7] border border-[#EFEDE9] focus:border-[#C9A24D] focus:ring-1 focus:ring-[#C9A24D] outline-none transition-all"
+                   />
+                 </div>
+
+                 <div className="grid grid-cols-2 gap-4">
+                   <div>
+                     <label className="block text-sm font-bold text-[#2C2F4A] mb-2">Code Postal <span className="text-red-400">*</span></label>
+                     <input 
+                       type="text" 
+                       name="zip"
+                       value={deliveryInfo.zip}
+                       onChange={handleDeliveryChange}
+                       placeholder="75000"
+                       className="w-full p-4 rounded-lg bg-[#FAF9F7] border border-[#EFEDE9] focus:border-[#C9A24D] focus:ring-1 focus:ring-[#C9A24D] outline-none transition-all"
+                     />
+                   </div>
+                   <div>
+                     <label className="block text-sm font-bold text-[#2C2F4A] mb-2">Ville <span className="text-red-400">*</span></label>
+                     <input 
+                       type="text" 
+                       name="city"
+                       value={deliveryInfo.city}
+                       onChange={handleDeliveryChange}
+                       placeholder="Paris"
+                       className="w-full p-4 rounded-lg bg-[#FAF9F7] border border-[#EFEDE9] focus:border-[#C9A24D] focus:ring-1 focus:ring-[#C9A24D] outline-none transition-all"
+                     />
+                   </div>
+                 </div>
+
+                 <div>
+                    <label className="block text-sm font-bold text-[#2C2F4A] mb-2">Pays</label>
+                    <select 
+                      name="country"
+                      value={deliveryInfo.country}
+                      onChange={handleDeliveryChange}
+                      className="w-full p-4 rounded-lg bg-[#FAF9F7] border border-[#EFEDE9] focus:border-[#C9A24D] outline-none"
+                    >
+                      <option value="France">France</option>
+                      <option value="Belgique">Belgique</option>
+                      <option value="Suisse">Suisse</option>
+                      <option value="Canada">Canada</option>
+                      <option value="Luxembourg">Luxembourg</option>
+                    </select>
+                 </div>
+               </motion.div>
+             )}
+          </div>
+        </motion.div>
 
         {/* FOOTER ACTION */}
         <div className="mt-16 text-center sticky bottom-8 z-20 pointer-events-none">

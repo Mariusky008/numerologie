@@ -2,6 +2,10 @@ import { UserData, NumerologyResult } from '@/lib/types';
 import PageContainer from './PageContainer';
 import { getNumberArchetype, getDayOfBirthContent } from '@/lib/numerology/contentGenerator';
 import { PLANET_INFLUENCES, ZODIAC_DETAILS } from '@/lib/numerology/interpretations-astro-geo';
+import Part1Identity from './Part1Identity';
+import Part2Incarnation from './Part2Incarnation';
+import Part3KarmaV2 from './Part3KarmaV2';
+import Part5Future from './Part5Future';
 
 // Colors from the design system
 const COLORS = {
@@ -148,6 +152,10 @@ export default function PartArchitecture({ userData, results }: PartArchitecture
           </p>
         </div>
       </PageContainer>
+      
+      {/* --- INSERTION MODULE DÉTAILLÉ : IDENTITÉ --- */}
+      <Part1Identity userData={userData} results={results} />
+
 
       {/* II. L'INTERFACE SOCIALE */}
       <PageContainer className="p-8 md:p-16">
@@ -193,6 +201,10 @@ export default function PartArchitecture({ userData, results }: PartArchitecture
            </p>
         </div>
       </PageContainer>
+      
+      {/* --- INSERTION MODULE DÉTAILLÉ : INCARNATION --- */}
+      <Part2Incarnation userData={userData} results={results} />
+
 
       {/* III. LE SANCTUAIRE INTÉRIEUR */}
       <PageContainer className="p-8 md:p-16 bg-[#fffbf0]">
@@ -231,6 +243,7 @@ export default function PartArchitecture({ userData, results }: PartArchitecture
         </div>
       </PageContainer>
 
+
       {/* IV. PUISSANCE D'ACTION */}
       <PageContainer className="p-8 md:p-16">
         <div className="mb-12">
@@ -266,6 +279,10 @@ export default function PartArchitecture({ userData, results }: PartArchitecture
            </div>
         </div>
       </PageContainer>
+      
+      {/* --- INSERTION MODULE DÉTAILLÉ : KARMA (GRILLE INCLUSION) --- */}
+      <Part3KarmaV2 userData={userData} results={results} />
+
 
       {/* V. NAVIGATION TEMPORELLE */}
       <PageContainer className="p-8 md:p-16 bg-[#fffbf0] relative">
@@ -301,23 +318,27 @@ export default function PartArchitecture({ userData, results }: PartArchitecture
             </div>
          </div>
       </PageContainer>
+      
+      {/* --- INSERTION MODULE DÉTAILLÉ : FUTUR (CYCLES) --- */}
+      <Part5Future userData={userData} results={results} />
+
 
       {/* CONCLUSION: 3 CLÉS D'ACTIVATION */}
-      <PageContainer className="p-8 md:p-16 justify-center bg-[#1B263B] text-white text-center">
+      <PageContainer className="p-8 md:p-16 justify-center bg-[#fffbf0] text-[#1B263B] text-center">
          <h2 className="text-3xl md:text-5xl font-serif text-[#D4A373] mb-12">VOS 3 CLÉS D'ACTIVATION</h2>
          
          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="p-6 border border-[#D4A373]/30 rounded-lg bg-white/5">
+            <div className="p-6 border border-[#D4A373]/30 rounded-lg bg-white shadow-sm">
                <div className="text-[#E07A5F] text-sm uppercase tracking-widest mb-4">Mental</div>
-               <p className="font-serif text-xl">"{lpArchetype.keyAdvice[0]}"</p>
+               <p className="font-serif text-xl text-[#1B263B]">"{lpArchetype.keyAdvice[0]}"</p>
             </div>
-            <div className="p-6 border border-[#D4A373]/30 rounded-lg bg-white/5">
+            <div className="p-6 border border-[#D4A373]/30 rounded-lg bg-white shadow-sm">
                <div className="text-[#E07A5F] text-sm uppercase tracking-widest mb-4">Émotionnel</div>
-               <p className="font-serif text-xl">"Écoutez votre {soulArchetype.keywords[0]}"</p>
+               <p className="font-serif text-xl text-[#1B263B]">"Écoutez votre {soulArchetype.keywords[0]}"</p>
             </div>
-            <div className="p-6 border border-[#D4A373]/30 rounded-lg bg-white/5">
+            <div className="p-6 border border-[#D4A373]/30 rounded-lg bg-white shadow-sm">
                <div className="text-[#E07A5F] text-sm uppercase tracking-widest mb-4">Action</div>
-               <p className="font-serif text-xl">"{actionContent.keywords[0]}"</p>
+               <p className="font-serif text-xl text-[#1B263B]">"{actionContent.keywords[0]}"</p>
             </div>
          </div>
 

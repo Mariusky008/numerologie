@@ -1,8 +1,8 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Suspense, useState, useEffect } from 'react';
-import { Check, Star, BookOpen, Download, Package } from 'lucide-react';
+import { Suspense, useState } from 'react';
+import { Check, Star, BookOpen, Package, Feather, ShieldCheck, ArrowLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 function CheckoutContent() {
@@ -40,7 +40,6 @@ function CheckoutContent() {
     // TODO: Intégration Stripe ici
     alert(`Redirection vers le paiement Stripe (${currentTotal}€)...\n\nPour le test, nous allons générer le PDF.`);
     
-    // Simulation de succès -> Redirection vers le PDF (ou le dashboard client plus tard)
     const params = new URLSearchParams({
         fn: userData.firstName,
         ln: userData.lastName,
@@ -49,180 +48,219 @@ function CheckoutContent() {
         fo: userData.focus
     });
     
-    // Si c'est le bundle livre, on pourrait rediriger vers une page de confirmation spécifique
-    // Pour l'instant on garde la logique existante
     window.open(`/pdf-report-v2?${params.toString()}`, '_blank');
   };
 
   return (
-    <div className="min-h-screen bg-[#fffbf0] text-[#57534e] py-12 px-4 md:px-8 font-sans">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen bg-[#FAF9F7] text-[#2C2F4A] font-sans overflow-x-hidden">
+      
+      {/* Background Ambience */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-60"></div>
+          <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-[#C9A24D] rounded-full blur-[150px] opacity-5"></div>
+          <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#5B4B8A] rounded-full blur-[150px] opacity-5"></div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 py-8 md:py-16 relative z-10">
         
-        {/* Header */}
-        <div className="text-center mb-12 space-y-4">
-          <h1 className="text-3xl md:text-4xl font-serif text-[#78350f] font-bold">
-            Finalisez votre accès
+        {/* Navigation Back */}
+        <button 
+          onClick={() => router.back()}
+          className="flex items-center gap-2 text-[#5B4B8A] hover:text-[#2C2F4A] transition-colors mb-8 md:mb-12 font-medium text-sm tracking-wide group"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Retour à l'analyse
+        </button>
+
+        {/* Header Hero */}
+        <div className="text-center mb-16 space-y-6 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[#5B4B8A]/5 text-[#5B4B8A] text-xs font-bold tracking-widest uppercase border border-[#5B4B8A]/20">
+             <Feather className="w-3 h-3" />
+             Votre histoire est prête
+          </div>
+          <h1 className="text-4xl md:text-6xl font-serif text-[#2C2F4A] leading-tight">
+            <span className="text-[#5B4B8A] italic block text-2xl md:text-3xl mb-2">Bonjour {userData.firstName},</span>
+            Comment souhaitez-vous recevoir <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C9A24D] to-[#B89B5E]">votre révélation ?</span>
           </h1>
-          <p className="text-lg text-[#a8a29e]">
-            {userData.firstName}, votre analyse complète est prête. <br/>
-            Choisissez le format qui vous correspond pour révéler votre destinée.
+          <p className="text-lg text-[#2C2F4A]/70 font-light leading-relaxed">
+            Votre profil numérologique complet a été calculé. <br/>
+            Choisissez maintenant le format qui vous permettra d'intégrer au mieux ces connaissances.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        {/* Pricing Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch max-w-5xl mx-auto">
           
           {/* OPTION 1: RAPPORT SEUL */}
-          <div 
+          <motion.div 
+            whileHover={{ y: -5 }}
             onClick={() => setSelectedPlan('report')}
-            className={`relative p-8 rounded-2xl border-2 transition-all cursor-pointer ${
+            className={`relative p-8 md:p-10 rounded-2xl border transition-all cursor-pointer flex flex-col ${
               selectedPlan === 'report' 
-                ? 'border-[#78350f] bg-white shadow-xl scale-[1.02]' 
-                : 'border-stone-200 bg-white/50 hover:border-[#78350f]/30'
+                ? 'border-[#5B4B8A] bg-white shadow-xl ring-1 ring-[#5B4B8A]/20' 
+                : 'border-[#EFEDE9] bg-white/60 hover:border-[#5B4B8A]/30 hover:bg-white'
             }`}
           >
-            <div className="flex justify-between items-start mb-6">
+            <div className="flex justify-between items-start mb-8">
               <div>
-                <h3 className="text-xl font-bold text-[#78350f]">Dossier Essentiel</h3>
-                <p className="text-sm text-[#a8a29e]">Numérologie & Astrologie V3</p>
+                <h3 className="text-2xl font-serif text-[#2C2F4A] mb-1">Dossier Essentiel</h3>
+                <p className="text-sm text-[#8FA6A0] uppercase tracking-wider font-bold">L'Analyse Technique</p>
               </div>
-              <div className="text-2xl font-bold text-[#78350f]">{PRICE_REPORT}€</div>
+              <div className="text-right">
+                <div className="text-3xl font-serif text-[#2C2F4A]">29€</div>
+              </div>
             </div>
 
-            <ul className="space-y-4 mb-8">
-              <li className="flex items-start gap-3 text-sm">
-                <Check className="w-5 h-5 text-green-500 shrink-0" />
-                <span>Rapport PDF Complet (V3)</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm">
-                <Check className="w-5 h-5 text-green-500 shrink-0" />
-                <span>Thème Astral Précis (Ascendant, Maisons)</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm">
-                <Check className="w-5 h-5 text-green-500 shrink-0" />
-                <span>Transits & Météo Astrale du jour</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm">
-                <Check className="w-5 h-5 text-green-500 shrink-0" />
-                <span>Plans d'Expression & Dettes Karmiques</span>
-              </li>
-            </ul>
+            <div className="flex-grow space-y-6 mb-8">
+               <p className="text-[#2C2F4A]/80 leading-relaxed text-sm">
+                 Pour ceux qui veulent aller droit au but. Une cartographie précise de vos forces, défis et cycles, sans la narration romancée.
+               </p>
+               <ul className="space-y-4">
+                <FeatureItem label="Rapport PDF Complet (V3)" />
+                <FeatureItem label="Thème Astral Précis (Ascendant, Maisons)" />
+                <FeatureItem label="Transits & Météo Astrale du jour" />
+                <FeatureItem label="Plans d'Expression & Dettes Karmiques" />
+              </ul>
+            </div>
 
-            <div className={`w-6 h-6 rounded-full border-2 absolute top-8 right-8 flex items-center justify-center ${
-              selectedPlan === 'report' ? 'border-[#78350f]' : 'border-stone-300'
+            <div className={`w-6 h-6 rounded-full border-2 absolute top-8 right-8 flex items-center justify-center transition-colors ${
+              selectedPlan === 'report' ? 'border-[#5B4B8A]' : 'border-stone-300'
             }`}>
-              {selectedPlan === 'report' && <div className="w-3 h-3 rounded-full bg-[#78350f]" />}
+              {selectedPlan === 'report' && <div className="w-3 h-3 rounded-full bg-[#5B4B8A]" />}
             </div>
-          </div>
+          </motion.div>
 
           {/* OPTION 2: BUNDLE (RAPPORT + LIVRE) */}
-          <div 
+          <motion.div 
+            whileHover={{ y: -5 }}
             onClick={() => setSelectedPlan('bundle')}
-            className={`relative p-8 rounded-2xl border-2 transition-all cursor-pointer overflow-hidden ${
+            className={`relative p-8 md:p-10 rounded-2xl border-2 transition-all cursor-pointer flex flex-col overflow-hidden ${
               selectedPlan === 'bundle' 
-                ? 'border-[#d97706] bg-white shadow-2xl scale-[1.02] ring-4 ring-[#d97706]/10' 
-                : 'border-stone-200 bg-white/50 hover:border-[#d97706]/30'
+                ? 'border-[#C9A24D] bg-white shadow-2xl ring-4 ring-[#C9A24D]/10' 
+                : 'border-[#EFEDE9] bg-white/60 hover:border-[#C9A24D]/50 hover:bg-white'
             }`}
           >
             {/* Badge Recommended */}
-            <div className="absolute top-0 right-0 bg-[#d97706] text-white text-xs font-bold px-4 py-1 rounded-bl-xl uppercase tracking-widest">
+            <div className="absolute top-0 right-0 bg-[#C9A24D] text-white text-[10px] font-bold px-4 py-1.5 rounded-bl-xl uppercase tracking-widest shadow-sm">
               Recommandé
             </div>
 
-            <div className="flex justify-between items-start mb-6">
+            <div className="flex justify-between items-start mb-8">
               <div>
-                <h3 className="text-xl font-bold text-[#78350f] flex items-center gap-2">
+                <h3 className="text-2xl font-serif text-[#2C2F4A] mb-1 flex items-center gap-2">
                   Pack Héros
-                  <Star className="w-4 h-4 fill-[#d97706] text-[#d97706]" />
+                  <Star className="w-4 h-4 fill-[#C9A24D] text-[#C9A24D]" />
                 </h3>
-                <p className="text-sm text-[#a8a29e]">Dossier + Votre Roman de Vie</p>
+                <p className="text-sm text-[#C9A24D] uppercase tracking-wider font-bold">Dossier + Roman de Vie</p>
               </div>
               <div className="text-right">
-                 <div className="text-sm text-stone-400 line-through decoration-red-400">78€</div>
-                 <div className="text-2xl font-bold text-[#d97706]">{PRICE_BUNDLE}€</div>
+                 <div className="text-sm text-[#2C2F4A]/40 line-through decoration-red-300">78€</div>
+                 <div className="text-4xl font-serif text-[#C9A24D]">49€</div>
               </div>
             </div>
 
-            <ul className="space-y-4 mb-8">
-              <li className="flex items-start gap-3 text-sm font-medium">
-                <Check className="w-5 h-5 text-[#d97706] shrink-0" />
-                <span>Tout le contenu du Dossier Essentiel</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm font-bold text-[#78350f] bg-[#fffbf0] p-2 rounded-lg -mx-2">
-                <BookOpen className="w-5 h-5 text-[#d97706] shrink-0" />
-                <span>Le Roman de votre Vie (E-Book)</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm text-stone-600 ml-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#d97706] mt-2 shrink-0" />
-                <span>100 pages personnalisées où vous êtes le héros</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm text-stone-600 ml-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#d97706] mt-2 shrink-0" />
-                <span>Basé sur vos cycles réels</span>
-              </li>
-            </ul>
+            <div className="flex-grow space-y-6 mb-8">
+               <p className="text-[#2C2F4A]/80 leading-relaxed text-sm">
+                 L'expérience ultime. Votre analyse technique transformée en une épopée littéraire dont vous êtes le protagoniste.
+               </p>
+               
+               <div className="bg-[#FAF9F7] p-4 rounded-xl border border-[#EFEDE9]">
+                 <ul className="space-y-4">
+                  <FeatureItem label="Tout le contenu du Dossier Essentiel" highlight />
+                  <li className="flex items-start gap-3 text-sm">
+                    <BookOpen className="w-5 h-5 text-[#C9A24D] shrink-0" />
+                    <span className="font-bold text-[#5B4B8A]">Le Roman de votre Vie (E-Book)</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-xs text-[#2C2F4A]/70 ml-8">
+                    <span className="list-disc">100 pages personnalisées</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-xs text-[#2C2F4A]/70 ml-8">
+                    <span className="list-disc">Structure narrative héroïque basée sur vos cycles</span>
+                  </li>
+                 </ul>
+               </div>
+            </div>
 
             {/* UPSELL PAPIER */}
             {selectedPlan === 'bundle' && (
                <motion.div 
                  initial={{ opacity: 0, height: 0 }}
                  animate={{ opacity: 1, height: 'auto' }}
-                 className="mt-6 pt-6 border-t border-stone-100"
+                 className="mt-4 pt-6 border-t border-[#EFEDE9]"
                >
                  <div 
                    onClick={(e) => {
                      e.stopPropagation();
                      setPaperOption(!paperOption);
                    }}
-                   className={`flex items-start gap-4 p-4 rounded-xl border-2 transition-colors ${
-                     paperOption ? 'border-[#78350f] bg-[#fffbf0]' : 'border-stone-200 hover:border-stone-300'
+                   className={`flex items-start gap-4 p-4 rounded-xl border transition-all ${
+                     paperOption ? 'border-[#C9A24D] bg-[#FFFBF0]' : 'border-[#EFEDE9] hover:border-[#C9A24D]/30 bg-white'
                    }`}
                  >
-                   <div className={`w-5 h-5 rounded border-2 mt-1 flex items-center justify-center shrink-0 ${
-                     paperOption ? 'border-[#78350f] bg-[#78350f]' : 'border-stone-300'
+                   <div className={`w-5 h-5 rounded border mt-1 flex items-center justify-center shrink-0 transition-colors ${
+                     paperOption ? 'border-[#C9A24D] bg-[#C9A24D]' : 'border-stone-300 bg-white'
                    }`}>
                      {paperOption && <Check className="w-3 h-3 text-white" />}
                    </div>
                    <div className="flex-1">
-                     <div className="flex justify-between items-center">
-                        <span className="font-bold text-[#78350f]">Option Livre Papier</span>
-                        <span className="font-bold text-[#78350f]">+{PRICE_PAPER}€</span>
+                     <div className="flex justify-between items-center mb-1">
+                        <span className="font-bold text-[#2C2F4A] text-sm">Recevoir le Livre Papier</span>
+                        <span className="font-serif text-[#C9A24D] font-bold text-lg">+29€</span>
                      </div>
-                     <p className="text-xs text-stone-500 mt-1">
-                       Recevez votre roman imprimé chez vous (Couverture rigide, papier premium).
+                     <p className="text-xs text-[#2C2F4A]/60 leading-relaxed">
+                       Un objet d'exception. Couverture rigide, papier bouffant premium, dorure à chaud. Livré chez vous.
                      </p>
                    </div>
                  </div>
                </motion.div>
             )}
 
-            <div className={`w-6 h-6 rounded-full border-2 absolute top-8 right-12 flex items-center justify-center ${
-              selectedPlan === 'bundle' ? 'border-[#d97706]' : 'border-stone-300'
+            <div className={`w-6 h-6 rounded-full border-2 absolute top-8 right-12 flex items-center justify-center transition-colors ${
+              selectedPlan === 'bundle' ? 'border-[#C9A24D]' : 'border-stone-300'
             }`}>
-              {selectedPlan === 'bundle' && <div className="w-3 h-3 rounded-full bg-[#d97706]" />}
+              {selectedPlan === 'bundle' && <div className="w-3 h-3 rounded-full bg-[#C9A24D]" />}
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
         {/* FOOTER ACTION */}
-        <div className="mt-12 text-center sticky bottom-8 z-10">
-          <button 
-            onClick={handlePayment}
-            className="group relative inline-flex items-center gap-4 px-12 py-5 bg-[#78350f] text-[#fffbf0] text-xl font-serif font-bold rounded-full shadow-2xl hover:bg-[#92400e] transition-all transform hover:scale-105"
-          >
-            <span>Procéder au paiement</span>
-            <span className="bg-white/20 px-3 py-1 rounded text-sm font-sans">
-              {currentTotal}€
-            </span>
-            <Package className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </button>
-          <p className="mt-4 text-xs text-stone-400">
-            Paiement sécurisé via Stripe • Satisfait ou remboursé 30 jours
-          </p>
+        <div className="mt-16 text-center sticky bottom-8 z-20 pointer-events-none">
+          <div className="pointer-events-auto inline-block">
+             <button 
+                onClick={handlePayment}
+                className="group relative inline-flex items-center gap-6 px-12 py-5 bg-[#2C2F4A] text-[#FAF9F7] text-xl font-serif font-bold rounded-full shadow-[0_20px_50px_-12px_rgba(44,47,74,0.5)] hover:bg-[#5B4B8A] transition-all transform hover:scale-105 hover:-translate-y-1"
+              >
+                <span>Accéder à ma destinée</span>
+                <span className="bg-[#FAF9F7]/10 px-4 py-1.5 rounded-full text-lg font-sans border border-[#FAF9F7]/20">
+                  {currentTotal}€
+                </span>
+                <Package className="w-6 h-6 text-[#C9A24D] group-hover:rotate-12 transition-transform" />
+              </button>
+              
+              <div className="mt-6 flex items-center justify-center gap-6 text-xs text-[#2C2F4A]/50 font-medium tracking-wide">
+                 <span className="flex items-center gap-2">
+                   <ShieldCheck className="w-4 h-4" /> Paiement Sécurisé
+                 </span>
+                 <span className="flex items-center gap-2">
+                   <Star className="w-4 h-4" /> Satisfait ou Remboursé
+                 </span>
+              </div>
+          </div>
         </div>
 
       </div>
     </div>
+  );
+}
+
+function FeatureItem({ label, highlight = false }: { label: string, highlight?: boolean }) {
+  return (
+    <li className="flex items-start gap-3 text-sm">
+      <Check className={`w-5 h-5 shrink-0 ${highlight ? 'text-[#C9A24D]' : 'text-[#8FA6A0]'}`} />
+      <span className={highlight ? 'text-[#2C2F4A] font-medium' : 'text-[#2C2F4A]/70'}>{label}</span>
+    </li>
   );
 }
 

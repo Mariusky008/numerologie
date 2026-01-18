@@ -63,8 +63,14 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
       {/* PAGE 20-21: LEÇONS KARMIQUES */}
       <PageContainer className="p-4 md:p-16">
         <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-red-400 pb-4 inline-block" style={{ pageBreakBefore: 'always' }}>
-          Les Leçons Karmiques
+          Les Leçons Karmiques (DEBUG DATA)
         </h2>
+        
+        {/* DEBUG: Show Raw Data */}
+        <div className="bg-gray-100 p-4 mb-4 text-xs font-mono border border-gray-300">
+          MISSING NUMBERS RAW: {JSON.stringify(results.missingNumbers)}
+        </div>
+
         <div className="space-y-8">
           {results.missingNumbers && results.missingNumbers.length > 0 ? (
             results.missingNumbers.map(n => {

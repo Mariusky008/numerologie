@@ -94,7 +94,19 @@ export default function Part1Identity({ userData, results }: { userData: UserDat
             </p>
             <div className="text-center p-6 bg-white rounded-lg shadow-sm border border-[#d97706]/10">
               <div className="text-4xl md:text-6xl font-serif text-[#d97706] mb-2">{results.expression}</div>
-              <div className="text-xs md:text-sm text-[#a8a29e] uppercase">Vibration Globale</div>
+              <div className="text-xs md:text-sm text-[#a8a29e] uppercase">
+                Vibration Globale
+                {results.details?.expression.subNumber && results.details.expression.subNumber !== results.expression && (
+                  <span className="block text-[#d97706]/60 mt-1 font-mono">
+                    (Issu du {results.details.expression.subNumber})
+                  </span>
+                )}
+                {results.details?.expression.karmicDebt && (
+                  <span className="block text-red-600 font-bold mt-1 text-xs bg-red-50 py-1 px-2 rounded-full inline-block">
+                    Dette Karmique {results.details.expression.karmicDebt}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>

@@ -14,12 +14,28 @@ export interface InclusionGrid {
   [key: number]: number; // 1-9: count
 }
 
+export interface NumberDetail {
+  value: number; // Réduit (ex: 4)
+  subNumber: number; // Origine (ex: 13)
+  isMaster: boolean; // (ex: false car 13/4 n'est pas maître, mais 11 oui)
+  karmicDebt?: number; // (ex: 13 si c'est une dette)
+}
+
 export interface NumerologyResult {
   lifePath: number;
   expression: number;
   soulUrge: number;
   personality: number;
   personalYear: number;
+  
+  // Details with sub-numbers (Karmic check)
+  details?: {
+    lifePath: NumberDetail;
+    expression: NumberDetail;
+    soulUrge: NumberDetail;
+    personality: NumberDetail;
+  };
+
   professionalAxes: string[];
   
   // New Additions

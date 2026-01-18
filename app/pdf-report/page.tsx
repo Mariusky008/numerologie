@@ -63,7 +63,11 @@ function PrintContent() {
           const etymology = await fetchNameAnalysis(userData.firstName.split(' ')[0]);
 
           const lifePath = calculateLifePath(userData.birthDate);
+          const lifePathDetails = calculateLifePathDetailed(userData.birthDate);
+
           const nameNumbers = calculateNameNumbers(userData.firstName + userData.lastName);
+          const nameNumbersDetails = calculateNameNumbersDetailed(userData.firstName + userData.lastName);
+
           const personalYear = calculatePersonalYear(userData.birthDate);
           const axes = getProfessionalAxes(lifePath, nameNumbers.expression);
 
@@ -88,6 +92,12 @@ function PrintContent() {
                lifePath,
                ...nameNumbers,
                personalYear,
+               details: {
+                 lifePath: lifePathDetails,
+                 expression: nameNumbersDetails.expression,
+                 soulUrge: nameNumbersDetails.soulUrge,
+                 personality: nameNumbersDetails.personality
+               },
                professionalAxes: axes,
                inclusionGrid,
                missingNumbers: missing,

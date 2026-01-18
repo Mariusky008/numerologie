@@ -18,7 +18,9 @@ import {
   generateCareerForecast,
   calculateDeepChallenges,
   calculatePlaceVibration,
-  getAdvancedProfile // New import
+  getAdvancedProfile,
+  calculateLifePathDetailed,
+  calculateNameNumbersDetailed
 } from '@/lib/numerology/engine';
 import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
 import { PLANET_INFLUENCES, ZODIAC_DETAILS } from '@/lib/numerology/interpretations-astro-geo';
@@ -47,7 +49,11 @@ export default function ReportView({ userData }: ReportViewProps) {
       });
 
       const lifePath = calculateLifePath(userData.birthDate);
+      const lifePathDetails = calculateLifePathDetailed(userData.birthDate);
+      
       const nameNumbers = calculateNameNumbers(userData.firstName + userData.lastName);
+      const nameNumbersDetails = calculateNameNumbersDetailed(userData.firstName + userData.lastName);
+      
       const personalYear = calculatePersonalYear(userData.birthDate);
       const axes = getProfessionalAxes(lifePath, nameNumbers.expression);
       
@@ -70,6 +76,12 @@ export default function ReportView({ userData }: ReportViewProps) {
         lifePath,
         ...nameNumbers,
         personalYear,
+        details: {
+          lifePath: lifePathDetails,
+          expression: nameNumbersDetails.expression,
+          soulUrge: nameNumbersDetails.soulUrge,
+          personality: nameNumbersDetails.personality
+        },
         professionalAxes: axes,
         inclusionGrid,
         missingNumbers: missing,
@@ -150,14 +162,21 @@ export default function ReportView({ userData }: ReportViewProps) {
 
         {/* Main Numbers Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Life Path Card */}
+            {/* Life Path Card */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
             className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm"
           >
-            <h2 className="text-xl font-serif text-[#78350f] mb-2">{pathTitle}</h2>
+            <div className="flex justify-between items-start">
+              <h2 className="text-xl font-serif text-[#78350f] mb-2">{pathTitle}</h2>
+              {results.details?.lifePath.karmicDebt && (
+                <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">
+                  Dette {results.details.lifePath.karmicDebt}
+                </span>
+              )}
+            </div>
             <p className="text-[#57534e] italic mb-4 text-sm leading-relaxed">{lifePathText}</p>
             
             {results.advancedProfile?.pathData && (
@@ -177,6 +196,11 @@ export default function ReportView({ userData }: ReportViewProps) {
               <div className="text-5xl font-bold text-[#d97706]/10">{results.lifePath}</div>
               <div className="text-xs text-[#a8a29e]">
                 Calculé à partir du {userData.birthDate}
+                {results.details?.lifePath.subNumber && results.details.lifePath.subNumber !== results.lifePath && (
+                  <span className="block text-[#d97706]/60 font-mono mt-1">
+                    ({results.details.lifePath.subNumber} / {results.lifePath})
+                  </span>
+                )}
               </div>
             </div>
           </motion.div>
@@ -188,12 +212,24 @@ export default function ReportView({ userData }: ReportViewProps) {
             transition={{ delay: 0.3 }}
             className="bg-white p-6 rounded-xl border border-stone-200 shadow-sm"
           >
-            <h2 className="text-2xl font-serif text-[#78350f] mb-2">Nombre d'Expression {results.expression}</h2>
+            <div className="flex justify-between items-start">
+              <h2 className="text-2xl font-serif text-[#78350f] mb-2">Nombre d'Expression {results.expression}</h2>
+              {results.details?.expression.karmicDebt && (
+                <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">
+                  Dette {results.details.expression.karmicDebt}
+                </span>
+              )}
+            </div>
             <p className="text-[#57534e] italic mb-4">{expressionText}</p>
             <div className="flex items-center gap-4">
               <div className="text-6xl font-bold text-[#d97706]/10">{results.expression}</div>
               <div className="text-sm text-[#a8a29e]">
                 Basé sur votre nom complet
+                {results.details?.expression.subNumber && results.details.expression.subNumber !== results.expression && (
+                  <span className="block text-[#d97706]/60 font-mono mt-1">
+                    ({results.details.expression.subNumber} / {results.expression})
+                  </span>
+                )}
               </div>
             </div>
           </motion.div>

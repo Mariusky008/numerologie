@@ -1,3 +1,5 @@
+import { InclusionGrid, NumberDetail } from '../types';
+import { ADVANCED_DATA } from './advanced-data';
 
 // Gematria Mapping
 const GEMATRIA: Record<string, number> = {
@@ -21,23 +23,48 @@ export function normalizeString(str: string): string {
 
 /**
  * Reduces a number to a single digit (1-9) or Master Number (11, 22, 33).
+ * Returns ONLY the final number.
  */
 export function reduceNumber(num: number): number {
-  // Master numbers are not reduced
   if (num === 11 || num === 22 || num === 33) return num;
-  
   if (num < 10) return num;
-
   const sum = num.toString().split('').reduce((acc, curr) => acc + parseInt(curr), 0);
   return reduceNumber(sum);
 }
 
 /**
- * Calculates the Life Path Number (Chemin de Vie).
- * Formula: Sum(Day Digits) + Sum(Month Digits) + Sum(Year Digits), then reduce.
+ * Detailed reduction that preserves the sub-number source.
+ * Detects Karmic Debts: 13, 14, 16, 19.
  */
-export function calculateLifePath(birthDate: string): number {
-  // format: YYYY-MM-DD
+export function reduceNumberDetailed(num: number): NumberDetail {
+  let current = num;
+  let subNumber = num;
+  
+  const karmicNumbers = new Set([13, 14, 16, 19]);
+  let karmicDebt: number | undefined = undefined;
+
+  // If the input itself is karmic
+  if (karmicNumbers.has(num)) karmicDebt = num;
+
+  while (current > 9 && current !== 11 && current !== 22 && current !== 33) {
+    if (karmicNumbers.has(current)) karmicDebt = current;
+    
+    subNumber = current;
+    current = current.toString().split('').reduce((acc, curr) => acc + parseInt(curr), 0);
+  }
+  
+  return {
+    value: current,
+    subNumber: subNumber,
+    isMaster: current === 11 || current === 22 || current === 33,
+    karmicDebt
+  };
+}
+
+/**
+ * Calculates the Life Path Number with Details.
+ */
+export function calculateLifePathDetailed(birthDate: string): NumberDetail {
   const [yearStr, monthStr, dayStr] = birthDate.split('-');
   
   const sumDay = dayStr.split('').reduce((acc, c) => acc + parseInt(c), 0);
@@ -45,40 +72,47 @@ export function calculateLifePath(birthDate: string): number {
   const sumYear = yearStr.split('').reduce((acc, c) => acc + parseInt(c), 0);
   
   const total = sumDay + sumMonth + sumYear;
-  return reduceNumber(total);
+  return reduceNumberDetailed(total);
 }
 
-/**
- * Calculates Expression Number, Soul Urge, and Personality.
- */
-export function calculateNameNumbers(fullName: string) {
+// Wrapper for backward compatibility
+export function calculateLifePath(birthDate: string): number {
+  return calculateLifePathDetailed(birthDate).value;
+}
+
+export function calculateNameNumbersDetailed(fullName: string) {
   const cleanName = normalizeString(fullName);
   
   let expressionSum = 0;
-  let soulUrgeSum = 0; // Vowels
-  let personalitySum = 0; // Consonants
+  let soulUrgeSum = 0;
+  let personalitySum = 0;
   
   for (const char of cleanName) {
     const val = GEMATRIA[char] || 0;
     expressionSum += val;
-    
-    if (VOWELS.has(char)) {
-      soulUrgeSum += val;
-    } else {
-      personalitySum += val;
-    }
+    if (VOWELS.has(char)) soulUrgeSum += val;
+    else personalitySum += val;
   }
   
   return {
-    expression: reduceNumber(expressionSum),
-    soulUrge: reduceNumber(soulUrgeSum),
-    personality: reduceNumber(personalitySum)
+    expression: reduceNumberDetailed(expressionSum),
+    soulUrge: reduceNumberDetailed(soulUrgeSum),
+    personality: reduceNumberDetailed(personalitySum)
+  };
+}
+
+// Wrapper for backward compatibility
+export function calculateNameNumbers(fullName: string) {
+  const details = calculateNameNumbersDetailed(fullName);
+  return {
+    expression: details.expression.value,
+    soulUrge: details.soulUrge.value,
+    personality: details.personality.value
   };
 }
 
 /**
  * Calculates Personal Year.
- * Formula: Day of Birth + Month of Birth + Current Year.
  */
 export function calculatePersonalYear(birthDate: string, currentYear: number = new Date().getFullYear()): number {
   const [_, monthStr, dayStr] = birthDate.split('-');
@@ -109,7 +143,7 @@ export function getProfessionalAxes(lifePath: number, expression: number): strin
   if (numbers.has(22)) axes.push("Bâtisseur", "Grands Projets", "International");
   if (numbers.has(33)) axes.push("Guide Spirituel", "Service", "Amour Universel");
   
-  return Array.from(new Set(axes)); // Remove duplicates
+  return Array.from(new Set(axes));
 }
 
 /**
@@ -120,7 +154,7 @@ export function calculateChallenges(birthDate: string) {
   
   const rDay = reduceNumber(parseInt(dayStr));
   const rMonth = reduceNumber(parseInt(monthStr));
-  const rYear = reduceNumber(parseInt(yearStr)); // Sum of year digits reduced
+  const rYear = reduceNumber(parseInt(yearStr));
 
   const challenge1 = Math.abs(rMonth - rDay);
   const challenge2 = Math.abs(rDay - rYear);
@@ -134,11 +168,6 @@ export function calculateChallenges(birthDate: string) {
     challenge4
   };
 }
-
-// --- NEW ADDITIONS FOR ADDENDUM ---
-
-import { InclusionGrid } from '../types';
-import { ADVANCED_DATA } from './advanced-data';
 
 // Zodiac calculation
 export function getZodiacSign(day: number, month: number): string {
@@ -162,15 +191,15 @@ export function getDominantPlanet(lifePath: number): string {
     1: "soleil",
     2: "lune",
     3: "jupiter",
-    4: "saturne", // or Uranus in modern
+    4: "saturne",
     5: "mercure",
     6: "venus",
-    7: "neptune", // or Moon/Saturn mix
-    8: "saturne", // or Mars in some systems
+    7: "neptune",
+    8: "saturne",
     9: "mars",
-    11: "uranus", // Higher octave of 4
-    22: "pluton", // Higher octave of 4/8
-    33: "neptune" // Higher octave of 6
+    11: "uranus",
+    22: "pluton",
+    33: "neptune"
   };
   return mapping[lifePath] || "soleil";
 }
@@ -179,28 +208,24 @@ export function getAdvancedProfile(lifePath: number, birthDate: string) {
   let day: number, month: number;
 
   try {
-    // Attempt standard YYYY-MM-DD format first
     if (birthDate.includes('-')) {
       const parts = birthDate.split('-');
       if (parts.length === 3) {
-        // YYYY-MM-DD
         month = parseInt(parts[1]);
         day = parseInt(parts[2]);
       } else {
          throw new Error("Invalid format");
       }
     } else {
-       // Fallback for Date object string or other formats if needed
        const dateObj = new Date(birthDate);
        if (isNaN(dateObj.getTime())) throw new Error("Invalid Date");
        day = dateObj.getDate();
-       month = dateObj.getMonth() + 1; // 0-indexed
+       month = dateObj.getMonth() + 1;
     }
 
     const zodiac = getZodiacSign(day, month);
     const planet = getDominantPlanet(lifePath);
     
-    // Safe access to data with fallback (try number key, then string key)
     const pathData = (ADVANCED_DATA.chemins_vie as any)[lifePath] || (ADVANCED_DATA.chemins_vie as any)[lifePath.toString()] || null;
     const mcData = (ADVANCED_DATA.milieu_du_ciel as any)[zodiac] || null;
     
@@ -212,7 +237,6 @@ export function getAdvancedProfile(lifePath: number, birthDate: string) {
     };
   } catch (e) {
     console.error("Error calculating advanced profile:", e);
-    // Return safe default to prevent crash
     return {
       zodiac: "inconnu",
       dominantPlanet: "inconnue",
@@ -224,7 +248,6 @@ export function getAdvancedProfile(lifePath: number, birthDate: string) {
 
 /**
  * Calculates the Inclusion Grid (Grille d'Inclusion).
- * Counts occurrences of digits 1-9 in the full name.
  */
 export function calculateInclusionGrid(fullName: string): InclusionGrid {
   const cleanName = normalizeString(fullName);
@@ -244,56 +267,14 @@ export function calculateInclusionGrid(fullName: string): InclusionGrid {
   return grid;
 }
 
-/**
- * Analyzes the Inclusion Grid to find Missing and Excess numbers.
- * Norms:
- * 1: 2-3
- * 2: 1
- * 3: 1
- * 4: 1
- * 5: 1
- * 6: 1
- * 7: 0-1
- * 8: 0-1
- * 9: 1
- * (Simplified based on prompt. Prompt says:
- * 1 -> Norme 2-3
- * 7 -> Norme 0-1
- * 8 -> Norme 0-1
- * Others -> Norme 1 (implied or explicit in some systems, prompt lists specific ones)
- * Let's use the prompt's implied norms where available or standard otherwise.
- * Prompt: 
- * 1: ? (Prompt says "Si le chiffre 1 apparaît 5 fois... Karma de Leadership")
- * 7: "Si le chiffre 7 est absent... Dette Karmique"
- * )
- * Let's define standard norms for "Balanced":
- * 1: 3
- * 2: 1
- * 3: 1-2
- * 4: 1
- * 5: 3-4 (Actually usually 5 is common, but let's stick to prompt logic: "Norme" column in prompt is empty/broken in OCR but let's infer)
- * Prompt Table:
- * 1 -> Norme ? (OCR glitch: "Norme (Nb d'occurrences)1Affirmation... 2 à 3") -> 2-3
- * 2 -> ? ("2Sensibilité... 1") -> 1
- * 3 -> ? ("3Communication... 1") -> 1
- * 4 -> ? ("4Travail... 1") -> 1
- * 5 -> ? ("5Adaptabilité... 1") -> 1
- * 6 -> ? ("6Responsabilités... 1") -> 1
- * 7 -> ? ("7Vie intérieure... 0 à 1") -> 0-1
- * 8 -> ? ("8Réalisation... 0 à 1") -> 0-1
- * 9 -> ? ("9Humanisme... 1") -> 1
- */
 const INCLUSION_NORMS: Record<number, { min: number, max: number }> = {
   1: { min: 2, max: 3 },
-  2: { min: 1, max: 1 }, // implied 1+ is ok, 0 is missing
+  2: { min: 1, max: 1 },
   3: { min: 1, max: 1 },
   4: { min: 1, max: 1 },
   5: { min: 1, max: 1 },
   6: { min: 1, max: 1 },
-  7: { min: 0, max: 1 }, // 0 is OK for 7? Prompt says "Si le chiffre 7 est absent, générer un chapitre sur la Leçon Karmique". So 0 is Missing. But norm says 0-1? 
-                          // Actually "Dettes Karmiques" usually means 0 occurrence. 
-                          // However, for 7 and 8, sometimes 0 is considered normal in some systems, but prompt says explicitly: "Si le chiffre 7 est absent... Leçon Karmique". 
-                          // So let's treat 0 as Missing for ALL numbers for the purpose of "Dettes Karmiques".
+  7: { min: 0, max: 1 },
   8: { min: 0, max: 1 },
   9: { min: 1, max: 1 }
 };
@@ -304,14 +285,9 @@ export function analyzeInclusion(grid: InclusionGrid) {
 
   for (let i = 1; i <= 9; i++) {
     const count = grid[i];
-    // Missing (Karmic Debt)
     if (count === 0) {
       missing.push(i);
     }
-    
-    // Excess (Forces)
-    // Prompt says "Si Valeur > Norme : Force Acquise"
-    // Using the max of the norm
     if (count > INCLUSION_NORMS[i].max) {
       excess.push(i);
     }
@@ -320,10 +296,6 @@ export function analyzeInclusion(grid: InclusionGrid) {
   return { missing, excess };
 }
 
-/**
- * Calculates Subconscious Self (Moi Subconscient).
- * Count how many grid numbers are present (have count > 0).
- */
 export function calculateSubconsciousSelf(grid: InclusionGrid): number {
   let count = 0;
   for (let i = 1; i <= 9; i++) {
@@ -332,33 +304,15 @@ export function calculateSubconsciousSelf(grid: InclusionGrid): number {
   return count;
 }
 
-/**
- * Calculates The Bridge (Le Pont).
- * Difference between Life Path and Expression.
- */
 export function calculateBridge(lifePath: number, expression: number): number {
-  // Bridge is usually defined as |LifePath - Expression| reduced? Or just difference?
-  // Prompt: "Calculer la différence entre le Chemin de Vie et le Nombre d'Expression."
-  // Usually it is reduced to 1-9.
   let diff = Math.abs(lifePath - expression);
-  if (diff === 0) return 0; // Or 9? Usually 0 means no bridge needed or bridge is 0. Let's keep 0.
+  if (diff === 0) return 0;
   return reduceNumber(diff);
 }
 
-/**
- * Calculates Life Cycles (Réalisations de Vie / Apogées).
- * 4 Pinnacles (Sommets/Apogées) usually.
- * Prompt mentions "4 grands sommets (Apex)".
- * Cycle 1: Month + Day
- * Cycle 2: Day + Year
- * Cycle 3: Cycle 1 + Cycle 2
- * Cycle 4: Month + Year
- * Transitions ages depend on Life Path.
- */
 export function calculateCycles(birthDate: string) {
   const [yearStr, monthStr, dayStr] = birthDate.split('-');
   
-  // Use reduced digits for calculations of pinnacles usually
   const rDay = reduceNumber(parseInt(dayStr));
   const rMonth = reduceNumber(parseInt(monthStr));
   const rYear = reduceNumber(parseInt(yearStr));
@@ -371,19 +325,11 @@ export function calculateCycles(birthDate: string) {
   return { cycle1, cycle2, cycle3, cycle4 };
 }
 
-/**
- * Calculates Deep Challenges (Défis Profonds) - Module 3.
- * Based on subtraction of birth components.
- * Often similar to the "Challenges" function but let's ensure we return the array as requested.
- */
 export function calculateDeepChallenges(birthDate: string): number[] {
   const { challenge1, challenge2, challengeMajor, challenge4 } = calculateChallenges(birthDate);
   return [challenge1, challenge2, challengeMajor, challenge4];
 }
 
-/**
- * Calculates the Numerological Vibration of a Place Name (Module 2).
- */
 export function calculatePlaceVibration(placeName: string): number {
   if (!placeName) return 0;
   const clean = normalizeString(placeName);
@@ -394,9 +340,6 @@ export function calculatePlaceVibration(placeName: string): number {
   return reduceNumber(sum);
 }
 
-/**
- * Generates a 10-year forecast (Module 4).
- */
 export function generateCareerForecast(birthDate: string, startYear: number = 2026): { year: number, personalYear: number }[] {
   const forecast = [];
   for (let i = 0; i < 10; i++) {
@@ -406,4 +349,3 @@ export function generateCareerForecast(birthDate: string, startYear: number = 20
   }
   return forecast;
 }
-

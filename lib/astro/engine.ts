@@ -5,6 +5,7 @@ export interface AstroData {
     signe: string;
     retrograde?: boolean;
     position_degres?: number;
+    maison?: number;
   }
 }
 
@@ -15,27 +16,58 @@ function degresVersSigne(degres: number): string {
   return signes[Math.floor(d / 30)];
 }
 
+function calculerMaison(posPlanete: number, ascendant: number): number {
+  let diff = posPlanete - ascendant;
+  if (diff < 0) diff += 360;
+  return Math.floor(diff / 30) + 1;
+}
+
 export function calculerThemeAstral(dateInput: string, timeInput: string | undefined, lat: number, lng: number): AstroData {
   const time = timeInput || '12:00';
   const dateTimeStr = `${dateInput}T${time}:00`;
   const date = new Date(dateTimeStr);
   
   const resultats: AstroData = {};
+
+  // 1. CALCUL ASCENDANT (AC) & MILIEU DU CIEL (MC)
+  const astroTime = Astronomy.MakeTime(date);
+  const gst = Astronomy.SiderealTime(astroTime);
+  let lst = (gst + (lng / 15)) % 24; 
+  if (lst < 0) lst += 24;
+
+  const ramc = lst * 15;
+  let ascendantDeg = (ramc + 90 + (lat < 0 ? 180 : 0)) % 360;
   
+  resultats['Ascendant'] = { 
+    signe: degresVersSigne(ascendantDeg),
+    position_degres: ascendantDeg,
+    maison: 1
+  };
+  resultats['MC'] = { 
+    signe: degresVersSigne(ramc),
+    position_degres: ramc,
+    maison: 10
+  };
+
+  // 2. PLANÈTES
   const corpsCelestes = ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"];
   
+  // Note: Astronomy.Observer n'est pas utilisé directement ici car GeoVector calcule en coordonnées géocentriques
+  // Pour plus de précision (Topocentrique), on pourrait utiliser l'observateur, mais la différence est minime sauf pour la Lune.
+  // Restons sur le standard GeoVector qui est robuste.
+
   corpsCelestes.forEach(corpsName => {
     const corps = corpsName as Astronomy.Body;
 
-    // 1. Vecteur Géocentrique
+    // Vecteur Géocentrique
     const vector = Astronomy.GeoVector(corps, date, true);
     
-    // 2. Coordonnées écliptiques
+    // Coordonnées écliptiques
     const ecliptic = Astronomy.Ecliptic(vector);
     
     const signe = degresVersSigne(ecliptic.elon);
     
-    // 3. Rétrograde
+    // Rétrograde
     const dateMoins1h = new Date(date.getTime() - 3600000);
     const vectorMoins1h = Astronomy.GeoVector(corps, dateMoins1h, true);
     const eclipticMoins1h = Astronomy.Ecliptic(vectorMoins1h);
@@ -46,24 +78,16 @@ export function calculerThemeAstral(dateInput: string, timeInput: string | undef
     
     const estRetrograde = diff < 0;
 
+    // Calcul Maison
+    const maison = calculerMaison(ecliptic.elon, ascendantDeg);
+
     resultats[corpsName] = {
       signe,
       retrograde: estRetrograde,
-      position_degres: ecliptic.elon
+      position_degres: ecliptic.elon,
+      maison
     };
   });
-  
-  // 3. CALCUL ASCENDANT (AC) & MILIEU DU CIEL (MC)
-  const astroTime = Astronomy.MakeTime(date);
-  const gst = Astronomy.SiderealTime(astroTime);
-  let lst = (gst + (lng / 15)) % 24; 
-  if (lst < 0) lst += 24;
-
-  const ramc = lst * 15;
-  let ascendantDeg = (ramc + 90 + (lat < 0 ? 180 : 0)) % 360;
-  
-  resultats['Ascendant'] = { signe: degresVersSigne(ascendantDeg) };
-  resultats['MC'] = { signe: degresVersSigne(ramc) };
 
   return resultats;
 }

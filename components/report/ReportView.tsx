@@ -376,8 +376,9 @@ export default function ReportView({ userData }: ReportViewProps) {
                        <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Signe Solaire</div>
                        <div className="text-xl font-serif text-[#78350f] font-bold">{zodiac}</div>
                        {results.realAstro && (
-                         <div className="text-xs text-[#d97706] mt-1">
-                           Ascendant : <span className="font-bold">{ascendant}</span>
+                         <div className="text-xs text-[#d97706] mt-1 space-y-1">
+                           <div>Ascendant : <span className="font-bold">{ascendant}</span></div>
+                           {realHouse && <div>Maison {realHouse}</div>}
                          </div>
                        )}
                      </div>

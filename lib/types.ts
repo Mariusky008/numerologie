@@ -82,6 +82,7 @@ export interface NumerologyResult {
       signe: string;
       retrograde?: boolean;
       position_degres?: number;
+      maison?: number;
     }
   };
 

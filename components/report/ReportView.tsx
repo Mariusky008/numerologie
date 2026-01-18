@@ -36,11 +36,14 @@ import BookCreationModal from './BookCreationModal';
 import BookBackCover from './BookBackCover';
 import { trackEvent } from '@/lib/analytics';
 
+import { useRouter } from 'next/navigation';
+
 interface ReportViewProps {
   userData: UserData;
 }
 
 export default function ReportView({ userData }: ReportViewProps) {
+  const router = useRouter();
   const [results, setResults] = useState<NumerologyResult | null>(null);
   const [etymology, setEtymology] = useState<NameData | null>(null);
   const [showBookModal, setShowBookModal] = useState(false);
@@ -607,9 +610,10 @@ export default function ReportView({ userData }: ReportViewProps) {
                     ln: userData.lastName,
                     bd: userData.birthDate,
                     bp: userData.birthPlace || '',
-                    fo: userData.focus
+                    fo: userData.focus,
+                    origin: 'download'
                   });
-                  window.open(`/pdf-report-v2?${params.toString()}`, '_blank');
+                  router.push(`/checkout?${params.toString()}`);
                 }}
                 className="flex items-center gap-3 px-8 py-4 bg-[#1B263B] text-white border-2 border-[#1B263B] rounded-full hover:bg-[#0f172a] transition-colors shadow-sm"
               >
@@ -649,7 +653,15 @@ export default function ReportView({ userData }: ReportViewProps) {
                       onClick={() => {
                         console.log("Write Button Clicked");
                         trackEvent('write_click');
-                        setShowBookModal(true);
+                        const params = new URLSearchParams({
+                            fn: userData.firstName,
+                            ln: userData.lastName,
+                            bd: userData.birthDate,
+                            bp: userData.birthPlace || '',
+                            fo: userData.focus,
+                            origin: 'book'
+                          });
+                        router.push(`/checkout?${params.toString()}`);
                       }}
                       className="w-full md:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#fffbf0] text-[#78350f] rounded-full font-bold text-lg hover:bg-[#fef3c7] transition-all transform hover:scale-105 shadow-2xl shadow-black/20"
                     >

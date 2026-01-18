@@ -2,10 +2,15 @@ import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
 export async function GET() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+  
   const diagnostics: any = {
-    env: {
-      url_present: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
-      key_present: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    env_check: {
+      url_start: url.substring(0, 15) + '...',
+      key_start: key.substring(0, 10) + '...',
+      key_end: '...' + key.substring(key.length - 10),
+      key_length: key.length
     },
     tests: []
   };

@@ -216,7 +216,7 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
 
         {/* VISUAL CARD (Replaces Map) */}
          <div className="md:col-span-5">
-            <div className="h-[350px] bg-[#292524] rounded-2xl p-8 text-[#fffbf0] flex flex-col justify-between relative overflow-hidden shadow-2xl" style={{ pageBreakInside: 'avoid' }}>
+            <div className="h-auto min-h-[400px] bg-[#292524] rounded-2xl p-8 text-[#fffbf0] flex flex-col justify-between relative shadow-2xl" style={{ pageBreakInside: 'avoid' }}>
                {/* Abstract decorative elements */}
                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#d97706]/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>

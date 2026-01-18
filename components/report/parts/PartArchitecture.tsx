@@ -16,7 +16,7 @@ interface PartArchitectureV3Props {
   results: NumerologyResult;
 }
 
-export default function PartArchitectureV3({ userData, results }: PartArchitectureV3Props) {
+export default function PartArchitecture({ userData, results }: PartArchitectureV3Props) {
   // --- DATA PREPARATION ---
   
   // 1. Pilier Central (Chemin de Vie + Signe)

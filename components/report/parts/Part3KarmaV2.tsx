@@ -82,22 +82,30 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
         <div className="space-y-8">
           {results.missingNumbers && results.missingNumbers.length > 0 ? (
             results.missingNumbers.map(n => {
-              const content = getKarmicLessonContent(n);
-              return (
-                <div key={n} className="bg-white p-6 md:p-8 border-l-4 border-red-400 shadow-sm rounded-r-xl" style={{ pageBreakInside: 'avoid' }}>
-                  <h3 className="text-xl md:text-2xl font-serif text-red-500 mb-2">{content.title}</h3>
-                  <p className="text-red-400 mb-4 font-bold text-sm md:text-base">
-                    {content.desc}
-                  </p>
-                  <p className="text-[#57534e] mb-4 leading-relaxed text-sm md:text-base">
-                    {content.lesson}
-                  </p>
-                  <div className="bg-red-50 p-4 rounded border border-red-200">
-                     <span className="text-red-600 font-bold mr-2 text-sm md:text-base">Conseil :</span>
-                     <span className="text-[#78350f] text-sm md:text-base">{content.advice}</span>
+              try {
+                const content = getKarmicLessonContent(n);
+                return (
+                  <div key={n} className="bg-white p-6 md:p-8 border-l-4 border-red-400 shadow-sm rounded-r-xl" style={{ pageBreakInside: 'avoid' }}>
+                    <h3 className="text-xl md:text-2xl font-serif text-red-500 mb-2">{content.title}</h3>
+                    <p className="text-red-400 mb-4 font-bold text-sm md:text-base">
+                      {content.desc}
+                    </p>
+                    <p className="text-[#57534e] mb-4 leading-relaxed text-sm md:text-base">
+                      {content.lesson}
+                    </p>
+                    <div className="bg-red-50 p-4 rounded border border-red-200">
+                       <span className="text-red-600 font-bold mr-2 text-sm md:text-base">Conseil :</span>
+                       <span className="text-[#78350f] text-sm md:text-base">{content.advice}</span>
+                    </div>
                   </div>
-                </div>
-              );
+                );
+              } catch (e) {
+                return (
+                  <div key={n} className="p-4 bg-red-100 border border-red-500 text-red-700">
+                    Erreur d'affichage pour la leçon {n}: {String(e)}
+                  </div>
+                );
+              }
             })
           ) : (
             <div className="bg-white p-8 border-l-4 border-green-500 shadow-sm rounded-r-xl" style={{ pageBreakInside: 'avoid' }}>

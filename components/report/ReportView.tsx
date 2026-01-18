@@ -28,6 +28,7 @@ import interpretations from '@/lib/numerology/interpretations.json';
 import { Download, BookOpen } from 'lucide-react';
 import BookCreationModal from './BookCreationModal';
 import BookBackCover from './BookBackCover';
+import { trackEvent } from '@/lib/analytics';
 
 interface ReportViewProps {
   userData: UserData;

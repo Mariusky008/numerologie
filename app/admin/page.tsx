@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock, Music, Compass, Star, TrendingUp, AlertTriangle, GitBranch, Copy, FileJson, Trash2 } from 'lucide-react';
+import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock, Music, Compass, Star, TrendingUp, AlertTriangle, GitBranch, Copy, FileJson, Trash2, Eye, Download, PenTool } from 'lucide-react';
 import { UserData, NumerologyResult } from '@/lib/types';
 
 export interface BookRequest {
@@ -29,10 +29,24 @@ export default function AdminDashboard() {
   const [requests, setRequests] = useState<BookRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [generatingId, setGeneratingId] = useState<string | null>(null);
+  const [stats, setStats] = useState<any>({});
 
   useEffect(() => {
     fetchRequests();
+    fetchStats();
   }, []);
+
+  const fetchStats = async () => {
+    try {
+      const res = await fetch('/api/stats');
+      if (res.ok) {
+        const data = await res.json();
+        setStats(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch stats', error);
+    }
+  };
 
   const fetchRequests = async () => {
     try {
@@ -192,6 +206,64 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
       </nav>
 
       <main className="max-w-7xl mx-auto p-4 md:p-8">
+        
+        {/* STATS SECTION */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {/* Stat 1: Visiteurs sans action */}
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+            <div className="flex items-center gap-4 mb-2">
+              <div className="p-3 bg-stone-100 text-stone-600 rounded-full">
+                <Eye className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-xs text-stone-500 uppercase tracking-wider font-bold">Visiteurs (Sans Profil)</p>
+                <p className="text-2xl font-bold text-[#78350f]">
+                  {Math.max(0, (stats.home_view || 0) - (stats.reveal_click || 0))}
+                </p>
+              </div>
+            </div>
+            <p className="text-xs text-stone-400">
+              Sur {stats.home_view || 0} vues totales
+            </p>
+          </div>
+
+          {/* Stat 2: Téléchargements PDF */}
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+            <div className="flex items-center gap-4 mb-2">
+              <div className="p-3 bg-blue-100 text-blue-600 rounded-full">
+                <Download className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-xs text-stone-500 uppercase tracking-wider font-bold">Téléchargements PDF</p>
+                <p className="text-2xl font-bold text-[#78350f]">
+                  {stats.download_click || 0}
+                </p>
+              </div>
+            </div>
+            <p className="text-xs text-stone-400">
+              Rapports générés
+            </p>
+          </div>
+
+          {/* Stat 3: Écritures commencées */}
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+            <div className="flex items-center gap-4 mb-2">
+              <div className="p-3 bg-amber-100 text-amber-600 rounded-full">
+                <PenTool className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-xs text-stone-500 uppercase tracking-wider font-bold">Écritures Commencées</p>
+                <p className="text-2xl font-bold text-[#78350f]">
+                  {stats.write_click || 0}
+                </p>
+              </div>
+            </div>
+            <p className="text-xs text-stone-400">
+              Clics sur "Commencer l'écriture"
+            </p>
+          </div>
+        </div>
+
         <h1 className="text-3xl font-serif text-[#78350f] mb-8">File d'attente de production</h1>
 
         {loading ? (

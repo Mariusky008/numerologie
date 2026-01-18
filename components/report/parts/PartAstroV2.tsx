@@ -39,7 +39,7 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
   return (
     <PageContainer className="p-4 md:p-16">
       <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-[#d97706] pb-4 inline-block">
-        ARCHITECTURE ASTRALE V3 (DEBUG)
+        Architecture Astrale & Résonance
       </h2>
 
       {/* 1. ASTROLOGIE */}
@@ -173,10 +173,10 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
             Ancrage Terrestre
         </h3>
       
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+      <div className="flex flex-col gap-8 mb-12">
         
         {/* VIBRATION CARD (Analysis) */}
-        <div className="md:col-span-7 space-y-8">
+        <div className="w-full space-y-8">
           <div className="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm">
             <h3 className="text-lg font-bold text-[#d97706] mb-4 uppercase tracking-widest text-xs">Analyse du Lieu de Naissance</h3>
             
@@ -214,17 +214,19 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
           </div>
         </div>
 
-        {/* VISUAL CARD (Replaces Map) */}
-         <div className="md:col-span-5">
-            <div className="h-auto min-h-[400px] bg-[#292524] rounded-2xl p-8 text-[#fffbf0] flex flex-col justify-between relative shadow-2xl" style={{ pageBreakInside: 'avoid' }}>
+        {/* VISUAL CARD (Replaces Map) - NOW FULL WIDTH BELOW */}
+         <div className="w-full">
+            <div className="bg-[#292524] rounded-2xl p-8 text-[#fffbf0] flex flex-col justify-between relative shadow-2xl" style={{ pageBreakInside: 'avoid' }}>
                {/* Abstract decorative elements */}
                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
               <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#d97706]/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
               
-              <div className="relative z-10">
-                <div className="text-xs uppercase tracking-widest opacity-60 mb-2">Coordonnées Vibratoires</div>
-                <div className="text-5xl font-serif mb-1">{vibration}</div>
-                <div className="w-12 h-1 bg-[#d97706] mb-8"></div>
+              <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <div className="text-xs uppercase tracking-widest opacity-60 mb-2">Coordonnées Vibratoires</div>
+                  <div className="text-5xl font-serif mb-1">{vibration}</div>
+                  <div className="w-12 h-1 bg-[#d97706] mb-8"></div>
+                </div>
                 
                 <div className="space-y-6">
                    <div>

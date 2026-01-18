@@ -12,7 +12,7 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
       {/* PAGE 17: GRILLE D'INCLUSION VISUELLE */}
       <PageContainer className="p-4 md:p-16 bg-[#fffbf0]">
         <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 border-b-2 border-[#d97706] pb-4 inline-block">
-          KARMA V3 (DEBUG)
+          Le Miroir Karmique
         </h2>
         <p className="text-base md:text-xl font-light mb-12 max-w-2xl text-[#57534e]">
           La Grille d'Inclusion est la radiographie de votre âme. Elle montre ce que vous avez emporté dans vos valises pour cette vie.
@@ -63,14 +63,9 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
       {/* PAGE 20-21: LEÇONS KARMIQUES */}
       <PageContainer className="p-4 md:p-16">
         <h2 className="text-2xl md:text-4xl font-serif text-[#78350f] mb-8 md:mb-12 border-b-2 border-red-400 pb-4 inline-block" style={{ pageBreakBefore: 'always' }}>
-          Les Leçons Karmiques (DEBUG DATA)
+          Les Leçons Karmiques
         </h2>
         
-        {/* DEBUG: Show Raw Data */}
-        <div className="bg-gray-100 p-4 mb-4 text-xs font-mono border border-gray-300">
-          MISSING NUMBERS RAW: {JSON.stringify(results.missingNumbers)}
-        </div>
-
         <div className="space-y-8">
           {results.missingNumbers && results.missingNumbers.length > 0 ? (
             results.missingNumbers.map(n => {

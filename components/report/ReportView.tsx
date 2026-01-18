@@ -74,6 +74,22 @@ export default function ReportView({ userData }: ReportViewProps) {
       // Advanced Profile
       const advancedProfile = getAdvancedProfile(lifePath, userData.birthDate);
 
+      // --- REAL ASTROLOGY CALCULATION ---
+      let realAstro = null;
+      if (userData.birthPlace) {
+        // We trigger this asynchronously to not block initial render
+        fetch(`/api/geocode?city=${encodeURIComponent(userData.birthPlace)}`)
+          .then(res => res.json())
+          .then(geoData => {
+            if (geoData.lat && geoData.lng) {
+              const astroData = calculerThemeAstral(userData.birthDate, undefined, geoData.lat, geoData.lng);
+              setResults(prev => prev ? ({ ...prev, realAstro: astroData }) : null);
+            }
+          })
+          .catch(err => console.error("Geocoding failed:", err));
+      }
+      // -----------------------------------
+
       setResults({
         lifePath,
         ...nameNumbers,
@@ -123,11 +139,19 @@ export default function ReportView({ userData }: ReportViewProps) {
   const zodiacKey = results.advancedProfile?.zodiac?.toLowerCase();
   const planetKey = results.advancedProfile?.dominantPlanet?.toLowerCase();
   
-  const zodiac = zodiacKey ? zodiacKey.charAt(0).toUpperCase() + zodiacKey.slice(1) : "";
+  // Prefer Real Astro calculation if available
+  const realZodiac = results.realAstro?.['Sun']?.signe;
+  const realAscendant = results.realAstro?.['Ascendant']?.signe;
+  
+  const zodiac = realZodiac || (zodiacKey ? zodiacKey.charAt(0).toUpperCase() + zodiacKey.slice(1) : "");
+  const ascendant = realAscendant || "Inconnu (Heure nécessaire)";
+  
   const planet = planetKey ? planetKey.charAt(0).toUpperCase() + planetKey.slice(1) : "";
   
   const planetText = planetKey ? PLANET_INFLUENCES[planetKey] : "";
-  const zodiacInfo = zodiacKey ? ZODIAC_DETAILS[zodiacKey] : null;
+  // Use zodiac info based on real zodiac if available
+  const zodiacInfoKey = realZodiac ? realZodiac.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : zodiacKey;
+  const zodiacInfo = zodiacInfoKey ? ZODIAC_DETAILS[zodiacInfoKey] : null;
 
   const pathTitle = results.advancedProfile?.pathData?.titre || `Chemin de Vie ${results.lifePath}`;
 
@@ -351,6 +375,11 @@ export default function ReportView({ userData }: ReportViewProps) {
                      <div>
                        <div className="text-xs uppercase tracking-widest text-[#a8a29e]">Signe Solaire</div>
                        <div className="text-xl font-serif text-[#78350f] font-bold">{zodiac}</div>
+                       {results.realAstro && (
+                         <div className="text-xs text-[#d97706] mt-1">
+                           Ascendant : <span className="font-bold">{ascendant}</span>
+                         </div>
+                       )}
                      </div>
                    </div>
 

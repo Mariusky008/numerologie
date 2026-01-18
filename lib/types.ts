@@ -70,6 +70,15 @@ export interface NumerologyResult {
   // Transits (Lettres de Passage)
   transits?: Transits;
 
+  // Real Astronomy Data
+  realAstro?: {
+    [key: string]: {
+      signe: string;
+      retrograde?: boolean;
+      position_degres?: number;
+    }
+  };
+
   // Advanced Profile (New Algorithm)
   advancedProfile?: {
     zodiac: string;

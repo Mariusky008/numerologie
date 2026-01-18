@@ -31,11 +31,34 @@ function PrintContent() {
 
   useEffect(() => {
     const initData = async () => {
+      let userData: UserData | null = null;
       const dataParam = searchParams.get('data');
+
       if (dataParam) {
         try {
-          const userData: UserData = JSON.parse(decodeURIComponent(dataParam));
-          
+          userData = JSON.parse(decodeURIComponent(dataParam));
+        } catch (e) {
+          console.error("Error parsing data param", e);
+        }
+      } else {
+        // Try getting individual params
+        const firstName = searchParams.get('fn');
+        const lastName = searchParams.get('ln');
+        const birthDate = searchParams.get('bd');
+        
+        if (firstName && lastName && birthDate) {
+          userData = {
+            firstName,
+            lastName,
+            birthDate,
+            birthPlace: searchParams.get('bp') || '',
+            focus: (searchParams.get('fo') as any) || 'mission'
+          };
+        }
+      }
+
+      if (userData) {
+        try {
           // Fetch Etymology
           const etymology = await fetchNameAnalysis(userData.firstName.split(' ')[0]);
 

@@ -1,0 +1,108 @@
+import { NextResponse } from 'next/server';
+import Stripe from 'stripe';
+
+// Initialisation de Stripe avec la clé secrète (à définir dans .env.local)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+  typescript: true,
+});
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const { orderInfo, userData, orderId } = body;
+
+    if (!process.env.STRIPE_SECRET_KEY) {
+      return NextResponse.json(
+        { error: "La clé Stripe n'est pas configurée sur le serveur." },
+        { status: 500 }
+      );
+    }
+
+    // Calcul du prix côté serveur pour sécurité
+    let unitAmount = 0;
+    let productName = "";
+    let description = "";
+
+    if (orderInfo.plan === 'report') {
+      productName = "Clés de Votre Destin (Analyse Technique)";
+      unitAmount = 3900; // 39.00€
+      description = "Dossier Numérologique Essentiel (PDF)";
+
+      if (orderInfo.reportPaperOption) {
+        unitAmount += 1000; // +10.00€
+        description += " + Option Impression Papier";
+      }
+    } else if (orderInfo.plan === 'bundle') {
+      productName = "Pack Héros (Roman de Vie + Dossier)";
+      unitAmount = 4900; // 49.00€
+      description = "Expérience Complète : Roman + Analyse";
+
+      // Option Papier
+      if (orderInfo.paperOption) {
+        unitAmount += 2900; // +29.00€
+        description += " + Livre Papier Luxe";
+      }
+
+      // Extension de pages
+      if (orderInfo.bookLength && orderInfo.bookLength > 100) {
+        const extraPages = (orderInfo.bookLength - 100) / 100;
+        unitAmount += extraPages * 1000; // +10€ par tranche de 100 pages
+        description += ` + Extension ${orderInfo.bookLength} pages`;
+      }
+    }
+
+    // Construction de l'URL de succès avec les paramètres pour la génération
+    // Note: Idéalement, on utiliserait un webhook pour déclencher la génération,
+    // mais pour l'instant on redirige vers la page de résultat.
+    const successParams = new URLSearchParams({
+      fn: userData.firstName,
+      ln: userData.lastName,
+      bd: userData.birthDate,
+      bp: userData.birthPlace || '',
+      fo: userData.focus || '',
+      payment_success: 'true',
+      order_id: orderId || ''
+    });
+
+    // URL de base (en dev ou prod)
+    const origin = request.headers.get('origin') || 'http://localhost:3000';
+
+    // Création de la session Stripe
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: productName,
+              description: description,
+              // images: ['https://votre-site.com/images/book-cover.jpg'], // Optionnel
+            },
+            unit_amount: unitAmount,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: `${origin}/pdf-report-v2?${successParams.toString()}`,
+      cancel_url: `${origin}/checkout?fn=${userData.firstName}&ln=${userData.lastName}&bd=${userData.birthDate}`,
+      client_reference_id: orderId,
+      customer_email: orderInfo.delivery?.email,
+      metadata: {
+        orderId: orderId,
+        plan: orderInfo.plan,
+        bookLength: orderInfo.bookLength?.toString() || '100',
+      },
+    });
+
+    return NextResponse.json({ url: session.url });
+
+  } catch (error) {
+    console.error('Erreur Stripe:', error);
+    return NextResponse.json(
+      { error: 'Erreur lors de la création de la session de paiement' },
+      { status: 500 }
+    );
+  }
+}

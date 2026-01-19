@@ -62,6 +62,8 @@ function CheckoutContent() {
   // Prix affiché dans la carte "Dossier Essentiel"
   const reportDisplayPrice = PRICE_REPORT + (reportPaperOption ? PRICE_REPORT_PAPER : 0);
 
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const handlePayment = async () => {
     if (!deliveryInfo.email) {
       alert("Merci de renseigner votre email pour recevoir vos documents.");
@@ -72,6 +74,8 @@ function CheckoutContent() {
       alert("Merci de compléter votre adresse de livraison pour le livre papier.");
       return;
     }
+
+    setIsProcessing(true);
 
     // Préparation des données de commande
     const orderInfo = {
@@ -85,41 +89,51 @@ function CheckoutContent() {
     };
 
     try {
-      // Sauvegarde en base de données (via API)
-      // On envoie userData et orderInfo. L'API calculera le profil complet.
-      const res = await fetch('/api/book-request', {
+      // 1. Sauvegarde en base de données (via API)
+      const resDb = await fetch('/api/book-request', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userData,
           orderInfo,
-          // On n'envoie pas reportResults ni lifeDetails, l'API s'en chargera
         })
       });
 
-      if (!res.ok) {
-        console.error("Erreur lors de la sauvegarde de la commande");
-        // On continue quand même vers le paiement/résultat pour ne pas bloquer l'utilisateur
+      if (!resDb.ok) {
+        throw new Error("Erreur lors de la sauvegarde de la commande");
       }
 
-      // Simulation Paiement & Redirection
-      alert(`Commande validée (${currentTotal}€) !\nUn email de confirmation a été envoyé à ${deliveryInfo.email}.`);
-      
-      const params = new URLSearchParams({
-          fn: userData.firstName,
-          ln: userData.lastName,
-          bd: userData.birthDate,
-          bp: userData.birthPlace,
-          fo: userData.focus
+      const dbData = await resDb.json();
+      const orderId = dbData.id;
+
+      // 2. Création de la session Stripe
+      const resStripe = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderInfo,
+          userData,
+          orderId
+        })
       });
-      
-      window.open(`/pdf-report-v2?${params.toString()}`, '_self'); // _self pour rester dans l'onglet
+
+      if (!resStripe.ok) {
+        throw new Error("Erreur lors de l'initialisation du paiement");
+      }
+
+      const { url } = await resStripe.json();
+
+      // 3. Redirection vers Stripe
+      if (url) {
+        window.location.href = url;
+      } else {
+        throw new Error("Pas d'URL de redirection reçue");
+      }
       
     } catch (e) {
-      console.error("Erreur critique checkout:", e);
-      alert("Une erreur est survenue. Veuillez réessayer.");
+      console.error("Erreur checkout:", e);
+      alert("Une erreur est survenue lors de l'initialisation du paiement. Veuillez réessayer.");
+      setIsProcessing(false);
     }
   };
 
@@ -470,13 +484,20 @@ function CheckoutContent() {
           <div className="pointer-events-auto inline-block">
              <button 
                 onClick={handlePayment}
-                className="group relative inline-flex items-center gap-6 px-12 py-5 bg-[#2C2F4A] text-[#FAF9F7] text-xl font-serif font-bold rounded-full shadow-[0_20px_50px_-12px_rgba(44,47,74,0.5)] hover:bg-[#5B4B8A] transition-all transform hover:scale-105 hover:-translate-y-1"
+                disabled={isProcessing}
+                className={`group relative inline-flex items-center gap-6 px-12 py-5 bg-[#2C2F4A] text-[#FAF9F7] text-xl font-serif font-bold rounded-full shadow-[0_20px_50px_-12px_rgba(44,47,74,0.5)] transition-all transform ${isProcessing ? 'opacity-80 cursor-wait' : 'hover:bg-[#5B4B8A] hover:scale-105 hover:-translate-y-1'}`}
               >
-                <span>Accéder à ma destinée</span>
-                <span className="bg-[#FAF9F7]/10 px-4 py-1.5 rounded-full text-lg font-sans border border-[#FAF9F7]/20">
-                  {currentTotal}€
-                </span>
-                <Package className="w-6 h-6 text-[#C9A24D] group-hover:rotate-12 transition-transform" />
+                <span>{isProcessing ? 'Redirection sécurisée...' : 'Accéder à ma destinée'}</span>
+                {!isProcessing && (
+                  <span className="bg-[#FAF9F7]/10 px-4 py-1.5 rounded-full text-lg font-sans border border-[#FAF9F7]/20">
+                    {currentTotal}€
+                  </span>
+                )}
+                {isProcessing ? (
+                  <div className="w-6 h-6 border-2 border-[#C9A24D] border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <Package className="w-6 h-6 text-[#C9A24D] group-hover:rotate-12 transition-transform" />
+                )}
               </button>
               
               <div className="mt-6 flex items-center justify-center gap-6 text-xs text-[#2C2F4A]/50 font-medium tracking-wide">

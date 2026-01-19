@@ -131,7 +131,7 @@ function CheckoutContent() {
                 <p className="text-sm text-[#8FA6A0] uppercase tracking-wider font-bold">L'Analyse Technique</p>
               </div>
               <div className="text-right">
-                <div className="text-3xl font-serif text-[#2C2F4A] font-bold">29€</div>
+                <div className="text-5xl font-serif text-[#2C2F4A] font-bold">29€</div>
               </div>
             </div>
 
@@ -178,8 +178,8 @@ function CheckoutContent() {
                 <p className="text-sm text-[#C9A24D] uppercase tracking-wider font-bold">Dossier + Roman de Vie</p>
               </div>
               <div className="text-right">
-                 <div className="text-sm text-[#2C2F4A]/40 line-through decoration-red-300">78€</div>
-                 <div className="text-4xl font-serif text-[#C9A24D] font-bold">49€</div>
+                 <div className="text-lg text-[#2C2F4A]/40 line-through decoration-red-300 font-medium mb-1 mr-2">78€</div>
+                 <div className="text-6xl font-serif text-[#C9A24D] font-bold">49€</div>
               </div>
             </div>
 

@@ -35,13 +35,13 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           
           {/* MYSTIC BOOK BACKGROUND ANIMATION - PULSING WITH COLORS */}
           <motion.div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] pointer-events-none mix-blend-multiply"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] pointer-events-none"
             animate={{ 
-              opacity: [0, 0.4, 0],
-              scale: [0.9, 1.05, 0.9]
+              opacity: [0.3, 1, 0.3],
+              scale: [0.95, 1.05, 0.95]
             }}
             transition={{ 
-              duration: 4, // Synchronized with orb pulse
+              duration: 4, 
               repeat: Infinity, 
               ease: "easeInOut" 
             }}
@@ -49,12 +49,12 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              <svg viewBox="0 0 800 600" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                <defs>
                  <linearGradient id="bookGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                   <stop offset="0%" stopColor="#C9A24D" stopOpacity="0.6" />
-                   <stop offset="50%" stopColor="#5B4B8A" stopOpacity="0.3" />
-                   <stop offset="100%" stopColor="#C9A24D" stopOpacity="0.6" />
+                   <stop offset="0%" stopColor="#C9A24D" stopOpacity="0.2" />
+                   <stop offset="50%" stopColor="#5B4B8A" stopOpacity="0.1" />
+                   <stop offset="100%" stopColor="#C9A24D" stopOpacity="0.2" />
                  </linearGradient>
                  <filter id="glowBlur" x="-50%" y="-50%" width="200%" height="200%">
-                   <feGaussianBlur stdDeviation="15" result="coloredBlur" />
+                   <feGaussianBlur stdDeviation="5" result="coloredBlur" />
                    <feMerge>
                      <feMergeNode in="coloredBlur" />
                      <feMergeNode in="SourceGraphic" />
@@ -67,24 +67,24 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                  <path 
                    d="M 400 500 C 280 530, 80 470, 50 350 L 50 150 C 80 270, 280 330, 400 300" 
                    fill="url(#bookGlow)" 
-                   stroke="#C9A24D" 
-                   strokeWidth="2"
+                   stroke="#B45309" 
+                   strokeWidth="4"
                  />
                  
                  {/* Right Page */}
                  <path 
                    d="M 400 500 C 520 530, 720 470, 750 350 L 750 150 C 720 270, 520 330, 400 300" 
                    fill="url(#bookGlow)" 
-                   stroke="#C9A24D" 
-                   strokeWidth="2"
+                   stroke="#B45309" 
+                   strokeWidth="4"
                  />
                  
                  {/* Spine Light */}
                  <path
                    d="M 400 300 L 400 500"
-                   stroke="#FFF"
-                   strokeWidth="3"
-                   strokeOpacity="0.6"
+                   stroke="#B45309"
+                   strokeWidth="6"
+                   strokeOpacity="0.8"
                    strokeLinecap="round"
                  />
                </g>

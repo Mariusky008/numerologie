@@ -32,7 +32,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden relative"
+            className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <button 
@@ -42,7 +42,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
 
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col md:flex-row overflow-y-auto">
               <div className="bg-[#FAF9F7] md:w-1/3 p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-[#EFEDE9]">
                 <div className="w-32 h-32 rounded-full border-4 border-[#C9A24D]/30 overflow-hidden mb-6 shadow-xl">
                   <div className="w-full h-full bg-stone-100 flex items-center justify-center text-5xl">👨‍💼</div>

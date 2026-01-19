@@ -26,20 +26,19 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     if (step === 0 && (!formData.firstName || !formData.lastName)) return;
     
     // Step 1: Birth Info (Date, Time, Place)
-    if (step === 1 && (!formData.birthDate || !formData.birthTime || !formData.birthPlace)) return;
-    
-    // Step 2: Focus (Always has a default, so valid)
-    
-    if (step === 2) {
-      // Transition to calculation
+    if (step === 1) {
+      if (!formData.birthDate || !formData.birthTime || !formData.birthPlace) return;
+      
+      // Skip Step 2 (Focus), go directly to Step 3 (Calculation)
       setStep(3);
       // Simulate calculation time for "Wow" effect
       setTimeout(() => {
         onComplete(formData);
       }, 3500);
-    } else {
-      setStep(step + 1);
+      return;
     }
+
+    setStep(step + 1);
   };
 
   const updateField = (field: keyof UserData, value: string) => {
@@ -164,7 +163,8 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
             </motion.div>
           )}
 
-          {/* STEP 2: Focus */}
+          {/* STEP 2: Focus - REMOVED per user request */}
+          {/* 
           {step === 2 && (
             <motion.div
               key="step2"
@@ -219,7 +219,8 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                 </button>
               </div>
             </motion.div>
-          )}
+          )} 
+          */}
 
           {/* STEP 3: Loading / Calculation */}
           {step === 3 && (

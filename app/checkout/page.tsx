@@ -144,6 +144,9 @@ function CheckoutContent() {
                 <FeatureItem label="Thème Astral Précis (Ascendant, Maisons)" />
                 <FeatureItem label="Transits & Météo Astrale du jour" />
                 <FeatureItem label="Plans d'Expression & Dettes Karmiques" />
+                <FeatureItem label="Prévisions 12 Mois détaillées" />
+                <FeatureItem label="Grille d'Inclusion & Défis de Vie" />
+                <FeatureItem label="Axes Professionnels & Mission" />
               </ul>
             </div>
 
@@ -190,7 +193,7 @@ function CheckoutContent() {
                
                <div className="bg-[#FAF9F7] p-4 rounded-xl border border-[#EFEDE9]">
                  <ul className="space-y-4">
-                  <FeatureItem label="Tout le contenu du Dossier Essentiel" highlight />
+                  <FeatureItem label="INCLUS : Le Dossier Essentiel (Analyse Technique)" highlight />
                   <li className="flex items-start gap-3 text-sm">
                     <BookOpen className="w-5 h-5 text-[#C9A24D] shrink-0" />
                     <span className="font-bold text-[#5B4B8A]">Le Roman de votre Vie (E-Book)</span>

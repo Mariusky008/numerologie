@@ -11,6 +11,7 @@ interface LandingPageProps {
 
 // "Hero's Journey" Variant Landing Page
 export default function LandingPageHero({ onStart }: LandingPageProps) {
+  const [showExcerpt, setShowExcerpt] = React.useState(false);
   // Sample data for preview
   const sampleGrid = { 1: 2, 2: 1, 3: 0, 4: 1, 5: 3, 6: 0, 7: 1, 8: 2, 9: 1 };
   const sampleMissing = [3, 6];
@@ -194,6 +195,16 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[80%] bg-[#C9A24D]/20 blur-3xl -z-10 group-hover:bg-[#C9A24D]/30 transition-colors"></div>
                </div>
                
+               <div className="flex justify-center mt-8 relative z-20">
+                 <button 
+                   onClick={() => setShowExcerpt(true)}
+                   className="group flex items-center gap-3 px-6 py-3 bg-white border border-[#C9A24D] text-[#2C2F4A] rounded-full font-bold shadow-sm hover:shadow-md hover:bg-[#FAF9F7] transition-all"
+                 >
+                   <BookOpen className="w-5 h-5 text-[#C9A24D]" />
+                   <span>Voir un extrait du livre</span>
+                 </button>
+               </div>
+
                {/* Note d'adaptation */}
                <p className="text-center text-xs text-[#2C2F4A]/50 mt-4 italic">
                  * Exemple basé sur le profil de Thomas. Votre livre sera unique.
@@ -381,7 +392,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-[#C9A24D]/30 mx-auto md:mx-0 overflow-hidden mb-6 shadow-xl">
                 <div className="w-full h-full bg-stone-100 flex items-center justify-center text-4xl">👨‍💼</div>
               </div>
-              <h3 className="text-2xl font-serif text-[#2C2F4A] mb-2">Julien M.</h3>
+              <h3 className="text-2xl font-serif text-[#2C2F4A] mb-2">Thomas</h3>
               <p className="text-[#C9A24D] font-bold text-sm tracking-widest uppercase mb-4">Entrepreneur, 41 ans</p>
               <div className="flex gap-1 justify-center md:justify-start text-[#C9A24D]">
                 {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-current" />)}
@@ -393,13 +404,10 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                 <span className="absolute -top-8 -left-4 text-8xl text-[#C9A24D]/20 font-serif">"</span>
                 <blockquote className="text-lg md:text-xl text-[#2C2F4A]/80 leading-relaxed space-y-6 font-light">
                   <p>
-                    <span className="text-[#5B4B8A] font-medium">J'étais sceptique.</span> Je pensais recevoir un énième PDF générique avec des phrases bateau sur mon signe astrologique. Mais quand j'ai commencé à lire "Le Gardien des Seuils" (le titre de mon livre), j'ai eu des frissons dès la première page.
+                    <span className="text-[#5B4B8A] font-medium">J'étais sceptique au début.</span> Un "livre" sur moi ? Mais dès la première page, j'ai été happé. C'est bien écrit, c'est profond, et ça ne ressemble à rien de ce que j'ai lu.
                   </p>
                   <p>
-                    Le héros, c'était moi. Pas un "moi" idéalisé, mais un moi profond, avec mes doutes réels que je n'avais jamais avoués à personne. L'IA a utilisé mon cycle de vie actuel (une année personnelle 4) pour construire une intrigue où le protagoniste devait justement apprendre à structurer le chaos.
-                  </p>
-                  <p>
-                    <span className="text-[#C9A24D] italic">C'était plus qu'une lecture, c'était une révélation.</span> Voir mes obstacles transformés en quête épique m'a redonné le pouvoir sur ma propre vie. J'ai compris que je n'étais pas "bloqué", mais en "préparation". Ce changement de perspective vaut tout l'or du monde.
+                    <span className="text-[#C9A24D] italic">C'est mon histoire, mais sublimée.</span> Voir mes obstacles transformés en quête épique m'a redonné le pouvoir sur ma propre vie.
                   </p>
                 </blockquote>
               </div>
@@ -450,6 +458,51 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           </div>
         </div>
       </footer>
+
+      {/* Excerpt Modal */}
+      {showExcerpt && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowExcerpt(false)}>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="bg-[#FDFBF7] w-full max-w-2xl rounded-sm shadow-2xl overflow-hidden relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Book Spine Effect */}
+            <div className="absolute left-0 top-0 bottom-0 w-4 md:w-8 bg-gradient-to-r from-[#E3E1DD] to-[#FDFBF7] z-10"></div>
+            
+            <button 
+              onClick={() => setShowExcerpt(false)}
+              className="absolute top-4 right-4 text-[#2C2F4A]/40 hover:text-[#2C2F4A] transition-colors z-20"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <div className="p-8 md:p-16 pl-12 md:pl-24 font-serif text-[#2C2F4A] leading-relaxed relative max-h-[80vh] overflow-y-auto custom-scrollbar">
+              <div className="text-xs tracking-[0.2em] text-[#C9A24D] uppercase mb-8 text-center font-sans font-bold">Extrait du Chapitre 1</div>
+              
+              <div className="space-y-6 text-lg md:text-xl">
+                <p>
+                  <span className="text-5xl float-left mr-3 mt-[-10px] text-[#5B4B8A] font-bold">L</span>
+                  ’air de la pièce semblait s’être figé. La lumière dorée de cette fin d’après-midi traversait les vitraux, projetant des ombres colorées sur le vieux tapis persan.
+                </p>
+                <p>
+                  Thomas s’assit, le cœur battant, face à ce manuscrit qui portait son nom. Il n’avait jamais cru aux prophéties, ni aux étoiles, mais en ouvrant la première page, il sentit un frisson parcourir son échine.
+                </p>
+                <p>
+                  Ce n’était pas juste des mots. C’était sa vie, racontée avec une précision effrayante, comme si l’auteur avait vécu chaque instant à ses côtés. Les silences qu’il n’avait jamais osé briser, les rêves qu’il avait enfouis… Tout était là.
+                </p>
+              </div>
+
+              <div className="mt-12 text-center">
+                <div className="inline-block w-16 h-[1px] bg-[#C9A24D]/50 mb-2"></div>
+                <p className="text-xs text-[#2C2F4A]/40 italic">Page 14 • Le Gardien des Seuils</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }

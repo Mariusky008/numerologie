@@ -411,11 +411,11 @@ function CheckoutContent() {
   );
 }
 
-function FeatureItem({ label, highlight = false }: { label: string, highlight?: boolean }) {
+function FeatureItem({ label, highlight = false, lightMode = false }: { label: string, highlight?: boolean, lightMode?: boolean }) {
   return (
     <li className="flex items-start gap-3 text-sm">
-      <Check className={`w-5 h-5 shrink-0 ${highlight ? 'text-[#C9A24D]' : 'text-[#8FA6A0]'}`} />
-      <span className={highlight ? 'text-[#2C2F4A] font-medium' : 'text-[#2C2F4A]/70'}>{label}</span>
+      <Check className={`w-5 h-5 shrink-0 ${highlight ? 'text-[#C9A24D]' : lightMode ? 'text-[#FAF9F7]/50' : 'text-[#8FA6A0]'}`} />
+      <span className={highlight ? (lightMode ? 'text-[#FAF9F7] font-medium' : 'text-[#2C2F4A] font-medium') : (lightMode ? 'text-[#FAF9F7]/70' : 'text-[#2C2F4A]/70')}>{label}</span>
     </li>
   );
 }

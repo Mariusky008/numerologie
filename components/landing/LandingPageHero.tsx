@@ -32,8 +32,26 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-[#FAF9F7] via-transparent to-[#FAF9F7] z-10"></div>
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-60"></div>
-          {/* Glowing Orb Soft */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#C9A24D] rounded-full blur-[150px] opacity-10 animate-pulse"></div>
+          {/* Glowing Orb Heartbeat */}
+          <motion.div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[120px]"
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.2, 0.5, 0.2],
+              backgroundColor: [
+                "#FCD34D", // Amber/Yellow
+                "#F97316", // Orange
+                "#EF4444", // Red
+                "#FCD34D"  // Loop back
+              ]
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              times: [0, 0.33, 0.66, 1]
+            }}
+          />
         </div>
 
         <div className="max-w-5xl mx-auto text-center relative z-20">

@@ -1,11 +1,6 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-// Initialisation de Stripe avec la clé secrète (à définir dans .env.local)
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  typescript: true,
-});
-
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -17,6 +12,11 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+
+    // Initialisation de Stripe uniquement si la clé est présente et au moment de la requête
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      typescript: true,
+    });
 
     // Calcul du prix côté serveur pour sécurité
     let unitAmount = 0;

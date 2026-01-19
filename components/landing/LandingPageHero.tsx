@@ -12,6 +12,7 @@ interface LandingPageProps {
 // "Hero's Journey" Variant Landing Page
 export default function LandingPageHero({ onStart }: LandingPageProps) {
   const [showExcerpt, setShowExcerpt] = React.useState(false);
+  const [showTestimonial, setShowTestimonial] = React.useState(false);
   // Sample data for preview
   const sampleGrid = { 1: 2, 2: 1, 3: 0, 4: 1, 5: 3, 6: 0, 7: 1, 8: 2, 9: 1 };
   const sampleMissing = [3, 6];
@@ -24,7 +25,59 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         <div className="text-2xl font-serif text-[#5B4B8A] font-bold flex items-center gap-2">
           <BookOpen className="w-6 h-6 text-[#C9A24D]" />
           Roman de Vie
+          {/* Testimonial Modal */}
+      {showTestimonial && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowTestimonial(false)}>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={() => setShowTestimonial(false)}
+              className="absolute top-4 right-4 text-[#2C2F4A]/40 hover:text-[#2C2F4A] transition-colors z-20"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <div className="flex flex-col md:flex-row">
+              <div className="bg-[#FAF9F7] md:w-1/3 p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-[#EFEDE9]">
+                <div className="w-32 h-32 rounded-full border-4 border-[#C9A24D]/30 overflow-hidden mb-6 shadow-xl">
+                  <div className="w-full h-full bg-stone-100 flex items-center justify-center text-5xl">👨‍💼</div>
+                </div>
+                <h3 className="text-2xl font-serif text-[#2C2F4A] mb-2">Thomas</h3>
+                <p className="text-[#C9A24D] font-bold text-sm tracking-widest uppercase mb-4 text-center">Entrepreneur, 41 ans</p>
+                <div className="flex gap-1 justify-center text-[#C9A24D]">
+                  {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-current" />)}
+                </div>
+              </div>
+
+              <div className="p-8 md:w-2/3 md:p-10 bg-white">
+                <div className="relative">
+                  <span className="absolute -top-6 -left-4 text-6xl text-[#C9A24D]/10 font-serif">"</span>
+                  <div className="space-y-6 text-[#2C2F4A]/80 leading-relaxed">
+                    <p className="font-serif text-xl text-[#2C2F4A] mb-4">
+                      "Je n'ai jamais lu quelque chose d'aussi juste sur moi-même."
+                    </p>
+                    <p>
+                      J'étais sceptique au début. Un "livre" sur moi ? Je pensais recevoir un horoscope glorifié. Mais dès la première page, j'ai été happé.
+                    </p>
+                    <p>
+                      Ce n'est pas juste une analyse froide de ma personnalité. L'IA a tissé une véritable histoire. Quand j'ai lu le passage sur mon "instabilité chronique" transformée en "génie foudroyant", j'ai eu les larmes aux yeux. J'ai compris que ce que je voyais comme un défaut était en fait ma plus grande arme, si j'apprenais à la maîtriser.
+                    </p>
+                    <p>
+                      <strong className="text-[#5B4B8A]">Ce livre m'a donné la permission d'être moi-même.</strong> Depuis que je l'ai lu, j'ai pris des décisions pour mon entreprise que je repoussais depuis des années. C'est bien plus qu'un livre, c'est un compagnon de route.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
+      )}
+    </div>
       </nav>
 
       {/* Hero Section Cinematic Light */}
@@ -267,13 +320,21 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[80%] bg-[#C9A24D]/20 blur-3xl -z-10 group-hover:bg-[#C9A24D]/30 transition-colors"></div>
                </div>
                
-               <div className="flex justify-center mt-8 relative z-20">
+               <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8 relative z-20">
                  <button 
                    onClick={() => setShowExcerpt(true)}
-                   className="group flex items-center gap-3 px-6 py-3 bg-white border border-[#C9A24D] text-[#2C2F4A] rounded-full font-bold shadow-sm hover:shadow-md hover:bg-[#FAF9F7] transition-all"
+                   className="group flex items-center justify-center gap-3 px-6 py-3 bg-white border border-[#C9A24D] text-[#2C2F4A] rounded-full font-bold shadow-sm hover:shadow-md hover:bg-[#FAF9F7] transition-all"
                  >
                    <BookOpen className="w-5 h-5 text-[#C9A24D]" />
                    <span>Voir un extrait du livre</span>
+                 </button>
+                 
+                 <button 
+                   onClick={() => setShowTestimonial(true)}
+                   className="group flex items-center justify-center gap-3 px-6 py-3 bg-[#5B4B8A] border border-[#5B4B8A] text-white rounded-full font-bold shadow-sm hover:shadow-md hover:bg-[#6A5FA8] transition-all"
+                 >
+                   <UserIcon className="w-5 h-5 text-white" />
+                   <span>Thomas parle de son livre</span>
                  </button>
                </div>
 
@@ -557,13 +618,13 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               <div className="space-y-6 text-lg md:text-xl">
                 <p>
                   <span className="text-5xl float-left mr-3 mt-[-10px] text-[#5B4B8A] font-bold">L</span>
-                  ’air de la pièce semblait s’être figé. La lumière dorée de cette fin d’après-midi traversait les vitraux, projetant des ombres colorées sur le vieux tapis persan.
+                  ’air de la pièce semblait s’être figé, comme si le temps lui-même attendait une permission pour reprendre sa course. Thomas fixa le reflet dans le miroir, mais ce n'était plus tout à fait le sien. Ce matin-là, les lignes de son visage semblaient dessiner une carte qu'il avait longtemps refusé de lire.
                 </p>
                 <p>
-                  Thomas s’assit, le cœur battant, face à ce manuscrit qui portait son nom. Il n’avait jamais cru aux prophéties, ni aux étoiles, mais en ouvrant la première page, il sentit un frisson parcourir son échine.
+                  Il se souvint de ce vieux secret qu'il portait depuis l'enfance : cette sensation d'être né sous un ciel qui exigeait trop de lui. Le nombre 14 n'était pas qu'une simple date sur son état civil ; c'était un rythme, une oscillation constante entre le besoin de tout détruire et l'envie de tout construire. Pour d'autres, c'était un mardi ordinaire. Pour lui, c'était le code source de son instabilité chronique et de son génie foudroyant.
                 </p>
                 <p>
-                  Ce n’était pas juste des mots. C’était sa vie, racontée avec une précision effrayante, comme si l’auteur avait vécu chaque instant à ses côtés. Les silences qu’il n’avait jamais osé briser, les rêves qu’il avait enfouis… Tout était là.
+                  Soudain, une lueur dorée traversa la fenêtre, illuminant une vieille boussole posée sur son bureau. Thomas comprit alors ce que les cycles tentaient de lui dire depuis des mois. Il arrivait au bout de la Neuvième Terre. Tout ce qu'il avait bâti ces dernières années s'effritait, non pas par échec, mais pour laisser place à la suite. Les dragons qu'il avait combattus — ce doute persistant sur sa légitimité, cette peur de l'ombre — n'étaient en réalité que des gardiens. Ils ne voulaient pas le dévorer, ils vérifiaient s'il était prêt pour la Grande Transition.
                 </p>
               </div>
 

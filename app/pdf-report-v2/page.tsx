@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
 import FullReportV2 from '@/components/report/FullReportV2';
+import BookCreationModal from '@/components/report/BookCreationModal';
 import { UserData, NumerologyResult } from '@/lib/types';
 import { 
   calculateLifePath, 
@@ -35,6 +36,24 @@ export const dynamic = 'force-dynamic';
 function PrintContent() {
   const searchParams = useSearchParams();
   const [data, setData] = useState<{userData: UserData, results: NumerologyResult, etymology?: NameData | null} | null>(null);
+  const [showBookModal, setShowBookModal] = useState(false);
+
+  useEffect(() => {
+    // Si le paiement a réussi et qu'on a un order_id, on peut potentiellement afficher la modale
+    // Mais pour l'instant, on se base sur le paramètre 'payment_success'
+    if (searchParams.get('payment_success') === 'true') {
+      // On attend un peu que les données soient chargées pour afficher la modale
+      // Ou on l'affiche dès que 'data' est prêt
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (data && searchParams.get('payment_success') === 'true') {
+        // Petit délai pour l'expérience utilisateur
+        const timer = setTimeout(() => setShowBookModal(true), 1500);
+        return () => clearTimeout(timer);
+    }
+  }, [data, searchParams]);
 
   useEffect(() => {
     const initData = async () => {
@@ -173,7 +192,17 @@ function PrintContent() {
 
   if (!data) return <div className="p-12 text-center text-stone-500">Chargement de l'étude...</div>;
 
-  return <FullReportV2 userData={data.userData} results={data.results} etymology={data.etymology} />;
+  return (
+    <>
+      <FullReportV2 userData={data.userData} results={data.results} etymology={data.etymology} />
+      <BookCreationModal 
+        isOpen={showBookModal} 
+        onClose={() => setShowBookModal(false)} 
+        userData={data.userData}
+        reportResults={data.results}
+      />
+    </>
+  );
 }
 
 export default function PrintPage() {

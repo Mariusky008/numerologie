@@ -24,6 +24,9 @@ export default function BookCreationModal({ isOpen, onClose, userData, reportRes
     dreams: '',
     mentors: '',
     dailyRituals: '',
+    bookTheme: '',
+    worstOrdeal: '',
+    bonusAnecdote: '',
     otherNotes: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -106,11 +109,61 @@ export default function BookCreationModal({ isOpen, onClose, userData, reportRes
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="bg-amber-50 p-4 rounded-xl border border-amber-100 mb-6">
                   <p className="text-sm text-[#78350f] italic">
-                    "Imaginez un livre dont vous êtes le héros, mais où chaque épreuve, chaque victoire et chaque rencontre est dictée par les nombres qui régissent votre existence. Pour que la magie opère, confiez-nous quelques clés de votre parcours."
+                    "Aidez-nous à capturer l'essence de votre parcours. Soyez aussi sincère et détaillé que possible, ce sont les petites anecdotes qui font les grandes histoires."
                   </p>
                 </div>
 
                 <div className="space-y-4">
+                  {/* NEW FIELDS START */}
+                  <div>
+                    <label className="flex items-center gap-2 text-[#78350f] font-bold mb-2">
+                      <BookOpen className="w-4 h-4" />
+                      Quel est le thème principal du livre ?
+                    </label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {['Entrepreneuriat / Business', 'Voyage / Aventure', 'Développement personnel / Changement de vie', 'Biographie familiale', 'Science fiction', 'Roman d\'amour'].map((theme) => (
+                        <label key={theme} className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${formData.bookTheme === theme ? 'bg-[#78350f] text-white border-[#78350f]' : 'bg-white border-[#d97706]/20 hover:border-[#d97706]/50'}`}>
+                          <input
+                            type="radio"
+                            name="bookTheme"
+                            value={theme}
+                            checked={formData.bookTheme === theme}
+                            onChange={(e) => setFormData({ ...formData, bookTheme: e.target.value })}
+                            className="w-4 h-4 accent-[#fffbf0]"
+                          />
+                          <span className="text-sm font-medium">{theme}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="flex items-center gap-2 text-[#78350f] font-bold mb-2">
+                      <Users className="w-4 h-4" />
+                      Quelle a été la pire galère ? (Soyez honnête, cela rend le héros humain)
+                    </label>
+                    <textarea
+                      className="w-full p-3 rounded-lg border border-[#d97706]/20 focus:ring-2 focus:ring-[#d97706]/50 outline-none bg-white min-h-[80px]"
+                      placeholder="Un échec cuisant, un moment de solitude intense, une erreur de parcours..."
+                      value={formData.worstOrdeal}
+                      onChange={(e) => setFormData({ ...formData, worstOrdeal: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="flex items-center gap-2 text-[#78350f] font-bold mb-2">
+                      <Star className="w-4 h-4" />
+                      Avez-vous une anecdote "bonus" ou un détail bizarre ?
+                    </label>
+                    <textarea
+                      className="w-full p-3 rounded-lg border border-[#d97706]/20 focus:ring-2 focus:ring-[#d97706]/50 outline-none bg-white min-h-[80px]"
+                      placeholder="Un talent inutile, une phobie étrange, une coïncidence incroyable..."
+                      value={formData.bonusAnecdote}
+                      onChange={(e) => setFormData({ ...formData, bonusAnecdote: e.target.value })}
+                    />
+                  </div>
+                  {/* NEW FIELDS END */}
+
                   <div>
                     <label className="flex items-center gap-2 text-[#78350f] font-bold mb-2">
                       <MapPin className="w-4 h-4" />

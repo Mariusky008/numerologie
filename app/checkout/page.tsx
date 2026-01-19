@@ -176,7 +176,7 @@ function CheckoutContent() {
           >
             <div className="flex justify-between items-start mb-8">
               <div>
-                <h3 className="text-2xl font-serif text-[#2C2F4A] mb-1">Dossier Essentiel</h3>
+                <h3 className="text-2xl font-serif text-[#2C2F4A] mb-1">Clés de Votre Destin</h3>
                 <p className="text-sm text-[#8FA6A0] uppercase tracking-wider font-bold">L'Analyse Technique</p>
               </div>
               <div className="text-right">

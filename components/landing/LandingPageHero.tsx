@@ -36,9 +36,9 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           
           {/* MYSTIC BOOK BACKGROUND ANIMATION - PULSING WITH COLORS */}
           <motion.div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] pointer-events-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] pointer-events-none flex items-center justify-center"
             animate={{ 
-              opacity: [0.3, 1, 0.3],
+              opacity: [0.4, 1, 0.4],
               scale: [0.95, 1.05, 0.95]
             }}
             transition={{ 
@@ -47,6 +47,39 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               ease: "easeInOut" 
             }}
           >
+             {/* Magical Particles Emitting from Book */}
+             {Array.from({ length: 15 }).map((_, i) => (
+               <motion.div
+                 key={i}
+                 className="absolute text-[#C9A24D] font-serif font-bold"
+                 initial={{ 
+                   opacity: 0, 
+                   x: 0, 
+                   y: 0, 
+                   scale: 0 
+                 }}
+                 animate={{ 
+                   opacity: [0, 1, 0],
+                   x: (Math.random() - 0.5) * 400,
+                   y: -Math.random() * 300 - 50,
+                   scale: [0, 1.5, 0.5],
+                   rotate: Math.random() * 360
+                 }}
+                 transition={{ 
+                   duration: 3 + Math.random() * 2,
+                   repeat: Infinity,
+                   delay: Math.random() * 2,
+                   ease: "easeOut"
+                 }}
+                 style={{
+                   fontSize: Math.random() > 0.5 ? '24px' : '16px',
+                   color: Math.random() > 0.5 ? '#C9A24D' : '#5B4B8A'
+                 }}
+               >
+                 {['1', '7', '4', 'A', 'Ω', '∑', '✨', '☾', '9', '3', '∞', '∆', '⚡'][i % 13]}
+               </motion.div>
+             ))}
+
              <svg viewBox="0 0 800 600" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                <defs>
                  <linearGradient id="bookGlow" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -55,7 +88,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                    <stop offset="100%" stopColor="#C9A24D" stopOpacity="0.2" />
                  </linearGradient>
                  <filter id="glowBlur" x="-50%" y="-50%" width="200%" height="200%">
-                   <feGaussianBlur stdDeviation="5" result="coloredBlur" />
+                   <feGaussianBlur stdDeviation="4" result="coloredBlur" />
                    <feMerge>
                      <feMergeNode in="coloredBlur" />
                      <feMergeNode in="SourceGraphic" />
@@ -64,29 +97,68 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                </defs>
                
                <g filter="url(#glowBlur)">
-                 {/* Left Page */}
+                 {/* Pages Layer 1 (Back) */}
+                 <path 
+                   d="M 400 520 C 250 540, 60 480, 40 360 L 40 160 C 60 280, 250 340, 400 320" 
+                   fill="none" 
+                   stroke="#B45309" 
+                   strokeWidth="2"
+                   strokeOpacity="0.5"
+                 />
+                 <path 
+                   d="M 400 520 C 550 540, 740 480, 760 360 L 760 160 C 740 280, 550 340, 400 320" 
+                   fill="none" 
+                   stroke="#B45309" 
+                   strokeWidth="2"
+                   strokeOpacity="0.5"
+                 />
+
+                 {/* Pages Layer 2 (Middle) */}
+                 <path 
+                   d="M 400 510 C 260 535, 70 475, 45 355 L 45 155 C 70 275, 260 335, 400 310" 
+                   fill="none" 
+                   stroke="#B45309" 
+                   strokeWidth="2"
+                   strokeOpacity="0.7"
+                 />
+                 <path 
+                   d="M 400 510 C 540 535, 730 475, 755 355 L 755 155 C 730 275, 540 335, 400 310" 
+                   fill="none" 
+                   stroke="#B45309" 
+                   strokeWidth="2"
+                   strokeOpacity="0.7"
+                 />
+
+                 {/* Main Pages (Front) */}
                  <path 
                    d="M 400 500 C 280 530, 80 470, 50 350 L 50 150 C 80 270, 280 330, 400 300" 
                    fill="url(#bookGlow)" 
                    stroke="#B45309" 
-                   strokeWidth="4"
+                   strokeWidth="3"
                  />
-                 
-                 {/* Right Page */}
                  <path 
                    d="M 400 500 C 520 530, 720 470, 750 350 L 750 150 C 720 270, 520 330, 400 300" 
                    fill="url(#bookGlow)" 
                    stroke="#B45309" 
-                   strokeWidth="4"
+                   strokeWidth="3"
                  />
                  
-                 {/* Spine Light */}
+                 {/* Spine */}
                  <path
                    d="M 400 300 L 400 500"
                    stroke="#B45309"
-                   strokeWidth="6"
-                   strokeOpacity="0.8"
+                   strokeWidth="4"
+                   strokeOpacity="0.9"
                    strokeLinecap="round"
+                 />
+                 
+                 {/* Binding curve */}
+                 <path
+                   d="M 380 305 Q 400 320 420 305"
+                   fill="none"
+                   stroke="#B45309"
+                   strokeWidth="2"
+                   strokeOpacity="0.6"
                  />
                </g>
              </svg>

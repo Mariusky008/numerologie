@@ -184,8 +184,8 @@ function CheckoutContent() {
                 <p className="text-sm text-[#C9A24D] uppercase tracking-wider font-bold">Dossier + Roman de Vie</p>
               </div>
               <div className="text-right">
-                 <div className="text-lg text-[#2C2F4A]/40 line-through decoration-red-300 font-medium mb-1 mr-2">78€</div>
-                 <div className="text-6xl font-serif text-[#C9A24D] font-bold">49€</div>
+                 <div className="text-lg text-[#2C2F4A]/40 line-through decoration-red-300 font-medium mb-1 mr-2">{bundleFullValue}€</div>
+                 <div className="text-6xl font-serif text-[#C9A24D] font-bold">{bundleDisplayPrice}€</div>
               </div>
             </div>
 

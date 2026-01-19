@@ -87,12 +87,12 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           <div className="absolute inset-0 bg-gradient-to-b from-[#FAF9F7] via-transparent to-[#FAF9F7] z-10"></div>
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-60"></div>
           
-          {/* MYSTIC BOOK BACKGROUND ANIMATION - PULSING WITH COLORS */}
+          {/* MYSTIC ANGEL WINGS BACKGROUND ANIMATION - PULSING WITH COLORS */}
           <motion.div 
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] pointer-events-none flex items-center justify-center"
             animate={{ 
-              opacity: [0.4, 1, 0.4],
-              scale: [0.95, 1.05, 0.95]
+              opacity: [0.6, 1, 0.6],
+              scale: [0.98, 1.02, 0.98]
             }}
             transition={{ 
               duration: 4, 
@@ -100,11 +100,11 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               ease: "easeInOut" 
             }}
           >
-             {/* Magical Particles Emitting from Book */}
-             {Array.from({ length: 15 }).map((_, i) => (
+             {/* Magical Particles Emitting from Wings */}
+             {Array.from({ length: 20 }).map((_, i) => (
                <motion.div
                  key={i}
-                 className="absolute text-[#C9A24D] font-serif font-bold"
+                 className="absolute text-[#C9A24D] font-serif font-bold mix-blend-multiply"
                  initial={{ 
                    opacity: 0, 
                    x: 0, 
@@ -113,35 +113,36 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                  }}
                  animate={{ 
                    opacity: [0, 1, 0],
-                   x: (Math.random() - 0.5) * 400,
-                   y: -Math.random() * 300 - 50,
-                   scale: [0, 1.5, 0.5],
+                   x: (Math.random() - 0.5) * 600,
+                   y: -Math.random() * 400 - 50,
+                   scale: [0.5, 2, 0.5],
                    rotate: Math.random() * 360
                  }}
                  transition={{ 
-                   duration: 3 + Math.random() * 2,
+                   duration: 4 + Math.random() * 3,
                    repeat: Infinity,
                    delay: Math.random() * 2,
                    ease: "easeOut"
                  }}
                  style={{
-                   fontSize: Math.random() > 0.5 ? '24px' : '16px',
-                   color: Math.random() > 0.5 ? '#C9A24D' : '#5B4B8A'
+                   fontSize: Math.random() > 0.5 ? '32px' : '20px',
+                   color: Math.random() > 0.3 ? '#C9A24D' : '#5B4B8A',
+                   textShadow: '0 0 10px rgba(201, 162, 77, 0.5)'
                  }}
                >
-                 {['1', '7', '4', 'A', 'Ω', '∑', '✨', '☾', '9', '3', '∞', '∆', '⚡'][i % 13]}
+                 {['1', '7', '4', 'A', 'Ω', '∑', '✨', '☾', '9', '3', '∞', '∆', '⚡', 'M', 'V', '8'][i % 16]}
                </motion.div>
              ))}
 
              <svg viewBox="0 0 800 600" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                <defs>
-                 <linearGradient id="bookGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                   <stop offset="0%" stopColor="#C9A24D" stopOpacity="0.2" />
-                   <stop offset="50%" stopColor="#5B4B8A" stopOpacity="0.1" />
-                   <stop offset="100%" stopColor="#C9A24D" stopOpacity="0.2" />
+                 <linearGradient id="wingGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+                   <stop offset="0%" stopColor="#C9A24D" stopOpacity="0" />
+                   <stop offset="50%" stopColor="#C9A24D" stopOpacity="0.15" />
+                   <stop offset="100%" stopColor="#C9A24D" stopOpacity="0" />
                  </linearGradient>
-                 <filter id="glowBlur" x="-50%" y="-50%" width="200%" height="200%">
-                   <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+                 <filter id="wingBlur" x="-50%" y="-50%" width="200%" height="200%">
+                   <feGaussianBlur stdDeviation="8" result="coloredBlur" />
                    <feMerge>
                      <feMergeNode in="coloredBlur" />
                      <feMergeNode in="SourceGraphic" />
@@ -149,70 +150,55 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                  </filter>
                </defs>
                
-               <g filter="url(#glowBlur)">
-                 {/* Pages Layer 1 (Back) */}
+               <g filter="url(#wingBlur)">
+                 {/* Left Wing */}
                  <path 
-                   d="M 400 520 C 250 540, 60 480, 40 360 L 40 160 C 60 280, 250 340, 400 320" 
-                   fill="none" 
-                   stroke="#B45309" 
+                   d="M 400 350 
+                      C 350 250, 200 150, 100 200
+                      C 50 220, 20 300, 50 350
+                      C 80 400, 150 450, 250 400
+                      C 300 380, 380 380, 400 350" 
+                   fill="url(#wingGlow)" 
+                   stroke="#C9A24D" 
                    strokeWidth="2"
-                   strokeOpacity="0.5"
+                   strokeOpacity="0.4"
                  />
                  <path 
-                   d="M 400 520 C 550 540, 740 480, 760 360 L 760 160 C 740 280, 550 340, 400 320" 
+                   d="M 400 350 
+                      C 360 270, 220 180, 120 220
+                      C 80 240, 60 300, 80 340
+                      C 100 380, 160 420, 240 380" 
                    fill="none" 
-                   stroke="#B45309" 
-                   strokeWidth="2"
-                   strokeOpacity="0.5"
-                 />
-
-                 {/* Pages Layer 2 (Middle) */}
-                 <path 
-                   d="M 400 510 C 260 535, 70 475, 45 355 L 45 155 C 70 275, 260 335, 400 310" 
-                   fill="none" 
-                   stroke="#B45309" 
-                   strokeWidth="2"
-                   strokeOpacity="0.7"
-                 />
-                 <path 
-                   d="M 400 510 C 540 535, 730 475, 755 355 L 755 155 C 730 275, 540 335, 400 310" 
-                   fill="none" 
-                   stroke="#B45309" 
-                   strokeWidth="2"
-                   strokeOpacity="0.7"
-                 />
-
-                 {/* Main Pages (Front) */}
-                 <path 
-                   d="M 400 500 C 280 530, 80 470, 50 350 L 50 150 C 80 270, 280 330, 400 300" 
-                   fill="url(#bookGlow)" 
-                   stroke="#B45309" 
-                   strokeWidth="3"
-                 />
-                 <path 
-                   d="M 400 500 C 520 530, 720 470, 750 350 L 750 150 C 720 270, 520 330, 400 300" 
-                   fill="url(#bookGlow)" 
-                   stroke="#B45309" 
-                   strokeWidth="3"
+                   stroke="#C9A24D" 
+                   strokeWidth="1.5"
+                   strokeOpacity="0.3"
                  />
                  
-                 {/* Spine */}
-                 <path
-                   d="M 400 300 L 400 500"
-                   stroke="#B45309"
-                   strokeWidth="4"
-                   strokeOpacity="0.9"
-                   strokeLinecap="round"
-                 />
-                 
-                 {/* Binding curve */}
-                 <path
-                   d="M 380 305 Q 400 320 420 305"
-                   fill="none"
-                   stroke="#B45309"
+                 {/* Right Wing */}
+                 <path 
+                   d="M 400 350 
+                      C 450 250, 600 150, 700 200
+                      C 750 220, 780 300, 750 350
+                      C 720 400, 650 450, 550 400
+                      C 500 380, 420 380, 400 350" 
+                   fill="url(#wingGlow)" 
+                   stroke="#C9A24D" 
                    strokeWidth="2"
-                   strokeOpacity="0.6"
+                   strokeOpacity="0.4"
                  />
+                 <path 
+                   d="M 400 350 
+                      C 440 270, 580 180, 680 220
+                      C 720 240, 740 300, 720 340
+                      C 700 380, 640 420, 560 380" 
+                   fill="none" 
+                   stroke="#C9A24D" 
+                   strokeWidth="1.5"
+                   strokeOpacity="0.3"
+                 />
+
+                 {/* Center Glow */}
+                 <circle cx="400" cy="350" r="40" fill="#C9A24D" fillOpacity="0.1" filter="url(#wingBlur)" />
                </g>
              </svg>
           </motion.div>

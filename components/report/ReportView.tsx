@@ -696,6 +696,29 @@ export default function ReportView({ userData }: ReportViewProps) {
                 </div>
              </div>
           </div>
+
+          {/* DEV ONLY: Floating Action Button */}
+          <div className="fixed bottom-8 left-8 z-[100] p-4 bg-white/90 backdrop-blur-md border-2 border-red-500 rounded-xl shadow-2xl animate-bounce hover:animate-none transition-all">
+            <h4 className="text-red-600 font-bold text-xs uppercase tracking-widest mb-2 text-center">Mode Débug</h4>
+            <button
+              onClick={() => {
+                const params = new URLSearchParams({
+                  fn: userData.firstName,
+                  ln: userData.lastName,
+                  bd: userData.birthDate,
+                  bp: userData.birthPlace || '',
+                  fo: userData.focus,
+                  payment_success: 'true'
+                });
+                window.open(`/pdf-report-v2?${params.toString()}`, '_blank');
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-bold hover:bg-red-700 shadow-lg hover:shadow-red-500/30 transition-all"
+            >
+              <span>🔓</span>
+              <span>Ouvrir Rapport Complet</span>
+            </button>
+          </div>
+
         </div>
 
         <BookCreationModal 

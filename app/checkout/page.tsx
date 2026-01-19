@@ -26,6 +26,8 @@ function CheckoutContent() {
   
   // Option papier (disponible uniquement pour le bundle)
   const [paperOption, setPaperOption] = useState(false);
+  // Option papier pour le rapport seul
+  const [reportPaperOption, setReportPaperOption] = useState(false);
   // Longueur du livre (100, 200, 300 pages)
   const [bookLength, setBookLength] = useState<100 | 200 | 300>(100);
 
@@ -46,15 +48,19 @@ function CheckoutContent() {
   const PRICE_REPORT = 29;
   const PRICE_BUNDLE = 49;
   const PRICE_PAPER = 29;
+  const PRICE_REPORT_PAPER = 10;
   const PRICE_PAGE_EXTENSION = 10; // +10€ pour chaque palier de 100 pages supp
 
   const currentTotal = selectedPlan === 'report' 
-    ? PRICE_REPORT 
+    ? PRICE_REPORT + (reportPaperOption ? PRICE_REPORT_PAPER : 0)
     : PRICE_BUNDLE + (paperOption ? PRICE_PAPER : 0) + ((bookLength - 100) / 100 * PRICE_PAGE_EXTENSION);
 
   // Prix affiché dans la carte "Pack Héros" (inclut la longueur ET l'option papier si sélectionnée)
   const bundleDisplayPrice = PRICE_BUNDLE + ((bookLength - 100) / 100 * PRICE_PAGE_EXTENSION) + (paperOption ? PRICE_PAPER : 0);
   const bundleFullValue = 78 + ((bookLength - 100) / 100 * PRICE_PAGE_EXTENSION) + (paperOption ? PRICE_PAPER : 0); // Prix barré dynamique
+
+  // Prix affiché dans la carte "Dossier Essentiel"
+  const reportDisplayPrice = PRICE_REPORT + (reportPaperOption ? PRICE_REPORT_PAPER : 0);
 
   const handlePayment = () => {
     if (!deliveryInfo.email) {
@@ -62,13 +68,13 @@ function CheckoutContent() {
       return;
     }
     
-    if (paperOption && (!deliveryInfo.address || !deliveryInfo.city || !deliveryInfo.zip)) {
+    if ((paperOption || reportPaperOption) && (!deliveryInfo.address || !deliveryInfo.city || !deliveryInfo.zip)) {
       alert("Merci de compléter votre adresse de livraison pour le livre papier.");
       return;
     }
 
     // TODO: Intégration Stripe ici
-    alert(`Redirection vers le paiement Stripe (${currentTotal}€)...\n\nEmail: ${deliveryInfo.email}\n${paperOption ? `Adresse: ${deliveryInfo.address}, ${deliveryInfo.zip} ${deliveryInfo.city}` : ''}\nLivre: ${bookLength} pages`);
+    alert(`Redirection vers le paiement Stripe (${currentTotal}€)...\n\nEmail: ${deliveryInfo.email}\n${(paperOption || reportPaperOption) ? `Adresse: ${deliveryInfo.address}, ${deliveryInfo.zip} ${deliveryInfo.city}` : ''}\n${selectedPlan === 'bundle' ? `Livre: ${bookLength} pages` : ''}`);
     
     const params = new URLSearchParams({
         fn: userData.firstName,
@@ -138,7 +144,7 @@ function CheckoutContent() {
                 <p className="text-sm text-[#8FA6A0] uppercase tracking-wider font-bold">L'Analyse Technique</p>
               </div>
               <div className="text-right">
-                <div className="text-5xl font-serif text-[#2C2F4A] font-bold">29€</div>
+                <div className="text-5xl font-serif text-[#2C2F4A] font-bold">{reportDisplayPrice}€</div>
               </div>
             </div>
 
@@ -156,6 +162,40 @@ function CheckoutContent() {
                 <FeatureItem label="Axes Professionnels & Mission" />
               </ul>
             </div>
+
+            {/* UPSELL PAPIER REPORT */}
+            {selectedPlan === 'report' && (
+               <motion.div 
+                 initial={{ opacity: 0, height: 0 }}
+                 animate={{ opacity: 1, height: 'auto' }}
+                 className="mt-4 pt-6 border-t border-[#EFEDE9]"
+               >
+                 <div 
+                   onClick={(e) => {
+                     e.stopPropagation();
+                     setReportPaperOption(!reportPaperOption);
+                   }}
+                   className={`flex items-start gap-4 p-4 rounded-xl border transition-all ${
+                     reportPaperOption ? 'border-[#5B4B8A] bg-[#5B4B8A]/5' : 'border-[#EFEDE9] hover:border-[#5B4B8A]/30 bg-white'
+                   }`}
+                 >
+                   <div className={`w-5 h-5 rounded border mt-1 flex items-center justify-center shrink-0 transition-colors ${
+                     reportPaperOption ? 'border-[#5B4B8A] bg-[#5B4B8A]' : 'border-stone-300 bg-white'
+                   }`}>
+                     {reportPaperOption && <Check className="w-3 h-3 text-white" />}
+                   </div>
+                   <div className="flex-1">
+                     <div className="flex justify-between items-center mb-1">
+                        <span className="font-bold text-[#2C2F4A] text-sm">Recevoir le Dossier Imprimé</span>
+                        <span className="font-serif text-[#5B4B8A] font-bold text-xl">+10€</span>
+                     </div>
+                     <p className="text-xs text-[#2C2F4A]/60 leading-relaxed">
+                       Impression haute qualité, reliure spirale pro. Livré directement chez vous.
+                     </p>
+                   </div>
+                 </div>
+               </motion.div>
+            )}
 
             <div className={`w-6 h-6 rounded-full border-2 absolute top-6 right-6 flex items-center justify-center transition-colors ${
               selectedPlan === 'report' ? 'border-[#5B4B8A]' : 'border-stone-300'
@@ -287,7 +327,7 @@ function CheckoutContent() {
                 <div className={`w-6 h-6 rounded-full border-2 absolute top-6 right-6 flex items-center justify-center transition-colors ${
                   selectedPlan === 'bundle' ? 'border-[#C9A24D]' : 'border-[#FAF9F7]/30'
                 }`}>
-                  {selectedPlan === 'bundle' && <div className="w-3 h-3 rounded-full bg-[#C9A24D]" />}
+              =bundle' &&<div className="w-3 h-3 rounded-full bg-[#C9A24D]" />}
                 </div>
             </div>
           </motion.div>
@@ -295,7 +335,7 @@ function CheckoutContent() {
         </div>
 
         {/* Delivery Form Section */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
@@ -321,7 +361,7 @@ function CheckoutContent() {
              </div>
 
              {/* Physical Address Fields (Conditional) */}
-             {paperOption && (
+             {(paperOption || reportPaperOption) && (
                <motion.div 
                  initial={{ opacity: 0, height: 0 }}
                  animate={{ opacity: 1, height: 'auto' }}

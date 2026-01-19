@@ -32,45 +32,69 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col"
+            className="bg-white w-full max-w-3xl rounded-xl shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col md:flex-row"
             onClick={(e) => e.stopPropagation()}
           >
             <button 
               onClick={() => setShowTestimonial(false)}
-              className="absolute top-4 right-4 text-[#2C2F4A]/40 hover:text-[#2C2F4A] transition-colors z-20"
+              className="absolute top-4 right-4 text-stone-400 hover:text-stone-800 transition-colors z-30 bg-white/80 backdrop-blur-sm p-1 rounded-full"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
 
-            <div className="flex flex-col md:flex-row overflow-y-auto">
-              <div className="bg-[#FAF9F7] md:w-1/3 p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-[#EFEDE9]">
-                <div className="w-32 h-32 rounded-full border-4 border-[#C9A24D]/30 overflow-hidden mb-6 shadow-xl">
-                  <div className="w-full h-full bg-stone-100 flex items-center justify-center text-5xl">👨‍💼</div>
-                </div>
-                <h3 className="text-2xl font-serif text-[#2C2F4A] mb-2">Thomas</h3>
-                <p className="text-[#C9A24D] font-bold text-sm tracking-widest uppercase mb-4 text-center">Entrepreneur, 41 ans</p>
-                <div className="flex gap-1 justify-center text-[#C9A24D]">
-                  {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-current" />)}
-                </div>
-              </div>
+            {/* Left Side: Visual & Profile */}
+            <div className="md:w-2/5 relative bg-[#2C2F4A] text-white flex flex-col items-center justify-center p-8 md:p-12 text-center overflow-hidden shrink-0">
+               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
+               <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#2C2F4A]/50 to-transparent"></div>
+               
+               <div className="relative z-10">
+                 <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-[#C9A24D] p-1 mx-auto mb-6 shadow-2xl">
+                   <img 
+                     src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                     alt="Thomas" 
+                     className="w-full h-full object-cover rounded-full grayscale hover:grayscale-0 transition-all duration-700"
+                   />
+                 </div>
+                 
+                 <h3 className="text-3xl font-serif text-white mb-2">Thomas D.</h3>
+                 <p className="text-[#C9A24D] font-medium tracking-wider text-xs uppercase mb-6">Entrepreneur • 41 ans</p>
+                 
+                 <div className="flex gap-1 justify-center text-[#C9A24D] mb-8">
+                   {[1,2,3,4,5].map(i => <Star key={i} className="w-5 h-5 fill-current" />)}
+                 </div>
 
-              <div className="p-8 md:w-2/3 md:p-10 bg-white">
-                <div className="relative">
-                  <span className="absolute -top-6 -left-4 text-6xl text-[#C9A24D]/10 font-serif">"</span>
-                  <div className="space-y-6 text-[#2C2F4A]/80 leading-relaxed">
-                    <p className="font-serif text-xl text-[#2C2F4A] mb-4">
-                      "Je n'ai jamais lu quelque chose d'aussi juste sur moi-même."
-                    </p>
-                    <p>
-                      J'étais sceptique au début. Un "livre" sur moi ? Je pensais recevoir un horoscope glorifié. Mais dès la première page, j'ai été happé.
-                    </p>
-                    <p>
-                      Ce n'est pas juste une analyse froide de ma personnalité. L'IA a tissé une véritable histoire. Quand j'ai lu le passage sur mon "instabilité chronique" transformée en "génie foudroyant", j'ai eu les larmes aux yeux. J'ai compris que ce que je voyais comme un défaut était en fait ma plus grande arme, si j'apprenais à la maîtriser.
-                    </p>
-                    <p>
-                      <strong className="text-[#5B4B8A]">Ce livre m'a donné la permission d'être moi-même.</strong> Depuis que je l'ai lu, j'ai pris des décisions pour mon entreprise que je repoussais depuis des années. C'est bien plus qu'un livre, c'est un compagnon de route.
-                    </p>
-                  </div>
+                 <div className="text-white/60 text-xs font-light italic">
+                   "Une révélation inattendue."
+                 </div>
+               </div>
+            </div>
+
+            {/* Right Side: The Letter */}
+            <div className="md:w-3/5 p-8 md:p-12 bg-white overflow-y-auto relative">
+              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#C9A24D] to-[#5B4B8A]"></div>
+              
+              <div className="space-y-6 text-[#2C2F4A]/80 leading-relaxed font-light text-lg">
+                <div className="mb-8">
+                   <Feather className="w-8 h-8 text-[#C9A24D] mb-4 opacity-50" />
+                   <h4 className="font-serif text-2xl text-[#2C2F4A] leading-tight">
+                     "Je pensais me connaître, mais je n'avais lu que la préface."
+                   </h4>
+                </div>
+
+                <p>
+                  J'étais sceptique au début. Un "livre" sur moi ? Je m'attendais à un horoscope glorifié, un PDF générique rempli de phrases bateau.
+                </p>
+                <p>
+                  Mais dès la première page, j'ai été happé. Ce n'est pas juste une analyse froide. <strong className="text-[#5B4B8A] font-medium">L'équipe de "Votre Légende" a tissé une véritable histoire.</strong>
+                </p>
+                <p>
+                  Quand j'ai lu le passage sur mon "instabilité chronique" transformée en "génie foudroyant", j'ai eu les larmes aux yeux. J'ai compris que ce que je voyais comme un défaut était en fait ma plus grande arme.
+                </p>
+                
+                <div className="p-6 bg-[#FAF9F7] rounded-lg border-l-4 border-[#C9A24D] mt-8">
+                  <p className="text-[#2C2F4A] font-medium italic text-base">
+                    "Ce livre m'a donné la permission d'être moi-même. Depuis que je l'ai lu, j'ai pris des décisions que je repoussais depuis des années."
+                  </p>
                 </div>
               </div>
             </div>

@@ -52,9 +52,9 @@ function CheckoutContent() {
     ? PRICE_REPORT 
     : PRICE_BUNDLE + (paperOption ? PRICE_PAPER : 0) + ((bookLength - 100) / 100 * PRICE_PAGE_EXTENSION);
 
-  // Prix affiché dans la carte "Pack Héros" (inclut la longueur, mais pas l'option papier qui est un supplément)
-  const bundleDisplayPrice = PRICE_BUNDLE + ((bookLength - 100) / 100 * PRICE_PAGE_EXTENSION);
-  const bundleFullValue = 78 + ((bookLength - 100) / 100 * PRICE_PAGE_EXTENSION); // Prix barré dynamique
+  // Prix affiché dans la carte "Pack Héros" (inclut la longueur ET l'option papier si sélectionnée)
+  const bundleDisplayPrice = PRICE_BUNDLE + ((bookLength - 100) / 100 * PRICE_PAGE_EXTENSION) + (paperOption ? PRICE_PAPER : 0);
+  const bundleFullValue = 78 + ((bookLength - 100) / 100 * PRICE_PAGE_EXTENSION) + (paperOption ? PRICE_PAPER : 0); // Prix barré dynamique
 
   const handlePayment = () => {
     if (!deliveryInfo.email) {

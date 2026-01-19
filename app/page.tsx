@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import LandingPage from '../components/landing/LandingPage';
+import LandingPageHero from '@/components/landing/LandingPageHero';
 import OnboardingFlow from '@/components/onboarding/OnboardingFlow';
 import ReportView from '@/components/report/ReportView';
 import { UserData } from '@/lib/types';
@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#FAF9F7] text-[#2C2F4A]">
       {!hasStarted ? (
-        <LandingPage onStart={handleStart} />
+        <LandingPageHero onStart={handleStart} />
       ) : !userData ? (
         <OnboardingFlow onComplete={setUserData} />
       ) : (

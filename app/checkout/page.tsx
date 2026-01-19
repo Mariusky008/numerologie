@@ -130,9 +130,11 @@ function CheckoutContent() {
         throw new Error("Pas d'URL de redirection reçue");
       }
       
-    } catch (e) {
+    } catch (e: any) {
       console.error("Erreur checkout:", e);
-      alert("Une erreur est survenue lors de l'initialisation du paiement. Veuillez réessayer.");
+      // Afficher plus de détails sur l'erreur si possible
+      const errorMessage = e?.message || "Une erreur est survenue lors de l'initialisation du paiement.";
+      alert(`${errorMessage} Veuillez réessayer.`);
       setIsProcessing(false);
     }
   };

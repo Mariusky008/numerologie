@@ -7,6 +7,7 @@ export async function POST(request: Request) {
     const { orderInfo, userData, orderId } = body;
 
     if (!process.env.STRIPE_SECRET_KEY) {
+      console.error("STRIPE_SECRET_KEY is missing in env");
       return NextResponse.json(
         { error: "La clé Stripe n'est pas configurée sur le serveur." },
         { status: 500 }
@@ -98,10 +99,10 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ url: session.url });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Erreur Stripe:', error);
     return NextResponse.json(
-      { error: 'Erreur lors de la création de la session de paiement' },
+      { error: `Erreur lors de la création de la session de paiement: ${error?.message || 'Inconnue'}` },
       { status: 500 }
     );
   }

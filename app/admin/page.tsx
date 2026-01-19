@@ -8,7 +8,20 @@ export interface BookRequest {
   id: string;
   date: string;
   status: 'pending' | 'generating' | 'completed';
-  userData: UserData;
+  userData: UserData & {
+    plan?: 'report' | 'bundle';
+    totalPrice?: number;
+    bookLength?: number;
+    paperOption?: boolean;
+    reportPaperOption?: boolean;
+    delivery?: {
+      email: string;
+      address?: string;
+      city?: string;
+      zip?: string;
+      country?: string;
+    };
+  };
   reportResults: NumerologyResult;
   lifeDetails: {
     placesLived: string;
@@ -292,10 +305,35 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                         <Clock className="w-3 h-3" />
                         {new Date(req.date).toLocaleString()}
                       </div>
+                      
+                      {/* Order Info Badge */}
+                      {req.userData.plan && (
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border ${req.userData.plan === 'bundle' ? 'bg-[#78350f] text-white border-[#78350f]' : 'bg-white text-stone-500 border-stone-200'}`}>
+                            {req.userData.plan === 'bundle' ? 'Pack Héros' : 'Dossier Essentiel'}
+                          </span>
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 border border-green-200">
+                            {req.userData.totalPrice}€
+                          </span>
+                          {(req.userData.paperOption || req.userData.reportPaperOption) && (
+                             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700 border border-blue-200 flex items-center gap-1">
+                               <MapPin className="w-3 h-3" /> Livraison
+                             </span>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                   
-                  <div>
+                  <div className="text-right">
+                    {(req.userData.delivery?.address) && (
+                      <div className="mb-3 text-xs text-stone-500 text-right">
+                        <p className="font-bold text-stone-700">{req.userData.delivery.email}</p>
+                        <p>{req.userData.delivery.address}</p>
+                        <p>{req.userData.delivery.zip} {req.userData.delivery.city}</p>
+                        <p>{req.userData.delivery.country}</p>
+                      </div>
+                    )}
                     {req.status === 'completed' ? (
                       <span className="flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
                         <CheckCircle className="w-4 h-4" />

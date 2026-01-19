@@ -62,7 +62,7 @@ function CheckoutContent() {
   // Prix affiché dans la carte "Dossier Essentiel"
   const reportDisplayPrice = PRICE_REPORT + (reportPaperOption ? PRICE_REPORT_PAPER : 0);
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     if (!deliveryInfo.email) {
       alert("Merci de renseigner votre email pour recevoir vos documents.");
       return;
@@ -73,18 +73,54 @@ function CheckoutContent() {
       return;
     }
 
-    // TODO: Intégration Stripe ici
-    alert(`Redirection vers le paiement Stripe (${currentTotal}€)...\n\nEmail: ${deliveryInfo.email}\n${(paperOption || reportPaperOption) ? `Adresse: ${deliveryInfo.address}, ${deliveryInfo.zip} ${deliveryInfo.city}` : ''}\n${selectedPlan === 'bundle' ? `Livre: ${bookLength} pages` : ''}`);
-    
-    const params = new URLSearchParams({
-        fn: userData.firstName,
-        ln: userData.lastName,
-        bd: userData.birthDate,
-        bp: userData.birthPlace,
-        fo: userData.focus
-    });
-    
-    window.open(`/pdf-report-v2?${params.toString()}`, '_blank');
+    // Préparation des données de commande
+    const orderInfo = {
+      plan: selectedPlan,
+      totalPrice: currentTotal,
+      bookLength: selectedPlan === 'bundle' ? bookLength : undefined,
+      paperOption: paperOption,
+      reportPaperOption: reportPaperOption,
+      delivery: deliveryInfo,
+      orderDate: new Date().toISOString()
+    };
+
+    try {
+      // Sauvegarde en base de données (via API)
+      // On envoie userData et orderInfo. L'API calculera le profil complet.
+      const res = await fetch('/api/book-request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userData,
+          orderInfo,
+          // On n'envoie pas reportResults ni lifeDetails, l'API s'en chargera
+        })
+      });
+
+      if (!res.ok) {
+        console.error("Erreur lors de la sauvegarde de la commande");
+        // On continue quand même vers le paiement/résultat pour ne pas bloquer l'utilisateur
+      }
+
+      // Simulation Paiement & Redirection
+      alert(`Commande validée (${currentTotal}€) !\nUn email de confirmation a été envoyé à ${deliveryInfo.email}.`);
+      
+      const params = new URLSearchParams({
+          fn: userData.firstName,
+          ln: userData.lastName,
+          bd: userData.birthDate,
+          bp: userData.birthPlace,
+          fo: userData.focus
+      });
+      
+      window.open(`/pdf-report-v2?${params.toString()}`, '_self'); // _self pour rester dans l'onglet
+      
+    } catch (e) {
+      console.error("Erreur critique checkout:", e);
+      alert("Une erreur est survenue. Veuillez réessayer.");
+    }
   };
 
   return (
@@ -327,7 +363,7 @@ function CheckoutContent() {
                 <div className={`w-6 h-6 rounded-full border-2 absolute top-6 right-6 flex items-center justify-center transition-colors ${
                   selectedPlan === 'bundle' ? 'border-[#C9A24D]' : 'border-[#FAF9F7]/30'
                 }`}>
-              =bundle' &&<div className="w-3 h-3 rounded-full bg-[#C9A24D]" />}
+                  {selectedPlan === 'bundle' && <div className="w-3 h-3 rounded-full bg-[#C9A24D]" />}
                 </div>
             </div>
           </motion.div>

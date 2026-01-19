@@ -8,6 +8,20 @@ export interface UserData {
   birthTime?: string; // HH:MM
   birthPlace?: string; // Ville/Pays
   focus: UserFocus; // Priorité actuelle
+  
+  // Order Info (Optional - merged for storage)
+  plan?: 'report' | 'bundle';
+  totalPrice?: number;
+  bookLength?: number;
+  paperOption?: boolean;
+  reportPaperOption?: boolean;
+  delivery?: {
+    email: string;
+    address?: string;
+    city?: string;
+    zip?: string;
+    country?: string;
+  };
 }
 
 export interface InclusionGrid {

@@ -7,10 +7,18 @@ Cette application est une plateforme complète de Numérologie et d'Astrologie g
 
 ### 2.1 Flux Utilisateur (Onboarding)
 *   **Collecte de Données** : Prénoms, Nom de Naissance, Date/Heure/Lieu de Naissance.
-*   **Focus Utilisateur** : Choix d'un domaine prioritaire (Amour, Carrière, Mission, Spiritualité) pour orienter l'interprétation.
+*   **Focus Utilisateur** : (Désactivé en V2.4) Le choix explicite a été retiré pour fluidifier l'expérience. L'analyse couvre désormais tous les domaines par défaut.
 *   **Calcul Temps Réel** : Génération instantanée du thème lors de la validation.
 
-### 2.2 Rapport Web Interactif
+### 2.2 Landing Page Hero (Nouveau Design)
+*   **Architecture** : Composant `LandingPageHero.tsx` remplaçant l'ancienne page d'accueil.
+*   **Ambiance** : Thème mystique avec animation d'ailes d'ange (`framer-motion`) et particules.
+*   **Interactions** :
+    *   *Bouton "Voir un extrait"* : Ouvre une modale simulant la lecture d'une page du livre (Chapitre 1).
+    *   *Bouton "Thomas parle de son livre"* : Ouvre une modale de témoignage premium avec photo et mise en page éditoriale (Lettre à droite, Profil à gauche).
+*   **Responsive** : Design adaptatif mobile/desktop, y compris pour les modales complexes.
+
+### 2.3 Rapport Web Interactif
 *   **Tableau de Bord** : Affichage des nombres clés (Chemin de Vie, Expression).
 *   **Visualisations** :
     *   *Radar de Personnalité* : Comparaison Expression / Élan Spirituel / Moi Intime / Chemin de Vie.
@@ -19,12 +27,12 @@ Cette application est une plateforme complète de Numérologie et d'Astrologie g
 *   **Astrologie** : Signe Solaire, Ascendant, Planète Dominante (calculés via éphémérides).
 *   **Météo Vibratoire** : Prévisions journalières et mensuelles.
 
-### 2.3 Rapport PDF (Génération Dynamique)
+### 2.4 Rapport PDF (Génération Dynamique)
 *   **Moteur de Rendu** : `FullReportV2` génère un rapport imprimable de haute qualité (A4).
 *   **Contenu** : 40+ pages incluant l'analyse détaillée, les graphiques vectoriels et les prévisions sur 12 mois.
-*   **Design** : Charte graphique "Hero" (Crème `#FAF9F7`, Bleu Nuit `#2C2F4A`, Or `#C9A24D`).
+*   **Design** : Charte graphique "Roman de Vie" (Crème `#FAF9F7`, Bleu Nuit `#2C2F4A`, Or `#C9A24D`).
 
-### 2.4 Monétisation & Checkout
+### 2.5 Monétisation & Checkout
 *   **Tunnel de Vente** : Page `/checkout` dédiée.
 *   **Options** :
     *   Rapport PDF Digital (29€).
@@ -101,4 +109,4 @@ Le texte est assemblé dynamiquement selon la structure :
 *   **Persistence** : LocalStorage (pour l'état session) / URL Params (pour le partage).
 
 ---
-*Document généré le 18 Janvier 2026 - Version 2.4*
+*Document généré le 19 Janvier 2026 - Version 2.5*

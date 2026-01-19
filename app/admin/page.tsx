@@ -34,6 +34,9 @@ export interface BookRequest {
     dreams: string;
     mentors: string;
     dailyRituals: string;
+    bookTheme?: string;
+    worstOrdeal?: string;
+    bonusAnecdote?: string;
     otherNotes?: string;
   };
 }
@@ -159,6 +162,10 @@ Prévisions Carrière (10 ans):
 ${req.reportResults.careerForecast ? req.reportResults.careerForecast.map(f => `- ${f.year}: AP ${f.personalYear}`).join('\n') : 'Non calculé'}
 
 --- ÉLÉMENTS BIOGRAPHIQUES (SOUVENIRS) ---
+Thème du Livre: ${req.lifeDetails.bookTheme || 'Non spécifié'}
+Pire Galère (Héros humain): ${req.lifeDetails.worstOrdeal || '-'}
+Anecdote Bonus: ${req.lifeDetails.bonusAnecdote || '-'}
+
 Lieux de vie: ${req.lifeDetails.placesLived}
 Déménagements: ${req.lifeDetails.moves}
 Vie Sentimentale: ${req.lifeDetails.relationships}
@@ -173,6 +180,7 @@ Notes Personnelles: ${req.lifeDetails.otherNotes || '-'}
 
 --- CONSIGNE ---
 Écris le premier chapitre d'un roman à la troisième personne centré sur ce personnage.
+Le genre littéraire souhaité est : ${req.lifeDetails.bookTheme || 'Roman Initiatique'}.
 L'axe principal du récit doit être : ${req.userData.focus || 'Le développement personnel'}.
 Utilise les cycles et les défis pour structurer l'intrigue et les éléments biographiques pour donner de la chair à l'histoire.
 Le ton doit être inspirant, mystérieux et profondément psychologique.
@@ -401,6 +409,33 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                   <div className="space-y-4">
                     <h4 className="font-serif font-bold text-[#78350f] border-b border-[#d97706]/20 pb-2">Éléments Biographiques</h4>
                     <div className="space-y-3 text-sm">
+                      {req.lifeDetails.bookTheme && (
+                        <div className="bg-[#d97706]/10 p-2 rounded border border-[#d97706]/20">
+                           <span className="flex items-center gap-2 font-bold text-[#78350f] mb-1">
+                             <BookOpen className="w-3 h-3" /> Thème
+                           </span>
+                           <p className="text-[#78350f]">{req.lifeDetails.bookTheme}</p>
+                        </div>
+                      )}
+                      
+                      {req.lifeDetails.worstOrdeal && (
+                        <div>
+                          <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
+                             <AlertTriangle className="w-3 h-3 text-red-500" /> Pire Galère
+                          </span>
+                          <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.worstOrdeal}</p>
+                        </div>
+                      )}
+
+                      {req.lifeDetails.bonusAnecdote && (
+                        <div>
+                          <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
+                             <Sparkles className="w-3 h-3 text-amber-500" /> Anecdote Bonus
+                          </span>
+                          <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.bonusAnecdote}</p>
+                        </div>
+                      )}
+
                       <div>
                         <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                           <MapPin className="w-3 h-3" /> Lieux

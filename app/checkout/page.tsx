@@ -168,119 +168,127 @@ function CheckoutContent() {
           <motion.div 
             whileHover={{ y: -5 }}
             onClick={() => setSelectedPlan('bundle')}
-            className={`relative p-8 md:p-10 rounded-2xl border-2 transition-all cursor-pointer flex flex-col overflow-hidden ${
+            className={`relative rounded-r-2xl rounded-l-md border-l-8 transition-all cursor-pointer flex flex-col overflow-hidden ${
               selectedPlan === 'bundle' 
-                ? 'border-[#C9A24D] bg-white shadow-2xl ring-4 ring-[#C9A24D]/10' 
-                : 'border-[#EFEDE9] bg-white/60 hover:border-[#C9A24D]/50 hover:bg-white'
+                ? 'border-l-[#1a1c2e] bg-[#2C2F4A] shadow-[20px_20px_60px_-15px_rgba(44,47,74,0.6)] ring-4 ring-[#C9A24D]/20 transform scale-[1.02]' 
+                : 'border-l-[#8FA6A0] bg-[#2C2F4A] opacity-90 hover:opacity-100 hover:scale-[1.01]'
             }`}
           >
+            {/* BOOK TEXTURE OVERLAY */}
+            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
+            
+            {/* GOLDEN BORDER FRAME */}
+            <div className="absolute inset-4 border border-[#C9A24D]/30 rounded-lg pointer-events-none"></div>
+
             {/* Badge Recommended */}
-            <div className="absolute top-0 right-0 bg-[#C9A24D] text-white text-[10px] font-bold px-4 py-1.5 rounded-bl-xl uppercase tracking-widest shadow-sm">
+            <div className="absolute top-0 right-0 bg-[#C9A24D] text-[#2C2F4A] text-[10px] font-bold px-4 py-1.5 rounded-bl-xl uppercase tracking-widest shadow-sm z-10">
               Recommandé
             </div>
 
-            <div className="flex justify-between items-start mb-8">
-              <div>
-                <h3 className="text-2xl font-serif text-[#2C2F4A] mb-1 flex items-center gap-2">
-                  Pack Héros
-                  <Star className="w-4 h-4 fill-[#C9A24D] text-[#C9A24D]" />
-                </h3>
-                <p className="text-sm text-[#C9A24D] uppercase tracking-wider font-bold">Dossier + Roman de Vie</p>
-              </div>
-              <div className="text-right">
-                 <div className="text-lg text-[#2C2F4A]/40 line-through decoration-red-300 font-medium mb-1 mr-2">{bundleFullValue}€</div>
-                 <div className="text-6xl font-serif text-[#C9A24D] font-bold">{bundleDisplayPrice}€</div>
-              </div>
-            </div>
+            <div className="relative z-10 p-8 md:p-10 flex flex-col h-full">
+                <div className="flex justify-between items-start mb-8">
+                  <div>
+                    <h3 className="text-2xl font-serif text-[#FAF9F7] mb-1 flex items-center gap-2">
+                      Pack Héros
+                      <Star className="w-4 h-4 fill-[#C9A24D] text-[#C9A24D]" />
+                    </h3>
+                    <p className="text-sm text-[#C9A24D] uppercase tracking-wider font-bold">Dossier + Roman de Vie</p>
+                  </div>
+                  <div className="text-right">
+                     <div className="text-lg text-[#FAF9F7]/40 line-through decoration-red-400 font-medium mb-1 mr-2">{bundleFullValue}€</div>
+                     <div className="text-6xl font-serif text-[#C9A24D] font-bold drop-shadow-md">{bundleDisplayPrice}€</div>
+                  </div>
+                </div>
 
-            <div className="flex-grow space-y-6 mb-8">
-               <p className="text-[#2C2F4A]/80 leading-relaxed text-sm">
-                 L'expérience ultime. Votre analyse technique transformée en une épopée littéraire dont vous êtes le protagoniste.
-               </p>
-               
-               <div className="bg-[#FAF9F7] p-4 rounded-xl border border-[#EFEDE9]">
-                 <ul className="space-y-4">
-                  <FeatureItem label="INCLUS : Le Dossier Essentiel (Analyse Technique)" highlight />
-                  <li className="flex items-start gap-3 text-sm">
-                    <BookOpen className="w-5 h-5 text-[#C9A24D] shrink-0" />
-                    <span className="font-bold text-[#5B4B8A]">Le Roman de votre Vie (E-Book)</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-xs text-[#2C2F4A]/70 ml-8">
-                    <span className="list-disc">100 pages personnalisées</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-xs text-[#2C2F4A]/70 ml-8">
-                    <span className="list-disc">Structure narrative héroïque basée sur vos cycles</span>
-                  </li>
-                 </ul>
-
-                 {/* BOOK LENGTH SELECTOR */}
-                 <div className="mt-6 pt-4 border-t border-[#EFEDE9]">
-                   <div className="flex justify-between items-center mb-3">
-                     <span className="text-xs font-bold text-[#5B4B8A] uppercase tracking-wider">Longueur de l'épopée</span>
-                     <span className="text-xs text-[#C9A24D] font-bold">
-                       {bookLength === 100 ? 'Inclus' : `+${((bookLength - 100) / 100 * 10)}€`}
-                     </span>
-                   </div>
-                   <div className="grid grid-cols-3 gap-2">
-                     {[100, 200, 300].map((length) => (
-                       <button
-                         key={length}
-                         onClick={(e) => { e.stopPropagation(); setBookLength(length as any); }}
-                         className={`py-2 rounded-lg text-xs font-bold border transition-all ${
-                           bookLength === length 
-                             ? 'bg-[#C9A24D] text-white border-[#C9A24D]' 
-                             : 'bg-white text-[#2C2F4A]/60 border-[#EFEDE9] hover:border-[#C9A24D]/50'
-                         }`}
-                       >
-                         {length} Pages
-                       </button>
-                     ))}
-                   </div>
-                   <p className="text-[10px] text-[#2C2F4A]/50 mt-2 italic text-center">
-                     Plus le livre est long, plus l'intrigue et les détails de vos vies antérieures sont développés.
+                <div className="flex-grow space-y-6 mb-8">
+                   <p className="text-[#FAF9F7]/80 leading-relaxed text-sm italic border-l-2 border-[#C9A24D] pl-4">
+                     "L'expérience ultime. Votre analyse technique transformée en une épopée littéraire dont vous êtes le protagoniste."
                    </p>
-                 </div>
-               </div>
-            </div>
+                   
+                   <div className="bg-[#FAF9F7]/5 p-4 rounded-xl border border-[#FAF9F7]/10 backdrop-blur-sm">
+                     <ul className="space-y-4">
+                      <FeatureItem label="INCLUS : Le Dossier Essentiel (Analyse Technique)" highlight lightMode />
+                      <li className="flex items-start gap-3 text-sm">
+                        <BookOpen className="w-5 h-5 text-[#C9A24D] shrink-0" />
+                        <span className="font-bold text-[#FAF9F7]">Le Roman de votre Vie (E-Book)</span>
+                      </li>
+                      <li className="flex items-start gap-3 text-xs text-[#FAF9F7]/60 ml-8">
+                        <span className="list-disc">100 pages personnalisées</span>
+                      </li>
+                      <li className="flex items-start gap-3 text-xs text-[#FAF9F7]/60 ml-8">
+                        <span className="list-disc">Structure narrative héroïque basée sur vos cycles</span>
+                      </li>
+                     </ul>
 
-            {/* UPSELL PAPIER */}
-            {selectedPlan === 'bundle' && (
-               <motion.div 
-                 initial={{ opacity: 0, height: 0 }}
-                 animate={{ opacity: 1, height: 'auto' }}
-                 className="mt-4 pt-6 border-t border-[#EFEDE9]"
-               >
-                 <div 
-                   onClick={(e) => {
-                     e.stopPropagation();
-                     setPaperOption(!paperOption);
-                   }}
-                   className={`flex items-start gap-4 p-4 rounded-xl border transition-all ${
-                     paperOption ? 'border-[#C9A24D] bg-[#FFFBF0]' : 'border-[#EFEDE9] hover:border-[#C9A24D]/30 bg-white'
-                   }`}
-                 >
-                   <div className={`w-5 h-5 rounded border mt-1 flex items-center justify-center shrink-0 transition-colors ${
-                     paperOption ? 'border-[#C9A24D] bg-[#C9A24D]' : 'border-stone-300 bg-white'
-                   }`}>
-                     {paperOption && <Check className="w-3 h-3 text-white" />}
-                   </div>
-                   <div className="flex-1">
-                     <div className="flex justify-between items-center mb-1">
-                        <span className="font-bold text-[#2C2F4A] text-sm">Recevoir le Livre Papier</span>
-                        <span className="font-serif text-[#C9A24D] font-bold text-2xl">+29€</span>
+                     {/* BOOK LENGTH SELECTOR */}
+                     <div className="mt-6 pt-4 border-t border-[#FAF9F7]/10">
+                       <div className="flex justify-between items-center mb-3">
+                         <span className="text-xs font-bold text-[#FAF9F7]/80 uppercase tracking-wider">Longueur de l'épopée</span>
+                         <span className="text-xs text-[#C9A24D] font-bold">
+                           {bookLength === 100 ? 'Inclus' : `+${((bookLength - 100) / 100 * 10)}€`}
+                         </span>
+                       </div>
+                       <div className="grid grid-cols-3 gap-2">
+                         {[100, 200, 300].map((length) => (
+                           <button
+                             key={length}
+                             onClick={(e) => { e.stopPropagation(); setBookLength(length as any); }}
+                             className={`py-2 rounded-lg text-xs font-bold border transition-all ${
+                               bookLength === length 
+                                 ? 'bg-[#C9A24D] text-[#2C2F4A] border-[#C9A24D]' 
+                                 : 'bg-[#FAF9F7]/5 text-[#FAF9F7]/60 border-[#FAF9F7]/10 hover:border-[#C9A24D]/50 hover:text-[#FAF9F7]'
+                             }`}
+                           >
+                             {length} Pages
+                           </button>
+                         ))}
+                       </div>
+                       <p className="text-[10px] text-[#FAF9F7]/40 mt-2 italic text-center">
+                         Plus le livre est long, plus l'intrigue et les détails de vos vies antérieures sont développés.
+                       </p>
                      </div>
-                     <p className="text-xs text-[#2C2F4A]/60 leading-relaxed">
-                       Un objet d'exception. Couverture rigide, papier bouffant premium, dorure à chaud. Livré chez vous.
-                     </p>
                    </div>
-                 </div>
-               </motion.div>
-            )}
+                </div>
 
-            <div className={`w-6 h-6 rounded-full border-2 absolute top-6 right-6 flex items-center justify-center transition-colors ${
-              selectedPlan === 'bundle' ? 'border-[#C9A24D]' : 'border-stone-300'
-            }`}>
-              {selectedPlan === 'bundle' && <div className="w-3 h-3 rounded-full bg-[#C9A24D]" />}
+                {/* UPSELL PAPIER */}
+                {selectedPlan === 'bundle' && (
+                   <motion.div 
+                     initial={{ opacity: 0, height: 0 }}
+                     animate={{ opacity: 1, height: 'auto' }}
+                     className="mt-4 pt-6 border-t border-[#FAF9F7]/10"
+                   >
+                     <div 
+                       onClick={(e) => {
+                         e.stopPropagation();
+                         setPaperOption(!paperOption);
+                       }}
+                       className={`flex items-start gap-4 p-4 rounded-xl border transition-all ${
+                         paperOption ? 'border-[#C9A24D] bg-[#C9A24D]/10' : 'border-[#FAF9F7]/10 hover:border-[#C9A24D]/30 bg-[#FAF9F7]/5'
+                       }`}
+                     >
+                       <div className={`w-5 h-5 rounded border mt-1 flex items-center justify-center shrink-0 transition-colors ${
+                         paperOption ? 'border-[#C9A24D] bg-[#C9A24D]' : 'border-[#FAF9F7]/30 bg-transparent'
+                       }`}>
+                         {paperOption && <Check className="w-3 h-3 text-white" />}
+                       </div>
+                       <div className="flex-1">
+                         <div className="flex justify-between items-center mb-1">
+                            <span className="font-bold text-[#FAF9F7] text-sm">Recevoir le Livre Papier</span>
+                            <span className="font-serif text-[#C9A24D] font-bold text-2xl">+29€</span>
+                         </div>
+                         <p className="text-xs text-[#FAF9F7]/60 leading-relaxed">
+                           Un objet d'exception. Couverture rigide, papier bouffant premium, dorure à chaud. Livré chez vous.
+                         </p>
+                       </div>
+                     </div>
+                   </motion.div>
+                )}
+
+                <div className={`w-6 h-6 rounded-full border-2 absolute top-6 right-6 flex items-center justify-center transition-colors ${
+                  selectedPlan === 'bundle' ? 'border-[#C9A24D]' : 'border-[#FAF9F7]/30'
+                }`}>
+                  {selectedPlan === 'bundle' && <div className="w-3 h-3 rounded-full bg-[#C9A24D]" />}
+                </div>
             </div>
           </motion.div>
 

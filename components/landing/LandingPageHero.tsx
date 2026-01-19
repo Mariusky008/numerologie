@@ -328,31 +328,6 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                <p className="text-center text-xs text-[#2C2F4A]/50 mt-4 italic">
                  * Exemple basé sur le profil de Thomas. Votre livre sera unique.
                </p>
-               
-               {/* Page intérieure preview (Tangibilité) */}
-               <div className="absolute -bottom-10 -right-10 w-48 h-64 bg-white shadow-xl rounded-lg border border-stone-200 rotate-12 p-5 block md:block">
-                  <div className="w-full h-full overflow-hidden font-serif">
-                    <div className="flex justify-between text-[4px] text-stone-400 mb-2 border-b border-stone-100 pb-1">
-                      <span>CHAPITRE I</span>
-                      <span>14</span>
-                    </div>
-                    <div className="text-[5px] text-justify leading-relaxed text-stone-600 space-y-2 font-serif">
-                        <p>
-                          <span className="text-3xl float-left mr-1 mt-[-4px] text-[#5B4B8A] font-bold">L</span>
-                          ’air de la pièce semblait s’être figé, comme si le temps lui-même attendait une permission pour reprendre sa course. Thomas fixa le reflet dans le miroir, mais ce n'était plus tout à fait le sien. Ce matin-là, les lignes de son visage semblaient dessiner une carte qu'il avait longtemps refusé de lire.
-                        </p>
-                        <p>
-                          Il se souvint de ce vieux secret qu'il portait depuis l'enfance : cette sensation d'être né sous un ciel qui exigeait trop de lui. Le nombre 14 n'était pas qu'une simple date sur son état civil ; c'était un rythme, une oscillation constante entre le besoin de tout détruire et l'envie de tout construire. Pour d'autres, c'était un mardi ordinaire. Pour lui, c'était le code source de son instabilité chronique et de son génie foudroyant.
-                        </p>
-                        <p>
-                          Soudain, une lueur dorée traversa la fenêtre, illuminant une vieille boussole posée sur son bureau. Thomas comprit alors ce que les cycles tentaient de lui dire depuis des mois. Il arrivait au bout de la Neuvième Terre. Tout ce qu'il avait bâti ces dernières années s'effritait, non pas par échec, mais pour laisser place à la suite. Les dragons qu'il avait combattus — ce doute persistant sur sa légitimité, cette peur de l'ombre — n'étaient en réalité que des gardiens. Ils ne voulaient pas le dévorer, ils vérifiaient s'il était prêt pour la Grande Transition.
-                        </p>
-                        <p className="blur-[1px] opacity-70">
-                          Le manuscrit de sa destinée était ouvert sur la table. La page était blanche, mais sous la lumière, des lettres de feu commençaient à apparaître, traçant son nom d'une manière qu'il n'avait jamais vue. Le récit ne faisait que commencer, et pour la première fois, Thomas ne craignait plus de tourner la page. Il savait enfin que son nom n'était pas un hasard. C'était un ordre de mission.
-                        </p>
-                      </div>
-                  </div>
-               </div>
             </div>
           </div>
         </div>
@@ -498,39 +473,6 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               quote="C'est étrange et magique. On sait que c'est une fiction, mais ça résonne tellement fort avec la réalité que ça en devient une thérapie."
               author="Elena, 29 ans"
             />
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Testimonial - Long Form Light */}
-      <section className="py-24 px-4 bg-[#FAF9F7] border-y border-[#EFEDE9] relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-60"></div>
-        <div className="max-w-4xl mx-auto relative z-10">
-          <div className="flex flex-col md:flex-row gap-12 items-start">
-            <div className="md:w-1/3 text-center md:text-left">
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-[#C9A24D]/30 mx-auto md:mx-0 overflow-hidden mb-6 shadow-xl">
-                <div className="w-full h-full bg-stone-100 flex items-center justify-center text-4xl">👨‍💼</div>
-              </div>
-              <h3 className="text-2xl font-serif text-[#2C2F4A] mb-2">Thomas</h3>
-              <p className="text-[#C9A24D] font-bold text-sm tracking-widest uppercase mb-4">Entrepreneur, 41 ans</p>
-              <div className="flex gap-1 justify-center md:justify-start text-[#C9A24D]">
-                {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-current" />)}
-              </div>
-            </div>
-            
-            <div className="md:w-2/3">
-              <div className="relative">
-                <span className="absolute -top-8 -left-4 text-8xl text-[#C9A24D]/20 font-serif">"</span>
-                <blockquote className="text-lg md:text-xl text-[#2C2F4A]/80 leading-relaxed space-y-6 font-light">
-                  <p>
-                    <span className="text-[#5B4B8A] font-medium">J'étais sceptique au début.</span> Un "livre" sur moi ? Mais dès la première page, j'ai été happé. C'est bien écrit, c'est profond, et ça ne ressemble à rien de ce que j'ai lu.
-                  </p>
-                  <p>
-                    <span className="text-[#C9A24D] italic">C'est mon histoire, mais sublimée.</span> Voir mes obstacles transformés en quête épique m'a redonné le pouvoir sur ma propre vie.
-                  </p>
-                </blockquote>
-              </div>
-            </div>
           </div>
         </div>
       </section>

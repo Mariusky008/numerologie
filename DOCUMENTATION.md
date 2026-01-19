@@ -67,23 +67,30 @@ L'algorithme détecte et préserve :
     *   *Émotionnel* : 2, 3, 6
     *   *Intuitif* : 7 (et Maîtres Nombres)
 
-### 3.5 Cycles Temporels
-*   **Année Personnelle** : Jour + Mois + Année en cours (réduit).
-*   **Mois Personnel** : Année Personnelle + Mois en cours.
-*   **Jour Personnel** : Mois Personnel + Jour en cours.
-*   **Transits (Lettres de Passage)** : Calcul de la lettre active pour l'âge actuel sur les plans Physique (Prénom), Mental (Nom) et Spirituel (Total).
+### 3.6 Algorithmes Avancés
+*   **Défis de Vie** : Calcul des 4 défis majeurs (Mineur 1, Mineur 2, Majeur, Supplémentaire) basés sur les soustractions de la date de naissance.
+*   **Cycles de Vie** : Calcul des 3 grands cycles (Formatif, Productif, Moisson).
+*   **Ponts (Bridges)** : Analyse du lien entre le Chemin de Vie et l'Expression pour harmoniser les conflits.
+*   **Prévisions Carrière** : Projection sur 10 ans des années personnelles pour la planification stratégique.
+*   **Vibration du Lieu** : Analyse numérologique des noms de ville pour la relocalisation.
 
 ## 4. Moteur Astrologique (`lib/astro/engine.ts`)
 
 Utilise la librairie `astronomy-engine` pour des calculs astronomiques de précision (NASA/JPL ephemerides).
 
 ### 4.1 Thème Natal (Real Astro)
-*   **Entrées** : Date, Heure, Latitude, Longitude (via géocodage).
-*   **Calculs** :
-    *   *Ascendant (AC)* & *Milieu du Ciel (MC)* : Calcul du Temps Sidéral Local (LST).
-    *   *Positions Planétaires* : Vecteurs géocentriques pour Soleil, Lune, Mercure... Pluton.
-    *   *Maisons* : Calcul de la maison astrologique pour chaque planète.
-    *   *Rétrogradation* : Détection du mouvement rétrograde par comparaison différentielle (-1h).
+*   **Entrées** : Date, Heure, Latitude, Longitude (via géocodage Google/Mapbox).
+*   **Calculs Géolocalisés** :
+    *   *Temps Sidéral Local (LST)* : Ajusté précisément selon la longitude exacte.
+    *   *Ascendant (AC)* : Calcul trigonométrique basé sur l'intersection de l'écliptique et de l'horizon Est local.
+    *   *Milieu du Ciel (MC)* : Point de culmination méridien local.
+*   **Positions Planétaires** :
+    *   Vecteurs géocentriques pour : Soleil, Lune, Mercure, Vénus, Mars, Jupiter, Saturne, Uranus, Neptune, Pluton.
+    *   Conversion en longitude écliptique (0-360°).
+*   **Système de Domification** :
+    *   Utilisation du système de **Maisons Égales** (Equal Houses) basé sur l'Ascendant pour définir les 12 domaines de vie.
+*   **Rétrogradation** :
+    *   Détection du mouvement apparent par calcul différentiel (position T vs T-1h).
 
 ### 4.2 Transits Actuels
 Calcul de la position actuelle des planètes pour fournir la "Météo Astrale" du jour.

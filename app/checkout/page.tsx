@@ -26,6 +26,8 @@ function CheckoutContent() {
   
   // Option papier (disponible uniquement pour le bundle)
   const [paperOption, setPaperOption] = useState(false);
+  // Longueur du livre (100, 200, 300 pages)
+  const [bookLength, setBookLength] = useState<100 | 200 | 300>(100);
 
   // Formulaire de livraison
   const [deliveryInfo, setDeliveryInfo] = useState({
@@ -44,10 +46,11 @@ function CheckoutContent() {
   const PRICE_REPORT = 29;
   const PRICE_BUNDLE = 49;
   const PRICE_PAPER = 29;
+  const PRICE_PAGE_EXTENSION = 10; // +10€ pour chaque palier de 100 pages supp
 
   const currentTotal = selectedPlan === 'report' 
     ? PRICE_REPORT 
-    : PRICE_BUNDLE + (paperOption ? PRICE_PAPER : 0);
+    : PRICE_BUNDLE + (paperOption ? PRICE_PAPER : 0) + ((bookLength - 100) / 100 * PRICE_PAGE_EXTENSION);
 
   const handlePayment = () => {
     if (!deliveryInfo.email) {
@@ -61,7 +64,7 @@ function CheckoutContent() {
     }
 
     // TODO: Intégration Stripe ici
-    alert(`Redirection vers le paiement Stripe (${currentTotal}€)...\n\nEmail: ${deliveryInfo.email}\n${paperOption ? `Adresse: ${deliveryInfo.address}, ${deliveryInfo.zip} ${deliveryInfo.city}` : ''}`);
+    alert(`Redirection vers le paiement Stripe (${currentTotal}€)...\n\nEmail: ${deliveryInfo.email}\n${paperOption ? `Adresse: ${deliveryInfo.address}, ${deliveryInfo.zip} ${deliveryInfo.city}` : ''}\nLivre: ${bookLength} pages`);
     
     const params = new URLSearchParams({
         fn: userData.firstName,
@@ -260,7 +263,7 @@ function CheckoutContent() {
                    <div className="flex-1">
                      <div className="flex justify-between items-center mb-1">
                         <span className="font-bold text-[#2C2F4A] text-sm">Recevoir le Livre Papier</span>
-                        <span className="font-serif text-[#C9A24D] font-bold text-lg">+29€</span>
+                        <span className="font-serif text-[#C9A24D] font-bold text-2xl">+29€</span>
                      </div>
                      <p className="text-xs text-[#2C2F4A]/60 leading-relaxed">
                        Un objet d'exception. Couverture rigide, papier bouffant premium, dorure à chaud. Livré chez vous.

@@ -34,6 +34,7 @@ import interpretations from '@/lib/numerology/interpretations.json';
 import { Download, BookOpen } from 'lucide-react';
 import BookCreationModal from './BookCreationModal';
 import BookBackCover from './BookBackCover';
+import WahooRevelation from './WahooRevelation';
 import { trackEvent } from '@/lib/analytics';
 
 import { useRouter } from 'next/navigation';
@@ -200,6 +201,9 @@ export default function ReportView({ userData }: ReportViewProps) {
             Focus : {userData.focus}
           </div>
         </header>
+
+        {/* WAHOO REVELATION SECTION - Added for high impact */}
+        <WahooRevelation userData={userData} results={results} />
 
         {/* Main Numbers Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

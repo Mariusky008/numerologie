@@ -29,40 +29,93 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
       {/* Hero Section Cinematic Light */}
       <header className="relative pt-20 pb-32 md:pt-32 md:pb-48 px-4 overflow-hidden">
         {/* Subtle Background */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-[#FAF9F7] via-transparent to-[#FAF9F7] z-10"></div>
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-60"></div>
-          {/* Glowing Orb Heartbeat - INTENSIFIED */}
+          
+          {/* MYSTIC BOOK BACKGROUND ANIMATION - PULSING WITH COLORS */}
           <motion.div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[100px] mix-blend-screen"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] pointer-events-none mix-blend-multiply"
+            animate={{ 
+              opacity: [0, 0.4, 0],
+              scale: [0.9, 1.05, 0.9]
+            }}
+            transition={{ 
+              duration: 4, // Synchronized with orb pulse
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+          >
+             <svg viewBox="0 0 800 600" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+               <defs>
+                 <linearGradient id="bookGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                   <stop offset="0%" stopColor="#C9A24D" stopOpacity="0.6" />
+                   <stop offset="50%" stopColor="#5B4B8A" stopOpacity="0.3" />
+                   <stop offset="100%" stopColor="#C9A24D" stopOpacity="0.6" />
+                 </linearGradient>
+                 <filter id="glowBlur" x="-50%" y="-50%" width="200%" height="200%">
+                   <feGaussianBlur stdDeviation="15" result="coloredBlur" />
+                   <feMerge>
+                     <feMergeNode in="coloredBlur" />
+                     <feMergeNode in="SourceGraphic" />
+                   </feMerge>
+                 </filter>
+               </defs>
+               
+               <g filter="url(#glowBlur)">
+                 {/* Left Page */}
+                 <path 
+                   d="M 400 500 C 280 530, 80 470, 50 350 L 50 150 C 80 270, 280 330, 400 300" 
+                   fill="url(#bookGlow)" 
+                   stroke="#C9A24D" 
+                   strokeWidth="2"
+                 />
+                 
+                 {/* Right Page */}
+                 <path 
+                   d="M 400 500 C 520 530, 720 470, 750 350 L 750 150 C 720 270, 520 330, 400 300" 
+                   fill="url(#bookGlow)" 
+                   stroke="#C9A24D" 
+                   strokeWidth="2"
+                 />
+                 
+                 {/* Spine Light */}
+                 <path
+                   d="M 400 300 L 400 500"
+                   stroke="#FFF"
+                   strokeWidth="3"
+                   strokeOpacity="0.6"
+                   strokeLinecap="round"
+                 />
+               </g>
+             </svg>
+          </motion.div>
+          
+          {/* Glowing Orb Heartbeat (kept but subtle behind) */}
+          <motion.div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[100px] mix-blend-screen opacity-30"
             animate={{
-              scale: [0.8, 1.5, 0.8],
-              opacity: [0.4, 0.8, 0.4],
-              backgroundColor: [
-                "#FCD34D", // Bright Amber
-                "#FB923C", // Bright Orange
-                "#EF4444", // Bright Red
-                "#FCD34D"  // Loop
-              ]
+              scale: [0.8, 1.2, 0.8],
+              opacity: [0.2, 0.5, 0.2],
+              backgroundColor: ["#FCD34D", "#FB923C", "#FCD34D"]
             }}
             transition={{
-              duration: 3,
+              duration: 4, // Synchronized
               repeat: Infinity,
-              ease: "easeInOut",
-              times: [0, 0.33, 0.66, 1]
+              ease: "easeInOut"
             }}
           />
         </div>
 
-        <div className="max-w-6xl mx-auto relative z-20">
+        <div className="max-w-4xl mx-auto relative z-20 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1 }}
-            className="flex flex-col md:flex-row gap-12 items-center"
+            className="flex flex-col items-center justify-center"
           >
-            {/* Left Column: Main Value Proposition */}
-            <div className="flex-1 text-center md:text-left">
+            {/* Main Value Proposition */}
+            <div className="w-full">
               <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[#5B4B8A]/5 text-[#5B4B8A] text-xs font-bold tracking-widest uppercase mb-8 border border-[#5B4B8A]/20">
                 <Feather className="w-3 h-3" />
                 Numérologie & Astrologie - Édition personnalisée
@@ -73,79 +126,18 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5B4B8A] to-[#C9A24D] italic">VOTRE histoire intérieure</span>
               </h1>
               
-              <p className="text-xl text-[#2C2F4A]/80 font-light mb-8 leading-relaxed">
-                Vous recevez votre rapport complet de numérologie & astrologie, puis sa version ultime : un livre personnalisé qui transforme l'analyse en récit vivant.
+              <p className="text-xl text-[#2C2F4A]/80 font-light mb-12 leading-relaxed max-w-3xl mx-auto">
+                Vous recevez votre <strong>rapport complet</strong> de numérologie & astrologie, puis sa version ultime : <strong>un livre personnalisé</strong> qui transforme l'analyse en récit vivant.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center gap-4 mt-8">
+              <div className="flex justify-center mt-8">
                 <button 
                   onClick={onStart}
-                  className="px-8 py-4 bg-[#5B4B8A] text-white rounded-full font-bold text-lg shadow-[0_10px_40px_-10px_rgba(91,75,138,0.4)] hover:bg-[#6A5FA8] transition-all transform hover:scale-105 flex items-center gap-2"
+                  className="px-10 py-5 bg-[#5B4B8A] text-white rounded-full font-bold text-xl shadow-[0_10px_40px_-10px_rgba(91,75,138,0.4)] hover:bg-[#6A5FA8] transition-all transform hover:scale-105 flex items-center gap-3"
                 >
                   Recevoir mon édition maintenant
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-6 h-6" />
                 </button>
-              </div>
-            </div>
-
-            {/* Right Column: Offer Breakdown Card */}
-            <div className="flex-1 w-full max-w-md">
-              <div className="bg-white/80 backdrop-blur-sm border border-[#EFEDE9] rounded-2xl p-8 shadow-xl relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#5B4B8A] to-[#C9A24D]"></div>
-                
-                <h3 className="text-lg font-serif text-[#2C2F4A] mb-6 flex items-center gap-2">
-                  <BookOpen className="w-5 h-5 text-[#C9A24D]" />
-                  Ce que comprend votre commande
-                </h3>
-
-                <div className="space-y-6">
-                  {/* Part 1: Report */}
-                  <div className="space-y-3 opacity-70">
-                    <div className="flex items-center gap-2 font-bold text-[#5B4B8A]">
-                      <div className="w-2 h-2 rounded-full bg-[#5B4B8A]"></div>
-                      Rapport complet de numérologie
-                    </div>
-                    <ul className="pl-6 space-y-1 text-sm text-[#2C2F4A]/70">
-                      <li>• Analyse technique</li>
-                      <li>• Données et interprétations</li>
-                      <li>• Consultation ponctuelle</li>
-                    </ul>
-                  </div>
-
-                  {/* Divider */}
-                  <div className="h-px bg-[#EFEDE9] w-full"></div>
-
-                  {/* Part 2: Book (Highlighted) */}
-                  <div className="space-y-3 relative">
-                    <div className="absolute -left-4 top-0 bottom-0 w-1 bg-[#C9A24D] rounded-r-full"></div>
-                    <div className="flex items-center gap-2 font-bold text-[#2C2F4A]">
-                      <div className="w-2 h-2 rounded-full bg-[#C9A24D]"></div>
-                      Rapport + Livre personnalisé
-                      <span className="text-[10px] bg-[#C9A24D]/10 text-[#C9A24D] px-2 py-0.5 rounded-full uppercase tracking-wide">Inclus</span>
-                    </div>
-                    <ul className="pl-6 space-y-2 text-sm text-[#2C2F4A]">
-                      <li className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-[#C9A24D]" />
-                        Analyse complète incluse
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-[#C9A24D]" />
-                        Mise en récit fluide et incarnée
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <Check className="w-4 h-4 text-[#C9A24D]" />
-                        Compréhension globale et durable
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="mt-8 pt-6 border-t border-[#EFEDE9] text-center">
-                  <p className="text-sm font-serif text-[#5B4B8A] italic">
-                    "Vous ne choisissez pas entre le rapport et le livre. <br/>
-                    <strong>Vous recevez les deux.</strong>"
-                  </p>
-                </div>
               </div>
             </div>
           </motion.div>

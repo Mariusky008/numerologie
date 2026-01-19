@@ -134,7 +134,13 @@ function CheckoutContent() {
       console.error("Erreur checkout:", e);
       // Afficher plus de détails sur l'erreur si possible
       const errorMessage = e?.message || "Une erreur est survenue lors de l'initialisation du paiement.";
-      alert(`${errorMessage} Veuillez réessayer.`);
+      
+      // Si l'erreur est liée à la clé Stripe, afficher un message plus clair pour l'admin
+      if (errorMessage.includes("clé Stripe") || errorMessage.includes("500")) {
+         alert(`Erreur de configuration Paiement: ${errorMessage}\n\nVérifiez que la clé STRIPE_SECRET_KEY est bien configurée dans les variables d'environnement Vercel.`);
+      } else {
+         alert(`${errorMessage} Veuillez réessayer.`);
+      }
       setIsProcessing(false);
     }
   };

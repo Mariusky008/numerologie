@@ -205,6 +205,34 @@ function CheckoutContent() {
                     <span className="list-disc">Structure narrative héroïque basée sur vos cycles</span>
                   </li>
                  </ul>
+
+                 {/* BOOK LENGTH SELECTOR */}
+                 <div className="mt-6 pt-4 border-t border-[#EFEDE9]">
+                   <div className="flex justify-between items-center mb-3">
+                     <span className="text-xs font-bold text-[#5B4B8A] uppercase tracking-wider">Longueur de l'épopée</span>
+                     <span className="text-xs text-[#C9A24D] font-bold">
+                       {bookLength === 100 ? 'Inclus' : `+${((bookLength - 100) / 100 * 10)}€`}
+                     </span>
+                   </div>
+                   <div className="grid grid-cols-3 gap-2">
+                     {[100, 200, 300].map((length) => (
+                       <button
+                         key={length}
+                         onClick={(e) => { e.stopPropagation(); setBookLength(length as any); }}
+                         className={`py-2 rounded-lg text-xs font-bold border transition-all ${
+                           bookLength === length 
+                             ? 'bg-[#C9A24D] text-white border-[#C9A24D]' 
+                             : 'bg-white text-[#2C2F4A]/60 border-[#EFEDE9] hover:border-[#C9A24D]/50'
+                         }`}
+                       >
+                         {length} Pages
+                       </button>
+                     ))}
+                   </div>
+                   <p className="text-[10px] text-[#2C2F4A]/50 mt-2 italic text-center">
+                     Plus le livre est long, plus l'intrigue et les détails de vos vies antérieures sont développés.
+                   </p>
+                 </div>
                </div>
             </div>
 

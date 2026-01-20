@@ -359,7 +359,7 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
           <div className="text-sm text-[#2C2F4A]/60 mb-6 italic bg-[#FAF9F7] p-4 rounded-lg border border-[#EFEDE9]">
             <p className="font-bold mb-2">Méthode de Calcul :</p>
             <p className="mb-2">Réduction du Jour de naissance + réduction du Mois de naissance + réduction de l’Année en cours, puis réduction finale.</p>
-            <p className="font-bold mt-2">Exemple :</p>
+            <p className="font-bold mt-2">Exemple (pour une naissance le 14 décembre) :</p>
             <ul className="list-disc pl-5 space-y-1">
               <li>Jour 14 → 1 + 4 = 5</li>
               <li>Mois 12 → 1 + 2 = 3</li>

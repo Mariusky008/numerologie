@@ -27,7 +27,7 @@ import {
 } from '@/lib/numerology/engine';
 import { fetchNameAnalysis, NameData } from '@/lib/numerology/db_etymology';
 import { calculerThemeAstral, calculerTransits as calculerTransitsAstro } from '@/lib/astro/engine';
-import { PLANET_INFLUENCES, ZODIAC_DETAILS } from '@/lib/numerology/interpretations-astro-geo';
+import { PLANET_INFLUENCES, ZODIAC_DETAILS, HOUSE_MEANINGS } from '@/lib/numerology/interpretations-astro-geo';
 import PersonalityRadar from './PersonalityRadar';
 import InclusionGridViz from './InclusionGridViz';
 import interpretations from '@/lib/numerology/interpretations.json';
@@ -184,6 +184,7 @@ export default function ReportView({ userData }: ReportViewProps) {
   // Use zodiac info based on real zodiac if available
   const zodiacInfoKey = realZodiac ? realZodiac.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : zodiacKey;
   const zodiacInfo = zodiacInfoKey ? ZODIAC_DETAILS[zodiacInfoKey] : null;
+  const houseInfo = realHouse ? HOUSE_MEANINGS[realHouse as number] : null;
 
   const pathTitle = results.advancedProfile?.pathData?.titre || `Chemin de Vie ${results.lifePath}`;
 
@@ -415,6 +416,26 @@ export default function ReportView({ userData }: ReportViewProps) {
              <h3 className="text-2xl font-serif text-[#2C2F4A] mb-6 flex items-center gap-3">
                <span className="text-[#C9A24D]">VII.</span> Architecture Astrale
              </h3>
+
+             {/* Pedagogie Maisons */}
+             <div className="mb-8 bg-[#FAF9F7] p-6 rounded-xl border border-[#C9A24D]/20">
+               <h4 className="font-serif text-[#2C2F4A] text-lg mb-2">Comprendre les Maisons Astrologiques</h4>
+               <p className="text-[#2C2F4A]/80 text-sm mb-4 leading-relaxed">
+                 Les signes et planètes décrivent <strong>comment</strong> vous fonctionnez. Les maisons indiquent <strong>où</strong> cette énergie s’exprime concrètement. C'est la carte de vos domaines de vie.
+               </p>
+               <details className="group">
+                 <summary className="cursor-pointer text-[#C9A24D] text-sm font-bold flex items-center gap-2">
+                   <span>Voir les 12 domaines de vie</span>
+                   <span className="group-open:rotate-180 transition-transform">▼</span>
+                 </summary>
+                 <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-[#2C2F4A]/70">
+                   {Object.entries(HOUSE_MEANINGS).map(([num, h]) => (
+                     <div key={num}><span className="font-bold text-[#5B4B8A]">{h.title} :</span> {h.keywords}</div>
+                   ))}
+                 </div>
+               </details>
+             </div>
+
              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Zodiac */}
                 <div className="bg-[#FAF9F7] p-6 rounded-xl border border-[#C9A24D]/10">
@@ -426,7 +447,14 @@ export default function ReportView({ userData }: ReportViewProps) {
                        {results.realAstro && (
                          <div className="text-xs text-[#C9A24D] mt-1 space-y-1">
                            <div>Ascendant : <span className="font-bold">{ascendant}</span></div>
-                           {realHouse && <div>Maison {realHouse}</div>}
+                           {houseInfo && (
+                             <div className="mt-2 border-t border-[#C9A24D]/20 pt-2">
+                               <div className="font-bold text-[#2C2F4A] mb-1">Soleil en {houseInfo.title}</div>
+                               <div className="text-[#2C2F4A]/70 italic leading-snug">
+                                 "{houseInfo.sunContext}"
+                               </div>
+                             </div>
+                           )}
                          </div>
                        )}
                      </div>

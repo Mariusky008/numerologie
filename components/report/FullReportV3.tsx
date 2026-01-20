@@ -57,6 +57,23 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
   const zodiacInfo = zodiacInfoKey ? ZODIAC_DETAILS[zodiacInfoKey] : null;
   const houseInfo = realHouse ? HOUSE_MEANINGS[realHouse as number] : null;
 
+  // Helper for example calculation
+  const [birthYear, birthMonth, birthDay] = userData.birthDate.split('-').map(Number);
+  const exampleYear = new Date().getFullYear(); // Current year for example
+  
+  const reduce = (n: number) => {
+    let sum = n;
+    while (sum > 9) {
+      sum = sum.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+    }
+    return sum;
+  };
+  
+  const dayReduced = reduce(birthDay);
+  const monthReduced = reduce(birthMonth);
+  const yearReduced = reduce(exampleYear);
+  const totalReduced = reduce(dayReduced + monthReduced + yearReduced);
+
   return (
     <div className="w-full bg-[#FAF9F7] text-[#2C2F4A] font-sans">
       
@@ -359,12 +376,12 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
           <div className="text-sm text-[#2C2F4A]/60 mb-6 italic bg-[#FAF9F7] p-4 rounded-lg border border-[#EFEDE9]">
             <p className="font-bold mb-2">Méthode de Calcul :</p>
             <p className="mb-2">Réduction du Jour de naissance + réduction du Mois de naissance + réduction de l’Année en cours, puis réduction finale.</p>
-            <p className="font-bold mt-2">Exemple (pour une naissance le 14 décembre) :</p>
+            <p className="font-bold mt-2">Exemple avec votre date de naissance :</p>
             <ul className="list-disc pl-5 space-y-1">
-              <li>Jour 14 → 1 + 4 = 5</li>
-              <li>Mois 12 → 1 + 2 = 3</li>
-              <li>Année 2026 → 2 + 0 + 2 + 6 = 10 → 1</li>
-              <li>Total : 5 + 3 + 1 = 9 (Année Personnelle 9)</li>
+              <li>Jour {birthDay} → {dayReduced}</li>
+              <li>Mois {birthMonth} → {monthReduced}</li>
+              <li>Année {exampleYear} → {reduce(Math.floor(exampleYear/1000) + Math.floor((exampleYear%1000)/100) + Math.floor((exampleYear%100)/10) + exampleYear%10)} → {yearReduced}</li>
+              <li>Total : {dayReduced} + {monthReduced} + {yearReduced} = {dayReduced + monthReduced + yearReduced} → {totalReduced} (Année Personnelle {totalReduced})</li>
             </ul>
           </div>
           <div className="space-y-4">

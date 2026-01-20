@@ -148,8 +148,10 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
         <div className="text-7xl md:text-9xl font-serif text-[#C9A24D] mb-4">{results.subconsciousSelf}</div>
         
         <p className="text-base md:text-xl max-w-2xl mx-auto text-[#2C2F4A]">
-          Avec un résultat de {results.subconsciousSelf}, vous avez une base émotionnelle {results.subconsciousSelf >= 7 ? "très stable" : "réactive"}.
-          Cela détermine votre capacité à garder votre sang-froid face aux imprévus de la vie.
+          Avec un résultat de {results.subconsciousSelf}, votre réaction face aux imprévus est {results.subconsciousSelf >= 7 ? "empreinte de recul et de maturité" : "instinctive et rapide"}.
+          {results.subconsciousSelf >= 7 
+            ? "Vous avez cette capacité naturelle à ne pas vous laisser submerger par l'émotion immédiate." 
+            : "Vous ressentez les choses intensément et réagissez souvent dans l'instant, avec spontanéité."}
         </p>
       </PageContainer>
 

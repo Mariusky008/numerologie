@@ -31,11 +31,15 @@ import { PLANET_INFLUENCES, ZODIAC_DETAILS } from '@/lib/numerology/interpretati
 import PersonalityRadar from './PersonalityRadar';
 import InclusionGridViz from './InclusionGridViz';
 import interpretations from '@/lib/numerology/interpretations.json';
-import { Download, BookOpen } from 'lucide-react';
+import { Download, BookOpen, Check } from 'lucide-react';
 import BookCreationModal from './BookCreationModal';
 import BookBackCover from './BookBackCover';
 import WahooRevelation from './WahooRevelation';
 import { trackEvent } from '@/lib/analytics';
+import { PEDAGOGY_CONTENT } from '@/lib/numerology/modules/pedagogy';
+import { TRAINING_30D } from '@/lib/numerology/modules/training30d';
+import { analyzeNameSignature } from '@/lib/numerology/modules/anthroponymy';
+import { generateDecadeForecast } from '@/lib/numerology/modules/decade';
 
 import { useRouter } from 'next/navigation';
 
@@ -48,6 +52,10 @@ export default function ReportView({ userData }: ReportViewProps) {
   const [results, setResults] = useState<NumerologyResult | null>(null);
   const [etymology, setEtymology] = useState<NameData | null>(null);
   const [showBookModal, setShowBookModal] = useState(false);
+
+  // New: Decade Forecast Calculation
+  const decadeForecast = userData ? generateDecadeForecast(userData.birthDate) : [];
+  const nameSignature = userData ? analyzeNameSignature(userData.firstName + " " + userData.lastName) : null;
 
   useEffect(() => {
     // Check for payment success parameter to auto-open modal
@@ -188,6 +196,30 @@ export default function ReportView({ userData }: ReportViewProps) {
 
       <div className="max-w-4xl mx-auto space-y-12 relative z-10">
         
+        {/* SECTION 0: PÉDAGOGIE & MODE D'EMPLOI */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm"
+        >
+          <h2 className="text-2xl font-serif text-[#2C2F4A] mb-4 flex items-center gap-2">
+            <span className="text-[#C9A24D]">★</span> {PEDAGOGY_CONTENT.intro.title}
+          </h2>
+          <div className="text-[#2C2F4A]/80 leading-relaxed whitespace-pre-line mb-6">
+            {PEDAGOGY_CONTENT.intro.content}
+          </div>
+          <div className="bg-[#FAF9F7] p-4 rounded-xl border border-[#C9A24D]/20">
+            <ul className="space-y-2">
+              {PEDAGOGY_CONTENT.intro.points_cles.map((point, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm">
+                   <Check className="w-4 h-4 text-[#C9A24D] shrink-0 mt-0.5" />
+                   <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+
         {/* Header */}
         <header className="text-center space-y-4 pt-8">
           <motion.h1 
@@ -217,6 +249,55 @@ export default function ReportView({ userData }: ReportViewProps) {
             Focus : {userData.focus}
           </div>
         </header>
+
+        {/* SECTION ANTHROPONYMIE */}
+      {nameSignature && (
+        <motion.div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm">
+           <h3 className="text-xl font-serif text-[#2C2F4A] mb-4">Signature Vibratoire du Nom</h3>
+           
+           {/* Si on a trouvé l'étymologie, on l'affiche en grand */}
+           {nameSignature.etymology && (
+             <div className="mb-8 p-6 bg-[#2C2F4A] rounded-xl text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A24D]/10 rounded-full blur-2xl"></div>
+                <div className="relative z-10">
+                  <div className="text-xs uppercase tracking-widest text-[#C9A24D] mb-2">Origine & Sens Caché</div>
+                  <h4 className="text-2xl font-serif mb-2">{userData.firstName}</h4>
+                  <div className="flex flex-wrap gap-4 text-sm mb-4 opacity-80">
+                    <span className="bg-white/10 px-3 py-1 rounded-full">{nameSignature.etymology.origin}</span>
+                    <span className="italic">"{nameSignature.etymology.meaning}"</span>
+                  </div>
+                  {nameSignature.etymology.spiritual && (
+                    <div className="pt-4 border-t border-white/10">
+                      <p className="text-sm leading-relaxed italic text-[#C9A24D]">
+                        ✨ Dimension Spirituelle : {nameSignature.etymology.spiritual}
+                      </p>
+                    </div>
+                  )}
+                </div>
+             </div>
+           )}
+
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+             <div className="bg-[#FAF9F7] p-4 rounded-lg text-center">
+               <div className="text-xs uppercase tracking-widest text-[#8FA6A0] mb-1">Initiale</div>
+               <div className="text-4xl font-serif text-[#C9A24D]">{nameSignature.firstLetter}</div>
+               <p className="text-xs text-[#2C2F4A]/60 mt-2">{nameSignature.initialMeaning}</p>
+             </div>
+             <div className="bg-[#FAF9F7] p-4 rounded-lg text-center">
+               <div className="text-xs uppercase tracking-widest text-[#8FA6A0] mb-1">Type de Signature</div>
+               <div className="text-xl font-bold text-[#2C2F4A] mt-2">{nameSignature.signatureType}</div>
+               <p className="text-xs text-[#2C2F4A]/60 mt-2">
+                 {nameSignature.vowelsCount} voyelles / {nameSignature.consonantsCount} consonnes
+               </p>
+             </div>
+             <div className="bg-[#FAF9F7] p-4 rounded-lg text-center">
+               <div className="text-xs uppercase tracking-widest text-[#8FA6A0] mb-1">Longueur</div>
+               <div className="text-xl font-bold text-[#2C2F4A] mt-2">{nameSignature.length} Lettres</div>
+               <p className="text-xs text-[#2C2F4A]/60 mt-2">Vibration de l'amplitude</p>
+             </div>
+           </div>
+        </motion.div>
+      )}
 
         {/* WAHOO REVELATION SECTION - Added for high impact */}
         <WahooRevelation userData={userData} results={results} />
@@ -621,6 +702,46 @@ export default function ReportView({ userData }: ReportViewProps) {
              </div>
            </motion.div>
         )}
+
+        {/* SECTION PROJECTION 10 ANS */}
+        <motion.div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm">
+          <h3 className="text-2xl font-serif text-[#2C2F4A] mb-6">Projection Décennale (2026-2035)</h3>
+          <div className="space-y-4">
+            {decadeForecast.map((yearData) => (
+              <div key={yearData.year} className="flex items-center gap-4 p-4 border-b border-[#EFEDE9] last:border-0 hover:bg-[#FAF9F7] transition-colors rounded-lg">
+                <div className="w-16 text-center shrink-0">
+                  <div className="text-xl font-bold text-[#2C2F4A]">{yearData.year}</div>
+                  <div className="text-xs text-[#C9A24D] font-bold uppercase">Année {yearData.personalYear}</div>
+                </div>
+                <div className="flex-1">
+                  <div className="font-bold text-[#2C2F4A] text-sm mb-1">{yearData.theme}</div>
+                  <div className="text-xs text-[#2C2F4A]/70">{yearData.focus}</div>
+                </div>
+                <div className="hidden md:block w-1/3 text-right">
+                  <div className="text-xs italic text-[#8FA6A0]">"{yearData.mantra}"</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* SECTION TRAINING 30 JOURS */}
+        <motion.div className="bg-[#2C2F4A] text-white p-8 rounded-2xl shadow-lg border border-[#5B4B8A]">
+          <h3 className="text-2xl font-serif text-[#FAF9F7] mb-6 flex items-center gap-2">
+             <span className="text-[#C9A24D]">⚡</span> Programme d'Intégration 30 Jours
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {TRAINING_30D.slice(0, 6).map((day, i) => (
+              <div key={i} className="bg-white/5 p-4 rounded-lg border border-white/10 hover:border-[#C9A24D]/50 transition-colors">
+                <div className="text-xs text-[#C9A24D] font-bold uppercase mb-1">Jour {day.day} • {day.theme}</div>
+                <p className="text-sm text-[#FAF9F7]/80">{day.action}</p>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-6">
+             <p className="text-xs text-[#FAF9F7]/50 italic">Débloquez les 30 jours complets dans le Dossier PDF Premium.</p>
+          </div>
+        </motion.div>
 
         {/* CTA */}
         <div className="flex flex-col items-center gap-12 pt-8 pb-12">

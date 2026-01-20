@@ -446,8 +446,11 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
         {/* 12. TRAINING 30 JOURS (CONTENU PAYANT) */}
         <div className="bg-[#2C2F4A] text-white p-8 rounded-2xl shadow-lg border border-[#5B4B8A]">
           <h3 className="text-2xl font-serif text-[#FAF9F7] mb-6 flex items-center gap-2">
-             <span className="text-[#C9A24D]">⚡</span> Programme d'Intégration 30 Jours
+             <span className="text-[#C9A24D]">⚡</span> Programme d'Intégration (Extrait)
           </h3>
+          <p className="text-[#FAF9F7]/70 mb-6 italic text-sm">
+            Voici les étapes clés de votre transformation. Ce programme est conçu pour intégrer vos nouvelles énergies jour après jour.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {TRAINING_30D.map((day, i) => (
               <div key={i} className="bg-white/5 p-4 rounded-lg border border-white/10 hover:border-[#C9A24D]/50 transition-colors">

@@ -75,6 +75,81 @@ export const ZODIAC_DETAILS: Record<string, { element: string, quality: string, 
   }
 };
 
+export const HOUSE_MEANINGS: Record<number, { title: string, keywords: string, description: string, sunContext: string }> = {
+  1: { 
+    title: "Maison 1", 
+    keywords: "Identité, Apparence, Élan", 
+    description: "Le domaine de l'affirmation de soi, de l'image que vous projetez et de votre manière d'initier les choses.",
+    sunContext: "Le Soleil en Maison 1 place votre identité au centre de tout. Vous êtes ici pour vous découvrir vous-même et vous affirmer."
+  },
+  2: { 
+    title: "Maison 2", 
+    keywords: "Ressources, Valeurs, Sécurité", 
+    description: "Le domaine de vos acquis, de votre argent, de vos talents innés et de ce qui vous donne un sentiment de sécurité.",
+    sunContext: "Le Soleil en Maison 2 met l'accent sur la construction de votre sécurité matérielle et la valorisation de vos talents personnels."
+  },
+  3: { 
+    title: "Maison 3", 
+    keywords: "Communication, Apprentissage, Entourage", 
+    description: "Le domaine des échanges, des études courtes, des frères et sœurs et de votre environnement immédiat.",
+    sunContext: "Le Soleil en Maison 3 illumine votre besoin de communiquer, d'apprendre et de connecter les gens autour de vous."
+  },
+  4: { 
+    title: "Maison 4", 
+    keywords: "Racines, Foyer, Intimité", 
+    description: "Le domaine de la famille, des origines, de votre habitat et de votre monde intérieur privé.",
+    sunContext: "Le Soleil en Maison 4 indique que votre réalisation passe par vos racines, votre foyer et la sécurité émotionnelle de votre clan."
+  },
+  5: { 
+    title: "Maison 5", 
+    keywords: "Créativité, Amour, Plaisir", 
+    description: "Le domaine de l'expression personnelle, des enfants, des amours, des loisirs et de la joie de vivre.",
+    sunContext: "Le Soleil en Maison 5 vous pousse à briller par votre créativité, à exprimer votre amour et à célébrer la vie."
+  },
+  6: { 
+    title: "Maison 6", 
+    keywords: "Quotidien, Santé, Service", 
+    description: "Le domaine du travail quotidien, des habitudes, de l'hygiène de vie et de l'utilité concrète.",
+    sunContext: "Le Soleil en Maison 6 trouve son sens dans le service, le perfectionnement de soi et l'organisation du quotidien."
+  },
+  7: { 
+    title: "Maison 7", 
+    keywords: "Relationnel, Contrats, Couple", 
+    description: "Le domaine de l'autre, du mariage, des associations et de la manière dont vous interagissez en duo.",
+    sunContext: "Le Soleil en Maison 7 indique que vous vous réalisez pleinement à travers vos relations, partenariats et le miroir de l'autre."
+  },
+  8: { 
+    title: "Maison 8", 
+    keywords: "Transformation, Mystère, Crises", 
+    description: "Le domaine des métamorphoses, de la sexualité, de l'argent des autres, de l'occulte et des renaissances.",
+    sunContext: "Le Soleil en Maison 8 vous invite à explorer les profondeurs de l'existence, à transformer ce qui doit l'être et à renaître."
+  },
+  9: { 
+    title: "Maison 9", 
+    keywords: "Expansion, Philosophie, Voyage", 
+    description: "Le domaine de la quête de sens, des études supérieures, de la spiritualité et des horizons lointains.",
+    sunContext: "Le Soleil en Maison 9 vous pousse vers l'aventure, la sagesse et l'élargissement constant de votre conscience."
+  },
+  10: { 
+    title: "Maison 10", 
+    keywords: "Vocation, Carrière, Statut", 
+    description: "Le domaine de la réussite sociale, de la mission de vie publique, de la reconnaissance et de l'autorité.",
+    sunContext: "Le Soleil en Maison 10 met l'accent sur la vocation, l'élévation, la reconnaissance, la mission publique et le besoin de construire une trajectoire visible et cohérente."
+  },
+  11: { 
+    title: "Maison 11", 
+    keywords: "Projets, Amis, Futur", 
+    description: "Le domaine des espoirs, des groupes, des réseaux, des amitiés et de votre vision pour l'avenir.",
+    sunContext: "Le Soleil en Maison 11 indique que votre réalisation passe par le collectif, les projets d'avenir et l'innovation sociale."
+  },
+  12: { 
+    title: "Maison 12", 
+    keywords: "Inconscient, Retrait, Spiritualité", 
+    description: "Le domaine de l'âme, des épreuves secrètes, de la guérison, de la solitude et de la dissolution de l'ego.",
+    sunContext: "Le Soleil en Maison 12 vous invite à vous tourner vers l'intérieur, à servir une cause plus grande et à explorer la spiritualité."
+  }
+};
+
 export const PLACE_VIBRATIONS: Record<number, string> = {
   1: "Ce lieu vibre d'une énergie de commencement, d'individualité et d'ambition. C'est un endroit idéal pour entreprendre, se lancer en solo ou prendre un nouveau départ. L'atmosphère y est dynamique, parfois rapide, favorisant l'autonomie.",
   2: "Ce lieu porte une vibration de collaboration, de calme et de diplomatie. C'est un endroit propice aux couples, aux partenariats et à l'écoute. L'énergie y est douce, favorisant la patience et les détails plutôt que la vitesse.",

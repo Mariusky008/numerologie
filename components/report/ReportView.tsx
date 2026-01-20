@@ -616,30 +616,6 @@ export default function ReportView({ userData }: ReportViewProps) {
         {/* CTA */}
         <div className="flex flex-col items-center gap-12 pt-8 pb-12">
           
-          {/* Step 1: PDF */}
-          <div className="text-center space-y-4">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                onClick={() => {
-                  trackEvent('download_click');
-                  const params = new URLSearchParams({
-                    fn: userData.firstName,
-                    ln: userData.lastName,
-                    bd: userData.birthDate,
-                    bp: userData.birthPlace || '',
-                    fo: userData.focus,
-                    origin: 'download'
-                  });
-                  router.push(`/checkout?${params.toString()}`);
-                }}
-                className="flex items-center gap-3 px-8 py-4 bg-[#5B4B8A] text-white rounded-full hover:bg-[#6A5FA8] transition-all shadow-lg shadow-[#5B4B8A]/30 transform hover:scale-105"
-              >
-                <span>🔓</span>
-                <span>Débloquer mon Dossier Numérologique / Astrologique</span>
-              </button>
-            </div>
-          </div>
-
           {/* Separator */}
           <div className="w-full flex items-center gap-4 max-w-md opacity-50">
             <div className="h-px bg-[#2C2F4A] flex-1"></div>

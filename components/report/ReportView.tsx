@@ -190,6 +190,15 @@ export default function ReportView({ userData }: ReportViewProps) {
           >
             {userData.firstName} {userData.lastName}
           </motion.h1>
+
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-[#2C2F4A]/60 font-serif italic"
+          >
+            Né(e) le {userData.birthDate} à {userData.birthPlace} {userData.birthTime && `• ${userData.birthTime}`}
+          </motion.div>
+
           <div className="flex items-center justify-center gap-4 text-[#5B4B8A] text-sm tracking-widest uppercase font-bold">
             <span>Chemin {results.lifePath}</span>
             <span>•</span>

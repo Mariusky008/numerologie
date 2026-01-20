@@ -39,6 +39,12 @@ export default function Part1Intro({ userData, results }: { userData: UserData, 
           {userData.firstName} <br className="hidden md:block" />
           <span className="text-[#C9A24D] block md:inline mt-2 md:mt-0">{userData.lastName}</span>
         </h1>
+
+        <div className="text-base md:text-lg text-[#2C2F4A]/70 mb-6 font-serif italic">
+           Né(e) le {userData.birthDate} {userData.birthTime && `à ${userData.birthTime}`} <br/>
+           à {userData.birthPlace}
+        </div>
+
         <div className="w-16 md:w-24 h-1 bg-[#C9A24D] mx-auto mb-6 md:mb-8" />
         <h2 className="text-lg md:text-2xl font-light tracking-[0.2em] md:tracking-[0.3em] uppercase text-[#8FA6A0] mb-8 md:mb-12">
           L'Odyssée Numérologique

@@ -24,7 +24,7 @@ export default function PersonalityRadar({ data }: PersonalityRadarProps) {
   const chartData = [
     { subject: 'Exp.', fullSubject: 'Expression', A: data.expression, fullMark: 9 },
     { subject: 'Âme', fullSubject: 'Élan Spirituel', A: data.soulUrge, fullMark: 9 },
-    { subject: 'Moi', fullSubject: 'Moi Intime', A: data.personality, fullMark: 9 },
+    { subject: 'Image', fullSubject: 'Image Sociale', A: data.personality, fullMark: 9 },
     { subject: 'Chemin', fullSubject: 'Chemin de Vie', A: data.lifePath, fullMark: 9 },
   ];
 

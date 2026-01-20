@@ -112,7 +112,7 @@ export default function Part4Focus({ userData, results }: { userData: UserData, 
              </div>
              <div className="bg-green-50 p-4 rounded-lg border border-green-200 flex gap-3">
                <div className="w-6 h-6 rounded-full bg-green-200 text-green-800 flex items-center justify-center font-bold text-xs flex-shrink-0">3</div>
-               <p className="text-[#2C2F4A] text-xs md:text-sm">Écoutez votre petite voix intérieure (Moi Intime {results.personality}).</p>
+               <p className="text-[#2C2F4A] text-xs md:text-sm">Soignez votre rayonnement (Image Sociale {results.personality}).</p>
              </div>
           </div>
         </div>

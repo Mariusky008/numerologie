@@ -183,15 +183,15 @@ export default function Part2Incarnation({ userData, results }: { userData: User
         </div>
       </PageContainer>
 
-      {/* PAGE 16: MOI INTIME */}
+      {/* PAGE 16: IMAGE SOCIALE */}
       <PageContainer className="p-4 md:p-16">
         <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8 md:mb-12 border-b-2 border-[#C9A24D] pb-4 inline-block">
-          Le Moi Intime {results.personality}
+          L'Image Sociale {results.personality}
         </h2>
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
            <div className="w-full md:w-1/3 text-center">
              <div className="text-8xl md:text-9xl font-serif text-[#2C2F4A]">{results.personality}</div>
-             <div className="mt-4 text-[#C9A24D] uppercase tracking-widest">Image Sociale</div>
+             <div className="mt-4 text-[#C9A24D] uppercase tracking-widest">Rayonnement</div>
            </div>
            <div className="w-full md:w-2/3 prose text-[#2C2F4A]">
              <h3 className="text-xl md:text-2xl font-serif text-[#C9A24D] mb-4">{persContent.title}</h3>

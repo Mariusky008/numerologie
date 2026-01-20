@@ -71,7 +71,7 @@ export default function KeyNumbersSection({ results, userData, areCardsLocked = 
           />
           
           <NumberCard 
-            title="Moi Intime"
+            title="Image Sociale"
             number={results.personality}
             description={persContent.desc}
             keywords={persContent.keywords.slice(0, 3)}

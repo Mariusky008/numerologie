@@ -21,10 +21,10 @@ export default function MentionsLegales() {
             Le présent site, accessible à l’URL www.romandevie.com (le « Site »), est édité par :
           </p>
           <p className="mt-2">
-            <strong>Jean-Philippe [NOM]</strong><br />
-            Résidant au [ADRESSE COMPLETE]<br />
+            <strong>Jean-Philippe Roth</strong><br />
+            Résidant au 7 rue Saint Pierre, 40100 Dax<br />
             De nationalité Française (France)<br />
-            Né(e) le [DATE DE NAISSANCE]
+            Né le 08/02/1971
           </p>
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">2. Hébergement</h2>
@@ -34,13 +34,13 @@ export default function MentionsLegales() {
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">3. Directeur de publication</h2>
           <p>
-            Le Directeur de la publication du Site est Jean-Philippe [NOM].
+            Le Directeur de la publication du Site est Jean-Philippe Roth.
           </p>
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">4. Nous contacter</h2>
           <p>
             Par email : contact@romandevie.com<br />
-            Par courrier : [ADRESSE POSTALE]
+            Par courrier : 7 rue saint Pierre, 40100 Dax
           </p>
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">5. Données personnelles</h2>

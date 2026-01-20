@@ -18,7 +18,7 @@ export default function CGU() {
 
       <h2>3. Propriété intellectuelle</h2>
       <p>
-        Les marques, logos, signes ainsi que tout le contenu du site (textes, images, son, algorithmes de calcul...) font l'objet d'une protection par le Code de la propriété intellectuelle et plus particulièrement par le droit d'auteur.
+        Les marques, logos, signes ainsi que tout le contenu du site (textes, images, son, méthode de calcul...) font l'objet d'une protection par le Code de la propriété intellectuelle et plus particulièrement par le droit d'auteur.
       </p>
       <p>
         L'Utilisateur sollicite l'autorisation préalable du site pour toute reproduction, publication, copie des différents contenus. Il s'engage à une utilisation des contenus du site dans un cadre strictement privé, toute utilisation à des fins commerciales et publicitaires est strictement interdite.

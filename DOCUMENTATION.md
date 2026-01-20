@@ -21,7 +21,7 @@ Cette application est une plateforme complète de Numérologie et d'Astrologie g
 ### 2.3 Rapport Web Interactif
 *   **Tableau de Bord** : Affichage des nombres clés (Chemin de Vie, Expression).
 *   **Visualisations** :
-    *   *Radar de Personnalité* : Comparaison Expression / Élan Spirituel / Moi Intime / Chemin de Vie.
+    *   *Radar de Personnalité* : Comparaison Expression / Élan Spirituel / Image Sociale / Chemin de Vie.
     *   *Grille d'Inclusion* : Matrice 3x3 visualisant les manques (Dettes) et excès (Forces).
     *   *Plans d'Expression* : Jauges pour les plans Mental, Physique, Émotionnel, Intuitif.
 *   **Astrologie** : Signe Solaire, Ascendant, Planète Dominante (calculés via éphémérides).
@@ -56,7 +56,7 @@ L'algorithme détecte et préserve :
 1.  **Chemin de Vie** : Somme verticale de la Date de Naissance (Jour + Mois + Année).
 2.  **Nombre d'Expression** : Somme de toutes les lettres du nom complet.
 3.  **Élan Spirituel (Soul Urge)** : Somme des voyelles.
-4.  **Moi Intime (Personality)** : Somme des consonnes.
+4.  **Image Sociale (Personality)** : Somme des consonnes.
 
 ### 3.4 Grille d'Inclusion & Plans
 *   **Inclusion** : Comptage de l'occurrence de chaque chiffre (1-9) dans le nom complet.

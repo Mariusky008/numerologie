@@ -134,7 +134,7 @@ Focus de lecture: ${req.userData.focus || 'Non spécifié'}
 Chemin de Vie: ${req.reportResults.lifePath}
 Nombre d'Expression: ${req.reportResults.expression}
 Élan Spirituel: ${req.reportResults.soulUrge}
-Moi Intime: ${req.reportResults.personality}
+Image Sociale: ${req.reportResults.personality}
 Année Personnelle: ${req.reportResults.personalYear}
 
 Grille d'Inclusion: ${req.reportResults.inclusionGrid ? Object.entries(req.reportResults.inclusionGrid).map(([k, v]) => `${k}:${v}`).join(', ') : 'Non calculée'}

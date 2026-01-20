@@ -242,8 +242,8 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
              <h3 className="text-2xl font-serif text-[#2C2F4A] mb-2 flex items-center gap-3">
                <span className="text-[#C9A24D]">VII.</span> Architecture Astrale
              </h3>
-             <p className="text-xs text-[#8FA6A0] italic mb-6">
-               * Positions symboliques basées sur la date de naissance. Pour une carte du ciel précise, l'heure et le lieu exacts sont requis.
+             <p className="text-xs text-[#8FA6A0] italic mb-6 text-justify">
+               * Les positions planétaires en signes peuvent être déterminées à partir de la date de naissance. En revanche, sans l’heure et le lieu exacts, l’Ascendant et la position des planètes en Maisons ne peuvent pas être calculés avec précision : ils sont donc présentés ici à titre indicatif (approximation). Pour une carte du ciel exacte, veuillez fournir l’heure et la ville de naissance.
              </p>
 
              {/* Pedagogie Maisons */}
@@ -356,9 +356,17 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
         {/* 11. PROJECTION 10 ANS (CONTENU PAYANT) */}
         <div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm mb-12">
           <h3 className="text-2xl font-serif text-[#2C2F4A] mb-2">Projection Décennale (2026-2035)</h3>
-          <p className="text-sm text-[#2C2F4A]/60 mb-6 italic">
-            (Calcul : Jour de Naissance + Mois de Naissance + Année En Cours)
-          </p>
+          <div className="text-sm text-[#2C2F4A]/60 mb-6 italic bg-[#FAF9F7] p-4 rounded-lg border border-[#EFEDE9]">
+            <p className="font-bold mb-2">Méthode de Calcul :</p>
+            <p className="mb-2">Réduction du Jour de naissance + réduction du Mois de naissance + réduction de l’Année en cours, puis réduction finale.</p>
+            <p className="font-bold mt-2">Exemple :</p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Jour 14 → 1 + 4 = 5</li>
+              <li>Mois 12 → 1 + 2 = 3</li>
+              <li>Année 2026 → 2 + 0 + 2 + 6 = 10 → 1</li>
+              <li>Total : 5 + 3 + 1 = 9 (Année Personnelle 9)</li>
+            </ul>
+          </div>
           <div className="space-y-4">
             {decadeForecast.map((yearData) => (
               <div key={yearData.year} className="flex items-center gap-4 p-4 border-b border-[#EFEDE9] last:border-0 hover:bg-[#FAF9F7] transition-colors rounded-lg">

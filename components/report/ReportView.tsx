@@ -416,8 +416,8 @@ export default function ReportView({ userData }: ReportViewProps) {
              <h3 className="text-2xl font-serif text-[#2C2F4A] mb-2 flex items-center gap-3">
                <span className="text-[#C9A24D]">VII.</span> Architecture Astrale
              </h3>
-             <p className="text-xs text-[#8FA6A0] italic mb-6">
-               * Positions symboliques (sauf si heure fournie).
+             <p className="text-xs text-[#8FA6A0] italic mb-6 text-justify">
+               * Les positions planétaires en signes peuvent être déterminées à partir de la date de naissance. En revanche, sans l’heure et le lieu exacts, l’Ascendant et la position des planètes en Maisons ne peuvent pas être calculés avec précision : ils sont donc présentés ici à titre indicatif (approximation). Pour une carte du ciel exacte, veuillez fournir l’heure et la ville de naissance.
              </p>
 
              {/* Pedagogie Maisons */}

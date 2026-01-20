@@ -306,7 +306,7 @@ export const getPersonalityContent = (num: number) => {
     desc: plan.desc,
     keywords: plan.keywords,
     // OVERRIDE extendedDesc
-    extendedDesc: `${plan.desc}\n\nC'est la première impression que vous donnez aux autres, votre "masque social" ou votre aura naturelle avant même que vous ne parliez.`,
+    extendedDesc: `${plan.desc}\n\nCette image correspond à votre manière spontanée d’entrer en relation avec le monde, avant même toute interaction approfondie.`,
     title: `Image Sociale ${num}`,
   };
 };

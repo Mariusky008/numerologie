@@ -194,8 +194,8 @@ export const PERSONALITY_DEFINITIONS: Record<number, PlanDefinition> = {
     keywords: ["Autorité", "Statut", "Puissance", "Classe"]
   },
   9: {
-    desc: "Vous apparaissez comme quelqu'un de généreux et d'ouvert d'esprit. Vous dégagez une chaleur humaine et une tolérance qui attirent les gens. On vous voit comme un ami potentiel ou un confident.",
-    keywords: ["Chaleur", "Tolérance", "Ouverture", "Générosité"]
+    desc: "Vous apparaissez comme quelqu'un de généreux et d'ouvert d'esprit. Vous dégagez une chaleur humaine et une tolérance qui attirent naturellement les autres. On vous perçoit comme une personne accessible, bienveillante et digne de confiance.",
+    keywords: ["Bienveillance", "Tolérance", "Humanisme", "Douceur"]
   },
   11: {
     desc: "Vous avez une présence électrique. On remarque votre regard habité, votre nervosité ou votre charisme particulier. Vous semblez 'ailleurs' ou connecté à autre chose, ce qui vous rend fascinant.",

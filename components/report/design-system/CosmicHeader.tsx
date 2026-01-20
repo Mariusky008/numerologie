@@ -75,7 +75,7 @@ export default function CosmicHeader({ firstName, lastName, lifePath }: CosmicHe
           transition={{ duration: 1, delay: 0.5 }}
         >
           <span className="inline-block py-1 px-3 rounded-full border border-[#C9A24D]/30 text-[#C9A24D] text-xs tracking-[0.2em] uppercase mb-6 backdrop-blur-sm bg-black/20">
-            Dossier Numérologique
+            Dossier Numérologique / Astrologique
           </span>
         </motion.div>
 

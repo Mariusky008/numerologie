@@ -24,12 +24,8 @@
   },
   "include": [
     "next-env.d.ts",
-    "app/**/*.tsx",
-    "app/**/*.ts",
-    "components/**/*.tsx",
-    "components/**/*.ts",
-    "lib/**/*.ts",
-    "scripts/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
@@ -37,4 +33,3 @@
     "node_modules"
   ]
 }
-// Config updated to fix ghost files

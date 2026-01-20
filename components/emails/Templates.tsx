@@ -137,54 +137,58 @@ const main = {
   backgroundColor: '#FAF9F7',
   fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
   color: '#2C2F4A',
+  padding: '40px 0', // Marge externe globale pour centrer verticalement
 };
 
 const container = {
   margin: '0 auto',
-  padding: '40px 20px', // Plus d'espace vertical global
-  width: '600px', // Légèrement plus large pour respirer
+  padding: '40px', // Espace interne du conteneur blanc
+  width: '600px',
   maxWidth: '100%',
+  backgroundColor: '#ffffff', // Fond blanc pour le conteneur principal
+  borderRadius: '12px', // Arrondi global
+  boxShadow: '0 4px 20px rgba(0,0,0,0.05)', // Ombre portée pour détacher le mail
 };
 
 const h1 = {
   color: '#2C2F4A',
-  fontSize: '36px', // Titre plus grand
+  fontSize: '32px',
   fontWeight: 'bold',
   textAlign: 'center' as const,
-  margin: '40px 0 20px', // Marge augmentée
+  margin: '0 0 30px',
   fontFamily: 'Georgia, serif',
+  lineHeight: '1.2',
 };
 
 const h3 = {
   color: 'inherit',
-  fontSize: '22px', // Sous-titre plus grand
+  fontSize: '20px',
   fontWeight: 'bold',
-  margin: '0 0 15px',
+  margin: '0 0 12px',
 };
 
 const text = {
   color: 'inherit',
   fontSize: '16px',
-  lineHeight: '28px', // Interlignage augmenté pour la lisibilité
-  margin: '0 0 15px', // Espace entre les paragraphes
+  lineHeight: '26px',
+  margin: '0 0 16px',
 };
 
 const btnContainer = {
   textAlign: 'center' as const,
-  margin: '40px 0', // Plus d'espace autour du bouton
+  margin: '30px 0',
 };
 
 const button = {
   backgroundColor: '#C9A24D',
   borderRadius: '50px',
   color: '#fff',
-  fontSize: '18px', // Bouton plus visible
+  fontSize: '16px',
   fontWeight: 'bold',
   textDecoration: 'none',
   textAlign: 'center' as const,
-  display: 'inline-block', // Permet le padding correct
-  padding: '18px 40px', // Bouton plus gros
-  boxShadow: '0 4px 10px rgba(201, 162, 77, 0.3)', // Ombre douce
+  display: 'inline-block',
+  padding: '14px 30px',
 };
 
 const secondaryButton = {
@@ -196,35 +200,32 @@ const secondaryButton = {
   textDecoration: 'none',
   textAlign: 'center' as const,
   display: 'inline-block',
-  padding: '12px 24px',
+  padding: '10px 20px',
   marginTop: '10px',
 };
 
 const box = {
-  padding: '32px', // Padding interne augmenté
-  backgroundColor: '#ffffff',
-  borderRadius: '16px', // Arrondi plus doux
+  padding: '24px',
+  backgroundColor: '#FAF9F7', // Fond gris clair pour distinguer du conteneur blanc
+  borderRadius: '12px',
+  marginBottom: '24px',
   border: '1px solid #EFEDE9',
-  marginBottom: '30px', // Espace sous la boîte augmenté
-  boxShadow: '0 2px 5px rgba(0,0,0,0.02)', // Ombre très légère
 };
 
 const highlightBox = {
-  padding: '32px', // Padding interne augmenté pour aérer le texte blanc
+  padding: '24px',
   backgroundColor: '#2C2F4A',
-  borderRadius: '16px',
+  borderRadius: '12px',
   color: '#ffffff',
-  marginBottom: '30px',
-  width: '100%',
-  boxSizing: 'border-box' as const,
+  marginBottom: '24px',
 };
 
 const paperBox = {
-  padding: '24px',
-  backgroundColor: '#FFFBF2', // Fond un peu plus chaud/clair
-  borderRadius: '12px',
-  border: '1px dashed #D4C5A5', // Bordure plus subtile
-  marginTop: '40px',
+  padding: '20px',
+  backgroundColor: '#FFFBF2',
+  borderRadius: '8px',
+  border: '1px dashed #D4C5A5',
+  marginTop: '30px',
 };
 
 const paperTitle = {

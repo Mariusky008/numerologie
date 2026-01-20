@@ -208,11 +208,6 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
           </div>
         </div>
 
-        {/* 6.5 FOCUS (V2) */}
-        <div className="mb-12">
-          <Part4Focus userData={userData} results={results} />
-        </div>
-
         {/* 7. GRILLE D'INCLUSION */}
         <div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm mb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -250,6 +245,11 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
                />
              </div>
           </div>
+        </div>
+
+        {/* 6.5 FOCUS (V2) */}
+        <div className="mb-12">
+          <Part4Focus userData={userData} results={results} />
         </div>
 
         {/* 7.5 INTEGRATION (V2) */}

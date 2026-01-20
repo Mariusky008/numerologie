@@ -6,26 +6,6 @@ import { CheckCircle } from 'lucide-react';
 export default function Part6Integration({ userData, results }: { userData: UserData, results: NumerologyResult }) {
   return (
     <>
-      {/* PAGE 37: SEMAINE IDEALE */}
-      <PageContainer className="p-4 md:p-16">
-        <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8 md:mb-12 border-b-2 border-[#C9A24D] pb-4 inline-block">
-          Votre Semaine Idéale
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-7 gap-2 md:h-96">
-          {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((day, i) => (
-            <div key={day} className="flex flex-row md:flex-col h-auto md:h-full gap-4 md:gap-0 p-4 md:p-0 bg-white md:bg-transparent rounded-lg md:rounded-none mb-2 md:mb-0 border border-stone-100 md:border-none shadow-sm md:shadow-none">
-              <div className="text-left md:text-center font-bold text-[#2C2F4A] mb-0 md:mb-2 uppercase text-sm w-16 md:w-auto">{day}</div>
-              <div className={`flex-1 rounded-lg p-2 text-xs md:text-xs ${i < 5 ? 'text-[#2C2F4A] md:bg-white md:border border-[#C9A24D]/30 shadow-sm' : 'text-[#8FA6A0] md:bg-stone-50 md:border border-stone-200'}`}>
-                {i === 0 && "Planification & Stratégie"}
-                {i === 2 && "Communication & Réunions"}
-                {i === 4 && "Bilan & Clôture"}
-                {i > 4 && "Repos & Ressourcement"}
-              </div>
-            </div>
-          ))}
-        </div>
-      </PageContainer>
-
       {/* PAGE 38: PROTOCOLE 30 JOURS (Consolidated) */}
       <PageContainer className="p-4 md:p-16 bg-[#FAF9F7] text-[#2C2F4A]">
         <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8 md:mb-12 border-b-2 border-[#C9A24D] pb-4 inline-block">

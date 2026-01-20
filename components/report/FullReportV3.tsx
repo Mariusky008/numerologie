@@ -257,11 +257,6 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
           <Part6Integration userData={userData} results={results} />
         </div>
 
-        {/* 7.5 INTEGRATION (V2) */}
-        <div className="mb-12">
-          <Part6Integration userData={userData} results={results} />
-        </div>
-
         {/* 8. ARCHITECTURE ASTRALE */}
         {results.advancedProfile && (
            <div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm mb-12">
@@ -441,6 +436,22 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
         {/* 13. CONCLUSION (V2) */}
         <div className="mt-12">
           <Part7ConclusionKeys userData={userData} results={results} />
+        </div>
+
+        {/* 14. FOOTER */}
+        <div className="mt-16 text-center">
+           <div className="w-32 h-1 bg-[#C9A24D] mx-auto mb-8"></div>
+           <h2 className="text-3xl font-serif text-[#2C2F4A] mb-6">Merci, {userData.firstName}</h2>
+           <p className="text-lg text-[#2C2F4A] max-w-2xl mx-auto mb-8 leading-relaxed">
+             Cette lecture n'est pas une fin, c'est un commencement. Vous avez maintenant la carte de votre territoire intérieur.
+             Il ne vous reste plus qu'à explorer, bâtir et aimer ce que vous êtes.
+           </p>
+           <p className="text-lg italic text-[#C9A24D] mb-12">
+             "Connais-toi toi-même et tu connaîtras l'Univers et les Dieux."
+           </p>
+           <div className="text-xs text-[#8FA6A0] uppercase tracking-widest pb-12">
+             Fin du Rapport • Généré le {new Date().toLocaleDateString()}
+           </div>
         </div>
 
       </div>

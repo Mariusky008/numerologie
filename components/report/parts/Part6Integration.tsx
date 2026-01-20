@@ -59,22 +59,6 @@ export default function Part6Integration({ userData, results }: { userData: User
           })}
         </div>
       </PageContainer>
-
-      {/* PAGE 40: CLOTURE */}
-      <PageContainer className="justify-center items-center text-center p-4 md:p-16">
-        <div className="w-32 h-1 bg-[#C9A24D] mb-8 md:mb-12"></div>
-        <h2 className="text-3xl md:text-5xl font-serif text-[#2C2F4A] mb-8">Merci, {userData.firstName}</h2>
-        <p className="text-base md:text-xl text-[#2C2F4A] max-w-2xl mx-auto mb-8 md:mb-12 leading-relaxed">
-          Cette lecture n'est pas une fin, c'est un commencement. Vous avez maintenant la carte de votre territoire intérieur.
-          Il ne vous reste plus qu'à explorer, bâtir et aimer ce que vous êtes.
-        </p>
-        <p className="text-base md:text-lg italic text-[#C9A24D] mb-12 md:mb-16">
-          "Connais-toi toi-même et tu connaîtras l'Univers et les Dieux."
-        </p>
-        <div className="text-xs md:text-sm text-[#8FA6A0] uppercase tracking-widest">
-          Fin du Rapport • Généré le {new Date().toLocaleDateString()}
-        </div>
-      </PageContainer>
     </>
   );
 }

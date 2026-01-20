@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
-import FullReportV2 from '@/components/report/FullReportV2';
+import FullReportV3 from '@/components/report/FullReportV3';
 import BookCreationModal from '@/components/report/BookCreationModal';
 import { UserData, NumerologyResult } from '@/lib/types';
 import { 

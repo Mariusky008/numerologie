@@ -136,52 +136,55 @@ export const EmailBundle = ({
 const main = {
   backgroundColor: '#FAF9F7',
   fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
-  color: '#2C2F4A', // Couleur par défaut pour tout le corps
+  color: '#2C2F4A',
 };
 
 const container = {
   margin: '0 auto',
-  padding: '20px 0 48px',
-  width: '580px',
+  padding: '40px 20px', // Plus d'espace vertical global
+  width: '600px', // Légèrement plus large pour respirer
+  maxWidth: '100%',
 };
 
 const h1 = {
   color: '#2C2F4A',
-  fontSize: '32px',
+  fontSize: '36px', // Titre plus grand
   fontWeight: 'bold',
   textAlign: 'center' as const,
-  margin: '30px 0',
+  margin: '40px 0 20px', // Marge augmentée
   fontFamily: 'Georgia, serif',
 };
 
 const h3 = {
   color: 'inherit',
-  fontSize: '20px',
+  fontSize: '22px', // Sous-titre plus grand
   fontWeight: 'bold',
-  margin: '0 0 10px',
+  margin: '0 0 15px',
 };
 
 const text = {
   color: 'inherit',
   fontSize: '16px',
-  lineHeight: '26px',
+  lineHeight: '28px', // Interlignage augmenté pour la lisibilité
+  margin: '0 0 15px', // Espace entre les paragraphes
 };
 
 const btnContainer = {
   textAlign: 'center' as const,
-  margin: '30px 0',
+  margin: '40px 0', // Plus d'espace autour du bouton
 };
 
 const button = {
   backgroundColor: '#C9A24D',
   borderRadius: '50px',
   color: '#fff',
-  fontSize: '16px',
+  fontSize: '18px', // Bouton plus visible
   fontWeight: 'bold',
   textDecoration: 'none',
   textAlign: 'center' as const,
-  display: 'block',
-  padding: '16px 30px',
+  display: 'inline-block', // Permet le padding correct
+  padding: '18px 40px', // Bouton plus gros
+  boxShadow: '0 4px 10px rgba(201, 162, 77, 0.3)', // Ombre douce
 };
 
 const secondaryButton = {
@@ -193,33 +196,35 @@ const secondaryButton = {
   textDecoration: 'none',
   textAlign: 'center' as const,
   display: 'inline-block',
-  padding: '10px 20px',
+  padding: '12px 24px',
+  marginTop: '10px',
 };
 
 const box = {
-  padding: '24px',
+  padding: '32px', // Padding interne augmenté
   backgroundColor: '#ffffff',
-  borderRadius: '12px',
+  borderRadius: '16px', // Arrondi plus doux
   border: '1px solid #EFEDE9',
-  marginBottom: '20px',
+  marginBottom: '30px', // Espace sous la boîte augmenté
+  boxShadow: '0 2px 5px rgba(0,0,0,0.02)', // Ombre très légère
 };
 
 const highlightBox = {
-  padding: '24px',
+  padding: '32px', // Padding interne augmenté pour aérer le texte blanc
   backgroundColor: '#2C2F4A',
-  borderRadius: '12px',
+  borderRadius: '16px',
   color: '#ffffff',
-  marginBottom: '20px',
-  width: '100%', // Assure que la boîte prend toute la largeur
-  boxSizing: 'border-box' as const, // Inclut le padding dans la largeur pour éviter le débordement
+  marginBottom: '30px',
+  width: '100%',
+  boxSizing: 'border-box' as const,
 };
 
 const paperBox = {
-  padding: '20px',
-  backgroundColor: '#FDF6E3',
-  borderRadius: '8px',
-  border: '1px dashed #C9A24D',
-  marginTop: '30px',
+  padding: '24px',
+  backgroundColor: '#FFFBF2', // Fond un peu plus chaud/clair
+  borderRadius: '12px',
+  border: '1px dashed #D4C5A5', // Bordure plus subtile
+  marginTop: '40px',
 };
 
 const paperTitle = {

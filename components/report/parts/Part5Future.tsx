@@ -131,18 +131,19 @@ export default function Part5Future({ userData, results }: { userData: UserData,
                   <td className="p-4 font-bold">{item.year}</td>
                   <td className="p-4">
                     <span className="inline-block w-8 h-8 rounded-full bg-[#FAF9F7] text-[#C9A24D] text-center leading-8 font-bold border border-[#C9A24D]/30">
-                      {item.personalYear}
+                      {item.personalYear > 9 ? (item.personalYear === 11 ? 2 : item.personalYear === 22 ? 4 : item.personalYear === 33 ? 6 : item.personalYear % 9 || 9) : item.personalYear}
                     </span>
                   </td>
                   <td className="p-4 text-sm md:text-base opacity-90">
-                    {item.personalYear === 1 ? "Nouveau Départ, Initiative" :
-                     item.personalYear === 2 ? "Collaboration, Patience" :
-                     item.personalYear === 3 ? "Expression, Créativité" :
-                     item.personalYear === 4 ? "Construction, Travail" :
-                     item.personalYear === 5 ? "Changement, Liberté" :
-                     item.personalYear === 6 ? "Responsabilité, Famille" :
-                     item.personalYear === 7 ? "Réflexion, Spiritualité" :
-                     item.personalYear === 8 ? "Pouvoir, Réussite" : "Bilan, Fin de cycle"}
+                    {/* Logique de réduction stricte pour l'affichage du texte */}
+                    {(item.personalYear > 9 ? (item.personalYear === 11 ? 2 : item.personalYear === 22 ? 4 : item.personalYear === 33 ? 6 : item.personalYear % 9 || 9) : item.personalYear) === 1 ? "Nouveau Départ, Initiative" :
+                     (item.personalYear > 9 ? (item.personalYear === 11 ? 2 : item.personalYear === 22 ? 4 : item.personalYear === 33 ? 6 : item.personalYear % 9 || 9) : item.personalYear) === 2 ? "Collaboration, Patience" :
+                     (item.personalYear > 9 ? (item.personalYear === 11 ? 2 : item.personalYear === 22 ? 4 : item.personalYear === 33 ? 6 : item.personalYear % 9 || 9) : item.personalYear) === 3 ? "Expression, Créativité" :
+                     (item.personalYear > 9 ? (item.personalYear === 11 ? 2 : item.personalYear === 22 ? 4 : item.personalYear === 33 ? 6 : item.personalYear % 9 || 9) : item.personalYear) === 4 ? "Construction, Travail" :
+                     (item.personalYear > 9 ? (item.personalYear === 11 ? 2 : item.personalYear === 22 ? 4 : item.personalYear === 33 ? 6 : item.personalYear % 9 || 9) : item.personalYear) === 5 ? "Changement, Liberté" :
+                     (item.personalYear > 9 ? (item.personalYear === 11 ? 2 : item.personalYear === 22 ? 4 : item.personalYear === 33 ? 6 : item.personalYear % 9 || 9) : item.personalYear) === 6 ? "Responsabilité, Famille" :
+                     (item.personalYear > 9 ? (item.personalYear === 11 ? 2 : item.personalYear === 22 ? 4 : item.personalYear === 33 ? 6 : item.personalYear % 9 || 9) : item.personalYear) === 7 ? "Réflexion, Spiritualité" :
+                     (item.personalYear > 9 ? (item.personalYear === 11 ? 2 : item.personalYear === 22 ? 4 : item.personalYear === 33 ? 6 : item.personalYear % 9 || 9) : item.personalYear) === 8 ? "Pouvoir, Réussite" : "Bilan, Fin de cycle"}
                   </td>
                 </tr>
               ))}

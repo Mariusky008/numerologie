@@ -195,7 +195,7 @@ function PrintContent() {
 
   return (
     <>
-      <FullReportV2 userData={data.userData} results={data.results} etymology={data.etymology} />
+      <FullReportV3 userData={data.userData} results={data.results} etymology={data.etymology} />
       <BookCreationModal 
         isOpen={showBookModal} 
         onClose={() => setShowBookModal(false)} 

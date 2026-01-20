@@ -227,6 +227,9 @@ export const getLifePathContent = (num: number) => {
     ...arch,
     desc: plan.desc,
     keywords: plan.keywords,
+    // OVERRIDE extendedDesc to avoid duplication
+    extendedDesc: `${plan.desc}\n\nEn tant que Chemin de Vie, cette énergie définit votre trajectoire globale. ${arch.extendedDesc.split('\n')[0]}`,
+    
     // Unique content for Part4Focus based on Plan Matrix
     love: `Votre Destin Amoureux : ${plan.desc} En couple, votre parcours vous demandera d'intégrer l'énergie de ${plan.keywords[0]} et de ${plan.keywords[1]}.`,
     work: `Votre Destin Professionnel : ${plan.desc} Votre carrière sera une montée progressive vers ${plan.keywords[2] || plan.keywords[0]} et ${plan.keywords[3] || plan.keywords[1]}.`,
@@ -248,7 +251,9 @@ export const getDayOfBirthContent = (day: number) => {
   return {
     ...arch,
     title: `Né(e) le ${day}`,
-    desc: `Le jour de naissance est un indicateur de talent inné. Le ${day} porte en lui la graine du ${reduced}. C'est un outil que vous utilisez instinctivement : ${arch.keywords[0]} et ${arch.keywords[1]}.`
+    desc: `Le jour de naissance est un indicateur de talent inné. Le ${day} porte en lui la graine du ${reduced}. C'est un outil que vous utilisez instinctivement : ${arch.keywords[0]} et ${arch.keywords[1]}.`,
+    // OVERRIDE extendedDesc
+    extendedDesc: `Votre jour de naissance (${day}) vous dote d'une capacité naturelle : ${arch.keywords[0]}. C'est un outil que vous n'avez pas besoin d'apprendre, il est inné. ${arch.desc}`
   };
 };
 
@@ -260,6 +265,9 @@ export const getExpressionContent = (num: number) => {
     ...arch,
     desc: plan.desc,
     keywords: plan.keywords,
+    // OVERRIDE extendedDesc to avoid duplication with Life Path or Soul Urge
+    extendedDesc: `${plan.desc}\n\nDans le monde social et professionnel, vous agissez principalement par ${plan.keywords[0]} et ${plan.keywords[1]}. C'est votre "costume" public et votre méthode d'action privilégiée.`,
+
     // Unique content for Part4Focus based on Plan Matrix
     love: `Votre Mode d'Action en Amour : ${plan.desc} Vous séduisez et interagissez par ${plan.keywords[0]} et ${plan.keywords[1]}.`,
     work: `Votre Mode d'Action au Travail : ${plan.desc} Socialement, vous vous positionnez par ${plan.keywords[0]} et ${plan.keywords[2] || plan.keywords[1]}.`,
@@ -277,6 +285,9 @@ export const getSoulUrgeContent = (num: number) => {
     ...arch,
     desc: plan.desc,
     keywords: plan.keywords,
+    // OVERRIDE extendedDesc to avoid duplication
+    extendedDesc: `${plan.desc}\n\nAu plus profond de vous, c'est ce qui vous motive réellement. Même si vous ne le montrez pas toujours, votre cœur a besoin de ${plan.keywords[0]} pour se sentir vivant.`,
+
     // Unique content for Part4Focus based on Plan Matrix
     love: `Vos Motivations Profondes en Amour : ${plan.desc} Votre cœur ne vibrera que s'il ressent ${plan.keywords[0]} et ${plan.keywords[1]}.`,
     work: `Vos Motivations Profondes au Travail : ${plan.desc} Pour vous épanouir, vous avez besoin de sentir ${plan.keywords[0]} et ${plan.keywords[2] || plan.keywords[1]}.`,
@@ -294,6 +305,8 @@ export const getPersonalityContent = (num: number) => {
     ...arch,
     desc: plan.desc,
     keywords: plan.keywords,
+    // OVERRIDE extendedDesc
+    extendedDesc: `${plan.desc}\n\nC'est la première impression que vous donnez aux autres, votre "masque social" ou votre aura naturelle avant même que vous ne parliez.`,
     title: `Moi Intime ${num}`,
   };
 };

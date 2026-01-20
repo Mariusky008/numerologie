@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 interface KeyNumbersSectionProps {
   results: NumerologyResult;
   userData: any; // On passe userData pour le lien de paiement
+  areCardsLocked?: boolean; // Nouvelle prop pour contrôler le verrouillage global
 }
 
-export default function KeyNumbersSection({ results, userData }: KeyNumbersSectionProps) {
+export default function KeyNumbersSection({ results, userData, areCardsLocked = true }: KeyNumbersSectionProps) {
   const router = useRouter();
 
   const handleUnlock = () => {
@@ -37,7 +38,7 @@ export default function KeyNumbersSection({ results, userData }: KeyNumbersSecti
             keywords={['Mission', 'Destin', 'Route']}
             color="#C9A24D"
             delay={0.1}
-            isLocked={false} // Le Chemin de Vie reste gratuit/visible comme teaser
+            isLocked={false} // Le Chemin de Vie reste toujours visible
           />
           
           <NumberCard 
@@ -47,7 +48,7 @@ export default function KeyNumbersSection({ results, userData }: KeyNumbersSecti
             keywords={['Talents', 'Action', 'Social']}
             color="#5B4B8A"
             delay={0.2}
-            isLocked={true}
+            isLocked={areCardsLocked}
             onUnlock={handleUnlock}
           />
           
@@ -58,7 +59,7 @@ export default function KeyNumbersSection({ results, userData }: KeyNumbersSecti
             keywords={['Désir', 'Intérieur', 'Motivation']}
             color="#9966CC"
             delay={0.3}
-            isLocked={true}
+            isLocked={areCardsLocked}
             onUnlock={handleUnlock}
           />
           
@@ -69,20 +70,22 @@ export default function KeyNumbersSection({ results, userData }: KeyNumbersSecti
             keywords={['Image', 'Perception', 'Extérieur']}
             color="#B87333"
             delay={0.4}
-            isLocked={true}
+            isLocked={areCardsLocked}
             onUnlock={handleUnlock}
           />
         </div>
         
-        <div className="text-center mt-12">
-           <button 
-             onClick={handleUnlock}
-             className="inline-flex items-center gap-2 px-8 py-3 bg-[#2C2F4A] text-white rounded-full font-bold shadow-lg hover:bg-[#1A1B2E] transition-all transform hover:scale-105"
-           >
-             <span>🔓</span>
-             <span>Débloquer mon Dossier Complet</span>
-           </button>
-        </div>
+        {areCardsLocked && (
+          <div className="text-center mt-12">
+             <button 
+               onClick={handleUnlock}
+               className="inline-flex items-center gap-2 px-8 py-3 bg-[#2C2F4A] text-white rounded-full font-bold shadow-lg hover:bg-[#1A1B2E] transition-all transform hover:scale-105"
+             >
+               <span>🔓</span>
+               <span>Débloquer mon Dossier Complet</span>
+             </button>
+          </div>
+        )}
       </div>
     </div>
   );

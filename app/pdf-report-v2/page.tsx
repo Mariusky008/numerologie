@@ -48,11 +48,12 @@ function PrintContent() {
   }, [searchParams]);
 
   useEffect(() => {
-    if (data && searchParams.get('payment_success') === 'true') {
-        // Petit délai pour l'expérience utilisateur
-        const timer = setTimeout(() => setShowBookModal(true), 1500);
-        return () => clearTimeout(timer);
-    }
+    // Popup désactivée pour l'instant pour ne pas gêner le téléchargement
+    // if (data && searchParams.get('payment_success') === 'true') {
+    //     // Petit délai pour l'expérience utilisateur
+    //     const timer = setTimeout(() => setShowBookModal(true), 1500);
+    //     return () => clearTimeout(timer);
+    // }
   }, [data, searchParams]);
 
   useEffect(() => {

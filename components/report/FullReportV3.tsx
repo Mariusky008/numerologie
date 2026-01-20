@@ -226,45 +226,6 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
           </div>
         </div>
 
-        {/* 7. GRILLE D'INCLUSION */}
-        <div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm mb-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-             <div>
-               <h3 className="text-2xl font-serif text-[#2C2F4A] mb-4">Analyse de la Grille d'Inclusion</h3>
-               <p className="text-[#2C2F4A]/80 mb-6">
-                 Cette matrice révèle la répartition de vos énergies.
-               </p>
-               <div className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-red-50 border border-red-200 flex items-center justify-center text-red-600 font-bold">
-                      {results.missingNumbers?.length || 0}
-                    </div>
-                    <div>
-                      <div className="text-[#2C2F4A] font-medium">Dettes Karmiques</div>
-                      <div className="text-sm text-[#8FA6A0]">Nombres manquants</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 font-bold">
-                      {results.excessNumbers?.length || 0}
-                    </div>
-                    <div>
-                      <div className="text-[#2C2F4A] font-medium">Forces Acquises</div>
-                      <div className="text-sm text-[#8FA6A0]">Nombres en excès</div>
-                    </div>
-                  </div>
-               </div>
-             </div>
-             <div>
-               <InclusionGridViz 
-                 grid={results.inclusionGrid} 
-                 missing={results.missingNumbers} 
-                 excess={results.excessNumbers} 
-               />
-             </div>
-          </div>
-        </div>
-
         {/* 6.5 FOCUS (V2) */}
         <div className="mb-12">
           <Part4Focus userData={userData} results={results} />

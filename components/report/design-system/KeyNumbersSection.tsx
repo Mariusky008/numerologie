@@ -1,6 +1,7 @@
 import NumberCard from './NumberCard';
 import { NumerologyResult } from '@/lib/types';
 import { useRouter } from 'next/navigation';
+import { getLifePathContent, getExpressionContent, getSoulUrgeContent, getPersonalityContent } from '@/lib/numerology/contentGenerator';
 
 interface KeyNumbersSectionProps {
   results: NumerologyResult;
@@ -23,6 +24,12 @@ export default function KeyNumbersSection({ results, userData, areCardsLocked = 
       router.push(`/checkout?${params.toString()}`);
   };
 
+  // Récupération des contenus dynamiques
+  const lpContent = getLifePathContent(results.lifePath);
+  const expContent = getExpressionContent(results.expression);
+  const soulContent = getSoulUrgeContent(results.soulUrge);
+  const persContent = getPersonalityContent(results.personality);
+
   return (
     <div className="py-16 px-4">
       <div className="max-w-6xl mx-auto">
@@ -34,8 +41,8 @@ export default function KeyNumbersSection({ results, userData, areCardsLocked = 
           <NumberCard 
             title="Chemin de Vie"
             number={results.lifePath}
-            description="Votre mission d'âme, la route principale que vous avez choisi d'emprunter dans cette incarnation."
-            keywords={['Mission', 'Destin', 'Route']}
+            description={lpContent.desc}
+            keywords={lpContent.keywords.slice(0, 3)}
             color="#C9A24D"
             delay={0.1}
             isLocked={false} // Le Chemin de Vie reste toujours visible
@@ -44,8 +51,8 @@ export default function KeyNumbersSection({ results, userData, areCardsLocked = 
           <NumberCard 
             title="Expression"
             number={results.expression}
-            description="Votre façon d'agir dans le monde, vos talents naturels et votre caractère social."
-            keywords={['Talents', 'Action', 'Social']}
+            description={expContent.desc}
+            keywords={expContent.keywords.slice(0, 3)}
             color="#5B4B8A"
             delay={0.2}
             isLocked={areCardsLocked}
@@ -55,8 +62,8 @@ export default function KeyNumbersSection({ results, userData, areCardsLocked = 
           <NumberCard 
             title="Élan Spirituel"
             number={results.soulUrge}
-            description="Vos motivations profondes, ce que votre âme désire vraiment, souvent caché aux autres."
-            keywords={['Désir', 'Intérieur', 'Motivation']}
+            description={soulContent.desc}
+            keywords={soulContent.keywords.slice(0, 3)}
             color="#9966CC"
             delay={0.3}
             isLocked={areCardsLocked}
@@ -66,8 +73,8 @@ export default function KeyNumbersSection({ results, userData, areCardsLocked = 
           <NumberCard 
             title="Moi Intime"
             number={results.personality}
-            description="Comment les autres vous perçoivent au premier abord, votre 'masque' social."
-            keywords={['Image', 'Perception', 'Extérieur']}
+            description={persContent.desc}
+            keywords={persContent.keywords.slice(0, 3)}
             color="#B87333"
             delay={0.4}
             isLocked={areCardsLocked}

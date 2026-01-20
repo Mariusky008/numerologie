@@ -9,51 +9,51 @@ export interface PlanDefinition {
 
 export const LIFE_PATH_DEFINITIONS: Record<number, PlanDefinition> = {
   1: {
-    desc: "Votre destin est tracé sous le signe de l'autonomie. La vie vous proposera constamment des situations où vous devrez décider seul, trancher et ouvrir la voie. Votre parcours est une montée en puissance vers l'indépendance totale.",
+    desc: "Votre dynamique dominante est tracée sous le signe de l'autonomie. La vie vous proposera constamment des situations où vous devrez décider seul, trancher et ouvrir la voie. Votre parcours est une montée en puissance vers l'indépendance totale.",
     keywords: ["Autonomie", "Initiative", "Destin Solitaire", "Pionnier"]
   },
   2: {
-    desc: "Votre chemin est celui de la relation. La vie vous mettra sans cesse face à l'autre pour apprendre la collaboration, la patience et l'écoute. Votre réussite ne se fera jamais seul, mais en duo ou en équipe.",
+    desc: "Votre climat récurrent est celui de la relation. La vie vous mettra sans cesse face à l'autre pour apprendre la collaboration, la patience et l'écoute. Votre réussite ne se fera jamais seul, mais en duo ou en équipe.",
     keywords: ["Alliance", "Patience", "Médiation", "Duo"]
   },
   3: {
-    desc: "Votre trajectoire est celle de l'expression personnelle. Le destin vous poussera sur le devant de la scène, vous demandant de communiquer, de créer et de socialiser. Les épreuves concerneront souvent votre image ou votre voix.",
+    desc: "Votre trajectoire est celle de l'expression personnelle. La tendance de vie vous poussera sur le devant de la scène, vous demandant de communiquer, de créer et de socialiser. Les épreuves concerneront souvent votre image ou votre voix.",
     keywords: ["Expression", "Créativité", "Social", "Image"]
   },
   4: {
-    desc: "Votre route est celle de la construction lente et solide. La vie ne vous fera pas de cadeaux en termes de chance rapide ; tout devra être mérité par l'effort et la méthode. C'est un chemin de bâtisseur.",
+    desc: "Votre route est celle de la construction lente et solide. La dynamique dominante ne vous fera pas de cadeaux en termes de chance rapide ; tout devra être mérité par l'effort et la méthode. C'est un chemin de bâtisseur.",
     keywords: ["Effort", "Construction", "Stabilité", "Temps"]
   },
   5: {
-    desc: "Votre destin est marqué par l'imprévu et le mouvement. La vie vous proposera des virages soudains, des déménagements et des changements de cap pour tester votre adaptabilité. C'est une route sans routine.",
+    desc: "Votre dynamique dominante est marquée par l'imprévu et le mouvement. La vie vous proposera des virages soudains, des déménagements et des changements de cap pour tester votre adaptabilité. C'est une route sans routine.",
     keywords: ["Changement", "Aventure", "Liberté", "Adaptation"]
   },
   6: {
-    desc: "Votre chemin est celui des responsabilités affectives. Le destin vous placera souvent en position de pilier familial ou communautaire. Vous aurez à gérer des charges pour les autres, apprenant ainsi l'amour responsable.",
+    desc: "Votre chemin est celui des responsabilités affectives. Le climat récurrent vous placera souvent en position de pilier familial ou communautaire. Vous aurez à gérer des charges pour les autres, apprenant ainsi l'amour responsable.",
     keywords: ["Responsabilité", "Famille", "Service", "Harmonie"]
   },
   7: {
-    desc: "Votre parcours est une quête de compréhension. La vie vous isolera parfois pour vous forcer à l'introspection et à l'analyse. C'est un chemin intellectuel et spirituel qui demande de se détacher des apparences.",
+    desc: "Votre parcours est une quête de compréhension. La tendance de vie vous isolera parfois pour vous forcer à l'introspection et à l'analyse. C'est un chemin intellectuel et spirituel qui demande de se détacher des apparences.",
     keywords: ["Sagesse", "Solitude", "Analyse", "Esprit"]
   },
   8: {
-    desc: "Votre destin est celui de la confrontation à la matière. La vie vous proposera des défis liés à l'argent, au pouvoir et à la justice. C'est une trajectoire de combat et de réalisation concrète d'ambitions élevées.",
+    desc: "Votre dynamique dominante est celle de la confrontation à la matière. La vie vous proposera des défis liés à l'argent, au pouvoir et à la justice. C'est une trajectoire de combat et de réalisation concrète d'ambitions élevées.",
     keywords: ["Pouvoir", "Réalisation", "Justice", "Matière"]
   },
   9: {
-    desc: "Votre chemin est celui du dévouement et de l'achèvement. Le destin vous invite à clore les cycles, à voyager (physiquement ou spirituellement) et à développer une conscience universelle. C'est une route de lâcher-prise pour atteindre une sagesse globale.",
+    desc: "Votre chemin est celui du dévouement et de l'achèvement. Le climat récurrent vous invite à clore les cycles, à voyager (physiquement ou spirituellement) et à développer une conscience universelle. C'est une route de lâcher-prise pour atteindre une sagesse globale.",
     keywords: ["Aboutissement", "Voyage", "Sagesse", "Bilan"]
   },
   11: {
-    desc: "Votre trajectoire est celle de l'inspiration. La vie vous placera dans des situations de tension nerveuse intense pour vous forcer à canaliser des idéaux élevés. C'est un chemin d'éveilleur de conscience, hors normes.",
+    desc: "Votre trajectoire est celle de l'inspiration. La dynamique dominante vous placera dans des situations de tension nerveuse intense pour vous forcer à canaliser des idéaux élevés. C'est un chemin d'éveilleur de conscience, hors normes.",
     keywords: ["Inspiration", "Tension", "Guide", "Idéal"]
   },
   22: {
-    desc: "Votre destin est celui des grandes réalisations. La vie vous donnera les moyens de construire des œuvres qui dépassent l'échelle individuelle. C'est un chemin de puissance constructive qui demande une éthique irréprochable.",
+    desc: "Votre dynamique dominante est celle des grandes réalisations. La vie vous donnera les moyens de construire des œuvres qui dépassent l'échelle individuelle. C'est un chemin de puissance constructive qui demande une éthique irréprochable.",
     keywords: ["Génie", "Construction", "Impact", "Puissance"]
   },
   33: {
-    desc: "Votre chemin est celui du guide bienveillant. Le destin vous demandera souvent de vous oublier pour une cause ou pour les autres. C'est une trajectoire de haute responsabilité spirituelle et de guérison.",
+    desc: "Votre chemin est celui du guide bienveillant. Le climat récurrent vous demandera souvent de vous oublier pour une cause ou pour les autres. C'est une trajectoire de haute responsabilité spirituelle et de guérison.",
     keywords: ["Guide", "Sacrifice", "Amour", "Guérison"]
   }
 };

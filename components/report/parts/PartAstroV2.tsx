@@ -58,6 +58,10 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
             <span className="w-8 h-8 rounded-full bg-[#C9A24D] text-white flex items-center justify-center text-sm font-bold">VII</span>
             Alignement Céleste
           </h3>
+
+          <p className="text-xs text-[#8FA6A0] italic mb-6 text-justify">
+            * Les positions planétaires en signes peuvent être déterminées à partir de la date de naissance. En revanche, sans l’heure de naissance (et le lieu si inconnu), l’Ascendant et la position des planètes en Maisons ne peuvent pas être calculés avec précision : ils sont donc présentés ici à titre indicatif (approximation). Pour une carte du ciel exacte, veuillez fournir l’heure et la ville de naissance.
+          </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* ZODIAC CARD */}
@@ -114,7 +118,7 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
                      <span>🪐</span>
                    </div>
                    <div>
-                     <div className="text-xs uppercase tracking-widest text-[#8FA6A0] font-bold">Planète Dominante</div>
+                     <div className="text-xs uppercase tracking-widest text-[#8FA6A0] font-bold">Dominante Symbolique</div>
                      <div className="text-3xl font-serif text-[#2C2F4A] font-bold">{planet}</div>
                    </div>
                  </div>

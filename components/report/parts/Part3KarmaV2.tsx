@@ -146,9 +146,9 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
       <PageContainer className="p-4 md:p-16 justify-center text-center">
         <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8 md:mb-12">Le Moi Subconscient</h2>
         <div className="text-7xl md:text-9xl font-serif text-[#C9A24D] mb-4">{results.subconsciousSelf}</div>
-        <p className="text-sm text-[#8FA6A0] italic mb-8">(Nombre d'énergies maîtrisées sur les 9 plans)</p>
+        
         <p className="text-base md:text-xl max-w-2xl mx-auto text-[#2C2F4A]">
-          Avec un score de {results.subconsciousSelf}, vous avez une base émotionnelle {results.subconsciousSelf >= 7 ? "très stable" : "réactive"}.
+          Avec un résultat de {results.subconsciousSelf}, vous avez une base émotionnelle {results.subconsciousSelf >= 7 ? "très stable" : "réactive"}.
           Cela détermine votre capacité à garder votre sang-froid face aux imprévus de la vie.
         </p>
       </PageContainer>

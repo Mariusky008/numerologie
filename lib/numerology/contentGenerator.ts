@@ -231,9 +231,9 @@ export const getLifePathContent = (num: number) => {
     extendedDesc: `${plan.desc}\n\nEn tant que Chemin de Vie, cette énergie définit votre trajectoire globale. ${arch.extendedDesc.split('\n')[0]}`,
     
     // Unique content for Part4Focus based on Plan Matrix
-    love: `Votre Destin Amoureux : ${plan.desc} En couple, votre parcours vous demandera d'intégrer l'énergie de ${plan.keywords[0]} et de ${plan.keywords[1]}.`,
-    work: `Votre Destin Professionnel : ${plan.desc} Votre carrière sera une montée progressive vers ${plan.keywords[2] || plan.keywords[0]} et ${plan.keywords[3] || plan.keywords[1]}.`,
-    spiritual: `Votre Destin Spirituel : ${plan.desc} Votre âme a choisi cette route pour expérimenter ${plan.keywords[0]} dans la matière.`,
+    love: `Votre Tendance Amoureuse : ${plan.desc} En couple, votre parcours vous demandera d'intégrer l'énergie de ${plan.keywords[0]} et de ${plan.keywords[1]}.`,
+    work: `Votre Tendance Professionnelle : ${plan.desc} Votre carrière sera une montée progressive vers ${plan.keywords[2] || plan.keywords[0]} et ${plan.keywords[3] || plan.keywords[1]}.`,
+    spiritual: `Votre Tendance Spirituelle : ${plan.desc} Votre âme a choisi cette route pour expérimenter ${plan.keywords[0]} dans la matière.`,
     
     mission: `Votre mission d'incarnation est sous la vibration du ${num}. ${plan.desc}`,
     positive: `En lumière, vous manifestez : ${plan.keywords.join(', ')}.`,
@@ -286,12 +286,12 @@ export const getSoulUrgeContent = (num: number) => {
     desc: plan.desc,
     keywords: plan.keywords,
     // OVERRIDE extendedDesc to avoid duplication
-    extendedDesc: `${plan.desc}\n\n[Désir d'Absolu] Au plus profond de vous, c'est ce qui vous motive réellement. Même si vous ne le montrez pas toujours, votre cœur a besoin de ${plan.keywords[0]} pour se sentir vivant.`,
+    extendedDesc: `[Désir d'Absolu] Au plus profond de vous, c'est ce qui vous motive réellement. Même si vous ne le montrez pas toujours, votre cœur a besoin de ${plan.keywords[0]} pour se sentir vivant.`,
 
     // Unique content for Part4Focus based on Plan Matrix
-    love: `[Attentes Relationnelles] Vos Motivations Profondes en Amour : ${plan.desc} Votre cœur ne vibrera que s'il ressent ${plan.keywords[0]} et ${plan.keywords[1]}.`,
-    work: `[Sens de l'Utilité] Vos Motivations Profondes au Travail : ${plan.desc} Pour vous épanouir, vous avez besoin de sentir ${plan.keywords[0]} et ${plan.keywords[2] || plan.keywords[1]}.`,
-    spiritual: `[Quête de Sens] Vos Aspirations d'Âme : ${plan.desc} Votre quête intérieure est celle de ${plan.keywords[0]}.`,
+    love: `[Attentes Relationnelles] Vos Motivations Profondes en Amour : Votre cœur ne vibrera que s'il ressent ${plan.keywords[0]} et ${plan.keywords[1]}.`,
+    work: `[Sens de l'Utilité] Vos Motivations Profondes au Travail : Pour vous épanouir, vous avez besoin de sentir ${plan.keywords[0]} et ${plan.keywords[2] || plan.keywords[1]}.`,
+    spiritual: `[Quête de Sens] Vos Aspirations d'Âme : Votre quête intérieure est celle de ${plan.keywords[0]}.`,
 
     title: `Élan Spirituel ${num}`,
   };

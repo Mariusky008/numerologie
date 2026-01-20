@@ -490,7 +490,7 @@ export default function ReportView({ userData }: ReportViewProps) {
                    <div className="flex items-center gap-4 mb-4">
                      <div className="text-4xl">🪐</div>
                      <div>
-                       <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Planète Dominante</div>
+                       <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Dominante Symbolique</div>
                        <div className="text-xl font-serif text-[#2C2F4A] font-bold">{planet}</div>
                      </div>
                    </div>

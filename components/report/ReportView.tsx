@@ -40,6 +40,8 @@ import { PEDAGOGY_CONTENT } from '@/lib/numerology/modules/pedagogy';
 import { TRAINING_30D } from '@/lib/numerology/modules/training30d';
 import { analyzeNameSignature } from '@/lib/numerology/modules/anthroponymy';
 import { generateDecadeForecast } from '@/lib/numerology/modules/decade';
+import CosmicHeader from '@/components/report/design-system/CosmicHeader';
+import KeyNumbersSection from '@/components/report/design-system/KeyNumbersSection';
 
 import { useRouter } from 'next/navigation';
 
@@ -186,21 +188,23 @@ export default function ReportView({ userData }: ReportViewProps) {
   const pathTitle = results.advancedProfile?.pathData?.titre || `Chemin de Vie ${results.lifePath}`;
 
   return (
-    <div className="min-h-screen bg-[#FAF9F7] text-[#2C2F4A] p-4 md:p-8 font-sans">
-      {/* Background Ambience */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-60"></div>
-          <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-[#C9A24D] rounded-full blur-[150px] opacity-5"></div>
-          <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#5B4B8A] rounded-full blur-[150px] opacity-5"></div>
-      </div>
+    <div className="min-h-screen bg-[#FAF9F7] text-[#2C2F4A] font-sans overflow-x-hidden">
+      
+      {/* NOUVEAU HEADER COSMIQUE - Remplace l'ancien header */}
+      <CosmicHeader 
+        firstName={userData.firstName}
+        lastName={userData.lastName}
+        lifePath={results.lifePath}
+      />
 
-      <div className="max-w-4xl mx-auto space-y-12 relative z-10">
+      <div className="p-4 md:p-8">
         
         {/* SECTION 0: PÉDAGOGIE & MODE D'EMPLOI */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm"
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-4xl mx-auto mb-12 bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm mt-8"
         >
           <h2 className="text-2xl font-serif text-[#2C2F4A] mb-4 flex items-center gap-2">
             <span className="text-[#C9A24D]">★</span> {PEDAGOGY_CONTENT.intro.title}
@@ -220,35 +224,8 @@ export default function ReportView({ userData }: ReportViewProps) {
           </div>
         </motion.div>
 
-        {/* Header */}
-        <header className="text-center space-y-4 pt-8">
-          <motion.h1 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-5xl font-serif text-[#2C2F4A]"
-          >
-            {userData.firstName} {userData.lastName}
-          </motion.h1>
-
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-[#2C2F4A]/60 font-serif italic"
-          >
-            Né(e) le {userData.birthDate} à {userData.birthPlace} {userData.birthTime && `• ${userData.birthTime}`}
-          </motion.div>
-
-          <div className="flex items-center justify-center gap-4 text-[#5B4B8A] text-sm tracking-widest uppercase font-bold">
-            <span>Chemin {results.lifePath}</span>
-            <span>•</span>
-            <span>{zodiac}</span>
-            <span>•</span>
-            <span>{planet}</span>
-          </div>
-          <div className="inline-block px-4 py-1 rounded-full bg-[#C9A24D]/10 text-[#C9A24D] text-xs border border-[#C9A24D]/20 uppercase tracking-widest font-bold">
-            Focus : {userData.focus}
-          </div>
-        </header>
+        {/* NOUVELLE SECTION CARTES DE TAROT NUMÉRIQUES */}
+        <KeyNumbersSection results={results} />
 
         {/* SECTION ANTHROPONYMIE */}
       {nameSignature && (

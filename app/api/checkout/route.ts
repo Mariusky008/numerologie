@@ -52,18 +52,14 @@ export async function POST(request: Request) {
       }
     }
 
-    // Construction de l'URL de succès avec les paramètres pour la génération
-    // Note: Idéalement, on utiliserait un webhook pour déclencher la génération,
-    // mais pour l'instant on redirige vers la page de résultat.
-    const successParams = new URLSearchParams({
-      fn: userData.firstName,
-      ln: userData.lastName,
-      bd: userData.birthDate,
-      bp: userData.birthPlace || '',
-      fo: userData.focus || '',
-      payment_success: 'true',
-      order_id: orderId || ''
-    });
+      // URL de succès modifiée pour rediriger vers la nouvelle page de remerciement
+      const successParams = new URLSearchParams({
+        plan: orderInfo.plan,
+        paper: (orderInfo.paperOption || orderInfo.reportPaperOption) ? 'true' : 'false',
+        email: orderInfo.delivery?.email || '',
+        fn: userData.firstName,
+        order_id: orderId || ''
+      });
 
     // URL de base (en dev ou prod)
     const origin = request.headers.get('origin') || 'http://localhost:3000';
@@ -86,7 +82,7 @@ export async function POST(request: Request) {
         },
       ],
       mode: 'payment',
-      success_url: `${origin}/pdf-report-v2?${successParams.toString()}`,
+      success_url: `${origin}/success?${successParams.toString()}`,
       cancel_url: `${origin}/checkout?fn=${userData.firstName}&ln=${userData.lastName}&bd=${userData.birthDate}`,
       client_reference_id: orderId,
       customer_email: orderInfo.delivery?.email,

@@ -50,6 +50,13 @@ export default function ReportView({ userData }: ReportViewProps) {
   const [showBookModal, setShowBookModal] = useState(false);
 
   useEffect(() => {
+    // Check for payment success parameter to auto-open modal
+    // REMOVED: Logic moved to success page to prevent showing modal for non-book purchases
+    // const params = new URLSearchParams(window.location.search);
+    // if (params.get('payment_success') === 'true') {
+    //   setShowBookModal(true);
+    // }
+
     if (userData) {
       // Async fetch for etymology
       fetchNameAnalysis(userData.firstName.split(' ')[0]).then(data => {

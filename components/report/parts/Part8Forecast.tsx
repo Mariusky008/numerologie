@@ -81,7 +81,7 @@ export default function Part8Forecast({ userData, results }: { userData: UserDat
               })}
            </div>
            <p className="text-xs text-stone-400 mt-4 italic text-center">
-             * Positions actuelles influençant le collectif.
+             * Positions collectives indicatives au jour de génération du rapport.
            </p>
         </div>
       </div>

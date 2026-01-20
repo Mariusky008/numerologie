@@ -37,7 +37,7 @@ export default function Part7ConclusionKeys({ userData, results }: { userData: U
           <div className="w-12 h-12 rounded-full bg-[#E07A5F] text-white flex items-center justify-center font-serif text-xl mb-4">
             {results.soulUrge}
           </div>
-          <p className="font-serif text-xl text-[#1B263B] italic">"Écoutez votre {soulArchetype.keywords[0]}"</p>
+          <p className="font-serif text-xl text-[#1B263B] italic">"Écoutez votre petite voix intérieure (Élan Spirituel {results.soulUrge})"</p>
         </div>
 
         {/* Clé Action */}

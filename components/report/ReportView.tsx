@@ -603,7 +603,7 @@ export default function ReportView({ userData }: ReportViewProps) {
                       })}
                    </div>
                    <p className="text-xs text-[#8FA6A0] mt-2">
-                     * Position actuelle des astres influençant votre thème.
+                     * Positions collectives indicatives au jour de génération du rapport.
                    </p>
                 </div>
              </div>

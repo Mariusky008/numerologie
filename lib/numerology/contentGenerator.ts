@@ -286,12 +286,12 @@ export const getSoulUrgeContent = (num: number) => {
     desc: plan.desc,
     keywords: plan.keywords,
     // OVERRIDE extendedDesc to avoid duplication
-    extendedDesc: `${plan.desc}\n\nAu plus profond de vous, c'est ce qui vous motive réellement. Même si vous ne le montrez pas toujours, votre cœur a besoin de ${plan.keywords[0]} pour se sentir vivant.`,
+    extendedDesc: `${plan.desc}\n\n[Désir d'Absolu] Au plus profond de vous, c'est ce qui vous motive réellement. Même si vous ne le montrez pas toujours, votre cœur a besoin de ${plan.keywords[0]} pour se sentir vivant.`,
 
     // Unique content for Part4Focus based on Plan Matrix
-    love: `Vos Motivations Profondes en Amour : ${plan.desc} Votre cœur ne vibrera que s'il ressent ${plan.keywords[0]} et ${plan.keywords[1]}.`,
-    work: `Vos Motivations Profondes au Travail : ${plan.desc} Pour vous épanouir, vous avez besoin de sentir ${plan.keywords[0]} et ${plan.keywords[2] || plan.keywords[1]}.`,
-    spiritual: `Vos Aspirations d'Âme : ${plan.desc} Votre quête intérieure est celle de ${plan.keywords[0]}.`,
+    love: `[Attentes Relationnelles] Vos Motivations Profondes en Amour : ${plan.desc} Votre cœur ne vibrera que s'il ressent ${plan.keywords[0]} et ${plan.keywords[1]}.`,
+    work: `[Sens de l'Utilité] Vos Motivations Profondes au Travail : ${plan.desc} Pour vous épanouir, vous avez besoin de sentir ${plan.keywords[0]} et ${plan.keywords[2] || plan.keywords[1]}.`,
+    spiritual: `[Quête de Sens] Vos Aspirations d'Âme : ${plan.desc} Votre quête intérieure est celle de ${plan.keywords[0]}.`,
 
     title: `Élan Spirituel ${num}`,
   };
@@ -306,7 +306,13 @@ export const getPersonalityContent = (num: number) => {
     desc: plan.desc,
     keywords: plan.keywords,
     // OVERRIDE extendedDesc
-    extendedDesc: `${plan.desc}\n\nCette image correspond à votre manière spontanée d’entrer en relation avec le monde, avant même toute interaction approfondie.`,
+    extendedDesc: `${plan.desc}\n\nCette image correspond à votre manière spontanée d'entrer en relation avec le monde, avant même toute interaction approfondie.`,
+
+    // Unique content for Part4Focus based on Plan Matrix
+    love: `Votre Image en Amour : ${plan.desc} Vous séduisez par une apparence de ${plan.keywords[0]} et ${plan.keywords[1]}.`,
+    work: `Votre Image Professionnelle : ${plan.desc} On vous perçoit comme quelqu'un de ${plan.keywords[0]} et ${plan.keywords[2] || plan.keywords[1]}.`,
+    spiritual: `Votre Rayonnement : ${plan.desc} Vous émanez ${plan.keywords[0]}.`,
+
     title: `Image Sociale ${num}`,
   };
 };

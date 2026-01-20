@@ -604,7 +604,7 @@ export default function ReportView({ userData }: ReportViewProps) {
                 className="flex items-center gap-3 px-8 py-4 bg-[#5B4B8A] text-white rounded-full hover:bg-[#6A5FA8] transition-all shadow-lg shadow-[#5B4B8A]/30 transform hover:scale-105"
               >
                 <span>🔓</span>
-                <span>Débloquer mon Dossier Numérologique et Astral</span>
+                <span>Débloquer mon Dossier Numérologique / Astrologique</span>
               </button>
             </div>
           </div>

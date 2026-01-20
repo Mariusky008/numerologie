@@ -89,7 +89,7 @@ export default function KeyNumbersSection({ results, userData, areCardsLocked = 
                className="inline-flex items-center gap-2 px-8 py-3 bg-[#2C2F4A] text-white rounded-full font-bold shadow-lg hover:bg-[#1A1B2E] transition-all transform hover:scale-105"
              >
                <span>🔓</span>
-               <span>Débloquer mon Dossier Numérologique et Astral</span>
+               <span>Débloquer mon Dossier Numérologique / Astrologique</span>
              </button>
           </div>
         )}

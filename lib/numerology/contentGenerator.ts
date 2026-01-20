@@ -1,6 +1,12 @@
 
 import { NumerologyResult } from '@/lib/types';
 import { INCLUSION_INTERPRETATIONS } from './interpretations-inclusion';
+import { 
+  LIFE_PATH_DEFINITIONS, 
+  EXPRESSION_DEFINITIONS, 
+  SOUL_URGE_DEFINITIONS, 
+  PERSONALITY_DEFINITIONS 
+} from './planDefinitions';
 
 interface NumberArchetype {
   title: string;
@@ -215,11 +221,20 @@ export const getNumberArchetype = (num: number): NumberArchetype => {
 
 export const getLifePathContent = (num: number) => {
   const arch = getNumberArchetype(num);
+  const plan = LIFE_PATH_DEFINITIONS[num] || LIFE_PATH_DEFINITIONS[1];
+  
   return {
     ...arch,
-    mission: `Votre mission d'incarnation est sous la vibration du ${num}. ${arch.desc}`,
-    positive: `En lumière, vous manifestez : ${arch.keywords[0]} et ${arch.keywords[1]}. Vous inspirez les autres par votre capacité à incarner ces vertus.`,
-    negative: `En ombre, attention à : L'excès inverse. ${arch.challenge} Si vous vibrez bas, vous pouvez devenir rigide ou fuyant.`
+    desc: plan.desc,
+    keywords: plan.keywords,
+    // Unique content for Part4Focus based on Plan Matrix
+    love: `Votre Destin Amoureux : ${plan.desc} En couple, votre parcours vous demandera d'intégrer l'énergie de ${plan.keywords[0]} et de ${plan.keywords[1]}.`,
+    work: `Votre Destin Professionnel : ${plan.desc} Votre carrière sera une montée progressive vers ${plan.keywords[2] || plan.keywords[0]} et ${plan.keywords[3] || plan.keywords[1]}.`,
+    spiritual: `Votre Destin Spirituel : ${plan.desc} Votre âme a choisi cette route pour expérimenter ${plan.keywords[0]} dans la matière.`,
+    
+    mission: `Votre mission d'incarnation est sous la vibration du ${num}. ${plan.desc}`,
+    positive: `En lumière, vous manifestez : ${plan.keywords.join(', ')}.`,
+    negative: `En ombre, attention à l'excès inverse. ${arch.challenge}`
   };
 };
 
@@ -233,34 +248,53 @@ export const getDayOfBirthContent = (day: number) => {
   return {
     ...arch,
     title: `Né(e) le ${day}`,
-    desc: `Le jour de naissance est un indicateur de talent inné. Le ${day} porte en lui la graine du ${reduced}. ${arch.desc} C'est un outil que vous utilisez instinctivement.`
+    desc: `Le jour de naissance est un indicateur de talent inné. Le ${day} porte en lui la graine du ${reduced}. C'est un outil que vous utilisez instinctivement : ${arch.keywords[0]} et ${arch.keywords[1]}.`
   };
 };
 
 export const getExpressionContent = (num: number) => {
   const arch = getNumberArchetype(num);
+  const plan = EXPRESSION_DEFINITIONS[num] || EXPRESSION_DEFINITIONS[1];
+
   return {
     ...arch,
+    desc: plan.desc,
+    keywords: plan.keywords,
+    // Unique content for Part4Focus based on Plan Matrix
+    love: `Votre Mode d'Action en Amour : ${plan.desc} Vous séduisez et interagissez par ${plan.keywords[0]} et ${plan.keywords[1]}.`,
+    work: `Votre Mode d'Action au Travail : ${plan.desc} Socialement, vous vous positionnez par ${plan.keywords[0]} et ${plan.keywords[2] || plan.keywords[1]}.`,
+    spiritual: `Votre Mode d'Expression Spirituelle : ${plan.desc} Vous témoignez de vos valeurs par ${plan.keywords[0]}.`,
+
     title: `Expression ${num} : ${arch.title}`,
-    desc: `Votre nombre d'Expression révèle comment le monde vous perçoit et comment vous agissez concrètement. Avec le ${num}, vous dégagez une aura de ${arch.keywords[0]} et de ${arch.keywords[1]}. ${arch.desc}`
   };
 };
 
 export const getSoulUrgeContent = (num: number) => {
   const arch = getNumberArchetype(num);
+  const plan = SOUL_URGE_DEFINITIONS[num] || SOUL_URGE_DEFINITIONS[1];
+
   return {
     ...arch,
+    desc: plan.desc,
+    keywords: plan.keywords,
+    // Unique content for Part4Focus based on Plan Matrix
+    love: `Vos Motivations Profondes en Amour : ${plan.desc} Votre cœur ne vibrera que s'il ressent ${plan.keywords[0]} et ${plan.keywords[1]}.`,
+    work: `Vos Motivations Profondes au Travail : ${plan.desc} Pour vous épanouir, vous avez besoin de sentir ${plan.keywords[0]} et ${plan.keywords[2] || plan.keywords[1]}.`,
+    spiritual: `Vos Aspirations d'Âme : ${plan.desc} Votre quête intérieure est celle de ${plan.keywords[0]}.`,
+
     title: `Élan Spirituel ${num}`,
-    desc: `Au plus profond de vous, votre âme a soif de ${arch.keywords[0]}. Ce qui vous motive réellement, ce n'est pas le succès extérieur, mais le sentiment de ${arch.keywords[1]}. ${arch.challenge}`
   };
 };
 
 export const getPersonalityContent = (num: number) => {
   const arch = getNumberArchetype(num);
+  const plan = PERSONALITY_DEFINITIONS[num] || PERSONALITY_DEFINITIONS[1];
+
   return {
     ...arch,
+    desc: plan.desc,
+    keywords: plan.keywords,
     title: `Moi Intime ${num}`,
-    desc: `Votre 'costume social' est celui du ${num}. Les gens vous voient d'abord comme quelqu'un de ${arch.keywords[0].toLowerCase()}. C'est votre interface avec la société. ${arch.desc}`
   };
 };
 

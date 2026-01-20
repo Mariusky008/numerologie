@@ -30,7 +30,6 @@ export default function PersonalityRadar({ data }: PersonalityRadarProps) {
 
   return (
     <div className="w-full h-[350px] md:h-[400px] bg-white rounded-xl border border-[#C9A24D]/20 shadow-sm p-2 md:p-4 flex flex-col overflow-hidden">
-      <h3 className="text-lg md:text-xl font-serif text-[#2C2F4A] text-center mb-2 md:mb-4 shrink-0">Radar de Personnalité</h3>
       <div className="flex-1 min-h-[250px] relative w-full">
         <ResponsiveContainer width="100%" height="100%" minWidth={0}>
           <RadarChart cx="50%" cy="50%" outerRadius="70%" data={chartData}>

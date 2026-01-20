@@ -10,6 +10,8 @@ interface NumberCardProps {
   keywords?: string[];
   color?: string;
   delay?: number;
+  isLocked?: boolean; // Nouvelle prop
+  onUnlock?: () => void; // Nouvelle prop
 }
 
 export default function NumberCard({ 
@@ -18,12 +20,22 @@ export default function NumberCard({
   description, 
   keywords = [], 
   color = '#C9A24D',
-  delay = 0 
+  delay = 0,
+  isLocked = false,
+  onUnlock
 }: NumberCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
 
+  const handleClick = () => {
+    if (isLocked && onUnlock) {
+      onUnlock();
+    } else {
+      setIsFlipped(!isFlipped);
+    }
+  };
+
   return (
-    <div className="group perspective-1000 w-full h-[400px] cursor-pointer" onClick={() => setIsFlipped(!isFlipped)}>
+    <div className="group perspective-1000 w-full h-[400px] cursor-pointer" onClick={handleClick}>
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -45,17 +57,26 @@ export default function NumberCard({
             
             <div 
               className="text-8xl font-serif mb-6 relative"
-              style={{ color: color }}
+              style={{ color: isLocked ? '#555' : color }}
             >
-              {number}
-              <div className="absolute inset-0 blur-2xl opacity-30" style={{ backgroundColor: color }} />
+              {isLocked ? '?' : number}
+              <div className="absolute inset-0 blur-2xl opacity-30" style={{ backgroundColor: isLocked ? '#555' : color }} />
             </div>
 
             <div className="w-12 h-[1px] bg-[#C9A24D]/50 mb-6" />
             
-            <p className="text-[#FAF9F7]/80 text-sm italic px-4">
-              "Cliquez pour révéler le sens"
-            </p>
+            {isLocked ? (
+               <div className="flex flex-col items-center gap-2">
+                 <span className="text-2xl">🔒</span>
+                 <p className="text-[#FAF9F7]/80 text-sm italic px-4 text-[#C9A24D]">
+                   Débloquer l'analyse
+                 </p>
+               </div>
+            ) : (
+              <p className="text-[#FAF9F7]/80 text-sm italic px-4">
+                "Cliquez pour révéler le sens"
+              </p>
+            )}
           </div>
         </div>
 
@@ -64,6 +85,7 @@ export default function NumberCard({
           className="absolute inset-0 w-full h-full backface-hidden rounded-2xl overflow-hidden border border-[#C9A24D]/30 shadow-xl bg-[#0F0F13] text-[#FAF9F7] rotate-y-180"
           style={{ transform: 'rotateY(180deg)' }}
         >
+          {/* ... même contenu verso ... */}
           <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay" />
           <div className="absolute inset-4 border border-[#C9A24D]/20 rounded-xl flex flex-col items-center justify-center p-6 text-center">
             

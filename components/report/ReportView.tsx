@@ -199,37 +199,9 @@ export default function ReportView({ userData }: ReportViewProps) {
 
       <div className="p-4 md:p-8">
         
-        {/* SECTION 0: PÉDAGOGIE & MODE D'EMPLOI */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-4xl mx-auto mb-12 bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm mt-8"
-        >
-          <h2 className="text-2xl font-serif text-[#2C2F4A] mb-4 flex items-center gap-2">
-            <span className="text-[#C9A24D]">★</span> {PEDAGOGY_CONTENT.intro.title}
-          </h2>
-          <div className="text-[#2C2F4A]/80 leading-relaxed whitespace-pre-line mb-6">
-            {PEDAGOGY_CONTENT.intro.content}
-          </div>
-          <div className="bg-[#FAF9F7] p-4 rounded-xl border border-[#C9A24D]/20">
-            <ul className="space-y-2">
-              {PEDAGOGY_CONTENT.intro.points_cles.map((point, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm">
-                   <Check className="w-4 h-4 text-[#C9A24D] shrink-0 mt-0.5" />
-                   <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.div>
-
-        {/* NOUVELLE SECTION CARTES DE TAROT NUMÉRIQUES */}
-        <KeyNumbersSection results={results} />
-
         {/* SECTION ANTHROPONYMIE */}
       {nameSignature && (
-        <motion.div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm">
+        <motion.div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm mb-12">
            <h3 className="text-xl font-serif text-[#2C2F4A] mb-4">Signature Vibratoire du Nom</h3>
            
            {/* Si on a trouvé l'étymologie, on l'affiche en grand */}
@@ -617,7 +589,7 @@ export default function ReportView({ userData }: ReportViewProps) {
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
              transition={{ delay: 0.9 }}
-             className="bg-gradient-to-br from-[#2C2F4A] to-[#1a1c2e] text-white p-8 rounded-2xl border border-[#2C2F4A] shadow-lg"
+             className="bg-gradient-to-br from-[#2C2F4A] to-[#1a1c2e] text-white p-8 rounded-2xl border border-[#2C2F4A] shadow-lg mb-12"
            >
              <h3 className="text-2xl font-serif text-[#FAF9F7] mb-6 flex items-center gap-3">
                <span className="text-[#C9A24D]">IX.</span> Météo Astrale & Numérologique
@@ -719,6 +691,9 @@ export default function ReportView({ userData }: ReportViewProps) {
              <p className="text-xs text-[#FAF9F7]/50 italic">Débloquez les 30 jours complets dans le Dossier PDF Premium.</p>
           </div>
         </motion.div>
+
+        {/* NOUVELLE SECTION CARTES DE TAROT NUMÉRIQUES (Teaser Fin) */}
+        <KeyNumbersSection results={results} userData={userData} />
 
         {/* CTA */}
         <div className="flex flex-col items-center gap-12 pt-8 pb-12">

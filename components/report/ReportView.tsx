@@ -587,7 +587,6 @@ export default function ReportView({ userData }: ReportViewProps) {
           
           {/* Step 1: PDF */}
           <div className="text-center space-y-4">
-            <h3 className="text-xl font-serif text-[#2C2F4A]">1. Conservez votre analyse</h3>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
                 onClick={() => {
@@ -604,8 +603,8 @@ export default function ReportView({ userData }: ReportViewProps) {
                 }}
                 className="flex items-center gap-3 px-8 py-4 bg-[#5B4B8A] text-white rounded-full hover:bg-[#6A5FA8] transition-all shadow-lg shadow-[#5B4B8A]/30 transform hover:scale-105"
               >
-                <Download className="w-5 h-5" />
-                TÉLÉCHARGER MON RAPPORT COMPLET (V3)
+                <span>🔓</span>
+                <span>Débloquer mon Dossier Complet</span>
               </button>
             </div>
           </div>

@@ -90,11 +90,17 @@ export default function Part4Focus({ userData, results }: { userData: UserData, 
           <div className="space-y-4">
              <h3 className="text-lg font-bold text-red-700 mb-2">Les Blocages à Surveiller</h3>
              <div className="bg-red-50 p-4 rounded-lg border border-red-200">
-               <h4 className="font-bold text-red-600 text-sm mb-1">Doute (Défi {results.challenges.minor1})</h4>
+               <div className="flex justify-between items-center mb-1">
+                 <h4 className="font-bold text-red-600 text-sm">Doute (Défi {results.challenges.minor1})</h4>
+                 <span className="text-[10px] text-red-400 bg-red-100 px-2 py-0.5 rounded-full">Origine : Mois - Jour</span>
+               </div>
                <p className="text-[#2C2F4A] text-xs md:text-sm">Attention à ne pas laisser l'hésitation paralyser vos initiatives dans ce domaine.</p>
              </div>
              <div className="bg-red-50 p-4 rounded-lg border border-red-200">
-               <h4 className="font-bold text-red-600 text-sm mb-1">Peur (Défi {results.challenges.major})</h4>
+               <div className="flex justify-between items-center mb-1">
+                 <h4 className="font-bold text-red-600 text-sm">Peur (Défi {results.challenges.major})</h4>
+                 <span className="text-[10px] text-red-400 bg-red-100 px-2 py-0.5 rounded-full">Origine : Synthèse des Défis</span>
+               </div>
                <p className="text-[#2C2F4A] text-xs md:text-sm">Votre peur de l'échec peut vous empêcher de saisir des opportunités en or.</p>
              </div>
           </div>

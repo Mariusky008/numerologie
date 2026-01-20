@@ -42,4 +42,5 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  /* font-family est géré par next/font dans layout.tsx */
 }

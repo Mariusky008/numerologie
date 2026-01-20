@@ -307,7 +307,7 @@ export const getPersonalityContent = (num: number) => {
     keywords: plan.keywords,
     // OVERRIDE extendedDesc
     extendedDesc: `${plan.desc}\n\nC'est la première impression que vous donnez aux autres, votre "masque social" ou votre aura naturelle avant même que vous ne parliez.`,
-    title: `Moi Intime ${num}`,
+    title: `Image Sociale ${num}`,
   };
 };
 

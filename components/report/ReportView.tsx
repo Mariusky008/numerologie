@@ -413,9 +413,12 @@ export default function ReportView({ userData }: ReportViewProps) {
              transition={{ delay: 0.7 }}
              className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm"
            >
-             <h3 className="text-2xl font-serif text-[#2C2F4A] mb-6 flex items-center gap-3">
+             <h3 className="text-2xl font-serif text-[#2C2F4A] mb-2 flex items-center gap-3">
                <span className="text-[#C9A24D]">VII.</span> Architecture Astrale
              </h3>
+             <p className="text-xs text-[#8FA6A0] italic mb-6">
+               * Positions symboliques (sauf si heure fournie).
+             </p>
 
              {/* Pedagogie Maisons */}
              <div className="mb-8 bg-[#FAF9F7] p-6 rounded-xl border border-[#C9A24D]/20">

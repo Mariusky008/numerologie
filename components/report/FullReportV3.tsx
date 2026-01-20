@@ -125,7 +125,7 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
                    : "Votre nom porte une vibration d'équilibre rare (Harmonie Voyelles/Consonnes). Cela indique une capacité naturelle à faire le pont entre l'intuition et l'action, le rêve et la réalité. Votre signature énergétique est celle d'un médiateur, unifiant les opposés."}
                </p>
                <div className="text-xs text-[#8FA6A0] italic border-t border-[#C9A24D]/10 pt-2">
-                 * Analyse basée sur la répartition phonétique de vos {nameSignature.length} lettres ({nameSignature.vowelsCount} voyelles / {nameSignature.consonantsCount} consonnes).
+                 * Analyse basée sur le prénom + nom de naissance, sans espaces ni accents, selon la méthode pythagoricienne classique. ({nameSignature.vowelsCount} voyelles / {nameSignature.consonantsCount} consonnes).
                </div>
              </div>
 
@@ -241,10 +241,7 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
            <div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm mb-12">
              <h3 className="text-2xl font-serif text-[#2C2F4A] mb-6 flex items-center gap-3">
                <span className="text-[#C9A24D]">VII.</span> Architecture Astrale
-             </h3>
-
-             {/* Pedagogie Maisons */}
-             <div className="mb-8 bg-[#FAF9F7] p-6 rounded-xl border border-[#C9A24D]/20">
+             </h3v className="mb-8 bg-[#FAF9F7] p-6 rounded-xl border border-[#C9A24D]/20">
                <h4 className="font-serif text-[#2C2F4A] text-lg mb-2">Comprendre les Maisons Astrologiques</h4>
                <p className="text-[#2C2F4A]/80 text-sm mb-4 leading-relaxed">
                  Les signes et planètes décrivent <strong>comment</strong> vous fonctionnez. Les maisons indiquent <strong>où</strong> cette énergie s’exprime concrètement. C'est la carte de vos domaines de vie.
@@ -355,7 +352,10 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
           <h3 className="text-2xl font-serif text-[#2C2F4A] mb-6">Projection Décennale (2026-2035)</h3>
           <div className="space-y-4">
             {decadeForecast.map((yearData) => (
-              <div key={yearData.year} className="flex items-center gap-4 p-4 border-b border-[#EFEDE9] last:border-0 hover:bg-[#FAF9F7] transition-colors rounded-lg">
+              <div key={yearData.year} className="flex items-ce2ter gap-4 p-4 border-b border-[#EFEDE9>
+          <p className="text-sm text-[#2C2F4A]/60 mb-6 italic">
+            (Calcul : Jour de Naissance + Mois de Naissance + Année En Cours)
+          </p] last:border-0 hover:bg-[#FAF9F7] transition-colors rounded-lg">
                 <div className="w-16 text-center shrink-0">
                   <div className="text-xl font-bold text-[#2C2F4A]">{yearData.year}</div>
                   <div className="text-xs text-[#C9A24D] font-bold uppercase">Année {yearData.personalYear}</div>

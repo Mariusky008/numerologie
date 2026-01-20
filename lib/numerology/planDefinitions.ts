@@ -41,8 +41,8 @@ export const LIFE_PATH_DEFINITIONS: Record<number, PlanDefinition> = {
     keywords: ["Pouvoir", "Réalisation", "Justice", "Matière"]
   },
   9: {
-    desc: "Votre chemin est celui du dévouement et de l'ouverture. Le destin vous demandera de dépasser vos frontières personnelles pour vous intéresser au collectif. C'est une route de voyages, d'humanisme et de lâcher-prise.",
-    keywords: ["Universel", "Voyage", "Altruisme", "Bilan"]
+    desc: "Votre chemin est celui du dévouement et de l'achèvement. Le destin vous invite à clore les cycles, à voyager (physiquement ou spirituellement) et à développer une conscience universelle. C'est une route de lâcher-prise pour atteindre une sagesse globale.",
+    keywords: ["Aboutissement", "Voyage", "Sagesse", "Bilan"]
   },
   11: {
     desc: "Votre trajectoire est celle de l'inspiration. La vie vous placera dans des situations de tension nerveuse intense pour vous forcer à canaliser des idéaux élevés. C'est un chemin d'éveilleur de conscience, hors normes.",
@@ -92,8 +92,8 @@ export const EXPRESSION_DEFINITIONS: Record<number, PlanDefinition> = {
     keywords: ["Management", "Efficacité", "Décision", "Contrôle"]
   },
   9: {
-    desc: "Vous vous présentez comme un idéaliste ou un enseignant. Votre action vise souvent le grand public ou l'international. Vous communiquez sur des valeurs, des causes et des visions larges. Vous êtes le porte-parole des émotions collectives.",
-    keywords: ["Enseignement", "International", "Causes", "Vision"]
+    desc: "Vous vous présentez comme un mentor ou un visionnaire. Votre action sociale vise à transmettre, éduquer ou défendre des valeurs. Vous êtes le porte-parole, l'enseignant ou le communicant qui s'adresse au plus grand nombre.",
+    keywords: ["Transmission", "Enseignement", "Vision", "Public"]
   },
   11: {
     desc: "Vous agissez comme un inspirateur. Votre présence électrise ou intrigue. Vous apportez des idées avant-gardistes et une vision qui sort du cadre. Votre rôle est de secouer les consciences ou d'innover radicalement.",

@@ -8,6 +8,14 @@ import KeyNumbersSection from './design-system/KeyNumbersSection';
 import PersonalityRadar from './PersonalityRadar';
 import InclusionGridViz from './InclusionGridViz';
 import WahooRevelation from './WahooRevelation';
+import Part1Identity from './parts/Part1Identity';
+import Part2Incarnation from './parts/Part2Incarnation';
+import Part3KarmaV2 from './parts/Part3KarmaV2';
+import Part4Focus from './parts/Part4Focus';
+import Part5Future from './parts/Part5Future';
+import Part6Integration from './parts/Part6Integration';
+import Part7ConclusionKeys from './parts/Part7ConclusionKeys';
+import Part8Forecast from './parts/Part8Forecast';
 import { Check } from 'lucide-react';
 import { PEDAGOGY_CONTENT } from '@/lib/numerology/modules/pedagogy';
 import { TRAINING_30D } from '@/lib/numerology/modules/training30d';
@@ -126,11 +134,11 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
           </div>
         )}
 
-        {/* 4. WAHOO REVELATION */}
-        <WahooRevelation userData={userData} results={results} />
-
-        {/* 5. CARTES DE TAROT (DÉVERROUILLÉES) */}
-        <KeyNumbersSection results={results} userData={userData} areCardsLocked={false} />
+        {/* 5.5 INCARNATION & KARMA (V2) */}
+        <div className="space-y-12 mb-12">
+          <Part2Incarnation userData={userData} results={results} />
+          <Part3KarmaV2 userData={userData} results={results} />
+        </div>
 
         {/* 6. RADAR & AXES */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
@@ -200,6 +208,11 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
           </div>
         </div>
 
+        {/* 6.5 FOCUS (V2) */}
+        <div className="mb-12">
+          <Part4Focus userData={userData} results={results} />
+        </div>
+
         {/* 7. GRILLE D'INCLUSION */}
         <div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm mb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -237,6 +250,16 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
                />
              </div>
           </div>
+        </div>
+
+        {/* 7.5 INTEGRATION (V2) */}
+        <div className="mb-12">
+          <Part6Integration userData={userData} results={results} />
+        </div>
+
+        {/* 7.5 INTEGRATION (V2) */}
+        <div className="mb-12">
+          <Part6Integration userData={userData} results={results} />
         </div>
 
         {/* 8. ARCHITECTURE ASTRALE */}
@@ -316,6 +339,11 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
            </div>
         )}
 
+        {/* 9.5 CYCLES & PINACLES (V2) */}
+        <div className="mb-12">
+          <Part5Future userData={userData} results={results} />
+        </div>
+
         {/* 10. MÉTÉO ASTRALE */}
         {results.previsions && (
            <div className="bg-gradient-to-br from-[#2C2F4A] to-[#1a1c2e] text-white p-8 rounded-2xl border border-[#2C2F4A] shadow-lg mb-12">
@@ -368,6 +396,11 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
            </div>
         )}
 
+        {/* 10.5 PRÉVISIONS DÉTAILLÉES (V2) */}
+        <div className="mb-12">
+          <Part8Forecast userData={userData} results={results} />
+        </div>
+
         {/* 11. PROJECTION 10 ANS (CONTENU PAYANT) */}
         <div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm mb-12">
           <h3 className="text-2xl font-serif text-[#2C2F4A] mb-6">Projection Décennale (2026-2035)</h3>
@@ -403,6 +436,11 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
               </div>
             ))}
           </div>
+        </div>
+
+        {/* 13. CONCLUSION (V2) */}
+        <div className="mt-12">
+          <Part7ConclusionKeys userData={userData} results={results} />
         </div>
 
       </div>

@@ -251,7 +251,7 @@ export const getDayOfBirthContent = (day: number) => {
   return {
     ...arch,
     title: `Né(e) le ${day}`,
-    desc: `Le jour de naissance est un indicateur de talent inné. Le ${day} porte en lui la graine du ${reduced}. C'est un outil que vous utilisez instinctivement : ${arch.keywords[0]} et ${arch.keywords[1]}.`,
+    desc: `Le jour de naissance est un indicateur de talent inné. Le ${day} s'exprime directement par la vibration du ${reduced}. C'est un outil que vous utilisez instinctivement : ${arch.keywords[0]} et ${arch.keywords[1]}.`,
     // OVERRIDE extendedDesc
     extendedDesc: `Votre jour de naissance (${day}) vous dote d'une capacité naturelle : ${arch.keywords[0]}. C'est un outil que vous n'avez pas besoin d'apprendre, il est inné. ${arch.desc}`
   };

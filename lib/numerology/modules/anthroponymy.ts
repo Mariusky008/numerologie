@@ -55,7 +55,7 @@ function getInitialMeaning(letter: string): string {
     "I": "Émotivité, tension, idéalisme.",
     "J": "Intelligence, direction, innovation.",
     // ... suite simplifiée
-    "M": "Travail, construction, mère.",
+    "M": "Travail, construction, structure.",
     "P": "Discrétion, philosophie, retrait.",
     "S": "Nervosité, émotivité, réussite.",
     "V": "Maîtrise, inspiration, construction."

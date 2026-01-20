@@ -116,13 +116,16 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
              {/* SYNTHÈSE VIBRATOIRE (Nouveau) */}
              <div className="mb-8 bg-[#FAF9F7] p-6 rounded-xl border-l-4 border-[#C9A24D]">
                <h4 className="font-serif text-[#2C2F4A] text-lg mb-2">Fréquence Dominante</h4>
-               <p className="text-[#2C2F4A]/80 leading-relaxed">
+               <p className="text-[#2C2F4A]/80 leading-relaxed mb-4">
                  {nameSignature.signatureType === "Intuitive & Créative" 
                    ? "Votre nom porte une vibration fluide et réceptive (dominante Yin/Voyelles). Cela indique une âme qui capte les ambiances avant de les analyser, privilégiant l'inspiration et le ressenti sur la logique pure. Votre signature énergétique est celle d'un canal, ouvert aux mondes subtils."
                    : nameSignature.signatureType === "Concrète & Active"
                    ? "Votre nom porte une vibration structurante et active (dominante Yang/Consonnes). Cela indique une âme venue pour bâtir, organiser et matérialiser. Votre signature énergétique est celle d'un architecte, capable d'ancrer les idées dans la matière."
                    : "Votre nom porte une vibration d'équilibre rare (Harmonie Voyelles/Consonnes). Cela indique une capacité naturelle à faire le pont entre l'intuition et l'action, le rêve et la réalité. Votre signature énergétique est celle d'un médiateur, unifiant les opposés."}
                </p>
+               <div className="text-xs text-[#8FA6A0] italic border-t border-[#C9A24D]/10 pt-2">
+                 * Analyse basée sur la répartition phonétique de vos {nameSignature.length} lettres ({nameSignature.vowelsCount} voyelles / {nameSignature.consonantsCount} consonnes).
+               </div>
              </div>
 
              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

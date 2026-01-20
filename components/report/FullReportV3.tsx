@@ -288,7 +288,7 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
                        {results.realAstro && (
                          <div className="text-xs text-[#C9A24D] mt-1 space-y-1">
                            <div>Ascendant : <span className="font-bold">{ascendant}</span></div>
-                           {realHouse && <div>Maison {realHouse}</div>}
+                           {realHouse && <div>Soleil en Maison {realHouse}</div>}
                          </div>
                        )}
                      </div>

@@ -37,12 +37,12 @@ export default function NumberCard({
   return (
     <div className="group perspective-1000 w-full h-[400px] cursor-pointer" onClick={handleClick}>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 50, rotateY: 0 }}
         whileInView={{ opacity: 1, y: 0 }}
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
         viewport={{ once: true }}
-        transition={{ delay, duration: 0.6 }}
-        className="relative w-full h-full transition-all duration-700 transform-style-3d"
-        style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+        transition={{ duration: 0.6 }}
+        className="relative w-full h-full transform-style-3d"
       >
         {/* RECTO */}
         <div className="absolute inset-0 w-full h-full backface-hidden rounded-2xl overflow-hidden border border-[#C9A24D]/30 shadow-xl bg-[#1A1B2E]">

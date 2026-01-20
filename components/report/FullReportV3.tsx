@@ -384,70 +384,7 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
           <Part5Future userData={userData} results={results} />
         </div>
 
-        {/* 10. MÉTÉO ASTRALE (Unifiée) */}
-        {results.previsions && (
-           <div className="bg-gradient-to-br from-[#2C2F4A] to-[#1a1c2e] text-white p-8 rounded-2xl border border-[#2C2F4A] shadow-lg mb-12">
-             <h3 className="text-2xl font-serif text-[#FAF9F7] mb-6 flex items-center gap-3">
-               <span className="text-[#C9A24D]">IX.</span> Météo Astrale & Numérologique
-             </h3>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                   <div className="flex items-center gap-4">
-                     <div className="text-4xl text-[#C9A24D]">📅</div>
-                     <div>
-                       <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Cycles Temporels</div>
-                       <div className="text-xl font-serif font-bold">Vibrations du Moment</div>
-                     </div>
-                   </div>
-                   <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
-                        <div className="text-3xl font-bold text-[#C9A24D] mb-1">{results.previsions.personalMonth}</div>
-                        <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Mois Personnel</div>
-                      </div>
-                      <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center">
-                        <div className="text-3xl font-bold text-[#C9A24D] mb-1">{results.previsions.personalDay}</div>
-                        <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Jour Personnel</div>
-                      </div>
-                   </div>
-                </div>
-                <div className="space-y-6">
-                   <div className="flex items-center gap-4">
-                     <div className="text-4xl text-[#C9A24D]">🌌</div>
-                     <div>
-                       <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Ciel Actuel</div>
-                       <div className="text-xl font-serif font-bold">Transits Planétaires</div>
-                     </div>
-                   </div>
-                   <div className="grid grid-cols-2 gap-3 text-sm">
-                      {['Sun', 'Moon', 'Saturn', 'Jupiter', 'Mars', 'Venus'].map((planet) => {
-                        const p = results.previsions?.astroTransits[planet];
-                        if (!p) return null;
-                        const planetName = {
-                          'Sun': 'Soleil',
-                          'Moon': 'Lune',
-                          'Saturn': 'Saturne',
-                          'Jupiter': 'Jupiter',
-                          'Mars': 'Mars',
-                          'Venus': 'Vénus'
-                        }[planet] || planet;
-                        
-                        return (
-                          <div key={planet} className="flex justify-between items-center bg-white/5 px-3 py-2 rounded border border-white/10">
-                            <span>{planetName}</span>
-                            <div className="flex items-center gap-1">
-                               <span className="font-bold text-[#C9A24D]">{p.signe}</span>
-                               {p.retrograde && <span className="text-[10px] bg-red-500/20 text-red-300 px-1 rounded">R</span>}
-                            </div>
-                          </div>
-                        );
-                      })}
-                   </div>
-                </div>
-             </div>
-           </div>
-        )}
-
-        {/* 10.5 PRÉVISIONS DÉTAILLÉES (V2) */}
+        {/* 10. MÉTÉO ASTRALE & PRÉVISIONS */}
         <div className="mb-12">
           <Part8Forecast userData={userData} results={results} />
         </div>

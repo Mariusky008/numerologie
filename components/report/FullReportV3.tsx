@@ -143,6 +143,7 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
         {/* 6. RADAR & AXES */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
           <div className="w-full">
+            <h3 className="text-xl font-serif text-[#2C2F4A] mb-4 text-center">Radar de Personnalité</h3>
             <PersonalityRadar data={results} />
           </div>
           <div className="space-y-6">
@@ -212,7 +213,7 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
         <div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm mb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
              <div>
-               <h3 className="text-2xl font-serif text-[#2C2F4A] mb-4">Grille d'Inclusion</h3>
+               <h3 className="text-2xl font-serif text-[#2C2F4A] mb-4">Analyse de la Grille d'Inclusion</h3>
                <p className="text-[#2C2F4A]/80 mb-6">
                  Cette matrice révèle la répartition de vos énergies.
                </p>
@@ -339,7 +340,7 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
           <Part5Future userData={userData} results={results} />
         </div>
 
-        {/* 10. MÉTÉO ASTRALE */}
+        {/* 10. MÉTÉO ASTRALE (Unifiée) */}
         {results.previsions && (
            <div className="bg-gradient-to-br from-[#2C2F4A] to-[#1a1c2e] text-white p-8 rounded-2xl border border-[#2C2F4A] shadow-lg mb-12">
              <h3 className="text-2xl font-serif text-[#FAF9F7] mb-6 flex items-center gap-3">
@@ -374,14 +375,25 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
                      </div>
                    </div>
                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      {['Sun', 'Moon', 'Saturn', 'Jupiter'].map((planet) => {
+                      {['Sun', 'Moon', 'Saturn', 'Jupiter', 'Mars', 'Venus'].map((planet) => {
                         const p = results.previsions?.astroTransits[planet];
                         if (!p) return null;
-                        const planetName = planet === 'Sun' ? 'Soleil' : planet === 'Moon' ? 'Lune' : planet === 'Saturn' ? 'Saturne' : 'Jupiter';
+                        const planetName = {
+                          'Sun': 'Soleil',
+                          'Moon': 'Lune',
+                          'Saturn': 'Saturne',
+                          'Jupiter': 'Jupiter',
+                          'Mars': 'Mars',
+                          'Venus': 'Vénus'
+                        }[planet] || planet;
+                        
                         return (
                           <div key={planet} className="flex justify-between items-center bg-white/5 px-3 py-2 rounded border border-white/10">
                             <span>{planetName}</span>
-                            <span className="font-bold text-[#C9A24D]">{p.signe}</span>
+                            <div className="flex items-center gap-1">
+                               <span className="font-bold text-[#C9A24D]">{p.signe}</span>
+                               {p.retrograde && <span className="text-[10px] bg-red-500/20 text-red-300 px-1 rounded">R</span>}
+                            </div>
                           </div>
                         );
                       })}

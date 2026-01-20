@@ -251,80 +251,7 @@ export default function ReportView({ userData }: ReportViewProps) {
         {/* WAHOO REVELATION SECTION - Added for high impact */}
         <WahooRevelation userData={userData} results={results} />
 
-        {/* Main Numbers Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Life Path Card */}
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white p-6 rounded-xl border border-[#EFEDE9] shadow-sm hover:shadow-md transition-shadow"
-          >
-            <div className="flex justify-between items-start">
-              <h2 className="text-xl font-serif text-[#2C2F4A] mb-2">{pathTitle}</h2>
-              {results.details?.lifePath.karmicDebt && (
-                <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">
-                  Dette {results.details.lifePath.karmicDebt}
-                </span>
-              )}
-            </div>
-            <p className="text-[#2C2F4A]/80 italic mb-4 text-sm leading-relaxed">{lifePathText}</p>
-            
-            {results.advancedProfile?.pathData && (
-               <div className="space-y-3 mt-4 pt-4 border-t border-[#EFEDE9]">
-                 <div>
-                   <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider block mb-1">Forces Majeures</span>
-                   <p className="text-xs text-[#2C2F4A]/70">{results.advancedProfile.pathData.forces_majeures}</p>
-                 </div>
-                 <div>
-                   <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider block mb-1">Clé d'Alignement</span>
-                   <p className="text-xs text-[#2C2F4A]/70 italic">"{results.advancedProfile.pathData.cle_alignement}"</p>
-                 </div>
-               </div>
-            )}
 
-            <div className="flex items-center gap-4 mt-4 pt-4 border-t border-[#EFEDE9]">
-              <div className="text-5xl font-bold text-[#C9A24D]/20">{results.lifePath}</div>
-              <div className="text-xs text-[#8FA6A0]">
-                Calculé à partir du {userData.birthDate}
-                {results.details?.lifePath.subNumber && results.details.lifePath.subNumber !== results.lifePath && (
-                  <span className="block text-[#C9A24D]/60 font-mono mt-1">
-                    ({results.details.lifePath.subNumber} / {results.lifePath})
-                  </span>
-                )}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Expression Card */}
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white p-6 rounded-xl border border-[#EFEDE9] shadow-sm hover:shadow-md transition-shadow"
-          >
-            <div className="flex justify-between items-start">
-              <h2 className="text-2xl font-serif text-[#2C2F4A] mb-2">Nombre d'Expression {results.expression}</h2>
-              {results.details?.expression.karmicDebt && (
-                <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider">
-                  Dette {results.details.expression.karmicDebt}
-                </span>
-              )}
-            </div>
-            <p className="text-[#2C2F4A]/80 italic mb-4">{expressionText}</p>
-            <div className="flex items-center gap-4">
-              <div className="text-6xl font-bold text-[#C9A24D]/20">{results.expression}</div>
-              <div className="text-sm text-[#8FA6A0]">
-                Basé sur votre nom complet
-                {results.details?.expression.subNumber && results.details.expression.subNumber !== results.expression && (
-                  <span className="block text-[#C9A24D]/60 font-mono mt-1">
-                    ({results.details.expression.subNumber} / {results.expression})
-                  </span>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        </div>
 
         {/* Visualization Section 1: Radar & Axes */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -651,46 +578,6 @@ export default function ReportView({ userData }: ReportViewProps) {
              </div>
            </motion.div>
         )}
-
-        {/* SECTION PROJECTION 10 ANS */}
-        <motion.div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm">
-          <h3 className="text-2xl font-serif text-[#2C2F4A] mb-6">Projection Décennale (2026-2035)</h3>
-          <div className="space-y-4">
-            {decadeForecast.map((yearData) => (
-              <div key={yearData.year} className="flex items-center gap-4 p-4 border-b border-[#EFEDE9] last:border-0 hover:bg-[#FAF9F7] transition-colors rounded-lg">
-                <div className="w-16 text-center shrink-0">
-                  <div className="text-xl font-bold text-[#2C2F4A]">{yearData.year}</div>
-                  <div className="text-xs text-[#C9A24D] font-bold uppercase">Année {yearData.personalYear}</div>
-                </div>
-                <div className="flex-1">
-                  <div className="font-bold text-[#2C2F4A] text-sm mb-1">{yearData.theme}</div>
-                  <div className="text-xs text-[#2C2F4A]/70">{yearData.focus}</div>
-                </div>
-                <div className="hidden md:block w-1/3 text-right">
-                  <div className="text-xs italic text-[#8FA6A0]">"{yearData.mantra}"</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* SECTION TRAINING 30 JOURS */}
-        <motion.div className="bg-[#2C2F4A] text-white p-8 rounded-2xl shadow-lg border border-[#5B4B8A]">
-          <h3 className="text-2xl font-serif text-[#FAF9F7] mb-6 flex items-center gap-2">
-             <span className="text-[#C9A24D]">⚡</span> Programme d'Intégration 30 Jours
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {TRAINING_30D.slice(0, 6).map((day, i) => (
-              <div key={i} className="bg-white/5 p-4 rounded-lg border border-white/10 hover:border-[#C9A24D]/50 transition-colors">
-                <div className="text-xs text-[#C9A24D] font-bold uppercase mb-1">Jour {day.day} • {day.theme}</div>
-                <p className="text-sm text-[#FAF9F7]/80">{day.action}</p>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-6">
-             <p className="text-xs text-[#FAF9F7]/50 italic">Débloquez les 30 jours complets dans le Dossier PDF Premium.</p>
-          </div>
-        </motion.div>
 
         {/* NOUVELLE SECTION CARTES DE TAROT NUMÉRIQUES (Teaser Fin) */}
         <KeyNumbersSection results={results} userData={userData} />

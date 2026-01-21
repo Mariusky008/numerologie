@@ -76,8 +76,8 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#2C2F4A] leading-[1.1] text-center mb-6"
           >
-            Ton avatar personnel <br className="hidden md:block" />
-            t’explique ta vie en <span className="text-[#C9A24D] italic">5 minutes</span>
+            Votre avatar personnel <br className="hidden md:block" />
+            vous explique votre vie en <span className="text-[#C9A24D] italic">5 minutes</span>
           </motion.h1>
 
           {/* Sous-titre / Description */}
@@ -190,7 +190,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             </button>
             <div className="mt-4 max-w-sm mx-auto">
                <strong className="text-[#5B4B8A] font-bold block text-sm mb-1">Le résumé de votre Thème Astrologique et Numérologique OFFERT</strong>
-               <p className="text-xs text-[#2C2F4A]/40 font-medium">Tu n’as rien à deviner. Tu as juste à regarder.</p>
+               <p className="text-xs text-[#2C2F4A]/40 font-medium">T ’as sn à deviner. Tu aTjsts regarder.</p>
             </div>
           </motion.div>
 
@@ -393,7 +393,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         <div className="max-w-md mx-auto bg-white p-8 rounded-2xl border border-[#C9A24D]/20 shadow-lg relative overflow-hidden">
           <div className="absolute top-0 right-0 bg-[#C9A24D] text-white text-[10px] font-bold px-3 py-1 uppercase">Pack Immédiat</div>
           
-          <h2 className="text-2xl font-serif text-[#2C2F4A] mb-6 text-center">Ce que tu reçois</h2>
+          <h2 className="text-2xl font-serif text-[#2C2F4A] mb-6 text-center">Ce que vous recevez</h2>
           
           <ul className="space-y-4 mb-8">
             <li className="flex items-center gap-4">
@@ -465,18 +465,18 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
 
       {/* 🧩 SECTION UPSELL TEASE */}
       <section className="py-12 px-6 max-w-2xl mx-auto text-center border-t border-[#EFEDE9]">
-        <h3 className="text-lg font-serif text-[#8FA6A0] mb-6 italic">Et si tu veux aller plus loin…</h3>
+        <h3 className="text-lg font-serif text-[#8FA6A0] mb-6 italic">Et si vous voulez aller plus loin…</h3>
         <p className="text-sm text-[#2C2F4A]/70 mb-6">
-          Après la vidéo, tu pourras, si tu le souhaites :
+          Après la vidéo, vous pourrez, si vous le souhaitez :
         </p>
         <div className="flex flex-col md:flex-row justify-center gap-4 text-sm text-[#2C2F4A]/80 mb-8">
           <div className="flex items-center gap-2 justify-center bg-white px-4 py-2 rounded-full border border-[#EFEDE9]">
             <FileText className="w-4 h-4 text-[#C9A24D]" />
-            <span>Télécharger ton analyse détaillée</span>
+            <span>Télécharger votre analyse détaillée</span>
           </div>
           <div className="flex items-center gap-2 justify-center bg-white px-4 py-2 rounded-full border border-[#EFEDE9]">
             <Compass className="w-4 h-4 text-[#C9A24D]" />
-            <span>Transformer ton thème en livre narratif</span>
+            <span>Transformer votre thème en livre narratif</span>
           </div>
         </div>
         <p className="text-xs text-[#2C2F4A]/40 italic">

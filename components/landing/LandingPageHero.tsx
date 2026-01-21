@@ -241,7 +241,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                      loop 
                      autoPlay
                      playsInline
-                     className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                     className="w-full h-full object-cover object-top opacity-80 group-hover:opacity-100 transition-opacity duration-700"
                   />
                   {/* Overlay Dégradé */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#2C2F4A] via-transparent to-transparent opacity-90"></div>
@@ -262,24 +262,35 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       duration: 4,
                       ease: "easeInOut"
                     }}
-                    className="absolute -bottom-6 -right-6 w-32 md:w-48 aspect-[2/3] bg-white rounded-r-lg shadow-2xl border-l-4 border-[#C9A24D] overflow-hidden transform rotate-3 hover:scale-105 transition-transform duration-300"
+                    className="absolute -bottom-8 -right-8 w-40 md:w-56 aspect-[3/4] bg-[#FAF9F7] rounded-r-md shadow-[10px_10px_30px_rgba(0,0,0,0.5)] border-l-[6px] border-[#1a1c2e] overflow-hidden transform rotate-3 hover:scale-105 transition-transform duration-300"
                   >
-                     <div className="h-full w-full bg-[#FAF9F7] p-3 flex flex-col relative">
-                        {/* Fake Content Lines */}
-                        <div className="w-full h-2 bg-[#EFEDE9] mb-4 mt-2"></div>
-                        <div className="space-y-2">
-                           <div className="w-full h-1 bg-[#2C2F4A]/10"></div>
-                           <div className="w-5/6 h-1 bg-[#2C2F4A]/10"></div>
-                           <div className="w-4/6 h-1 bg-[#2C2F4A]/10"></div>
-                           <div className="w-full h-1 bg-[#2C2F4A]/10"></div>
+                     {/* Couverture Livre */}
+                     <div className="h-full w-full flex flex-col relative border-t border-b border-r border-[#C9A24D]/30 p-4">
+                        {/* Ornements Coins */}
+                        <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-[#C9A24D]/40 rounded-tr-lg"></div>
+                        <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-[#C9A24D]/40 rounded-br-lg"></div>
+                        
+                        {/* Titre */}
+                        <div className="mt-8 text-center space-y-1">
+                           <div className="text-[10px] uppercase tracking-[0.2em] text-[#C9A24D] font-bold">Le Roman de</div>
+                           <div className="text-xl font-serif text-[#2C2F4A] font-bold leading-none">Votre Vie</div>
+                           <div className="w-8 h-[1px] bg-[#C9A24D] mx-auto my-2"></div>
                         </div>
-                        {/* Chapter Title */}
-                        <div className="mt-6 text-center">
-                           <div className="text-[8px] uppercase tracking-widest text-[#C9A24D] font-bold">Chapitre 1</div>
-                           <div className="text-[10px] font-serif text-[#2C2F4A] font-bold">L'Appel de l'Aventure</div>
+
+                        {/* Contenu visuel abstrait (Cosmic Wheel) */}
+                        <div className="flex-1 flex items-center justify-center my-2 opacity-10">
+                           <div className="w-20 h-20 rounded-full border border-[#2C2F4A] flex items-center justify-center">
+                              <div className="w-14 h-14 border border-[#2C2F4A] rotate-45"></div>
+                           </div>
                         </div>
-                        {/* Page Corner Effect */}
-                        <div className="absolute bottom-0 right-0 w-8 h-8 bg-gradient-to-tl from-black/10 to-transparent"></div>
+
+                        {/* Footer Cover */}
+                        <div className="text-center mt-auto">
+                           <div className="text-[8px] text-[#2C2F4A]/60 uppercase tracking-widest">Tome 1 • L'Éveil</div>
+                        </div>
+                        
+                        {/* Texture Papier */}
+                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-50 mix-blend-multiply pointer-events-none"></div>
                      </div>
                   </motion.div>
                </div>

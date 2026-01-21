@@ -1,5 +1,5 @@
-import React from 'react';
-import { Play, Shield, Smartphone, User, Compass, Eye, FileText, ArrowRight } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Play, Shield, Smartphone, User, Compass, Eye, FileText, ArrowRight, Volume2, VolumeX } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface LandingPageProps {
@@ -7,6 +7,31 @@ interface LandingPageProps {
 }
 
 export default function LandingPageHero({ onStart }: LandingPageProps) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+        videoRef.current.muted = false; // Unmute on click
+        setIsMuted(false);
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#FAF9F7] text-[#2C2F4A] font-sans selection:bg-[#C9A24D]/20">
       
@@ -61,7 +86,8 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="relative w-64 h-64 mx-auto my-10 rounded-full border-4 border-[#C9A24D]/30 p-2 shadow-2xl"
+            className="relative w-64 h-64 mx-auto my-10 rounded-full border-4 border-[#C9A24D]/30 p-2 shadow-2xl cursor-pointer group"
+            onClick={togglePlay}
           >
             {/* Mystic Particles (reintroduced) */}
             {Array.from({ length: 12 }).map((_, i) => (
@@ -95,25 +121,38 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             <div className="w-full h-full rounded-full overflow-hidden relative bg-gradient-to-br from-[#2C2F4A] to-[#5B4B8A] z-10">
               {/* Avatar Video Preview */}
               <video 
+                ref={videoRef}
                 src="/Ton Parcours de Vie.mp4" 
-                autoPlay 
-                muted 
+                muted={false} // Initially handled by code
                 loop 
                 playsInline
                 className="w-full h-full object-cover opacity-90"
               />
-              <div className="absolute inset-0 bg-black/10"></div>
               
-              {/* Play Button Overlay */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50 animate-pulse">
-                  <Play className="w-8 h-8 text-white fill-white ml-1" />
-                </div>
+              {/* Controls Overlay */}
+              <div className={`absolute inset-0 bg-black/20 transition-opacity duration-300 ${isPlaying ? 'opacity-0 hover:opacity-100' : 'opacity-100'}`}>
+                 <div className="absolute inset-0 flex items-center justify-center">
+                    {!isPlaying && (
+                      <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50 animate-pulse">
+                        <Play className="w-8 h-8 text-white fill-white ml-1" />
+                      </div>
+                    )}
+                 </div>
+                 
+                 {/* Mute/Unmute Button (Visible when playing) */}
+                 {isPlaying && (
+                    <button 
+                      onClick={toggleMute}
+                      className="absolute bottom-4 right-4 p-2 bg-black/40 rounded-full hover:bg-black/60 text-white transition-colors"
+                    >
+                      {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                    </button>
+                 )}
               </div>
             </div>
             
             {/* Decorative Orbit */}
-            <div className="absolute inset-0 border border-[#C9A24D] rounded-full scale-110 opacity-30 animate-spin-slow"></div>
+            <div className={`absolute inset-0 border border-[#C9A24D] rounded-full scale-110 opacity-30 ${isPlaying ? 'animate-spin-slow' : ''}`}></div>
           </motion.div>
 
           {/* CTA UNIQUE */}

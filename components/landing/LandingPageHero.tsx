@@ -55,31 +55,49 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           />
         </div>
 
-        <div className="relative z-10 text-center space-y-6">
+        <div className="relative z-10 flex flex-col items-center max-w-4xl mx-auto pt-8">
           
+          {/* Badge / Tag */}
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 px-4 py-1.5 rounded-full bg-white/80 border border-[#C9A24D]/30 shadow-sm backdrop-blur-sm flex items-center gap-2"
+          >
+             <span className="w-1.5 h-1.5 rounded-full bg-[#C9A24D] animate-pulse"></span>
+             <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#2C2F4A]/70">
+               Basée sur ta date de naissance
+             </span>
+          </motion.div>
+
           {/* Titre Principal */}
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-serif leading-tight text-[#2C2F4A]"
+            className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#2C2F4A] leading-[1.1] text-center mb-6"
           >
-            🎥 Ton avatar personnel t’explique ta vie en 5 minutes
+            Ton avatar personnel<br className="hidden md:block" />
+            t’explique ta vie en <span className="text-[#C9A24D] italic">5 minutes</span>
           </motion.h1>
 
-          <p className="text-[#C9A24D] font-bold text-sm uppercase tracking-wide">
-            Reçois ta vidéo personnalisée en moins de 5 minutes, basée sur ta date de naissance.
-          </p>
-
-          {/* Sous-titre */}
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-[#2C2F4A]/80 leading-relaxed max-w-2xl mx-auto"
+          {/* Sous-titre / Description */}
+          <motion.div 
+             initial={{ opacity: 0 }}
+             animate={{ opacity: 1 }}
+             transition={{ delay: 0.2 }}
+             className="text-center space-y-4 max-w-2xl"
           >
-            Basé sur ta numérologie et ton thème astrologique.<br className="hidden md:block"/>
-            Pas une prédiction. Une lecture claire de ton parcours.
-          </motion.p>
+            <p className="text-lg md:text-xl text-[#2C2F4A] font-medium">
+              Reçois ta vidéo personnalisée instantanément.
+            </p>
+            
+            <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 text-sm md:text-base text-[#2C2F4A]/60 font-light">
+               <span>Numérologie & Astrologie</span>
+               <span className="hidden md:inline w-1 h-1 rounded-full bg-[#C9A24D]"></span>
+               <span>Pas une prédiction</span>
+               <span className="hidden md:inline w-1 h-1 rounded-full bg-[#C9A24D]"></span>
+               <span>Une lecture claire</span>
+            </div>
+          </motion.div>
 
           {/* Visuel Central (Avatar + Play) */}
           <motion.div 

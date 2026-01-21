@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Play, Shield, Smartphone, User, Compass, Eye, FileText, ArrowRight, Volume2, VolumeX } from 'lucide-react';
+import { Play, Shield, Smartphone, User, Compass, Eye, FileText, ArrowRight, Volume2, VolumeX, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface LandingPageProps {
@@ -9,6 +9,7 @@ interface LandingPageProps {
 export default function LandingPageHero({ onStart }: LandingPageProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [showExcerpt, setShowExcerpt] = useState(false); // New state for excerpt modal
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const togglePlay = () => {
@@ -272,8 +273,8 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                         
                         {/* Titre */}
                         <div className="mt-8 text-center space-y-1">
-                           <div className="text-[10px] uppercase tracking-[0.2em] text-[#C9A24D] font-bold">Le Roman de</div>
-                           <div className="text-xl font-serif text-[#2C2F4A] font-bold leading-none">Votre Vie</div>
+                           <div className="text-[8px] uppercase tracking-[0.2em] text-[#C9A24D] font-bold">Votre Histoire</div>
+                           <div className="text-xl font-serif text-[#2C2F4A] font-bold leading-none">La Légende<br/>Intérieure</div>
                            <div className="w-8 h-[1px] bg-[#C9A24D] mx-auto my-2"></div>
                         </div>
 
@@ -282,6 +283,17 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                            <div className="w-20 h-20 rounded-full border border-[#2C2F4A] flex items-center justify-center">
                               <div className="w-14 h-14 border border-[#2C2F4A] rotate-45"></div>
                            </div>
+                        </div>
+
+                        {/* Button Extrait */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                           <button 
+                             onClick={(e) => { e.stopPropagation(); setShowExcerpt(true); }}
+                             className="bg-[#2C2F4A] text-white text-[10px] font-bold px-3 py-2 rounded-full shadow-lg flex items-center gap-1 hover:scale-105 transition-transform whitespace-nowrap"
+                           >
+                             <BookOpen className="w-3 h-3" />
+                             Lire un extrait
+                           </button>
                         </div>
 
                         {/* Footer Cover */}
@@ -537,6 +549,51 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           © {new Date().getFullYear()} Roman de Vie
         </p>
       </footer>
+
+      {/* Excerpt Modal */}
+      {showExcerpt && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setShowExcerpt(false)}>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="bg-[#FDFBF7] w-full max-w-2xl rounded-sm shadow-2xl overflow-hidden relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Book Spine Effect */}
+            <div className="absolute left-0 top-0 bottom-0 w-4 md:w-8 bg-gradient-to-r from-[#E3E1DD] to-[#FDFBF7] z-10"></div>
+            
+            <button 
+              onClick={() => setShowExcerpt(false)}
+              className="absolute top-4 right-4 text-[#2C2F4A]/40 hover:text-[#2C2F4A] transition-colors z-20"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+
+            <div className="p-8 md:p-16 pl-12 md:pl-24 font-serif text-[#2C2F4A] leading-relaxed relative max-h-[80vh] overflow-y-auto custom-scrollbar">
+              <div className="text-xs tracking-[0.2em] text-[#C9A24D] uppercase mb-8 text-center font-sans font-bold">Extrait du Chapitre 1</div>
+              
+              <div className="space-y-6 text-lg md:text-xl">
+                <p>
+                  <span className="text-5xl float-left mr-3 mt-[-10px] text-[#5B4B8A] font-bold">L</span>
+                  ’air de la pièce semblait s’être figé, comme si le temps lui-même attendait une permission pour reprendre sa course. Thomas fixa le reflet dans le miroir, mais ce n'était plus tout à fait le sien. Ce matin-là, les lignes de son visage semblaient dessiner une carte qu'il avait longtemps refusé de lire.
+                </p>
+                <p>
+                  Il se souvint de ce vieux secret qu'il portait depuis l'enfance : cette sensation d'être né sous un ciel qui exigeait trop de lui. Le nombre 14 n'était pas qu'une simple date sur son état civil ; c'était un rythme, une oscillation constante entre le besoin de tout détruire et l'envie de tout construire. Pour d'autres, c'était un mardi ordinaire. Pour lui, c'était le code source de son instabilité chronique et de son génie foudroyant.
+                </p>
+                <p>
+                  Soudain, une lueur dorée traversa la fenêtre, illuminant une vieille boussole posée sur son bureau. Thomas comprit alors ce que les cycles tentaient de lui dire depuis des mois. Il arrivait au bout de la Neuvième Terre. Tout ce qu'il avait bâti ces dernières années s'effritait, non pas par échec, mais pour laisser place à la suite. Les dragons qu'il avait combattus — ce doute persistant sur sa légitimité, cette peur de l'ombre — n'étaient en réalité que des gardiens. Ils ne voulaient pas le dévorer, ils vérifiaient s'il était prêt pour la Grande Transition.
+                </p>
+              </div>
+
+              <div className="mt-12 text-center">
+                <div className="inline-block w-16 h-[1px] bg-[#C9A24D]/50 mb-2"></div>
+                <p className="text-xs text-[#2C2F4A]/40 italic">Page 14 • Le Gardien des Seuils</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
     </div>
   );

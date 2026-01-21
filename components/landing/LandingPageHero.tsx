@@ -276,22 +276,21 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             >
                {/* Container Principal : Vidéo Avatar */}
                <div 
-                  className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer bg-gradient-to-br from-[#2C2F4A] to-[#1a1c2e]"
+                  className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer bg-black"
                   onClick={togglePreviewPlay}
                >
-                  {/* Loading State / Fallback Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#2C2F4A] to-[#5B4B8A] z-0"></div>
-
                   <video 
                      ref={previewVideoRef}
-                     src="/avatars.mp4" 
                      muted 
                      loop 
                      autoPlay 
                      playsInline
                      preload="auto"
-                     className="w-full h-full object-cover object-top relative z-10"
-                  />
+                     className="w-full h-full object-cover object-center relative z-10"
+                  >
+                    <source src="/avatars.mp4?v=2" type="video/mp4" />
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                  </video>
                   
                   {/* Bouton Play Central (Masqué si lecture) */}
                   {!isPreviewPlaying && (

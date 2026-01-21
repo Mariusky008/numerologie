@@ -271,7 +271,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                >
                   <video 
                      ref={previewVideoRef}
-                     src="/Ton Parcours de Vie.mp4" 
+                     src="/avatars.mp4" 
                      muted 
                      loop 
                      autoPlay // Play immediately to show content

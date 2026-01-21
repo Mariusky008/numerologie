@@ -188,7 +188,8 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               Découvrez ce que votre avatar dit de vous
             </button>
             <p className="text-xs text-[#2C2F4A]/40 mt-3 font-medium">
-              Votre avatar vous montre vos forces et vos blocages
+              <strong className="text-[#5B4B8A] font-bold block text-sm mb-1">Le résumé de votre Thème Astrologique et Numérologique OFFERT</strong>
+              Tu n’as rien à deviner. Tu as juste à regarder.
             </p>
           </motion.div>
 

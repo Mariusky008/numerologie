@@ -66,7 +66,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           >
              <span className="w-1.5 h-1.5 rounded-full bg-[#C9A24D] animate-pulse"></span>
              <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#2C2F4A]/70">
-               Basée sur ta date de naissance
+               Basée sur votre date de naissance
              </span>
           </motion.div>
 
@@ -88,7 +88,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              className="text-center space-y-4 max-w-2xl"
           >
             <p className="text-lg md:text-xl text-[#2C2F4A] font-medium">
-              Reçois ta vidéo personnalisée instantanément.
+              Recevez votre vidéo personnalisée instantanément.
             </p>
             
             <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 text-sm md:text-base text-[#2C2F4A]/60 font-light">
@@ -199,16 +199,16 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              <p className="text-sm font-bold text-[#C9A24D] uppercase tracking-wider mb-2 text-center">En 5 minutes, il te révèle :</p>
              <ul className="space-y-2 text-sm text-[#2C2F4A]/80">
                <li className="flex items-start gap-2">
-                 <span className="text-[#C9A24D]">✓</span> ce que tu portes profondément
+                 <span className="text-[#C9A24D]">✓</span> ce que vous portez profondément
                </li>
                <li className="flex items-start gap-2">
-                 <span className="text-[#C9A24D]">✓</span> ce que tu traverses en ce moment
+                 <span className="text-[#C9A24D]">✓</span> ce que vous traversez en ce moment
                </li>
                <li className="flex items-start gap-2">
-                 <span className="text-[#C9A24D]">✓</span> les grandes dynamiques de ta vie
+                 <span className="text-[#C9A24D]">✓</span> les grandes dynamiques de votre vie
                </li>
                <li className="flex items-start gap-2">
-                 <span className="text-[#C9A24D]">✓</span> tes forces et tes défis récurrents
+                 <span className="text-[#C9A24D]">✓</span> vos forces et vos défis récurrents
                </li>
              </ul>
              <p className="text-xs text-center pt-2 italic text-[#2C2F4A]/50 border-t border-[#EFEDE9] mt-2">
@@ -247,12 +247,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                   {/* Overlay Dégradé */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#2C2F4A] via-transparent to-transparent opacity-90"></div>
                   
-                  {/* Badge "En direct" */}
-                  <div className="absolute top-4 left-4 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
-                     <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-                     <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">Analyse en cours</span>
-                  </div>
-
+                  
                   {/* Livre Flottant (Superposé) */}
                   <motion.div 
                     initial={{ y: 20, rotate: -5 }}

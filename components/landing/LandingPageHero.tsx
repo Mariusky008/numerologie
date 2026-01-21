@@ -339,7 +339,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                            <button 
                              onClick={(e) => { e.stopPropagation(); setShowExcerpt(true); }}
-                             className="bg-[#2C2F4A] text-white text-[10px] font-bold px-3 py-2 rounded-full shadow-lg flex items-center gap-1 hover:scale-105 transition-transform whitespace-nowrap opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
+                             className="bg-[#2C2F4A] text-white text-[10px] font-bold px-3 py-2 rounded-full shadow-lg flex items-center gap-1 hover:scale-105 transition-transform whitespace-nowrap opacity-100"
                            >
                              <BookOpen className="w-3 h-3" />
                              Lire un extrait

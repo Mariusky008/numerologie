@@ -340,8 +340,11 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                      
                      {/* Titre */}
                      <div className="mt-4 text-center space-y-2 relative z-20">
-                        <div className="text-[9px] uppercase tracking-[0.2em] text-[#C9A24D] font-bold">Votre Histoire</div>
-                        <div className="text-2xl font-serif text-[#2C2F4A] font-bold leading-[0.95]">La Légende<br/>Intérieure</div>
+                        <div className="text-[9px] uppercase tracking-[0.2em] text-[#C9A24D] font-bold">Thomas R.</div>
+                        <div className="text-2xl font-serif text-[#2C2F4A] font-bold leading-[0.95]">La trajectoire</div>
+                        <div className="text-[10px] text-[#2C2F4A]/70 italic leading-tight px-1">
+                          "Une vie ne se comprend jamais dans l’ordre où elle se vit."
+                        </div>
                         <div className="w-8 h-[2px] bg-[#C9A24D] mx-auto my-3"></div>
                      </div>
 
@@ -414,7 +417,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              <div className="relative w-48 h-48 flex-shrink-0">
                <div className="absolute inset-0 bg-[#C9A24D] rounded-full blur-xl opacity-20"></div>
                <img 
-                 src="/homme.jpg" 
+                 src="/thomas.jpg?v=1" 
                  alt="Thomas, 34 ans" 
                  className="w-full h-full object-cover rounded-full border-4 border-white shadow-xl relative z-10"
                />

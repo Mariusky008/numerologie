@@ -86,7 +86,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="relative w-64 h-64 mx-auto my-10 rounded-full border-4 border-[#C9A24D]/30 p-2 shadow-2xl cursor-pointer group"
+            className="relative w-80 h-80 md:w-96 md:h-96 mx-auto my-10 rounded-full border-4 border-[#C9A24D]/30 p-2 shadow-2xl cursor-pointer group"
             onClick={togglePlay}
           >
             {/* Mystic Particles (reintroduced) */}
@@ -97,8 +97,8 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                  initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
                  animate={{ 
                    opacity: [0, 0.8, 0],
-                   x: (Math.random() - 0.5) * 300,
-                   y: (Math.random() - 0.5) * 300,
+                   x: (Math.random() - 0.5) * 350,
+                   y: (Math.random() - 0.5) * 350,
                    scale: [0.5, 1.5, 0.5],
                    rotate: Math.random() * 360
                  }}
@@ -126,15 +126,15 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                 muted={false} // Initially handled by code
                 loop 
                 playsInline
-                className="w-full h-full object-cover opacity-90"
+                className="w-full h-full object-cover object-top opacity-90"
               />
               
               {/* Controls Overlay */}
               <div className={`absolute inset-0 bg-black/20 transition-opacity duration-300 ${isPlaying ? 'opacity-0 hover:opacity-100' : 'opacity-100'}`}>
                  <div className="absolute inset-0 flex items-center justify-center">
                     {!isPlaying && (
-                      <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50 animate-pulse">
-                        <Play className="w-8 h-8 text-white fill-white ml-1" />
+                      <div className="w-24 h-24 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50 animate-pulse">
+                        <Play className="w-10 h-10 text-white fill-white ml-1" />
                       </div>
                     )}
                  </div>
@@ -143,9 +143,9 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                  {isPlaying && (
                     <button 
                       onClick={toggleMute}
-                      className="absolute bottom-4 right-4 p-2 bg-black/40 rounded-full hover:bg-black/60 text-white transition-colors"
+                      className="absolute bottom-6 right-6 p-3 bg-black/40 rounded-full hover:bg-black/60 text-white transition-colors"
                     >
-                      {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                      {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
                     </button>
                  )}
               </div>

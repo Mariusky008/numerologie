@@ -17,8 +17,29 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "Numérologie Personnalisée | Découvrez votre Chemin de Vie & Cycles",
-  description: "Obtenez votre analyse numérologique complète : Chemin de Vie, Dettes Karmiques, et Prévisions Annuelles. Une méthode précise alliant tradition et modernité.",
+  title: "Numérologie & Avatar : Votre Lecture de Vie en 5 Minutes",
+  description: "Découvrez votre avatar personnel et votre lecture de vie en 5 minutes. Une analyse numérologique unique basée sur votre date de naissance. 100% personnalisé.",
+  openGraph: {
+    title: "Numérologie & Avatar : Votre Lecture de Vie en 5 Minutes",
+    description: "Découvrez votre avatar personnel et votre lecture de vie en 5 minutes. Une analyse numérologique unique basée sur votre date de naissance.",
+    siteName: "Roman de Vie",
+    locale: "fr_FR",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg", // Image à ajouter dans le dossier public
+        width: 1200,
+        height: 630,
+        alt: "Aperçu de l'expérience Avatar Numérologique",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Numérologie & Avatar : Votre Lecture de Vie en 5 Minutes",
+    description: "Découvrez votre avatar personnel et votre lecture de vie en 5 minutes.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 export const revalidate = 0; // Disable static caching globally

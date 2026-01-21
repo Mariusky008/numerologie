@@ -276,7 +276,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             >
                {/* Container Principal : Vidéo Avatar */}
                <div 
-                  className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer bg-black"
+                  className="relative aspect-[9/16] max-w-[320px] mx-auto rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer bg-black"
                   onClick={togglePreviewPlay}
                >
                   <video 
@@ -287,7 +287,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                      playsInline
                      preload="auto"
                      poster="/avatar-poster.jpg"
-                     className="w-full h-full object-cover object-center relative z-10"
+                     className="w-full h-full object-contain bg-black relative z-10"
                   >
                     <source src="/avatars.mp4?v=2" type="video/mp4" />
                     Votre navigateur ne supporte pas la lecture de vidéos.

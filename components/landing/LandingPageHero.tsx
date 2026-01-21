@@ -266,7 +266,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             >
                {/* Container Principal : Vidéo Avatar */}
                <div 
-                  className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer"
+                  className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer bg-black"
                   onClick={togglePreviewPlay}
                >
                   <video 
@@ -278,8 +278,6 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                      playsInline
                      className="w-full h-full object-cover object-top transition-opacity duration-700"
                   />
-                  {/* Overlay Dégradé (Masqué si lecture) */}
-                  <div className={`absolute inset-0 bg-gradient-to-t from-[#2C2F4A] via-transparent to-transparent transition-opacity duration-500 pointer-events-none ${isPreviewPlaying ? 'opacity-0' : 'opacity-60'}`}></div>
                   
                   {/* Bouton Play Central (Masqué si lecture) */}
                   {!isPreviewPlaying && (

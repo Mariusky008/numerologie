@@ -481,6 +481,24 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           <Play className="w-5 h-5 fill-current" />
           Votre avatar vous montre vos forces et vos blocages
         </button>
+
+        {/* Trust Badges (Nouveau) */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-10 text-white/60">
+           <div className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-[#C9A24D]" />
+              <span className="text-xs font-medium">Paiement 100% sécurisé</span>
+           </div>
+           <div className="hidden md:block w-1 h-1 bg-white/20 rounded-full"></div>
+           <div className="flex items-center gap-2">
+              <User className="w-5 h-5 text-[#C9A24D]" />
+              <span className="text-xs font-medium">Données confidentielles (RGPD)</span>
+           </div>
+           <div className="hidden md:block w-1 h-1 bg-white/20 rounded-full"></div>
+           <div className="flex items-center gap-2">
+              <span className="text-lg">💳</span>
+              <span className="text-xs font-medium">Stripe • Visa • Mastercard</span>
+           </div>
+        </div>
       </section>
 
       {/* 🧩 SECTION 6 — AVERTISSEMENT LÉGAL */}

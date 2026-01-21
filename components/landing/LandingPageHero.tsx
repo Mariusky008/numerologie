@@ -218,6 +218,108 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         </div>
       </section>
 
+      {/* 🧩 SECTION 1.5 — APERÇU PRODUIT (NOUVEAU) */}
+      <section className="py-16 px-6 bg-[#2C2F4A] text-white relative overflow-hidden">
+         {/* Background Elements */}
+         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#C9A24D] rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
+         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#5B4B8A] rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+
+         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            
+            {/* Visualisation (Video + Livre) */}
+            <motion.div 
+               initial={{ opacity: 0, x: -50 }}
+               whileInView={{ opacity: 1, x: 0 }}
+               viewport={{ once: true }}
+               className="relative"
+            >
+               {/* Container Principal : Vidéo Avatar */}
+               <div className="relative aspect-video rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group">
+                  <video 
+                     src="/Ton Parcours de Vie.mp4" 
+                     muted 
+                     loop 
+                     autoPlay
+                     playsInline
+                     className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                  />
+                  {/* Overlay Dégradé */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C2F4A] via-transparent to-transparent opacity-90"></div>
+                  
+                  {/* Badge "En direct" */}
+                  <div className="absolute top-4 left-4 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+                     <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                     <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">Analyse en cours</span>
+                  </div>
+
+                  {/* Livre Flottant (Superposé) */}
+                  <motion.div 
+                    initial={{ y: 20, rotate: -5 }}
+                    animate={{ y: 0, rotate: 0 }}
+                    transition={{ 
+                      repeat: Infinity, 
+                      repeatType: "reverse", 
+                      duration: 4,
+                      ease: "easeInOut"
+                    }}
+                    className="absolute -bottom-6 -right-6 w-32 md:w-48 aspect-[2/3] bg-white rounded-r-lg shadow-2xl border-l-4 border-[#C9A24D] overflow-hidden transform rotate-3 hover:scale-105 transition-transform duration-300"
+                  >
+                     <div className="h-full w-full bg-[#FAF9F7] p-3 flex flex-col relative">
+                        {/* Fake Content Lines */}
+                        <div className="w-full h-2 bg-[#EFEDE9] mb-4 mt-2"></div>
+                        <div className="space-y-2">
+                           <div className="w-full h-1 bg-[#2C2F4A]/10"></div>
+                           <div className="w-5/6 h-1 bg-[#2C2F4A]/10"></div>
+                           <div className="w-4/6 h-1 bg-[#2C2F4A]/10"></div>
+                           <div className="w-full h-1 bg-[#2C2F4A]/10"></div>
+                        </div>
+                        {/* Chapter Title */}
+                        <div className="mt-6 text-center">
+                           <div className="text-[8px] uppercase tracking-widest text-[#C9A24D] font-bold">Chapitre 1</div>
+                           <div className="text-[10px] font-serif text-[#2C2F4A] font-bold">L'Appel de l'Aventure</div>
+                        </div>
+                        {/* Page Corner Effect */}
+                        <div className="absolute bottom-0 right-0 w-8 h-8 bg-gradient-to-tl from-black/10 to-transparent"></div>
+                     </div>
+                  </motion.div>
+               </div>
+            </motion.div>
+
+            {/* Texte Explicatif */}
+            <motion.div 
+               initial={{ opacity: 0, x: 50 }}
+               whileInView={{ opacity: 1, x: 0 }}
+               viewport={{ once: true }}
+               className="space-y-6 text-center lg:text-left"
+            >
+               <h2 className="text-3xl md:text-4xl font-serif leading-tight">
+                  <span className="text-[#C9A24D]">Regardez</span> votre histoire,<br/>
+                  <span className="text-white/60">puis</span> lisez votre destin.
+               </h2>
+               <p className="text-white/70 text-lg leading-relaxed max-w-lg mx-auto lg:mx-0">
+                  Votre expérience commence par une <strong>vidéo immersive</strong> où votre avatar vous parle directement. 
+                  <br/><br/>
+                  Elle se prolonge (si vous le souhaitez) par un <strong>livre unique</strong> et un <strong>dossier d'analyse</strong> complet, retraçant chaque étape de votre vie avec une précision troublante.
+               </p>
+               
+               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                  <button 
+                    onClick={onStart}
+                    className="px-8 py-4 bg-[#C9A24D] text-[#2C2F4A] rounded-full font-bold shadow-lg hover:bg-white transition-all flex items-center justify-center gap-2 group"
+                  >
+                    <Play className="w-4 h-4 fill-current group-hover:scale-110 transition-transform" />
+                    Voir votre lecture complète
+                  </button>
+                  <div className="flex items-center gap-3 px-6 py-4 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-sm text-white/80">
+                     <FileText className="w-4 h-4 text-[#C9A24D]" />
+                     <span>Aperçu immédiat</span>
+                  </div>
+               </div>
+            </motion.div>
+
+         </div>
+      </section>
+
       {/* 🧩 SECTION 2 — POURQUOI C’EST DIFFÉRENT */}
       <section className="py-16 px-6 bg-white border-y border-[#EFEDE9]">
         <div className="max-w-4xl mx-auto">

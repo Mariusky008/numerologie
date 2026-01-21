@@ -13,10 +13,20 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
   // States for Preview Video
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
   const [isPreviewMuted, setIsPreviewMuted] = useState(true);
+  const [isPreviewLoaded, setIsPreviewLoaded] = useState(false);
   
   const [showExcerpt, setShowExcerpt] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const previewVideoRef = useRef<HTMLVideoElement>(null);
+
+  // Force Autoplay on Mount
+  React.useEffect(() => {
+    if (previewVideoRef.current) {
+      previewVideoRef.current.play().catch(() => {
+        // Autoplay prevented (e.g. low power mode), waiting for user interaction
+      });
+    }
+  }, []);
 
   const togglePreviewPlay = () => {
     if (previewVideoRef.current) {
@@ -266,17 +276,22 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             >
                {/* Container Principal : Vidéo Avatar */}
                <div 
-                  className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer bg-black"
+                  className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer bg-gradient-to-br from-[#2C2F4A] to-[#1a1c2e]"
                   onClick={togglePreviewPlay}
                >
+                  {/* Loading State / Fallback Gradient */}
+                  <div className={`absolute inset-0 bg-gradient-to-br from-[#2C2F4A] to-[#5B4B8A] transition-opacity duration-700 ${isPreviewLoaded ? 'opacity-0' : 'opacity-100'} z-0`}></div>
+
                   <video 
                      ref={previewVideoRef}
                      src="/avatars.mp4" 
                      muted 
                      loop 
-                     autoPlay // Play immediately to show content
+                     autoPlay 
                      playsInline
-                     className="w-full h-full object-cover object-top transition-opacity duration-700"
+                     preload="auto"
+                     onLoadedData={() => setIsPreviewLoaded(true)}
+                     className={`w-full h-full object-cover object-top transition-opacity duration-700 relative z-10 ${isPreviewLoaded ? 'opacity-100' : 'opacity-0'}`}
                   />
                   
                   {/* Bouton Play Central (Masqué si lecture) */}

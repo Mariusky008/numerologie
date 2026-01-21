@@ -20,13 +20,13 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
   const previewVideoRef = useRef<HTMLVideoElement>(null);
 
   // Force Autoplay on Mount
-  React.useEffect(() => {
-    if (previewVideoRef.current) {
-      previewVideoRef.current.play().catch(() => {
-        // Autoplay prevented (e.g. low power mode), waiting for user interaction
-      });
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (previewVideoRef.current) {
+  //     previewVideoRef.current.play().catch(() => {
+  //       // Autoplay prevented (e.g. low power mode), waiting for user interaction
+  //     });
+  //   }
+  // }, []);
 
   const togglePreviewPlay = () => {
     if (previewVideoRef.current) {
@@ -283,7 +283,6 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                      ref={previewVideoRef}
                      muted 
                      loop 
-                     autoPlay 
                      playsInline
                      preload="auto"
                      poster="/avatar-poster.jpg"

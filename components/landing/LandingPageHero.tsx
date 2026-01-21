@@ -23,6 +23,10 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             🎥 Ton avatar personnel t’explique ta vie en 5 minutes
           </motion.h1>
 
+          <p className="text-[#C9A24D] font-bold text-sm uppercase tracking-wide">
+            Reçois ta vidéo personnalisée en moins de 5 minutes, basée sur ta date de naissance.
+          </p>
+
           {/* Sous-titre */}
           <motion.p 
             initial={{ opacity: 0 }}
@@ -111,7 +115,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-serif text-[#2C2F4A] text-center mb-10">Pourquoi c’est différent</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {/* Bloc 1 */}
             <div className="text-center space-y-3">
               <div className="w-12 h-12 bg-[#FAF9F7] rounded-full flex items-center justify-center mx-auto text-3xl">🎥</div>
@@ -135,10 +139,30 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               <div className="w-12 h-12 bg-[#FAF9F7] rounded-full flex items-center justify-center mx-auto text-3xl">🐉</div>
               <h3 className="font-bold text-[#2C2F4A]">Tes défis deviennent lisibles</h3>
               <p className="text-sm text-[#2C2F4A]/70 leading-relaxed">
-                Ce qui semblait confus prend enfin une forme compréhensible.
+                Découvre tes 3 forces principales et comment les utiliser chaque jour.
               </p>
             </div>
           </div>
+
+          {/* Témoignages (Preuve Sociale) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-[#EFEDE9]">
+            <div className="p-4 bg-[#FAF9F7] rounded-xl italic text-sm text-[#2C2F4A]/80 relative">
+               <span className="absolute top-2 left-2 text-2xl text-[#C9A24D] opacity-30">"</span>
+               "Je ne lis jamais ça, mais cette vidéo m’a aidé à comprendre mes choix."
+               <div className="mt-2 text-xs font-bold text-[#5B4B8A] not-italic">— Thomas</div>
+            </div>
+            <div className="p-4 bg-[#FAF9F7] rounded-xl italic text-sm text-[#2C2F4A]/80 relative">
+               <span className="absolute top-2 left-2 text-2xl text-[#C9A24D] opacity-30">"</span>
+               "C'est fou comme 5 minutes peuvent être plus claires que des heures de recherche."
+               <div className="mt-2 text-xs font-bold text-[#5B4B8A] not-italic">— Sarah</div>
+            </div>
+            <div className="p-4 bg-[#FAF9F7] rounded-xl italic text-sm text-[#2C2F4A]/80 relative">
+               <span className="absolute top-2 left-2 text-2xl text-[#C9A24D] opacity-30">"</span>
+               "J'ai enfin mis des mots sur ce que je ressentais depuis toujours."
+               <div className="mt-2 text-xs font-bold text-[#5B4B8A] not-italic">— Julien</div>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -154,7 +178,10 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
                 <Play className="w-5 h-5" />
               </div>
-              <span className="font-medium text-[#2C2F4A]">Une vidéo privée de 5 minutes</span>
+              <div>
+                <span className="font-medium text-[#2C2F4A] block">Une vidéo privée de 5 minutes</span>
+                <span className="text-xs text-[#2C2F4A]/50">Livraison immédiate après paiement</span>
+              </div>
             </li>
             <li className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
@@ -176,8 +203,30 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             </li>
           </ul>
 
-          <div className="bg-[#FAF9F7] p-4 rounded-lg text-center mb-4">
-            <p className="text-sm font-bold text-[#2C2F4A]">Aucun abonnement. Aucune surprise.</p>
+          <div className="bg-[#FAF9F7] p-4 rounded-lg text-center mb-4 border border-[#C9A24D]/10">
+            <div className="text-3xl font-serif text-[#C9A24D] mb-1">29€</div>
+            <p className="text-sm font-bold text-[#2C2F4A]">Paiement unique. Aucun abonnement.</p>
+          </div>
+          
+          {/* Mini Comment ça marche */}
+          <div className="mt-6 pt-6 border-t border-[#EFEDE9]">
+             <p className="text-xs text-[#8FA6A0] uppercase tracking-widest text-center mb-4">Comment ça marche</p>
+             <div className="flex justify-between items-center text-xs text-[#2C2F4A]/70 px-2">
+               <div className="flex flex-col items-center gap-1">
+                 <span className="w-6 h-6 rounded-full bg-[#FAF9F7] flex items-center justify-center font-bold text-[#5B4B8A]">1</span>
+                 <span>Date</span>
+               </div>
+               <div className="h-px w-8 bg-[#EFEDE9]"></div>
+               <div className="flex flex-col items-center gap-1">
+                 <span className="w-6 h-6 rounded-full bg-[#FAF9F7] flex items-center justify-center font-bold text-[#5B4B8A]">2</span>
+                 <span>Vidéo</span>
+               </div>
+               <div className="h-px w-8 bg-[#EFEDE9]"></div>
+               <div className="flex flex-col items-center gap-1">
+                 <span className="w-6 h-6 rounded-full bg-[#FAF9F7] flex items-center justify-center font-bold text-[#5B4B8A]">3</span>
+                 <span>Analyse</span>
+               </div>
+             </div>
           </div>
         </div>
       </section>

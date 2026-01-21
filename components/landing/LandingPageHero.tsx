@@ -93,13 +93,16 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              ))}
 
             <div className="w-full h-full rounded-full overflow-hidden relative bg-gradient-to-br from-[#2C2F4A] to-[#5B4B8A] z-10">
-              {/* Avatar Image Placeholder */}
-              <img 
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" 
-                alt="Avatar" 
-                className="w-full h-full object-cover opacity-80 mix-blend-overlay"
+              {/* Avatar Video Preview */}
+              <video 
+                src="/Ton Parcours de Vie.mp4" 
+                autoPlay 
+                muted 
+                loop 
+                playsInline
+                className="w-full h-full object-cover opacity-90"
               />
-              <div className="absolute inset-0 bg-black/20"></div>
+              <div className="absolute inset-0 bg-black/10"></div>
               
               {/* Play Button Overlay */}
               <div className="absolute inset-0 flex items-center justify-center">

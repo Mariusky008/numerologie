@@ -276,10 +276,10 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                      loop 
                      autoPlay // Play immediately to show content
                      playsInline
-                     className={`w-full h-full object-cover object-top transition-opacity duration-700 ${isPreviewPlaying ? 'opacity-100' : 'opacity-80 group-hover:opacity-100'}`}
+                     className="w-full h-full object-cover object-top transition-opacity duration-700"
                   />
                   {/* Overlay Dégradé (Masqué si lecture) */}
-                  <div className={`absolute inset-0 bg-gradient-to-t from-[#2C2F4A] via-transparent to-transparent opacity-90 transition-opacity duration-500 pointer-events-none ${isPreviewPlaying ? 'opacity-0' : 'opacity-90'}`}></div>
+                  <div className={`absolute inset-0 bg-gradient-to-t from-[#2C2F4A] via-transparent to-transparent transition-opacity duration-500 pointer-events-none ${isPreviewPlaying ? 'opacity-0' : 'opacity-60'}`}></div>
                   
                   {/* Bouton Play Central (Masqué si lecture) */}
                   {!isPreviewPlaying && (

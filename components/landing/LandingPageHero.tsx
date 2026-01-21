@@ -272,11 +272,11 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                initial={{ opacity: 0, x: -50 }}
                whileInView={{ opacity: 1, x: 0 }}
                viewport={{ once: true }}
-               className="relative"
+               className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8"
             >
                {/* Container Principal : Vidéo Avatar */}
                <div 
-                  className="relative aspect-[9/16] max-w-[320px] mx-auto rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer bg-black"
+                  className="relative aspect-[9/16] w-full max-w-[260px] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer bg-black"
                   onClick={togglePreviewPlay}
                >
                   <video 
@@ -313,61 +313,59 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                         </button>
                      </div>
                   )}
-                  
-                  
-                  {/* Livre Flottant (Superposé) */}
-                  <motion.div 
-                    initial={{ y: 20, rotate: -5 }}
-                    animate={{ y: 0, rotate: 0 }}
-                    transition={{ 
-                      repeat: Infinity, 
-                      repeatType: "reverse", 
-                      duration: 4,
-                      ease: "easeInOut"
-                    }}
-                    className="absolute bottom-4 right-4 md:-bottom-8 md:-right-8 w-32 md:w-56 aspect-[3/4] bg-[#FAF9F7] rounded-r-md shadow-[10px_10px_30px_rgba(0,0,0,0.5)] border-l-[6px] border-[#1a1c2e] overflow-hidden transform rotate-3 hover:scale-105 transition-transform duration-300 z-20"
-                  >
-                     {/* Couverture Livre */}
-                     <div className="h-full w-full flex flex-col relative border-t border-b border-r border-[#C9A24D]/30 p-4">
-                        {/* Ornements Coins */}
-                        <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-[#C9A24D]/40 rounded-tr-lg"></div>
-                        <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-[#C9A24D]/40 rounded-br-lg"></div>
-                        
-                        {/* Titre */}
-                        <div className="mt-8 text-center space-y-1">
-                           <div className="text-[8px] uppercase tracking-[0.2em] text-[#C9A24D] font-bold">Votre Histoire</div>
-                           <div className="text-xl font-serif text-[#2C2F4A] font-bold leading-none">La Légende<br/>Intérieure</div>
-                           <div className="w-8 h-[1px] bg-[#C9A24D] mx-auto my-2"></div>
-                        </div>
-
-                        {/* Contenu visuel abstrait (Cosmic Wheel) */}
-                        <div className="flex-1 flex items-center justify-center my-2 opacity-10">
-                           <div className="w-20 h-20 rounded-full border border-[#2C2F4A] flex items-center justify-center">
-                              <div className="w-14 h-14 border border-[#2C2F4A] rotate-45"></div>
-                           </div>
-                        </div>
-
-                        {/* Button Extrait */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                           <button 
-                             onClick={(e) => { e.stopPropagation(); setShowExcerpt(true); }}
-                             className="bg-[#2C2F4A] text-white text-[10px] font-bold px-3 py-2 rounded-full shadow-lg flex items-center gap-1 hover:scale-105 transition-transform whitespace-nowrap opacity-100"
-                           >
-                             <BookOpen className="w-3 h-3" />
-                             Lire un extrait
-                           </button>
-                        </div>
-
-                        {/* Footer Cover */}
-                        <div className="text-center mt-auto">
-                           <div className="text-[8px] text-[#2C2F4A]/60 uppercase tracking-widest">Tome 1 • L'Éveil</div>
-                        </div>
-                        
-                        {/* Texture Papier */}
-                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-50 mix-blend-multiply pointer-events-none"></div>
-                     </div>
-                  </motion.div>
                </div>
+                  
+               {/* Livre Flottant (À côté) */}
+               <motion.div 
+                 initial={{ y: 20, rotate: -3 }}
+                 animate={{ y: [0, -10, 0] }}
+                 transition={{ 
+                   repeat: Infinity, 
+                   duration: 6,
+                   ease: "easeInOut"
+                 }}
+                 className="w-40 md:w-48 aspect-[3/4] bg-[#FAF9F7] rounded-r-md shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] border-l-[6px] border-[#1a1c2e] overflow-hidden transform hover:scale-105 transition-transform duration-300 relative z-10"
+               >
+                  {/* Couverture Livre */}
+                  <div className="h-full w-full flex flex-col relative border-t border-b border-r border-[#C9A24D]/30 p-4">
+                     {/* Ornements Coins */}
+                     <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-[#C9A24D]/40 rounded-tr-lg"></div>
+                     <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-[#C9A24D]/40 rounded-br-lg"></div>
+                     
+                     {/* Titre */}
+                     <div className="mt-8 text-center space-y-1">
+                        <div className="text-[8px] uppercase tracking-[0.2em] text-[#C9A24D] font-bold">Votre Histoire</div>
+                        <div className="text-xl font-serif text-[#2C2F4A] font-bold leading-none">La Légende<br/>Intérieure</div>
+                        <div className="w-8 h-[1px] bg-[#C9A24D] mx-auto my-2"></div>
+                     </div>
+
+                     {/* Contenu visuel abstrait (Cosmic Wheel) */}
+                     <div className="flex-1 flex items-center justify-center my-2 opacity-10">
+                        <div className="w-20 h-20 rounded-full border border-[#2C2F4A] flex items-center justify-center">
+                           <div className="w-14 h-14 border border-[#2C2F4A] rotate-45"></div>
+                        </div>
+                     </div>
+
+                     {/* Button Extrait */}
+                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); setShowExcerpt(true); }}
+                          className="bg-[#2C2F4A] text-white text-[10px] font-bold px-3 py-2 rounded-full shadow-lg flex items-center gap-1 hover:scale-105 transition-transform whitespace-nowrap opacity-100"
+                        >
+                          <BookOpen className="w-3 h-3" />
+                          Lire un extrait
+                        </button>
+                     </div>
+
+                     {/* Footer Cover */}
+                     <div className="text-center mt-auto">
+                        <div className="text-[8px] text-[#2C2F4A]/60 uppercase tracking-widest">Tome 1 • L'Éveil</div>
+                     </div>
+                     
+                     {/* Texture Papier */}
+                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-50 mix-blend-multiply pointer-events-none"></div>
+                  </div>
+               </motion.div>
             </motion.div>
 
             {/* Texte Explicatif */}

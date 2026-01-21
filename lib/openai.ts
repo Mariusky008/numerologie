@@ -1,11 +1,18 @@
 import OpenAI from 'openai';
 import { BookRequest } from '@/app/admin/page';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function generateScriptFromReport(request: BookRequest): Promise<string> {
+  const apiKey = process.env.OPENAI_API_KEY;
+  
+  if (!apiKey) {
+    console.error("OPENAI_API_KEY is missing");
+    throw new Error("La clé API OpenAI n'est pas configurée.");
+  }
+
+  const openai = new OpenAI({
+    apiKey: apiKey,
+  });
+
   const { userData, reportResults, lifeDetails } = request;
 
   const systemPrompt = `

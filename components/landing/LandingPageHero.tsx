@@ -178,7 +178,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="pb-8"
+            className="pb-8 flex flex-col items-center text-center"
           >
             <button 
               onClick={onStart}
@@ -187,10 +187,10 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               <Play className="w-5 h-5 fill-current" />
               Découvrez ce que votre avatar dit de vous
             </button>
-            <p className="text-xs text-[#2C2F4A]/40 mt-3 font-medium">
-              <strong className="text-[#5B4B8A] font-bold block text-sm mb-1">Le résumé de votre Thème Astrologique et Numérologique OFFERT</strong>
-              Tu n’as rien à deviner. Tu as juste à regarder.
-            </p>
+            <div className="mt-4 max-w-sm mx-auto">
+               <strong className="text-[#5B4B8A] font-bold block text-sm mb-1">Le résumé de votre Thème Astrologique et Numérologique OFFERT</strong>
+               <p className="text-xs text-[#2C2F4A]/40 font-medium">Tu n’as rien à deviner. Tu as juste à regarder.</p>
+            </div>
           </motion.div>
 
           {/* Hook List */}

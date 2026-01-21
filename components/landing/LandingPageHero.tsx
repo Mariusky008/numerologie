@@ -12,7 +12,25 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
       
       {/* 🧩 SECTION 1 — HERO */}
       <section className="relative pt-8 pb-16 px-6 overflow-hidden max-w-md mx-auto md:max-w-4xl">
-        <div className="text-center space-y-6">
+        
+        {/* Glowing Orb Heartbeat (reintroduced) */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <motion.div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[80px] mix-blend-multiply opacity-20"
+            animate={{
+              scale: [0.8, 1.1, 0.8],
+              opacity: [0.15, 0.3, 0.15],
+              backgroundColor: ["#FCD34D", "#FB923C", "#FCD34D"]
+            }}
+            transition={{
+              duration: 4, 
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        </div>
+
+        <div className="relative z-10 text-center space-y-6">
           
           {/* Titre Principal */}
           <motion.h1 
@@ -45,7 +63,36 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             transition={{ delay: 0.3 }}
             className="relative w-64 h-64 mx-auto my-10 rounded-full border-4 border-[#C9A24D]/30 p-2 shadow-2xl"
           >
-            <div className="w-full h-full rounded-full overflow-hidden relative bg-gradient-to-br from-[#2C2F4A] to-[#5B4B8A]">
+            {/* Mystic Particles (reintroduced) */}
+            {Array.from({ length: 12 }).map((_, i) => (
+               <motion.div
+                 key={i}
+                 className="absolute text-[#C9A24D] font-serif font-bold pointer-events-none z-0"
+                 initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
+                 animate={{ 
+                   opacity: [0, 0.8, 0],
+                   x: (Math.random() - 0.5) * 300,
+                   y: (Math.random() - 0.5) * 300,
+                   scale: [0.5, 1.5, 0.5],
+                   rotate: Math.random() * 360
+                 }}
+                 transition={{ 
+                   duration: 3 + Math.random() * 3,
+                   repeat: Infinity,
+                   delay: Math.random() * 2,
+                   ease: "easeOut"
+                 }}
+                 style={{
+                   top: '50%',
+                   left: '50%',
+                   fontSize: Math.random() > 0.5 ? '20px' : '12px',
+                 }}
+               >
+                 {['1', '7', '4', 'A', 'Ω', '✨', '☾', '9', '3', '∞', '⚡', '8'][i % 12]}
+               </motion.div>
+             ))}
+
+            <div className="w-full h-full rounded-full overflow-hidden relative bg-gradient-to-br from-[#2C2F4A] to-[#5B4B8A] z-10">
               {/* Avatar Image Placeholder */}
               <img 
                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" 

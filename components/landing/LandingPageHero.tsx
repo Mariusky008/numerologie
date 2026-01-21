@@ -286,6 +286,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                      autoPlay 
                      playsInline
                      preload="auto"
+                     poster="/avatar-poster.jpg"
                      className="w-full h-full object-cover object-center relative z-10"
                   >
                     <source src="/avatars.mp4?v=2" type="video/mp4" />

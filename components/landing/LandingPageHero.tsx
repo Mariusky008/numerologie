@@ -377,7 +377,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           className="w-full md:w-auto px-10 py-5 bg-[#FAF9F7] text-[#2C2F4A] rounded-full font-bold text-xl shadow-lg hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-3 mx-auto"
         >
           <Play className="w-5 h-5 fill-current" />
-          Créer mon avatar personnel
+          Votre avatar vous montre vos forces et vos blocages
         </button>
       </section>
 

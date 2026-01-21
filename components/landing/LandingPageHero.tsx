@@ -280,7 +280,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                   onClick={togglePreviewPlay}
                >
                   {/* Loading State / Fallback Gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-br from-[#2C2F4A] to-[#5B4B8A] transition-opacity duration-700 ${isPreviewLoaded ? 'opacity-0' : 'opacity-100'} z-0`}></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#2C2F4A] to-[#5B4B8A] z-0"></div>
 
                   <video 
                      ref={previewVideoRef}
@@ -290,8 +290,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                      autoPlay 
                      playsInline
                      preload="auto"
-                     onLoadedData={() => setIsPreviewLoaded(true)}
-                     className={`w-full h-full object-cover object-top transition-opacity duration-700 relative z-10 ${isPreviewLoaded ? 'opacity-100' : 'opacity-0'}`}
+                     className="w-full h-full object-cover object-top relative z-10"
                   />
                   
                   {/* Bouton Play Central (Masqué si lecture) */}

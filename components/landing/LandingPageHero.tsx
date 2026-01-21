@@ -235,7 +235,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                className="relative"
             >
                {/* Container Principal : Vidéo Avatar */}
-               <div className="relative aspect-video rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group">
+               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group">
                   <video 
                      src="/Ton Parcours de Vie.mp4" 
                      muted 
@@ -333,10 +333,6 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                     <Play className="w-4 h-4 fill-current group-hover:scale-110 transition-transform" />
                     Voir votre lecture complète
                   </button>
-                  <div className="flex items-center gap-3 px-6 py-4 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-sm text-white/80">
-                     <FileText className="w-4 h-4 text-[#C9A24D]" />
-                     <span>Aperçu immédiat</span>
-                  </div>
                </div>
             </motion.div>
 

@@ -9,8 +9,35 @@ interface LandingPageProps {
 export default function LandingPageHero({ onStart }: LandingPageProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [showExcerpt, setShowExcerpt] = useState(false); // New state for excerpt modal
+  
+  // States for Preview Video
+  const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
+  const [isPreviewMuted, setIsPreviewMuted] = useState(true);
+  
+  const [showExcerpt, setShowExcerpt] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const previewVideoRef = useRef<HTMLVideoElement>(null);
+
+  const togglePreviewPlay = () => {
+    if (previewVideoRef.current) {
+      if (isPreviewPlaying) {
+        previewVideoRef.current.pause();
+      } else {
+        previewVideoRef.current.play();
+        previewVideoRef.current.muted = false;
+        setIsPreviewMuted(false);
+      }
+      setIsPreviewPlaying(!isPreviewPlaying);
+    }
+  };
+
+  const togglePreviewMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (previewVideoRef.current) {
+      previewVideoRef.current.muted = !isPreviewMuted;
+      setIsPreviewMuted(!isPreviewMuted);
+    }
+  };
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -190,7 +217,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             </button>
             <div className="mt-4 max-w-sm mx-auto">
                <strong className="text-[#5B4B8A] font-bold block text-sm mb-1">Le résumé de votre Thème Astrologique et Numérologique OFFERT</strong>
-               <p className="text-xs text-[#2C2F4A]/40 font-medium">T ’as sn à deviner. Tu aTjsts regarder.</p>
+               <p className="text-xs text-[#2C2F4A]/40 font-medium">Vous n’avez rien à deviner. Vous avez juste à regarder.</p>
             </div>
           </motion.div>
 
@@ -235,17 +262,41 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                className="relative"
             >
                {/* Container Principal : Vidéo Avatar */}
-               <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group">
+               <div 
+                  className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer"
+                  onClick={togglePreviewPlay}
+               >
                   <video 
+                     ref={previewVideoRef}
                      src="/Ton Parcours de Vie.mp4" 
                      muted 
                      loop 
-                     autoPlay
                      playsInline
-                     className="w-full h-full object-cover object-top opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                     className={`w-full h-full object-cover object-top transition-opacity duration-700 ${isPreviewPlaying ? 'opacity-100' : 'opacity-80 group-hover:opacity-100'}`}
                   />
-                  {/* Overlay Dégradé */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#2C2F4A] via-transparent to-transparent opacity-90"></div>
+                  {/* Overlay Dégradé (Masqué si lecture) */}
+                  <div className={`absolute inset-0 bg-gradient-to-t from-[#2C2F4A] via-transparent to-transparent opacity-90 transition-opacity duration-500 pointer-events-none ${isPreviewPlaying ? 'opacity-0' : 'opacity-90'}`}></div>
+                  
+                  {/* Bouton Play Central (Masqué si lecture) */}
+                  {!isPreviewPlaying && (
+                     <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_30px_rgba(201,162,77,0.3)]">
+                           <Play className="w-6 h-6 text-white fill-white ml-1" />
+                        </div>
+                     </div>
+                  )}
+
+                  {/* Contrôles Son (Visible si lecture) */}
+                  {isPreviewPlaying && (
+                     <div className="absolute bottom-6 left-6 z-30" onClick={(e) => e.stopPropagation()}>
+                        <button 
+                          onClick={togglePreviewMute}
+                          className="p-2 bg-black/40 rounded-full hover:bg-black/60 text-white transition-colors backdrop-blur-sm"
+                        >
+                          {isPreviewMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                        </button>
+                     </div>
+                  )}
                   
                   
                   {/* Livre Flottant (Superposé) */}
@@ -258,7 +309,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       duration: 4,
                       ease: "easeInOut"
                     }}
-                    className="absolute -bottom-8 -right-8 w-40 md:w-56 aspect-[3/4] bg-[#FAF9F7] rounded-r-md shadow-[10px_10px_30px_rgba(0,0,0,0.5)] border-l-[6px] border-[#1a1c2e] overflow-hidden transform rotate-3 hover:scale-105 transition-transform duration-300"
+                    className="absolute bottom-4 right-4 md:-bottom-8 md:-right-8 w-32 md:w-56 aspect-[3/4] bg-[#FAF9F7] rounded-r-md shadow-[10px_10px_30px_rgba(0,0,0,0.5)] border-l-[6px] border-[#1a1c2e] overflow-hidden transform rotate-3 hover:scale-105 transition-transform duration-300"
                   >
                      {/* Couverture Livre */}
                      <div className="h-full w-full flex flex-col relative border-t border-b border-r border-[#C9A24D]/30 p-4">
@@ -343,7 +394,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              <div className="relative w-48 h-48 flex-shrink-0">
                <div className="absolute inset-0 bg-[#C9A24D] rounded-full blur-xl opacity-20"></div>
                <img 
-                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop" 
+                 src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=300&auto=format&fit=crop" 
                  alt="Thomas, 34 ans" 
                  className="w-full h-full object-cover rounded-full border-4 border-white shadow-xl relative z-10"
                />

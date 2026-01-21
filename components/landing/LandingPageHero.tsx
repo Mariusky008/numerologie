@@ -324,7 +324,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       duration: 4,
                       ease: "easeInOut"
                     }}
-                    className="absolute bottom-4 right-4 md:-bottom-8 md:-right-8 w-32 md:w-56 aspect-[3/4] bg-[#FAF9F7] rounded-r-md shadow-[10px_10px_30px_rgba(0,0,0,0.5)] border-l-[6px] border-[#1a1c2e] overflow-hidden transform rotate-3 hover:scale-105 transition-transform duration-300"
+                    className="absolute bottom-4 right-4 md:-bottom-8 md:-right-8 w-32 md:w-56 aspect-[3/4] bg-[#FAF9F7] rounded-r-md shadow-[10px_10px_30px_rgba(0,0,0,0.5)] border-l-[6px] border-[#1a1c2e] overflow-hidden transform rotate-3 hover:scale-105 transition-transform duration-300 z-20"
                   >
                      {/* Couverture Livre */}
                      <div className="h-full w-full flex flex-col relative border-t border-b border-r border-[#C9A24D]/30 p-4">

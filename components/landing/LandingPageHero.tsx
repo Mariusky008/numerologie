@@ -331,57 +331,55 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
          </div>
       </section>
 
-      {/* 🧩 SECTION 2 — POURQUOI C’EST DIFFÉRENT */}
+      {/* 🧩 SECTION 2 — TÉMOIGNAGE UNIQUE */}
       <section className="py-16 px-6 bg-white border-y border-[#EFEDE9]">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-2xl font-serif text-[#2C2F4A] text-center mb-10">Pourquoi c’est différent</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {/* Bloc 1 */}
-            <div className="text-center space-y-3">
-              <div className="w-12 h-12 bg-[#FAF9F7] rounded-full flex items-center justify-center mx-auto text-3xl">🎥</div>
-              <h3 className="font-bold text-[#2C2F4A]">Tu regardes au lieu de lire</h3>
-              <p className="text-sm text-[#2C2F4A]/70 leading-relaxed">
-                Une vidéo courte, personnelle, accessible immédiatement.
-              </p>
-            </div>
+          <div className="flex flex-col md:flex-row items-center gap-10">
+             {/* Photo Témoin */}
+             <div className="relative w-48 h-48 flex-shrink-0">
+               <div className="absolute inset-0 bg-[#C9A24D] rounded-full blur-xl opacity-20"></div>
+               <img 
+                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop" 
+                 alt="Thomas, 34 ans" 
+                 className="w-full h-full object-cover rounded-full border-4 border-white shadow-xl relative z-10"
+               />
+               <div className="absolute -bottom-4 -right-4 bg-white p-2 rounded-full shadow-lg z-20">
+                  <span className="text-2xl">⭐️</span>
+               </div>
+             </div>
 
-            {/* Bloc 2 */}
-            <div className="text-center space-y-3">
-              <div className="w-12 h-12 bg-[#FAF9F7] rounded-full flex items-center justify-center mx-auto text-3xl">🧭</div>
-              <h3 className="font-bold text-[#2C2F4A]">Une structure, pas du hasard</h3>
-              <p className="text-sm text-[#2C2F4A]/70 leading-relaxed">
-                Tes nombres servent de trame à ton histoire et donnent une cohérence à ce que tu vis.
-              </p>
-            </div>
+             {/* Contenu Témoignage */}
+             <div className="flex-1 text-center md:text-left space-y-6">
+                <div className="space-y-2">
+                   <div className="flex items-center justify-center md:justify-start gap-2 text-[#C9A24D]">
+                      <span className="text-xl">★★★★★</span>
+                      <span className="text-xs font-bold uppercase tracking-widest text-[#2C2F4A]/40">Vérifié</span>
+                   </div>
+                   <h3 className="font-serif text-2xl md:text-3xl text-[#2C2F4A] leading-tight">
+                     "Je pensais me connaître, mais je n'avais lu que la préface."
+                   </h3>
+                </div>
 
-            {/* Bloc 3 */}
-            <div className="text-center space-y-3">
-              <div className="w-12 h-12 bg-[#FAF9F7] rounded-full flex items-center justify-center mx-auto text-3xl">🐉</div>
-              <h3 className="font-bold text-[#2C2F4A]">Tes défis deviennent lisibles</h3>
-              <p className="text-sm text-[#2C2F4A]/70 leading-relaxed">
-                Découvre tes 3 forces principales et comment les utiliser chaque jour.
-              </p>
-            </div>
-          </div>
+                <div className="space-y-4 text-[#2C2F4A]/70 text-lg font-light leading-relaxed">
+                   <p>
+                     J'étais sceptique au début. Un "livre" sur moi ? Je m'attendais à un horoscope glorifié, un PDF générique rempli de phrases bateau.
+                   </p>
+                   <p>
+                     Mais dès la première page, j'ai été happé. Ce n'est pas juste une analyse froide. <strong className="text-[#5B4B8A] font-medium">L'équipe de "Votre Légende" a tissé une véritable histoire.</strong>
+                   </p>
+                   <p>
+                     Quand j'ai lu le passage sur mon "instabilité chronique" transformée en "génie foudroyant", j'ai eu les larmes aux yeux. J'ai compris que ce que je voyais comme un défaut était en fait ma plus grande arme.
+                   </p>
+                </div>
 
-          {/* Témoignages (Preuve Sociale) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-[#EFEDE9]">
-            <div className="p-4 bg-[#FAF9F7] rounded-xl italic text-sm text-[#2C2F4A]/80 relative">
-               <span className="absolute top-2 left-2 text-2xl text-[#C9A24D] opacity-30">"</span>
-               "Je ne lis jamais ça, mais cette vidéo m’a aidé à comprendre mes choix."
-               <div className="mt-2 text-xs font-bold text-[#5B4B8A] not-italic">— Thomas</div>
-            </div>
-            <div className="p-4 bg-[#FAF9F7] rounded-xl italic text-sm text-[#2C2F4A]/80 relative">
-               <span className="absolute top-2 left-2 text-2xl text-[#C9A24D] opacity-30">"</span>
-               "C'est fou comme 5 minutes peuvent être plus claires que des heures de recherche."
-               <div className="mt-2 text-xs font-bold text-[#5B4B8A] not-italic">— Sarah</div>
-            </div>
-            <div className="p-4 bg-[#FAF9F7] rounded-xl italic text-sm text-[#2C2F4A]/80 relative">
-               <span className="absolute top-2 left-2 text-2xl text-[#C9A24D] opacity-30">"</span>
-               "J'ai enfin mis des mots sur ce que je ressentais depuis toujours."
-               <div className="mt-2 text-xs font-bold text-[#5B4B8A] not-italic">— Julien</div>
-            </div>
+                <div className="pt-4 border-t border-[#EFEDE9] flex flex-col md:flex-row items-center gap-4">
+                   <div className="text-left">
+                      <div className="font-bold text-[#2C2F4A]">Thomas R.</div>
+                      <div className="text-sm text-[#2C2F4A]/50">34 ans • Entrepreneur • Chemin de Vie 5</div>
+                   </div>
+                </div>
+             </div>
           </div>
 
         </div>

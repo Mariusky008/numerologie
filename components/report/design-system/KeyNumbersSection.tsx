@@ -83,50 +83,63 @@ export default function KeyNumbersSection({ results, userData, areCardsLocked = 
         </div>
         
         {areCardsLocked && (
-          <div className="flex justify-center mt-12">
-             <button 
-               onClick={handleUnlock}
-               className="group relative w-full max-w-md bg-[#2C2F4A] rounded-2xl p-4 shadow-2xl hover:scale-[1.02] transition-transform duration-300 border-2 border-[#C9A24D]/30 overflow-hidden text-left"
-             >
-               {/* Background Effect */}
-               <div className="absolute inset-0 bg-gradient-to-r from-[#2C2F4A] to-[#5B4B8A] opacity-90"></div>
-               
-               <div className="relative z-10 flex items-center gap-6">
-                 {/* Fake Video Thumbnail */}
-                 <div className="w-24 h-24 rounded-full border-2 border-[#C9A24D] bg-black/50 flex-shrink-0 relative overflow-hidden shadow-lg">
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
-                      <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50">
-                        <svg className="w-5 h-5 text-white fill-current ml-1" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
+          <div className="flex justify-center mt-16">
+             <div className="w-full max-w-4xl bg-[#2C2F4A] rounded-2xl shadow-2xl overflow-hidden border border-[#C9A24D]/30 relative group">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
+                
+                <div className="flex flex-col md:flex-row">
+                   {/* Left: Video Preview Area (Large) */}
+                   <div className="md:w-5/12 relative min-h-[300px] bg-black">
+                      <video 
+                        src="/Ton Parcours de Vie.mp4" 
+                        className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-700"
+                        muted loop autoPlay playsInline
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#2C2F4A] md:to-transparent md:bg-gradient-to-l opacity-50"></div>
+                      
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_30px_rgba(201,162,77,0.3)]">
+                           <svg className="w-6 h-6 text-white fill-current ml-1" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                        </div>
                       </div>
-                    </div>
-                    {/* Placeholder for Avatar Image/Video */}
-                    <div className="absolute inset-0 -z-10 bg-cover bg-center opacity-80" style={{ backgroundImage: "url('/avatar-preview.jpg')" }}>
-                      {/* Fallback gradient if no image */}
-                      <div className="w-full h-full bg-gradient-to-br from-[#C9A24D] to-[#2C2F4A]"></div>
-                    </div>
-                 </div>
-
-                 {/* Text Content */}
-                 <div className="flex-1">
-                   <div className="text-[#C9A24D] text-xs font-bold uppercase tracking-widest mb-1">Révélation</div>
-                   <h3 className="text-xl font-serif text-white leading-tight mb-2">Votre destin révélé par votre avatar</h3>
-                   <div className="flex items-center gap-2 text-white/60 text-xs">
-                     <span className="bg-white/10 px-2 py-0.5 rounded">Vidéo 5 min</span>
-                     <span>•</span>
-                     <span>Format Audio & Visuel</span>
+                      <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded text-xs text-white font-bold flex items-center gap-2 border border-white/10">
+                        <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                        VIDÉO PRIVÉE
+                      </div>
                    </div>
-                 </div>
-                 
-                 {/* Arrow Icon */}
-                 <div className="text-[#C9A24D]">
-                   <svg className="w-6 h-6 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                   </svg>
-                 </div>
-               </div>
-             </button>
+
+                   {/* Right: Content & CTA */}
+                   <div className="md:w-7/12 p-8 md:p-12 flex flex-col justify-center text-left relative z-10">
+                      <div className="inline-block px-3 py-1 rounded bg-[#C9A24D]/10 text-[#C9A24D] text-xs font-bold tracking-widest uppercase mb-4 w-fit border border-[#C9A24D]/20">
+                        Révélation
+                      </div>
+                      
+                      <h3 className="text-3xl md:text-4xl font-serif text-white leading-tight mb-4">
+                        Votre destin révélé <br/> par votre avatar
+                      </h3>
+                      
+                      <p className="text-[#8FA6A0] text-lg mb-8 leading-relaxed">
+                        Une analyse vidéo de 5 minutes, 100% personnalisée. <br className="hidden md:block" />
+                        Découvrez vos blocages inconscients et vos plus grandes opportunités de vie.
+                      </p>
+
+                      <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-stretch">
+                        <button 
+                          onClick={handleUnlock}
+                          className="w-full sm:w-auto px-8 py-4 bg-[#C9A24D] text-[#2C2F4A] rounded-full font-bold text-lg hover:bg-white hover:scale-105 transition-all shadow-[0_10px_20px_-5px_rgba(201,162,77,0.4)] flex items-center justify-center gap-2"
+                        >
+                          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                          Débloquer ma vidéo
+                        </button>
+                        <div className="flex items-center gap-2 text-white/40 text-sm px-2">
+                           <span className="w-1.5 h-1.5 rounded-full bg-[#C9A24D]"></span>
+                           Format Audio & Visuel
+                        </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
           </div>
         )}
       </div>

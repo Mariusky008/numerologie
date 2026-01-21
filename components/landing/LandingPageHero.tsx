@@ -398,7 +398,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              <div className="relative w-48 h-48 flex-shrink-0">
                <div className="absolute inset-0 bg-[#C9A24D] rounded-full blur-xl opacity-20"></div>
                <img 
-                 src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=300&auto=format&fit=crop" 
+                 src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300&auto=format&fit=crop" 
                  alt="Thomas, 34 ans" 
                  className="w-full h-full object-cover rounded-full border-4 border-white shadow-xl relative z-10"
                />

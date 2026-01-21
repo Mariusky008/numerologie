@@ -23,6 +23,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
       if (isPreviewPlaying) {
         previewVideoRef.current.pause();
       } else {
+        previewVideoRef.current.currentTime = 0; // Restart video from beginning
         previewVideoRef.current.play();
         previewVideoRef.current.muted = false;
         setIsPreviewMuted(false);
@@ -44,6 +45,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
       if (isPlaying) {
         videoRef.current.pause();
       } else {
+        videoRef.current.currentTime = 0; // Restart video from beginning
         videoRef.current.play();
         videoRef.current.muted = false; // Unmute on click
         setIsMuted(false);
@@ -169,7 +171,8 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               <video 
                 ref={videoRef}
                 src="/Ton Parcours de Vie.mp4" 
-                muted={false} // Initially handled by code
+                muted // Always start muted for autoplay policy
+                autoPlay // Play immediately to show content
                 loop 
                 playsInline
                 className="w-full h-full object-cover object-top opacity-90"
@@ -271,6 +274,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                      src="/Ton Parcours de Vie.mp4" 
                      muted 
                      loop 
+                     autoPlay // Play immediately to show content
                      playsInline
                      className={`w-full h-full object-cover object-top transition-opacity duration-700 ${isPreviewPlaying ? 'opacity-100' : 'opacity-80 group-hover:opacity-100'}`}
                   />

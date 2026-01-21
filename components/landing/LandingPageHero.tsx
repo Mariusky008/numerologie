@@ -265,6 +265,19 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
 
       {/* 🧩 SECTION 6 — AVERTISSEMENT LÉGAL */}
       <footer className="py-8 px-6 bg-[#FAF9F7] text-center">
+        {/* Navigation Footer */}
+        <div className="flex flex-wrap justify-center gap-6 text-xs text-[#2C2F4A]/60 mb-8 font-medium">
+          <a href="/cgv" className="hover:text-[#5B4B8A] transition-colors">CGV</a>
+          <span className="text-[#EFEDE9]">•</span>
+          <a href="/cgu" className="hover:text-[#5B4B8A] transition-colors">CGU</a>
+          <span className="text-[#EFEDE9]">•</span>
+          <a href="/mentions-legales" className="hover:text-[#5B4B8A] transition-colors">Mentions Légales</a>
+          <span className="text-[#EFEDE9]">•</span>
+          <a href="/confidentialite" className="hover:text-[#5B4B8A] transition-colors">Politique de Confidentialité</a>
+          <span className="text-[#EFEDE9]">•</span>
+          <a href="mailto:contact@roman-de-vie.com" className="hover:text-[#5B4B8A] transition-colors">Contact</a>
+        </div>
+
         <div className="max-w-2xl mx-auto p-4 bg-[#EFEDE9]/30 rounded-xl">
           <p className="text-[10px] md:text-xs text-[#2C2F4A]/50 leading-relaxed">
             <strong className="block mb-1 text-[#2C2F4A]/70">⚠️ Information importante</strong>

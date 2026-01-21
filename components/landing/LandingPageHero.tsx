@@ -234,7 +234,10 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
                 <Shield className="w-5 h-5" />
               </div>
-              <span className="font-medium text-[#2C2F4A]">Accessible à vie</span>
+              <div>
+                <span className="font-medium text-[#2C2F4A] block">Accessible à vie</span>
+                <span className="text-xs text-[#2C2F4A]/50">Données sécurisées & confidentielles</span>
+              </div>
             </li>
             <li className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
@@ -246,13 +249,20 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
                 <User className="w-5 h-5" />
               </div>
-              <span className="font-medium text-[#2C2F4A]">100 % personnalisée</span>
+              <div>
+                 <span className="font-medium text-[#2C2F4A] block">100 % personnalisée</span>
+                 <span className="text-xs text-[#2C2F4A]/50">Garantie de satisfaction</span>
+              </div>
             </li>
           </ul>
 
           <div className="bg-[#FAF9F7] p-4 rounded-lg text-center mb-4 border border-[#C9A24D]/10">
             <div className="text-3xl font-serif text-[#C9A24D] mb-1">29€</div>
             <p className="text-sm font-bold text-[#2C2F4A]">Paiement unique. Aucun abonnement.</p>
+            <div className="flex justify-center gap-2 mt-2 opacity-50">
+               <span className="text-[10px] border border-[#2C2F4A] px-1 rounded">🔒 Paiement Sécurisé</span>
+               <span className="text-[10px] border border-[#2C2F4A] px-1 rounded">🛡 Données Privées</span>
+            </div>
           </div>
           
           {/* Mini Comment ça marche */}

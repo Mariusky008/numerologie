@@ -14,6 +14,9 @@ export interface BookRequest {
     bookLength?: number;
     paperOption?: boolean;
     reportPaperOption?: boolean;
+    generated_script?: string; // Script IA
+    video_status?: 'pending' | 'processing' | 'completed' | 'failed';
+    video_url?: string;
     delivery?: {
       email: string;
       address?: string;
@@ -22,6 +25,7 @@ export interface BookRequest {
       country?: string;
     };
   };
+  generated_script?: string; // Direct column
   reportResults: NumerologyResult;
   lifeDetails: {
     placesLived: string;
@@ -45,6 +49,10 @@ export default function AdminDashboard() {
   const [requests, setRequests] = useState<BookRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [generatingId, setGeneratingId] = useState<string | null>(null);
+  const [scriptGeneratingId, setScriptGeneratingId] = useState<string | null>(null);
+  const [editingScriptId, setEditingScriptId] = useState<string | null>(null);
+  const [tempScript, setTempScript] = useState<string>("");
+  const [videoGeneratingId, setVideoGeneratingId] = useState<string | null>(null);
   const [stats, setStats] = useState<any>({});
 
   useEffect(() => {
@@ -74,6 +82,7 @@ export default function AdminDashboard() {
           id: item.id,
           date: item.created_at,
           status: item.status,
+          generated_script: item.generated_script || item.user_data?.generated_script, // Load script
           userData: item.user_data,
           reportResults: item.numerology_result.reportResults,
           lifeDetails: item.numerology_result.lifeDetails
@@ -117,6 +126,77 @@ export default function AdminDashboard() {
       alert("Erreur réseau.");
     } finally {
       setGeneratingId(null);
+    }
+  };
+
+  const handleGenerateScript = async (req: BookRequest) => {
+    setScriptGeneratingId(req.id);
+    try {
+      const res = await fetch('/api/generate-script', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: req.id, requestData: req }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setRequests(requests.map(r => 
+          r.id === req.id ? { ...r, generated_script: data.script } : r
+        ));
+        alert("Script généré avec succès !");
+      } else {
+        alert("Erreur: " + data.error);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Erreur réseau");
+    } finally {
+      setScriptGeneratingId(null);
+    }
+  };
+
+  const handleEditScript = (req: BookRequest) => {
+    setEditingScriptId(req.id);
+    setTempScript(req.generated_script || "");
+  };
+
+  const handleSaveScript = async (id: string) => {
+    // Here we should save to DB, for now we just update local state
+    // Ideally create an endpoint to update just the script
+    setRequests(requests.map(r => 
+      r.id === id ? { ...r, generated_script: tempScript } : r
+    ));
+    setEditingScriptId(null);
+  };
+
+  const handleGenerateVideo = async (req: BookRequest) => {
+    if (!req.generated_script) return;
+    
+    if (!confirm("Voulez-vous lancer la production vidéo HeyGen ? Cela consommera des crédits.")) {
+      return;
+    }
+
+    setVideoGeneratingId(req.id);
+    try {
+      const res = await fetch('/api/generate-video', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: req.id, script: req.generated_script }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Production vidéo lancée ! ID HeyGen: " + data.video_id);
+        // Refresh requests to show processing status
+        fetchRequests();
+      } else {
+        alert("Erreur HeyGen: " + data.error);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Erreur réseau");
+    } finally {
+      setVideoGeneratingId(null);
     }
   };
 
@@ -488,6 +568,111 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                 </div>
 
                 {/* Actions */}
+                
+                {/* STUDIO VIDEO SECTION */}
+                <div className="bg-slate-50 p-6 border-t border-stone-100">
+                  <h4 className="font-serif font-bold text-[#78350f] mb-4 flex items-center gap-2">
+                    <Music className="w-4 h-4" /> Studio Vidéo IA
+                  </h4>
+                  
+                  {!req.generated_script ? (
+                    <div className="text-center py-6 border-2 border-dashed border-slate-200 rounded-lg">
+                      <p className="text-sm text-slate-500 mb-4">Aucun script généré pour le moment</p>
+                      <button
+                        onClick={() => handleGenerateScript(req)}
+                        disabled={!!scriptGeneratingId}
+                        className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm inline-flex items-center gap-2 disabled:opacity-50"
+                      >
+                        {scriptGeneratingId === req.id ? (
+                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></div>
+                        ) : (
+                          <Sparkles className="w-4 h-4" />
+                        )}
+                        Rédiger avec ChatGPT
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {editingScriptId === req.id ? (
+                        <div className="space-y-2">
+                          <textarea
+                            value={tempScript}
+                            onChange={(e) => setTempScript(e.target.value)}
+                            className="w-full h-64 p-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 font-mono text-sm"
+                          />
+                          <div className="flex justify-end gap-2">
+                            <button 
+                              onClick={() => setEditingScriptId(null)}
+                              className="px-3 py-1 text-slate-600 hover:text-slate-800"
+                            >
+                              Annuler
+                            </button>
+                            <button 
+                              onClick={() => handleSaveScript(req.id)}
+                              className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+                            >
+                              Valider le Script
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="relative group">
+                          <div className="bg-white p-4 rounded-lg border border-slate-200 text-sm leading-relaxed whitespace-pre-wrap max-h-60 overflow-y-auto">
+                            {req.generated_script}
+                          </div>
+                          <button
+                            onClick={() => handleEditScript(req)}
+                            className="absolute top-2 right-2 p-2 bg-white/90 shadow rounded-full text-slate-500 hover:text-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            <PenTool className="w-4 h-4" />
+                          </button>
+                        </div>
+                      )}
+                      
+                      {/* HeyGen Action */}
+                      <div className="flex justify-end pt-2">
+                        {/* Status Display */}
+                         {req.userData?.video_status && (
+                            <div className="mr-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider">
+                              {req.userData.video_status === 'completed' && <span className="text-green-600">Vidéo Prête</span>}
+                              {req.userData.video_status === 'processing' && <span className="text-amber-600 animate-pulse">En cours...</span>}
+                              {req.userData.video_status === 'failed' && <span className="text-red-600">Échec</span>}
+                            </div>
+                         )}
+
+                         <button 
+                           onClick={() => handleGenerateVideo(req)}
+                           disabled={!!videoGeneratingId || req.userData?.video_status === 'processing'}
+                           className="flex items-center gap-2 px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-wait"
+                         >
+                            {videoGeneratingId === req.id ? (
+                               <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></div>
+                            ) : (
+                               <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                            )}
+                            Production HeyGen
+                         </button>
+                      </div>
+
+                      {/* Video Player */}
+                      {req.userData?.video_url && (
+                        <div className="mt-4 border rounded-lg overflow-hidden bg-black">
+                           <video 
+                             src={req.userData.video_url} 
+                             controls 
+                             className="w-full h-auto max-h-[400px] mx-auto"
+                           />
+                           <div className="p-2 bg-stone-100 flex justify-center">
+                              <a href={req.userData.video_url} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">
+                                Ouvrir dans un nouvel onglet
+                              </a>
+                           </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
                 <div className="p-4 bg-stone-50 border-t border-stone-100 flex justify-between gap-3">
                   <button
                     onClick={() => handleDelete(req.id)}

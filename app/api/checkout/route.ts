@@ -50,6 +50,29 @@ export async function POST(request: Request) {
         unitAmount += extraPages * 1000; // +10€ par tranche de 100 pages
         description += ` + Extension ${orderInfo.bookLength} pages`;
       }
+    } else if (orderInfo.plan === 'avatar') {
+      productName = "Votre Destin Révélé par votre Avatar";
+      unitAmount = 2900; // 29.00€ (Base Vidéo)
+      description = "Vidéo Personnalisée (5 min)";
+
+      // Option PDF (+10€)
+      if (orderInfo.includeReport) {
+        unitAmount += 1000;
+        description += " + Dossier PDF Complet";
+      }
+
+      // Option Livre (+29€ base)
+      if (orderInfo.includeBook) {
+        unitAmount += 2900;
+        description += " + Roman de Vie (E-Book)";
+        
+        // Extension de pages Livre
+        if (orderInfo.bookLength && orderInfo.bookLength > 100) {
+          const extraPages = (orderInfo.bookLength - 100) / 100;
+          unitAmount += extraPages * 1000;
+          description += ` (${orderInfo.bookLength} pages)`;
+        }
+      }
     }
 
       // URL de succès modifiée pour rediriger vers la nouvelle page de remerciement

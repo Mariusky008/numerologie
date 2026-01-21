@@ -83,13 +83,49 @@ export default function KeyNumbersSection({ results, userData, areCardsLocked = 
         </div>
         
         {areCardsLocked && (
-          <div className="text-center mt-12">
+          <div className="flex justify-center mt-12">
              <button 
                onClick={handleUnlock}
-               className="inline-flex items-center gap-2 px-8 py-3 bg-[#2C2F4A] text-white rounded-full font-bold shadow-lg hover:bg-[#1A1B2E] transition-all transform hover:scale-105"
+               className="group relative w-full max-w-md bg-[#2C2F4A] rounded-2xl p-4 shadow-2xl hover:scale-[1.02] transition-transform duration-300 border-2 border-[#C9A24D]/30 overflow-hidden text-left"
              >
-               <span>🔓</span>
-               <span>Débloquer mon Dossier Numérologique / Astrologique</span>
+               {/* Background Effect */}
+               <div className="absolute inset-0 bg-gradient-to-r from-[#2C2F4A] to-[#5B4B8A] opacity-90"></div>
+               
+               <div className="relative z-10 flex items-center gap-6">
+                 {/* Fake Video Thumbnail */}
+                 <div className="w-24 h-24 rounded-full border-2 border-[#C9A24D] bg-black/50 flex-shrink-0 relative overflow-hidden shadow-lg">
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                      <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50">
+                        <svg className="w-5 h-5 text-white fill-current ml-1" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                    {/* Placeholder for Avatar Image/Video */}
+                    <div className="absolute inset-0 -z-10 bg-cover bg-center opacity-80" style={{ backgroundImage: "url('/avatar-preview.jpg')" }}>
+                      {/* Fallback gradient if no image */}
+                      <div className="w-full h-full bg-gradient-to-br from-[#C9A24D] to-[#2C2F4A]"></div>
+                    </div>
+                 </div>
+
+                 {/* Text Content */}
+                 <div className="flex-1">
+                   <div className="text-[#C9A24D] text-xs font-bold uppercase tracking-widest mb-1">Révélation</div>
+                   <h3 className="text-xl font-serif text-white leading-tight mb-2">Votre destin révélé par votre avatar</h3>
+                   <div className="flex items-center gap-2 text-white/60 text-xs">
+                     <span className="bg-white/10 px-2 py-0.5 rounded">Vidéo 5 min</span>
+                     <span>•</span>
+                     <span>Format Audio & Visuel</span>
+                   </div>
+                 </div>
+                 
+                 {/* Arrow Icon */}
+                 <div className="text-[#C9A24D]">
+                   <svg className="w-6 h-6 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                   </svg>
+                 </div>
+               </div>
              </button>
           </div>
         )}

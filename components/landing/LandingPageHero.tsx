@@ -75,7 +75,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#2C2F4A] leading-[1.1] text-center mb-6"
           >
-            Ton avatar personnel<br className="hidden md:block" />
+            Ton avatar personnel <br className="hidden md:block" />
             t’explique ta vie en <span className="text-[#C9A24D] italic">5 minutes</span>
           </motion.h1>
 

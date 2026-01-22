@@ -367,62 +367,108 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         </div>
       </section>
 
-      {/* 🧩 SECTION 3 — CE QUE TU REÇOIS */}
-      <section className="py-16 px-6 bg-[#FAF9F7]">
-        <div className="max-w-md mx-auto bg-white p-8 rounded-2xl border border-[#C9A24D]/20 shadow-lg relative overflow-hidden">
-          <div className="absolute top-0 right-0 bg-[#C9A24D] text-white text-[10px] font-bold px-3 py-1 uppercase">Pack Révélation</div>
-          
-          <h2 className="text-2xl font-serif text-[#2C2F4A] mb-2 text-center">Votre Pack Complet</h2>
-          <p className="text-center text-xs text-[#2C2F4A]/50 mb-6 italic">Tout est inclus, pas de frais cachés</p>
-          
-          <ul className="space-y-4 mb-8">
-            <li className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
-                <FileText className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="font-medium text-[#2C2F4A] block">Votre Dossier Numérologique</span>
-                <span className="text-xs text-[#2C2F4A]/50">PDF complet de 40+ pages</span>
-              </div>
-            </li>
-            <li className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
-                <Play className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="font-medium text-[#2C2F4A] block">Votre Vidéo Avatar (5 min)</span>
-                <span className="text-xs text-[#2C2F4A]/50">Analyse orale et visuelle</span>
-              </div>
-            </li>
-            <li className="flex items-center gap-4 bg-[#F0FDF4] p-2 rounded-lg -mx-2 border border-green-100">
-              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-green-600 shadow-sm">
-                <Volume2 className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="font-bold text-green-800 block">Coach Vocal IA (30 min)</span>
-                <span className="text-xs text-green-700">Posez toutes vos questions à l'oral !</span>
-              </div>
-            </li>
-          </ul>
+      {/* 🧩 SECTION 3 — CE QUE VOUS RECEVEZ (REDESIGN PREMIUM) */}
+      <section className="py-20 px-6 bg-[#FAF9F7] relative overflow-hidden">
+        {/* Background Decorative */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-white rounded-full blur-[100px] opacity-60 pointer-events-none"></div>
+        <div className="absolute top-20 right-0 w-64 h-64 bg-[#C9A24D]/10 rounded-full blur-[60px] pointer-events-none"></div>
 
-          <div className="bg-[#FAF9F7] p-4 rounded-lg text-center mb-4 border border-[#C9A24D]/10 relative overflow-hidden">
-            {/* Old Price Strikethrough */}
-            <div className="absolute top-2 right-2 text-xs text-red-400 line-through font-bold">129€</div>
-            
-            <div className="text-4xl font-serif text-[#C9A24D] mb-1 font-bold">29€</div>
-            <p className="text-sm font-bold text-[#2C2F4A] uppercase tracking-wide">Accès Immédiat à Tout</p>
-            <div className="flex justify-center gap-2 mt-2 opacity-60">
-               <span className="text-[10px] bg-white px-2 py-0.5 rounded border border-[#2C2F4A]/10">🔒 Paiement Unique</span>
-            </div>
-          </div>
+        <div className="max-w-5xl mx-auto relative z-10">
           
-          {/* Option Livre */}
-          <div className="mt-4 pt-4 border-t border-[#EFEDE9] text-center">
-             <p className="text-xs text-[#2C2F4A]/60">
-               <span className="font-bold text-[#5B4B8A]">En option :</span> Vous pourrez aussi commander votre <br/>
-               <strong>Livre "Roman de Vie"</strong> après votre commande.
+          <div className="text-center mb-12 space-y-4">
+             <span className="text-[#C9A24D] font-bold tracking-[0.2em] text-xs uppercase border border-[#C9A24D]/30 px-4 py-1 rounded-full bg-white/50 backdrop-blur-sm">Offre Complète</span>
+             <h2 className="text-3xl md:text-5xl font-serif text-[#2C2F4A]">Votre Pack Révélation</h2>
+             <p className="text-[#2C2F4A]/60 max-w-lg mx-auto">
+               Une suite d'outils unique pour explorer votre identité sous tous ses angles. Écrit, Visuel et Oral.
              </p>
           </div>
+
+          <div className="bg-white rounded-[2.5rem] shadow-2xl border border-[#EFEDE9] overflow-hidden relative">
+             {/* Top Banner Stripe */}
+             <div className="h-2 w-full bg-gradient-to-r from-[#2C2F4A] via-[#C9A24D] to-[#2C2F4A]"></div>
+
+             <div className="p-8 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-10">
+                
+                {/* Left Col: The Content Items (Span 7) */}
+                <div className="lg:col-span-7 space-y-6">
+                   
+                   {/* Item 1: Dossier */}
+                   <div className="flex items-start gap-5 p-5 rounded-2xl bg-[#FAF9F7] border border-[#EFEDE9] group hover:border-[#C9A24D]/30 transition-colors">
+                      <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-[#5B4B8A] shadow-sm shrink-0 group-hover:scale-110 transition-transform">
+                         <FileText className="w-6 h-6" />
+                      </div>
+                      <div>
+                         <h3 className="font-serif text-lg text-[#2C2F4A] mb-1">Votre Dossier Numérologique</h3>
+                         <p className="text-sm text-[#2C2F4A]/60 leading-relaxed">
+                           Un document PDF complet de <strong>40+ pages</strong>, analysant vos cycles, vos défis et votre chemin de vie avec une clarté absolue.
+                         </p>
+                      </div>
+                   </div>
+
+                   {/* Item 2: Vidéo */}
+                   <div className="flex items-start gap-5 p-5 rounded-2xl bg-[#FAF9F7] border border-[#EFEDE9] group hover:border-[#C9A24D]/30 transition-colors">
+                      <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-[#C9A24D] shadow-sm shrink-0 group-hover:scale-110 transition-transform">
+                         <Play className="w-6 h-6 fill-current" />
+                      </div>
+                      <div>
+                         <h3 className="font-serif text-lg text-[#2C2F4A] mb-1">Votre Vidéo Avatar (5 min)</h3>
+                         <p className="text-sm text-[#2C2F4A]/60 leading-relaxed">
+                           La synthèse visuelle et orale de votre profil. Votre avatar vous explique l'essentiel, droit dans les yeux.
+                         </p>
+                      </div>
+                   </div>
+
+                   {/* Item 3: Coach (Highlight) */}
+                   <div className="flex items-start gap-5 p-5 rounded-2xl bg-[#2C2F4A] text-white relative overflow-hidden group">
+                      {/* Glow */}
+                      <div className="absolute -right-10 -top-10 w-32 h-32 bg-[#C9A24D] rounded-full blur-[50px] opacity-20 group-hover:opacity-30 transition-opacity"></div>
+                      
+                      <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-[#C9A24D] shrink-0 ring-1 ring-white/20">
+                         <Volume2 className="w-6 h-6" />
+                      </div>
+                      <div className="relative z-10">
+                         <h3 className="font-serif text-lg text-white mb-1 flex items-center gap-2">
+                           Coach Vocal IA (30 min)
+                           <span className="text-[10px] bg-[#C9A24D] text-[#2C2F4A] px-2 py-0.5 rounded-full font-bold uppercase tracking-wide">Exclusif</span>
+                         </h3>
+                         <p className="text-sm text-white/70 leading-relaxed">
+                           Posez toutes vos questions à l'oral. Votre avatar vous répond instantanément avec une sagesse personnalisée.
+                         </p>
+                      </div>
+                   </div>
+
+                </div>
+
+                {/* Right Col: Price & CTA (Span 5) */}
+                <div className="lg:col-span-5 flex flex-col justify-center bg-[#FAF9F7]/50 rounded-2xl p-8 border border-[#EFEDE9] text-center relative">
+                   
+                   <div className="mb-6">
+                      <div className="text-sm text-[#2C2F4A]/40 line-through mb-1">Valeur réelle : 129€</div>
+                      <div className="text-6xl font-serif text-[#2C2F4A] font-bold tracking-tight">29€</div>
+                      <div className="text-[#C9A24D] text-sm font-bold uppercase tracking-widest mt-2">Paiement Unique</div>
+                   </div>
+
+                   <div className="space-y-4">
+                      <div className="flex flex-col gap-2 text-xs text-[#2C2F4A]/50 mb-4">
+                         <div className="flex items-center justify-center gap-2">
+                            <Shield className="w-4 h-4 text-[#C9A24D]" /> <span>Paiement 100% Sécurisé</span>
+                         </div>
+                         <div className="flex items-center justify-center gap-2">
+                            <span className="text-lg leading-none">⚡️</span> <span>Accès Immédiat par Email</span>
+                         </div>
+                      </div>
+
+                      {/* Option Livre Mention */}
+                      <div className="py-3 px-4 bg-white rounded-lg border border-[#C9A24D]/20 text-xs text-[#2C2F4A]/70 italic">
+                        <span className="font-bold text-[#5B4B8A] block mb-1 not-italic">🎁 Bonus Optionnel</span>
+                        Possibilité d'ajouter le <strong>Livre "Roman de Vie"</strong> à l'étape suivante.
+                      </div>
+                   </div>
+                </div>
+
+             </div>
+          </div>
+
         </div>
       </section>
 

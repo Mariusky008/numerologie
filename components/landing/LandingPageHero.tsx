@@ -311,7 +311,131 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
 
           </div>
       </section>
+
+
+      {/* 🧩 SECTION 2 — TÉMOIGNAGE UNIQUE */}
+      <section className="py-16 px-6 bg-white border-y border-[#EFEDE9]">
+        <div className="max-w-4xl mx-auto">
+          
+          <div className="flex flex-col md:flex-row items-center gap-10">
+             {/* Photo Témoin */}
+             <div className="relative w-48 h-48 flex-shrink-0">
+               <div className="absolute inset-0 bg-[#C9A24D] rounded-full blur-xl opacity-20"></div>
+               <img 
+                 src="/thomas.jpg?v=1" 
+                 alt="Thomas, 34 ans" 
+                 className="w-full h-full object-cover rounded-full border-4 border-white shadow-xl relative z-10"
+               />
+               <div className="absolute -bottom-4 -right-4 bg-white p-2 rounded-full shadow-lg z-20">
+                  <span className="text-2xl">⭐️</span>
+               </div>
+             </div>
+
+             {/* Contenu Témoignage */}
+             <div className="flex-1 text-center md:text-left space-y-6">
+                <div className="space-y-2">
+                   <div className="flex items-center justify-center md:justify-start gap-2 text-[#C9A24D]">
+                      <span className="text-xl">★★★★★</span>
+                      <span className="text-xs font-bold uppercase tracking-widest text-[#2C2F4A]/40">Vérifié</span>
+                   </div>
+                   <h3 className="font-serif text-2xl md:text-3xl text-[#2C2F4A] leading-tight">
+                     "Je pensais me connaître, mais je n'avais lu que la préface."
+                   </h3>
+                </div>
+
+                <div className="space-y-4 text-[#2C2F4A]/70 text-lg font-light leading-relaxed">
+                   <p>
+                     J'étais sceptique au début. Un "livre" sur moi ? Je m'attendais à un horoscope glorifié, un PDF générique rempli de phrases bateau.
+                   </p>
+                   <p>
+                     Mais dès la première page, j'ai été happé. Ce n'est pas juste une analyse froide. <strong className="text-[#5B4B8A] font-medium">L'équipe de "Votre Légende" a tissé une véritable histoire.</strong>
+                   </p>
+                   <p>
+                     Quand j'ai lu le passage sur mon "instabilité chronique" transformée en "génie foudroyant", j'ai eu les larmes aux yeux. J'ai compris que ce que je voyais comme un défaut était en fait ma plus grande arme.
+                   </p>
+                </div>
+
+                <div className="pt-4 border-t border-[#EFEDE9] flex flex-col md:flex-row items-center gap-4">
+                   <div className="text-left">
+                      <div className="font-bold text-[#2C2F4A]">Thomas R.</div>
+                      <div className="text-sm text-[#2C2F4A]/50">34 ans • Entrepreneur • Chemin de Vie 5</div>
+                   </div>
+                </div>
+             </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 🧩 SECTION 3 — CE QUE TU REÇOIS */}
+      <section className="py-16 px-6 bg-[#FAF9F7]">
+        <div className="max-w-md mx-auto bg-white p-8 rounded-2xl border border-[#C9A24D]/20 shadow-lg relative overflow-hidden">
+          <div className="absolute top-0 right-0 bg-[#C9A24D] text-white text-[10px] font-bold px-3 py-1 uppercase">Pack Révélation</div>
+          
+          <h2 className="text-2xl font-serif text-[#2C2F4A] mb-2 text-center">Votre Pack Complet</h2>
+          <p className="text-center text-xs text-[#2C2F4A]/50 mb-6 italic">Tout est inclus, pas de frais cachés</p>
+          
+          <ul className="space-y-4 mb-8">
+            <li className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
+                <FileText className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="font-medium text-[#2C2F4A] block">Votre Dossier Numérologique</span>
+                <span className="text-xs text-[#2C2F4A]/50">PDF complet de 40+ pages</span>
+              </div>
+            </li>
+            <li className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
+                <Play className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="font-medium text-[#2C2F4A] block">Votre Vidéo Avatar (5 min)</span>
+                <span className="text-xs text-[#2C2F4A]/50">Analyse orale et visuelle</span>
+              </div>
+            </li>
+            <li className="flex items-center gap-4 bg-[#F0FDF4] p-2 rounded-lg -mx-2 border border-green-100">
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-green-600 shadow-sm">
+                <Volume2 className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="font-bold text-green-800 block">Coach Vocal IA (30 min)</span>
+                <span className="text-xs text-green-700">Posez toutes vos questions à l'oral !</span>
+              </div>
+            </li>
+          </ul>
+
+          <div className="bg-[#FAF9F7] p-4 rounded-lg text-center mb-4 border border-[#C9A24D]/10 relative overflow-hidden">
+            {/* Old Price Strikethrough */}
+            <div className="absolute top-2 right-2 text-xs text-red-400 line-through font-bold">129€</div>
+            
+            <div className="text-4xl font-serif text-[#C9A24D] mb-1 font-bold">29€</div>
+            <p className="text-sm font-bold text-[#2C2F4A] uppercase tracking-wide">Accès Immédiat à Tout</p>
+            <div className="flex justify-center gap-2 mt-2 opacity-60">
+               <span className="text-[10px] bg-white px-2 py-0.5 rounded border border-[#2C2F4A]/10">🔒 Paiement Unique</span>
+            </div>
+          </div>
+          
+          {/* Option Livre */}
+          <div className="mt-4 pt-4 border-t border-[#EFEDE9] text-center">
+             <p className="text-xs text-[#2C2F4A]/60">
+               <span className="font-bold text-[#5B4B8A]">En option :</span> Vous pourrez aussi commander votre <br/>
+               <strong>Livre "Roman de Vie"</strong> après votre commande.
+             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 🧩 SECTION 4 — UPSELL LIVRE & VIDÉO (PREMIUM) */}
       <section className="py-16 px-6 bg-[#2C2F4A] text-white relative overflow-hidden">
+         {/* Title Premium */}
+         <div className="max-w-4xl mx-auto text-center mb-16 relative z-20">
+            <h2 className="text-2xl md:text-3xl font-serif leading-tight text-white">
+              Et si vous voulez aller encore plus loin, <br/>
+              nous vous proposons <span className="text-[#C9A24D]">le roman de votre propre vie</span> en option premium.
+            </h2>
+         </div>
+
          {/* Background Elements */}
          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#C9A24D] rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#5B4B8A] rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
@@ -459,123 +583,167 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
          </div>
       </section>
 
-      {/* 🧩 SECTION 2 — TÉMOIGNAGE UNIQUE */}
-      <section className="py-16 px-6 bg-white border-y border-[#EFEDE9]">
-        <div className="max-w-4xl mx-auto">
-          
-          <div className="flex flex-col md:flex-row items-center gap-10">
-             {/* Photo Témoin */}
-             <div className="relative w-48 h-48 flex-shrink-0">
-               <div className="absolute inset-0 bg-[#C9A24D] rounded-full blur-xl opacity-20"></div>
-               <img 
-                 src="/thomas.jpg?v=1" 
-                 alt="Thomas, 34 ans" 
-                 className="w-full h-full object-cover rounded-full border-4 border-white shadow-xl relative z-10"
-               />
-               <div className="absolute -bottom-4 -right-4 bg-white p-2 rounded-full shadow-lg z-20">
-                  <span className="text-2xl">⭐️</span>
-               </div>
-             </div>
 
-             {/* Contenu Témoignage */}
-             <div className="flex-1 text-center md:text-left space-y-6">
-                <div className="space-y-2">
-                   <div className="flex items-center justify-center md:justify-start gap-2 text-[#C9A24D]">
-                      <span className="text-xl">★★★★★</span>
-                      <span className="text-xs font-bold uppercase tracking-widest text-[#2C2F4A]/40">Vérifié</span>
-                   </div>
-                   <h3 className="font-serif text-2xl md:text-3xl text-[#2C2F4A] leading-tight">
-                     "Je pensais me connaître, mais je n'avais lu que la préface."
-                   </h3>
-                </div>
 
-                <div className="space-y-4 text-[#2C2F4A]/70 text-lg font-light leading-relaxed">
-                   <p>
-                     J'étais sceptique au début. Un "livre" sur moi ? Je m'attendais à un horoscope glorifié, un PDF générique rempli de phrases bateau.
-                   </p>
-                   <p>
-                     Mais dès la première page, j'ai été happé. Ce n'est pas juste une analyse froide. <strong className="text-[#5B4B8A] font-medium">L'équipe de "Votre Légende" a tissé une véritable histoire.</strong>
-                   </p>
-                   <p>
-                     Quand j'ai lu le passage sur mon "instabilité chronique" transformée en "génie foudroyant", j'ai eu les larmes aux yeux. J'ai compris que ce que je voyais comme un défaut était en fait ma plus grande arme.
-                   </p>
-                </div>
+      {/* 🧩 SECTION 4 — UPSELL LIVRE & VIDÉO (PREMIUM) */}
+      <section className="py-16 px-6 bg-[#2C2F4A] text-white relative overflow-hidden">
+         {/* Title Premium */}
+         <div className="max-w-4xl mx-auto text-center mb-16 relative z-20">
+            <h2 className="text-2xl md:text-3xl font-serif leading-tight text-white">
+              Et si vous voulez aller encore plus loin, <br/>
+              nous vous proposons <span className="text-[#C9A24D]">le roman de votre propre vie</span> en option premium.
+            </h2>
+         </div>
 
-                <div className="pt-4 border-t border-[#EFEDE9] flex flex-col md:flex-row items-center gap-4">
-                   <div className="text-left">
-                      <div className="font-bold text-[#2C2F4A]">Thomas R.</div>
-                      <div className="text-sm text-[#2C2F4A]/50">34 ans • Entrepreneur • Chemin de Vie 5</div>
-                   </div>
-                </div>
-             </div>
-          </div>
+         {/* Background Elements */}
+         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#C9A24D] rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
+         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#5B4B8A] rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
 
-        </div>
-      </section>
-
-      {/* 🧩 SECTION 3 — CE QUE TU REÇOIS */}
-      <section className="py-16 px-6 bg-[#FAF9F7]">
-        <div className="max-w-md mx-auto bg-white p-8 rounded-2xl border border-[#C9A24D]/20 shadow-lg relative overflow-hidden">
-          <div className="absolute top-0 right-0 bg-[#C9A24D] text-white text-[10px] font-bold px-3 py-1 uppercase">Pack Révélation</div>
-          
-          <h2 className="text-2xl font-serif text-[#2C2F4A] mb-2 text-center">Votre Pack Complet</h2>
-          <p className="text-center text-xs text-[#2C2F4A]/50 mb-6 italic">Tout est inclus, pas de frais cachés</p>
-          
-          <ul className="space-y-4 mb-8">
-            <li className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
-                <FileText className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="font-medium text-[#2C2F4A] block">Votre Dossier Numérologique</span>
-                <span className="text-xs text-[#2C2F4A]/50">PDF complet de 40+ pages</span>
-              </div>
-            </li>
-            <li className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
-                <Play className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="font-medium text-[#2C2F4A] block">Votre Vidéo Avatar (5 min)</span>
-                <span className="text-xs text-[#2C2F4A]/50">Analyse orale et visuelle</span>
-              </div>
-            </li>
-            <li className="flex items-center gap-4 bg-[#F0FDF4] p-2 rounded-lg -mx-2 border border-green-100">
-              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-green-600 shadow-sm">
-                <Volume2 className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="font-bold text-green-800 block">Coach Vocal IA (30 min)</span>
-                <span className="text-xs text-green-700">Posez toutes vos questions à l'oral !</span>
-              </div>
-            </li>
-          </ul>
-
-          <div className="bg-[#FAF9F7] p-4 rounded-lg text-center mb-4 border border-[#C9A24D]/10 relative overflow-hidden">
-            {/* Old Price Strikethrough */}
-            <div className="absolute top-2 right-2 text-xs text-red-400 line-through font-bold">129€</div>
+         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
             
-            <div className="text-4xl font-serif text-[#C9A24D] mb-1 font-bold">29€</div>
-            <p className="text-sm font-bold text-[#2C2F4A] uppercase tracking-wide">Accès Immédiat à Tout</p>
-            <div className="flex justify-center gap-2 mt-2 opacity-60">
-               <span className="text-[10px] bg-white px-2 py-0.5 rounded border border-[#2C2F4A]/10">🔒 Paiement Unique</span>
-            </div>
-          </div>
-          
-          {/* Option Livre */}
-          <div className="mt-4 pt-4 border-t border-[#EFEDE9] text-center">
-             <p className="text-xs text-[#2C2F4A]/60">
-               <span className="font-bold text-[#5B4B8A]">En option :</span> Vous pourrez aussi commander votre <br/>
-               <strong>Livre "Roman de Vie"</strong> après votre commande.
-             </p>
-          </div>
-        </div>
+            {/* Visualisation (Video + Livre) */}
+            <motion.div 
+               initial={{ opacity: 0, x: -50 }}
+               whileInView={{ opacity: 1, x: 0 }}
+               viewport={{ once: true }}
+               className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8"
+            >
+               {/* Container Principal : Vidéo Avatar */}
+               <div 
+                  className="relative aspect-[9/16] w-full max-w-[260px] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer bg-black"
+                  onClick={togglePreviewPlay}
+               >
+                  <video 
+                     ref={previewVideoRef}
+                     muted 
+                     loop 
+                     playsInline
+                     preload="auto"
+                     poster="/avatar-poster.jpg"
+                     className="w-full h-full object-contain bg-black relative z-10"
+                  >
+                    <source src="/avatars.mp4?v=2" type="video/mp4" />
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                  </video>
+                  
+                  {/* Bouton Play Central (Masqué si lecture) */}
+                  {!isPreviewPlaying && (
+                     <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_30px_rgba(201,162,77,0.3)]">
+                           <Play className="w-6 h-6 text-white fill-white ml-1" />
+                        </div>
+                     </div>
+                  )}
+
+                  {/* Contrôles Son (Visible si lecture) */}
+                  {isPreviewPlaying && (
+                     <div className="absolute bottom-6 left-6 z-30" onClick={(e) => e.stopPropagation()}>
+                        <button 
+                          onClick={togglePreviewMute}
+                          className="p-2 bg-black/40 rounded-full hover:bg-black/60 text-white transition-colors backdrop-blur-sm"
+                        >
+                          {isPreviewMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                        </button>
+                     </div>
+                  )}
+               </div>
+                  
+               {/* Livre Flottant (À côté) */}
+               <motion.div 
+                 initial={{ y: 20, rotate: -3 }}
+                 animate={{ y: [0, -10, 0] }}
+                 transition={{ 
+                   repeat: Infinity, 
+                   duration: 6,
+                   ease: "easeInOut"
+                 }}
+                 className="w-48 md:w-56 aspect-[3/4] bg-[#FAF9F7] rounded-r-lg shadow-[20px_20px_50px_-10px_rgba(0,0,0,0.5)] border-l-[10px] border-[#1a1c2e] overflow-hidden transform hover:scale-105 transition-transform duration-300 relative z-10"
+               >
+                  {/* Effet reliure (Ombre portée depuis la gauche) */}
+                  <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-black/20 to-transparent pointer-events-none z-10"></div>
+                  
+                  {/* Effet épaisseur des pages (Bordure droite et basse) */}
+                  <div className="absolute right-0 top-0 bottom-0 w-1 bg-[#E3E1DD] border-l border-black/5"></div>
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#E3E1DD] border-t border-black/5"></div>
+
+                  {/* Couverture Livre */}
+                  <div className="h-full w-full flex flex-col relative p-5 pb-8">
+                     {/* Ornements Coins */}
+                     <div className="absolute top-3 right-3 w-10 h-10 border-t-2 border-r-2 border-[#C9A24D]/60 rounded-tr-lg"></div>
+                     <div className="absolute bottom-3 right-3 w-10 h-10 border-b-2 border-r-2 border-[#C9A24D]/60 rounded-br-lg"></div>
+                     
+                     {/* Titre */}
+                     <div className="mt-4 text-center space-y-2 relative z-20">
+                        <div className="text-[9px] uppercase tracking-[0.2em] text-[#C9A24D] font-bold">Thomas R.</div>
+                        <div className="text-2xl font-serif text-[#2C2F4A] font-bold leading-[0.95]">La trajectoire</div>
+                        <div className="text-[10px] text-[#2C2F4A]/70 italic leading-tight px-1">
+                          "Une vie ne se comprend jamais dans l’ordre où elle se vit."
+                        </div>
+                        <div className="w-8 h-[2px] bg-[#C9A24D] mx-auto my-3"></div>
+                     </div>
+
+                     {/* Contenu visuel abstrait (Cosmic Wheel) */}
+                     <div className="flex-1 flex items-center justify-center my-2 opacity-10">
+                        <div className="w-24 h-24 rounded-full border border-[#2C2F4A] flex items-center justify-center">
+                           <div className="w-16 h-16 border border-[#2C2F4A] rotate-45"></div>
+                        </div>
+                     </div>
+
+                     {/* Button Extrait (Positionné en bas) */}
+                     <div className="mt-auto mb-4 relative z-30 flex justify-center">
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); setShowExcerpt(true); }}
+                          className="bg-[#2C2F4A] text-white text-xs font-bold px-5 py-3 rounded-full shadow-lg flex items-center gap-2 hover:bg-[#C9A24D] hover:text-[#2C2F4A] hover:scale-105 transition-all whitespace-nowrap"
+                        >
+                          <BookOpen className="w-4 h-4" />
+                          Lire un extrait
+                        </button>
+                     </div>
+
+                     {/* Footer Cover */}
+                     <div className="text-center">
+                        <div className="text-[8px] text-[#2C2F4A]/50 uppercase tracking-widest">Tome 1 • L'Éveil</div>
+                     </div>
+                     
+                     {/* Texture Papier */}
+                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-50 mix-blend-multiply pointer-events-none z-0"></div>
+                  </div>
+               </motion.div>
+            </motion.div>
+
+            {/* Texte Explicatif */}
+            <motion.div 
+               initial={{ opacity: 0, x: 50 }}
+               whileInView={{ opacity: 1, x: 0 }}
+               viewport={{ once: true }}
+               className="space-y-6 text-center lg:text-left"
+            >
+               <h2 className="text-3xl md:text-4xl font-serif leading-tight">
+                  <span className="text-[#C9A24D]">Regardez</span> votre histoire,<br/>
+                  <span className="text-white/60">puis</span> lisez votre destin.
+               </h2>
+               <p className="text-white/70 text-lg leading-relaxed max-w-lg mx-auto lg:mx-0">
+                  Votre expérience commence par une <strong>vidéo immersive</strong> où votre avatar vous parle directement. 
+                  <br/><br/>
+                  Elle se prolonge (si vous le souhaitez) par un <strong>livre unique</strong> et un <strong>dossier d'analyse</strong> complet, retraçant chaque étape de votre vie avec une précision troublante.
+               </p>
+               
+               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                  <button 
+                    onClick={onStart}
+                    className="px-8 py-4 bg-[#C9A24D] text-[#2C2F4A] rounded-full font-bold shadow-lg hover:bg-white transition-all flex items-center justify-center gap-2 group"
+                  >
+                    <Play className="w-4 h-4 fill-current group-hover:scale-110 transition-transform" />
+                    Voir votre lecture complète
+                  </button>
+               </div>
+            </motion.div>
+
+         </div>
       </section>
-
-
 
       {/* 🧩 SECTION 5 — CTA FINAL */}
-      <section className="py-12 px-6 bg-[#2C2F4A] text-center">
+      <section className="py-12 px-6 bg-[#2C2F4A] text-center border-t border-white/10">
         <button 
           onClick={onStart}
           className="w-full md:w-auto px-10 py-5 bg-[#FAF9F7] text-[#2C2F4A] rounded-full font-bold text-xl shadow-lg hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-3 mx-auto"

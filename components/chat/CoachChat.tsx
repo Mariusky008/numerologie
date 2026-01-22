@@ -244,11 +244,26 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
         {/* ORB ANIMATION COMPLEX */}
         <div className="relative mb-12 scale-110 md:scale-125 transition-transform duration-700">
            
+           {/* HEARTBEAT GLOW (From Landing Page) */}
+           <motion.div 
+             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[80px] mix-blend-screen pointer-events-none"
+             animate={{
+               scale: [0.8, 1.2, 0.8],
+               opacity: isLoading || isSpeaking ? [0.2, 0.5, 0.2] : [0.1, 0.2, 0.1],
+               backgroundColor: ["#FCD34D", "#FB923C", "#FCD34D"] // Gold to Orange cycle
+             }}
+             transition={{
+               duration: isLoading || isSpeaking ? 2 : 4, // Faster heartbeat when active
+               repeat: Infinity,
+               ease: "easeInOut"
+             }}
+           />
+
            {/* ASTROLABE RINGS */}
            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] border border-white/5 rounded-full ${isLoading ? 'animate-[spin_10s_linear_infinite]' : 'opacity-10'} transition-all duration-1000`}></div>
            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] border border-[#C9A24D]/10 rounded-full border-dashed ${isLoading ? 'animate-[spin_20s_linear_infinite_reverse]' : 'opacity-20'} transition-all duration-1000`}></div>
            
-           {/* PULSING GLOW */}
+           {/* PULSING GLOW (Inner) */}
            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-[#C9A24D] blur-[80px] mix-blend-screen ${isLoading || isSpeaking ? 'opacity-30 scale-110' : 'opacity-5 scale-90'} transition-all duration-1000 ease-in-out`}></div>
 
            {/* THE CORE SPHERE */}

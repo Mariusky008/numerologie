@@ -45,6 +45,7 @@ function useCustomChat({ api, body, initialMessages, onFinish }: any) {
   const [messages, setMessages] = useState<any[]>(initialMessages || []);
   const [isLoading, setIsLoading] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false); // Track TTS status
+  const [error, setError] = useState<string | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const stop = () => {
@@ -55,12 +56,14 @@ function useCustomChat({ api, body, initialMessages, onFinish }: any) {
     setIsLoading(false);
     window.speechSynthesis.cancel();
     setIsSpeaking(false);
+    setError(null);
   };
 
   const append = async (message: any) => {
     // Stop any current speech when user talks
     window.speechSynthesis.cancel();
     setIsSpeaking(false);
+    setError(null);
 
     const newMessages = [...messages, message];
     setMessages(newMessages);
@@ -79,7 +82,11 @@ function useCustomChat({ api, body, initialMessages, onFinish }: any) {
         signal: abortControllerRef.current.signal
       });
 
-      if (!response.ok) throw new Error(response.statusText);
+      if (!response.ok) {
+        if (response.status === 404) throw new Error("Profil introuvable (Mauvais ID)");
+        if (response.status === 500) throw new Error("Erreur serveur (Vérifier logs)");
+        throw new Error(`Erreur API: ${response.statusText}`);
+      }
 
       const reader = response.body?.getReader();
       if (!reader) return;
@@ -116,14 +123,18 @@ function useCustomChat({ api, body, initialMessages, onFinish }: any) {
       }
 
     } catch (err: any) {
-      if (err.name !== 'AbortError') console.error("Chat error:", err);
+      if (err.name !== 'AbortError') {
+         console.error("Chat error:", err);
+         setError(err.message || "Une erreur est survenue");
+         // Remove user message if failed? No, keep it.
+      }
     } finally {
       setIsLoading(false);
       abortControllerRef.current = null;
     }
   };
 
-  return { messages, append, isLoading, isSpeaking, stop };
+  return { messages, append, isLoading, isSpeaking, error, stop };
 }
 
 // --- MAIN COMPONENT ---
@@ -131,7 +142,7 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
   const [input, setInput] = useState('');
   const [isMuted, setIsMuted] = useState(false);
 
-  const { messages, append, isLoading, isSpeaking, stop } = useCustomChat({
+  const { messages, append, isLoading, isSpeaking, error, stop } = useCustomChat({
     api: '/api/chat',
     body: { userId },
     initialMessages: [
@@ -294,7 +305,17 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
            
            <div className="max-h-[300px] md:max-h-[350px] overflow-y-auto custom-scrollbar px-6 py-8 text-center relative z-10 scroll-smooth bg-black/40 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl" ref={messagesEndRef}>
              <AnimatePresence mode='wait'>
-               {messages.length > 0 ? (
+               {error ? (
+                 <motion.div
+                   initial={{ opacity: 0 }}
+                   animate={{ opacity: 1 }}
+                   className="p-4 bg-red-900/50 border border-red-500/50 rounded-xl text-red-200 text-sm"
+                 >
+                   ⚠️ {error}
+                   <br/>
+                   <button onClick={() => window.location.reload()} className="underline mt-2 text-xs">Recharger la page</button>
+                 </motion.div>
+               ) : messages.length > 0 ? (
                  <motion.div
                    key={messages.length}
                    initial={{ opacity: 0, y: 10, filter: 'blur(5px)' }}

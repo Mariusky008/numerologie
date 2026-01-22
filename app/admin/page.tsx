@@ -441,13 +441,27 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                   </div>
                   
                   <div className="text-right">
-                    {(req.userData.delivery?.address) && (
-                      <div className="mb-3 text-xs text-stone-500 text-right">
-                        <p className="font-bold text-stone-700">{req.userData.delivery.email}</p>
-                        <p>{req.userData.delivery.address}</p>
-                        <p>{req.userData.delivery.zip} {req.userData.delivery.city}</p>
-                        <p>{req.userData.delivery.country}</p>
-                      </div>
+                    {/* Toujours afficher l'email s'il est dispo */}
+                    {req.userData.delivery?.email && (
+                       <div className="mb-3 text-xs text-stone-500 text-right">
+                         <p className="font-bold text-stone-700 flex items-center justify-end gap-1">
+                           <span className="select-all">{req.userData.delivery.email}</span>
+                           <button 
+                             onClick={() => navigator.clipboard.writeText(req.userData.delivery!.email)}
+                             className="text-stone-400 hover:text-stone-600"
+                             title="Copier l'email"
+                           >
+                             <Copy className="w-3 h-3" />
+                           </button>
+                         </p>
+                         {req.userData.delivery.address && (
+                           <>
+                             <p>{req.userData.delivery.address}</p>
+                             <p>{req.userData.delivery.zip} {req.userData.delivery.city}</p>
+                             <p>{req.userData.delivery.country}</p>
+                           </>
+                         )}
+                       </div>
                     )}
                     {req.status === 'completed' ? (
                       <span className="flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">

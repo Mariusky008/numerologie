@@ -12,23 +12,37 @@ export async function POST(req: Request) {
       return new Response('User ID required', { status: 400 });
     }
 
-    // 1. Fetch User's Numerology Profile
-    const { data: requestData, error } = await supabase
-      .from('book_requests')
-      .select('user_data, numerology_result')
-      .eq('id', userId)
-      .single();
+    let userData, reportResults;
 
-    if (error || !requestData) {
-      console.error('Profile fetch error:', error);
-      return new Response('Profile not found', { status: 404 });
+    // --- TEST MODE ---
+    if (userId === 'demo-123') {
+      userData = { firstName: 'Jean-Test', birthDate: '15/05/1985' };
+      reportResults = {
+        lifePath: 5,
+        expression: 3,
+        personalYear: 9,
+        challenges: { major: 2 }
+      };
+    } 
+    // --- REAL MODE ---
+    else {
+      // 1. Fetch User's Numerology Profile
+      const { data: requestData, error } = await supabase
+        .from('book_requests')
+        .select('user_data, numerology_result')
+        .eq('id', userId)
+        .single();
+
+      if (error || !requestData) {
+        console.error('Profile fetch error:', error);
+        return new Response('Profile not found', { status: 404 });
+      }
+
+      // Fix: Access user_data (lowercase from DB)
+      userData = requestData.user_data;
+      const numerology_result = requestData.numerology_result;
+      reportResults = numerology_result.reportResults || numerology_result;
     }
-
-    // Fix: Access user_data (lowercase from DB)
-    const userData = requestData.user_data;
-    const numerology_result = requestData.numerology_result;
-    
-    const reportResults = numerology_result.reportResults || numerology_result;
 
     // 2. Build System Prompt
     const systemPrompt = `

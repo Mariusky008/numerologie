@@ -23,15 +23,15 @@ const speakText = (text: string) => {
     // 3. Create Utterance
     const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.lang = 'fr-FR';
-    utterance.rate = 1.05; // Slightly faster for natural feel
-    utterance.pitch = 1.0;
+    utterance.rate = 0.95; // Slower, more mystic
+    utterance.pitch = 1.05; // Slightly higher for a "soft" feminine touch if available, or keep 1.0
     
     // 4. Voice Selection (Prioritize Google or iOS voices)
     const voices = window.speechSynthesis.getVoices();
-    // Priority: Google Français -> Thomas (iOS) -> Amelie (iOS) -> Any 'fr'
+    // Try to find a soft female voice (Google Français is usually female and good)
+    // Amelie (iOS) is female. Thomas is male.
     const bestVoice = voices.find(v => v.name.includes("Google") && v.lang.includes("fr")) 
-                   || voices.find(v => v.name === "Thomas")
-                   || voices.find(v => v.name === "Amelie")
+                   || voices.find(v => v.name === "Amelie") 
                    || voices.find(v => v.lang.includes("fr"));
     
     if (bestVoice) utterance.voice = bestVoice;
@@ -204,17 +204,27 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
   const isOracle = lastMessage?.role === 'assistant';
 
   return (
-    <div className="flex flex-col h-[700px] w-full max-w-md mx-auto bg-[#0F111A] rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden border border-[#C9A24D]/20 relative font-sans">
+    <div className="flex flex-col h-[750px] w-full max-w-lg mx-auto bg-[#08090F] rounded-[40px] shadow-[0_20px_100px_-20px_rgba(201,162,77,0.3)] overflow-hidden border border-[#C9A24D]/10 relative font-sans group">
       
-      {/* 🌌 COSMIC BACKGROUND */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1F2235] via-[#0F111A] to-black z-0 pointer-events-none"></div>
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none z-0"></div>
+      {/* 🌌 COSMIC BACKGROUND LAYERS */}
+      <div className="absolute inset-0 bg-[#08090F]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,_rgba(44,47,74,0.4),_transparent_70%)] opacity-60"></div>
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-screen animate-pulse-slow"></div>
+      
+      {/* SHOOTING STARS EFFECT (CSS only simulation) */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+         <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full shadow-[0_0_10px_white] animate-[ping_3s_infinite]"></div>
+         <div className="absolute top-3/4 right-1/4 w-0.5 h-0.5 bg-white rounded-full shadow-[0_0_5px_white] animate-[ping_5s_infinite_1s]"></div>
+      </div>
 
       {/* 🔝 HEADER */}
-      <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-start z-30">
+      <div className="absolute top-0 left-0 right-0 p-8 flex justify-between items-start z-30">
         <div className="flex flex-col">
-           <h3 className="text-[#C9A24D] font-serif text-2xl tracking-widest drop-shadow-[0_2px_10px_rgba(201,162,77,0.3)]">L'ORACLE</h3>
-           <p className="text-white/30 text-[10px] uppercase tracking-[0.3em] mt-1">Lien Spirituel Actif</p>
+           <div className="flex items-center gap-2 mb-1">
+             <div className="w-1.5 h-1.5 bg-[#C9A24D] rounded-full animate-pulse"></div>
+             <h3 className="text-[#EAEAEA] font-serif text-lg tracking-[0.2em] uppercase opacity-80">L'Oracle</h3>
+           </div>
+           <p className="text-[#C9A24D]/60 text-[9px] uppercase tracking-[0.4em] pl-4 border-l border-[#C9A24D]/30">Connexion Établie</p>
         </div>
         <button 
           onClick={() => {
@@ -222,68 +232,83 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
             setIsMuted(newMuted);
             if (newMuted) window.speechSynthesis.cancel();
           }}
-          className="p-3 bg-white/5 hover:bg-white/10 rounded-full text-[#C9A24D]/60 transition-colors backdrop-blur-md border border-white/5"
+          className="p-3 rounded-full text-white/40 hover:text-[#C9A24D] hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-[#C9A24D]/20"
         >
           {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
         </button>
       </div>
 
       {/* 🔮 CENTRAL VISUALIZATION */}
-      <div className="flex-1 flex flex-col items-center justify-center relative z-10 px-6 pt-10">
+      <div className="flex-1 flex flex-col items-center justify-center relative z-10 px-6 pt-12">
         
-        {/* ORB ANIMATION */}
-        <div className="relative mb-10 scale-125">
-           {/* Outer Rings */}
-           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 border border-[#C9A24D]/10 rounded-full ${isLoading ? 'animate-spin-slow' : 'opacity-20'} transition-all duration-1000`}></div>
-           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 border border-[#C9A24D]/20 rounded-full ${isLoading ? 'animate-reverse-spin' : 'opacity-30'} transition-all duration-1000`}></div>
+        {/* ORB ANIMATION COMPLEX */}
+        <div className="relative mb-12 scale-110 md:scale-125 transition-transform duration-700">
            
-           {/* Pulsing Aura */}
-           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-[#C9A24D] blur-[60px] ${isLoading || isSpeaking ? 'opacity-40 animate-pulse' : 'opacity-10'} transition-all duration-1000`}></div>
+           {/* ASTROLABE RINGS */}
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] border border-white/5 rounded-full ${isLoading ? 'animate-[spin_10s_linear_infinite]' : 'opacity-10'} transition-all duration-1000`}></div>
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] border border-[#C9A24D]/10 rounded-full border-dashed ${isLoading ? 'animate-[spin_20s_linear_infinite_reverse]' : 'opacity-20'} transition-all duration-1000`}></div>
+           
+           {/* PULSING GLOW */}
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-[#C9A24D] blur-[80px] mix-blend-screen ${isLoading || isSpeaking ? 'opacity-30 scale-110' : 'opacity-5 scale-90'} transition-all duration-1000 ease-in-out`}></div>
 
-           {/* The Core */}
-           <div className={`w-32 h-32 rounded-full bg-gradient-to-b from-[#2C2F4A] to-black border border-[#C9A24D]/50 shadow-[inset_0_0_30px_rgba(201,162,77,0.3)] flex items-center justify-center relative z-10 transition-transform duration-500 ${isLoading ? 'scale-105' : 'scale-100'}`}>
+           {/* THE CORE SPHERE */}
+           <div className={`w-36 h-36 rounded-full bg-gradient-to-b from-[#1F2235] to-[#000] border border-[#C9A24D]/30 shadow-[inset_0_4px_20px_rgba(201,162,77,0.2),_0_0_30px_rgba(0,0,0,0.5)] flex items-center justify-center relative z-10 overflow-hidden`}>
               
-              {/* Inner Light */}
-              <div className={`absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-[#C9A24D]/20 to-transparent ${isLoading ? 'animate-spin' : ''}`}></div>
+              {/* Liquid Light Effect */}
+              <div className={`absolute inset-0 bg-gradient-to-tr from-[#C9A24D]/0 via-[#C9A24D]/10 to-[#C9A24D]/0 rotate-45 transform transition-transform duration-[2000ms] ${isLoading ? 'translate-x-full' : '-translate-x-full'}`}></div>
               
-              {isLoading ? (
-                 <Sparkles className="w-10 h-10 text-[#C9A24D] animate-pulse drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
-              ) : isSpeaking ? (
-                 <Radio className="w-10 h-10 text-[#C9A24D] animate-pulse" />
-              ) : (
-                 <div className="w-3 h-3 bg-[#C9A24D] rounded-full shadow-[0_0_20px_#C9A24D] animate-pulse"></div>
-              )}
+              {/* Center Icon */}
+              <div className="relative z-20">
+                {isLoading ? (
+                   <Loader2 className="w-8 h-8 text-[#C9A24D] animate-spin opacity-80" />
+                ) : isSpeaking ? (
+                   <div className="flex gap-1 items-center h-8">
+                      <div className="w-1 h-3 bg-[#C9A24D] rounded-full animate-[pulse_0.5s_ease-in-out_infinite]"></div>
+                      <div className="w-1 h-6 bg-[#C9A24D] rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.1s]"></div>
+                      <div className="w-1 h-4 bg-[#C9A24D] rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.2s]"></div>
+                   </div>
+                ) : (
+                   <Sparkles className="w-8 h-8 text-[#C9A24D]/60 animate-pulse duration-[3000ms]" />
+                )}
+              </div>
            </div>
         </div>
 
-        {/* 📜 SCROLLABLE TEXT AREA */}
-        <div className="w-full relative group">
-           {/* Fade Masks */}
-           <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-[#0F111A] to-transparent z-20 pointer-events-none"></div>
-           <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[#0F111A] to-transparent z-20 pointer-events-none"></div>
+        {/* 📜 SCROLLABLE TEXT AREA - ELEGANT */}
+        <div className="w-full relative max-w-sm mx-auto">
+           <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-[#08090F] to-transparent z-20 pointer-events-none"></div>
+           <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#08090F] to-transparent z-20 pointer-events-none"></div>
 
-           <div className="max-h-[220px] overflow-y-auto custom-scrollbar px-4 py-4 text-center relative z-10 scroll-smooth" ref={messagesEndRef}>
+           <div className="max-h-[200px] overflow-y-auto custom-scrollbar px-2 py-6 text-center relative z-10 scroll-smooth" ref={messagesEndRef}>
              <AnimatePresence mode='wait'>
                {messages.length > 0 ? (
                  <motion.div
                    key={messages.length}
-                   initial={{ opacity: 0, y: 10 }}
-                   animate={{ opacity: 1, y: 0 }}
-                   exit={{ opacity: 0, y: -10 }}
+                   initial={{ opacity: 0, y: 20, filter: 'blur(5px)' }}
+                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                   transition={{ duration: 0.8, ease: "easeOut" }}
                    className="space-y-2"
                  >
                    {isOracle ? (
-                     <div className="prose prose-invert prose-p:text-[#EAEAEA] prose-p:font-serif prose-p:text-lg prose-p:leading-relaxed mx-auto">
-                        <p className="drop-shadow-md">{lastMessage.content}</p>
+                     <div className="prose prose-invert">
+                        <p className="text-[#EAEAEA] font-serif text-lg md:text-xl leading-relaxed drop-shadow-lg tracking-wide">
+                          {lastMessage.content}
+                        </p>
                      </div>
                    ) : (
-                     <p className="text-white/40 text-sm italic font-light">
-                       " {lastMessage.content} "
+                     <p className="text-white/30 text-sm font-light tracking-wide italic">
+                       — {lastMessage.content}
                      </p>
                    )}
                  </motion.div>
                ) : (
-                 <p className="text-white/30 text-sm">Touchez l'orbe ou le micro pour commencer...</p>
+                 <motion.p 
+                    initial={{ opacity: 0 }} 
+                    animate={{ opacity: 1 }}
+                    className="text-[#C9A24D]/40 text-xs uppercase tracking-[0.2em] mt-10"
+                 >
+                    En attente de votre voix...
+                 </motion.p>
                )}
              </AnimatePresence>
            </div>
@@ -291,44 +316,42 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
 
       </div>
 
-      {/* 🎛 CONTROLS */}
-      <div className="p-8 pb-10 z-30 flex flex-col items-center gap-6 bg-gradient-to-t from-[#0F111A] via-[#0F111A] to-transparent">
+      {/* 🎛 CONTROLS - FUTURISTIC */}
+      <div className="p-8 pb-12 z-30 flex flex-col items-center gap-6 bg-gradient-to-t from-[#08090F] via-[#08090F] to-transparent">
         
         {/* Hidden Input (Fallback) */}
         {!isListening && (
-          <form onSubmit={handleSubmit} className="w-full max-w-xs relative opacity-40 hover:opacity-100 transition-opacity duration-300 focus-within:opacity-100">
+          <form onSubmit={handleSubmit} className="w-full max-w-[200px] relative opacity-0 hover:opacity-100 focus-within:opacity-100 transition-all duration-500">
             <input
               value={input}
               onChange={handleInputChange}
-              placeholder="Écrire ma question..."
-              className="w-full bg-white/5 border border-white/10 rounded-full px-5 py-3 text-sm text-white focus:outline-none focus:border-[#C9A24D]/50 text-center placeholder:text-white/20 shadow-inner"
+              placeholder="Écrire..."
+              className="w-full bg-transparent border-b border-white/10 px-2 py-1 text-xs text-white/50 focus:outline-none focus:border-[#C9A24D]/50 text-center placeholder:text-white/10"
             />
           </form>
         )}
 
-        {/* MAIN ACTION BUTTON */}
+        {/* MAGICAL BUTTON */}
         <button
           onClick={startListening}
-          className={`w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-white/10 backdrop-blur-xl relative group ${
+          className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-500 relative group ${
             isListening 
-              ? 'bg-red-500/20 border-red-500/50 scale-110' 
-              : 'bg-white/5 hover:bg-[#C9A24D]/20 hover:border-[#C9A24D]/50 hover:scale-105'
+              ? 'bg-red-900/20 scale-110 shadow-[0_0_50px_rgba(220,38,38,0.4)]' 
+              : 'bg-gradient-to-b from-[#1F2235] to-[#0F111A] hover:scale-105 shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5'
           }`}
         >
-          <div className={`absolute inset-0 rounded-full border border-white/5 ${isListening ? 'animate-ping' : ''}`}></div>
+          {/* Glowing Ring */}
+          <div className={`absolute inset-0 rounded-full border border-[#C9A24D]/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-110 group-hover:scale-125`}></div>
           
           {isListening ? (
-            <StopCircle className="w-8 h-8 text-red-400" />
+            <StopCircle className="w-6 h-6 text-red-400/80" />
           ) : isLoading ? (
-             <Loader2 className="w-8 h-8 text-[#C9A24D] animate-spin" />
+             <Loader2 className="w-6 h-6 text-[#C9A24D] animate-spin" />
           ) : (
-            <Mic className="w-8 h-8 text-white group-hover:text-[#C9A24D] transition-colors" />
+            <Mic className="w-6 h-6 text-[#EAEAEA]/80 group-hover:text-[#C9A24D] transition-colors" />
           )}
         </button>
 
-        <p className="text-[9px] text-white/20 uppercase tracking-[0.2em] font-light">
-           {isListening ? "Écoute en cours..." : isLoading ? "Consultation des astres..." : "Touchez pour parler"}
-        </p>
       </div>
 
     </div>

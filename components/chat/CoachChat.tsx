@@ -204,7 +204,7 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
   const isOracle = lastMessage?.role === 'assistant';
 
   return (
-    <div className="flex flex-col h-[750px] w-full max-w-lg mx-auto bg-[#08090F] rounded-[40px] shadow-[0_20px_100px_-20px_rgba(201,162,77,0.3)] overflow-hidden border border-[#C9A24D]/10 relative font-sans group">
+    <div className="flex flex-col h-[85vh] md:h-[800px] w-full max-w-5xl mx-auto bg-[#08090F] md:rounded-[40px] shadow-[0_20px_100px_-20px_rgba(201,162,77,0.3)] overflow-hidden border-y md:border border-[#C9A24D]/10 relative font-sans group">
       
       {/* 🌌 COSMIC BACKGROUND LAYERS */}
       <div className="absolute inset-0 bg-[#08090F]"></div>
@@ -290,9 +290,9 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
         </div>
 
         {/* 📜 SCROLLABLE TEXT AREA - ELEGANT & READABLE */}
-        <div className="w-full relative max-w-md mx-auto mt-8 z-20">
+        <div className="w-full relative max-w-2xl mx-auto mt-8 z-20 px-4">
            
-           <div className="max-h-[250px] overflow-y-auto custom-scrollbar px-6 py-6 text-center relative z-10 scroll-smooth bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-2xl" ref={messagesEndRef}>
+           <div className="max-h-[300px] md:max-h-[350px] overflow-y-auto custom-scrollbar px-6 py-8 text-center relative z-10 scroll-smooth bg-black/40 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl" ref={messagesEndRef}>
              <AnimatePresence mode='wait'>
                {messages.length > 0 ? (
                  <motion.div
@@ -300,16 +300,16 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
                    initial={{ opacity: 0, y: 10, filter: 'blur(5px)' }}
                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                    transition={{ duration: 0.5, ease: "easeOut" }}
-                   className="space-y-4"
+                   className="space-y-6"
                  >
                    {isOracle ? (
-                     <div className="prose prose-invert">
-                        <p className="text-[#FDFBF7] font-serif text-xl md:text-2xl leading-relaxed drop-shadow-lg tracking-wide font-medium">
+                     <div className="prose prose-invert max-w-none">
+                        <p className="text-[#FDFBF7] font-serif text-xl md:text-3xl leading-relaxed drop-shadow-lg tracking-wide font-medium">
                           {lastMessage.content}
                         </p>
                      </div>
                    ) : (
-                     <p className="text-white/60 text-base font-light tracking-wide italic bg-white/5 inline-block px-4 py-2 rounded-full">
+                     <p className="text-white/60 text-base md:text-lg font-light tracking-wide italic bg-white/5 inline-block px-6 py-3 rounded-full border border-white/5">
                        "{lastMessage.content}"
                      </p>
                    )}

@@ -16,7 +16,8 @@ export async function generateScriptFromReport(request: BookRequest): Promise<st
   const { userData, reportResults, lifeDetails } = request;
 
   const systemPrompt = `
-Tu es un expert en numérologie et un orateur bienveillant. Ta mission est de rédiger un script vidéo de 5 minutes environ (800-900 mots) qui sera lu par un avatar réaliste pour le client.
+Tu es un expert en numérologie et un orateur bienveillant. Ta mission est de rédiger un script vidéo de 5 minutes environ.
+**CONTRAINTE TECHNIQUE ABSOLUE :** Le texte doit faire MOINS de 4800 caractères (espaces compris) pour ne pas être rejeté par le système vidéo, mais il doit être suffisamment dense pour durer 5 minutes à l'oral (rythme posé).
 
 **Ton et Style :**
 - Bienveillant, mystérieux, inspirant et profondément personnel.

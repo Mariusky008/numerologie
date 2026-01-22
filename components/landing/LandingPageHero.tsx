@@ -139,6 +139,71 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             </div>
           </motion.div>
 
+          {/* ✨ NEW FEATURE BLOCKS */}
+          <div className="w-full max-w-3xl mx-auto mt-12 mb-4 space-y-6">
+            
+            {/* 1. Benefits List */}
+            <motion.div 
+               initial={{ opacity: 0, y: 10 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ delay: 0.3 }}
+               className="bg-white/60 backdrop-blur-md p-6 md:p-8 rounded-3xl border border-[#EFEDE9] shadow-sm"
+            >
+               <p className="text-sm font-bold text-[#C9A24D] uppercase tracking-wider mb-6 text-center">En 5 minutes, il te révèle :</p>
+               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                 <li className="flex items-start gap-3">
+                   <div className="w-6 h-6 rounded-full bg-[#FAF9F7] flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-xs">✓</div>
+                   <span className="text-[#2C2F4A]/80 font-medium">Ce que vous portez profondément</span>
+                 </li>
+                 <li className="flex items-start gap-3">
+                   <div className="w-6 h-6 rounded-full bg-[#FAF9F7] flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-xs">✓</div>
+                   <span className="text-[#2C2F4A]/80 font-medium">Ce que vous traversez en ce moment</span>
+                 </li>
+                 <li className="flex items-start gap-3">
+                   <div className="w-6 h-6 rounded-full bg-[#FAF9F7] flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-xs">✓</div>
+                   <span className="text-[#2C2F4A]/80 font-medium">Les grandes dynamiques de votre vie</span>
+                 </li>
+                 <li className="flex items-start gap-3">
+                   <div className="w-6 h-6 rounded-full bg-[#FAF9F7] flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-xs">✓</div>
+                   <span className="text-[#2C2F4A]/80 font-medium">Vos forces et vos défis récurrents</span>
+                 </li>
+               </ul>
+               <p className="text-xs md:text-sm text-center pt-6 italic text-[#2C2F4A]/50 mt-2">
+                 "Sans jargon. Sans discours flou. Sans promesses irréalistes."
+               </p>
+            </motion.div>
+
+            {/* 2. Chat Feature Promo (Gros Encart) */}
+            <motion.div 
+               initial={{ opacity: 0, scale: 0.95 }}
+               animate={{ opacity: 1, scale: 1 }}
+               transition={{ delay: 0.4 }}
+               className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1F2235] to-[#2C2F4A] p-8 text-white text-center shadow-xl border border-[#C9A24D]/20 group"
+            >
+                {/* Decorative Background */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#C9A24D] rounded-full blur-[80px] opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                
+                <div className="relative z-10 flex flex-col items-center gap-4">
+                   <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mb-2 animate-pulse-slow">
+                      <Volume2 className="w-6 h-6 text-[#C9A24D]" />
+                   </div>
+                   
+                   <h3 className="text-xl md:text-2xl font-serif leading-tight">
+                     Posez toutes vos questions à votre Avatar
+                   </h3>
+                   
+                   <p className="text-white/80 leading-relaxed max-w-lg">
+                     Tu pourras aussi parler à ton avatar pendant <strong className="text-[#C9A24D]">30 minutes</strong> pour lui poser toutes les questions que tu as à lui poser sur ta vie...
+                   </p>
+                   
+                   <div className="text-[10px] uppercase tracking-widest text-white/40 mt-2 border border-white/10 px-3 py-1 rounded-full">
+                     Inclus dans le pack
+                   </div>
+                </div>
+            </motion.div>
+
+          </div>
+
           {/* Visuel Central (Avatar + Play) */}
           <motion.div 
             initial={{ scale: 0.9, opacity: 0 }}
@@ -234,27 +299,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             </div>
           </motion.div>
 
-          {/* Hook List */}
-          <div className="text-left bg-white p-6 rounded-2xl border border-[#EFEDE9] shadow-sm max-w-sm mx-auto space-y-3">
-             <p className="text-sm font-bold text-[#C9A24D] uppercase tracking-wider mb-2 text-center">En 5 minutes, il te révèle :</p>
-             <ul className="space-y-2 text-sm text-[#2C2F4A]/80">
-               <li className="flex items-start gap-2">
-                 <span className="text-[#C9A24D]">✓</span> ce que vous portez profondément
-               </li>
-               <li className="flex items-start gap-2">
-                 <span className="text-[#C9A24D]">✓</span> ce que vous traversez en ce moment
-               </li>
-               <li className="flex items-start gap-2">
-                 <span className="text-[#C9A24D]">✓</span> les grandes dynamiques de votre vie
-               </li>
-               <li className="flex items-start gap-2">
-                 <span className="text-[#C9A24D]">✓</span> vos forces et vos défis récurrents
-               </li>
-             </ul>
-             <p className="text-xs text-center pt-2 italic text-[#2C2F4A]/50 border-t border-[#EFEDE9] mt-2">
-               Sans jargon. Sans discours flou. Sans promesses irréalistes.
-             </p>
-          </div>
+
 
         </div>
       </section>

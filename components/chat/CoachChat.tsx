@@ -225,6 +225,7 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null); // Store recognition instance
 
   // Suggestions de questions
   const suggestions = [
@@ -248,6 +249,13 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
 
   // STT
   const startListening = () => {
+    // If already listening, stop it manually
+    if (isListening && recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+      return;
+    }
+
     // Interruption logic: If speaking, stop it.
     if (isSpeaking || isLoading) {
       stop(); 
@@ -259,6 +267,8 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
       recognition.lang = 'fr-FR';
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
+      
+      recognitionRef.current = recognition; // Store ref
 
       recognition.onstart = () => setIsListening(true);
       
@@ -271,7 +281,11 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
          }, 500);
       };
 
-      recognition.onend = () => setIsListening(false);
+      recognition.onend = () => {
+        setIsListening(false);
+        recognitionRef.current = null;
+      };
+      
       recognition.start();
     } else {
       alert("Microphone non supporté sur ce navigateur.");

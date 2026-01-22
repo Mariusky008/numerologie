@@ -697,7 +697,7 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                                 onClick={() => handleSendEmail(req)}
                                 className="text-xs text-green-600 hover:underline flex items-center gap-1 font-bold"
                               >
-                                <Download className="w-3 h-3" /> Envoyer Email Client
+                                <Sparkles className="w-3 h-3" /> Envoyer Pack Complet
                               </button>
                            </div>
                         </div>

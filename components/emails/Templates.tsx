@@ -13,6 +13,109 @@ import {
 } from '@react-email/components';
 import * as React from 'react';
 
+interface EmailConfirmationProps {
+  firstName: string;
+}
+
+export const EmailConfirmation = ({ firstName }: EmailConfirmationProps) => (
+  <Html>
+    <Head />
+    <Preview>Votre commande est bien reçue !</Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Heading style={h1}>Préparation en cours...</Heading>
+        <Text style={text}>Bonjour {firstName},</Text>
+        <Text style={text}>
+          Nous avons bien reçu votre commande pour le Pack Révélation.
+        </Text>
+        <Section style={box}>
+          <Heading as="h3" style={h3}>⏳ Prochaine étape</Heading>
+          <Text style={text}>
+            Votre guide numérologue enregistre actuellement votre vidéo personnalisée. 
+            Cela demande un peu de concentration et de temps.
+          </Text>
+          <Text style={text}>
+            Vous recevrez un email complet d'ici quelques heures (maximum 24h) contenant :
+            <ul>
+              <li>Votre Vidéo Avatar</li>
+              <li>Votre Dossier PDF</li>
+              <li>Votre accès au Coach Vocal</li>
+            </ul>
+          </Text>
+        </Section>
+        <Text style={footer}>
+          L'équipe Votre Légende.
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+);
+
+interface EmailDeliverablesProps {
+  firstName: string;
+  videoLink: string;
+  reportLink: string;
+  coachLink: string;
+}
+
+export const EmailDeliverables = ({
+  firstName,
+  videoLink,
+  reportLink,
+  coachLink,
+}: EmailDeliverablesProps) => (
+  <Html>
+    <Head />
+    <Preview>Votre Pack Révélation est prêt !</Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Heading style={h1}>Votre Révélation est là ✨</Heading>
+        <Text style={text}>Bonjour {firstName},</Text>
+        <Text style={text}>
+          Votre guide a terminé son analyse. Voici votre accès complet à votre destinée.
+        </Text>
+        
+        {/* 1. VIDEO (Highlight) */}
+        <Section style={highlightBox}>
+          <Heading as="h3" style={h3}>1. Votre Vidéo Personnelle</Heading>
+          <Text style={text}>
+            Regardez d'abord ceci. Votre avatar vous explique tout.
+          </Text>
+          <Button style={button} href={videoLink}>
+            ▶️ Regarder ma Vidéo (5 min)
+          </Button>
+        </Section>
+
+        {/* 2. REPORT */}
+        <Section style={box}>
+          <Heading as="h3" style={h3}>2. Votre Dossier PDF</Heading>
+          <Text style={text}>
+            Tous les détails techniques et votre météo astrale.
+          </Text>
+          <Button style={secondaryButton} href={reportLink}>
+            📄 Télécharger mon Dossier
+          </Button>
+        </Section>
+
+        {/* 3. COACH */}
+        <Section style={box}>
+          <Heading as="h3" style={h3}>3. Votre Oracle Vocal</Heading>
+          <Text style={text}>
+            Une question après la vidéo ? Posez-la à l'Oracle.
+          </Text>
+          <Button style={secondaryButton} href={coachLink}>
+            🎙️ Parler à l'Oracle
+          </Button>
+        </Section>
+
+        <Text style={footer}>
+          L'équipe Votre Légende.
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+);
+
 interface EmailReportProps {
   firstName: string;
   downloadLink: string;

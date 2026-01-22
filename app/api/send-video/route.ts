@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { EmailVideo } from '@/components/emails/Templates';
+import { EmailDeliverables } from '@/components/emails/Templates';
 import { NextResponse } from 'next/server';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -12,15 +12,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Missing parameters' }, { status: 400 });
     }
 
-    const coachLink = `https://www.votrelegende.fr/coach?id=${requestId}&name=${encodeURIComponent(firstName)}`;
+    // Construction des liens
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.votrelegende.fr';
+    const coachLink = `${baseUrl}/coach?id=${requestId}&name=${encodeURIComponent(firstName)}`;
+    const reportLink = `${baseUrl}/pdf-report-v2?order_id=${requestId}`;
 
     const { data, error } = await resend.emails.send({
-      from: 'Votre Légende <contact@roman-de-vie.com>', // Update with your verified domain
+      from: 'Votre Légende <contact@roman-de-vie.com>',
       to: [email],
-      subject: '🎥 Votre vidéo numérologique est prête !',
-      react: EmailVideo({
+      subject: '✨ Votre Pack Révélation est prêt (Vidéo + Rapport)',
+      react: EmailDeliverables({
         firstName,
-        downloadLink: videoUrl,
+        videoLink: videoUrl,
+        reportLink,
         coachLink,
       }),
     });

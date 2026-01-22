@@ -138,5 +138,26 @@ Simplification radicale de l'offre commerciale pour maximiser la conversion.
 *   **Emails Transactionnels** : Ajout d'un bouton "Accéder à mon Coach" dans l'email de livraison de la vidéo.
 *   **Lien d'Accès** : Format `/coach?id={COMMANDE_ID}&name={PRENOM}` pour une connexion fluide sans mot de passe.
 
+### 7.4 Workflow Email & Livraison (Automatisé)
+Le processus de livraison a été optimisé pour gérer le délai de génération de la vidéo (HeyGen) sans frustrer le client.
+
+1.  **Confirmation Immédiate (Automatique)**
+    *   *Déclencheur* : Paiement Stripe validé (`checkout.session.completed`).
+    *   *Action* : Envoi de l'email `EmailConfirmation`.
+    *   *Contenu* : Confirmation de commande, rassurance sur le délai de traitement (création de la vidéo unique), et annonce du contenu à venir.
+
+2.  **Génération & Production (Côté Admin)**
+    *   L'administrateur reçoit la commande dans son Dashboard.
+    *   Il lance la génération du script IA, puis de la vidéo HeyGen.
+    *   Une fois la vidéo prête, l'admin clique sur **"Envoyer Pack Complet"**.
+
+3.  **Livraison Finale (All-in-One)**
+    *   *Déclencheur* : Action manuelle Admin via API `/api/send-video`.
+    *   *Action* : Envoi de l'email `EmailDeliverables`.
+    *   *Contenu Unique* : Un seul email regroupant les 3 piliers de l'offre :
+        *   ▶️ Lien vers la **Vidéo Avatar**.
+        *   📄 Lien de téléchargement du **Rapport PDF**.
+        *   🎙️ Accès direct à **L'Oracle Vocal** (Chatbot).
+
 ---
-*Document mis à jour le 22 Janvier 2026 - Version 2.6*
+*Document mis à jour le 22 Janvier 2026 - Version 2.7*

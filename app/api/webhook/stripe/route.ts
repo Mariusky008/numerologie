@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
-import { EmailReport, EmailBundle } from '@/components/emails/Templates';
+import { EmailReport, EmailConfirmation } from '@/components/emails/Templates';
 
 // Configuration Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -33,44 +33,36 @@ export async function POST(request: Request) {
     const session = event.data.object as Stripe.Checkout.Session;
     
     // Récupération des métadonnées stockées lors de la création de session
-    const { orderId, plan, bookLength } = session.metadata || {};
+    const { orderId, plan } = session.metadata || {};
     const customerEmail = session.customer_details?.email;
     const customerName = session.customer_details?.name || 'Cher Client';
+    const firstName = customerName.split(' ')[0];
 
-    // Détermination des options
-    const isPaper = session.amount_total! >= 3900; // Simplification (à affiner selon vos prix exacts si besoin)
-    
     // Liens (à adapter avec votre vrai domaine en prod)
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
     
-    // Paramètres pour regénérer les liens
-    // Note: Dans un vrai système, on récupérerait ces infos de la DB via orderId
-    // Ici on simplifie pour l'exemple
-    
     try {
       if (plan === 'report') {
-        // Envoi Email Rapport Seul
+        // Envoi Email Rapport Seul (Immédiat car pas de vidéo)
         await resend.emails.send({
-          from: 'Votre Légende <contact@votrelegende.fr>', // Remplacez par votre domaine vérifié Resend
+          from: 'Votre Légende <contact@roman-de-vie.com>',
           to: [customerEmail!],
           subject: 'Votre Dossier Numérologique est prêt 🌟',
           react: EmailReport({
-            firstName: customerName.split(' ')[0],
-            downloadLink: `${baseUrl}/pdf-report-v2?order_id=${orderId}`, // Lien direct vers le PDF
-            isPaper: isPaper,
+            firstName,
+            downloadLink: `${baseUrl}/pdf-report-v2?order_id=${orderId}`,
+            isPaper: false,
           }),
         });
-      } else if (plan === 'bundle') {
-        // Envoi Email Bundle (Livre)
+      } else {
+        // Pour le Bundle (Vidéo + Rapport + Chat) ou tout autre plan
+        // On envoie d'abord une confirmation de commande "En traitement"
         await resend.emails.send({
-          from: 'Votre Légende <contact@votrelegende.fr>',
+          from: 'Votre Légende <contact@roman-de-vie.com>',
           to: [customerEmail!],
-          subject: 'Commencez l\'écriture de votre Légende 📖',
-          react: EmailBundle({
-            firstName: customerName.split(' ')[0],
-            writeLink: `${baseUrl}/book-setup?order_id=${orderId}`, // Nouvelle page à créer pour configurer le livre
-            downloadLink: `${baseUrl}/pdf-report-v2?order_id=${orderId}`,
-            isPaper: isPaper,
+          subject: 'Votre commande est confirmée ✅',
+          react: EmailConfirmation({
+            firstName,
           }),
         });
       }
@@ -79,8 +71,6 @@ export async function POST(request: Request) {
       
     } catch (error) {
       console.error('Erreur envoi email:', error);
-      // On ne renvoie pas d'erreur 500 à Stripe pour éviter qu'il ne re-tente indéfiniment le webhook
-      // Mais on loggue l'erreur pour intervention manuelle
     }
   }
 

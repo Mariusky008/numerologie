@@ -1,20 +1,89 @@
 'use client';
 
-import { useChat } from '@ai-sdk/react';
 import { useRef, useEffect, useState } from 'react';
 import { Send, Mic, User, Sparkles, Loader2, StopCircle } from 'lucide-react';
 
 interface CoachChatProps {
-  userId: string; // The ID of the book request to fetch context
+  userId: string;
   userName: string;
 }
 
+// Custom hook to replace flaky @ai-sdk/react useChat
+function useCustomChat({ api, body, initialMessages }: any) {
+  const [messages, setMessages] = useState<any[]>(initialMessages || []);
+  const [isLoading, setIsLoading] = useState(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
+
+  const stop = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+      setIsLoading(false);
+    }
+  };
+
+  const append = async (message: any) => {
+    const newMessages = [...messages, message];
+    setMessages(newMessages);
+    setIsLoading(true);
+
+    abortControllerRef.current = new AbortController();
+
+    try {
+      const response = await fetch(api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: newMessages,
+          ...body
+        }),
+        signal: abortControllerRef.current.signal
+      });
+
+      if (!response.ok) throw new Error(response.statusText);
+
+      const reader = response.body?.getReader();
+      if (!reader) return;
+
+      const assistantMessage = { id: Date.now().toString(), role: 'assistant', content: '' };
+      setMessages(prev => [...prev, assistantMessage]);
+
+      const decoder = new TextDecoder();
+      
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const text = decoder.decode(value, { stream: true });
+        
+        setMessages(prev => {
+          const updated = [...prev];
+          const lastMsg = updated[updated.length - 1];
+          if (lastMsg.role === 'assistant') {
+             lastMsg.content += text;
+          }
+          return updated;
+        });
+      }
+
+    } catch (err: any) {
+      if (err.name !== 'AbortError') {
+        console.error("Chat error:", err);
+      }
+    } finally {
+      setIsLoading(false);
+      abortControllerRef.current = null;
+    }
+  };
+
+  return { messages, append, isLoading, stop };
+}
+
 export default function CoachChat({ userId, userName }: CoachChatProps) {
-  // Manual input management for compatibility with latest AI SDK
+  // Manual input management
   const [input, setInput] = useState('');
 
-  // AI Chat Hook
-  const { messages, append, status, stop, isLoading: sdkLoading } = useChat({
+  // Use Custom Chat Hook
+  const { messages, append, isLoading, stop } = useCustomChat({
     api: '/api/chat',
     body: { userId },
     initialMessages: [
@@ -24,10 +93,7 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
         content: `Bonjour ${userName}, je suis ton Coach Numérologue. J'ai analysé ton thème. Quelle question te préoccupe en ce moment ?`
       }
     ]
-  } as any) as any; 
-
-  // Derived loading state (support both status and legacy isLoading)
-  const isLoading = sdkLoading || status === 'streaming' || status === 'submitted';
+  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -40,13 +106,8 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
     const userMessage = { role: 'user', content: input };
     setInput(''); // Clear input immediately
     
-    // Use append if available (legacy/standard), otherwise try sendMessage (new SDK)
-    if (append) {
-      await append(userMessage);
-    } else {
-      // Fallback or error handling if SDK is too new/different
-      console.error("Chat SDK missing 'append' method");
-    }
+    // Use append (custom hook always has append)
+    await append(userMessage);
   };
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -73,12 +134,10 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
         setInput(transcript);
         
         // Auto submit after voice
-        setTimeout(() => {
-             if (append) {
-                 append({ role: 'user', content: transcript });
-                 setInput('');
-             }
-        }, 800);
+         setTimeout(() => {
+              append({ role: 'user', content: transcript });
+              setInput('');
+         }, 800);
       };
 
       recognition.onend = () => setIsListening(false);
@@ -105,6 +164,8 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
         </div>
       </div>
 
+      {/* Debug Info (Removed) */}
+      
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-[#FAF9F7]">
         {messages.map((m: any) => (

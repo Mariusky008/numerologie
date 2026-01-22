@@ -253,7 +253,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                className="text-center"
             >
                <h3 className="text-2xl md:text-3xl font-serif text-[#2C2F4A] mb-10 leading-tight">
-                 En <span className="text-[#C9A24D]">5 minutes de vidéo</span>, il te révèle :
+                 En <span className="text-[#C9A24D]">5 minutes de vidéo</span>, il vous révèle :
                </h3>
                
                <ul className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-3xl mx-auto">
@@ -300,7 +300,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                    </h3>
                    
                    <p className="text-white/80 leading-relaxed text-lg md:text-xl max-w-lg">
-                     Tu pourras aussi parler à ton avatar pendant <br/><strong className="text-[#C9A24D] text-2xl">30 minutes</strong><br/> pour lui poser toutes les questions que tu as à lui poser sur ta vie...
+                     Vous pourrez aussi parler à votre avatar pendant <br/><strong className="text-[#C9A24D] text-2xl">30 minutes</strong><br/> pour lui poser toutes les questions que vous avez à lui poser sur votre vie...
                    </p>
                    
                    <div className="text-xs font-bold uppercase tracking-widest text-[#C9A24D] mt-4 border border-[#C9A24D]/30 px-6 py-2 rounded-full bg-[#C9A24D]/10 backdrop-blur-sm">
@@ -426,162 +426,6 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         </div>
       </section>
 
-      {/* 🧩 SECTION 4 — UPSELL LIVRE & VIDÉO (PREMIUM) */}
-      <section className="py-16 px-6 bg-[#2C2F4A] text-white relative overflow-hidden">
-         {/* Title Premium */}
-         <div className="max-w-4xl mx-auto text-center mb-16 relative z-20">
-            <h2 className="text-2xl md:text-3xl font-serif leading-tight text-white">
-              Et si vous voulez aller encore plus loin, <br/>
-              nous vous proposons <span className="text-[#C9A24D]">le roman de votre propre vie</span> en option premium.
-            </h2>
-         </div>
-
-         {/* Background Elements */}
-         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#C9A24D] rounded-full blur-[120px] opacity-10 pointer-events-none"></div>
-         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#5B4B8A] rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
-
-         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-            
-            {/* Visualisation (Video + Livre) */}
-            <motion.div 
-               initial={{ opacity: 0, x: -50 }}
-               whileInView={{ opacity: 1, x: 0 }}
-               viewport={{ once: true }}
-               className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8"
-            >
-               {/* Container Principal : Vidéo Avatar */}
-               <div 
-                  className="relative aspect-[9/16] w-full max-w-[260px] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer bg-black"
-                  onClick={togglePreviewPlay}
-               >
-                  <video 
-                     ref={previewVideoRef}
-                     muted 
-                     loop 
-                     playsInline
-                     preload="auto"
-                     poster="/avatar-poster.jpg"
-                     className="w-full h-full object-contain bg-black relative z-10"
-                  >
-                    <source src="/avatars.mp4?v=2" type="video/mp4" />
-                    Votre navigateur ne supporte pas la lecture de vidéos.
-                  </video>
-                  
-                  {/* Bouton Play Central (Masqué si lecture) */}
-                  {!isPreviewPlaying && (
-                     <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_30px_rgba(201,162,77,0.3)]">
-                           <Play className="w-6 h-6 text-white fill-white ml-1" />
-                        </div>
-                     </div>
-                  )}
-
-                  {/* Contrôles Son (Visible si lecture) */}
-                  {isPreviewPlaying && (
-                     <div className="absolute bottom-6 left-6 z-30" onClick={(e) => e.stopPropagation()}>
-                        <button 
-                          onClick={togglePreviewMute}
-                          className="p-2 bg-black/40 rounded-full hover:bg-black/60 text-white transition-colors backdrop-blur-sm"
-                        >
-                          {isPreviewMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-                        </button>
-                     </div>
-                  )}
-               </div>
-                  
-               {/* Livre Flottant (À côté) */}
-               <motion.div 
-                 initial={{ y: 20, rotate: -3 }}
-                 animate={{ y: [0, -10, 0] }}
-                 transition={{ 
-                   repeat: Infinity, 
-                   duration: 6,
-                   ease: "easeInOut"
-                 }}
-                 className="w-48 md:w-56 aspect-[3/4] bg-[#FAF9F7] rounded-r-lg shadow-[20px_20px_50px_-10px_rgba(0,0,0,0.5)] border-l-[10px] border-[#1a1c2e] overflow-hidden transform hover:scale-105 transition-transform duration-300 relative z-10"
-               >
-                  {/* Effet reliure (Ombre portée depuis la gauche) */}
-                  <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-black/20 to-transparent pointer-events-none z-10"></div>
-                  
-                  {/* Effet épaisseur des pages (Bordure droite et basse) */}
-                  <div className="absolute right-0 top-0 bottom-0 w-1 bg-[#E3E1DD] border-l border-black/5"></div>
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#E3E1DD] border-t border-black/5"></div>
-
-                  {/* Couverture Livre */}
-                  <div className="h-full w-full flex flex-col relative p-5 pb-8">
-                     {/* Ornements Coins */}
-                     <div className="absolute top-3 right-3 w-10 h-10 border-t-2 border-r-2 border-[#C9A24D]/60 rounded-tr-lg"></div>
-                     <div className="absolute bottom-3 right-3 w-10 h-10 border-b-2 border-r-2 border-[#C9A24D]/60 rounded-br-lg"></div>
-                     
-                     {/* Titre */}
-                     <div className="mt-4 text-center space-y-2 relative z-20">
-                        <div className="text-[9px] uppercase tracking-[0.2em] text-[#C9A24D] font-bold">Thomas R.</div>
-                        <div className="text-2xl font-serif text-[#2C2F4A] font-bold leading-[0.95]">La trajectoire</div>
-                        <div className="text-[10px] text-[#2C2F4A]/70 italic leading-tight px-1">
-                          "Une vie ne se comprend jamais dans l’ordre où elle se vit."
-                        </div>
-                        <div className="w-8 h-[2px] bg-[#C9A24D] mx-auto my-3"></div>
-                     </div>
-
-                     {/* Contenu visuel abstrait (Cosmic Wheel) */}
-                     <div className="flex-1 flex items-center justify-center my-2 opacity-10">
-                        <div className="w-24 h-24 rounded-full border border-[#2C2F4A] flex items-center justify-center">
-                           <div className="w-16 h-16 border border-[#2C2F4A] rotate-45"></div>
-                        </div>
-                     </div>
-
-                     {/* Button Extrait (Positionné en bas) */}
-                     <div className="mt-auto mb-4 relative z-30 flex justify-center">
-                        <button 
-                          onClick={(e) => { e.stopPropagation(); setShowExcerpt(true); }}
-                          className="bg-[#2C2F4A] text-white text-xs font-bold px-5 py-3 rounded-full shadow-lg flex items-center gap-2 hover:bg-[#C9A24D] hover:text-[#2C2F4A] hover:scale-105 transition-all whitespace-nowrap"
-                        >
-                          <BookOpen className="w-4 h-4" />
-                          Lire un extrait
-                        </button>
-                     </div>
-
-                     {/* Footer Cover */}
-                     <div className="text-center">
-                        <div className="text-[8px] text-[#2C2F4A]/50 uppercase tracking-widest">Tome 1 • L'Éveil</div>
-                     </div>
-                     
-                     {/* Texture Papier */}
-                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-50 mix-blend-multiply pointer-events-none z-0"></div>
-                  </div>
-               </motion.div>
-            </motion.div>
-
-            {/* Texte Explicatif */}
-            <motion.div 
-               initial={{ opacity: 0, x: 50 }}
-               whileInView={{ opacity: 1, x: 0 }}
-               viewport={{ once: true }}
-               className="space-y-6 text-center lg:text-left"
-            >
-               <h2 className="text-3xl md:text-4xl font-serif leading-tight">
-                  <span className="text-[#C9A24D]">Regardez</span> votre histoire,<br/>
-                  <span className="text-white/60">puis</span> lisez votre destin.
-               </h2>
-               <p className="text-white/70 text-lg leading-relaxed max-w-lg mx-auto lg:mx-0">
-                  Votre expérience commence par une <strong>vidéo immersive</strong> où votre avatar vous parle directement. 
-                  <br/><br/>
-                  Elle se prolonge (si vous le souhaitez) par un <strong>livre unique</strong> et un <strong>dossier d'analyse</strong> complet, retraçant chaque étape de votre vie avec une précision troublante.
-               </p>
-               
-               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-                  <button 
-                    onClick={onStart}
-                    className="px-8 py-4 bg-[#C9A24D] text-[#2C2F4A] rounded-full font-bold shadow-lg hover:bg-white transition-all flex items-center justify-center gap-2 group"
-                  >
-                    <Play className="w-4 h-4 fill-current group-hover:scale-110 transition-transform" />
-                    Voir votre lecture complète
-                  </button>
-               </div>
-            </motion.div>
-
-         </div>
-      </section>
 
 
 

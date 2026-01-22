@@ -32,12 +32,8 @@ Cette application est une plateforme complète de Numérologie et d'Astrologie g
 *   **Contenu** : 40+ pages incluant l'analyse détaillée, les graphiques vectoriels et les prévisions sur 12 mois.
 *   **Design** : Charte graphique "Roman de Vie" (Crème `#FAF9F7`, Bleu Nuit `#2C2F4A`, Or `#C9A24D`).
 
-### 2.5 Monétisation & Checkout
-*   **Tunnel de Vente** : Page `/checkout` dédiée.
-*   **Options** :
-    *   Rapport PDF Digital (29€).
-    *   Bundle PDF + Livre Papier (49€ + 29€ optionnel).
-*   **Logique de Livraison** : Formulaire conditionnel pour l'adresse postale si le livre papier est choisi.
+### 2.5 Monétisation & Checkout (Obsolète voir V2.6)
+*   *Ancienne version V2.5* : Tunnel multi-options (49€ + 29€). Remplacé par le Pack Unique en V2.6.
 
 ## 3. Algorithme de Numérologie (`lib/numerology/engine.ts`)
 
@@ -109,11 +105,38 @@ Le texte est assemblé dynamiquement selon la structure :
     *   *Ex:* Une touche "ardente" pour un Bélier, "mystique" pour un Poissons.
 
 ## 6. Stack Technique
-*   **Framework** : Next.js 14 (App Router).
+*   **Framework** : Next.js 14+ (App Router).
 *   **Langage** : TypeScript.
 *   **Styling** : Tailwind CSS + Framer Motion (Animations).
+*   **IA & Chat** : Vercel AI SDK 3.0+ / OpenAI GPT-4.
 *   **Astro** : `astronomy-engine`.
-*   **Persistence** : LocalStorage (pour l'état session) / URL Params (pour le partage).
+*   **Persistence** : LocalStorage / Supabase (pour les requêtes).
+
+## 7. Mises à jour V2.6 (Janvier 2026)
+
+### 7.1 Coach Numérologue IA (`/coach`)
+Remplacement de l'avatar vidéo interactif (HeyGen) par une solution Chatbot texte/audio plus performante et économique.
+*   **Technologie** : Vercel AI SDK Core (`streamText`) + OpenAI GPT-4 Turbo.
+*   **Interface** : Composant `CoachChat.tsx` style messagerie moderne.
+*   **Saisie Vocale** : Intégration Speech-to-Text native navigateur (Web Speech API) pour dicter les questions.
+*   **Contextualisation** : L'IA reçoit automatiquement le profil numérologique complet du client (Chemin de Vie, Expression, Cycles...) pour personnaliser ses réponses.
+*   **Sécurité** : Accès restreint via `requestId` vérifié en base de données.
+
+### 7.2 Le Pack Révélation (Offre Unique)
+Simplification radicale de l'offre commerciale pour maximiser la conversion.
+*   **Produit Unique** : "Le Pack Révélation".
+*   **Prix** : **29,00 €** (au lieu de 49€ + options).
+*   **Contenu du Pack** :
+    1.  **Vidéo Avatar** (5 min) : Analyse émotionnelle générée par HeyGen.
+    2.  **Dossier PDF** (40 pages) : Rapport technique complet généré par l'algorithme.
+    3.  **Coach IA** (30 min) : Accès offert au chatbot expert pour poser des questions.
+*   **Modifications Checkout** :
+    *   Mise à jour de `app/checkout/page.tsx` pour afficher le prix unique et les nouvelles inclusions.
+    *   Sécurisation de `app/api/checkout/route.ts` pour forcer le montant de 29€ côté serveur Stripe.
+
+### 7.3 Expérience Post-Achat
+*   **Emails Transactionnels** : Ajout d'un bouton "Accéder à mon Coach" dans l'email de livraison de la vidéo.
+*   **Lien d'Accès** : Format `/coach?id={COMMANDE_ID}&name={PRENOM}` pour une connexion fluide sans mot de passe.
 
 ---
-*Document généré le 19 Janvier 2026 - Version 2.5*
+*Document mis à jour le 22 Janvier 2026 - Version 2.6*

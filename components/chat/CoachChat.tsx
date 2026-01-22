@@ -9,39 +9,64 @@ interface CoachChatProps {
   userName: string;
 }
 
-// --- TTS HELPER ---
-const speakText = (text: string) => {
-  if ('speechSynthesis' in window) {
-    // 1. Clean emojis and markdown artifacts
-    const cleanText = text
-      .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}]/gu, '')
-      .replace(/\*/g, ''); // Remove bold markers
+// --- TTS HELPER (Streaming Queue) ---
+let speechQueue: string[] = [];
+let isSpeakingGlobal = false;
 
-    // 2. Cancel ongoing speech
+const speakText = (text: string, forceReset = false) => {
+  if (!('speechSynthesis' in window)) return;
+
+  if (forceReset) {
     window.speechSynthesis.cancel();
-
-    // 3. Create Utterance
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'fr-FR';
-    utterance.rate = 0.95; // Slower, more mystic
-    utterance.pitch = 1.05; // Slightly higher for a "soft" feminine touch if available, or keep 1.0
-    
-    // 4. Voice Selection (Prioritize Google or iOS voices)
-    const voices = window.speechSynthesis.getVoices();
-    // Try to find a soft female voice (Google Français is usually female and good)
-    // Amelie (iOS) is female. Thomas is male.
-    const bestVoice = voices.find(v => v.name.includes("Google") && v.lang.includes("fr")) 
-                   || voices.find(v => v.name === "Amelie") 
-                   || voices.find(v => v.lang.includes("fr"));
-    
-    if (bestVoice) utterance.voice = bestVoice;
-
-    window.speechSynthesis.speak(utterance);
+    speechQueue = [];
+    isSpeakingGlobal = false;
   }
+
+  // 1. Clean emojis and markdown artifacts
+  const cleanText = text
+    .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}]/gu, '')
+    .replace(/\*/g, '')
+    .trim();
+
+  if (!cleanText) return;
+
+  speechQueue.push(cleanText);
+  processSpeechQueue();
+};
+
+const processSpeechQueue = () => {
+  if (isSpeakingGlobal || speechQueue.length === 0) return;
+
+  isSpeakingGlobal = true;
+  const textToSpeak = speechQueue.shift()!;
+
+  const utterance = new SpeechSynthesisUtterance(textToSpeak);
+  utterance.lang = 'fr-FR';
+  utterance.rate = 1.0; // Slightly faster for flow
+  utterance.pitch = 1.0;
+  
+  // Voice Selection
+  const voices = window.speechSynthesis.getVoices();
+  const bestVoice = voices.find(v => v.name.includes("Google") && v.lang.includes("fr")) 
+                 || voices.find(v => v.name === "Amelie") 
+                 || voices.find(v => v.lang.includes("fr"));
+  if (bestVoice) utterance.voice = bestVoice;
+
+  utterance.onend = () => {
+    isSpeakingGlobal = false;
+    processSpeechQueue(); // Next phrase
+  };
+
+  utterance.onerror = () => {
+    isSpeakingGlobal = false;
+    processSpeechQueue();
+  };
+
+  window.speechSynthesis.speak(utterance);
 };
 
 // --- CUSTOM CHAT HOOK ---
-function useCustomChat({ api, body, initialMessages, onFinish }: any) {
+function useCustomChat({ api, body, initialMessages, onFinish, isMuted }: any) {
   const [messages, setMessages] = useState<any[]>(initialMessages || []);
   const [isLoading, setIsLoading] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false); // Track TTS status
@@ -61,7 +86,7 @@ function useCustomChat({ api, body, initialMessages, onFinish }: any) {
 
   const append = async (message: any) => {
     // Stop any current speech when user talks
-    window.speechSynthesis.cancel();
+    speakText("", true); // Force reset queue
     setIsSpeaking(false);
     setError(null);
 
@@ -96,13 +121,30 @@ function useCustomChat({ api, body, initialMessages, onFinish }: any) {
 
       const decoder = new TextDecoder();
       let fullResponse = "";
+      let sentenceBuffer = "";
       
+      // Start Speaking mode immediately as we expect audio
+      if (!isMuted) setIsSpeaking(true);
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         const text = decoder.decode(value, { stream: true });
         fullResponse += text;
+        sentenceBuffer += text;
         
+        // STREAMING TTS LOGIC
+        // Detect sentence endings (. ? ! ) followed by space or end of string
+        // We use a regex that looks for punctuation
+        const sentenceMatch = sentenceBuffer.match(/([.?!])\s+/);
+        if (sentenceMatch && sentenceMatch.index !== undefined && !isMuted) {
+           const endIdx = sentenceMatch.index + 1;
+           const sentence = sentenceBuffer.substring(0, endIdx);
+           sentenceBuffer = sentenceBuffer.substring(endIdx); // Keep the rest (punctuation included in sentence)
+           
+           speakText(sentence);
+        }
+
         setMessages(prev => {
           const updated = [...prev];
           const lastMsgIndex = updated.length - 1;
@@ -115,24 +157,35 @@ function useCustomChat({ api, body, initialMessages, onFinish }: any) {
       
       setIsLoading(false); // Text is ready
       
-      // Speak (Auto)
-      if (onFinish) {
-        setIsSpeaking(true);
-        // Small delay to ensure state update
-        setTimeout(() => onFinish(fullResponse), 100);
+      // Speak remaining buffer if any
+      if (sentenceBuffer.trim() && !isMuted) {
+         speakText(sentenceBuffer);
       }
+      
+      // We rely on the queue to handle isSpeaking state now, 
+      // but we might want to keep the visual active until queue is empty?
+      // For simplicity, let's keep visual active for a bit longer or until user interrupts.
 
     } catch (err: any) {
       if (err.name !== 'AbortError') {
          console.error("Chat error:", err);
          setError(err.message || "Une erreur est survenue");
-         // Remove user message if failed? No, keep it.
+         setIsSpeaking(false);
       }
     } finally {
       setIsLoading(false);
       abortControllerRef.current = null;
     }
   };
+
+  // We need to sync isSpeaking state with the queue status
+  useEffect(() => {
+    const interval = setInterval(() => {
+       if (isSpeakingGlobal && !isSpeaking) setIsSpeaking(true);
+       if (!isSpeakingGlobal && isSpeaking && !isLoading) setIsSpeaking(false);
+    }, 200);
+    return () => clearInterval(interval);
+  }, [isSpeaking, isLoading]);
 
   return { messages, append, isLoading, isSpeaking, error, stop };
 }
@@ -152,8 +205,9 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
         content: `Bonjour ${userName}. Je suis l'Oracle. J'ai lu dans tes nombres. Quelle question hante ton esprit ?`
       }
     ],
+    isMuted,
     onFinish: (text: string) => {
-      if (!isMuted) speakText(text);
+      // Legacy onFinish not used for TTS anymore, but useful for other things?
     }
   });
 
@@ -171,6 +225,19 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isListening, setIsListening] = useState(false);
+
+  // Suggestions de questions
+  const suggestions = [
+    "Quel est mon défi actuel ?",
+    "Parle-moi de ma vie sentimentale",
+    "Quelle est ma mission de vie ?",
+    "Que me réserve mon année personnelle ?"
+  ];
+
+  const handleSuggestionClick = (question: string) => {
+    const userMessage = { role: 'user', content: question };
+    append(userMessage);
+  };
 
   // Auto-scroll
   useEffect(() => {
@@ -353,6 +420,21 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
       {/* 🎛 CONTROLS - FUTURISTIC */}
       <div className="p-8 pb-12 z-30 flex flex-col items-center gap-6 bg-gradient-to-t from-[#08090F] via-[#08090F] to-transparent">
         
+        {/* SUGGESTIONS (Chips) - Visible if only welcome message exists or empty */}
+        {!isLoading && !isListening && messages.length <= 1 && (
+          <div className="flex flex-wrap justify-center gap-2 mb-2 max-w-sm">
+            {suggestions.map((q, i) => (
+              <button
+                key={i}
+                onClick={() => handleSuggestionClick(q)}
+                className="px-4 py-2 bg-white/5 hover:bg-[#C9A24D]/20 border border-white/10 hover:border-[#C9A24D]/50 rounded-full text-xs text-white/70 hover:text-white transition-all backdrop-blur-md"
+              >
+                {q}
+              </button>
+            ))}
+          </div>
+        )}
+
         {/* Hidden Input (Fallback) */}
         {!isListening && (
           <form onSubmit={handleSubmit} className="w-full max-w-[200px] relative opacity-0 hover:opacity-100 focus-within:opacity-100 transition-all duration-500">

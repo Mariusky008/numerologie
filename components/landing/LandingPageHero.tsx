@@ -366,19 +366,19 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       <span className="text-xs font-bold uppercase tracking-widest text-[#2C2F4A]/40">Vérifié</span>
                    </div>
                    <h3 className="font-serif text-2xl md:text-3xl text-[#2C2F4A] leading-tight">
-                     "Je pensais me connaître, mais je n'avais lu que la préface."
+                     "Je pensais me connaître, mais l'Avatar a vu ce que j'ignorais."
                    </h3>
                 </div>
 
                 <div className="space-y-4 text-[#2C2F4A]/70 text-lg font-light leading-relaxed">
                    <p>
-                     J'étais sceptique au début. Un "livre" sur moi ? Je m'attendais à un horoscope glorifié, un PDF générique rempli de phrases bateau.
+                     J'étais sceptique. Une vidéo et un chat IA sur ma vie ? Je m'attendais à des généralités d'horoscope. Mais quand l'avatar a commencé à parler, j'ai été scotché.
                    </p>
                    <p>
-                     Mais dès la première page, j'ai été happé. Ce n'est pas juste une analyse froide. <strong className="text-[#5B4B8A] font-medium">L'équipe de "Votre Légende" a tissé une véritable histoire.</strong>
+                     <strong className="text-[#5B4B8A] font-medium">En 5 minutes, elle a mis des mots sur des blocages que je traîne depuis 10 ans.</strong> J'ai ensuite passé 30 minutes à discuter avec elle : ses conseils étaient d'une justesse effrayante.
                    </p>
                    <p>
-                     Quand j'ai lu le passage sur mon "instabilité chronique" transformée en "génie foudroyant", j'ai eu les larmes aux yeux. J'ai compris que ce que je voyais comme un défaut était en fait ma plus grande arme.
+                     Le dossier de 40 pages est la cerise sur le gâteau : une véritable feuille de route. J'ai enfin compris que mon "instabilité" était en fait ma plus grande force créative.
                    </p>
                 </div>
 

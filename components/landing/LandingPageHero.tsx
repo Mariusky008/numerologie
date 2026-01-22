@@ -465,74 +465,58 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
       {/* 🧩 SECTION 3 — CE QUE TU REÇOIS */}
       <section className="py-16 px-6 bg-[#FAF9F7]">
         <div className="max-w-md mx-auto bg-white p-8 rounded-2xl border border-[#C9A24D]/20 shadow-lg relative overflow-hidden">
-          <div className="absolute top-0 right-0 bg-[#C9A24D] text-white text-[10px] font-bold px-3 py-1 uppercase">Pack Immédiat</div>
+          <div className="absolute top-0 right-0 bg-[#C9A24D] text-white text-[10px] font-bold px-3 py-1 uppercase">Pack Révélation</div>
           
-          <h2 className="text-2xl font-serif text-[#2C2F4A] mb-6 text-center">Ce que vous recevez</h2>
+          <h2 className="text-2xl font-serif text-[#2C2F4A] mb-2 text-center">Votre Pack Complet</h2>
+          <p className="text-center text-xs text-[#2C2F4A]/50 mb-6 italic">Tout est inclus, pas de frais cachés</p>
           
           <ul className="space-y-4 mb-8">
+            <li className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
+                <FileText className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="font-medium text-[#2C2F4A] block">Votre Dossier Numérologique</span>
+                <span className="text-xs text-[#2C2F4A]/50">PDF complet de 40+ pages</span>
+              </div>
+            </li>
             <li className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
                 <Play className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-medium text-[#2C2F4A] block">Une vidéo privée de 5 minutes</span>
-                <span className="text-xs text-[#2C2F4A]/50">Livraison immédiate après paiement</span>
+                <span className="font-medium text-[#2C2F4A] block">Votre Vidéo Avatar (5 min)</span>
+                <span className="text-xs text-[#2C2F4A]/50">Analyse orale et visuelle</span>
               </div>
             </li>
-            <li className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
-                <Shield className="w-5 h-5" />
+            <li className="flex items-center gap-4 bg-[#F0FDF4] p-2 rounded-lg -mx-2 border border-green-100">
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-green-600 shadow-sm">
+                <Volume2 className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-medium text-[#2C2F4A] block">Accessible à vie</span>
-                <span className="text-xs text-[#2C2F4A]/50">Données sécurisées & confidentielles</span>
-              </div>
-            </li>
-            <li className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
-                <Smartphone className="w-5 h-5" />
-              </div>
-              <span className="font-medium text-[#2C2F4A]">Visionnable sur mobile & PC</span>
-            </li>
-            <li className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#FAF9F7] flex items-center justify-center text-[#5B4B8A]">
-                <User className="w-5 h-5" />
-              </div>
-              <div>
-                 <span className="font-medium text-[#2C2F4A] block">100 % personnalisée</span>
-                 <span className="text-xs text-[#2C2F4A]/50">Garantie de satisfaction</span>
+                <span className="font-bold text-green-800 block">Coach Vocal IA (30 min)</span>
+                <span className="text-xs text-green-700">Posez toutes vos questions à l'oral !</span>
               </div>
             </li>
           </ul>
 
-          <div className="bg-[#FAF9F7] p-4 rounded-lg text-center mb-4 border border-[#C9A24D]/10">
-            <div className="text-3xl font-serif text-[#C9A24D] mb-1">29€</div>
-            <p className="text-sm font-bold text-[#2C2F4A]">Paiement unique. Aucun abonnement.</p>
-            <div className="flex justify-center gap-2 mt-2 opacity-50">
-               <span className="text-[10px] border border-[#2C2F4A] px-1 rounded">🔒 Paiement Sécurisé</span>
-               <span className="text-[10px] border border-[#2C2F4A] px-1 rounded">🛡 Données Privées</span>
+          <div className="bg-[#FAF9F7] p-4 rounded-lg text-center mb-4 border border-[#C9A24D]/10 relative overflow-hidden">
+            {/* Old Price Strikethrough */}
+            <div className="absolute top-2 right-2 text-xs text-red-400 line-through font-bold">129€</div>
+            
+            <div className="text-4xl font-serif text-[#C9A24D] mb-1 font-bold">29€</div>
+            <p className="text-sm font-bold text-[#2C2F4A] uppercase tracking-wide">Accès Immédiat à Tout</p>
+            <div className="flex justify-center gap-2 mt-2 opacity-60">
+               <span className="text-[10px] bg-white px-2 py-0.5 rounded border border-[#2C2F4A]/10">🔒 Paiement Unique</span>
             </div>
           </div>
           
-          {/* Mini Comment ça marche */}
-          <div className="mt-6 pt-6 border-t border-[#EFEDE9]">
-             <p className="text-xs text-[#8FA6A0] uppercase tracking-widest text-center mb-4">Comment ça marche</p>
-             <div className="flex justify-between items-center text-xs text-[#2C2F4A]/70 px-2">
-               <div className="flex flex-col items-center gap-1">
-                 <span className="w-6 h-6 rounded-full bg-[#FAF9F7] flex items-center justify-center font-bold text-[#5B4B8A]">1</span>
-                 <span>Date</span>
-               </div>
-               <div className="h-px w-8 bg-[#EFEDE9]"></div>
-               <div className="flex flex-col items-center gap-1">
-                 <span className="w-6 h-6 rounded-full bg-[#FAF9F7] flex items-center justify-center font-bold text-[#5B4B8A]">2</span>
-                 <span>Vidéo</span>
-               </div>
-               <div className="h-px w-8 bg-[#EFEDE9]"></div>
-               <div className="flex flex-col items-center gap-1">
-                 <span className="w-6 h-6 rounded-full bg-[#FAF9F7] flex items-center justify-center font-bold text-[#5B4B8A]">3</span>
-                 <span>Analyse</span>
-               </div>
-             </div>
+          {/* Option Livre */}
+          <div className="mt-4 pt-4 border-t border-[#EFEDE9] text-center">
+             <p className="text-xs text-[#2C2F4A]/60">
+               <span className="font-bold text-[#5B4B8A]">En option :</span> Vous pourrez aussi commander votre <br/>
+               <strong>Livre "Roman de Vie"</strong> après votre commande.
+             </p>
           </div>
         </div>
       </section>

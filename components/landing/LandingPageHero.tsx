@@ -571,32 +571,61 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         </div>
       </section>
 
-      {/* 🧩 SECTION 6 — AVERTISSEMENT LÉGAL */}
-      <footer className="py-8 px-6 bg-[#FAF9F7] text-center">
-        {/* Navigation Footer */}
-        <div className="flex flex-wrap justify-center gap-6 text-xs text-[#2C2F4A]/60 mb-8 font-medium">
-          <a href="/cgv" className="hover:text-[#5B4B8A] transition-colors">CGV</a>
-          <span className="text-[#EFEDE9]">•</span>
-          <a href="/cgu" className="hover:text-[#5B4B8A] transition-colors">CGU</a>
-          <span className="text-[#EFEDE9]">•</span>
-          <a href="/mentions-legales" className="hover:text-[#5B4B8A] transition-colors">Mentions Légales</a>
-          <span className="text-[#EFEDE9]">•</span>
-          <a href="/confidentialite" className="hover:text-[#5B4B8A] transition-colors">Politique de Confidentialité</a>
-          <span className="text-[#EFEDE9]">•</span>
-          <a href="mailto:contact@roman-de-vie.com" className="hover:text-[#5B4B8A] transition-colors">Contact</a>
+      {/* 🧩 FOOTER PREMIUM */}
+      <footer className="py-16 px-6 bg-[#1F2235] text-white border-t border-white/10">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+          
+          {/* Col 1: Brand */}
+          <div className="space-y-4">
+            <h3 className="font-serif text-2xl text-[#C9A24D]">Votre Légende</h3>
+            <p className="text-sm text-white/50 leading-relaxed">
+              La première expérience de numérologie narrative qui transforme vos données de naissance en une épopée visuelle et écrite.
+            </p>
+          </div>
+
+          {/* Col 2: Liens Utiles */}
+          <div className="space-y-4">
+            <h4 className="font-bold text-white/80 uppercase tracking-wider text-xs">Navigation</h4>
+            <ul className="space-y-2 text-sm text-white/60">
+              <li><a href="#" className="hover:text-[#C9A24D] transition-colors">Accueil</a></li>
+              <li><a href="#" onClick={onStart} className="hover:text-[#C9A24D] transition-colors">Commencer l'expérience</a></li>
+              <li><a href="mailto:contact@roman-de-vie.com" className="hover:text-[#C9A24D] transition-colors">Contact Support</a></li>
+            </ul>
+          </div>
+
+          {/* Col 3: Légal */}
+          <div className="space-y-4">
+            <h4 className="font-bold text-white/80 uppercase tracking-wider text-xs">Informations Légales</h4>
+            <ul className="space-y-2 text-sm text-white/60">
+              <li><a href="/legal/mentions" className="hover:text-[#C9A24D] transition-colors">Mentions Légales</a></li>
+              <li><a href="/legal/cgu" className="hover:text-[#C9A24D] transition-colors">CGU & Avertissement</a></li>
+              <li><a href="/legal/cgv" className="hover:text-[#C9A24D] transition-colors">Conditions Générales de Vente</a></li>
+              <li><a href="/legal/privacy" className="hover:text-[#C9A24D] transition-colors">Politique de Confidentialité</a></li>
+            </ul>
+          </div>
+
+          {/* Col 4: Trust */}
+          <div className="space-y-4">
+            <h4 className="font-bold text-white/80 uppercase tracking-wider text-xs">Paiement Sécurisé</h4>
+            <div className="flex gap-2 opacity-70">
+              <div className="w-10 h-6 bg-white rounded flex items-center justify-center text-[8px] text-black font-bold">VISA</div>
+              <div className="w-10 h-6 bg-white rounded flex items-center justify-center text-[8px] text-black font-bold">MC</div>
+              <div className="w-10 h-6 bg-white rounded flex items-center justify-center text-[8px] text-black font-bold">AMEX</div>
+            </div>
+            <p className="text-xs text-white/40">
+              Toutes les transactions sont sécurisées et chiffrées par Stripe.
+            </p>
+          </div>
         </div>
 
-        <div className="max-w-2xl mx-auto p-4 bg-[#EFEDE9]/30 rounded-xl">
-          <p className="text-[10px] md:text-xs text-[#2C2F4A]/50 leading-relaxed">
-            <strong className="block mb-1 text-[#2C2F4A]/70">⚠️ Information importante</strong>
-            Ce service s’inscrit dans une démarche de développement personnel et de narration symbolique. 
-            Il ne constitue ni une science exacte, ni un conseil médical, juridique ou financier. 
-            Tu restes pleinement responsable de tes décisions.
+        <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-white/30">
+            © {new Date().getFullYear()} Roman de Vie. Tous droits réservés.
           </p>
+          <div className="flex gap-4 text-xs text-white/30">
+            <span>Fait avec ✨ à Paris</span>
+          </div>
         </div>
-        <p className="text-[10px] text-[#2C2F4A]/30 mt-6">
-          © {new Date().getFullYear()} Roman de Vie
-        </p>
       </footer>
 
       {/* Excerpt Modal */}

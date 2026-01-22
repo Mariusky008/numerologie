@@ -6,6 +6,18 @@ export default function CGU() {
       <h1>Conditions Générales d'Utilisation (CGU)</h1>
       <p className="text-sm text-stone-500">Dernière mise à jour : {new Date().toLocaleDateString()}</p>
 
+      {/* AVERTISSEMENT LÉGAL */}
+      <div className="bg-amber-50 border-l-4 border-amber-500 p-4 my-6 rounded-r">
+        <h3 className="text-amber-800 font-bold mt-0 flex items-center gap-2">
+          ⚠️ Information importante & Avertissement
+        </h3>
+        <p className="text-amber-900 mb-0">
+          Ce service s’inscrit dans une démarche de développement personnel et de narration symbolique. 
+          Il ne constitue ni une science exacte, ni un conseil médical, juridique ou financier. 
+          Tu restes pleinement responsable de tes décisions.
+        </p>
+      </div>
+
       <h2>1. Objet</h2>
       <p>
         Les présentes Conditions Générales d'Utilisation ont pour objet de définir les modalités de mise à disposition des services du site <strong>Numerologie.app</strong>, ci-après nommé « le Service » et les conditions d'utilisation du Service par l'Utilisateur.

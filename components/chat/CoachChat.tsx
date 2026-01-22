@@ -181,106 +181,117 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
   };
 
   return (
-    <div className="flex flex-col h-[600px] w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-stone-200">
+    <div className="flex flex-col h-[600px] w-full max-w-md mx-auto bg-[#1a1c2e] rounded-3xl shadow-2xl overflow-hidden border border-[#C9A24D]/30 relative">
       
-      {/* Header */}
-      <div className="bg-[#2C2F4A] p-4 flex items-center justify-between shadow-md z-10">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#C9A24D] flex items-center justify-center border-2 border-white/20">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <h3 className="text-white font-serif font-bold text-lg">Votre Guide Personnel</h3>
-            <p className="text-white/60 text-xs flex items-center gap-1">
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-              En ligne - Connexion au thème établie
-            </p>
-          </div>
+      {/* Background Ambience */}
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 pointer-events-none"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-[#2C2F4A]/0 via-[#2C2F4A]/0 to-[#1a1c2e] pointer-events-none"></div>
+
+      {/* Header Minimaliste */}
+      <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-start z-20">
+        <div className="flex flex-col">
+           <h3 className="text-[#C9A24D] font-serif text-xl tracking-wide">L'Oracle</h3>
+           <p className="text-white/40 text-[10px] uppercase tracking-widest">Connecté à votre âme</p>
         </div>
-        
-        {/* Mute Toggle */}
         <button 
           onClick={() => {
             const newMuted = !isMuted;
             setIsMuted(newMuted);
             if (newMuted) window.speechSynthesis.cancel();
           }}
-          className="p-2 text-white/60 hover:text-white hover:bg-white/10 rounded-full transition-colors"
-          title={isMuted ? "Activer la voix" : "Couper la voix"}
+          className="p-3 bg-white/5 hover:bg-white/10 rounded-full text-white/60 transition-colors backdrop-blur-md"
         >
           {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
         </button>
       </div>
 
-      {/* Debug Info (Removed) */}
-      
-      {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-[#FAF9F7]">
-        {messages.map((m: any) => (
-          <div
-            key={m.id}
-            className={`flex items-start gap-3 ${m.role === 'user' ? 'flex-row-reverse' : ''}`}
-          >
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${m.role === 'user' ? 'bg-stone-200' : 'bg-[#2C2F4A]'}`}>
-              {m.role === 'user' ? <User className="w-4 h-4 text-stone-500" /> : <Sparkles className="w-4 h-4 text-[#C9A24D]" />}
-            </div>
-            
-            <div className={`max-w-[80%] p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${
-              m.role === 'user' 
-                ? 'bg-white text-stone-800 rounded-tr-none border border-stone-100' 
-                : 'bg-[#2C2F4A] text-white/90 rounded-tl-none'
-            }`}>
-              {m.content}
-            </div>
-          </div>
-        ))}
+      {/* ZONE CENTRALE : VISUALISATION */}
+      <div className="flex-1 flex flex-col items-center justify-center relative z-10 px-6">
         
-        {isLoading && (
-          <div className="flex items-start gap-3">
-             <div className="w-8 h-8 rounded-full bg-[#2C2F4A] flex items-center justify-center shrink-0">
-               <Loader2 className="w-4 h-4 text-[#C9A24D] animate-spin" />
+        {/* L'ORBE */}
+        <div className="relative mb-12">
+           {/* Anneaux Pulsants */}
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-[#C9A24D]/20 rounded-full ${isLoading ? 'animate-ping' : ''} opacity-20`}></div>
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-[#C9A24D]/30 rounded-full ${isLoading ? 'animate-pulse' : ''} opacity-30 delay-100`}></div>
+           
+           {/* Coeur de l'Orbe */}
+           <div className={`w-32 h-32 rounded-full bg-gradient-to-br from-[#C9A24D] to-[#5B4B8A] shadow-[0_0_50px_rgba(201,162,77,0.4)] flex items-center justify-center relative transition-all duration-1000 ${isLoading ? 'scale-110 shadow-[0_0_80px_rgba(201,162,77,0.6)]' : 'scale-100'}`}>
+              <div className="absolute inset-0 rounded-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-overlay animate-spin-slow"></div>
+              {isLoading ? (
+                 <Sparkles className="w-12 h-12 text-white animate-pulse" />
+              ) : (
+                 <div className="w-2 h-2 bg-white rounded-full shadow-[0_0_10px_white]"></div>
+              )}
+           </div>
+        </div>
+
+        {/* Dernier Message (Sous-titres) */}
+        <div className="min-h-[100px] w-full text-center space-y-4">
+           {messages.length > 0 && (
+             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+               {messages[messages.length - 1].role === 'assistant' ? (
+                 <p className="text-white/90 text-lg md:text-xl font-serif leading-relaxed drop-shadow-md">
+                   "{messages[messages.length - 1].content}"
+                 </p>
+               ) : (
+                 <p className="text-white/40 text-sm italic">
+                   Vous : {messages[messages.length - 1].content}
+                 </p>
+               )}
              </div>
-             <div className="text-xs text-stone-400 italic mt-2">
-               Le guide analyse vos nombres...
-             </div>
-          </div>
+           )}
+           {messages.length === 0 && (
+             <p className="text-white/50 text-sm">Touchez le micro pour parler...</p>
+           )}
+        </div>
+
+      </div>
+
+      {/* CONTROLS (Bas de page) */}
+      <div className="p-6 pb-8 z-20">
+        
+        {/* Input Text (Discret, pour fallback) */}
+        {!isListening && (
+          <form onSubmit={handleSubmit} className="mb-4 relative opacity-50 hover:opacity-100 transition-opacity">
+            <input
+              value={input}
+              onChange={handleInputChange}
+              placeholder="Écrire une question..."
+              className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C9A24D]/50 text-center placeholder:text-white/20"
+            />
+          </form>
         )}
+
+        {/* Gros Bouton Micro */}
+        <div className="flex justify-center items-center gap-6">
+           <button
+             onClick={startListening}
+             disabled={isLoading}
+             className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl ${
+               isListening 
+                 ? 'bg-red-500/80 scale-110 shadow-[0_0_30px_rgba(239,68,68,0.5)]' 
+                 : 'bg-white/10 hover:bg-[#C9A24D] hover:scale-105 border border-white/20 backdrop-blur-md'
+             } disabled:opacity-50 disabled:cursor-not-allowed`}
+           >
+             {isListening ? (
+               <StopCircle className="w-8 h-8 text-white animate-pulse" />
+             ) : (
+               <Mic className="w-8 h-8 text-white" />
+             )}
+           </button>
+        </div>
+        
+        <p className="text-center text-[10px] text-white/20 mt-6 uppercase tracking-widest">
+           Oracle IA • Session Privée 30 min
+        </p>
+      </div>
+
+      {/* Historique Masqué (Debug/Scroll) */}
+      <div className="hidden">
+        {messages.map((m: any) => m.content)}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Area */}
-      <div className="p-4 bg-white border-t border-stone-200">
-        <form onSubmit={handleSubmit} className="flex items-center gap-2 relative">
-          <input
-            name="chat-input"
-            value={input}
-            onChange={handleInputChange}
-            placeholder="Posez votre question ici..."
-            className="flex-1 p-4 pr-12 rounded-full bg-stone-100 border border-stone-200 focus:outline-none focus:border-[#C9A24D] focus:ring-1 focus:ring-[#C9A24D] transition-all text-stone-700"
-            disabled={isLoading}
-          />
-          
-          <button
-            type="button"
-            onClick={startListening}
-            className={`absolute right-16 p-2 rounded-full transition-colors ${isListening ? 'bg-red-50 text-red-500 animate-pulse' : 'text-stone-400 hover:text-[#C9A24D]'}`}
-            title="Parler"
-          >
-            <Mic className="w-5 h-5" />
-          </button>
-
-          <button
-            type="submit"
-            disabled={!input.trim() || isLoading}
-            className="p-4 bg-[#C9A24D] text-white rounded-full hover:bg-[#b08d42] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
-          >
-            {isLoading ? <StopCircle onClick={stop} className="w-5 h-5" /> : <Send className="w-5 h-5" />}
-          </button>
-        </form>
-        <p className="text-center text-[10px] text-stone-400 mt-2">
-          Mode Coach Numérologique • Basé sur votre thème natal • Limité à 30 minutes
-        </p>
-      </div>
     </div>
   );
 }

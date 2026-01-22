@@ -241,96 +241,72 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         </div>
       </section>
 
-      {/* 🧩 SECTION 1.2 — NARRATIVE JOURNEY (OPTION / UPSELL CONTEXT) */}
-      <section className="py-24 px-6 bg-[#FAF9F7] border-y border-[#EFEDE9] overflow-hidden relative">
-          
-          {/* Background Decorative Elements */}
-          <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
-             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-gradient-to-br from-[#C9A24D]/10 to-transparent rounded-full blur-[80px]"></div>
-             <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-gradient-to-tl from-[#5B4B8A]/10 to-transparent rounded-full blur-[80px]"></div>
-          </div>
-
-          <div className="w-full max-w-4xl mx-auto relative z-10 text-center space-y-12">
+      {/* 🧩 SECTION 1.2 — BÉNÉFICES & CHAT (NOUVEAU PLACEMENT) */}
+      <section className="py-16 px-6 bg-white border-y border-[#EFEDE9]">
+          <div className="w-full max-w-4xl mx-auto space-y-16">
             
-            {/* Title & Intro */}
+            {/* 1. Benefits List */}
             <motion.div 
                initial={{ opacity: 0, y: 10 }}
                whileInView={{ opacity: 1, y: 0 }}
                viewport={{ once: true }}
-               className="space-y-6 max-w-3xl mx-auto"
+               className="text-center"
             >
-               <h2 className="text-3xl md:text-5xl font-serif text-[#2C2F4A] leading-tight">
-                 Regardez votre histoire,<br/>
-                 <span className="text-[#C9A24D] italic">puis</span> lisez votre destin.
-               </h2>
+               <h3 className="text-2xl md:text-3xl font-serif text-[#2C2F4A] mb-10 leading-tight">
+                 En <span className="text-[#C9A24D]">5 minutes de vidéo</span>, il te révèle :
+               </h3>
                
-               <p className="text-lg md:text-xl text-[#2C2F4A]/80 font-light leading-relaxed">
-                 Votre expérience commence par une <strong className="text-[#5B4B8A] font-medium">vidéo immersive</strong> où votre avatar vous parle directement.
-               </p>
-               
-               <p className="text-base md:text-lg text-[#2C2F4A]/60 leading-relaxed max-w-2xl mx-auto">
-                 Elle se prolonge <span className="italic text-[#2C2F4A]/40">(si vous le souhaitez)</span> par un <strong>livre unique</strong> et un <strong>dossier d'analyse complet</strong>, retraçant chaque étape de votre vie avec une précision troublante.
+               <ul className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-3xl mx-auto">
+                 <li className="flex items-start gap-4 bg-[#FAF9F7] p-5 rounded-2xl border border-[#EFEDE9] hover:border-[#C9A24D]/30 transition-colors">
+                   <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-sm shadow-sm">✓</div>
+                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Ce que vous portez profondément</span>
+                 </li>
+                 <li className="flex items-start gap-4 bg-[#FAF9F7] p-5 rounded-2xl border border-[#EFEDE9] hover:border-[#C9A24D]/30 transition-colors">
+                   <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-sm shadow-sm">✓</div>
+                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Ce que vous traversez en ce moment</span>
+                 </li>
+                 <li className="flex items-start gap-4 bg-[#FAF9F7] p-5 rounded-2xl border border-[#EFEDE9] hover:border-[#C9A24D]/30 transition-colors">
+                   <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-sm shadow-sm">✓</div>
+                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Les grandes dynamiques de votre vie</span>
+                 </li>
+                 <li className="flex items-start gap-4 bg-[#FAF9F7] p-5 rounded-2xl border border-[#EFEDE9] hover:border-[#C9A24D]/30 transition-colors">
+                   <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-sm shadow-sm">✓</div>
+                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Vos forces et vos défis récurrents</span>
+                 </li>
+               </ul>
+               <p className="text-sm text-center pt-8 italic text-[#2C2F4A]/50">
+                 "Sans jargon. Sans discours flou. Sans promesses irréalistes."
                </p>
             </motion.div>
 
-            {/* Visual Representation of the "Extension" */}
+            {/* 2. Chat Feature Promo (Gros Encart) */}
             <motion.div 
                initial={{ opacity: 0, scale: 0.95 }}
                whileInView={{ opacity: 1, scale: 1 }}
                viewport={{ once: true }}
-               transition={{ delay: 0.2 }}
-               className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch"
+               className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#1F2235] to-[#2C2F4A] p-8 md:p-16 text-white text-center shadow-2xl border border-[#C9A24D]/20 group max-w-3xl mx-auto"
             >
-                {/* Card 1: The Book/Report */}
-                <div className="bg-white p-8 rounded-3xl shadow-lg border border-[#EFEDE9] flex flex-col items-center text-center hover:border-[#C9A24D]/30 transition-colors group">
-                    <div className="w-16 h-16 bg-[#FAF9F7] rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                        <BookOpen className="w-8 h-8 text-[#5B4B8A]" />
-                    </div>
-                    <h3 className="font-serif text-xl text-[#2C2F4A] mb-3">Le Livre de Votre Vie</h3>
-                    <p className="text-sm text-[#2C2F4A]/60 leading-relaxed mb-6 flex-1">
-                        Un récit écrit de votre destinée. Vos forces, vos défis et vos grandes dynamiques révélés sans jargon.
-                    </p>
-                    <div className="text-xs font-bold text-[#C9A24D] uppercase tracking-widest border border-[#C9A24D]/20 px-4 py-2 rounded-full">
-                        Inclus dans le dossier
-                    </div>
+                {/* Decorative Background */}
+                <div className="absolute top-0 right-0 w-80 h-80 bg-[#C9A24D] rounded-full blur-[100px] opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#5B4B8A] rounded-full blur-[80px] opacity-20"></div>
+                
+                <div className="relative z-10 flex flex-col items-center gap-8">
+                   <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mb-2 animate-pulse-slow ring-1 ring-white/20 shadow-[0_0_30px_rgba(201,162,77,0.2)]">
+                      <Volume2 className="w-10 h-10 text-[#C9A24D]" />
+                   </div>
+                   
+                   <h3 className="text-3xl md:text-4xl font-serif leading-tight">
+                     Posez toutes vos questions <br/> à votre Avatar
+                   </h3>
+                   
+                   <p className="text-white/80 leading-relaxed text-lg md:text-xl max-w-lg">
+                     Tu pourras aussi parler à ton avatar pendant <br/><strong className="text-[#C9A24D] text-2xl">30 minutes</strong><br/> pour lui poser toutes les questions que tu as à lui poser sur ta vie...
+                   </p>
+                   
+                   <div className="text-xs font-bold uppercase tracking-widest text-[#C9A24D] mt-4 border border-[#C9A24D]/30 px-6 py-2 rounded-full bg-[#C9A24D]/10 backdrop-blur-sm">
+                     ✨ Inclus dans le pack
+                   </div>
                 </div>
-
-                {/* Card 2: The Chat (Upsell Context) */}
-                <div className="bg-gradient-to-br from-[#1F2235] to-[#2C2F4A] p-8 rounded-3xl shadow-xl border border-[#C9A24D]/20 flex flex-col items-center text-center text-white relative overflow-hidden group">
-                    {/* Glow effect */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A24D] rounded-full blur-[60px] opacity-10 group-hover:opacity-20 transition-opacity"></div>
-                    
-                    <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-6 ring-1 ring-white/20 group-hover:scale-110 transition-transform duration-500">
-                        <Volume2 className="w-8 h-8 text-[#C9A24D]" />
-                    </div>
-                    <h3 className="font-serif text-xl text-white mb-3">Conversation avec l'Avatar</h3>
-                    <p className="text-sm text-white/70 leading-relaxed mb-6 flex-1">
-                        Une extension orale de 30 minutes pour poser toutes vos questions et approfondir les points clés.
-                    </p>
-                    <div className="text-xs font-bold text-[#C9A24D] uppercase tracking-widest bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
-                        Option Premium
-                    </div>
-                </div>
-            </motion.div>
-
-            {/* CTA */}
-            <motion.div 
-               initial={{ opacity: 0, y: 20 }}
-               whileInView={{ opacity: 1, y: 0 }}
-               viewport={{ once: true }}
-               transition={{ delay: 0.4 }}
-               className="pt-4"
-            >
-               <button 
-                  onClick={onStart}
-                  className="px-10 py-5 bg-[#C9A24D] text-[#2C2F4A] rounded-full font-bold text-lg shadow-[0_10px_30px_rgba(201,162,77,0.3)] hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-3 mx-auto"
-               >
-                  <Play className="w-5 h-5 fill-current" />
-                  Voir votre lecture complète
-               </button>
-               <p className="mt-4 text-xs text-[#2C2F4A]/40 italic">
-                 Accès immédiat après personnalisation
-               </p>
             </motion.div>
 
           </div>
@@ -596,25 +572,99 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         </div>
       </section>
 
-      {/* 🧩 SECTION UPSELL TEASE */}
-      <section className="py-12 px-6 max-w-2xl mx-auto text-center border-t border-[#EFEDE9]">
-        <h3 className="text-lg font-serif text-[#8FA6A0] mb-6 italic">Et si vous voulez aller plus loin…</h3>
-        <p className="text-sm text-[#2C2F4A]/70 mb-6">
-          Après la vidéo, vous pourrez, si vous le souhaitez :
-        </p>
-        <div className="flex flex-col md:flex-row justify-center gap-4 text-sm text-[#2C2F4A]/80 mb-8">
-          <div className="flex items-center gap-2 justify-center bg-white px-4 py-2 rounded-full border border-[#EFEDE9]">
-            <FileText className="w-4 h-4 text-[#C9A24D]" />
-            <span>Télécharger votre analyse détaillée</span>
+      {/* 🧩 SECTION UPSELL / NARRATIVE CONTEXT */}
+      <section className="py-24 px-6 bg-[#FAF9F7] border-y border-[#EFEDE9] overflow-hidden relative">
+          
+          {/* Background Decorative Elements */}
+          <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
+             <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-gradient-to-br from-[#C9A24D]/10 to-transparent rounded-full blur-[80px]"></div>
+             <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-gradient-to-tl from-[#5B4B8A]/10 to-transparent rounded-full blur-[80px]"></div>
           </div>
-          <div className="flex items-center gap-2 justify-center bg-white px-4 py-2 rounded-full border border-[#EFEDE9]">
-            <Compass className="w-4 h-4 text-[#C9A24D]" />
-            <span>Transformer votre thème en livre narratif</span>
+
+          <div className="w-full max-w-4xl mx-auto relative z-10 text-center space-y-12">
+            
+            {/* Title & Intro */}
+            <motion.div 
+               initial={{ opacity: 0, y: 10 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true }}
+               className="space-y-6 max-w-3xl mx-auto"
+            >
+               <h2 className="text-3xl md:text-5xl font-serif text-[#2C2F4A] leading-tight">
+                 Regardez votre histoire,<br/>
+                 <span className="text-[#C9A24D] italic">puis</span> lisez votre destin.
+               </h2>
+               
+               <p className="text-lg md:text-xl text-[#2C2F4A]/80 font-light leading-relaxed">
+                 Votre expérience commence par une <strong className="text-[#5B4B8A] font-medium">vidéo immersive</strong> où votre avatar vous parle directement.
+               </p>
+               
+               <p className="text-base md:text-lg text-[#2C2F4A]/60 leading-relaxed max-w-2xl mx-auto">
+                 Elle se prolonge <span className="italic text-[#2C2F4A]/40">(si vous le souhaitez)</span> par un <strong>livre unique</strong> et un <strong>dossier d'analyse complet</strong>, retraçant chaque étape de votre vie avec une précision troublante.
+               </p>
+            </motion.div>
+
+            {/* Visual Representation of the "Extension" */}
+            <motion.div 
+               initial={{ opacity: 0, scale: 0.95 }}
+               whileInView={{ opacity: 1, scale: 1 }}
+               viewport={{ once: true }}
+               transition={{ delay: 0.2 }}
+               className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch"
+            >
+                {/* Card 1: The Book/Report */}
+                <div className="bg-white p-8 rounded-3xl shadow-lg border border-[#EFEDE9] flex flex-col items-center text-center hover:border-[#C9A24D]/30 transition-colors group">
+                    <div className="w-16 h-16 bg-[#FAF9F7] rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                        <BookOpen className="w-8 h-8 text-[#5B4B8A]" />
+                    </div>
+                    <h3 className="font-serif text-xl text-[#2C2F4A] mb-3">Le Livre de Votre Vie</h3>
+                    <p className="text-sm text-[#2C2F4A]/60 leading-relaxed mb-6 flex-1">
+                        Un récit écrit de votre destinée. Vos forces, vos défis et vos grandes dynamiques révélés sans jargon.
+                    </p>
+                    <div className="text-xs font-bold text-[#C9A24D] uppercase tracking-widest border border-[#C9A24D]/20 px-4 py-2 rounded-full">
+                        Inclus dans le dossier
+                    </div>
+                </div>
+
+                {/* Card 2: The Chat (Upsell Context) */}
+                <div className="bg-gradient-to-br from-[#1F2235] to-[#2C2F4A] p-8 rounded-3xl shadow-xl border border-[#C9A24D]/20 flex flex-col items-center text-center text-white relative overflow-hidden group">
+                    {/* Glow effect */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A24D] rounded-full blur-[60px] opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                    
+                    <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-6 ring-1 ring-white/20 group-hover:scale-110 transition-transform duration-500">
+                        <Volume2 className="w-8 h-8 text-[#C9A24D]" />
+                    </div>
+                    <h3 className="font-serif text-xl text-white mb-3">Conversation avec l'Avatar</h3>
+                    <p className="text-sm text-white/70 leading-relaxed mb-6 flex-1">
+                        Une extension orale de 30 minutes pour poser toutes vos questions et approfondir les points clés.
+                    </p>
+                    <div className="text-xs font-bold text-[#C9A24D] uppercase tracking-widest bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
+                        Option Premium
+                    </div>
+                </div>
+            </motion.div>
+
+            {/* CTA */}
+            <motion.div 
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true }}
+               transition={{ delay: 0.4 }}
+               className="pt-4"
+            >
+               <button 
+                  onClick={onStart}
+                  className="px-10 py-5 bg-[#C9A24D] text-[#2C2F4A] rounded-full font-bold text-lg shadow-[0_10px_30px_rgba(201,162,77,0.3)] hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-3 mx-auto"
+               >
+                  <Play className="w-5 h-5 fill-current" />
+                  Voir votre lecture complète
+               </button>
+               <p className="mt-4 text-xs text-[#2C2F4A]/40 italic">
+                 Accès immédiat après personnalisation
+               </p>
+            </motion.div>
+
           </div>
-        </div>
-        <p className="text-xs text-[#2C2F4A]/40 italic">
-          Ces options sont proposées après, jamais obligatoires.
-        </p>
       </section>
 
       {/* 🧩 SECTION 5 — CTA FINAL */}

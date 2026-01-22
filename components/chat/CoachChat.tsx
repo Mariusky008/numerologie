@@ -10,8 +10,11 @@ interface CoachChatProps {
 }
 
 export default function CoachChat({ userId, userName }: CoachChatProps) {
+  // Manual input management for compatibility with latest AI SDK
+  const [input, setInput] = useState('');
+
   // AI Chat Hook
-  const { messages, input, handleInputChange, handleSubmit, isLoading, stop } = useChat({
+  const { messages, append, status, stop, isLoading: sdkLoading } = useChat({
     api: '/api/chat',
     body: { userId },
     initialMessages: [
@@ -21,7 +24,30 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
         content: `Bonjour ${userName}, je suis ton Coach Numérologue. J'ai analysé ton thème. Quelle question te préoccupe en ce moment ?`
       }
     ]
-  } as any) as any; // Cast options and return to any to avoid type errors with recent SDK versions
+  } as any) as any; 
+
+  // Derived loading state (support both status and legacy isLoading)
+  const isLoading = sdkLoading || status === 'streaming' || status === 'submitted';
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+  };
+
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
+    if (!input.trim()) return;
+
+    const userMessage = { role: 'user', content: input };
+    setInput(''); // Clear input immediately
+    
+    // Use append if available (legacy/standard), otherwise try sendMessage (new SDK)
+    if (append) {
+      await append(userMessage);
+    } else {
+      // Fallback or error handling if SDK is too new/different
+      console.error("Chat SDK missing 'append' method");
+    }
+  };
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isListening, setIsListening] = useState(false);
@@ -44,20 +70,15 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
       
       recognition.onresult = (event: any) => {
         const transcript = event.results[0][0].transcript;
-        // Simulate input change
-        const nativeInputSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value")?.set;
-        const inputEvent = new Event('input', { bubbles: true });
+        setInput(transcript);
         
-        const inputElement = document.querySelector('input[name="chat-input"]') as HTMLInputElement;
-        if (inputElement && nativeInputSetter) {
-            nativeInputSetter.call(inputElement, transcript);
-            inputElement.dispatchEvent(inputEvent);
-            // Auto submit after voice
-            setTimeout(() => {
-                const form = inputElement.closest('form');
-                form?.requestSubmit();
-            }, 500);
-        }
+        // Auto submit after voice
+        setTimeout(() => {
+             if (append) {
+                 append({ role: 'user', content: transcript });
+                 setInput('');
+             }
+        }, 800);
       };
 
       recognition.onend = () => setIsListening(false);

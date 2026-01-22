@@ -59,7 +59,7 @@ Réponds directement à ${userData.firstName} maintenant.
       temperature: 0.7,
     });
 
-    return result.toDataStreamResponse();
+    return result.toTextStreamResponse();
 
   } catch (error) {
     console.error('Chat API Error:', error);

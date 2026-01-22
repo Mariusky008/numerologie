@@ -1,49 +1,67 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { Send, Mic, User, Sparkles, Loader2, StopCircle, Volume2, VolumeX } from 'lucide-react';
+import { Send, Mic, User, Sparkles, Loader2, StopCircle, Volume2, VolumeX, Radio } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface CoachChatProps {
   userId: string;
   userName: string;
 }
 
-// Helper for TTS
+// --- TTS HELPER ---
 const speakText = (text: string) => {
   if ('speechSynthesis' in window) {
-    // Cancel any ongoing speech
+    // 1. Clean emojis and markdown artifacts
+    const cleanText = text
+      .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}]/gu, '')
+      .replace(/\*/g, ''); // Remove bold markers
+
+    // 2. Cancel ongoing speech
     window.speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    // 3. Create Utterance
+    const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.lang = 'fr-FR';
-    utterance.rate = 1.0;
+    utterance.rate = 1.05; // Slightly faster for natural feel
     utterance.pitch = 1.0;
     
-    // Try to find a good French voice
+    // 4. Voice Selection (Prioritize Google or iOS voices)
     const voices = window.speechSynthesis.getVoices();
-    const frVoice = voices.find(v => v.lang.includes('fr') && v.name.includes('Google')) || voices.find(v => v.lang.includes('fr'));
-    if (frVoice) utterance.voice = frVoice;
+    // Priority: Google Français -> Thomas (iOS) -> Amelie (iOS) -> Any 'fr'
+    const bestVoice = voices.find(v => v.name.includes("Google") && v.lang.includes("fr")) 
+                   || voices.find(v => v.name === "Thomas")
+                   || voices.find(v => v.name === "Amelie")
+                   || voices.find(v => v.lang.includes("fr"));
+    
+    if (bestVoice) utterance.voice = bestVoice;
 
     window.speechSynthesis.speak(utterance);
   }
 };
 
-// Custom hook to replace flaky @ai-sdk/react useChat
+// --- CUSTOM CHAT HOOK ---
 function useCustomChat({ api, body, initialMessages, onFinish }: any) {
   const [messages, setMessages] = useState<any[]>(initialMessages || []);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false); // Track TTS status
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const stop = () => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
-      setIsLoading(false);
-      window.speechSynthesis.cancel();
     }
+    setIsLoading(false);
+    window.speechSynthesis.cancel();
+    setIsSpeaking(false);
   };
 
   const append = async (message: any) => {
+    // Stop any current speech when user talks
+    window.speechSynthesis.cancel();
+    setIsSpeaking(false);
+
     const newMessages = [...messages, message];
     setMessages(newMessages);
     setIsLoading(true);
@@ -80,47 +98,47 @@ function useCustomChat({ api, body, initialMessages, onFinish }: any) {
         
         setMessages(prev => {
           const updated = [...prev];
-          // IMPORTANT: Create a copy of the last message to avoid StrictMode double-mutation issues
           const lastMsgIndex = updated.length - 1;
           const lastMsg = { ...updated[lastMsgIndex] };
-          
-          lastMsg.content = lastMsg.content + text; // Append to copy
-          updated[lastMsgIndex] = lastMsg; // Replace in array
-          
+          lastMsg.content = lastMsg.content + text;
+          updated[lastMsgIndex] = lastMsg;
           return updated;
         });
       }
       
-      // Speak the full response when done
-      if (onFinish) onFinish(fullResponse);
+      setIsLoading(false); // Text is ready
+      
+      // Speak (Auto)
+      if (onFinish) {
+        setIsSpeaking(true);
+        // Small delay to ensure state update
+        setTimeout(() => onFinish(fullResponse), 100);
+      }
 
     } catch (err: any) {
-      if (err.name !== 'AbortError') {
-        console.error("Chat error:", err);
-      }
+      if (err.name !== 'AbortError') console.error("Chat error:", err);
     } finally {
       setIsLoading(false);
       abortControllerRef.current = null;
     }
   };
 
-  return { messages, append, isLoading, stop };
+  return { messages, append, isLoading, isSpeaking, stop };
 }
 
+// --- MAIN COMPONENT ---
 export default function CoachChat({ userId, userName }: CoachChatProps) {
-  // Manual input management
   const [input, setInput] = useState('');
   const [isMuted, setIsMuted] = useState(false);
 
-  // Use Custom Chat Hook
-  const { messages, append, isLoading, stop } = useCustomChat({
+  const { messages, append, isLoading, isSpeaking, stop } = useCustomChat({
     api: '/api/chat',
     body: { userId },
     initialMessages: [
       {
         id: 'welcome',
         role: 'assistant',
-        content: `Bonjour ${userName}, je suis ton Coach Numérologue. J'ai analysé ton thème. Quelle question te préoccupe en ce moment ?`
+        content: `Bonjour ${userName}. Je suis l'Oracle. J'ai lu dans tes nombres. Quelle question hante ton esprit ?`
       }
     ],
     onFinish: (text: string) => {
@@ -135,24 +153,28 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
     if (!input.trim()) return;
-
     const userMessage = { role: 'user', content: input };
-    setInput(''); // Clear input immediately
-    
-    // Use append (custom hook always has append)
+    setInput('');
     await append(userMessage);
   };
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isListening, setIsListening] = useState(false);
 
-  // Auto-scroll to bottom
+  // Auto-scroll
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [messages]);
 
-  // Speech to Text Logic (Browser Native)
+  // STT
   const startListening = () => {
+    // Interruption logic: If speaking, stop it.
+    if (isSpeaking || isLoading) {
+      stop(); 
+    }
+
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
       const recognition = new SpeechRecognition();
@@ -165,33 +187,34 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
       recognition.onresult = (event: any) => {
         const transcript = event.results[0][0].transcript;
         setInput(transcript);
-        
-        // Auto submit after voice
-         setTimeout(() => {
+        setTimeout(() => {
               append({ role: 'user', content: transcript });
               setInput('');
-         }, 800);
+         }, 500);
       };
 
       recognition.onend = () => setIsListening(false);
       recognition.start();
     } else {
-      alert("La reconnaissance vocale n'est pas supportée par votre navigateur.");
+      alert("Microphone non supporté sur ce navigateur.");
     }
   };
 
-  return (
-    <div className="flex flex-col h-[600px] w-full max-w-md mx-auto bg-[#1a1c2e] rounded-3xl shadow-2xl overflow-hidden border border-[#C9A24D]/30 relative">
-      
-      {/* Background Ambience */}
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 pointer-events-none"></div>
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-[#2C2F4A]/0 via-[#2C2F4A]/0 to-[#1a1c2e] pointer-events-none"></div>
+  const lastMessage = messages[messages.length - 1];
+  const isOracle = lastMessage?.role === 'assistant';
 
-      {/* Header Minimaliste */}
-      <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-start z-20">
+  return (
+    <div className="flex flex-col h-[700px] w-full max-w-md mx-auto bg-[#0F111A] rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden border border-[#C9A24D]/20 relative font-sans">
+      
+      {/* 🌌 COSMIC BACKGROUND */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1F2235] via-[#0F111A] to-black z-0 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none z-0"></div>
+
+      {/* 🔝 HEADER */}
+      <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-start z-30">
         <div className="flex flex-col">
-           <h3 className="text-[#C9A24D] font-serif text-xl tracking-wide">L'Oracle</h3>
-           <p className="text-white/40 text-[10px] uppercase tracking-widest">Connecté à votre âme</p>
+           <h3 className="text-[#C9A24D] font-serif text-2xl tracking-widest drop-shadow-[0_2px_10px_rgba(201,162,77,0.3)]">L'ORACLE</h3>
+           <p className="text-white/30 text-[10px] uppercase tracking-[0.3em] mt-1">Lien Spirituel Actif</p>
         </div>
         <button 
           onClick={() => {
@@ -199,97 +222,113 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
             setIsMuted(newMuted);
             if (newMuted) window.speechSynthesis.cancel();
           }}
-          className="p-3 bg-white/5 hover:bg-white/10 rounded-full text-white/60 transition-colors backdrop-blur-md"
+          className="p-3 bg-white/5 hover:bg-white/10 rounded-full text-[#C9A24D]/60 transition-colors backdrop-blur-md border border-white/5"
         >
           {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
         </button>
       </div>
 
-      {/* ZONE CENTRALE : VISUALISATION */}
-      <div className="flex-1 flex flex-col items-center justify-center relative z-10 px-6">
+      {/* 🔮 CENTRAL VISUALIZATION */}
+      <div className="flex-1 flex flex-col items-center justify-center relative z-10 px-6 pt-10">
         
-        {/* L'ORBE */}
-        <div className="relative mb-12">
-           {/* Anneaux Pulsants */}
-           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-[#C9A24D]/20 rounded-full ${isLoading ? 'animate-ping' : ''} opacity-20`}></div>
-           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-[#C9A24D]/30 rounded-full ${isLoading ? 'animate-pulse' : ''} opacity-30 delay-100`}></div>
+        {/* ORB ANIMATION */}
+        <div className="relative mb-10 scale-125">
+           {/* Outer Rings */}
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 border border-[#C9A24D]/10 rounded-full ${isLoading ? 'animate-spin-slow' : 'opacity-20'} transition-all duration-1000`}></div>
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 border border-[#C9A24D]/20 rounded-full ${isLoading ? 'animate-reverse-spin' : 'opacity-30'} transition-all duration-1000`}></div>
            
-           {/* Coeur de l'Orbe */}
-           <div className={`w-32 h-32 rounded-full bg-gradient-to-br from-[#C9A24D] to-[#5B4B8A] shadow-[0_0_50px_rgba(201,162,77,0.4)] flex items-center justify-center relative transition-all duration-1000 ${isLoading ? 'scale-110 shadow-[0_0_80px_rgba(201,162,77,0.6)]' : 'scale-100'}`}>
-              <div className="absolute inset-0 rounded-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-overlay animate-spin-slow"></div>
+           {/* Pulsing Aura */}
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-[#C9A24D] blur-[60px] ${isLoading || isSpeaking ? 'opacity-40 animate-pulse' : 'opacity-10'} transition-all duration-1000`}></div>
+
+           {/* The Core */}
+           <div className={`w-32 h-32 rounded-full bg-gradient-to-b from-[#2C2F4A] to-black border border-[#C9A24D]/50 shadow-[inset_0_0_30px_rgba(201,162,77,0.3)] flex items-center justify-center relative z-10 transition-transform duration-500 ${isLoading ? 'scale-105' : 'scale-100'}`}>
+              
+              {/* Inner Light */}
+              <div className={`absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-[#C9A24D]/20 to-transparent ${isLoading ? 'animate-spin' : ''}`}></div>
+              
               {isLoading ? (
-                 <Sparkles className="w-12 h-12 text-white animate-pulse" />
+                 <Sparkles className="w-10 h-10 text-[#C9A24D] animate-pulse drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+              ) : isSpeaking ? (
+                 <Radio className="w-10 h-10 text-[#C9A24D] animate-pulse" />
               ) : (
-                 <div className="w-2 h-2 bg-white rounded-full shadow-[0_0_10px_white]"></div>
+                 <div className="w-3 h-3 bg-[#C9A24D] rounded-full shadow-[0_0_20px_#C9A24D] animate-pulse"></div>
               )}
            </div>
         </div>
 
-        {/* Dernier Message (Sous-titres) */}
-        <div className="min-h-[100px] w-full text-center space-y-4">
-           {messages.length > 0 && (
-             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-               {messages[messages.length - 1].role === 'assistant' ? (
-                 <p className="text-white/90 text-lg md:text-xl font-serif leading-relaxed drop-shadow-md">
-                   "{messages[messages.length - 1].content}"
-                 </p>
+        {/* 📜 SCROLLABLE TEXT AREA */}
+        <div className="w-full relative group">
+           {/* Fade Masks */}
+           <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-[#0F111A] to-transparent z-20 pointer-events-none"></div>
+           <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[#0F111A] to-transparent z-20 pointer-events-none"></div>
+
+           <div className="max-h-[220px] overflow-y-auto custom-scrollbar px-4 py-4 text-center relative z-10 scroll-smooth" ref={messagesEndRef}>
+             <AnimatePresence mode='wait'>
+               {messages.length > 0 ? (
+                 <motion.div
+                   key={messages.length}
+                   initial={{ opacity: 0, y: 10 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   exit={{ opacity: 0, y: -10 }}
+                   className="space-y-2"
+                 >
+                   {isOracle ? (
+                     <div className="prose prose-invert prose-p:text-[#EAEAEA] prose-p:font-serif prose-p:text-lg prose-p:leading-relaxed mx-auto">
+                        <p className="drop-shadow-md">{lastMessage.content}</p>
+                     </div>
+                   ) : (
+                     <p className="text-white/40 text-sm italic font-light">
+                       " {lastMessage.content} "
+                     </p>
+                   )}
+                 </motion.div>
                ) : (
-                 <p className="text-white/40 text-sm italic">
-                   Vous : {messages[messages.length - 1].content}
-                 </p>
+                 <p className="text-white/30 text-sm">Touchez l'orbe ou le micro pour commencer...</p>
                )}
-             </div>
-           )}
-           {messages.length === 0 && (
-             <p className="text-white/50 text-sm">Touchez le micro pour parler...</p>
-           )}
+             </AnimatePresence>
+           </div>
         </div>
 
       </div>
 
-      {/* CONTROLS (Bas de page) */}
-      <div className="p-6 pb-8 z-20">
+      {/* 🎛 CONTROLS */}
+      <div className="p-8 pb-10 z-30 flex flex-col items-center gap-6 bg-gradient-to-t from-[#0F111A] via-[#0F111A] to-transparent">
         
-        {/* Input Text (Discret, pour fallback) */}
+        {/* Hidden Input (Fallback) */}
         {!isListening && (
-          <form onSubmit={handleSubmit} className="mb-4 relative opacity-50 hover:opacity-100 transition-opacity">
+          <form onSubmit={handleSubmit} className="w-full max-w-xs relative opacity-40 hover:opacity-100 transition-opacity duration-300 focus-within:opacity-100">
             <input
               value={input}
               onChange={handleInputChange}
-              placeholder="Écrire une question..."
-              className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 text-sm text-white focus:outline-none focus:border-[#C9A24D]/50 text-center placeholder:text-white/20"
+              placeholder="Écrire ma question..."
+              className="w-full bg-white/5 border border-white/10 rounded-full px-5 py-3 text-sm text-white focus:outline-none focus:border-[#C9A24D]/50 text-center placeholder:text-white/20 shadow-inner"
             />
           </form>
         )}
 
-        {/* Gros Bouton Micro */}
-        <div className="flex justify-center items-center gap-6">
-           <button
-             onClick={startListening}
-             disabled={isLoading}
-             className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl ${
-               isListening 
-                 ? 'bg-red-500/80 scale-110 shadow-[0_0_30px_rgba(239,68,68,0.5)]' 
-                 : 'bg-white/10 hover:bg-[#C9A24D] hover:scale-105 border border-white/20 backdrop-blur-md'
-             } disabled:opacity-50 disabled:cursor-not-allowed`}
-           >
-             {isListening ? (
-               <StopCircle className="w-8 h-8 text-white animate-pulse" />
-             ) : (
-               <Mic className="w-8 h-8 text-white" />
-             )}
-           </button>
-        </div>
-        
-        <p className="text-center text-[10px] text-white/20 mt-6 uppercase tracking-widest">
-           Oracle IA • Session Privée 30 min
-        </p>
-      </div>
+        {/* MAIN ACTION BUTTON */}
+        <button
+          onClick={startListening}
+          className={`w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-white/10 backdrop-blur-xl relative group ${
+            isListening 
+              ? 'bg-red-500/20 border-red-500/50 scale-110' 
+              : 'bg-white/5 hover:bg-[#C9A24D]/20 hover:border-[#C9A24D]/50 hover:scale-105'
+          }`}
+        >
+          <div className={`absolute inset-0 rounded-full border border-white/5 ${isListening ? 'animate-ping' : ''}`}></div>
+          
+          {isListening ? (
+            <StopCircle className="w-8 h-8 text-red-400" />
+          ) : isLoading ? (
+             <Loader2 className="w-8 h-8 text-[#C9A24D] animate-spin" />
+          ) : (
+            <Mic className="w-8 h-8 text-white group-hover:text-[#C9A24D] transition-colors" />
+          )}
+        </button>
 
-      {/* Historique Masqué (Debug/Scroll) */}
-      <div className="hidden">
-        {messages.map((m: any) => m.content)}
-        <div ref={messagesEndRef} />
+        <p className="text-[9px] text-white/20 uppercase tracking-[0.2em] font-light">
+           {isListening ? "Écoute en cours..." : isLoading ? "Consultation des astres..." : "Touchez pour parler"}
+        </p>
       </div>
 
     </div>

@@ -1,13 +1,8 @@
-import { OpenAIStream, StreamingTextResponse } from 'ai';
-import OpenAI from 'openai';
+import { openai } from '@ai-sdk/openai';
+import { streamText } from 'ai';
 import { supabase } from '@/lib/supabase';
 
-// Initialize OpenAI
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-export const runtime = 'edge'; // Use Edge Runtime for better streaming performance
+export const maxDuration = 30;
 
 export async function POST(req: Request) {
   try {
@@ -17,12 +12,11 @@ export async function POST(req: Request) {
       return new Response('User ID required', { status: 400 });
     }
 
-    // 1. Fetch User's Numerology Profile from Supabase
-    // We need to give the AI context about who it's talking to
+    // 1. Fetch User's Numerology Profile
     const { data: requestData, error } = await supabase
       .from('book_requests')
-      .select('user_data, numerology_result, life_details') // Assuming life_details is stored or part of result
-      .eq('id', userId) // userId here is actually the request ID from the URL or session
+      .select('user_data, numerology_result')
+      .eq('id', userId)
       .single();
 
     if (error || !requestData) {
@@ -30,10 +24,13 @@ export async function POST(req: Request) {
       return new Response('Profile not found', { status: 404 });
     }
 
-    const { userData, numerology_result } = requestData;
-    const reportResults = numerology_result.reportResults || numerology_result; // Handle structure variation
+    // Fix: Access user_data (lowercase from DB)
+    const userData = requestData.user_data;
+    const numerology_result = requestData.numerology_result;
+    
+    const reportResults = numerology_result.reportResults || numerology_result;
 
-    // 2. Build System Prompt with Context
+    // 2. Build System Prompt
     const systemPrompt = `
 Tu es un Coach Numérologue expert et bienveillant. Tu discutes avec ${userData.firstName}.
 Ta mission est de l'aider à comprendre son thème et à naviguer dans sa vie grâce aux nombres.
@@ -48,27 +45,21 @@ Ta mission est de l'aider à comprendre son thème et à naviguer dans sa vie gr
 **Tes consignes :**
 - Réponds de manière empathique, encourageante et spirituelle mais ancrée.
 - Fais toujours le lien entre sa question et ses nombres (ex: "C'est normal avec ton Chemin de Vie 5...").
-- Ne sois pas trop long (max 3-4 phrases par réponse) pour garder la conversation fluide, sauf si on te demande une explication détaillée.
-- Si la question sort de la numérologie/dev perso, ramène gentiment le sujet vers ton expertise ou décline poliment.
-- Tu as une mémoire de la conversation en cours.
+- Ne sois pas trop long (max 3-4 phrases par réponse) pour garder la conversation fluide.
+- Si la question sort de la numérologie/dev perso, ramène gentiment le sujet vers ton expertise.
 
 Réponds directement à ${userData.firstName} maintenant.
 `;
 
-    // 3. Call OpenAI
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4-turbo-preview', // Smartest model for coaching
-      stream: true,
-      messages: [
-        { role: 'system', content: systemPrompt },
-        ...messages,
-      ],
+    // 3. Stream Text using Vercel AI SDK Core
+    const result = await streamText({
+      model: openai('gpt-4-turbo-preview'),
+      system: systemPrompt,
+      messages,
       temperature: 0.7,
     });
 
-    // 4. Return Stream
-    const stream = OpenAIStream(response);
-    return new StreamingTextResponse(stream);
+    return result.toDataStreamResponse();
 
   } catch (error) {
     console.error('Chat API Error:', error);

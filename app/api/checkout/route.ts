@@ -24,55 +24,24 @@ export async function POST(request: Request) {
     let productName = "";
     let description = "";
 
-    if (orderInfo.plan === 'report') {
-      productName = "Clés de Votre Destin (Analyse Technique)";
-      unitAmount = 3900; // 39.00€
-      description = "Dossier Numérologique Essentiel (PDF)";
-
-      if (orderInfo.reportPaperOption) {
-        unitAmount += 1000; // +10.00€
-        description += " + Option Impression Papier";
-      }
-    } else if (orderInfo.plan === 'bundle') {
-      productName = "Pack Héros (Roman de Vie + Dossier)";
-      unitAmount = 4900; // 49.00€
-      description = "Expérience Complète : Roman + Analyse";
-
-      // Option Papier
-      if (orderInfo.paperOption) {
-        unitAmount += 2900; // +29.00€
-        description += " + Livre Papier Luxe";
-      }
-
-      // Extension de pages
-      if (orderInfo.bookLength && orderInfo.bookLength > 100) {
-        const extraPages = (orderInfo.bookLength - 100) / 100;
-        unitAmount += extraPages * 1000; // +10€ par tranche de 100 pages
-        description += ` + Extension ${orderInfo.bookLength} pages`;
-      }
-    } else if (orderInfo.plan === 'avatar') {
-      productName = "Votre Destin Révélé par votre Avatar";
-      unitAmount = 2900; // 29.00€ (Base Vidéo)
-      description = "Vidéo Personnalisée (5 min)";
-
-      // Option PDF (+10€)
-      if (orderInfo.includeReport) {
-        unitAmount += 1000;
-        description += " + Dossier PDF Complet";
-      }
-
-      // Option Livre (+29€ base)
-      if (orderInfo.includeBook) {
-        unitAmount += 2900;
-        description += " + Roman de Vie (E-Book)";
-        
-        // Extension de pages Livre
-        if (orderInfo.bookLength && orderInfo.bookLength > 100) {
-          const extraPages = (orderInfo.bookLength - 100) / 100;
-          unitAmount += extraPages * 1000;
-          description += ` (${orderInfo.bookLength} pages)`;
-        }
-      }
+    // NOUVELLE LOGIQUE UNIQUE : PACK RÉVÉLATION
+    if (orderInfo.plan === 'bundle') {
+      productName = "Le Pack Révélation (Complet)";
+      unitAmount = 2900; // 29.00€
+      description = "Vidéo Avatar (5 min) + Dossier PDF (40 pages) + Coach IA (30 min)";
+      
+      // On ignore les anciennes options pour l'instant pour éviter les erreurs de calcul
+    } 
+    // BACKWARD COMPATIBILITY (au cas où d'anciens liens traînent)
+    else if (orderInfo.plan === 'report') {
+      productName = "Dossier Numérologique (PDF)";
+      unitAmount = 2900; // Alignement sur le prix unique
+      description = "Dossier PDF + Bonus";
+    } else {
+       // Fallback par défaut
+      productName = "Pack Révélation";
+      unitAmount = 2900;
+      description = "Offre complète";
     }
 
       // URL de succès modifiée pour rediriger vers la nouvelle page de remerciement

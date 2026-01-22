@@ -47,7 +47,7 @@ function CheckoutContent() {
 
     // Préparation des données de commande
     const orderInfo = {
-      plan: 'bundle', // Force le plan bundle
+      plan: selectedPlan,
       totalPrice: TOTAL_PRICE,
       includeReport: true, // Toujours inclus
       includeBook: false, // Plus d'option livre en supplément

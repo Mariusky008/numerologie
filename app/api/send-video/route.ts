@@ -6,11 +6,13 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   try {
-    const { email, firstName, videoUrl } = await req.json();
+    const { email, firstName, videoUrl, requestId } = await req.json();
 
-    if (!email || !firstName || !videoUrl) {
+    if (!email || !firstName || !videoUrl || !requestId) {
       return NextResponse.json({ error: 'Missing parameters' }, { status: 400 });
     }
+
+    const coachLink = `https://www.votrelegende.fr/coach?id=${requestId}&name=${encodeURIComponent(firstName)}`;
 
     const { data, error } = await resend.emails.send({
       from: 'Votre Légende <contact@roman-de-vie.com>', // Update with your verified domain
@@ -19,6 +21,7 @@ export async function POST(req: Request) {
       react: EmailVideo({
         firstName,
         downloadLink: videoUrl,
+        coachLink,
       }),
     });
 

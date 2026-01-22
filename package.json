@@ -13,6 +13,7 @@
     "@react-email/components": "^1.0.5",
     "@react-email/render": "^2.0.3",
     "@supabase/supabase-js": "^2.90.1",
+    "ai": "^6.0.45",
     "astronomy-engine": "^2.1.19",
     "clsx": "^2.1.1",
     "framer-motion": "^12.26.2",

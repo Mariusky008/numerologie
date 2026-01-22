@@ -213,6 +213,7 @@ export default function AdminDashboard() {
           email: req.userData.delivery.email,
           firstName: req.userData.firstName,
           videoUrl: req.userData.video_url,
+          requestId: req.id, // Pass request ID for coach link
         }),
       });
 

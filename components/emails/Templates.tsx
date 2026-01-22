@@ -136,11 +136,13 @@ export const EmailBundle = ({
 interface EmailVideoProps {
   firstName: string;
   downloadLink: string;
+  coachLink: string;
 }
 
 export const EmailVideo = ({
   firstName,
   downloadLink,
+  coachLink,
 }: EmailVideoProps) => (
   <Html>
     <Head />
@@ -160,6 +162,16 @@ export const EmailVideo = ({
           </Text>
           <Button style={button} href={downloadLink}>
             Regarder ma Vidéo
+          </Button>
+        </Section>
+
+        <Section style={box}>
+          <Heading as="h3" style={h3}>💬 Votre Coach Interactif (Offert)</Heading>
+          <Text style={text}>
+            Vous avez une question sur votre thème ? Discutez directement avec votre guide numérologue via notre interface de chat sécurisée.
+          </Text>
+          <Button style={secondaryButton} href={coachLink}>
+            Accéder à mon Coach (30 min)
           </Button>
         </Section>
 

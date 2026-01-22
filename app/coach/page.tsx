@@ -1,6 +1,30 @@
-import InteractiveAvatar from '@/components/heygen/InteractiveAvatar';
+'use client';
+
+import CoachChat from '@/components/chat/CoachChat';
 import { Sparkles, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+
+function CoachContent() {
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  const name = searchParams.get('name') || 'Cher Voyageur';
+
+  if (!id) {
+    return (
+      <div className="text-center py-20">
+        <p className="text-white/50">Lien invalide. Veuillez utiliser le lien reçu par email.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full">
+       <CoachChat userId={id} userName={name} />
+    </div>
+  );
+}
 
 export default function CoachPage() {
   return (
@@ -25,18 +49,18 @@ export default function CoachPage() {
              Posez vos questions en direct
            </h1>
            <p className="text-lg text-white/60">
-             Votre avatar connaît votre thème numérologique. Discutez avec lui (ou elle) de vive voix pour approfondir votre lecture.
+             Votre guide connaît votre thème numérologique. Discutez avec lui par écrit ou de vive voix pour approfondir votre lecture.
            </p>
         </div>
 
-        {/* The Avatar Component */}
-        <div className="w-full">
-           <InteractiveAvatar />
-        </div>
+        {/* The Chat Component */}
+        <Suspense fallback={<div>Chargement du guide...</div>}>
+          <CoachContent />
+        </Suspense>
 
         <div className="mt-12 text-center text-xs text-white/30 max-w-md">
            <p>
-             Technologie propulsée par HeyGen Interactive Avatar. 
+             Technologie propulsée par OpenAI GPT-4. 
              Les réponses sont générées par une intelligence artificielle et doivent être prises comme des conseils de développement personnel, non comme des vérités absolues.
            </p>
         </div>

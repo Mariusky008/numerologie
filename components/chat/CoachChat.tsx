@@ -1,15 +1,35 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { Send, Mic, User, Sparkles, Loader2, StopCircle } from 'lucide-react';
+import { Send, Mic, User, Sparkles, Loader2, StopCircle, Volume2, VolumeX } from 'lucide-react';
 
 interface CoachChatProps {
   userId: string;
   userName: string;
 }
 
+// Helper for TTS
+const speakText = (text: string) => {
+  if ('speechSynthesis' in window) {
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+    
+    // Try to find a good French voice
+    const voices = window.speechSynthesis.getVoices();
+    const frVoice = voices.find(v => v.lang.includes('fr') && v.name.includes('Google')) || voices.find(v => v.lang.includes('fr'));
+    if (frVoice) utterance.voice = frVoice;
+
+    window.speechSynthesis.speak(utterance);
+  }
+};
+
 // Custom hook to replace flaky @ai-sdk/react useChat
-function useCustomChat({ api, body, initialMessages }: any) {
+function useCustomChat({ api, body, initialMessages, onFinish }: any) {
   const [messages, setMessages] = useState<any[]>(initialMessages || []);
   const [isLoading, setIsLoading] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -19,6 +39,7 @@ function useCustomChat({ api, body, initialMessages }: any) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
       setIsLoading(false);
+      window.speechSynthesis.cancel();
     }
   };
 
@@ -49,21 +70,29 @@ function useCustomChat({ api, body, initialMessages }: any) {
       setMessages(prev => [...prev, assistantMessage]);
 
       const decoder = new TextDecoder();
+      let fullResponse = "";
       
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         const text = decoder.decode(value, { stream: true });
+        fullResponse += text;
         
         setMessages(prev => {
           const updated = [...prev];
-          const lastMsg = updated[updated.length - 1];
-          if (lastMsg.role === 'assistant') {
-             lastMsg.content += text;
-          }
+          // IMPORTANT: Create a copy of the last message to avoid StrictMode double-mutation issues
+          const lastMsgIndex = updated.length - 1;
+          const lastMsg = { ...updated[lastMsgIndex] };
+          
+          lastMsg.content = lastMsg.content + text; // Append to copy
+          updated[lastMsgIndex] = lastMsg; // Replace in array
+          
           return updated;
         });
       }
+      
+      // Speak the full response when done
+      if (onFinish) onFinish(fullResponse);
 
     } catch (err: any) {
       if (err.name !== 'AbortError') {
@@ -81,6 +110,7 @@ function useCustomChat({ api, body, initialMessages }: any) {
 export default function CoachChat({ userId, userName }: CoachChatProps) {
   // Manual input management
   const [input, setInput] = useState('');
+  const [isMuted, setIsMuted] = useState(false);
 
   // Use Custom Chat Hook
   const { messages, append, isLoading, stop } = useCustomChat({
@@ -92,7 +122,10 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
         role: 'assistant',
         content: `Bonjour ${userName}, je suis ton Coach Numérologue. J'ai analysé ton thème. Quelle question te préoccupe en ce moment ?`
       }
-    ]
+    ],
+    onFinish: (text: string) => {
+      if (!isMuted) speakText(text);
+    }
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,17 +184,32 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
     <div className="flex flex-col h-[600px] w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-stone-200">
       
       {/* Header */}
-      <div className="bg-[#2C2F4A] p-4 flex items-center gap-3 shadow-md z-10">
-        <div className="w-10 h-10 rounded-full bg-[#C9A24D] flex items-center justify-center border-2 border-white/20">
-          <Sparkles className="w-5 h-5 text-white" />
+      <div className="bg-[#2C2F4A] p-4 flex items-center justify-between shadow-md z-10">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-[#C9A24D] flex items-center justify-center border-2 border-white/20">
+            <Sparkles className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h3 className="text-white font-serif font-bold text-lg">Votre Guide Personnel</h3>
+            <p className="text-white/60 text-xs flex items-center gap-1">
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+              En ligne - Connexion au thème établie
+            </p>
+          </div>
         </div>
-        <div>
-          <h3 className="text-white font-serif font-bold text-lg">Votre Guide Personnel</h3>
-          <p className="text-white/60 text-xs flex items-center gap-1">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-            En ligne - Connexion au thème établie
-          </p>
-        </div>
+        
+        {/* Mute Toggle */}
+        <button 
+          onClick={() => {
+            const newMuted = !isMuted;
+            setIsMuted(newMuted);
+            if (newMuted) window.speechSynthesis.cancel();
+          }}
+          className="p-2 text-white/60 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+          title={isMuted ? "Activer la voix" : "Couper la voix"}
+        >
+          {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+        </button>
       </div>
 
       {/* Debug Info (Removed) */}

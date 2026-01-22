@@ -317,35 +317,35 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
       </div>
 
       {/* 🔮 CENTRAL VISUALIZATION */}
-      <div className="flex-1 flex flex-col items-center justify-center relative z-10 px-6 pt-12">
+      <div className="flex-1 flex flex-col items-center justify-start relative z-10 px-6 pt-20 md:pt-12">
         
-        {/* ORB ANIMATION COMPLEX */}
-        <div className="relative mb-12 scale-110 md:scale-125 transition-transform duration-700">
+        {/* ORB ANIMATION COMPLEX - Slightly smaller & higher */}
+        <div className="relative mb-8 scale-90 md:scale-100 transition-transform duration-700">
            
-           {/* HEARTBEAT GLOW (From Landing Page) */}
+           {/* HEARTBEAT GLOW */}
            <motion.div 
-             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[80px] mix-blend-screen pointer-events-none"
+             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full blur-[80px] mix-blend-screen pointer-events-none"
              animate={{
                scale: [0.8, 1.2, 0.8],
                opacity: isLoading || isSpeaking ? [0.2, 0.5, 0.2] : [0.1, 0.2, 0.1],
-               backgroundColor: ["#FCD34D", "#FB923C", "#FCD34D"] // Gold to Orange cycle
+               backgroundColor: ["#FCD34D", "#FB923C", "#FCD34D"]
              }}
              transition={{
-               duration: isLoading || isSpeaking ? 2 : 4, // Faster heartbeat when active
+               duration: isLoading || isSpeaking ? 2 : 4,
                repeat: Infinity,
                ease: "easeInOut"
              }}
            />
 
            {/* ASTROLABE RINGS */}
-           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] border border-white/5 rounded-full ${isLoading ? 'animate-[spin_10s_linear_infinite]' : 'opacity-10'} transition-all duration-1000`}></div>
-           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] border border-[#C9A24D]/10 rounded-full border-dashed ${isLoading ? 'animate-[spin_20s_linear_infinite_reverse]' : 'opacity-20'} transition-all duration-1000`}></div>
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] border border-white/5 rounded-full ${isLoading ? 'animate-[spin_10s_linear_infinite]' : 'opacity-10'} transition-all duration-1000`}></div>
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] border border-[#C9A24D]/10 rounded-full border-dashed ${isLoading ? 'animate-[spin_20s_linear_infinite_reverse]' : 'opacity-20'} transition-all duration-1000`}></div>
            
            {/* PULSING GLOW (Inner) */}
-           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-[#C9A24D] blur-[80px] mix-blend-screen ${isLoading || isSpeaking ? 'opacity-30 scale-110' : 'opacity-5 scale-90'} transition-all duration-1000 ease-in-out`}></div>
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-[#C9A24D] blur-[80px] mix-blend-screen ${isLoading || isSpeaking ? 'opacity-30 scale-110' : 'opacity-5 scale-90'} transition-all duration-1000 ease-in-out`}></div>
 
            {/* THE CORE SPHERE */}
-           <div className={`w-36 h-36 rounded-full bg-gradient-to-b from-[#1F2235] to-[#000] border border-[#C9A24D]/30 shadow-[inset_0_4px_20px_rgba(201,162,77,0.2),_0_0_30px_rgba(0,0,0,0.5)] flex items-center justify-center relative z-10 overflow-hidden`}>
+           <div className={`w-28 h-28 rounded-full bg-gradient-to-b from-[#1F2235] to-[#000] border border-[#C9A24D]/30 shadow-[inset_0_4px_20px_rgba(201,162,77,0.2),_0_0_30px_rgba(0,0,0,0.5)] flex items-center justify-center relative z-10 overflow-hidden`}>
               
               {/* Liquid Light Effect */}
               <div className={`absolute inset-0 bg-gradient-to-tr from-[#C9A24D]/0 via-[#C9A24D]/10 to-[#C9A24D]/0 rotate-45 transform transition-transform duration-[2000ms] ${isLoading ? 'translate-x-full' : '-translate-x-full'}`}></div>
@@ -355,9 +355,9 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
                 {isLoading ? (
                    <Loader2 className="w-8 h-8 text-[#C9A24D] animate-spin opacity-80" />
                 ) : isSpeaking ? (
-                   <div className="flex gap-1 items-center h-8">
+                   <div className="flex gap-1 items-center h-6">
                       <div className="w-1 h-3 bg-[#C9A24D] rounded-full animate-[pulse_0.5s_ease-in-out_infinite]"></div>
-                      <div className="w-1 h-6 bg-[#C9A24D] rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.1s]"></div>
+                      <div className="w-1 h-5 bg-[#C9A24D] rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.1s]"></div>
                       <div className="w-1 h-4 bg-[#C9A24D] rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.2s]"></div>
                    </div>
                 ) : (
@@ -367,10 +367,10 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
            </div>
         </div>
 
-        {/* 📜 SCROLLABLE TEXT AREA - ELEGANT & READABLE */}
-        <div className="w-full relative max-w-2xl mx-auto mt-8 z-20 px-4">
+        {/* 📜 SCROLLABLE TEXT AREA - Centered and clear of overlaps */}
+        <div className="w-full relative max-w-3xl mx-auto z-20 px-4 flex-1 flex flex-col justify-start">
            
-           <div className="max-h-[300px] md:max-h-[350px] overflow-y-auto custom-scrollbar px-6 py-8 text-center relative z-10 scroll-smooth bg-black/40 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl" ref={messagesEndRef}>
+           <div className="max-h-[30vh] md:max-h-[300px] overflow-y-auto custom-scrollbar px-6 py-6 text-center relative z-10 scroll-smooth bg-black/40 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl" ref={messagesEndRef}>
              <AnimatePresence mode='wait'>
                {error ? (
                  <motion.div

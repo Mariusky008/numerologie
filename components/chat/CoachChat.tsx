@@ -454,7 +454,7 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
       </div>
 
       {/* 🎙️ FLOATING MICROPHONE BUTTON (FIXED TO SCREEN BOTTOM) */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-4">
+      <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-4">
         
         {/* Hidden Input (Fallback - Hover to reveal) */}
         {!isListening && (
@@ -470,21 +470,21 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
 
         <button
           onClick={startListening}
-          className={`w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center transition-all duration-500 relative group ${
+          className={`w-28 h-28 md:w-32 md:h-32 rounded-full flex items-center justify-center transition-all duration-500 relative group ${
             isListening 
-              ? 'bg-red-900/40 scale-110 shadow-[0_0_60px_rgba(220,38,38,0.5)] border border-red-500/30' 
-              : 'bg-[#1F2235] hover:bg-[#2C2F4A] hover:scale-105 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-white/10 ring-1 ring-white/5'
+              ? 'bg-red-900/40 scale-110 shadow-[0_0_80px_rgba(220,38,38,0.6)] border border-red-500/30' 
+              : 'bg-[#1F2235] hover:bg-[#2C2F4A] hover:scale-105 shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-white/10 ring-1 ring-white/5'
           }`}
         >
           {/* Glowing Ring */}
           <div className={`absolute inset-0 rounded-full border border-[#C9A24D]/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-110 group-hover:scale-125`}></div>
           
           {isListening ? (
-            <StopCircle className="w-8 h-8 text-red-400" />
+            <StopCircle className="w-10 h-10 text-red-400" />
           ) : isLoading ? (
-             <Loader2 className="w-8 h-8 text-[#C9A24D] animate-spin" />
+             <Loader2 className="w-10 h-10 text-[#C9A24D] animate-spin" />
           ) : (
-            <Mic className="w-8 h-8 text-[#EAEAEA] group-hover:text-[#C9A24D] transition-colors" />
+            <Mic className="w-10 h-10 text-[#EAEAEA] group-hover:text-[#C9A24D] transition-colors" />
           )}
         </button>
       </div>

@@ -429,32 +429,32 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
            </div>
         </div>
 
+        {/* 🔮 SUGGESTIONS (Inside Container, Bottom) */}
+        <AnimatePresence>
+          {!isLoading && !isListening && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="w-full max-w-4xl mx-auto px-6 pb-8 z-20 flex flex-wrap justify-center gap-3 relative"
+            >
+              {suggestions.map((q, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleSuggestionClick(q)}
+                  className="px-6 py-3 bg-white/5 hover:bg-[#C9A24D]/20 border border-white/10 hover:border-[#C9A24D]/50 rounded-full text-sm md:text-base text-white/80 hover:text-white transition-all backdrop-blur-md shadow-lg"
+                >
+                  {q}
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
       </div>
 
-      {/* 🔮 SUGGESTIONS (Floating Above Mic) */}
-      <AnimatePresence>
-        {!isLoading && !isListening && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="absolute bottom-36 left-0 right-0 z-20 flex flex-wrap justify-center gap-3 px-6 pointer-events-none"
-          >
-            {suggestions.map((q, i) => (
-              <button
-                key={i}
-                onClick={() => handleSuggestionClick(q)}
-                className="pointer-events-auto px-6 py-3 bg-black/40 hover:bg-[#C9A24D]/20 border border-white/10 hover:border-[#C9A24D]/50 rounded-full text-sm md:text-base text-white/90 hover:text-white transition-all backdrop-blur-xl shadow-lg hover:shadow-[#C9A24D]/20"
-              >
-                {q}
-              </button>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* �️ FLOATING MICROPHONE BUTTON */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-4">
+      {/* 🎙️ FLOATING MICROPHONE BUTTON (FIXED TO SCREEN BOTTOM) */}
+      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-4">
         
         {/* Hidden Input (Fallback - Hover to reveal) */}
         {!isListening && (
@@ -470,10 +470,10 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
 
         <button
           onClick={startListening}
-          className={`w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500 relative group ${
+          className={`w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center transition-all duration-500 relative group ${
             isListening 
               ? 'bg-red-900/40 scale-110 shadow-[0_0_60px_rgba(220,38,38,0.5)] border border-red-500/30' 
-              : 'bg-black/40 hover:bg-[#1F2235]/80 hover:scale-105 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-white/10 backdrop-blur-md'
+              : 'bg-[#1F2235] hover:bg-[#2C2F4A] hover:scale-105 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-white/10 ring-1 ring-white/5'
           }`}
         >
           {/* Glowing Ring */}

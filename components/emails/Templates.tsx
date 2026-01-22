@@ -133,6 +133,45 @@ export const EmailBundle = ({
   </Html>
 );
 
+interface EmailVideoProps {
+  firstName: string;
+  downloadLink: string;
+}
+
+export const EmailVideo = ({
+  firstName,
+  downloadLink,
+}: EmailVideoProps) => (
+  <Html>
+    <Head />
+    <Preview>Votre vidéo personnalisée est arrivée !</Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Heading style={h1}>Un message pour vous</Heading>
+        <Text style={text}>Bonjour {firstName},</Text>
+        <Text style={text}>
+          Votre guide personnel a enregistré un message vidéo spécialement pour vous, basé sur votre thème numérologique.
+        </Text>
+        
+        <Section style={highlightBox}>
+          <Heading as="h3" style={h3}>🎥 Votre Vidéo Personnelle</Heading>
+          <Text style={text}>
+            Cliquez ci-dessous pour visionner votre analyse vidéo de 5 minutes.
+          </Text>
+          <Button style={button} href={downloadLink}>
+            Regarder ma Vidéo
+          </Button>
+        </Section>
+
+        <Text style={footer}>
+          Lien valable 7 jours. Pensez à télécharger la vidéo si vous souhaitez la conserver.<br/>
+          L'équipe Votre Légende.
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+);
+
 const main = {
   backgroundColor: '#FAF9F7',
   fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',

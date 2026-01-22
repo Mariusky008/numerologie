@@ -200,6 +200,34 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleSendEmail = async (req: BookRequest) => {
+    if (!req.userData?.video_url || !req.userData.delivery?.email) return;
+
+    if (!confirm(`Envoyer la vidéo à ${req.userData.delivery.email} ?`)) return;
+
+    try {
+      const res = await fetch('/api/send-video', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: req.userData.delivery.email,
+          firstName: req.userData.firstName,
+          videoUrl: req.userData.video_url,
+        }),
+      });
+
+      if (res.ok) {
+        alert("Email envoyé avec succès !");
+      } else {
+        const err = await res.json();
+        alert("Erreur envoi email: " + err.error);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Erreur réseau");
+    }
+  };
+
   const copyToClipboard = (req: BookRequest) => {
     const prompt = `
 Agis comme un écrivain biographe expert en numérologie.
@@ -662,10 +690,16 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                              controls 
                              className="w-full h-auto max-h-[400px] mx-auto"
                            />
-                           <div className="p-2 bg-stone-100 flex justify-center">
-                              <a href={req.userData.video_url} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline">
-                                Ouvrir dans un nouvel onglet
+                           <div className="p-2 bg-stone-100 flex justify-center gap-4">
+                              <a href={req.userData.video_url} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline flex items-center gap-1">
+                                <Eye className="w-3 h-3" /> Voir
                               </a>
+                              <button 
+                                onClick={() => handleSendEmail(req)}
+                                className="text-xs text-green-600 hover:underline flex items-center gap-1 font-bold"
+                              >
+                                <Download className="w-3 h-3" /> Envoyer Email Client
+                              </button>
                            </div>
                         </div>
                       )}

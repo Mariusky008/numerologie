@@ -417,20 +417,20 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
 
       </div>
 
-      {/* 🔮 SUGGESTIONS (Outside Controls) */}
+      {/* 🔮 SUGGESTIONS (Floating Above Mic) */}
       <AnimatePresence>
         {!isLoading && !isListening && (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="w-full max-w-4xl mx-auto px-6 mb-4 z-20 flex flex-wrap justify-center gap-3"
+            className="absolute bottom-36 left-0 right-0 z-20 flex flex-wrap justify-center gap-3 px-6 pointer-events-none"
           >
             {suggestions.map((q, i) => (
               <button
                 key={i}
                 onClick={() => handleSuggestionClick(q)}
-                className="px-6 py-3 bg-white/5 hover:bg-[#C9A24D]/20 border border-white/10 hover:border-[#C9A24D]/50 rounded-full text-sm md:text-base text-white/80 hover:text-white transition-all backdrop-blur-md shadow-lg"
+                className="pointer-events-auto px-6 py-3 bg-black/40 hover:bg-[#C9A24D]/20 border border-white/10 hover:border-[#C9A24D]/50 rounded-full text-sm md:text-base text-white/90 hover:text-white transition-all backdrop-blur-xl shadow-lg hover:shadow-[#C9A24D]/20"
               >
                 {q}
               </button>
@@ -439,42 +439,40 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
         )}
       </AnimatePresence>
 
-      {/* 🎛 CONTROLS - FUTURISTIC */}
-      <div className="p-8 pb-12 z-30 flex flex-col items-center gap-6 bg-gradient-to-t from-[#08090F] via-[#08090F] to-transparent">
+      {/* �️ FLOATING MICROPHONE BUTTON */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-4">
         
-        {/* Hidden Input (Fallback) */}
+        {/* Hidden Input (Fallback - Hover to reveal) */}
         {!isListening && (
-          <form onSubmit={handleSubmit} className="w-full max-w-[200px] relative opacity-0 hover:opacity-100 focus-within:opacity-100 transition-all duration-500">
+          <form onSubmit={handleSubmit} className="w-[200px] absolute -top-12 opacity-0 hover:opacity-100 focus-within:opacity-100 transition-all duration-300">
             <input
               value={input}
               onChange={handleInputChange}
               placeholder="Écrire..."
-              className="w-full bg-transparent border-b border-white/10 px-2 py-1 text-xs text-white/50 focus:outline-none focus:border-[#C9A24D]/50 text-center placeholder:text-white/10"
+              className="w-full bg-black/50 backdrop-blur border-b border-white/20 px-3 py-2 text-sm text-white focus:outline-none focus:border-[#C9A24D] text-center rounded-t-lg"
             />
           </form>
         )}
 
-        {/* MAGICAL BUTTON */}
         <button
           onClick={startListening}
-          className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-500 relative group ${
+          className={`w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500 relative group ${
             isListening 
-              ? 'bg-red-900/20 scale-110 shadow-[0_0_50px_rgba(220,38,38,0.4)]' 
-              : 'bg-gradient-to-b from-[#1F2235] to-[#0F111A] hover:scale-105 shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5'
+              ? 'bg-red-900/40 scale-110 shadow-[0_0_60px_rgba(220,38,38,0.5)] border border-red-500/30' 
+              : 'bg-black/40 hover:bg-[#1F2235]/80 hover:scale-105 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-white/10 backdrop-blur-md'
           }`}
         >
           {/* Glowing Ring */}
           <div className={`absolute inset-0 rounded-full border border-[#C9A24D]/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-110 group-hover:scale-125`}></div>
           
           {isListening ? (
-            <StopCircle className="w-6 h-6 text-red-400/80" />
+            <StopCircle className="w-8 h-8 text-red-400" />
           ) : isLoading ? (
-             <Loader2 className="w-6 h-6 text-[#C9A24D] animate-spin" />
+             <Loader2 className="w-8 h-8 text-[#C9A24D] animate-spin" />
           ) : (
-            <Mic className="w-6 h-6 text-[#EAEAEA]/80 group-hover:text-[#C9A24D] transition-colors" />
+            <Mic className="w-8 h-8 text-[#EAEAEA] group-hover:text-[#C9A24D] transition-colors" />
           )}
         </button>
-
       </div>
 
     </div>

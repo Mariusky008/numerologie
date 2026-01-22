@@ -6,12 +6,13 @@ export function middleware(req: NextRequest) {
 
   // Protection de la route /admin ET des routes API sensibles
   // On exclut /api/book-request POST (création de commande publique)
+  // On exclut /api/stats POST (tracking analytics publique)
   const isProtectedApi = 
     (pathname.startsWith('/api/book-request') && req.method !== 'POST') ||
+    (pathname.startsWith('/api/stats') && req.method !== 'POST') ||
     pathname.startsWith('/api/generate-video') ||
     pathname.startsWith('/api/generate-script') ||
-    pathname.startsWith('/api/send-video') ||
-    pathname.startsWith('/api/stats');
+    pathname.startsWith('/api/send-video');
 
   if (pathname.startsWith('/admin') || isProtectedApi) {
     const basicAuth = req.headers.get('authorization');

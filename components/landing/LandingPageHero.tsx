@@ -253,7 +253,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                className="text-center"
             >
                <h3 className="text-2xl md:text-3xl font-serif text-[#2C2F4A] mb-10 leading-tight">
-                 En <span className="text-[#C9A24D]">5 minutes de vidéo</span>, il vous révèle :
+                 En <span className="text-[#C9A24D]">5 minutes de vidéo</span>, votre avatar vous révèle :
                </h3>
                
                <ul className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-3xl mx-auto">

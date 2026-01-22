@@ -289,30 +289,28 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
            </div>
         </div>
 
-        {/* 📜 SCROLLABLE TEXT AREA - ELEGANT */}
-        <div className="w-full relative max-w-sm mx-auto">
-           <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-[#08090F] to-transparent z-20 pointer-events-none"></div>
-           <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#08090F] to-transparent z-20 pointer-events-none"></div>
-
-           <div className="max-h-[200px] overflow-y-auto custom-scrollbar px-2 py-6 text-center relative z-10 scroll-smooth" ref={messagesEndRef}>
+        {/* 📜 SCROLLABLE TEXT AREA - ELEGANT & READABLE */}
+        <div className="w-full relative max-w-md mx-auto mt-8 z-20">
+           
+           <div className="max-h-[250px] overflow-y-auto custom-scrollbar px-6 py-6 text-center relative z-10 scroll-smooth bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 shadow-2xl" ref={messagesEndRef}>
              <AnimatePresence mode='wait'>
                {messages.length > 0 ? (
                  <motion.div
                    key={messages.length}
-                   initial={{ opacity: 0, y: 20, filter: 'blur(5px)' }}
+                   initial={{ opacity: 0, y: 10, filter: 'blur(5px)' }}
                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                   transition={{ duration: 0.8, ease: "easeOut" }}
-                   className="space-y-2"
+                   transition={{ duration: 0.5, ease: "easeOut" }}
+                   className="space-y-4"
                  >
                    {isOracle ? (
                      <div className="prose prose-invert">
-                        <p className="text-[#EAEAEA] font-serif text-lg md:text-xl leading-relaxed drop-shadow-lg tracking-wide">
+                        <p className="text-[#FDFBF7] font-serif text-xl md:text-2xl leading-relaxed drop-shadow-lg tracking-wide font-medium">
                           {lastMessage.content}
                         </p>
                      </div>
                    ) : (
-                     <p className="text-white/30 text-sm font-light tracking-wide italic">
-                       — {lastMessage.content}
+                     <p className="text-white/60 text-base font-light tracking-wide italic bg-white/5 inline-block px-4 py-2 rounded-full">
+                       "{lastMessage.content}"
                      </p>
                    )}
                  </motion.div>
@@ -320,9 +318,9 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
                  <motion.p 
                     initial={{ opacity: 0 }} 
                     animate={{ opacity: 1 }}
-                    className="text-[#C9A24D]/40 text-xs uppercase tracking-[0.2em] mt-10"
+                    className="text-[#C9A24D] text-sm uppercase tracking-[0.2em] font-bold"
                  >
-                    En attente de votre voix...
+                    L'Oracle vous écoute...
                  </motion.p>
                )}
              </AnimatePresence>

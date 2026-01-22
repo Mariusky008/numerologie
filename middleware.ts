@@ -2,8 +2,18 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
-  // Protection de la route /admin
-  if (req.nextUrl.pathname.startsWith('/admin')) {
+  const pathname = req.nextUrl.pathname;
+
+  // Protection de la route /admin ET des routes API sensibles
+  // On exclut /api/book-request POST (création de commande publique)
+  const isProtectedApi = 
+    (pathname.startsWith('/api/book-request') && req.method !== 'POST') ||
+    pathname.startsWith('/api/generate-video') ||
+    pathname.startsWith('/api/generate-script') ||
+    pathname.startsWith('/api/send-video') ||
+    pathname.startsWith('/api/stats');
+
+  if (pathname.startsWith('/admin') || isProtectedApi) {
     const basicAuth = req.headers.get('authorization');
 
     if (basicAuth) {
@@ -33,5 +43,12 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: '/admin/:path*',
+  matcher: [
+    '/admin/:path*',
+    '/api/book-request',
+    '/api/generate-video',
+    '/api/generate-script',
+    '/api/send-video',
+    '/api/stats'
+  ],
 };

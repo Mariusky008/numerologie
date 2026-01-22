@@ -45,8 +45,8 @@ export default function CoachPage() {
       <div className="max-w-6xl mx-auto px-6 py-12 flex flex-col items-center">
         
         <div className="text-center max-w-2xl mb-12 space-y-4">
-           <h1 className="text-4xl md:text-5xl font-serif font-bold">
-             Posez vos questions en direct
+           <h1 className="text-4xl md:text-5xl font-serif font-bold text-[#C9A24D]">
+             L'Oracle Numérologique
            </h1>
            <p className="text-lg text-white/60">
              Votre guide connaît votre thème numérologique. Discutez avec lui par écrit ou de vive voix pour approfondir votre lecture.

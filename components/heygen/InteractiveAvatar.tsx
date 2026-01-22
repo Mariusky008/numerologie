@@ -19,9 +19,37 @@ export default function InteractiveAvatar() {
   const [debug, setDebug] = useState<string>('Prêt à démarrer');
   const [isUserTalking, setIsUserTalking] = useState(false);
   const [textInput, setTextInput] = useState('');
+  const [timeLeft, setTimeLeft] = useState<number>(30 * 60); // 30 minutes in seconds
 
   const avatar = useRef<StreamingAvatar | null>(null);
   const mediaStream = useRef<HTMLVideoElement>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Timer Logic
+  useEffect(() => {
+    if (avatar.current && timeLeft > 0) {
+      timerRef.current = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            endSession();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } else {
+      if (timerRef.current) clearInterval(timerRef.current);
+    }
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [avatar.current, timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   // Initialize Session
   async function startSession() {
@@ -178,7 +206,10 @@ export default function InteractiveAvatar() {
            
            {/* Status Bar */}
            <div className="flex justify-between items-center text-xs font-mono text-stone-500 px-2">
-              <span>Status: {debug}</span>
+              <span className="flex items-center gap-2">
+                <span className={`w-2 h-2 rounded-full ${timeLeft < 300 ? 'bg-red-500 animate-pulse' : 'bg-green-500'}`}></span>
+                Temps restant: {formatTime(timeLeft)}
+              </span>
               <button onClick={endSession} className="text-red-500 hover:text-red-400 flex items-center gap-1">
                 <X className="w-3 h-3" /> Terminer
               </button>

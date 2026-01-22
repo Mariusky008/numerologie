@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Play, Shield, Smartphone, User, Compass, Eye, FileText, ArrowRight, Volume2, VolumeX, BookOpen } from 'lucide-react';
+import { Play, Shield, Smartphone, User, Compass, Eye, FileText, ArrowRight, Volume2, VolumeX, BookOpen, Mic, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface LandingPageProps {
@@ -284,18 +284,45 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                initial={{ opacity: 0, scale: 0.95 }}
                whileInView={{ opacity: 1, scale: 1 }}
                viewport={{ once: true }}
-               className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#1F2235] to-[#2C2F4A] p-8 md:p-16 text-white text-center shadow-2xl border border-[#C9A24D]/20 group max-w-3xl mx-auto"
+               className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#1F2235] to-[#2C2F4A] p-8 md:p-12 text-white text-center shadow-2xl border border-[#C9A24D]/20 group max-w-3xl mx-auto"
             >
                 {/* Decorative Background */}
                 <div className="absolute top-0 right-0 w-80 h-80 bg-[#C9A24D] rounded-full blur-[100px] opacity-10 group-hover:opacity-20 transition-opacity"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#5B4B8A] rounded-full blur-[80px] opacity-20"></div>
                 
                 <div className="relative z-10 flex flex-col items-center gap-8">
-                   <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center mb-2 animate-pulse-slow ring-1 ring-white/20 shadow-[0_0_30px_rgba(201,162,77,0.2)]">
-                      <Volume2 className="w-10 h-10 text-[#C9A24D]" />
-                   </div>
                    
-                   <h3 className="text-3xl md:text-4xl font-serif leading-tight">
+                   {/* ✨ NOUVEAU VISUEL : Simulation Conversation */}
+                   <div className="w-full max-w-md bg-black/20 backdrop-blur-md rounded-2xl p-6 border border-white/10 shadow-2xl mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">
+                      {/* Message Utilisateur */}
+                      <div className="flex justify-end mb-6">
+                         <div className="bg-[#C9A24D] text-[#2C2F4A] px-5 py-3 rounded-2xl rounded-tr-sm text-sm md:text-base font-bold flex items-center gap-3 shadow-lg transform translate-x-2 group-hover:translate-x-0 transition-transform">
+                           <span>"Pourquoi je bloque toujours en amour ?"</span>
+                           <div className="w-6 h-6 bg-[#2C2F4A]/10 rounded-full flex items-center justify-center">
+                              <Mic className="w-3 h-3 text-[#2C2F4A]" />
+                           </div>
+                         </div>
+                      </div>
+
+                      {/* Réponse Avatar (Waveform) */}
+                      <div className="flex justify-start items-center gap-4">
+                         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#2C2F4A] to-[#5B4B8A] border border-white/20 flex items-center justify-center shadow-lg relative overflow-hidden ring-2 ring-[#C9A24D]/50">
+                            {/* Placeholder Avatar Image if available, else icon */}
+                            <div className="absolute inset-0 bg-[#5B4B8A] opacity-50"></div>
+                            <Sparkles className="w-5 h-5 text-white relative z-10" />
+                         </div>
+                         <div className="h-12 bg-white/10 px-5 rounded-full flex items-center gap-1.5 border border-white/5 backdrop-blur-sm">
+                            {/* Animated Bars */}
+                            <div className="w-1 h-3 bg-[#C9A24D] rounded-full animate-[pulse_1s_ease-in-out_infinite]"></div>
+                            <div className="w-1 h-6 bg-[#C9A24D] rounded-full animate-[pulse_1.2s_ease-in-out_infinite] delay-75"></div>
+                            <div className="w-1 h-4 bg-[#C9A24D] rounded-full animate-[pulse_0.8s_ease-in-out_infinite] delay-150"></div>
+                            <div className="w-1 h-8 bg-[#C9A24D] rounded-full animate-[pulse_1.5s_ease-in-out_infinite] delay-200"></div>
+                            <div className="w-1 h-5 bg-[#C9A24D] rounded-full animate-[pulse_1.1s_ease-in-out_infinite] delay-300"></div>
+                         </div>
+                      </div>
+                   </div>
+
+                   <h3 className="text-3xl md:text-4xl font-serif leading-tight mt-4">
                      Posez toutes vos questions <br/> à votre Avatar
                    </h3>
                    

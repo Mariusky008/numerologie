@@ -417,24 +417,31 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
 
       </div>
 
-      {/* 🎛 CONTROLS - FUTURISTIC */}
-      <div className="p-8 pb-12 z-30 flex flex-col items-center gap-6 bg-gradient-to-t from-[#08090F] via-[#08090F] to-transparent">
-        
-        {/* SUGGESTIONS (Chips) - Visible if only welcome message exists or empty */}
-        {!isLoading && !isListening && messages.length <= 1 && (
-          <div className="flex flex-wrap justify-center gap-2 mb-2 max-w-sm">
+      {/* 🔮 SUGGESTIONS (Outside Controls) */}
+      <AnimatePresence>
+        {!isLoading && !isListening && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="w-full max-w-4xl mx-auto px-6 mb-4 z-20 flex flex-wrap justify-center gap-3"
+          >
             {suggestions.map((q, i) => (
               <button
                 key={i}
                 onClick={() => handleSuggestionClick(q)}
-                className="px-4 py-2 bg-white/5 hover:bg-[#C9A24D]/20 border border-white/10 hover:border-[#C9A24D]/50 rounded-full text-xs text-white/70 hover:text-white transition-all backdrop-blur-md"
+                className="px-6 py-3 bg-white/5 hover:bg-[#C9A24D]/20 border border-white/10 hover:border-[#C9A24D]/50 rounded-full text-sm md:text-base text-white/80 hover:text-white transition-all backdrop-blur-md shadow-lg"
               >
                 {q}
               </button>
             ))}
-          </div>
+          </motion.div>
         )}
+      </AnimatePresence>
 
+      {/* 🎛 CONTROLS - FUTURISTIC */}
+      <div className="p-8 pb-12 z-30 flex flex-col items-center gap-6 bg-gradient-to-t from-[#08090F] via-[#08090F] to-transparent">
+        
         {/* Hidden Input (Fallback) */}
         {!isListening && (
           <form onSubmit={handleSubmit} className="w-full max-w-[200px] relative opacity-0 hover:opacity-100 focus-within:opacity-100 transition-all duration-500">

@@ -788,55 +788,80 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
       <footer className="py-16 px-6 bg-[#1F2235] text-white border-t border-white/10">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
           
+      {/* 🧩 FOOTER (Professional Redesign) */}
+      <footer className="bg-[#1F2235] text-white py-16 px-6 border-t border-[#C9A24D]/20 relative overflow-hidden">
+        {/* Background Glow */}
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#5B4B8A] rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
+
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
+          
           {/* Col 1: Brand */}
-          <div className="space-y-4">
-            <h3 className="font-serif text-2xl text-[#C9A24D]">Votre Légende</h3>
-            <p className="text-sm text-white/50 leading-relaxed">
-              La première expérience de numérologie narrative qui transforme vos données de naissance en une épopée visuelle et écrite.
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#C9A24D] to-[#FCD34D] flex items-center justify-center shadow-lg shadow-[#C9A24D]/20">
+                <Sparkles className="w-5 h-5 text-[#2C2F4A]" />
+              </div>
+              <span className="font-serif text-xl font-bold tracking-wide">Votre Légende</span>
+            </div>
+            <p className="text-sm text-white/60 leading-relaxed">
+              La première plateforme de numérologie narrative assistée par IA. Découvrez votre histoire, maîtrisez votre destin.
             </p>
+            <div className="flex gap-4">
+              {/* Social Icons */}
+              <a href="#" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#C9A24D] hover:text-[#2C2F4A] transition-all">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" /></svg>
+              </a>
+              <a href="#" className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#C9A24D] hover:text-[#2C2F4A] transition-all">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465C9.673 2.013 10.03 2 12.484 2h.08zM12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm5.338-3.205a1.2 1.2 0 110-2.4 1.2 1.2 0 010 2.4z" clipRule="evenodd" /></svg>
+              </a>
+            </div>
           </div>
 
-          {/* Col 2: Liens Utiles */}
+          {/* Col 2: Liens Rapides */}
           <div className="space-y-4">
-            <h4 className="font-bold text-white/80 uppercase tracking-wider text-xs">Navigation</h4>
-            <ul className="space-y-2 text-sm text-white/60">
-              <li><a href="#" className="hover:text-[#C9A24D] transition-colors">Accueil</a></li>
-              <li><a href="#" onClick={onStart} className="hover:text-[#C9A24D] transition-colors">Commencer l'expérience</a></li>
-              <li><a href="mailto:contact@roman-de-vie.com" className="hover:text-[#C9A24D] transition-colors">Contact Support</a></li>
+            <h4 className="font-bold text-[#C9A24D] uppercase tracking-wider text-xs">Navigation</h4>
+            <ul className="space-y-3 text-sm text-white/60">
+              <li><a href="#" className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3 opacity-50" /> Accueil</a></li>
+              <li><button onClick={onStart} className="hover:text-white transition-colors flex items-center gap-2 text-left"><ArrowRight className="w-3 h-3 opacity-50" /> Commencer l'expérience</button></li>
+              <li><a href="mailto:contact@votrelegende.fr" className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3 opacity-50" /> Support Client</a></li>
             </ul>
           </div>
 
           {/* Col 3: Légal */}
           <div className="space-y-4">
-            <h4 className="font-bold text-white/80 uppercase tracking-wider text-xs">Informations Légales</h4>
-            <ul className="space-y-2 text-sm text-white/60">
-              <li><a href="/legal/mentions" className="hover:text-[#C9A24D] transition-colors">Mentions Légales</a></li>
-              <li><a href="/legal/cgu" className="hover:text-[#C9A24D] transition-colors">CGU & Avertissement</a></li>
-              <li><a href="/legal/cgv" className="hover:text-[#C9A24D] transition-colors">Conditions Générales de Vente</a></li>
-              <li><a href="/legal/privacy" className="hover:text-[#C9A24D] transition-colors">Politique de Confidentialité</a></li>
+            <h4 className="font-bold text-[#C9A24D] uppercase tracking-wider text-xs">Informations Légales</h4>
+            <ul className="space-y-3 text-sm text-white/60">
+              <li><a href="/mentions-legales" className="hover:text-white transition-colors">Mentions Légales</a></li>
+              <li><a href="/cgu" className="hover:text-white transition-colors">CGU & Avertissement</a></li>
+              <li><a href="/cgv" className="hover:text-white transition-colors">Conditions Générales de Vente</a></li>
+              <li><a href="/mentions-legales" className="hover:text-white transition-colors">Politique de Confidentialité</a></li>
             </ul>
           </div>
 
-          {/* Col 4: Trust */}
-          <div className="space-y-4">
-            <h4 className="font-bold text-white/80 uppercase tracking-wider text-xs">Paiement Sécurisé</h4>
-            <div className="flex gap-2 opacity-70">
-              <div className="w-10 h-6 bg-white rounded flex items-center justify-center text-[8px] text-black font-bold">VISA</div>
-              <div className="w-10 h-6 bg-white rounded flex items-center justify-center text-[8px] text-black font-bold">MC</div>
-              <div className="w-10 h-6 bg-white rounded flex items-center justify-center text-[8px] text-black font-bold">AMEX</div>
+          {/* Col 4: Confiance */}
+          <div className="space-y-6">
+            <h4 className="font-bold text-[#C9A24D] uppercase tracking-wider text-xs">Paiement 100% Sécurisé</h4>
+            <div className="flex gap-3 opacity-80">
+               <div className="h-8 bg-white rounded px-2 flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" className="h-4 w-auto" alt="PayPal" /></div>
+               <div className="h-8 bg-white rounded px-2 flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-3 w-auto" alt="Visa" /></div>
+               <div className="h-8 bg-white rounded px-2 flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" className="h-5 w-auto" alt="Mastercard" /></div>
             </div>
-            <p className="text-xs text-white/40">
-              Toutes les transactions sont sécurisées et chiffrées par Stripe.
-            </p>
+            <div className="flex items-center gap-3 bg-white/5 p-3 rounded-lg border border-white/5 backdrop-blur-sm">
+               <Shield className="w-5 h-5 text-[#00B67A]" />
+               <div className="text-xs">
+                 <div className="font-bold text-white">Site Vérifié</div>
+                 <div className="text-white/40">Connexion SSL Chiffrée</div>
+               </div>
+            </div>
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-white/30">
-            © {new Date().getFullYear()} Roman de Vie. Tous droits réservés.
-          </p>
-          <div className="flex gap-4 text-xs text-white/30">
-            <span>Fait avec ✨ à Paris</span>
+        <div className="max-w-6xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/30">
+          <p>© {new Date().getFullYear()} votrelegende.fr - Tous droits réservés.</p>
+          <div className="flex gap-6">
+            <span>Ibrelisle</span>
+            <span>SIRET 840 800 106</span>
+            <span>Dax, France</span>
           </div>
         </div>
       </footer>

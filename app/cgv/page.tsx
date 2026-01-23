@@ -18,13 +18,13 @@ export default function CGV() {
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">1. Préambule</h2>
           <p>
-            Les présentes conditions générales de vente s'appliquent à toutes les ventes conclues sur le site internet "Roman de Vie".
+            Les présentes conditions générales de vente s'appliquent à toutes les ventes conclues sur le site internet "votrelegende.fr".
           </p>
           <p>
             Le site propose les produits suivants : 
             <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>Rapports numérologiques (format numérique)</li>
-              <li>Livres personnalisés "Roman de Vie" (format numérique ou physique)</li>
+              <li>Livres personnalisés "Votre Légende" (format numérique ou physique)</li>
             </ul>
           </p>
 
@@ -33,7 +33,7 @@ export default function CGV() {
             Les prix de nos produits sont indiqués en euros toutes taxes comprises (TTC). Toutes les commandes quelle que soit leur origine sont payables en euros.
           </p>
           <p>
-            "Roman de Vie" se réserve le droit de modifier ses prix à tout moment, mais le produit sera facturé sur la base du tarif en vigueur au moment de la validation de la commande.
+            "votrelegende.fr" se réserve le droit de modifier ses prix à tout moment, mais le produit sera facturé sur la base du tarif en vigueur au moment de la validation de la commande.
           </p>
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">3. Commandes</h2>
@@ -56,7 +56,7 @@ export default function CGV() {
             <strong>Exception au droit de rétractation :</strong> Conformément aux dispositions de l'article L.221-28 du Code de la Consommation, le droit de rétractation ne s'applique pas à :
             <ul className="list-disc pl-5 mt-2 space-y-1">
               <li>La fourniture d'un contenu numérique non fourni sur un support matériel dont l'exécution a commencé après accord préalable exprès du consommateur et renoncement exprès à son droit de rétractation.</li>
-              <li>La fourniture de biens confectionnés selon les spécifications du consommateur ou nettement personnalisés (ce qui est le cas de nos Romans de Vie basés sur vos données personnelles).</li>
+              <li>La fourniture de biens confectionnés selon les spécifications du consommateur ou nettement personnalisés (ce qui est le cas de nos livres "Votre Légende" basés sur vos données personnelles).</li>
             </ul>
             Par conséquent, aucun remboursement ne pourra être effectué une fois le processus de génération du rapport ou du livre entamé.
           </p>
@@ -73,10 +73,10 @@ export default function CGV() {
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">9. Responsabilité</h2>
           <p>
-            Les produits proposés sont conformes à la législation française en vigueur. La responsabilité de "Roman de Vie" ne saurait être engagée en cas de non-respect de la législation du pays où le produit est livré.
+            Les produits proposés sont conformes à la législation française en vigueur. La responsabilité de "votrelegende.fr" ne saurait être engagée en cas de non-respect de la législation du pays où le produit est livré.
           </p>
           <p>
-            Par ailleurs, "Roman de Vie" ne saurait être tenu pour responsable des dommages résultant d'une mauvaise utilisation du produit acheté.
+            Par ailleurs, "votrelegende.fr" ne saurait être tenu pour responsable des dommages résultant d'une mauvaise utilisation du produit acheté.
           </p>
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">10. Droit applicable en cas de litiges</h2>

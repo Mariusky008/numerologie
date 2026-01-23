@@ -18,7 +18,7 @@ export default function CGU() {
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">1. Objet</h2>
           <p>
-            Les présentes Conditions Générales d'Utilisation ont pour objet de définir les modalités de mise à disposition des services du site "Roman de Vie" (ci-après nommé "le Service") et les conditions d'utilisation du Service par l'Utilisateur.
+            Les présentes Conditions Générales d'Utilisation ont pour objet de définir les modalités de mise à disposition des services du site "votrelegende.fr" (ci-après nommé "le Service") et les conditions d'utilisation du Service par l'Utilisateur.
           </p>
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">2. Accès au service</h2>
@@ -44,7 +44,7 @@ export default function CGU() {
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">5. Responsabilité</h2>
           <p>
-            Les informations communiquées sur le site "Roman de Vie" sont présentées à titre indicatif et général sans valeur contractuelle. Malgré des mises à jour régulières, le site ne peut être tenu responsable de la modification des dispositions administratives et juridiques survenant après la publication. De même, le site ne peut être tenu responsable de l'utilisation et de l'interprétation de l'information contenue dans ce site.
+            Les informations communiquées sur le site "votrelegende.fr" sont présentées à titre indicatif et général sans valeur contractuelle. Malgré des mises à jour régulières, le site ne peut être tenu responsable de la modification des dispositions administratives et juridiques survenant après la publication. De même, le site ne peut être tenu responsable de l'utilisation et de l'interprétation de l'information contenue dans ce site.
           </p>
           <p className="bg-[#EFEDE9] p-4 rounded-lg border-l-4 border-[#C9A24D]">
             <strong>Important :</strong> Les services de numérologie et les contenus générés (livres, rapports) sont fournis à des fins de divertissement et de développement personnel uniquement. Ils ne constituent en aucun cas un conseil médical, psychologique, juridique ou financier. L'éditeur ne saurait être tenu responsable des décisions prises par l'utilisateur sur la base des informations fournies.
@@ -52,7 +52,7 @@ export default function CGU() {
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">6. Liens hypertextes</h2>
           <p>
-            Des liens hypertextes peuvent être présents sur le site. L'Utilisateur est informé qu'en cliquant sur ces liens, il sortira du site "Roman de Vie". Ce dernier n'a pas de contrôle sur les pages web sur lesquelles aboutissent ces liens et ne saurait, en aucun cas, être responsable de leur contenu.
+            Des liens hypertextes peuvent être présents sur le site. L'Utilisateur est informé qu'en cliquant sur ces liens, il sortira du site "votrelegende.fr". Ce dernier n'a pas de contrôle sur les pages web sur lesquelles aboutissent ces liens et ne saurait, en aucun cas, être responsable de leur contenu.
           </p>
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">7. Droit applicable et juridiction compétente</h2>

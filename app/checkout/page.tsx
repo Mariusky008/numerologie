@@ -21,6 +21,14 @@ function CheckoutContent() {
 
   // État de la sélection (Pack unique désormais)
   const [selectedPlan] = useState<'bundle'>('bundle');
+  const [includeBook, setIncludeBook] = useState(false);
+  
+  // Auto-select book if coming from book CTA
+  useState(() => {
+    if (userData.origin === 'book') {
+      setIncludeBook(true);
+    }
+  });
   
   // Formulaire de livraison
   const [deliveryInfo, setDeliveryInfo] = useState({
@@ -32,8 +40,10 @@ function CheckoutContent() {
     setDeliveryInfo({ ...deliveryInfo, [e.target.name]: e.target.value });
   };
 
-  // Prix Unique
-  const TOTAL_PRICE = 29;
+  // Prix
+  const BASE_PRICE = 29;
+  const BOOK_PRICE = 29; // Promo spéciale bump
+  const TOTAL_PRICE = BASE_PRICE + (includeBook ? BOOK_PRICE : 0);
 
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -50,7 +60,7 @@ function CheckoutContent() {
       plan: selectedPlan,
       totalPrice: TOTAL_PRICE,
       includeReport: true, // Toujours inclus
-      includeBook: false, // Plus d'option livre en supplément
+      includeBook: includeBook, // Option livre
       includeChat: true, // Nouvelle option Chat incluse
       delivery: deliveryInfo,
       orderDate: new Date().toISOString()
@@ -207,6 +217,51 @@ function CheckoutContent() {
           </motion.div>
         </div>
 
+        {/* ORDER BUMP - OPTION LIVRE */}
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className={`mb-12 p-6 rounded-2xl border-2 transition-all cursor-pointer relative overflow-hidden group ${includeBook ? 'bg-[#FFFBF2] border-[#C9A24D] shadow-xl ring-1 ring-[#C9A24D]/20' : 'bg-white border-[#EFEDE9] hover:border-[#C9A24D]/50'}`}
+          onClick={() => setIncludeBook(!includeBook)}
+        >
+           {/* Flashing "Recommended" tag if coming from book page */}
+           {userData.origin === 'book' && !includeBook && (
+             <div className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg animate-pulse">
+               Recommandé pour vous
+             </div>
+           )}
+
+           <div className="flex items-start gap-5 relative z-10">
+              <div className={`mt-1 w-8 h-8 rounded-lg border-2 flex items-center justify-center transition-all duration-300 shrink-0 ${includeBook ? 'bg-[#C9A24D] border-[#C9A24D] scale-110' : 'bg-white border-[#C9A24D]/30 group-hover:border-[#C9A24D]'}`}>
+                 {includeBook && <Check className="w-5 h-5 text-white" />}
+              </div>
+              <div className="flex-1">
+                 <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2 gap-2">
+                    <h3 className="font-serif font-bold text-[#2C2F4A] text-xl">
+                       Ajouter "Le Roman de Votre Vie"
+                    </h3>
+                    <div className="flex items-center gap-2">
+                       <span className="text-sm text-[#2C2F4A]/40 line-through decoration-red-400">49€</span>
+                       <span className="font-bold text-[#C9A24D] text-xl">+29€</span>
+                    </div>
+                 </div>
+                 <p className="text-[#2C2F4A]/70 mb-4 leading-relaxed max-w-2xl">
+                    <strong className="text-[#5B4B8A]">Ne partez pas sans la suite de votre histoire.</strong><br/>
+                    Recevez une biographie romancée de 100 pages où VOUS êtes le héros. Basé sur vos véritables cycles numérologiques et souvenirs.
+                 </p>
+                 <div className="flex flex-wrap gap-2">
+                    <span className="text-[10px] bg-[#C9A24D]/10 text-[#C9A24D] px-2 py-1 rounded font-bold uppercase flex items-center gap-1">
+                      <Star className="w-3 h-3" /> Nouveau & Exclusif
+                    </span>
+                    <span className="text-[10px] bg-[#2C2F4A]/5 text-[#2C2F4A] px-2 py-1 rounded font-bold uppercase flex items-center gap-1">
+                      <FileText className="w-3 h-3" /> Format PDF (100 pages)
+                    </span>
+                 </div>
+              </div>
+           </div>
+        </motion.div>
+
         {/* Email Field */}
         <div className="max-w-xl mx-auto mb-12">
             <label className="block text-sm font-bold text-[#2C2F4A] mb-2 text-center">Où envoyer votre pack ? <span className="text-red-400">*</span></label>
@@ -227,7 +282,7 @@ function CheckoutContent() {
                 disabled={isProcessing}
                 className={`group relative inline-flex items-center gap-4 px-16 py-6 bg-[#2C2F4A] text-[#FAF9F7] text-xl font-serif font-bold rounded-full shadow-[0_20px_50px_-12px_rgba(44,47,74,0.5)] transition-all transform ${isProcessing ? 'opacity-80 cursor-wait' : 'hover:bg-[#5B4B8A] hover:scale-105 hover:-translate-y-1'}`}
               >
-                <span>{isProcessing ? 'Préparation...' : 'Débloquer mon Pack à 29€'}</span>
+                <span>{isProcessing ? 'Préparation...' : `Débloquer mon Pack à ${TOTAL_PRICE}€`}</span>
                 {isProcessing && (
                   <div className="w-6 h-6 border-2 border-[#C9A24D] border-t-transparent rounded-full animate-spin"></div>
                 )}

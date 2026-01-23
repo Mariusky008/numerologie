@@ -383,6 +383,16 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                         "C'est comme parler à une amie qui sait tout."
                      </div>
                    </div>
+                   
+                   <div className="mt-8 flex justify-center md:justify-start">
+                      <button 
+                        onClick={onStart}
+                        className="px-8 py-4 bg-[#C9A24D] text-[#2C2F4A] rounded-full font-bold shadow-[0_10px_20px_-5px_rgba(201,162,77,0.4)] hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-2 group"
+                      >
+                        <Play className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
+                        Découvrir mon avatar maintenant
+                      </button>
+                   </div>
                 </div>
             </motion.div>
 
@@ -540,6 +550,14 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                         <span className="font-bold text-[#5B4B8A] block mb-1 not-italic">🎁 Bonus Optionnel</span>
                         Possibilité d'ajouter le <strong>Livre "Roman de Vie"</strong> à l'étape suivante.
                       </div>
+                      
+                      <button 
+                        onClick={onStart}
+                        className="w-full py-4 bg-[#2C2F4A] text-white rounded-xl font-bold text-lg shadow-xl hover:bg-[#C9A24D] hover:text-[#2C2F4A] transition-all flex items-center justify-center gap-2 mt-2 group"
+                      >
+                        <Play className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
+                        Obtenir mon accès immédiat
+                      </button>
                    </div>
                 </div>
 

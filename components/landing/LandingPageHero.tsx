@@ -301,7 +301,14 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       
                       {/* Photo Avatar (La même que la vidéo) */}
                       <div className="w-full h-full rounded-full overflow-hidden shadow-2xl relative z-10 bg-[#2C2F4A]">
-                        <img src="/avatar-poster.jpg" alt="Votre Avatar" className="w-full h-full object-cover" />
+                        <video 
+                          src="/Ton Parcours de Vie.mp4" 
+                          muted 
+                          autoPlay 
+                          loop 
+                          playsInline 
+                          className="w-full h-full object-cover object-top transform scale-150 translate-y-2" 
+                        />
                       </div>
 
                       {/* Status Indicator (Online) */}
@@ -324,8 +331,15 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       
                       {/* Bulle Avatar (Waveform Response) */}
                       <div className="flex items-center gap-3 animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300 fill-mode-both">
-                         <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20 shrink-0">
-                            <img src="/avatar-poster.jpg" alt="Avatar Small" className="w-full h-full object-cover" />
+                         <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20 shrink-0 bg-[#2C2F4A]">
+                            <video 
+                              src="/Ton Parcours de Vie.mp4" 
+                              muted 
+                              autoPlay 
+                              loop 
+                              playsInline 
+                              className="w-full h-full object-cover object-top transform scale-150 translate-y-1" 
+                            />
                          </div>
                          <div className="h-10 flex-1 bg-white/10 rounded-full rounded-tl-sm flex items-center px-4 gap-1 border border-white/5 shadow-inner">
                             {/* Waveform Bars */}

@@ -133,35 +133,24 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             </h2>
           </motion.div>
 
-          {/* CTA Principal + Preuve Sociale */}
+          {/* Preuve Sociale (Seulement) */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="flex flex-col items-center gap-4 mt-8 mb-4 relative z-20"
+            className="flex flex-col items-center gap-1 mt-4 mb-4 relative z-20"
           >
-            <button 
-              onClick={onStart}
-              className="px-8 py-4 bg-[#2C2F4A] text-white text-lg font-bold rounded-full shadow-[0_10px_30px_-10px_rgba(44,47,74,0.4)] hover:scale-105 hover:bg-[#5B4B8A] transition-all flex items-center gap-3 group"
-            >
-              <span>Révéler ma légende</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-
-            {/* Social Proof Trustpilot-style */}
-            <div className="flex flex-col items-center gap-1">
-               <div className="flex items-center gap-1">
-                 {[1,2,3,4,5].map(i => (
-                   <div key={i} className="bg-[#00B67A] p-1 rounded-sm">
-                      <Star className="w-3 h-3 text-white fill-white" />
-                    </div>
-                 ))}
-                 <span className="font-bold text-[#2C2F4A] ml-2 text-sm">4.9/5</span>
-               </div>
-               <p className="text-xs text-[#2C2F4A]/60 font-medium">
-                 Déjà <strong className="text-[#2C2F4A]">12 430 légendes</strong> révélées
-               </p>
-            </div>
+             <div className="flex items-center gap-1">
+               {[1,2,3,4,5].map(i => (
+                 <div key={i} className="bg-[#00B67A] p-1 rounded-sm">
+                   <Star className="w-3 h-3 text-white fill-white" />
+                 </div>
+               ))}
+               <span className="font-bold text-[#2C2F4A] ml-2 text-sm">4.9/5</span>
+             </div>
+             <p className="text-xs text-[#2C2F4A]/60 font-medium">
+               Déjà <strong className="text-[#2C2F4A]">1 247 légendes</strong> révélées
+             </p>
           </motion.div>
 
 
@@ -208,8 +197,6 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               <video 
                 ref={videoRef}
                 src="/Ton Parcours de Vie.mp4" 
-                poster="/avatar-poster.jpg"
-                preload="metadata"
                 // muted: Removed to ensure sound is ON when user clicks play
                 // autoPlay: Removed to prevent silent playback
                 // loop: Removed to stop at end

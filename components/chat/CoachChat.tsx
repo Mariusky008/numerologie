@@ -298,25 +298,26 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
   return (
     <div className="flex flex-col h-[85vh] md:h-[800px] w-full max-w-5xl mx-auto bg-[#08090F] md:rounded-[40px] shadow-[0_20px_100px_-20px_rgba(201,162,77,0.3)] overflow-hidden border-y md:border border-[#C9A24D]/10 relative font-sans group">
       
-      {/* 🌌 COSMIC BACKGROUND LAYERS */}
-      <div className="absolute inset-0 bg-[#08090F]"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,_rgba(44,47,74,0.4),_transparent_70%)] opacity-60"></div>
-      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-screen animate-pulse-slow"></div>
+      {/* 🌌 COSMIC BACKGROUND LAYERS - WARMER EDITION */}
+      <div className="absolute inset-0 bg-[#0F0B15]"></div> {/* Fond violet très sombre */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,_rgba(91,75,138,0.3),_transparent_70%)]"></div> {/* Halo Violet */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,_rgba(201,162,77,0.15),_transparent_60%)]"></div> {/* Lumière divine dorée */}
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-40 mix-blend-screen animate-pulse-slow"></div>
       
-      {/* SHOOTING STARS EFFECT (CSS only simulation) */}
+      {/* GOLDEN PARTICLES */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-         <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full shadow-[0_0_10px_white] animate-[ping_3s_infinite]"></div>
-         <div className="absolute top-3/4 right-1/4 w-0.5 h-0.5 bg-white rounded-full shadow-[0_0_5px_white] animate-[ping_5s_infinite_1s]"></div>
+         <div className="absolute top-1/4 left-1/3 w-1 h-1 bg-[#FCD34D] rounded-full shadow-[0_0_15px_#FCD34D] animate-[ping_4s_infinite]"></div>
+         <div className="absolute bottom-1/4 right-1/4 w-0.5 h-0.5 bg-[#FCD34D] rounded-full shadow-[0_0_10px_#FCD34D] animate-[ping_6s_infinite_1s]"></div>
       </div>
 
       {/* 🔝 HEADER */}
-      <div className="absolute top-0 left-0 right-0 p-8 flex justify-between items-start z-30">
+      <div className="absolute top-0 left-0 right-0 p-6 md:p-8 flex justify-between items-start z-30">
         <div className="flex flex-col">
-           <div className="flex items-center gap-2 mb-1">
-             <div className="w-1.5 h-1.5 bg-[#C9A24D] rounded-full animate-pulse"></div>
-             <h3 className="text-[#EAEAEA] font-serif text-lg tracking-[0.2em] uppercase opacity-80">L'Oracle</h3>
+           <div className="flex items-center gap-3 mb-1">
+             <div className="w-2 h-2 bg-[#C9A24D] rounded-full animate-[pulse_2s_infinite] shadow-[0_0_10px_#C9A24D]"></div>
+             <h3 className="text-[#FDFBF7] font-serif text-xl tracking-widest uppercase font-bold drop-shadow-md">L'Oracle</h3>
            </div>
-           <p className="text-[#C9A24D]/60 text-[9px] uppercase tracking-[0.4em] pl-4 border-l border-[#C9A24D]/30">Connexion Établie</p>
+           <p className="text-[#C9A24D] text-[10px] uppercase tracking-[0.3em] pl-5 border-l-2 border-[#C9A24D]/30 font-medium">Connecté à votre énergie</p>
         </div>
         <button 
           onClick={() => {
@@ -324,125 +325,127 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
             setIsMuted(newMuted);
             if (newMuted) window.speechSynthesis.cancel();
           }}
-          className="p-3 rounded-full text-white/40 hover:text-[#C9A24D] hover:bg-white/5 transition-all duration-300 border border-transparent hover:border-[#C9A24D]/20"
+          className="p-3 rounded-full text-[#FDFBF7]/60 hover:text-[#C9A24D] hover:bg-white/5 transition-all duration-300 border border-white/5 hover:border-[#C9A24D]/30 backdrop-blur-sm"
         >
           {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
         </button>
       </div>
 
       {/* 🔮 CENTRAL VISUALIZATION */}
-      <div className="flex-1 flex flex-col items-center justify-start relative z-10 px-6 pt-20 md:pt-12">
+      <div className="flex-1 flex flex-col items-center justify-start relative z-10 px-6 pt-24 md:pt-20 pb-32">
         
-        {/* ORB ANIMATION COMPLEX - Slightly smaller & higher */}
-        <div className="relative mb-8 scale-90 md:scale-100 transition-transform duration-700">
+        {/* ORB ANIMATION COMPLEX - WARMER & ALIVE */}
+        <div className="relative mb-10 scale-90 md:scale-110 transition-transform duration-700">
            
-           {/* HEARTBEAT GLOW */}
+           {/* HEARTBEAT GLOW - Warmer Colors */}
            <motion.div 
-             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full blur-[80px] mix-blend-screen pointer-events-none"
+             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full blur-[100px] mix-blend-screen pointer-events-none"
              animate={{
-               scale: [0.8, 1.2, 0.8],
-               opacity: isLoading || isSpeaking ? [0.2, 0.5, 0.2] : [0.1, 0.2, 0.1],
-               backgroundColor: ["#FCD34D", "#FB923C", "#FCD34D"]
+               scale: [0.9, 1.1, 0.9],
+               opacity: isLoading || isSpeaking ? [0.3, 0.6, 0.3] : [0.15, 0.25, 0.15],
+               backgroundColor: ["#5B4B8A", "#C9A24D", "#5B4B8A"] // Violet to Gold loop
              }}
              transition={{
-               duration: isLoading || isSpeaking ? 2 : 4,
+               duration: isLoading || isSpeaking ? 3 : 6,
                repeat: Infinity,
                ease: "easeInOut"
              }}
            />
 
-           {/* ASTROLABE RINGS */}
-           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] border border-white/5 rounded-full ${isLoading ? 'animate-[spin_10s_linear_infinite]' : 'opacity-10'} transition-all duration-1000`}></div>
-           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] border border-[#C9A24D]/10 rounded-full border-dashed ${isLoading ? 'animate-[spin_20s_linear_infinite_reverse]' : 'opacity-20'} transition-all duration-1000`}></div>
+           {/* ASTROLABE RINGS - Golden & Elegant */}
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] border border-[#C9A24D]/20 rounded-full ${isLoading ? 'animate-[spin_15s_linear_infinite]' : 'opacity-30'} transition-all duration-1000`}></div>
+           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] border border-[#FDFBF7]/10 rounded-full border-dashed ${isLoading ? 'animate-[spin_25s_linear_infinite_reverse]' : 'opacity-40'} transition-all duration-1000`}></div>
            
-           {/* PULSING GLOW (Inner) */}
-           <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full bg-[#C9A24D] blur-[80px] mix-blend-screen ${isLoading || isSpeaking ? 'opacity-30 scale-110' : 'opacity-5 scale-90'} transition-all duration-1000 ease-in-out`}></div>
-
-           {/* THE CORE SPHERE */}
-           <div className={`w-28 h-28 rounded-full bg-gradient-to-b from-[#1F2235] to-[#000] border border-[#C9A24D]/30 shadow-[inset_0_4px_20px_rgba(201,162,77,0.2),_0_0_30px_rgba(0,0,0,0.5)] flex items-center justify-center relative z-10 overflow-hidden`}>
+           {/* THE CORE SPHERE - Liquid Gold */}
+           <div className={`w-32 h-32 rounded-full bg-gradient-to-br from-[#2C2F4A] to-[#000] border-2 border-[#C9A24D]/50 shadow-[0_0_50px_rgba(201,162,77,0.4),_inset_0_0_20px_rgba(0,0,0,0.8)] flex items-center justify-center relative z-10 overflow-hidden group-hover:scale-105 transition-transform duration-500`}>
               
-              {/* Liquid Light Effect */}
-              <div className={`absolute inset-0 bg-gradient-to-tr from-[#C9A24D]/0 via-[#C9A24D]/10 to-[#C9A24D]/0 rotate-45 transform transition-transform duration-[2000ms] ${isLoading ? 'translate-x-full' : '-translate-x-full'}`}></div>
+              {/* Internal Nebulas */}
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-50 animate-spin-slow"></div>
               
               {/* Center Icon */}
               <div className="relative z-20">
                 {isLoading ? (
-                   <Loader2 className="w-8 h-8 text-[#C9A24D] animate-spin opacity-80" />
+                   <Loader2 className="w-10 h-10 text-[#C9A24D] animate-spin drop-shadow-[0_0_10px_rgba(201,162,77,0.8)]" />
                 ) : isSpeaking ? (
-                   <div className="flex gap-1 items-center h-6">
-                      <div className="w-1 h-3 bg-[#C9A24D] rounded-full animate-[pulse_0.5s_ease-in-out_infinite]"></div>
-                      <div className="w-1 h-5 bg-[#C9A24D] rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.1s]"></div>
-                      <div className="w-1 h-4 bg-[#C9A24D] rounded-full animate-[pulse_0.5s_ease-in-out_infinite_0.2s]"></div>
+                   <div className="flex gap-1.5 items-center h-8">
+                      <div className="w-1.5 h-4 bg-[#FCD34D] rounded-full animate-[pulse_0.4s_ease-in-out_infinite] shadow-[0_0_10px_#FCD34D]"></div>
+                      <div className="w-1.5 h-7 bg-[#FCD34D] rounded-full animate-[pulse_0.4s_ease-in-out_infinite_0.1s] shadow-[0_0_10px_#FCD34D]"></div>
+                      <div className="w-1.5 h-5 bg-[#FCD34D] rounded-full animate-[pulse_0.4s_ease-in-out_infinite_0.2s] shadow-[0_0_10px_#FCD34D]"></div>
                    </div>
                 ) : (
-                   <Sparkles className="w-8 h-8 text-[#C9A24D]/60 animate-pulse duration-[3000ms]" />
+                   <Sparkles className="w-10 h-10 text-[#C9A24D] animate-pulse duration-[3000ms] drop-shadow-[0_0_15px_rgba(201,162,77,0.6)]" />
                 )}
               </div>
            </div>
         </div>
 
-        {/* 📜 SCROLLABLE TEXT AREA - Centered and clear of overlaps */}
-        <div className="w-full relative max-w-3xl mx-auto z-20 px-4 flex-1 flex flex-col justify-start">
+        {/* 📜 SCROLLABLE TEXT AREA - More Elegant Typography */}
+        <div className="w-full relative max-w-2xl mx-auto z-20 px-0 flex-1 flex flex-col justify-start">
            
-           <div className="max-h-[30vh] md:max-h-[300px] overflow-y-auto custom-scrollbar px-6 py-6 text-center relative z-10 scroll-smooth bg-black/40 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl" ref={messagesEndRef}>
+           <div className="max-h-[35vh] md:max-h-[350px] overflow-y-auto custom-scrollbar px-4 py-2 text-center relative z-10 scroll-smooth" ref={messagesEndRef}>
              <AnimatePresence mode='wait'>
                {error ? (
                  <motion.div
-                   initial={{ opacity: 0 }}
-                   animate={{ opacity: 1 }}
-                   className="p-4 bg-red-900/50 border border-red-500/50 rounded-xl text-red-200 text-sm"
+                   initial={{ opacity: 0, scale: 0.9 }}
+                   animate={{ opacity: 1, scale: 1 }}
+                   className="p-4 bg-red-900/40 border border-red-500/30 rounded-2xl text-red-100 text-sm backdrop-blur-md"
                  >
                    ⚠️ {error}
-                   <br/>
-                   <button onClick={() => window.location.reload()} className="underline mt-2 text-xs">Recharger la page</button>
                  </motion.div>
                ) : messages.length > 0 ? (
                  <motion.div
                    key={messages.length}
-                   initial={{ opacity: 0, y: 10, filter: 'blur(5px)' }}
-                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                   transition={{ duration: 0.5, ease: "easeOut" }}
+                   initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                   animate={{ opacity: 1, y: 0, scale: 1 }}
+                   transition={{ duration: 0.6, type: "spring" }}
                    className="space-y-6"
                  >
                    {isOracle ? (
-                     <div className="prose prose-invert max-w-none">
-                        <p className="text-[#FDFBF7] font-serif text-xl md:text-3xl leading-relaxed drop-shadow-lg tracking-wide font-medium">
+                     <div className="relative">
+                        {/* Decorative quotes */}
+                        <span className="absolute -top-4 -left-2 text-6xl text-[#C9A24D]/20 font-serif">“</span>
+                        <p className="text-[#FDFBF7] font-serif text-xl md:text-2xl leading-relaxed drop-shadow-md tracking-wide font-medium">
                           {lastMessage.content}
                         </p>
+                        <span className="absolute -bottom-8 -right-2 text-6xl text-[#C9A24D]/20 font-serif rotate-180">“</span>
                      </div>
                    ) : (
-                     <p className="text-white/60 text-base md:text-lg font-light tracking-wide italic bg-white/5 inline-block px-6 py-3 rounded-full border border-white/5">
-                       "{lastMessage.content}"
-                     </p>
+                     <div className="inline-block bg-[#FDFBF7]/10 px-6 py-3 rounded-2xl rounded-tr-sm border border-[#FDFBF7]/10 backdrop-blur-sm">
+                        <p className="text-[#FDFBF7]/90 text-base md:text-lg font-light italic">
+                          "{lastMessage.content}"
+                        </p>
+                     </div>
                    )}
                  </motion.div>
                ) : (
-                 <motion.p 
+                 <motion.div 
                     initial={{ opacity: 0 }} 
                     animate={{ opacity: 1 }}
-                    className="text-[#C9A24D] text-sm uppercase tracking-[0.2em] font-bold"
+                    className="flex flex-col items-center gap-3"
                  >
-                    L'Oracle vous écoute...
-                 </motion.p>
+                    <p className="text-[#C9A24D] text-sm uppercase tracking-[0.2em] font-bold animate-pulse">
+                       L'Oracle vous écoute...
+                    </p>
+                 </motion.div>
                )}
              </AnimatePresence>
            </div>
         </div>
 
-        {/* 🔮 SUGGESTIONS (Inside Container, Bottom) */}
+        {/* 🔮 SUGGESTIONS */}
         <AnimatePresence>
           {!isLoading && !isListening && (
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="w-full max-w-4xl mx-auto px-6 pb-8 z-20 flex flex-wrap justify-center gap-3 relative"
+              className="w-full max-w-4xl mx-auto px-4 mt-6 z-20 flex flex-wrap justify-center gap-2 relative"
             >
               {suggestions.map((q, i) => (
                 <button
                   key={i}
                   onClick={() => handleSuggestionClick(q)}
-                  className="px-6 py-3 bg-white/5 hover:bg-[#C9A24D]/20 border border-white/10 hover:border-[#C9A24D]/50 rounded-full text-sm md:text-base text-white/80 hover:text-white transition-all backdrop-blur-md shadow-lg"
+                  className="px-5 py-2.5 bg-[#FDFBF7]/5 hover:bg-[#C9A24D]/20 border border-[#FDFBF7]/10 hover:border-[#C9A24D]/50 rounded-xl text-xs md:text-sm text-[#FDFBF7]/70 hover:text-white transition-all backdrop-blur-sm shadow-sm hover:shadow-[0_0_15px_rgba(201,162,77,0.3)]"
                 >
                   {q}
                 </button>
@@ -453,40 +456,56 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
 
       </div>
 
-      {/* 🎙️ FLOATING MICROPHONE BUTTON (FIXED TO SCREEN BOTTOM) */}
-      <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-4">
-        
-        {/* Hidden Input (Fallback - Hover to reveal) */}
-        {!isListening && (
-          <form onSubmit={handleSubmit} className="w-[200px] absolute -top-12 opacity-0 hover:opacity-100 focus-within:opacity-100 transition-all duration-300">
-            <input
-              value={input}
-              onChange={handleInputChange}
-              placeholder="Écrire..."
-              className="w-full bg-black/50 backdrop-blur border-b border-white/20 px-3 py-2 text-sm text-white focus:outline-none focus:border-[#C9A24D] text-center rounded-t-lg"
-            />
-          </form>
-        )}
+      {/* 🎙️ INPUT BAR - NEW HYBRID DESIGN (Bottom of Card) */}
+      <div className="absolute bottom-0 left-0 right-0 p-6 z-50 bg-gradient-to-t from-[#0F0B15] to-transparent pt-20">
+        <div className="max-w-2xl mx-auto relative">
+           
+           <form 
+             onSubmit={handleSubmit}
+             className={`flex items-center gap-2 p-1.5 rounded-full transition-all duration-300 border ${
+               isListening 
+                 ? 'bg-red-900/20 border-red-500/50 shadow-[0_0_30px_rgba(220,38,38,0.2)]' 
+                 : 'bg-[#1F2235]/80 border-[#C9A24D]/30 shadow-[0_10px_40px_rgba(0,0,0,0.5)]'
+             } backdrop-blur-xl`}
+           >
+              {/* Text Input */}
+              <input
+                value={input}
+                onChange={handleInputChange}
+                placeholder={isListening ? "Écoute en cours..." : "Posez votre question à l'Oracle..."}
+                disabled={isListening}
+                className="flex-1 bg-transparent border-none outline-none text-[#FDFBF7] px-6 py-3 text-base placeholder:text-white/30 font-light"
+              />
 
-        <button
-          onClick={startListening}
-          className={`w-28 h-28 md:w-32 md:h-32 rounded-full flex items-center justify-center transition-all duration-500 relative group ${
-            isListening 
-              ? 'bg-red-900/40 scale-110 shadow-[0_0_80px_rgba(220,38,38,0.6)] border border-red-500/30' 
-              : 'bg-[#1F2235] hover:bg-[#2C2F4A] hover:scale-105 shadow-[0_20px_60px_rgba(0,0,0,0.6)] border border-white/10 ring-1 ring-white/5'
-          }`}
-        >
-          {/* Glowing Ring */}
-          <div className={`absolute inset-0 rounded-full border border-[#C9A24D]/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-110 group-hover:scale-125`}></div>
-          
-          {isListening ? (
-            <StopCircle className="w-10 h-10 text-red-400" />
-          ) : isLoading ? (
-             <Loader2 className="w-10 h-10 text-[#C9A24D] animate-spin" />
-          ) : (
-            <Mic className="w-10 h-10 text-[#EAEAEA] group-hover:text-[#C9A24D] transition-colors" />
-          )}
-        </button>
+              {/* Action Button (Mic or Send) */}
+              <button
+                type="button" // Default to button to prevent submit on click unless intended
+                onClick={input.trim() ? () => handleSubmit() : startListening}
+                className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+                  input.trim() 
+                    ? 'bg-[#C9A24D] text-[#1F2235] hover:scale-110 shadow-[0_0_20px_rgba(201,162,77,0.5)]' 
+                    : isListening 
+                      ? 'bg-red-500 text-white animate-pulse' 
+                      : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-white'
+                }`}
+              >
+                 {input.trim() ? (
+                   <Send className="w-5 h-5 ml-0.5" />
+                 ) : isListening ? (
+                   <StopCircle className="w-5 h-5" />
+                 ) : (
+                   <Mic className="w-5 h-5" />
+                 )}
+              </button>
+           </form>
+           
+           {/* Helper Text */}
+           {!input.trim() && !isListening && (
+             <p className="text-center text-[#FDFBF7]/20 text-[10px] uppercase tracking-widest mt-3">
+               Appuyez sur le micro ou écrivez
+             </p>
+           )}
+        </div>
       </div>
 
     </div>

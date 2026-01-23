@@ -130,7 +130,17 @@ function CheckoutContent() {
         
         {/* Navigation Back */}
         <button 
-          onClick={() => router.back()}
+          onClick={() => {
+            // Reconstruct URL to restore state on home page
+            const params = new URLSearchParams({
+                fn: userData.firstName,
+                ln: userData.lastName,
+                bd: userData.birthDate,
+                bp: userData.birthPlace,
+                fo: userData.focus
+            });
+            router.push(`/?${params.toString()}`);
+          }}
           className="flex items-center gap-2 text-[#5B4B8A] hover:text-[#2C2F4A] transition-colors mb-8 font-medium text-sm tracking-wide group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />

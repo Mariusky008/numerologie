@@ -10,30 +10,33 @@ import { trackEvent } from '@/lib/analytics';
 
 function HomeContent() {
   const searchParams = useSearchParams();
-  const [hasStarted, setHasStarted] = useState(false);
-  const [userData, setUserData] = useState<UserData | null>(null);
+  
+  // Initialize state directly from URL if possible to avoid flash/race conditions
+  const urlFn = searchParams.get('fn');
+  const urlLn = searchParams.get('ln');
+  const urlBd = searchParams.get('bd');
+  
+  const initialUserData = (urlFn && urlLn && urlBd) ? {
+      firstName: urlFn,
+      lastName: urlLn,
+      birthDate: urlBd,
+      birthPlace: searchParams.get('bp') || '',
+      birthTime: '', 
+      focus: (searchParams.get('fo') as any) || 'mission'
+  } : null;
+
+  const [hasStarted, setHasStarted] = useState(!!initialUserData);
+  const [userData, setUserData] = useState<UserData | null>(initialUserData);
 
   useEffect(() => {
     // Track Home View on mount
     trackEvent('home_view');
     
-    // Check for state restoration from URL (e.g. coming back from checkout)
-    const fn = searchParams.get('fn');
-    const ln = searchParams.get('ln');
-    const bd = searchParams.get('bd');
-    
-    if (fn && ln && bd) {
-        setUserData({
-            firstName: fn,
-            lastName: ln,
-            birthDate: bd,
-            birthPlace: searchParams.get('bp') || '',
-            birthTime: '', // Not strictly needed for display restoration
-            focus: (searchParams.get('fo') as any) || 'mission'
-        });
+    // If we just hydrated from URL, make sure state is consistent (double check)
+    if (initialUserData && !hasStarted) {
         setHasStarted(true);
     }
-  }, [searchParams]);
+  }, [searchParams]); // Remove initialUserData dep to avoid loop, though it's constant per render
 
   const handleStart = () => {
     trackEvent('reveal_click');

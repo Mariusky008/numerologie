@@ -101,11 +101,14 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 px-4 py-1.5 rounded-full bg-white/80 border border-[#C9A24D]/30 shadow-sm backdrop-blur-sm flex items-center gap-2"
+            className="mb-6 px-4 py-1.5 rounded-full bg-[#C9A24D]/10 border border-[#C9A24D]/30 shadow-sm backdrop-blur-sm flex items-center gap-2"
           >
-             <span className="w-1.5 h-1.5 rounded-full bg-[#C9A24D] animate-pulse"></span>
-             <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#2C2F4A]/70">
-               Basée sur votre date de naissance
+             <span className="relative flex h-2 w-2">
+               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C9A24D] opacity-75"></span>
+               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#C9A24D]"></span>
+             </span>
+             <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#2C2F4A]">
+               Technologie Avatar IA • Inédit
              </span>
           </motion.div>
 
@@ -126,7 +129,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              className="text-center max-w-2xl mx-auto"
           >
             <h2 className="text-lg md:text-xl text-[#2C2F4A]/80 font-light leading-relaxed">
-              Laissez votre avatar personnel vous expliquer votre thème de vie, sans jargon ni détours. Découvrez enfin qui vous êtes vraiment.
+              Laissez <strong className="font-bold text-[#5B4B8A]">votre avatar personnel</strong> vous expliquer votre thème de vie, sans jargon ni détours. Découvrez enfin qui vous êtes vraiment.
             </h2>
           </motion.div>
 

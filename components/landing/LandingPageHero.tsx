@@ -185,9 +185,10 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                 src="/Ton Parcours de Vie.mp4" 
                 // muted: Removed to ensure sound is ON when user clicks play
                 // autoPlay: Removed to prevent silent playback
-                loop 
+                // loop: Removed to stop at end
                 playsInline
                 className="w-full h-full object-cover object-top opacity-90"
+                onEnded={() => setIsPlaying(false)}
               />
               
               {/* Controls Overlay */}

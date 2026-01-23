@@ -785,9 +785,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
       </section>
 
       {/* 🧩 FOOTER PREMIUM */}
-      <footer className="py-16 px-6 bg-[#1F2235] text-white border-t border-white/10">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-          
+
       {/* 🧩 FOOTER (Professional Redesign) */}
       <footer className="bg-[#1F2235] text-white py-16 px-6 border-t border-[#C9A24D]/20 relative overflow-hidden">
         {/* Background Glow */}

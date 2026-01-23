@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     const reportLink = `${baseUrl}/pdf-report-v2?order_id=${requestId}`;
 
     const { data, error } = await resend.emails.send({
-      from: 'Votre Légende <contact@roman-de-vie.com>',
+      from: 'Votre Légende <contact@votrelegende.fr>',
       to: [email],
       subject: '✨ Votre Pack Révélation est prêt (Vidéo + Rapport)',
       react: EmailDeliverables({

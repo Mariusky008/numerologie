@@ -45,7 +45,7 @@ export async function POST(request: Request) {
       if (plan === 'report') {
         // Envoi Email Rapport Seul (Immédiat car pas de vidéo)
         await resend.emails.send({
-          from: 'Votre Légende <contact@roman-de-vie.com>',
+          from: 'Votre Légende <contact@votrelegende.fr>',
           to: [customerEmail!],
           subject: 'Votre Dossier Numérologique est prêt 🌟',
           react: EmailReport({

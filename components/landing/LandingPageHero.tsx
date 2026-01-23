@@ -280,59 +280,108 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                </p>
             </motion.div>
 
-            {/* 2. Chat Feature Promo (Gros Encart) */}
+            {/* 2. Chat Feature Promo (Redesigned & Narrative) */}
             <motion.div 
                initial={{ opacity: 0, scale: 0.95 }}
                whileInView={{ opacity: 1, scale: 1 }}
                viewport={{ once: true }}
-               className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#1F2235] to-[#2C2F4A] p-8 md:p-12 text-white text-center shadow-2xl border border-[#C9A24D]/20 group max-w-3xl mx-auto"
+               className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#1F2235] to-[#2C2F4A] text-white shadow-2xl border border-[#C9A24D]/20 group max-w-5xl mx-auto flex flex-col md:flex-row items-stretch"
             >
                 {/* Decorative Background */}
-                <div className="absolute top-0 right-0 w-80 h-80 bg-[#C9A24D] rounded-full blur-[100px] opacity-10 group-hover:opacity-20 transition-opacity"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#5B4B8A] rounded-full blur-[80px] opacity-20"></div>
+                <div className="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay pointer-events-none"></div>
+                <div className="absolute -top-20 -right-20 w-80 h-80 bg-[#C9A24D] rounded-full blur-[100px] opacity-10 group-hover:opacity-20 transition-opacity"></div>
                 
-                <div className="relative z-10 flex flex-col items-center gap-8">
+                {/* Gauche : Le Visuel de Continuité (45%) */}
+                <div className="w-full md:w-[45%] p-8 md:p-12 relative flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-white/10 bg-black/20">
                    
-                   {/* ✨ NOUVEAU VISUEL : Simulation Conversation */}
-                   <div className="w-full max-w-md bg-black/20 backdrop-blur-md rounded-2xl p-6 border border-white/10 shadow-2xl mb-2 transform group-hover:-translate-y-2 transition-transform duration-500">
-                      {/* Message Utilisateur */}
-                      <div className="flex justify-end mb-6">
-                         <div className="bg-[#C9A24D] text-[#2C2F4A] px-5 py-3 rounded-2xl rounded-tr-sm text-sm md:text-base font-bold flex items-center gap-3 shadow-lg transform translate-x-2 group-hover:translate-x-0 transition-transform">
-                           <span>"Pourquoi je bloque toujours en amour ?"</span>
-                           <div className="w-6 h-6 bg-[#2C2F4A]/10 rounded-full flex items-center justify-center">
-                              <Mic className="w-3 h-3 text-[#2C2F4A]" />
-                           </div>
-                         </div>
+                   {/* Avatar Circle (Large & Alive) */}
+                   <div className="relative w-28 h-28 md:w-32 md:h-32 mb-8 group-hover:scale-105 transition-transform duration-500">
+                      <div className="absolute inset-0 rounded-full border-2 border-[#C9A24D] animate-[pulse_3s_infinite]"></div>
+                      <div className="absolute -inset-2 rounded-full border border-white/10"></div>
+                      
+                      {/* Photo Avatar (La même que la vidéo) */}
+                      <div className="w-full h-full rounded-full overflow-hidden shadow-2xl relative z-10 bg-[#2C2F4A]">
+                        <img src="/avatar-poster.jpg" alt="Votre Avatar" className="w-full h-full object-cover" />
                       </div>
 
-                      {/* Réponse Avatar (Waveform) */}
-                      <div className="flex justify-start items-center gap-4">
-                         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#2C2F4A] to-[#5B4B8A] border border-white/20 flex items-center justify-center shadow-lg relative overflow-hidden ring-2 ring-[#C9A24D]/50">
-                            {/* Placeholder Avatar Image if available, else icon */}
-                            <div className="absolute inset-0 bg-[#5B4B8A] opacity-50"></div>
-                            <Sparkles className="w-5 h-5 text-white relative z-10" />
+                      {/* Status Indicator (Online) */}
+                      <div className="absolute bottom-1 right-1 w-6 h-6 bg-green-500 border-4 border-[#1F2235] rounded-full z-20 shadow-md flex items-center justify-center">
+                         <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
+                      </div>
+                   </div>
+
+                   {/* Simulation Interface Vocale */}
+                   <div className="w-full max-w-xs space-y-4">
+                      {/* Bulle User */}
+                      <div className="flex justify-end">
+                         <div className="bg-[#C9A24D] text-[#2C2F4A] px-4 py-2.5 rounded-2xl rounded-tr-sm text-xs md:text-sm font-bold shadow-lg flex items-center gap-2 transform translate-x-2 group-hover:translate-x-0 transition-transform duration-500">
+                            <span>"Pourquoi je bloque en amour ?"</span>
+                            <div className="w-5 h-5 bg-[#2C2F4A]/10 rounded-full flex items-center justify-center shrink-0">
+                               <Mic className="w-2.5 h-2.5 text-[#2C2F4A]" />
+                            </div>
                          </div>
-                         <div className="h-12 bg-white/10 px-5 rounded-full flex items-center gap-1.5 border border-white/5 backdrop-blur-sm">
-                            {/* Animated Bars */}
-                            <div className="w-1 h-3 bg-[#C9A24D] rounded-full animate-[pulse_1s_ease-in-out_infinite]"></div>
-                            <div className="w-1 h-6 bg-[#C9A24D] rounded-full animate-[pulse_1.2s_ease-in-out_infinite] delay-75"></div>
-                            <div className="w-1 h-4 bg-[#C9A24D] rounded-full animate-[pulse_0.8s_ease-in-out_infinite] delay-150"></div>
-                            <div className="w-1 h-8 bg-[#C9A24D] rounded-full animate-[pulse_1.5s_ease-in-out_infinite] delay-200"></div>
-                            <div className="w-1 h-5 bg-[#C9A24D] rounded-full animate-[pulse_1.1s_ease-in-out_infinite] delay-300"></div>
+                      </div>
+                      
+                      {/* Bulle Avatar (Waveform Response) */}
+                      <div className="flex items-center gap-3 animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300 fill-mode-both">
+                         <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20 shrink-0">
+                            <img src="/avatar-poster.jpg" alt="Avatar Small" className="w-full h-full object-cover" />
+                         </div>
+                         <div className="h-10 flex-1 bg-white/10 rounded-full rounded-tl-sm flex items-center px-4 gap-1 border border-white/5 shadow-inner">
+                            {/* Waveform Bars */}
+                            {[...Array(12)].map((_, i) => (
+                               <div key={i} className="w-0.5 md:w-1 bg-[#C9A24D] rounded-full animate-[pulse_1s_ease-in-out_infinite]" style={{ 
+                                  height: Math.random() * 16 + 6 + 'px',
+                                  animationDelay: i * 0.05 + 's',
+                                  opacity: 0.8
+                               }}></div>
+                            ))}
                          </div>
                       </div>
                    </div>
 
-                   <h3 className="text-3xl md:text-4xl font-serif leading-tight mt-4">
-                     Posez toutes vos questions <br/> à votre Avatar
+                </div>
+
+                {/* Droite : Le Texte Explicatif (55%) */}
+                <div className="w-full md:w-[55%] p-8 md:p-12 text-center md:text-left relative z-10 flex flex-col justify-center">
+                   <div className="inline-flex items-center justify-center md:justify-start gap-2 mb-6">
+                      <div className="px-3 py-1 rounded-full bg-[#C9A24D]/10 border border-[#C9A24D]/20 text-[#C9A24D] text-[10px] font-bold uppercase tracking-widest">
+                        ✨ La suite de l'expérience
+                      </div>
+                   </div>
+                   
+                   <h3 className="text-2xl md:text-4xl font-serif leading-tight mb-6">
+                     Après la vidéo,<br/>
+                     <span className="text-[#C9A24D]">la conversation continue.</span>
                    </h3>
                    
-                   <p className="text-white/80 leading-relaxed text-lg md:text-xl max-w-lg">
-                     Vous pourrez aussi parler à votre avatar pendant <br/><strong className="text-[#C9A24D] text-2xl">30 minutes</strong><br/> pour lui poser toutes les questions que vous avez à lui poser sur votre vie...
+                   <p className="text-white/70 leading-relaxed text-base md:text-lg mb-8 font-light">
+                     Ne restez pas sur votre faim. Une fois la vidéo terminée, votre avatar reste disponible pour <strong>30 minutes d'échange vocal</strong>, comme une vraie consultation.
                    </p>
                    
-                   <div className="text-xs font-bold uppercase tracking-widest text-[#C9A24D] mt-4 border border-[#C9A24D]/30 px-6 py-2 rounded-full bg-[#C9A24D]/10 backdrop-blur-sm">
-                     ✨ Inclus dans le pack
+                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                      <div className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div className="w-8 h-8 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0">
+                           <User className="w-4 h-4 text-[#C9A24D]" />
+                        </div>
+                        <span className="text-sm text-white/80 font-medium">Posez vos questions</span>
+                      </div>
+                      <div className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div className="w-8 h-8 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0">
+                           <Sparkles className="w-4 h-4 text-[#C9A24D]" />
+                        </div>
+                        <span className="text-sm text-white/80 font-medium">Réponses uniques</span>
+                      </div>
+                   </div>
+
+                   <div className="pt-6 border-t border-white/10 flex items-center justify-center md:justify-between gap-4">
+                     <div className="text-xs font-bold uppercase tracking-widest text-white/40 flex items-center gap-2">
+                       <Volume2 className="w-4 h-4 text-[#C9A24D]" />
+                       Inclus dans le Pack
+                     </div>
+                     <div className="text-[#C9A24D] font-serif italic opacity-60 text-sm hidden sm:block">
+                        "C'est comme parler à une amie qui sait tout."
+                     </div>
                    </div>
                 </div>
             </motion.div>

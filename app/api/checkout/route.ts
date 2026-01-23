@@ -19,29 +19,37 @@ export async function POST(request: Request) {
       typescript: true,
     });
 
-    // Calcul du prix côté serveur pour sécurité
-    let unitAmount = 0;
-    let productName = "";
-    let description = "";
+    // Calcul des produits (Server-side source of truth)
 
     // NOUVELLE LOGIQUE UNIQUE : PACK RÉVÉLATION
-    if (orderInfo.plan === 'bundle') {
-      productName = "Le Pack Révélation (Complet)";
-      unitAmount = 2900; // 29.00€
-      description = "Vidéo Avatar (5 min) + Dossier PDF (40 pages) + Coach IA (30 min)";
-      
-      // On ignore les anciennes options pour l'instant pour éviter les erreurs de calcul
-    } 
-    // BACKWARD COMPATIBILITY (au cas où d'anciens liens traînent)
-    else if (orderInfo.plan === 'report') {
-      productName = "Dossier Numérologique (PDF)";
-      unitAmount = 2900; // Alignement sur le prix unique
-      description = "Dossier PDF + Bonus";
-    } else {
-       // Fallback par défaut
-      productName = "Pack Révélation";
-      unitAmount = 2900;
-      description = "Offre complète";
+    const line_items = [];
+
+    // 1. LE PACK DE BASE (Toujours présent)
+    line_items.push({
+      price_data: {
+        currency: 'eur',
+        product_data: {
+          name: "Le Pack Révélation (Complet)",
+          description: "Vidéo Avatar (5 min) + Dossier PDF (40 pages) + Coach IA (30 min)",
+        },
+        unit_amount: 2900, // 29.00€
+      },
+      quantity: 1,
+    });
+
+    // 2. OPTION LIVRE (Si cochée)
+    if (orderInfo.includeBook) {
+      line_items.push({
+        price_data: {
+          currency: 'eur',
+          product_data: {
+            name: 'Option : Le Roman de Votre Vie (PDF)',
+            description: 'Biographie romancée de 100 pages basée sur votre numérologie.',
+          },
+          unit_amount: 2900, // +29.00€
+        },
+        quantity: 1,
+      });
     }
 
       // URL de succès modifiée pour rediriger vers la nouvelle page de remerciement
@@ -59,20 +67,7 @@ export async function POST(request: Request) {
     // Création de la session Stripe
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      line_items: [
-        {
-          price_data: {
-            currency: 'eur',
-            product_data: {
-              name: productName,
-              description: description,
-              // images: ['https://votre-site.com/images/book-cover.jpg'], // Optionnel
-            },
-            unit_amount: unitAmount,
-          },
-          quantity: 1,
-        },
-      ],
+      line_items: line_items,
       mode: 'payment',
       success_url: `${origin}/success?${successParams.toString()}`,
       cancel_url: `${origin}/checkout?fn=${userData.firstName}&ln=${userData.lastName}&bd=${userData.birthDate}`,

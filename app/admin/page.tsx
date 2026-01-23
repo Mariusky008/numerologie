@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock, Music, Compass, Star, TrendingUp, AlertTriangle, GitBranch, Copy, FileJson, Trash2, Eye, Download, PenTool } from 'lucide-react';
+import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock, Music, Compass, Star, TrendingUp, AlertTriangle, GitBranch, Copy, FileJson, Trash2, Eye, Download, PenTool, ExternalLink } from 'lucide-react';
 import { UserData, NumerologyResult } from '@/lib/types';
 
 export interface BookRequest {
@@ -461,6 +461,32 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                              <p>{req.userData.delivery.country}</p>
                            </>
                          )}
+                         
+                         {/* Admin Quick Links */}
+                         <div className="mt-3 pt-3 border-t border-stone-100 flex flex-col gap-2">
+                           <div className="flex items-center justify-end gap-2 text-[10px]">
+                             <span className="text-stone-400 font-medium">PDF:</span>
+                             <button 
+                               onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/pdf-report-v2?order_id=${req.id}`)}
+                               className="text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-2 py-1 rounded flex items-center gap-1 transition-colors"
+                               title="Copier le lien PDF pour email"
+                             >
+                               <Copy className="w-3 h-3" /> Copier
+                             </button>
+                             <a href={`/pdf-report-v2?order_id=${req.id}`} target="_blank" className="text-stone-300 hover:text-stone-500"><ExternalLink className="w-3 h-3" /></a>
+                           </div>
+                           <div className="flex items-center justify-end gap-2 text-[10px]">
+                             <span className="text-stone-400 font-medium">Coach:</span>
+                             <button 
+                               onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/coach?id=${req.id}&name=${encodeURIComponent(req.userData.firstName)}`)}
+                               className="text-purple-600 hover:text-purple-800 bg-purple-50 hover:bg-purple-100 px-2 py-1 rounded flex items-center gap-1 transition-colors"
+                               title="Copier le lien Coach pour email"
+                             >
+                               <Copy className="w-3 h-3" /> Copier
+                             </button>
+                             <a href={`/coach?id=${req.id}&name=${encodeURIComponent(req.userData.firstName)}`} target="_blank" className="text-stone-300 hover:text-stone-500"><ExternalLink className="w-3 h-3" /></a>
+                           </div>
+                         </div>
                        </div>
                     )}
                     {req.status === 'completed' ? (

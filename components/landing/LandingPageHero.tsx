@@ -183,8 +183,8 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               <video 
                 ref={videoRef}
                 src="/Ton Parcours de Vie.mp4" 
-                muted // Always start muted for autoplay policy
-                autoPlay // Play immediately to show content
+                // muted: Removed to ensure sound is ON when user clicks play
+                // autoPlay: Removed to prevent silent playback
                 loop 
                 playsInline
                 className="w-full h-full object-cover object-top opacity-90"

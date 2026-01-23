@@ -18,29 +18,34 @@ export default function MentionsLegales() {
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">1. Édition du site</h2>
           <p>
-            Le présent site, accessible à l’URL www.romandevie.com (le « Site »), est édité par :
+            Le présent site, accessible à l’URL www.votrelegende.fr (le « Site »), est édité par :
           </p>
           <p className="mt-2">
-            <strong>Jean-Philippe Roth</strong><br />
-            Résidant au 7 rue Saint Pierre, 40100 Dax<br />
-            De nationalité Française (France)<br />
-            Né le 08/02/1971
+            <strong>Ibrelisle</strong><br />
+            Siège social : 23 rue paul lahragou, 40100 Dax<br />
+            SIRET : 840 800 106<br />
+            Email : contact@votrelegende.fr
           </p>
 
-          <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">2. Hébergement</h2>
+          <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">2. Directeur de la publication</h2>
           <p>
-            Le Site est hébergé par la société Vercel Inc., située 340 S Lemon Ave #4133 Walnut, CA 91789, (contact téléphonique ou email : https://vercel.com/contact).
+            Directeur de la publication : Yann Ibrelisle
           </p>
 
-          <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">3. Directeur de publication</h2>
+          <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">3. Hébergement</h2>
           <p>
-            Le Directeur de la publication du Site est Jean-Philippe Roth.
+            Le site est hébergé par :<br/>
+            <strong>Vercel Inc.</strong><br />
+            340 S Lemon Ave #4133<br />
+            Walnut, CA 91789<br />
+            États-Unis<br />
+            <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-[#C9A24D] hover:underline">https://vercel.com</a>
           </p>
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">4. Nous contacter</h2>
           <p>
-            Par email : contact@romandevie.com<br />
-            Par courrier : 7 rue saint Pierre, 40100 Dax
+            Par email : contact@votrelegende.fr<br />
+            Par courrier : 23 rue paul lahragou, 40100 Dax
           </p>
 
           <h2 className="text-xl font-bold text-[#5B4B8A] mt-8 mb-4">5. Données personnelles</h2>

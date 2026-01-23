@@ -115,8 +115,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#2C2F4A] leading-[1.1] text-center mb-6"
           >
-            Votre avatar personnel <br className="hidden md:block" />
-            vous explique votre vie en <span className="text-[#C9A24D] italic">5 minutes</span>
+            Votre histoire révélée<br/> en <span className="text-[#C9A24D]">5 minutes</span>
           </motion.h1>
 
           {/* Sous-titre / Description */}
@@ -124,19 +123,11 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              initial={{ opacity: 0 }}
              animate={{ opacity: 1 }}
              transition={{ delay: 0.2 }}
-             className="text-center space-y-4 max-w-2xl"
+             className="text-center max-w-2xl mx-auto"
           >
-            <p className="text-lg md:text-xl text-[#2C2F4A] font-medium">
-              Recevez votre vidéo personnalisée instantanément.
-            </p>
-            
-            <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 text-sm md:text-base text-[#2C2F4A]/60 font-light">
-               <span>Numérologie & Astrologie</span>
-               <span className="hidden md:inline w-1 h-1 rounded-full bg-[#C9A24D]"></span>
-               <span>Pas une prédiction</span>
-               <span className="hidden md:inline w-1 h-1 rounded-full bg-[#C9A24D]"></span>
-               <span>Une lecture claire</span>
-            </div>
+            <h2 className="text-lg md:text-xl text-[#2C2F4A]/80 font-light leading-relaxed">
+              Laissez votre avatar personnel vous expliquer votre thème de vie, sans jargon ni détours. Découvrez enfin qui vous êtes vraiment.
+            </h2>
           </motion.div>
 
 

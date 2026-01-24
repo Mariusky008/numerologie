@@ -6,19 +6,19 @@ import { motion } from 'framer-motion';
 
 // --- DATA SIMULÉE ---
 // Dans la vraie version, cela viendra du calcul
-const ARCHETYPES: Record<number, { title: string; subtitle: string; power: string; shadow: string }> = {
-  1: { title: "LE PIONNIER", subtitle: "L'Initiateur", power: "Indépendance", shadow: "Isolement" },
-  2: { title: "LE MÉDIATEUR", subtitle: "L'Harmonisateur", power: "Intuition", shadow: "Dépendance" },
-  3: { title: "L'ARTISTE", subtitle: "Le Communicant", power: "Créativité", shadow: "Dispersion" },
-  4: { title: "LE BÂTISSEUR", subtitle: "Le Pilier", power: "Stabilité", shadow: "Rigidité" },
-  5: { title: "L'AVENTURIER", subtitle: "Le Libertaire", power: "Liberté", shadow: "Instabilité" },
-  6: { title: "LE PROTECTEUR", subtitle: "Le Gardien", power: "Harmonie", shadow: "Sacrifice" },
-  7: { title: "LE SAGE", subtitle: "Le Chercheur", power: "Sagesse", shadow: "Solitude" },
-  8: { title: "LE STRATÈGE", subtitle: "Le Conquérant", power: "Puissance", shadow: "Matérialisme" },
-  9: { title: "L'HUMANISTE", subtitle: "L'Idéaliste", power: "Compassion", shadow: "Détachement" },
-  11: { title: "LE VISIONNAIRE", subtitle: "L'Éveilleur", power: "Inspiration", shadow: "Tension nerveuse" },
-  22: { title: "LE BÂTISSEUR UNIVERSEL", subtitle: "Le Maître d'Œuvre", power: "Réalisation", shadow: "Autodestruction" },
-  33: { title: "LE GUIDE", subtitle: "Le Maître Enseignant", power: "Amour Inconditionnel", shadow: "Martyre" },
+const ARCHETYPES: Record<number, { title: string; subtitle: string; power: string; shadow: string; description: string }> = {
+  1: { title: "LE PIONNIER", subtitle: "L'Initiateur", power: "Indépendance", shadow: "Isolement", description: "Tu es une force de la nature, un leader né qui n'a pas peur d'ouvrir de nouvelles voies. Là où les autres hésitent, tu fonces. Ton énergie est brute, directe et puissante." },
+  2: { title: "LE MÉDIATEUR", subtitle: "L'Harmonisateur", power: "Intuition", shadow: "Dépendance", description: "Tu as un don rare pour ressentir ce que les autres cachent. Tu es le lien, le pont entre les mondes. Ton empathie est ta boussole, mais parfois aussi ton fardeau." },
+  3: { title: "L'ARTISTE", subtitle: "Le Communicant", power: "Créativité", shadow: "Dispersion", description: "Ton esprit est un feu d'artifice permanent. Tu es né pour exprimer, créer et inspirer. Ta parole est magique, mais attention à ne pas t'éparpiller dans mille directions." },
+  4: { title: "LE BÂTISSEUR", subtitle: "Le Pilier", power: "Stabilité", shadow: "Rigidité", description: "Tu es le roc sur lequel les autres s'appuient. Tu construis pour durer. Ton sens du détail et ta discipline sont légendaires, mais n'oublie pas de laisser entrer un peu de lumière." },
+  5: { title: "L'AVENTURIER", subtitle: "Le Libertaire", power: "Liberté", shadow: "Instabilité", description: "La routine est ton pire ennemi. Tu as besoin de mouvement, de changement, d'air frais. Tu es un explorateur de la vie, capable de t'adapter à tout, sauf à l'ennui." },
+  6: { title: "LE PROTECTEUR", subtitle: "Le Gardien", power: "Harmonie", shadow: "Sacrifice", description: "Ton cœur est grand comme une maison. Tu prends soin, tu nourris, tu protèges. Tu es l'âme du foyer, mais attention à ne pas t'oublier en voulant sauver tout le monde." },
+  7: { title: "LE SAGE", subtitle: "Le Chercheur", power: "Sagesse", shadow: "Solitude", description: "Tu ne te contentes pas des apparences. Tu cherches la vérité cachée derrière chaque chose. Ton esprit est analytique et profond. Tu as besoin de temps seul pour recharger tes batteries spirituelles." },
+  8: { title: "LE STRATÈGE", subtitle: "Le Conquérant", power: "Puissance", shadow: "Matérialisme", description: "Tu as l'ambition des grands bâtisseurs d'empires. Tu comprends instinctivement le monde matériel et l'argent. Tu es fait pour diriger, mais ton défi est d'allier cette puissance à l'éthique." },
+  9: { title: "L'HUMANISTE", subtitle: "L'Idéaliste", power: "Compassion", shadow: "Détachement", description: "Tu vois le monde non pas tel qu'il est, mais tel qu'il devrait être. Tu es une vieille âme, venue pour achever un cycle et aider l'humanité à s'élever. Ton amour est universel." },
+  11: { title: "LE VISIONNAIRE", subtitle: "L'Éveilleur", power: "Inspiration", shadow: "Tension nerveuse", description: "Tu captes des fréquences que les autres ignorent. Tu es un canal, une source d'inspiration. Ta présence électrise, mais cette haute tension peut parfois être épuisante." },
+  22: { title: "LE BÂTISSEUR UNIVERSEL", subtitle: "Le Maître d'Œuvre", power: "Réalisation", shadow: "Autodestruction", description: "Tu as la vision de l'idéaliste et les mains du bâtisseur. Tu peux transformer les rêves les plus fous en réalité concrète. Ton potentiel est immense, tout comme ta responsabilité." },
+  33: { title: "LE GUIDE", subtitle: "Le Maître Enseignant", power: "Amour Inconditionnel", shadow: "Martyre", description: "Ton énergie est celle de la guérison pure. Tu es ici pour enseigner par l'exemple de l'amour. C'est un chemin exigeant qui demande un dévouement total." },
 };
 
 export default function DemoRevealPage() {
@@ -71,9 +71,13 @@ export default function DemoRevealPage() {
           <h1 className="text-2xl md:text-3xl font-serif font-bold mb-4 leading-tight">
             {firstName}, tu es né pour être un <span className="text-[#C9A24D]">{archetype.title}</span>, mais quelque chose te freine.
           </h1>
-          <p className="text-white/60 text-sm font-light leading-relaxed px-4">
-            J'ai analysé ta date de naissance. Ton potentiel est immense, mais un schéma répétitif t'empêche d'atteindre ton plein épanouissement.
+          <p className="text-white/60 text-sm font-light leading-relaxed px-4 mb-6">
+            {archetype.description}
           </p>
+          <div className="flex justify-center gap-2 mb-8">
+             <span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white/70 border border-white/10">Chemin de Vie {lifePath}</span>
+             <span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white/70 border border-white/10">Âme {lifePath === 7 ? '9' : '1'}</span>
+          </div>
         </motion.div>
 
         {/* 2. LE TEASER VIDÉO (LE CLIFFHANGER) */}
@@ -136,8 +140,27 @@ export default function DemoRevealPage() {
                 <p className="text-sm text-white/60 mb-6">
                   Ton avatar a découvert un blocage important lié à ton ombre : <strong className="text-white">{archetype.shadow}</strong>.
                 </p>
+                
+                <div className="bg-white/5 p-4 rounded-xl text-left mb-6 border border-white/5">
+                  <p className="text-xs font-bold text-[#C9A24D] uppercase mb-2">Ce que tu débloques (29€) :</p>
+                  <ul className="space-y-2 text-xs text-white/80">
+                    <li className="flex gap-2">
+                      <span className="text-[#C9A24D]">▶</span>
+                      <strong>Vidéo Révélation (5 min) :</strong> L'analyse de tes traits profonds.
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-[#C9A24D]">💬</span>
+                      <strong>Coach Vocal IA (30 min) :</strong> Pose tes questions pour comprendre tes échecs passés.
+                    </li>
+                    <li className="flex gap-2">
+                      <span className="text-[#C9A24D]">📄</span>
+                      <strong>Dossier Complet (40 pages) :</strong> Ton plan d'action écrit pour le futur.
+                    </li>
+                  </ul>
+                </div>
+
                 <button className="w-full py-4 bg-[#C9A24D] text-[#1a1c2e] font-bold rounded-xl shadow-lg hover:bg-white transition-colors flex items-center justify-center gap-2">
-                  Débloquer la suite (29€) <ArrowRight className="w-4 h-4" />
+                  Débloquer mon Pack <ArrowRight className="w-4 h-4" />
                 </button>
                 <p className="mt-3 text-[10px] text-white/40">
                   Accès immédiat • Satisfait ou remboursé

@@ -149,7 +149,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                <span className="font-bold text-[#2C2F4A] ml-2 text-sm">4.9/5</span>
              </div>
              <p className="text-xs text-[#2C2F4A]/60 font-medium">
-               Déjà <strong className="text-[#2C2F4A]">1 247 légendes</strong> révélées
+               Déjà <strong className="text-[#2C2F4A]">+ de 1 200 légendes</strong> révélées
              </p>
           </motion.div>
 

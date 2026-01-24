@@ -214,9 +214,13 @@ export default function DemoRevealPage() {
                </div>
              </div>
              <h4 className="text-xl font-serif font-bold text-white mb-1">{archetype.title}</h4>
-             <p className="text-white/60 text-sm italic mb-3">"{archetype.subtitle}"</p>
+             <p className="text-white/60 text-sm italic mb-4">"{archetype.subtitle}"</p>
              
-             <div className="flex gap-2">
+             <p className="text-sm text-white/80 leading-relaxed mb-4 border-l-2 border-[#C9A24D] pl-3">
+               Ta nature profonde est celle d'un éclaireur. Tu ne suis pas les chemins tracés, tu crées les tiens. Cette force intérieure est rare, et elle explique pourquoi tu t'es souvent senti différent(e) des autres. C'est ta plus grande richesse.
+             </p>
+
+             <div className="flex gap-2 flex-wrap">
                 <span className="px-2 py-1 bg-[#C9A24D]/20 rounded text-[10px] font-bold text-[#C9A24D] border border-[#C9A24D]/20">{archetype.power}</span>
                 <span className="px-2 py-1 bg-[#C9A24D]/20 rounded text-[10px] font-bold text-[#C9A24D] border border-[#C9A24D]/20">Intuitif</span>
                 <span className="px-2 py-1 bg-[#C9A24D]/20 rounded text-[10px] font-bold text-[#C9A24D] border border-[#C9A24D]/20">Visionnaire</span>

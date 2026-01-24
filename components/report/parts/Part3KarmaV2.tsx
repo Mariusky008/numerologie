@@ -2,7 +2,7 @@
 import { UserData, NumerologyResult } from '@/lib/types';
 import PageContainer from './PageContainer';
 import InclusionGridViz from '../InclusionGridViz';
-import { getKarmicLessonContent, getExcessNumberContent, getBridgeContent, getBalancedNumberContent } from '@/lib/numerology/contentGenerator';
+import { getKarmicLessonContent, getExcessNumberContent, getBridgeContent, getBalancedNumberContent, getChallengeContent } from '@/lib/numerology/contentGenerator';
 
 export default function Part3KarmaV2({ userData, results }: { userData: UserData, results: NumerologyResult }) {
   const bridgeContent = getBridgeContent(results.bridgeNumber);
@@ -13,6 +13,10 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
     (!results.missingNumbers?.includes(n)) && 
     (!results.excessNumbers?.includes(n))
   );
+
+  // Get major challenge for exercise
+  const majorChallenge = results.challenges?.major || 0;
+  const majorChallengeContent = getChallengeContent(majorChallenge, 'major');
 
   return (
     <>
@@ -103,6 +107,26 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
           Les Leçons Karmiques
         </h2>
         
+        {/* Exercice de Déblocage du Défi Majeur */}
+        <div className="bg-[#FAF9F7] p-6 md:p-8 rounded-xl border border-[#C9A24D] mb-12 shadow-sm" style={{ pageBreakInside: 'avoid' }}>
+          <h3 className="text-xl md:text-2xl font-serif text-[#C9A24D] mb-4 flex items-center gap-2">
+            <span>💡</span> Votre Exercice de Déblocage
+          </h3>
+          <p className="text-[#2C2F4A] mb-6">
+            Pour activer votre plein potentiel et dépasser votre frein principal (Défi Majeur {majorChallenge}), voici une action concrète à pratiquer :
+          </p>
+          
+          <div className="bg-white p-6 rounded-lg border-l-4 border-[#C9A24D]">
+            <h4 className="font-bold text-[#2C2F4A] mb-2 text-lg">{majorChallengeContent.exercise?.title}</h4>
+            <p className="text-[#2C2F4A] font-medium mb-3 text-lg">
+              {majorChallengeContent.exercise?.action}
+            </p>
+            <p className="text-[#2C2F4A]/70 italic text-sm">
+              Pourquoi ? {majorChallengeContent.exercise?.why}
+            </p>
+          </div>
+        </div>
+
         <div className="space-y-8">
           {results.missingNumbers && results.missingNumbers.length > 0 ? (
             results.missingNumbers.map(n => {

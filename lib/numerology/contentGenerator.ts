@@ -1,6 +1,7 @@
 
 import { NumerologyResult } from '@/lib/types';
 import { INCLUSION_INTERPRETATIONS } from './interpretations-inclusion';
+import { CHALLENGE_EXERCISES } from './challengeExercises';
 import { 
   LIFE_PATH_DEFINITIONS, 
   EXPRESSION_DEFINITIONS, 
@@ -410,5 +411,28 @@ export const getBalancedNumberContent = (num: number) => {
     desc: `Vous maîtrisez bien l'énergie du ${num}. Elle circule de manière fluide en vous.`,
     meaning: `Cela signifie que vous savez faire preuve de ${arch.keywords[0].toLowerCase()} et de ${arch.keywords[1].toLowerCase()} au bon moment, sans excès ni manque.`,
     benefit: `C'est une zone de stabilité dans votre vie. Vous pouvez vous appuyer sur cette qualité : "${arch.desc}"`
+  };
+};
+
+export const getChallengeContent = (num: number, type: 'minor' | 'major' = 'minor') => {
+  const texts: Record<number, string> = {
+    0: "Le Défi du Choix (0). Ce défi rare vous demande d'apprendre à faire des choix par vous-même, sans être influencé par les autres. C'est le défi de la souveraineté intérieure. Vous avez toutes les cartes en main, mais vous devez oser jouer votre propre jeu.",
+    1: "Le Défi de l'Affirmation (1). Vous devez apprendre à vous affirmer, à oser dire 'je' et à prendre des initiatives sans attendre l'approbation des autres. C'est le défi de l'indépendance. Attention à ne pas tomber dans l'agressivité par peur de ne pas être entendu.",
+    2: "Le Défi de l'Association (2). Vous devez apprendre la patience, la diplomatie et la collaboration. Le défi est de trouver votre place dans la relation sans vous oublier ni vous soumettre. Attention à la susceptibilité et à la dépendance affective.",
+    3: "Le Défi de l'Expression (3). Vous devez apprendre à exprimer vos émotions et votre créativité sans dispersion. La peur du jugement ou le besoin de paraître peuvent vous bloquer. Osez dire votre vérité, même si elle déplaît.",
+    4: "Le Défi de la Construction (4). Vous devez apprendre la rigueur, la méthode et le travail régulier. La paresse, la désorganisation ou au contraire la rigidité excessive sont les pièges à éviter. Construisez des bases solides.",
+    5: "Le Défi de la Liberté (5). Vous devez apprendre à gérer le changement et l'instabilité. La peur de l'inconnu ou au contraire l'impulsivité excessive sont vos freins. Apprenez à être libre à l'intérieur d'un cadre.",
+    6: "Le Défi de la Responsabilité (6). Vous devez apprendre à accepter les responsabilités familiales ou affectives sans vous sentir esclave. Le perfectionnisme et l'idéalisme peuvent vous rendre exigeant. Acceptez les autres tels qu'ils sont.",
+    7: "Le Défi de la Foi (7). Vous devez apprendre à vous ouvrir à la spiritualité ou à la vie intérieure. Le scepticisme, le cynisme ou l'isolement mental sont vos pièges. Faites confiance à ce que vous ne voyez pas.",
+    8: "Le Défi du Pouvoir (8). Vous devez apprendre à gérer l'argent et le pouvoir avec justesse. La peur du manque ou l'avidité peuvent vous déséquilibrer. Trouvez votre puissance intérieure sans écraser les autres.",
+    9: "Le Défi de l'Altruisme (9). Vous devez apprendre le détachement et la compassion universelle. Les vieux schémas émotionnels ou le refus de pardonner peuvent vous retenir. Ouvrez-vous au monde sans attente."
+  };
+
+  const exercise = CHALLENGE_EXERCISES[num] || CHALLENGE_EXERCISES[0];
+
+  return {
+    title: `Défi ${type === 'major' ? 'Majeur' : 'Mineur'} : ${num}`,
+    desc: texts[num] || "Un défi particulier à relever.",
+    exercise: type === 'major' ? exercise : null // Only include exercise for major challenge
   };
 };

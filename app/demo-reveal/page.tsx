@@ -166,7 +166,7 @@ export default function DemoRevealPage() {
                         <span className="text-[#C9A24D] text-[10px]">💬</span>
                       </div>
                       <div>
-                        <strong className="text-xs text-white block">Coach Vocal IA (Illimité)</strong>
+                        <strong className="text-xs text-white block">Coach Vocal IA (30 min)</strong>
                         <span className="text-[10px] text-white/50 block leading-tight">Comprends tes échecs passés.</span>
                       </div>
                     </li>

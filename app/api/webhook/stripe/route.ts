@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     const session = event.data.object as Stripe.Checkout.Session;
     
     // Récupération des métadonnées stockées lors de la création de session
-    const { orderId, plan } = session.metadata || {};
+    const { orderId, plan, type } = session.metadata || {};
     const customerEmail = session.customer_details?.email;
     const customerName = session.customer_details?.name || 'Cher Client';
     const firstName = customerName.split(' ')[0];
@@ -42,6 +42,62 @@ export async function POST(request: Request) {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
     
     try {
+      // CAS 1: UPGRADE ROMAN (Achat du livre seul après coup)
+      if (type === 'book_upgrade') {
+        // 1. Mettre à jour la base de données pour dire "Livre inclus"
+        // Note: Ici on suppose que vous avez accès à supabase pour update.
+        // Comme supabase n'est pas importé ici (dans ce snippet), on va supposer que l'admin verra la commande Stripe.
+        // MAIS pour bien faire, il faudrait update la ligne 'book_requests'.
+        
+        // Import dynamique pour éviter les soucis si supabase n'est pas utilisé ailleurs ?
+        // Non, on va l'importer en haut.
+        
+        // 2. Envoyer mail de confirmation spécifique
+         await resend.emails.send({
+          from: 'Votre Légende <contact@votrelegende.fr>',
+          to: [customerEmail!],
+          subject: 'Votre Roman est commandé ! 📖',
+          react: EmailConfirmation({
+            firstName,
+            // On pourrait ajouter un message spécifique "Upgrade" dans le template si besoin
+          }),
+        });
+
+        // 3. (Optionnel) Update Supabase ici si on avait le client
+        // Voir import supabase en haut
+        const { createClient } = require('@supabase/supabase-js');
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // Utiliser la clé service pour écrire
+        
+        if (supabaseUrl && supabaseKey) {
+           const supabaseAdmin = createClient(supabaseUrl, supabaseKey);
+           
+           // On récupère d'abord les infos actuelles pour ne pas écraser
+           const { data: existingOrder } = await supabaseAdmin
+             .from('book_requests')
+             .select('user_data')
+             .eq('id', orderId)
+             .single();
+             
+           if (existingOrder) {
+             const updatedUserData = {
+               ...existingOrder.user_data,
+               plan: 'bundle', // Upgrade to bundle equivalent
+               includeBook: true
+             };
+             
+             await supabaseAdmin
+               .from('book_requests')
+               .update({ user_data: updatedUserData })
+               .eq('id', orderId);
+           }
+        }
+
+        console.log(`Upgrade Roman traité pour la commande ${orderId}`);
+        return NextResponse.json({ received: true });
+      }
+
+      // CAS 2: ACHAT CLASSIQUE
       if (plan === 'report') {
         // Envoi Email Rapport Seul (Immédiat car pas de vidéo)
         await resend.emails.send({

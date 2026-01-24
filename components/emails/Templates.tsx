@@ -133,7 +133,7 @@ export const EmailDeliverables = ({
 
 interface EmailUpsellBookProps {
   firstName: string;
-  upgradeLink: string;
+  upgradeLink: string; // Ce lien contiendra l'ID de la commande: https://votrelegende.fr/upgrade-book?orderId=...
 }
 
 export const EmailUpsellBook = ({

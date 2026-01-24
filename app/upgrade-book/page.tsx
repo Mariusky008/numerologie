@@ -9,6 +9,7 @@ export default function UpgradeBookPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const orderId = searchParams.get('orderId');
+  const isDemo = searchParams.get('demo') === 'true';
   
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<any>(null);
@@ -16,6 +17,12 @@ export default function UpgradeBookPage() {
   const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
+    if (isDemo) {
+      setUserData({ firstName: "Jean-Philippe", delivery: { email: "demo@example.com" } });
+      setLoading(false);
+      return;
+    }
+
     if (!orderId) {
       setError("Lien invalide. Veuillez utiliser le lien reçu par email.");
       setLoading(false);
@@ -39,9 +46,13 @@ export default function UpgradeBookPage() {
     };
 
     fetchOrder();
-  }, [orderId]);
+  }, [orderId, isDemo]);
 
   const handleUpgrade = async () => {
+    if (isDemo) {
+      alert("Mode démo : Redirection vers Stripe simulée.");
+      return;
+    }
     setProcessing(true);
     try {
       const res = await fetch('/api/checkout/upgrade', {

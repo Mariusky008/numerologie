@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { BookOpen, Star, CheckCircle, ShieldCheck, Sparkles, Lock } from 'lucide-react';
 import Image from 'next/image';
 
-export default function UpgradeBookPage() {
+function UpgradeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const orderId = searchParams.get('orderId');
@@ -214,5 +214,17 @@ export default function UpgradeBookPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function UpgradeBookPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#FAF9F7] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C9A24D]"></div>
+      </div>
+    }>
+      <UpgradeContent />
+    </Suspense>
   );
 }

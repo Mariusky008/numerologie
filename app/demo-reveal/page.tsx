@@ -132,39 +132,64 @@ export default function DemoRevealPage() {
               </>
             ) : (
               // ÉCRAN DE FIN (PAYWALL)
-              <div className="absolute inset-0 bg-[#1a1c2e]/90 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-500">
-                <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-4 border border-white/20">
-                  <Lock className="w-8 h-8 text-[#C9A24D]" />
+              <div className="absolute inset-0 bg-[#1a1c2e]/95 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-500 z-50">
+                
+                {/* Icône Cadenas */}
+                <div className="w-12 h-12 bg-[#C9A24D]/10 rounded-full flex items-center justify-center mb-4 border border-[#C9A24D]/20 shadow-[0_0_15px_rgba(201,162,77,0.2)]">
+                  <Lock className="w-6 h-6 text-[#C9A24D]" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Vidéo Interrompue</h3>
-                <p className="text-sm text-white/60 mb-6">
-                  Ton avatar a découvert un blocage important lié à ton ombre : <strong className="text-white">{archetype.shadow}</strong>.
+
+                <h3 className="text-xl font-serif font-bold mb-2 text-white">Vidéo Interrompue</h3>
+                <p className="text-sm text-white/60 mb-6 max-w-xs mx-auto leading-relaxed">
+                  Ton avatar a découvert un blocage important lié à ton ombre : <strong className="text-white border-b border-[#C9A24D]/50 pb-0.5">{archetype.shadow}</strong>.
                 </p>
                 
-                <div className="bg-white/5 p-4 rounded-xl text-left mb-6 border border-white/5">
-                  <p className="text-xs font-bold text-[#C9A24D] uppercase mb-2">Ce que tu débloques (29€) :</p>
-                  <ul className="space-y-2 text-xs text-white/80">
-                    <li className="flex gap-2">
-                      <span className="text-[#C9A24D]">▶</span>
-                      <strong>Vidéo Révélation (5 min) :</strong> L'analyse de tes traits profonds.
+                {/* Offre Packagée - Design Amélioré */}
+                <div className="bg-white/5 p-5 rounded-2xl text-left mb-6 border border-white/10 w-full max-w-xs shadow-inner">
+                  <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
+                    <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider">Pack Révélation</span>
+                    <span className="text-sm font-bold text-white">29€</span>
+                  </div>
+                  
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5">
+                        <span className="text-[#C9A24D] text-[10px]">▶</span>
+                      </div>
+                      <div>
+                        <strong className="text-xs text-white block">Vidéo Révélation (5 min)</strong>
+                        <span className="text-[10px] text-white/50 block leading-tight">L'analyse de tes traits profonds.</span>
+                      </div>
                     </li>
-                    <li className="flex gap-2">
-                      <span className="text-[#C9A24D]">💬</span>
-                      <strong>Coach Vocal IA (30 min) :</strong> Pose tes questions pour comprendre tes échecs passés.
+                    <li className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5">
+                        <span className="text-[#C9A24D] text-[10px]">💬</span>
+                      </div>
+                      <div>
+                        <strong className="text-xs text-white block">Coach Vocal IA (Illimité)</strong>
+                        <span className="text-[10px] text-white/50 block leading-tight">Comprends tes échecs passés.</span>
+                      </div>
                     </li>
-                    <li className="flex gap-2">
-                      <span className="text-[#C9A24D]">📄</span>
-                      <strong>Dossier Complet (40 pages) :</strong> Ton plan d'action écrit pour le futur.
+                    <li className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5">
+                        <span className="text-[#C9A24D] text-[10px]">📄</span>
+                      </div>
+                      <div>
+                        <strong className="text-xs text-white block">Dossier Complet (40 pages)</strong>
+                        <span className="text-[10px] text-white/50 block leading-tight">Ton plan d'action écrit.</span>
+                      </div>
                     </li>
                   </ul>
                 </div>
 
-                <button className="w-full py-4 bg-[#C9A24D] text-[#1a1c2e] font-bold rounded-xl shadow-lg hover:bg-white transition-colors flex items-center justify-center gap-2">
-                  Débloquer mon Pack <ArrowRight className="w-4 h-4" />
+                {/* Bouton CTA */}
+                <button className="w-full max-w-xs py-3.5 bg-gradient-to-r from-[#C9A24D] to-[#b08d42] text-[#1a1c2e] font-bold rounded-xl shadow-[0_4px_20px_rgba(201,162,77,0.3)] hover:shadow-[0_4px_25px_rgba(201,162,77,0.5)] hover:scale-[1.02] transition-all flex items-center justify-center gap-2 text-sm">
+                  <Lock className="w-4 h-4" /> Débloquer mon Pack
                 </button>
-                <p className="mt-3 text-[10px] text-white/40">
-                  Accès immédiat • Satisfait ou remboursé
-                </p>
+                
+                <div className="mt-3 flex items-center gap-2 text-[10px] text-white/30">
+                  <ShieldCheck className="w-3 h-3" /> Accès immédiat • Satisfait ou remboursé
+                </div>
               </div>
             )}
           </div>

@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { render } from '@react-email/render';
-import { EmailReport, EmailBundle, EmailConfirmation } from '@/components/emails/Templates';
+import { EmailReport, EmailDeliverables, EmailConfirmation, EmailUpsellBook } from '@/components/emails/Templates';
 
 export default function EmailPreviewPage() {
-  const [activeTab, setActiveTab] = useState<'report' | 'bundle' | 'confirmation'>('confirmation');
+  const [activeTab, setActiveTab] = useState<'confirmation' | 'deliverables' | 'deliverables_book' | 'upsell'>('confirmation');
   const [isPaper, setIsPaper] = useState(false);
   const [htmlContent, setHtmlContent] = useState('');
 
@@ -13,29 +13,40 @@ export default function EmailPreviewPage() {
     let component;
     
     switch (activeTab) {
-      case 'report':
-        component = (
-          <EmailReport 
-            firstName="Jean-Philippe"
-            downloadLink="https://votrelegende.fr/download/demo"
-            isPaper={isPaper}
-          />
-        );
-        break;
-      case 'bundle':
-        component = (
-          <EmailBundle 
-            firstName="Jean-Philippe"
-            writeLink="https://votrelegende.fr/book-setup/demo"
-            downloadLink="https://votrelegende.fr/download/demo"
-            isPaper={isPaper}
-          />
-        );
-        break;
       case 'confirmation':
         component = (
           <EmailConfirmation 
             firstName="Jean-Philippe"
+          />
+        );
+        break;
+      case 'deliverables':
+        component = (
+          <EmailDeliverables 
+            firstName="Jean-Philippe"
+            videoLink="https://votrelegende.fr/video/demo"
+            reportLink="https://votrelegende.fr/download/demo"
+            coachLink="https://votrelegende.fr/coach/demo"
+            // Pas de bookLink ici
+          />
+        );
+        break;
+      case 'deliverables_book':
+        component = (
+          <EmailDeliverables 
+            firstName="Jean-Philippe"
+            videoLink="https://votrelegende.fr/video/demo"
+            reportLink="https://votrelegende.fr/download/demo"
+            coachLink="https://votrelegende.fr/coach/demo"
+            bookLink="https://votrelegende.fr/book/demo"
+          />
+        );
+        break;
+      case 'upsell':
+        component = (
+          <EmailUpsellBook 
+            firstName="Jean-Philippe"
+            upgradeLink="https://votrelegende.fr/upgrade-book"
           />
         );
         break;
@@ -59,7 +70,7 @@ export default function EmailPreviewPage() {
         {/* Contrôles */}
         <div className="bg-white p-6 rounded-xl shadow-sm mb-6 flex flex-wrap gap-6 items-center border border-gray-200">
           
-          <div className="flex gap-2 p-1 bg-gray-100 rounded-lg">
+          <div className="flex gap-2 p-1 bg-gray-100 rounded-lg flex-wrap">
             <button 
               onClick={() => setActiveTab('confirmation')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'confirmation' ? 'bg-white shadow text-green-600' : 'text-gray-500 hover:text-gray-700'}`}
@@ -67,16 +78,22 @@ export default function EmailPreviewPage() {
               1. Confirmation (Immédiat)
             </button>
             <button 
-              onClick={() => setActiveTab('report')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'report' ? 'bg-white shadow text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+              onClick={() => setActiveTab('deliverables')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'deliverables' ? 'bg-white shadow text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
             >
-              2. Rapport Seul
+              2. Livraison (Standard)
             </button>
             <button 
-              onClick={() => setActiveTab('bundle')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'bundle' ? 'bg-white shadow text-purple-600' : 'text-gray-500 hover:text-gray-700'}`}
+              onClick={() => setActiveTab('deliverables_book')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'deliverables_book' ? 'bg-white shadow text-purple-600' : 'text-gray-500 hover:text-gray-700'}`}
             >
-              3. Pack Complet (Livraison)
+              2b. Livraison (+ Roman)
+            </button>
+            <button 
+              onClick={() => setActiveTab('upsell')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'upsell' ? 'bg-white shadow text-amber-600' : 'text-gray-500 hover:text-gray-700'}`}
+            >
+              3. Upsell Roman
             </button>
           </div>
 

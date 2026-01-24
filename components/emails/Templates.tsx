@@ -56,6 +56,7 @@ interface EmailDeliverablesProps {
   videoLink: string;
   reportLink: string;
   coachLink: string;
+  bookLink?: string; // New optional prop for the Book PDF
 }
 
 export const EmailDeliverables = ({
@@ -63,6 +64,7 @@ export const EmailDeliverables = ({
   videoLink,
   reportLink,
   coachLink,
+  bookLink,
 }: EmailDeliverablesProps) => (
   <Html>
     <Head />
@@ -108,7 +110,72 @@ export const EmailDeliverables = ({
           </Button>
         </Section>
 
+        {/* 4. BOOK (Optional) */}
+        {bookLink && (
+          <Section style={highlightBox}>
+            <Heading as="h3" style={h3}>4. Votre Roman de Vie</Heading>
+            <Text style={text}>
+              Vous avez choisi l'option Roman. Voici votre biographie romancée unique.
+            </Text>
+            <Button style={button} href={bookLink}>
+              📖 Lire mon Roman (PDF)
+            </Button>
+          </Section>
+        )}
+
         <Text style={footer}>
+          L'équipe Votre Légende.
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+);
+
+interface EmailUpsellBookProps {
+  firstName: string;
+  upgradeLink: string;
+}
+
+export const EmailUpsellBook = ({
+  firstName,
+  upgradeLink,
+}: EmailUpsellBookProps) => (
+  <Html>
+    <Head />
+    <Preview>Une dernière chose pour compléter votre légende...</Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Heading style={h1}>Merci pour votre confiance 🙏</Heading>
+        <Text style={text}>Bonjour {firstName},</Text>
+        <Text style={text}>
+          J'espère que vous avez apprécié la découverte de votre vidéo et de votre rapport numérologique.
+        </Text>
+        <Text style={text}>
+          Beaucoup de nos membres nous demandent s'il est possible d'aller plus loin et de transformer ces données brutes en une véritable histoire.
+        </Text>
+        
+        <Section style={box}>
+          <Heading as="h3" style={h3}>📖 Et si votre vie était un roman ?</Heading>
+          <Text style={text}>
+            Nous pouvons générer pour vous "Le Roman de Votre Vie".
+          </Text>
+          <Text style={text}>
+            Une biographie romancée de 100 pages, entièrement basée sur votre numérologie, où vous êtes le héros.
+          </Text>
+          <ul style={{ paddingLeft: '20px', margin: '10px 0', color: '#57534e' }}>
+            <li>Un récit initiatique captivant</li>
+            <li>Vos défis transformés en quêtes épiques</li>
+            <li>Une lecture thérapeutique et inspirante</li>
+          </ul>
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <Button style={button} href={upgradeLink}>
+              Découvrir le Roman de Vie
+            </Button>
+          </div>
+        </Section>
+
+        <Text style={footer}>
+          Cette offre est réservée aux membres ayant déjà réalisé leur thème.<br/>
           L'équipe Votre Légende.
         </Text>
       </Container>

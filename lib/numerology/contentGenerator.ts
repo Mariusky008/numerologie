@@ -229,7 +229,7 @@ export const getLifePathContent = (num: number) => {
     desc: plan.desc,
     keywords: plan.keywords,
     // OVERRIDE extendedDesc to avoid duplication
-    extendedDesc: `${plan.desc}\n\nEn tant que Chemin de Vie, cette énergie définit votre trajectoire globale. ${arch.extendedDesc.split('\n')[0]}`,
+    extendedDesc: `En tant que Chemin de Vie, cette énergie définit votre trajectoire globale. ${arch.extendedDesc.split('\n')[0]}`,
     
     // Unique content for Part4Focus based on Plan Matrix
     love: `Votre Tendance Amoureuse : ${plan.desc} En couple, votre parcours vous demandera d'intégrer l'énergie de ${plan.keywords[0]} et de ${plan.keywords[1]}.`,
@@ -267,7 +267,7 @@ export const getExpressionContent = (num: number) => {
     desc: plan.desc,
     keywords: plan.keywords,
     // OVERRIDE extendedDesc to avoid duplication with Life Path or Soul Urge
-    extendedDesc: `${plan.desc}\n\nDans le monde social et professionnel, vous agissez principalement par ${plan.keywords[0]} et ${plan.keywords[1]}. C'est votre "costume" public et votre méthode d'action privilégiée.`,
+    extendedDesc: `Dans le monde social et professionnel, vous agissez principalement par ${plan.keywords[0]} et ${plan.keywords[1]}. C'est votre "costume" public et votre méthode d'action privilégiée.`,
 
     // Unique content for Part4Focus based on Plan Matrix
     love: `Votre Mode d'Action en Amour : ${plan.desc} Vous séduisez et interagissez par ${plan.keywords[0]} et ${plan.keywords[1]}.`,
@@ -307,7 +307,7 @@ export const getPersonalityContent = (num: number) => {
     desc: plan.desc,
     keywords: plan.keywords,
     // OVERRIDE extendedDesc
-    extendedDesc: `${plan.desc}\n\nCette image correspond à votre manière spontanée d'entrer en relation avec le monde, avant même toute interaction approfondie.`,
+    extendedDesc: `Cette image correspond à votre manière spontanée d'entrer en relation avec le monde, avant même toute interaction approfondie.`,
 
     // Unique content for Part4Focus based on Plan Matrix
     love: `Votre Image en Amour : ${plan.desc} Vous séduisez par une apparence de ${plan.keywords[0]} et ${plan.keywords[1]}.`,

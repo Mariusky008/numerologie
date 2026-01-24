@@ -62,6 +62,46 @@ Un système complet a été mis en place pour permettre aux clients d'acheter le
 
 ---
 
+## 4. Expérience "Révélation" (Teasing & Conversion)
+
+Une nouvelle page de démo (`/demo-reveal`) a été créée pour maximiser la conversion après la saisie des informations de naissance.
+
+### Concept "Gamifié"
+Au lieu d'un simple tableau de résultats, le client vit une expérience progressive :
+1.  **L'Archétype :** Une carte "Révélée" qui flatte son ego (ex: "Le Sage", "Le Pionnier") avec une description valorisante.
+2.  **Le Paywall Vidéo :** Une vidéo d'introduction de l'Avatar se lance automatiquement (chargement instantané) mais se coupe au bout de 8 secondes avec un message de suspense ("J'ai découvert un blocage...").
+3.  **Les Cartes Verrouillées :** Deux autres cartes ("Ton Blocage Inconscient", "Ta Destinée 2026") sont floutées pour créer le désir.
+4.  **Diagnostic Vital :** Une liste de 3 points de douleur ("Tu te sens incompris ?") générés dynamiquement pour que le client se sente "vu".
+
+### Promesse Tenue (PDF)
+Pour justifier la promesse "Mode d'emploi précis", le rapport PDF inclut désormais un encart **"💡 Votre Exercice de Déblocage"**.
+*   Il propose une action concrète et unique basée sur le Défi Majeur du client (ex: "Dites NON sans vous justifier").
+
+---
+
+## 5. Module "Expert Booking" (High Ticket)
+
+Un système d'Upsell Premium a été ajouté pour vendre des consultations humaines (49€ ou 149€) en plus de l'IA.
+
+### Page de Vente (`/expert-booking`)
+*   Présente l'experte (Marie D.) et rassure sur la complémentarité IA + Humain.
+*   Propose deux offres claires : "Flash" (15 min) et "Profond" (45 min).
+*   Inclut une garantie "Satisfait ou Remboursé".
+
+### Points d'Entrée Stratégiques
+L'accès à cette page est proposé à 3 moments clés du parcours client :
+1.  **Chat Coach :** Un bouton "Parler à un Expert Humain" est présent dans l'interface de discussion.
+2.  **Email de Livraison :** Un P.S. en bas du mail invite à réserver si la situation est complexe.
+3.  **Rapport PDF :** La dernière page contient un encart "Besoin d'aller plus loin ?".
+
+### Flux Technique (À activer)
+Actuellement, les boutons sont en place. Pour activer les paiements :
+1.  Créer des **Payment Links** sur Stripe pour les offres à 49€ et 149€.
+2.  Configurer **Calendly** pour la prise de RDV.
+3.  Connecter Stripe à Calendly (redirection après paiement) pour automatiser tout le processus.
+
+---
+
 ## Résumé des URLs Clés
 
 | Page | URL | Usage |
@@ -69,4 +109,7 @@ Un système complet a été mis en place pour permettre aux clients d'acheter le
 | **Admin** | `/admin` | Gestion des commandes et liens |
 | **Preview Emails** | `/email-preview` | Vérification du design des mails |
 | **Page Upsell** | `/upgrade-book?orderId=...` | Page de vente du livre (nécessite un ID) |
+| **Page Booking** | `/expert-booking` | Page de réservation consultation expert |
+| **Démo Reveal** | `/demo-reveal` | Nouvelle page de résultat "Teasing" |
 | **Rapport PDF** | `/pdf-report-v2?order_id=...` | Consultation du rapport client |
+| **Preview Hub** | `/preview-hub` | **NOUVEAU** : Centre de contrôle pour tout voir |

@@ -49,277 +49,300 @@ export default function DemoRevealPage() {
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
       </div>
 
-      <div className="relative z-10 max-w-md mx-auto px-6 py-8 flex flex-col min-h-screen">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-8 flex flex-col min-h-screen">
         
         {/* HEADER SIMPLE */}
-        <header className="flex justify-between items-center mb-8">
+        <header className="flex justify-between items-center mb-8 md:mb-12">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-[#C9A24D]" />
-            <span className="font-serif font-bold tracking-wide">Votre Légende</span>
+            <span className="font-serif font-bold tracking-wide text-lg">Votre Légende</span>
           </div>
-          <div className="px-3 py-1 bg-white/10 rounded-full text-xs font-bold border border-white/10">
+          <div className="px-4 py-1.5 bg-white/10 rounded-full text-xs font-bold border border-white/10 tracking-wide uppercase">
             Analyse Terminée
           </div>
         </header>
 
-        {/* 1. TITRE CHOC (DIAGNOSTIC VITAL) */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-10"
-        >
-          <h1 className="text-2xl md:text-3xl font-serif font-bold mb-4 leading-tight">
-            {firstName}, tu es né pour être un <span className="text-[#C9A24D]">{archetype.title}</span>, mais quelque chose te freine.
-          </h1>
-          <p className="text-white/60 text-sm font-light leading-relaxed px-4 mb-6">
-            {archetype.description}
-          </p>
-          <div className="flex justify-center gap-2 mb-8">
-             <span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white/70 border border-white/10">Chemin de Vie {lifePath}</span>
-             <span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white/70 border border-white/10">Âme {lifePath === 7 ? '9' : '1'}</span>
-          </div>
-        </motion.div>
+        {/* LAYOUT DESKTOP : GRILLE 2 COLONNES */}
+        <div className="grid md:grid-cols-12 gap-8 md:gap-16 items-start">
+          
+          {/* COLONNE GAUCHE (Vidéo & Archétype) - Sticky sur Desktop */}
+          <div className="md:col-span-5 md:sticky md:top-8">
+            
+            {/* 1. TITRE CHOC (DIAGNOSTIC VITAL) - Visible mobile, caché desktop (déplacé) */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center mb-8 md:text-left md:mb-6"
+            >
+              <h1 className="text-2xl md:text-4xl font-serif font-bold mb-4 leading-tight">
+                {firstName}, tu es né pour être un <span className="text-[#C9A24D]">{archetype.title}</span>.
+              </h1>
+              <p className="text-white/60 text-sm md:text-base font-light leading-relaxed mb-6">
+                {archetype.description}
+              </p>
+              <div className="flex justify-center md:justify-start gap-2 mb-8">
+                 <span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white/70 border border-white/10">Chemin de Vie {lifePath}</span>
+                 <span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white/70 border border-white/10">Âme {lifePath === 7 ? '9' : '1'}</span>
+              </div>
+            </motion.div>
 
-        {/* 2. LE TEASER VIDÉO (LE CLIFFHANGER) */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3 }}
-          className="bg-black/40 rounded-2xl border border-white/10 overflow-hidden shadow-2xl mb-12 relative group"
-        >
-          {/* Header Vidéo */}
-          <div className="px-4 py-3 bg-white/5 border-b border-white/5 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-xs font-medium text-white/70">
-              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-              Message de votre Avatar
-            </div>
-            <div className="text-xs text-white/40">00:08 / 05:00</div>
-          </div>
+            {/* 2. LE TEASER VIDÉO */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+              className="bg-black/40 rounded-2xl border border-white/10 overflow-hidden shadow-2xl mb-8 relative group max-w-sm mx-auto md:mx-0 md:max-w-full"
+            >
+              {/* Header Vidéo */}
+              <div className="px-4 py-3 bg-white/5 border-b border-white/5 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs font-medium text-white/70">
+                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                  Message de votre Avatar
+                </div>
+                <div className="text-xs text-white/40">00:08 / 05:00</div>
+              </div>
 
-          {/* Player Vidéo */}
-          <div className="relative aspect-[9/16] bg-black">
-            {!videoEnded ? (
-              <>
-                <video 
-                  src="/Ton Parcours de Vie.mp4" 
-                  className={`w-full h-full object-cover transition-opacity duration-500 ${isPlaying ? 'opacity-100' : 'opacity-60'}`}
-                  playsInline
-                />
-                
-                {!isPlaying && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[2px]">
-                    <button 
-                      onClick={handlePlay}
-                      className="w-16 h-16 bg-[#C9A24D] rounded-full flex items-center justify-center text-[#1a1c2e] shadow-[0_0_30px_rgba(201,162,77,0.4)] hover:scale-110 transition-transform animate-pulse"
-                    >
-                      <Play className="w-6 h-6 fill-current ml-1" />
+              {/* Player Vidéo */}
+              <div className="relative aspect-[9/16] bg-black">
+                {!videoEnded ? (
+                  <>
+                    <video 
+                      src="/Ton Parcours de Vie.mp4" 
+                      className={`w-full h-full object-cover transition-opacity duration-500 ${isPlaying ? 'opacity-100' : 'opacity-60'}`}
+                      playsInline
+                    />
+                    
+                    {!isPlaying && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-[2px]">
+                        <button 
+                          onClick={handlePlay}
+                          className="w-16 h-16 bg-[#C9A24D] rounded-full flex items-center justify-center text-[#1a1c2e] shadow-[0_0_30px_rgba(201,162,77,0.4)] hover:scale-110 transition-transform animate-pulse"
+                        >
+                          <Play className="w-6 h-6 fill-current ml-1" />
+                        </button>
+                        <div className="absolute bottom-8 text-xs font-bold uppercase tracking-widest text-white/80">
+                          Cliquez pour écouter
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Barre de progression Fake */}
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10">
+                       <motion.div 
+                         className="h-full bg-[#C9A24D]" 
+                         initial={{ width: "0%" }}
+                         animate={{ width: isPlaying ? "100%" : "0%" }}
+                         transition={{ duration: 8, ease: "linear" }}
+                       />
+                    </div>
+                  </>
+                ) : (
+                  // ÉCRAN DE FIN (PAYWALL)
+                  <div className="absolute inset-0 bg-[#1a1c2e]/95 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-500 z-50">
+                    
+                    {/* Icône Cadenas */}
+                    <div className="w-12 h-12 bg-[#C9A24D]/10 rounded-full flex items-center justify-center mb-4 border border-[#C9A24D]/20 shadow-[0_0_15px_rgba(201,162,77,0.2)]">
+                      <Lock className="w-6 h-6 text-[#C9A24D]" />
+                    </div>
+
+                    <h3 className="text-xl font-serif font-bold mb-2 text-white">Vidéo Interrompue</h3>
+                    <p className="text-sm text-white/60 mb-6 max-w-xs mx-auto leading-relaxed">
+                      Ton avatar a découvert un blocage important lié à ton ombre : <strong className="text-white border-b border-[#C9A24D]/50 pb-0.5">{archetype.shadow}</strong>.
+                    </p>
+                    
+                    {/* Offre Packagée - Design Amélioré */}
+                    <div className="bg-white/5 p-5 rounded-2xl text-left mb-6 border border-white/10 w-full max-w-xs shadow-inner">
+                      <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
+                        <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider">Pack Révélation</span>
+                        <span className="text-sm font-bold text-white">29€</span>
+                      </div>
+                      
+                      <ul className="space-y-3">
+                        <li className="flex items-start gap-3">
+                          <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5">
+                            <span className="text-[#C9A24D] text-[10px]">▶</span>
+                          </div>
+                          <div>
+                            <strong className="text-xs text-white block">Vidéo Révélation (5 min)</strong>
+                            <span className="text-[10px] text-white/50 block leading-tight">L'analyse de tes traits profonds.</span>
+                          </div>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5">
+                            <span className="text-[#C9A24D] text-[10px]">💬</span>
+                          </div>
+                          <div>
+                            <strong className="text-xs text-white block">Coach Vocal IA (30 min)</strong>
+                            <span className="text-[10px] text-white/50 block leading-tight">Comprends tes échecs passés.</span>
+                          </div>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5">
+                            <span className="text-[#C9A24D] text-[10px]">📄</span>
+                          </div>
+                          <div>
+                            <strong className="text-xs text-white block">Dossier Complet (40 pages)</strong>
+                            <span className="text-[10px] text-white/50 block leading-tight">Ton plan d'action écrit.</span>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* Bouton CTA */}
+                    <button className="w-full max-w-xs py-3.5 bg-gradient-to-r from-[#C9A24D] to-[#b08d42] text-[#1a1c2e] font-bold rounded-xl shadow-[0_4px_20px_rgba(201,162,77,0.3)] hover:shadow-[0_4px_25px_rgba(201,162,77,0.5)] hover:scale-[1.02] transition-all flex items-center justify-center gap-2 text-sm">
+                      <Lock className="w-4 h-4" /> Débloquer mon Pack
                     </button>
-                    <div className="absolute bottom-8 text-xs font-bold uppercase tracking-widest text-white/80">
-                      Cliquez pour écouter
+                    
+                    <div className="mt-3 flex items-center gap-2 text-[10px] text-white/30">
+                      <ShieldCheck className="w-3 h-3" /> Accès immédiat • Satisfait ou remboursé
                     </div>
                   </div>
                 )}
-
-                {/* Barre de progression Fake */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10">
-                   <motion.div 
-                     className="h-full bg-[#C9A24D]" 
-                     initial={{ width: "0%" }}
-                     animate={{ width: isPlaying ? "100%" : "0%" }}
-                     transition={{ duration: 8, ease: "linear" }}
-                   />
-                </div>
-              </>
-            ) : (
-              // ÉCRAN DE FIN (PAYWALL)
-              <div className="absolute inset-0 bg-[#1a1c2e]/95 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-500 z-50">
-                
-                {/* Icône Cadenas */}
-                <div className="w-12 h-12 bg-[#C9A24D]/10 rounded-full flex items-center justify-center mb-4 border border-[#C9A24D]/20 shadow-[0_0_15px_rgba(201,162,77,0.2)]">
-                  <Lock className="w-6 h-6 text-[#C9A24D]" />
-                </div>
-
-                <h3 className="text-xl font-serif font-bold mb-2 text-white">Vidéo Interrompue</h3>
-                <p className="text-sm text-white/60 mb-6 max-w-xs mx-auto leading-relaxed">
-                  Ton avatar a découvert un blocage important lié à ton ombre : <strong className="text-white border-b border-[#C9A24D]/50 pb-0.5">{archetype.shadow}</strong>.
-                </p>
-                
-                {/* Offre Packagée - Design Amélioré */}
-                <div className="bg-white/5 p-5 rounded-2xl text-left mb-6 border border-white/10 w-full max-w-xs shadow-inner">
-                  <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
-                    <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider">Pack Révélation</span>
-                    <span className="text-sm font-bold text-white">29€</span>
-                  </div>
-                  
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5">
-                        <span className="text-[#C9A24D] text-[10px]">▶</span>
-                      </div>
-                      <div>
-                        <strong className="text-xs text-white block">Vidéo Révélation (5 min)</strong>
-                        <span className="text-[10px] text-white/50 block leading-tight">L'analyse de tes traits profonds.</span>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5">
-                        <span className="text-[#C9A24D] text-[10px]">💬</span>
-                      </div>
-                      <div>
-                        <strong className="text-xs text-white block">Coach Vocal IA (30 min)</strong>
-                        <span className="text-[10px] text-white/50 block leading-tight">Comprends tes échecs passés.</span>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5">
-                        <span className="text-[#C9A24D] text-[10px]">📄</span>
-                      </div>
-                      <div>
-                        <strong className="text-xs text-white block">Dossier Complet (40 pages)</strong>
-                        <span className="text-[10px] text-white/50 block leading-tight">Ton plan d'action écrit.</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* Bouton CTA */}
-                <button className="w-full max-w-xs py-3.5 bg-gradient-to-r from-[#C9A24D] to-[#b08d42] text-[#1a1c2e] font-bold rounded-xl shadow-[0_4px_20px_rgba(201,162,77,0.3)] hover:shadow-[0_4px_25px_rgba(201,162,77,0.5)] hover:scale-[1.02] transition-all flex items-center justify-center gap-2 text-sm">
-                  <Lock className="w-4 h-4" /> Débloquer mon Pack
-                </button>
-                
-                <div className="mt-3 flex items-center gap-2 text-[10px] text-white/30">
-                  <ShieldCheck className="w-3 h-3" /> Accès immédiat • Satisfait ou remboursé
-                </div>
               </div>
-            )}
+            </motion.div>
           </div>
-        </motion.div>
 
-        {/* 3. LES 3 CARTES (GAMIFICATION) */}
-        <div className="space-y-6 mb-12">
-          <h3 className="text-sm font-bold uppercase tracking-widest text-white/40 text-center mb-2">
-            Les Clés de ton Analyse
-          </h3>
+          {/* COLONNE DROITE (Cartes & Diagnostic) */}
+          <div className="md:col-span-7">
+            
+            {/* 3. LES 3 CARTES (GAMIFICATION) */}
+            <div className="space-y-6 mb-12">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-white/40 text-center md:text-left mb-4">
+                Les Clés de ton Analyse
+              </h3>
 
-          {/* CARTE 1 : RÉVÉLÉE (LE CADEAU) */}
-          <motion.div 
-            initial={{ x: -20, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            className="bg-gradient-to-r from-[#C9A24D]/20 to-[#C9A24D]/5 border border-[#C9A24D]/30 rounded-xl p-5 relative overflow-hidden"
-          >
-             <div className="flex items-start justify-between mb-2">
-               <div className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider flex items-center gap-1">
-                 <Star className="w-3 h-3 fill-current" /> Carte 1 • Révélée
-               </div>
-             </div>
-             <h4 className="text-xl font-serif font-bold text-white mb-1">{archetype.title}</h4>
-             <p className="text-white/60 text-sm italic mb-4">"{archetype.subtitle}"</p>
-             
-             <p className="text-sm text-white/80 leading-relaxed mb-4 border-l-2 border-[#C9A24D] pl-3">
-               Ta nature profonde est celle d'un éclaireur. Tu ne suis pas les chemins tracés, tu crées les tiens. Cette force intérieure est rare, et elle explique pourquoi tu t'es souvent senti différent(e) des autres. C'est ta plus grande richesse.
-             </p>
+              {/* CARTE 1 : RÉVÉLÉE (LE CADEAU) */}
+              <motion.div 
+                initial={{ x: -20, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-r from-[#C9A24D]/20 to-[#C9A24D]/5 border border-[#C9A24D]/30 rounded-xl p-6 md:p-8 relative overflow-hidden"
+              >
+                 <div className="flex items-start justify-between mb-4">
+                   <div className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider flex items-center gap-1">
+                     <Star className="w-3 h-3 fill-current" /> Carte 1 • Révélée
+                   </div>
+                 </div>
+                 <h4 className="text-2xl font-serif font-bold text-white mb-2">{archetype.title}</h4>
+                 <p className="text-white/60 text-sm italic mb-6">"{archetype.subtitle}"</p>
+                 
+                 <p className="text-base text-white/80 leading-relaxed mb-6 border-l-2 border-[#C9A24D] pl-4">
+                   Ta nature profonde est celle d'un éclaireur. Tu ne suis pas les chemins tracés, tu crées les tiens. Cette force intérieure est rare, et elle explique pourquoi tu t'es souvent senti différent(e) des autres. C'est ta plus grande richesse.
+                 </p>
 
-             <div className="flex gap-2 flex-wrap">
-                <span className="px-2 py-1 bg-[#C9A24D]/20 rounded text-[10px] font-bold text-[#C9A24D] border border-[#C9A24D]/20">{archetype.power}</span>
-                <span className="px-2 py-1 bg-[#C9A24D]/20 rounded text-[10px] font-bold text-[#C9A24D] border border-[#C9A24D]/20">Intuitif</span>
-                <span className="px-2 py-1 bg-[#C9A24D]/20 rounded text-[10px] font-bold text-[#C9A24D] border border-[#C9A24D]/20">Visionnaire</span>
-             </div>
-          </motion.div>
+                 <div className="flex gap-2 flex-wrap">
+                    <span className="px-3 py-1 bg-[#C9A24D]/20 rounded text-xs font-bold text-[#C9A24D] border border-[#C9A24D]/20">{archetype.power}</span>
+                    <span className="px-3 py-1 bg-[#C9A24D]/20 rounded text-xs font-bold text-[#C9A24D] border border-[#C9A24D]/20">Intuitif</span>
+                    <span className="px-3 py-1 bg-[#C9A24D]/20 rounded text-xs font-bold text-[#C9A24D] border border-[#C9A24D]/20">Visionnaire</span>
+                 </div>
+              </motion.div>
 
-          {/* CARTE 2 : VERROUILLÉE (LA DOULEUR) */}
-          <motion.div 
-            initial={{ x: 20, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="bg-[#1F2235] border border-white/5 rounded-xl p-5 relative overflow-hidden group"
-          >
-             {/* Flou et Overlay */}
-             <div className="absolute inset-0 backdrop-blur-[2px] bg-black/40 z-10 flex flex-col items-center justify-center text-center p-4">
-                <Lock className="w-6 h-6 text-white/50 mb-2" />
-                <p className="text-xs text-white/60 font-medium">Débloquer pour voir ton blocage</p>
-             </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* CARTE 2 : VERROUILLÉE (LA DOULEUR) */}
+                <motion.div 
+                  initial={{ x: 20, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 }}
+                  className="bg-[#1F2235] border border-white/5 rounded-xl p-6 relative overflow-hidden group"
+                >
+                   {/* Flou et Overlay */}
+                   <div className="absolute inset-0 backdrop-blur-[2px] bg-black/40 z-10 flex flex-col items-center justify-center text-center p-4">
+                      <Lock className="w-6 h-6 text-white/50 mb-2" />
+                      <p className="text-xs text-white/60 font-medium">Débloquer pour voir ton blocage</p>
+                   </div>
 
-             <div className="flex items-start justify-between mb-2 opacity-50 blur-[1px]">
-               <div className="text-xs font-bold text-white/40 uppercase tracking-wider flex items-center gap-1">
-                 <ShieldCheck className="w-3 h-3" /> Carte 2 • Inconscient
-               </div>
-             </div>
-             <h4 className="text-xl font-serif font-bold text-white mb-1 blur-[3px]">Le Saboteur Caché</h4>
-             <p className="text-white/60 text-sm mb-3 blur-[2px]">Il y a une raison pour laquelle tu répètes les mêmes schémas...</p>
-          </motion.div>
+                   <div className="flex items-start justify-between mb-2 opacity-50 blur-[1px]">
+                     <div className="text-xs font-bold text-white/40 uppercase tracking-wider flex items-center gap-1">
+                       <ShieldCheck className="w-3 h-3" /> Carte 2 • Inconscient
+                     </div>
+                   </div>
+                   <h4 className="text-xl font-serif font-bold text-white mb-1 blur-[3px]">Le Saboteur Caché</h4>
+                   <p className="text-white/60 text-sm mb-3 blur-[2px]">Il y a une raison pour laquelle tu répètes les mêmes schémas...</p>
+                </motion.div>
 
-          {/* CARTE 3 : VERROUILLÉE (LA PROMESSE) */}
-          <motion.div 
-            initial={{ x: -20, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="bg-[#1F2235] border border-white/5 rounded-xl p-5 relative overflow-hidden group"
-          >
-             {/* Flou et Overlay */}
-             <div className="absolute inset-0 backdrop-blur-[4px] bg-black/40 z-10 flex flex-col items-center justify-center text-center p-4">
-                <Lock className="w-6 h-6 text-[#C9A24D] mb-2" />
-                <p className="text-xs text-[#C9A24D] font-bold uppercase tracking-widest">Ta Destinée 2026</p>
-             </div>
+                {/* CARTE 3 : VERROUILLÉE (LA PROMESSE) */}
+                <motion.div 
+                  initial={{ x: -20, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  className="bg-[#1F2235] border border-white/5 rounded-xl p-6 relative overflow-hidden group"
+                >
+                   {/* Flou et Overlay */}
+                   <div className="absolute inset-0 backdrop-blur-[4px] bg-black/40 z-10 flex flex-col items-center justify-center text-center p-4">
+                      <Lock className="w-6 h-6 text-[#C9A24D] mb-2" />
+                      <p className="text-xs text-[#C9A24D] font-bold uppercase tracking-widest">Ta Destinée 2026</p>
+                   </div>
 
-             <div className="flex items-start justify-between mb-2 opacity-50 blur-[2px]">
-               <div className="text-xs font-bold text-white/40 uppercase tracking-wider flex items-center gap-1">
-                 <Sparkles className="w-3 h-3" /> Carte 3 • Futur
-               </div>
-             </div>
-             <h4 className="text-xl font-serif font-bold text-white mb-1 blur-[4px]">L'Année de la Récolte</h4>
-             <p className="text-white/60 text-sm mb-3 blur-[3px]">Ce que tu as semé va enfin porter ses fruits, mais attention à...</p>
-          </motion.div>
+                   <div className="flex items-start justify-between mb-2 opacity-50 blur-[2px]">
+                     <div className="text-xs font-bold text-white/40 uppercase tracking-wider flex items-center gap-1">
+                       <Sparkles className="w-3 h-3" /> Carte 3 • Futur
+                     </div>
+                   </div>
+                   <h4 className="text-xl font-serif font-bold text-white mb-1 blur-[4px]">L'Année de la Récolte</h4>
+                   <p className="text-white/60 text-sm mb-3 blur-[3px]">Ce que tu as semé va enfin porter ses fruits, mais attention à...</p>
+                </motion.div>
+              </div>
+            </div>
+
+            {/* 4. LE DIAGNOSTIC VITAL (STYLE DOCTEUR) */}
+            <div className="bg-white/5 rounded-2xl p-8 border border-white/10 mb-8">
+              <h3 className="text-xl font-serif font-bold mb-6 flex items-center gap-2">
+                <span className="text-2xl">🩺</span> Diagnostic de l'Âme
+              </h3>
+              
+              <div className="space-y-4 mb-8">
+                <p className="text-sm font-bold text-white/80 uppercase tracking-wide">Ressens-tu ceci ?</p>
+                <ul className="space-y-4">
+                  <li className="flex gap-4 text-base text-white/70">
+                    <span className="text-red-400 font-bold text-lg">✕</span>
+                    Tu as souvent l'impression d'être incompris par ton entourage, comme si tu parlais une autre langue.
+                  </li>
+                  <li className="flex gap-4 text-base text-white/70">
+                    <span className="text-red-400 font-bold text-lg">✕</span>
+                    Tu as beaucoup d'idées brillantes, mais une force invisible t'empêche de les concrétiser jusqu'au bout.
+                  </li>
+                  <li className="flex gap-4 text-base text-white/70">
+                    <span className="text-red-400 font-bold text-lg">✕</span>
+                    Tu donnes beaucoup aux autres, mais tu finis souvent épuisé et vide.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-[#C9A24D]/10 rounded-xl p-6 border border-[#C9A24D]/20">
+                <p className="text-base text-[#C9A24D] italic text-center leading-relaxed">
+                  "Ce n'est pas de ta faute. C'est écrit dans ton thème (Maison 12). Ton rapport complet contient le mode d'emploi précis pour désactiver ce frein."
+                </p>
+              </div>
+            </div>
+
+          </div>
         </div>
 
-        {/* 4. LE DIAGNOSTIC VITAL (STYLE DOCTEUR) */}
-        <div className="bg-white/5 rounded-2xl p-6 border border-white/10 mb-8">
-          <h3 className="text-lg font-serif font-bold mb-4 flex items-center gap-2">
-            <span className="text-2xl">🩺</span> Diagnostic de l'Âme
-          </h3>
-          
-          <div className="space-y-4 mb-6">
-            <p className="text-sm font-bold text-white/80 uppercase tracking-wide">Ressens-tu ceci ?</p>
-            <ul className="space-y-3">
-              <li className="flex gap-3 text-sm text-white/70">
-                <span className="text-red-400 font-bold">✕</span>
-                Tu as souvent l'impression d'être incompris par ton entourage, comme si tu parlais une autre langue.
-              </li>
-              <li className="flex gap-3 text-sm text-white/70">
-                <span className="text-red-400 font-bold">✕</span>
-                Tu as beaucoup d'idées brillantes, mais une force invisible t'empêche de les concrétiser jusqu'au bout.
-              </li>
-              <li className="flex gap-3 text-sm text-white/70">
-                <span className="text-red-400 font-bold">✕</span>
-                Tu donnes beaucoup aux autres, mais tu finis souvent épuisé et vide.
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-[#C9A24D]/10 rounded-xl p-4 border border-[#C9A24D]/20">
-            <p className="text-sm text-[#C9A24D] italic text-center">
-              "Ce n'est pas de ta faute. C'est écrit dans ton thème (Maison 12). Ton rapport complet contient le mode d'emploi précis pour désactiver ce frein."
-            </p>
-          </div>
-        </div>
-
-        {/* CTA FINAL STICKY */}
-        <div className="sticky bottom-4 z-50">
+        {/* CTA FINAL STICKY - Mobile only or Desktop floating */}
+        <div className="sticky bottom-4 z-50 md:hidden">
           <button className="w-full py-4 bg-[#C9A24D] text-[#1a1c2e] font-bold rounded-xl shadow-[0_10px_30px_rgba(201,162,77,0.4)] hover:bg-white transition-all flex items-center justify-center gap-2 animate-pulse">
             Votre avatar vous montre vos forces et vos blocages <ArrowRight className="w-5 h-5" />
           </button>
         </div>
+        
+        {/* Desktop CTA Floating */}
+        <div className="hidden md:block fixed bottom-8 right-8 z-50">
+           <button className="py-4 px-8 bg-[#C9A24D] text-[#1a1c2e] font-bold rounded-full shadow-[0_10px_40px_rgba(201,162,77,0.6)] hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-3 animate-pulse text-lg">
+            Votre avatar vous montre vos forces et vos blocages <ArrowRight className="w-6 h-6" />
+          </button>
+        </div>
 
         {/* FOOTER */}
-        <div className="mt-auto pt-8 text-center pb-20">
+        <div className="mt-auto pt-8 text-center pb-20 md:pb-8">
           <p className="text-xs text-white/30">
             Cette analyse est basée sur les coordonnées de naissance précises.
           </p>
         </div>
 
       </div>
+
     </div>
   );
 }

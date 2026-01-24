@@ -1,38 +1,33 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Play, Lock, Star, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { Play, Lock, Star, ArrowRight, ShieldCheck, Sparkles, Brain, Heart, Zap, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
-
-// --- DATA SIMULÉE ---
-// Dans la vraie version, cela viendra du calcul
-const ARCHETYPES: Record<number, { title: string; subtitle: string; power: string; shadow: string; description: string }> = {
-  1: { title: "LE PIONNIER", subtitle: "L'Initiateur", power: "Indépendance", shadow: "Isolement", description: "Tu es une force de la nature, un leader né qui n'a pas peur d'ouvrir de nouvelles voies. Là où les autres hésitent, tu fonces. Ton énergie est brute, directe et puissante." },
-  2: { title: "LE MÉDIATEUR", subtitle: "L'Harmonisateur", power: "Intuition", shadow: "Dépendance", description: "Tu as un don rare pour ressentir ce que les autres cachent. Tu es le lien, le pont entre les mondes. Ton empathie est ta boussole, mais parfois aussi ton fardeau." },
-  3: { title: "L'ARTISTE", subtitle: "Le Communicant", power: "Créativité", shadow: "Dispersion", description: "Ton esprit est un feu d'artifice permanent. Tu es né pour exprimer, créer et inspirer. Ta parole est magique, mais attention à ne pas t'éparpiller dans mille directions." },
-  4: { title: "LE BÂTISSEUR", subtitle: "Le Pilier", power: "Stabilité", shadow: "Rigidité", description: "Tu es le roc sur lequel les autres s'appuient. Tu construis pour durer. Ton sens du détail et ta discipline sont légendaires, mais n'oublie pas de laisser entrer un peu de lumière." },
-  5: { title: "L'AVENTURIER", subtitle: "Le Libertaire", power: "Liberté", shadow: "Instabilité", description: "La routine est ton pire ennemi. Tu as besoin de mouvement, de changement, d'air frais. Tu es un explorateur de la vie, capable de t'adapter à tout, sauf à l'ennui." },
-  6: { title: "LE PROTECTEUR", subtitle: "Le Gardien", power: "Harmonie", shadow: "Sacrifice", description: "Ton cœur est grand comme une maison. Tu prends soin, tu nourris, tu protèges. Tu es l'âme du foyer, mais attention à ne pas t'oublier en voulant sauver tout le monde." },
-  7: { title: "LE SAGE", subtitle: "Le Chercheur", power: "Sagesse", shadow: "Solitude", description: "Tu ne te contentes pas des apparences. Tu cherches la vérité cachée derrière chaque chose. Ton esprit est analytique et profond. Tu as besoin de temps seul pour recharger tes batteries spirituelles." },
-  8: { title: "LE STRATÈGE", subtitle: "Le Conquérant", power: "Puissance", shadow: "Matérialisme", description: "Tu as l'ambition des grands bâtisseurs d'empires. Tu comprends instinctivement le monde matériel et l'argent. Tu es fait pour diriger, mais ton défi est d'allier cette puissance à l'éthique." },
-  9: { title: "L'HUMANISTE", subtitle: "L'Idéaliste", power: "Compassion", shadow: "Détachement", description: "Tu vois le monde non pas tel qu'il est, mais tel qu'il devrait être. Tu es une vieille âme, venue pour achever un cycle et aider l'humanité à s'élever. Ton amour est universel." },
-  11: { title: "LE VISIONNAIRE", subtitle: "L'Éveilleur", power: "Inspiration", shadow: "Tension nerveuse", description: "Tu captes des fréquences que les autres ignorent. Tu es un canal, une source d'inspiration. Ta présence électrise, mais cette haute tension peut parfois être épuisante." },
-  22: { title: "LE BÂTISSEUR UNIVERSEL", subtitle: "Le Maître d'Œuvre", power: "Réalisation", shadow: "Autodestruction", description: "Tu as la vision de l'idéaliste et les mains du bâtisseur. Tu peux transformer les rêves les plus fous en réalité concrète. Ton potentiel est immense, tout comme ta responsabilité." },
-  33: { title: "LE GUIDE", subtitle: "Le Maître Enseignant", power: "Amour Inconditionnel", shadow: "Martyre", description: "Ton énergie est celle de la guérison pure. Tu es ici pour enseigner par l'exemple de l'amour. C'est un chemin exigeant qui demande un dévouement total." },
-};
+import { 
+  getLifePathContent, 
+  getSoulUrgeContent, 
+  getExpressionContent, 
+  getPersonalYearContent,
+  getChallengeContent 
+} from '@/lib/numerology/contentGenerator';
 
 export default function DemoRevealPage() {
-  // Simulation d'un Chemin de Vie 7 pour la démo
-  const lifePath = 7;
-  const archetype = ARCHETYPES[lifePath];
+  // --- SIMULATION DATA (Jean-Philippe) ---
   const firstName = "Jean-Philippe";
+  
+  // 1. Calculs simulés (mais réalistes pour la démo)
+  // LP 7 (Le Sage), Expression 5 (L'Aventurier), Soul 9 (L'Humaniste), Year 8 (Récolte)
+  const lpData = getLifePathContent(7);
+  const expressionData = getExpressionContent(5);
+  const soulData = getSoulUrgeContent(9);
+  const yearData = getPersonalYearContent(8);
+  const challengeData = getChallengeContent(7, 'major'); // Défi de la Foi/Introspection
 
   const [videoEnded, setVideoEnded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = () => {
     setIsPlaying(true);
-    // Simulation : Au bout de 8 secondes, on coupe
     setTimeout(() => {
       setIsPlaying(false);
       setVideoEnded(true);
@@ -68,21 +63,22 @@ export default function DemoRevealPage() {
           {/* COLONNE GAUCHE (Vidéo & Archétype) - Sticky sur Desktop */}
           <div className="md:col-span-5 md:sticky md:top-8">
             
-            {/* 1. TITRE CHOC (DIAGNOSTIC VITAL) - Visible mobile, caché desktop (déplacé) */}
+            {/* 1. TITRE CHOC */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-center mb-8 md:text-left md:mb-6"
             >
               <h1 className="text-2xl md:text-4xl font-serif font-bold mb-4 leading-tight">
-                {firstName}, tu es né pour être un <span className="text-[#C9A24D]">{archetype.title}</span>.
+                {firstName}, tu es né pour être un <span className="text-[#C9A24D]">{lpData.title.toUpperCase()}</span>.
               </h1>
               <p className="text-white/60 text-sm md:text-base font-light leading-relaxed mb-6">
-                {archetype.description}
+                {lpData.desc}
               </p>
-              <div className="flex justify-center md:justify-start gap-2 mb-8">
-                 <span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white/70 border border-white/10">Chemin de Vie {lifePath}</span>
-                 <span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white/70 border border-white/10">Âme {lifePath === 7 ? '9' : '1'}</span>
+              <div className="flex justify-center md:justify-start gap-2 mb-8 flex-wrap">
+                 <span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white/70 border border-white/10">Chemin de Vie 7</span>
+                 <span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white/70 border border-white/10">Expression 5</span>
+                 <span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white/70 border border-white/10">Âme 9</span>
               </div>
             </motion.div>
 
@@ -147,7 +143,7 @@ export default function DemoRevealPage() {
 
                     <h3 className="text-xl font-serif font-bold mb-2 text-white">Vidéo Interrompue</h3>
                     <p className="text-sm text-white/60 mb-6 max-w-xs mx-auto leading-relaxed">
-                      Ton avatar a découvert un blocage important lié à ton ombre : <strong className="text-white border-b border-[#C9A24D]/50 pb-0.5">{archetype.shadow}</strong>.
+                      Ton avatar a découvert un blocage important lié à ton ombre : <strong className="text-white border-b border-[#C9A24D]/50 pb-0.5">La Solitude de l'Intellect</strong>.
                     </p>
                     
                     {/* Offre Packagée - Design Amélioré */}
@@ -203,15 +199,15 @@ export default function DemoRevealPage() {
           </div>
 
           {/* COLONNE DROITE (Cartes & Diagnostic) */}
-          <div className="md:col-span-7">
+          <div className="md:col-span-7 space-y-8">
             
             {/* 3. LES 3 CARTES (GAMIFICATION) */}
-            <div className="space-y-6 mb-12">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-white/40 text-center md:text-left mb-4">
-                Les Clés de ton Analyse
+            <div className="space-y-6">
+              <h3 className="text-sm font-bold uppercase tracking-widest text-white/40 text-center md:text-left flex items-center gap-2">
+                <Star className="w-4 h-4" /> Vos Piliers Fondamentaux
               </h3>
 
-              {/* CARTE 1 : RÉVÉLÉE (LE CADEAU) */}
+              {/* CARTE 1 : RÉVÉLÉE (LE CADEAU - CHEMIN DE VIE) */}
               <motion.div 
                 initial={{ x: -20, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
@@ -220,25 +216,25 @@ export default function DemoRevealPage() {
               >
                  <div className="flex items-start justify-between mb-4">
                    <div className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider flex items-center gap-1">
-                     <Star className="w-3 h-3 fill-current" /> Carte 1 • Révélée
+                     <Brain className="w-3 h-3 fill-current" /> Pilier Mental • Révélé
                    </div>
                  </div>
-                 <h4 className="text-2xl font-serif font-bold text-white mb-2">{archetype.title}</h4>
-                 <p className="text-white/60 text-sm italic mb-6">"{archetype.subtitle}"</p>
+                 <h4 className="text-2xl font-serif font-bold text-white mb-2">{lpData.title}</h4>
+                 <p className="text-white/60 text-sm italic mb-6">"Le Chercheur de Vérité"</p>
                  
                  <p className="text-base text-white/80 leading-relaxed mb-6 border-l-2 border-[#C9A24D] pl-4">
-                   Ta nature profonde est celle d'un éclaireur. Tu ne suis pas les chemins tracés, tu crées les tiens. Cette force intérieure est rare, et elle explique pourquoi tu t'es souvent senti différent(e) des autres. C'est ta plus grande richesse.
+                   {lpData.extendedDesc.split('\n')[0]}
                  </p>
 
                  <div className="flex gap-2 flex-wrap">
-                    <span className="px-3 py-1 bg-[#C9A24D]/20 rounded text-xs font-bold text-[#C9A24D] border border-[#C9A24D]/20">{archetype.power}</span>
-                    <span className="px-3 py-1 bg-[#C9A24D]/20 rounded text-xs font-bold text-[#C9A24D] border border-[#C9A24D]/20">Intuitif</span>
-                    <span className="px-3 py-1 bg-[#C9A24D]/20 rounded text-xs font-bold text-[#C9A24D] border border-[#C9A24D]/20">Visionnaire</span>
+                    {lpData.keywords.slice(0, 3).map((kw, i) => (
+                      <span key={i} className="px-3 py-1 bg-[#C9A24D]/20 rounded text-xs font-bold text-[#C9A24D] border border-[#C9A24D]/20">{kw}</span>
+                    ))}
                  </div>
               </motion.div>
 
               <div className="grid md:grid-cols-2 gap-6">
-                {/* CARTE 2 : VERROUILLÉE (LA DOULEUR) */}
+                {/* CARTE 2 : VERROUILLÉE (EXPRESSION) */}
                 <motion.div 
                   initial={{ x: 20, opacity: 0 }}
                   whileInView={{ x: 0, opacity: 1 }}
@@ -249,19 +245,19 @@ export default function DemoRevealPage() {
                    {/* Flou et Overlay */}
                    <div className="absolute inset-0 backdrop-blur-[2px] bg-black/40 z-10 flex flex-col items-center justify-center text-center p-4">
                       <Lock className="w-6 h-6 text-white/50 mb-2" />
-                      <p className="text-xs text-white/60 font-medium">Débloquer pour voir ton blocage</p>
+                      <p className="text-xs text-white/60 font-medium">Débloquer le Pilier Social</p>
                    </div>
 
                    <div className="flex items-start justify-between mb-2 opacity-50 blur-[1px]">
                      <div className="text-xs font-bold text-white/40 uppercase tracking-wider flex items-center gap-1">
-                       <ShieldCheck className="w-3 h-3" /> Carte 2 • Inconscient
+                       <Eye className="w-3 h-3" /> Pilier Social • Expression
                      </div>
                    </div>
-                   <h4 className="text-xl font-serif font-bold text-white mb-1 blur-[3px]">Le Saboteur Caché</h4>
-                   <p className="text-white/60 text-sm mb-3 blur-[2px]">Il y a une raison pour laquelle tu répètes les mêmes schémas...</p>
+                   <h4 className="text-xl font-serif font-bold text-white mb-1 blur-[3px]">{expressionData.title}</h4>
+                   <p className="text-white/60 text-sm mb-3 blur-[2px]">Comment le monde vous perçoit réellement...</p>
                 </motion.div>
 
-                {/* CARTE 3 : VERROUILLÉE (LA PROMESSE) */}
+                {/* CARTE 3 : VERROUILLÉE (ÂME) */}
                 <motion.div 
                   initial={{ x: -20, opacity: 0 }}
                   whileInView={{ x: 0, opacity: 1 }}
@@ -270,51 +266,83 @@ export default function DemoRevealPage() {
                   className="bg-[#1F2235] border border-white/5 rounded-xl p-6 relative overflow-hidden group"
                 >
                    {/* Flou et Overlay */}
-                   <div className="absolute inset-0 backdrop-blur-[4px] bg-black/40 z-10 flex flex-col items-center justify-center text-center p-4">
-                      <Lock className="w-6 h-6 text-[#C9A24D] mb-2" />
-                      <p className="text-xs text-[#C9A24D] font-bold uppercase tracking-widest">Ta Destinée 2026</p>
+                   <div className="absolute inset-0 backdrop-blur-[2px] bg-black/40 z-10 flex flex-col items-center justify-center text-center p-4">
+                      <Lock className="w-6 h-6 text-white/50 mb-2" />
+                      <p className="text-xs text-white/60 font-medium">Débloquer le Pilier Coeur</p>
                    </div>
 
                    <div className="flex items-start justify-between mb-2 opacity-50 blur-[2px]">
                      <div className="text-xs font-bold text-white/40 uppercase tracking-wider flex items-center gap-1">
-                       <Sparkles className="w-3 h-3" /> Carte 3 • Futur
+                       <Heart className="w-3 h-3" /> Pilier Cœur • Élan
                      </div>
                    </div>
-                   <h4 className="text-xl font-serif font-bold text-white mb-1 blur-[4px]">L'Année de la Récolte</h4>
-                   <p className="text-white/60 text-sm mb-3 blur-[3px]">Ce que tu as semé va enfin porter ses fruits, mais attention à...</p>
+                   <h4 className="text-xl font-serif font-bold text-white mb-1 blur-[4px]">{soulData.title}</h4>
+                   <p className="text-white/60 text-sm mb-3 blur-[3px]">Ce qui motive secrètement vos choix...</p>
                 </motion.div>
               </div>
             </div>
 
-            {/* 4. LE DIAGNOSTIC VITAL (STYLE DOCTEUR) */}
-            <div className="bg-white/5 rounded-2xl p-8 border border-white/10 mb-8">
-              <h3 className="text-xl font-serif font-bold mb-6 flex items-center gap-2">
+            {/* 4. LE DIAGNOSTIC VITAL (STYLE DOCTEUR) - AMÉLIORÉ */}
+            <div className="bg-white/5 rounded-2xl p-8 border border-white/10 relative overflow-hidden">
+              {/* Effet d'arrière plan */}
+              <div className="absolute -right-10 -top-10 w-40 h-40 bg-red-500/10 rounded-full blur-3xl"></div>
+              
+              <h3 className="text-xl font-serif font-bold mb-6 flex items-center gap-2 relative z-10">
                 <span className="text-2xl">🩺</span> Diagnostic de l'Âme
               </h3>
               
-              <div className="space-y-4 mb-8">
-                <p className="text-sm font-bold text-white/80 uppercase tracking-wide">Ressens-tu ceci ?</p>
-                <ul className="space-y-4">
-                  <li className="flex gap-4 text-base text-white/70">
-                    <span className="text-red-400 font-bold text-lg">✕</span>
-                    Tu as souvent l'impression d'être incompris par ton entourage, comme si tu parlais une autre langue.
-                  </li>
-                  <li className="flex gap-4 text-base text-white/70">
-                    <span className="text-red-400 font-bold text-lg">✕</span>
-                    Tu as beaucoup d'idées brillantes, mais une force invisible t'empêche de les concrétiser jusqu'au bout.
-                  </li>
-                  <li className="flex gap-4 text-base text-white/70">
-                    <span className="text-red-400 font-bold text-lg">✕</span>
-                    Tu donnes beaucoup aux autres, mais tu finis souvent épuisé et vide.
-                  </li>
-                </ul>
+              <div className="space-y-6 mb-8 relative z-10">
+                <div>
+                    <p className="text-sm font-bold text-white/80 uppercase tracking-wide mb-2">Votre Blocage Actuel</p>
+                    <p className="text-lg text-white font-serif italic">"{challengeData.desc}"</p>
+                </div>
+
+                <div className="space-y-3">
+                    <p className="text-xs text-white/50 uppercase tracking-wide">Symptômes Fréquents</p>
+                    <ul className="space-y-3">
+                    <li className="flex gap-4 text-base text-white/70">
+                        <span className="text-red-400 font-bold text-lg mt-[-2px]">✕</span>
+                        <span>Difficulté à lâcher prise sur le mental (Analyse excessive).</span>
+                    </li>
+                    <li className="flex gap-4 text-base text-white/70">
+                        <span className="text-red-400 font-bold text-lg mt-[-2px]">✕</span>
+                        <span>Sentiment de solitude même entouré (Incompréhension).</span>
+                    </li>
+                    <li className="flex gap-4 text-base text-white/70">
+                        <span className="text-red-400 font-bold text-lg mt-[-2px]">✕</span>
+                        <span>Tendance à l'isolement pour se protéger.</span>
+                    </li>
+                    </ul>
+                </div>
               </div>
 
-              <div className="bg-[#C9A24D]/10 rounded-xl p-6 border border-[#C9A24D]/20">
+              <div className="bg-[#C9A24D]/10 rounded-xl p-6 border border-[#C9A24D]/20 relative z-10">
                 <p className="text-base text-[#C9A24D] italic text-center leading-relaxed">
-                  "Ce n'est pas de ta faute. C'est écrit dans ton thème (Maison 12). Ton rapport complet contient le mode d'emploi précis pour désactiver ce frein."
+                  "Ce n'est pas une fatalité. C'est le Défi Majeur de votre thème. Votre rapport contient l'exercice pratique '{challengeData.exercise?.title}' pour transformer ce blocage en force dès cette semaine."
                 </p>
               </div>
+            </div>
+
+            {/* 5. NOUVELLE SECTION : TEASER FUTUR 2026 */}
+            <div className="bg-gradient-to-br from-indigo-900/40 to-purple-900/40 rounded-2xl p-8 border border-white/10">
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-indigo-500/20 rounded-lg text-indigo-300">
+                        <Zap className="w-5 h-5" />
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-bold text-white">Votre Météo 2026</h3>
+                        <p className="text-xs text-indigo-200 uppercase tracking-wide">Année Personnelle {yearData.split(' ')[0]}</p>
+                    </div>
+                </div>
+                
+                <p className="text-white/70 leading-relaxed mb-6">
+                    {yearData.substring(0, 150)}...
+                </p>
+                
+                <div className="flex items-center gap-2 text-sm text-indigo-300 font-medium cursor-not-allowed opacity-70">
+                    <Lock className="w-4 h-4" />
+                    <span>Lire les prévisions mois par mois dans le rapport</span>
+                </div>
             </div>
 
           </div>
@@ -323,14 +351,14 @@ export default function DemoRevealPage() {
         {/* CTA FINAL STICKY - Mobile only or Desktop floating */}
         <div className="sticky bottom-4 z-50 md:hidden">
           <button className="w-full py-4 bg-[#C9A24D] text-[#1a1c2e] font-bold rounded-xl shadow-[0_10px_30px_rgba(201,162,77,0.4)] hover:bg-white transition-all flex items-center justify-center gap-2 animate-pulse">
-            Votre avatar vous montre vos forces et vos blocages <ArrowRight className="w-5 h-5" />
+            Obtenir mes solutions maintenant <ArrowRight className="w-5 h-5" />
           </button>
         </div>
         
         {/* Desktop CTA Floating */}
         <div className="hidden md:block fixed bottom-8 right-8 z-50">
            <button className="py-4 px-8 bg-[#C9A24D] text-[#1a1c2e] font-bold rounded-full shadow-[0_10px_40px_rgba(201,162,77,0.6)] hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-3 animate-pulse text-lg">
-            Votre avatar vous montre vos forces et vos blocages <ArrowRight className="w-6 h-6" />
+            Obtenir mon Plan d'Action <ArrowRight className="w-6 h-6" />
           </button>
         </div>
 

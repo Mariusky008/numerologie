@@ -304,7 +304,7 @@ export default function DemoRevealPage() {
         {/* CTA FINAL STICKY */}
         <div className="sticky bottom-4 z-50">
           <button className="w-full py-4 bg-[#C9A24D] text-[#1a1c2e] font-bold rounded-xl shadow-[0_10px_30px_rgba(201,162,77,0.4)] hover:bg-white transition-all flex items-center justify-center gap-2 animate-pulse">
-            Obtenir ma Guérison maintenant <ArrowRight className="w-5 h-5" />
+            Votre avatar vous montre vos forces et vos blocages <ArrowRight className="w-5 h-5" />
           </button>
         </div>
 

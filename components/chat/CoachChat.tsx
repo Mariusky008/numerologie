@@ -321,16 +321,30 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
            </div>
            <p className="text-[#C9A24D] text-[10px] uppercase tracking-[0.3em] pl-5 border-l-2 border-[#C9A24D]/30 font-medium">Connecté à votre énergie</p>
         </div>
-        <button 
-          onClick={() => {
-            const newMuted = !isMuted;
-            setIsMuted(newMuted);
-            if (newMuted) window.speechSynthesis.cancel();
-          }}
-          className="p-3 rounded-full text-[#FDFBF7]/60 hover:text-[#C9A24D] hover:bg-white/5 transition-all duration-300 border border-white/5 hover:border-[#C9A24D]/30 backdrop-blur-sm"
-        >
-          {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-        </button>
+        
+        <div className="flex items-center gap-3">
+          {/* UPSELL BUTTON */}
+          <a 
+            href="/expert-booking" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hidden md:flex items-center gap-2 px-4 py-2 bg-[#C9A24D]/10 hover:bg-[#C9A24D]/20 border border-[#C9A24D]/30 rounded-full text-[#C9A24D] text-xs font-bold uppercase tracking-wider transition-all backdrop-blur-sm hover:scale-105"
+          >
+            <User className="w-3 h-3" />
+            Parler à un Expert Humain
+          </a>
+
+          <button 
+            onClick={() => {
+              const newMuted = !isMuted;
+              setIsMuted(newMuted);
+              if (newMuted) window.speechSynthesis.cancel();
+            }}
+            className="p-3 rounded-full text-[#FDFBF7]/60 hover:text-[#C9A24D] hover:bg-white/5 transition-all duration-300 border border-white/5 hover:border-[#C9A24D]/30 backdrop-blur-sm"
+          >
+            {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {/* 🔮 CENTRAL VISUALIZATION */}

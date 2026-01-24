@@ -16,6 +16,7 @@ export default function Part7ConclusionKeys({ userData, results }: { userData: U
   const zodiacName = zodiacKey ? zodiacKey.charAt(0).toUpperCase() + zodiacKey.slice(1) : "Inconnu";
 
   return (
+    <>
     <PageContainer className="p-8 md:p-16 justify-center bg-[#FAF9F7] text-[#1B263B] text-center print:break-before-page">
       <h2 className="text-3xl md:text-5xl font-serif text-[#D4A373] mb-12 border-b-2 border-[#D4A373] pb-4 inline-block">
         VOS 3 CLÉS D'ACTIVATION
@@ -56,5 +57,29 @@ export default function Part7ConclusionKeys({ userData, results }: { userData: U
         </p>
       </div>
     </PageContainer>
+
+    {/* CLOSING STATEMENT */}
+    <PageContainer className="p-4 md:p-16 justify-center text-center bg-[#2C2F4A] text-[#FDFBF7]">
+      <h2 className="text-3xl md:text-5xl font-serif mb-8 text-[#C9A24D]">Votre Légende Commence Ici</h2>
+      <p className="text-lg md:text-2xl font-light max-w-3xl mx-auto leading-relaxed mb-12">
+        "Les nombres ne sont pas un destin, mais un itinéraire. Vous avez maintenant la carte. À vous de marcher."
+      </p>
+      <div className="w-24 h-1 bg-[#C9A24D] mx-auto mb-8"></div>
+      <p className="text-sm opacity-60 uppercase tracking-widest">
+        Fin du Rapport • {new Date().getFullYear()}
+      </p>
+
+      {/* UPSELL EXPERT DANS LE PDF */}
+      <div className="mt-16 bg-white/5 border border-white/10 rounded-xl p-8 max-w-2xl mx-auto backdrop-blur-sm">
+        <h3 className="text-xl font-serif text-[#C9A24D] mb-4">Besoin d'aller plus loin ?</h3>
+        <p className="text-white/80 mb-6">
+          Parfois, une lecture humaine est nécessaire pour débloquer une situation complexe que l'algorithme ne peut pas percevoir.
+        </p>
+        <a href="https://votrelegende.fr/expert-booking" target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-3 bg-[#C9A24D] text-[#2C2F4A] font-bold rounded-lg hover:bg-white transition-colors">
+          Parler à un Expert Humain
+        </a>
+      </div>
+    </PageContainer>
+    </>
   );
 }

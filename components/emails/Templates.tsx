@@ -123,6 +123,16 @@ export const EmailDeliverables = ({
           </Section>
         )}
 
+        {/* P.S. UPSELL EXPERT */}
+        <Section style={{ marginTop: '30px', borderTop: '1px solid #e5e7eb', paddingTop: '20px' }}>
+          <Text style={{ ...text, fontSize: '14px', fontStyle: 'italic', color: '#6b7280' }}>
+            P.S. Si vous traversez une période particulièrement complexe et que vous souhaitez en parler de vive voix, Marie, notre experte astrologue, a ouvert quelques créneaux cette semaine.
+          </Text>
+          <Link href="https://votrelegende.fr/expert-booking" style={{ color: '#C9A24D', fontSize: '14px', fontWeight: 'bold', textDecoration: 'underline' }}>
+            👉 Réserver ma consultation privée avec Marie
+          </Link>
+        </Section>
+
         <Text style={footer}>
           L'équipe Votre Légende.
         </Text>

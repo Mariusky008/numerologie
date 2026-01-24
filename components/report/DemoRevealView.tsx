@@ -165,39 +165,45 @@ export default function DemoRevealView({ userData, results }: DemoRevealViewProp
                       Ton avatar a découvert un blocage important lié à ton ombre : <strong className="text-white border-b border-[#C9A24D]/50 pb-0.5">{lpData.challenge || "La Peur de l'Inconnu"}</strong>.
                     </p>
                     
-                    {/* Offre Packagée - Design Amélioré */}
-                    <div className="bg-white/5 p-5 rounded-2xl text-left mb-6 border border-white/10 w-full max-w-xs shadow-inner">
-                      <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
-                        <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider">Pack Révélation</span>
-                        <span className="text-sm font-bold text-white">29€</span>
+                    {/* Offre Packagée - Design Amélioré & Plus Impactant */}
+                    <div className="bg-gradient-to-b from-white/10 to-white/5 p-8 rounded-2xl text-left mb-8 border border-[#C9A24D]/30 w-full shadow-2xl relative overflow-hidden group">
+                      {/* Effet de brillance au survol */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                      
+                      <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4 relative z-10">
+                        <span className="text-xl font-bold text-[#C9A24D] uppercase tracking-widest drop-shadow-md">Pack Révélation</span>
+                        <div className="flex flex-col items-end">
+                          <span className="text-3xl font-bold text-white drop-shadow-lg">29€</span>
+                          <span className="text-[10px] text-white/50 line-through">99€</span>
+                        </div>
                       </div>
                       
-                      <ul className="space-y-3">
-                        <li className="flex items-start gap-3">
-                          <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5">
-                            <span className="text-[#C9A24D] text-[10px]">▶</span>
+                      <ul className="space-y-5 relative z-10">
+                        <li className="flex items-start gap-4">
+                          <div className="w-10 h-10 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5 border border-[#C9A24D]/30 shadow-[0_0_10px_rgba(201,162,77,0.2)]">
+                            <span className="text-[#C9A24D] text-sm">▶</span>
                           </div>
                           <div>
-                            <strong className="text-xs text-white block">Vidéo Révélation (5 min)</strong>
-                            <span className="text-[10px] text-white/50 block leading-tight">L'analyse de tes traits profonds.</span>
+                            <strong className="text-lg text-white block mb-1">Vidéo Révélation (5 min)</strong>
+                            <span className="text-sm text-white/60 block leading-tight">L'analyse percutante de tes traits profonds et de ton potentiel caché.</span>
                           </div>
                         </li>
-                        <li className="flex items-start gap-3">
-                          <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5">
-                            <span className="text-[#C9A24D] text-[10px]">💬</span>
+                        <li className="flex items-start gap-4">
+                          <div className="w-10 h-10 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5 border border-[#C9A24D]/30 shadow-[0_0_10px_rgba(201,162,77,0.2)]">
+                            <span className="text-[#C9A24D] text-sm">💬</span>
                           </div>
                           <div>
-                            <strong className="text-xs text-white block">Coach Vocal IA (30 min)</strong>
-                            <span className="text-[10px] text-white/50 block leading-tight">Comprends tes échecs passés.</span>
+                            <strong className="text-lg text-white block mb-1">Coach Vocal IA (30 min)</strong>
+                            <span className="text-sm text-white/60 block leading-tight">Dialoguez avec votre profil pour comprendre vos échecs passés.</span>
                           </div>
                         </li>
-                        <li className="flex items-start gap-3">
-                          <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5">
-                            <span className="text-[#C9A24D] text-[10px]">📄</span>
+                        <li className="flex items-start gap-4">
+                          <div className="w-10 h-10 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-0.5 border border-[#C9A24D]/30 shadow-[0_0_10px_rgba(201,162,77,0.2)]">
+                            <span className="text-[#C9A24D] text-sm">📄</span>
                           </div>
                           <div>
-                            <strong className="text-xs text-white block">Dossier Complet (40 pages)</strong>
-                            <span className="text-[10px] text-white/50 block leading-tight">Ton plan d'action écrit.</span>
+                            <strong className="text-lg text-white block mb-1">Dossier Complet (40 pages)</strong>
+                            <span className="text-sm text-white/60 block leading-tight">Ton plan d'action écrit, tes cycles de vie et ta météo personnelle.</span>
                           </div>
                         </li>
                       </ul>

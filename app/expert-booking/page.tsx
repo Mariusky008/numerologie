@@ -94,9 +94,14 @@ export default function ExpertBookingPage() {
               </li>
             </ul>
 
-            <button className="w-full py-3 border-2 border-[#2C2F4A] text-[#2C2F4A] font-bold rounded-lg hover:bg-[#2C2F4A] hover:text-white transition-colors">
+            <a 
+              href="https://calendly.com/contact-votrelegende" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block w-full text-center py-3 border-2 border-[#2C2F4A] text-[#2C2F4A] font-bold rounded-lg hover:bg-[#2C2F4A] hover:text-white transition-colors"
+            >
               Réserver un créneau
-            </button>
+            </a>
           </div>
 
           {/* Option 2: Deep Dive (Featured) */}
@@ -108,7 +113,7 @@ export default function ExpertBookingPage() {
               <h4 className="text-xl font-bold mb-2 text-[#C9A24D]">Thème Astral Profond</h4>
               <div className="flex items-baseline gap-1">
                 <span className="text-3xl font-serif font-bold">149€</span>
-                <span className="text-gray-500">/ 45 min</span>
+                <span className="text-gray-500">/ 30 min</span>
               </div>
             </div>
             
@@ -127,9 +132,14 @@ export default function ExpertBookingPage() {
               </li>
             </ul>
 
-            <button className="w-full py-3 bg-[#C9A24D] text-white font-bold rounded-lg hover:bg-[#b08d42] transition-colors shadow-lg">
+            <a 
+              href="https://calendly.com/contact-votrelegende" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block w-full text-center py-3 bg-[#C9A24D] text-white font-bold rounded-lg hover:bg-[#b08d42] transition-colors shadow-lg"
+            >
               Réserver maintenant
-            </button>
+            </a>
             <p className="text-center text-xs text-gray-400 mt-3">
               Seulement 3 créneaux disponibles cette semaine
             </p>

@@ -137,8 +137,26 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  let id: string | null = null;
   try {
+    const { searchParams } = new URL(request.url);
+    id = searchParams.get('id');
+
+    if (id) {
+      const { data, error } = await supabase
+        .from('book_requests')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      return NextResponse.json(data);
+    }
+
     const { data, error } = await supabase
       .from('book_requests')
       .select('*')
@@ -151,7 +169,7 @@ export async function GET() {
     return NextResponse.json(data);
   } catch (error) {
      console.error('Error fetching requests:', error);
-     return NextResponse.json([]);
+     return NextResponse.json(id ? { error: 'Not found' } : [], { status: id ? 404 : 200 });
   }
 }
 

@@ -59,9 +59,25 @@ function PrintContent() {
   useEffect(() => {
     const initData = async () => {
       let userData: UserData | null = null;
+      let preCalculatedResults: NumerologyResult | null = null;
+      
+      const orderId = searchParams.get('order_id');
       const dataParam = searchParams.get('data');
 
-      if (dataParam) {
+      if (orderId) {
+        try {
+          const res = await fetch(`/api/book-request?id=${orderId}`);
+          if (res.ok) {
+            const order = await res.json();
+            userData = order.user_data;
+            if (order.numerology_result?.reportResults) {
+               preCalculatedResults = order.numerology_result.reportResults;
+            }
+          }
+        } catch (e) {
+          console.error("Error fetching order", e);
+        }
+      } else if (dataParam) {
         try {
           userData = JSON.parse(decodeURIComponent(dataParam));
         } catch (e) {
@@ -88,57 +104,45 @@ function PrintContent() {
           // Fetch Etymology
           const etymology = await fetchNameAnalysis(userData.firstName.split(' ')[0]);
 
-          const lifePath = calculateLifePath(userData.birthDate);
-          const lifePathDetails = calculateLifePathDetailed(userData.birthDate);
-          
-          const nameNumbers = calculateNameNumbers(userData.firstName + userData.lastName);
-          const nameNumbersDetails = calculateNameNumbersDetailed(userData.firstName + userData.lastName);
-          
-          const personalYear = calculatePersonalYear(userData.birthDate);
-          const axes = getProfessionalAxes(lifePath, nameNumbers.expression);
+          let results: NumerologyResult;
 
-          // Extended data
-          const inclusionGrid = calculateInclusionGrid(userData.firstName + userData.lastName);
-          const { missing, excess } = analyzeInclusion(inclusionGrid);
-          const subconsciousSelf = calculateSubconsciousSelf(inclusionGrid);
-          const bridgeNumber = calculateBridge(lifePath, nameNumbers.expression);
-          const challenges = calculateChallenges(userData.birthDate);
-          const deepChallenges = calculateDeepChallenges(userData.birthDate);
-          const birthPlaceVibration = calculatePlaceVibration(userData.birthPlace || "");
-          const careerForecast = generateCareerForecast(userData.birthDate, 2026);
-          const cycles = calculateCycles(userData.birthDate);
-          
-          const advancedProfile = getAdvancedProfile(lifePath, userData.birthDate);
-          
-          const transits = calculateTransits(userData.firstName, userData.lastName, userData.birthDate);
-          const planesOfExpression = calculatePlanesOfExpression(userData.firstName + userData.lastName);
+          if (preCalculatedResults) {
+             results = preCalculatedResults;
+          } else {
+            const lifePath = calculateLifePath(userData.birthDate);
+            const lifePathDetails = calculateLifePathDetailed(userData.birthDate);
+            
+            const nameNumbers = calculateNameNumbers(userData.firstName + userData.lastName);
+            const nameNumbersDetails = calculateNameNumbersDetailed(userData.firstName + userData.lastName);
+            
+            const personalYear = calculatePersonalYear(userData.birthDate);
+            const axes = getProfessionalAxes(lifePath, nameNumbers.expression);
 
-          // Temporal Synthesis
-          const now = new Date();
-          const currentMonth = now.getMonth() + 1;
-          const currentDay = now.getDate();
-          const personalMonth = calculatePersonalMonth(personalYear, currentMonth);
-          const personalDay = calculatePersonalDay(personalMonth, currentDay);
-          const astroTransits = calculerTransitsAstro(now);
+            // Extended data
+            const inclusionGrid = calculateInclusionGrid(userData.firstName + userData.lastName);
+            const { missing, excess } = analyzeInclusion(inclusionGrid);
+            const subconsciousSelf = calculateSubconsciousSelf(inclusionGrid);
+            const bridgeNumber = calculateBridge(lifePath, nameNumbers.expression);
+            const challenges = calculateChallenges(userData.birthDate);
+            const deepChallenges = calculateDeepChallenges(userData.birthDate);
+            const birthPlaceVibration = calculatePlaceVibration(userData.birthPlace || "");
+            const careerForecast = generateCareerForecast(userData.birthDate, 2026);
+            const cycles = calculateCycles(userData.birthDate);
+            
+            const advancedProfile = getAdvancedProfile(lifePath, userData.birthDate);
+            
+            const transits = calculateTransits(userData.firstName, userData.lastName, userData.birthDate);
+            const planesOfExpression = calculatePlanesOfExpression(userData.firstName + userData.lastName);
 
-          // Real Astro (Geocoding needed)
-          let realAstro = undefined;
-          if (userData.birthPlace) {
-             try {
-                const geoRes = await fetch(`/api/geocode?city=${encodeURIComponent(userData.birthPlace)}`);
-                const geoData = await geoRes.json();
-                if (geoData.lat && geoData.lng) {
-                   realAstro = calculerThemeAstral(userData.birthDate, undefined, geoData.lat, geoData.lng);
-                }
-             } catch (err) {
-                console.error("Geocoding failed for PDF", err);
-             }
-          }
+            // Temporal Synthesis
+            const now = new Date();
+            const currentMonth = now.getMonth() + 1;
+            const currentDay = now.getDate();
+            const personalMonth = calculatePersonalMonth(personalYear, currentMonth);
+            const personalDay = calculatePersonalDay(personalMonth, currentDay);
+            const astroTransits = calculerTransitsAstro(now);
 
-          setData({
-            userData,
-            etymology,
-            results: {
+            results = {
                lifePath,
                ...nameNumbers,
                personalYear,
@@ -174,13 +178,31 @@ function PrintContent() {
                advancedProfile,
                transits,
                planesOfExpression,
-               realAstro,
                previsions: {
                   personalMonth,
                   personalDay,
                   astroTransits
                }
-            }
+            };
+          }
+
+          // Real Astro (Check if missing)
+          if (!results.realAstro && userData.birthPlace) {
+             try {
+                const geoRes = await fetch(`/api/geocode?city=${encodeURIComponent(userData.birthPlace)}`);
+                const geoData = await geoRes.json();
+                if (geoData.lat && geoData.lng) {
+                   results.realAstro = calculerThemeAstral(userData.birthDate, undefined, geoData.lat, geoData.lng);
+                }
+             } catch (err) {
+                console.error("Geocoding failed for PDF", err);
+             }
+          }
+
+          setData({
+            userData,
+            results,
+            etymology
           });
         } catch (e) {
           console.error("Invalid data", e);

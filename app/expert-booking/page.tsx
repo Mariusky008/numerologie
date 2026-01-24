@@ -74,7 +74,7 @@ export default function ExpertBookingPage() {
             <div className="mb-6">
               <h4 className="text-xl font-bold mb-2">Consultation Flash</h4>
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-serif font-bold">49€</span>
+                <span className="text-3xl font-serif font-bold">29€</span>
                 <span className="text-gray-500">/ 15 min</span>
               </div>
             </div>

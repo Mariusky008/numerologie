@@ -300,9 +300,15 @@ export default function DemoRevealView({ userData, results }: DemoRevealViewProp
                   className="bg-[#1F2235] border border-white/5 rounded-xl p-6 relative overflow-hidden group"
                 >
                    {/* Flou et Overlay */}
-                   <div className="absolute inset-0 backdrop-blur-[2px] bg-black/40 z-10 flex flex-col items-center justify-center text-center p-4">
-                      <Lock className="w-6 h-6 text-white/50 mb-2" />
-                      <p className="text-xs text-white/60 font-medium">Débloquer le Pilier Coeur</p>
+                   <div className="absolute inset-0 backdrop-blur-[2px] bg-black/60 z-10 flex flex-col items-center justify-center text-center p-4 transition-all duration-300 group-hover:backdrop-blur-[4px] group-hover:bg-black/70">
+                      <Lock className="w-8 h-8 text-[#C9A24D] mb-3" />
+                      <p className="text-sm text-white font-bold mb-4">Débloquer le Pilier Cœur</p>
+                      <button 
+                        onClick={handleUnlock}
+                        className="px-5 py-2 bg-[#C9A24D] text-[#1a1c2e] text-xs font-bold rounded-full hover:bg-white hover:scale-105 transition-all shadow-[0_0_15px_rgba(201,162,77,0.3)] flex items-center gap-2"
+                      >
+                        Voir mon analyse <ArrowRight className="w-3 h-3" />
+                      </button>
                    </div>
 
                    <div className="flex items-start justify-between mb-2 opacity-50 blur-[2px]">

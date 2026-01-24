@@ -112,8 +112,8 @@ export default function ExpertBookingPage() {
             <div className="mb-6">
               <h4 className="text-xl font-bold mb-2 text-[#C9A24D]">Thème Astral Profond</h4>
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-serif font-bold">149€</span>
-                <span className="text-gray-500">/ 30 min</span>
+                <span className="text-3xl font-serif font-bold">79€</span>
+                <span className="text-gray-500">/ 45 min</span>
               </div>
             </div>
             

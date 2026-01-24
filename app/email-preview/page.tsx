@@ -2,28 +2,44 @@
 
 import { useState, useEffect } from 'react';
 import { render } from '@react-email/render';
-import { EmailReport, EmailBundle } from '@/components/emails/Templates';
+import { EmailReport, EmailBundle, EmailConfirmation } from '@/components/emails/Templates';
 
 export default function EmailPreviewPage() {
-  const [activeTab, setActiveTab] = useState<'report' | 'bundle'>('report');
+  const [activeTab, setActiveTab] = useState<'report' | 'bundle' | 'confirmation'>('confirmation');
   const [isPaper, setIsPaper] = useState(false);
   const [htmlContent, setHtmlContent] = useState('');
 
   useEffect(() => {
-    const component = activeTab === 'report' ? (
-      <EmailReport 
-        firstName="Jean-Philippe"
-        downloadLink="https://votrelegende.fr/download/demo"
-        isPaper={isPaper}
-      />
-    ) : (
-      <EmailBundle 
-        firstName="Jean-Philippe"
-        writeLink="https://votrelegende.fr/book-setup/demo"
-        downloadLink="https://votrelegende.fr/download/demo"
-        isPaper={isPaper}
-      />
-    );
+    let component;
+    
+    switch (activeTab) {
+      case 'report':
+        component = (
+          <EmailReport 
+            firstName="Jean-Philippe"
+            downloadLink="https://votrelegende.fr/download/demo"
+            isPaper={isPaper}
+          />
+        );
+        break;
+      case 'bundle':
+        component = (
+          <EmailBundle 
+            firstName="Jean-Philippe"
+            writeLink="https://votrelegende.fr/book-setup/demo"
+            downloadLink="https://votrelegende.fr/download/demo"
+            isPaper={isPaper}
+          />
+        );
+        break;
+      case 'confirmation':
+        component = (
+          <EmailConfirmation 
+            firstName="Jean-Philippe"
+          />
+        );
+        break;
+    }
 
     // On rend le composant en HTML string pour l'injecter dans l'iframe
     // Cela simule parfaitement le rendu final d'un email
@@ -45,16 +61,22 @@ export default function EmailPreviewPage() {
           
           <div className="flex gap-2 p-1 bg-gray-100 rounded-lg">
             <button 
+              onClick={() => setActiveTab('confirmation')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'confirmation' ? 'bg-white shadow text-green-600' : 'text-gray-500 hover:text-gray-700'}`}
+            >
+              1. Confirmation (Immédiat)
+            </button>
+            <button 
               onClick={() => setActiveTab('report')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'report' ? 'bg-white shadow text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
             >
-              Email Rapport Seul
+              2. Rapport Seul
             </button>
             <button 
               onClick={() => setActiveTab('bundle')}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'bundle' ? 'bg-white shadow text-purple-600' : 'text-gray-500 hover:text-gray-700'}`}
             >
-              Email Pack Héros (Livre)
+              3. Pack Complet (Livraison)
             </button>
           </div>
 

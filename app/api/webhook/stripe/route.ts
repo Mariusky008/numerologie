@@ -58,7 +58,7 @@ export async function POST(request: Request) {
         // Pour le Bundle (Vidéo + Rapport + Chat) ou tout autre plan
         // On envoie d'abord une confirmation de commande "En traitement"
         await resend.emails.send({
-          from: 'Votre Légende <contact@roman-de-vie.com>',
+          from: 'Votre Légende <contact@votrelegende.fr>',
           to: [customerEmail!],
           subject: 'Votre commande est confirmée ✅',
           react: EmailConfirmation({

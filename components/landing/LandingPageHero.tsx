@@ -518,10 +518,12 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
         <div className="max-w-5xl mx-auto relative z-10">
           
           <div className="text-center mb-12 space-y-4">
-             <span className="text-[#C9A24D] font-bold tracking-[0.2em] text-xs uppercase border border-[#C9A24D]/30 px-4 py-1 rounded-full bg-white/50 backdrop-blur-sm">Offre Complète</span>
-             <h2 className="text-3xl md:text-5xl font-serif text-[#2C2F4A]">Votre Pack Révélation</h2>
-             <p className="text-[#2C2F4A]/60 max-w-lg mx-auto">
-               Une suite d'outils unique pour explorer votre identité sous tous ses angles. Écrit, Visuel et Oral.
+             <span className="text-[#C9A24D] font-bold tracking-[0.2em] text-xs uppercase border border-[#C9A24D]/30 px-4 py-1 rounded-full bg-white/50 backdrop-blur-sm">🎁 Votre Pack Révélation</span>
+             <h2 className="text-3xl md:text-5xl font-serif text-[#2C2F4A] leading-tight">
+               Une expérience complète pour comprendre<br className="hidden md:block"/> vos schémas profonds
+             </h2>
+             <p className="text-[#2C2F4A]/70 max-w-2xl mx-auto text-lg leading-relaxed">
+               Mettre des mots sur ce que vous ressentez depuis longtemps et reprendre le contrôle de vos décisions.
              </p>
           </div>
 
@@ -532,83 +534,113 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              <div className="p-8 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-10">
                 
                 {/* Left Col: The Content Items (Span 7) */}
-                <div className="lg:col-span-7 space-y-6">
+                <div className="lg:col-span-7 space-y-8">
                    
                    {/* Item 1: Dossier */}
-                   <div className="flex items-start gap-5 p-5 rounded-2xl bg-[#FAF9F7] border border-[#EFEDE9] group hover:border-[#C9A24D]/30 transition-colors">
+                   <div className="flex items-start gap-5 p-6 rounded-2xl bg-[#FAF9F7] border border-[#EFEDE9] group hover:border-[#C9A24D]/30 transition-colors">
                       <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-[#5B4B8A] shadow-sm shrink-0 group-hover:scale-110 transition-transform">
                          <FileText className="w-6 h-6" />
                       </div>
-                      <div>
-                         <h3 className="font-serif text-lg text-[#2C2F4A] mb-1">Votre Dossier Numérologique</h3>
-                         <p className="text-sm text-[#2C2F4A]/60 leading-relaxed">
-                           Un document PDF complet de <strong>40+ pages</strong>, analysant vos cycles, vos défis et votre chemin de vie avec une clarté absolue.
-                         </p>
+                      <div className="space-y-3">
+                         <h3 className="font-serif text-xl text-[#2C2F4A]">🧠 Votre Dossier Numérologique (40+ pages)</h3>
+                         <div className="text-sm text-[#2C2F4A]/70 leading-relaxed space-y-2">
+                           <p className="font-medium">Une analyse claire et structurée de :</p>
+                           <ul className="list-disc pl-5 space-y-1 opacity-80">
+                             <li>vos schémas de décision récurrents</li>
+                             <li>vos blocages inconscients</li>
+                             <li>vos cycles de vie et périodes clés</li>
+                           </ul>
+                           <p className="text-[#C9A24D] font-bold text-xs uppercase tracking-wide pt-2">
+                             👉 Pour comprendre pourquoi vous répétez certains choix, et où agir concrètement.
+                           </p>
+                         </div>
                       </div>
                    </div>
 
                    {/* Item 2: Vidéo */}
-                   <div className="flex items-start gap-5 p-5 rounded-2xl bg-[#FAF9F7] border border-[#EFEDE9] group hover:border-[#C9A24D]/30 transition-colors">
+                   <div className="flex items-start gap-5 p-6 rounded-2xl bg-[#FAF9F7] border border-[#EFEDE9] group hover:border-[#C9A24D]/30 transition-colors">
                       <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-[#C9A24D] shadow-sm shrink-0 group-hover:scale-110 transition-transform">
                          <Play className="w-6 h-6 fill-current" />
                       </div>
-                      <div>
-                         <h3 className="font-serif text-lg text-[#2C2F4A] mb-1">Votre Vidéo Avatar (5 min)</h3>
-                         <p className="text-sm text-[#2C2F4A]/60 leading-relaxed">
-                           La synthèse visuelle et orale de votre profil. Votre avatar vous explique l'essentiel, droit dans les yeux.
-                         </p>
+                      <div className="space-y-3">
+                         <h3 className="font-serif text-xl text-[#2C2F4A]">🎥 Votre Vidéo Avatar personnalisée (5 min)</h3>
+                         <div className="text-sm text-[#2C2F4A]/70 leading-relaxed space-y-2">
+                           <p>
+                             L’essentiel de votre profil, expliqué simplement. Votre avatar vous parle directement, sans jargon, et met en lumière ce que vous ne voyez pas encore.
+                           </p>
+                           <p className="text-[#C9A24D] font-bold text-xs uppercase tracking-wide pt-1">
+                             👉 Pour une prise de conscience immédiate.
+                           </p>
+                         </div>
                       </div>
                    </div>
 
                    {/* Item 3: Coach (Highlight) */}
-                   <div className="flex items-start gap-5 p-5 rounded-2xl bg-[#2C2F4A] text-white relative overflow-hidden group">
+                   <div className="flex items-start gap-5 p-6 rounded-2xl bg-[#2C2F4A] text-white relative overflow-hidden group">
                       {/* Glow */}
                       <div className="absolute -right-10 -top-10 w-32 h-32 bg-[#C9A24D] rounded-full blur-[50px] opacity-20 group-hover:opacity-30 transition-opacity"></div>
                       
                       <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-[#C9A24D] shrink-0 ring-1 ring-white/20">
                          <Volume2 className="w-6 h-6" />
                       </div>
-                      <div className="relative z-10">
-                         <h3 className="font-serif text-lg text-white mb-1 flex items-center gap-2">
-                           Coach Vocal IA (30 min)
+                      <div className="relative z-10 space-y-3">
+                         <h3 className="font-serif text-xl text-white flex items-center gap-2">
+                           🎙️ Coach Vocal IA – 30 minutes
                            <span className="text-[10px] bg-[#C9A24D] text-[#2C2F4A] px-2 py-0.5 rounded-full font-bold uppercase tracking-wide">Exclusif</span>
                          </h3>
-                         <p className="text-sm text-white/70 leading-relaxed">
-                           Posez toutes vos questions à l'oral. Votre avatar vous répond instantanément avec une sagesse personnalisée.
-                         </p>
+                         <div className="text-sm text-white/70 leading-relaxed space-y-2">
+                           <p>
+                             Posez vos questions à l’oral. Votre avatar vous répond en temps réel, avec des réponses cohérentes avec votre profil personnel.
+                           </p>
+                           <p className="text-[#C9A24D] font-bold text-xs uppercase tracking-wide pt-1">
+                             👉 Pour aller plus loin que la lecture, et adapter les insights à votre situation actuelle.
+                           </p>
+                         </div>
                       </div>
                    </div>
 
                 </div>
 
                 {/* Right Col: Price & CTA (Span 5) */}
-                <div className="lg:col-span-5 flex flex-col justify-center bg-[#FAF9F7]/50 rounded-2xl p-8 border border-[#EFEDE9] text-center relative">
+                <div className="lg:col-span-5 flex flex-col justify-between bg-[#FAF9F7]/50 rounded-2xl p-8 border border-[#EFEDE9] text-center relative">
                    
-                   <div className="mb-6">
-                      <div className="text-sm text-[#2C2F4A]/40 line-through mb-1">Valeur réelle : 129€</div>
-                      <div className="text-6xl font-serif text-[#2C2F4A] font-bold tracking-tight">29€</div>
-                      <div className="text-[#C9A24D] text-sm font-bold uppercase tracking-widest mt-2">Paiement Unique</div>
-                   </div>
-
-                   <div className="space-y-4">
-                      <div className="flex flex-col gap-2 text-xs text-[#2C2F4A]/50 mb-4">
-                         <div className="flex items-center justify-center gap-2">
-                            <Shield className="w-4 h-4 text-[#C9A24D]" /> <span>Paiement 100% Sécurisé</span>
-                         </div>
-                         <div className="flex items-center justify-center gap-2">
-                            <span className="text-lg leading-none">⚡️</span> <span>Accès Immédiat par Email</span>
-                         </div>
+                   <div className="space-y-6">
+                      <div className="pt-4">
+                        <div className="text-base text-[#2C2F4A]/40 line-through mb-1 font-medium">💰 Valeur réelle : 129 €</div>
+                        <div className="text-5xl md:text-6xl font-serif text-[#2C2F4A] font-bold tracking-tight">29 €</div>
+                        <div className="text-[#C9A24D] text-xs font-bold uppercase tracking-widest mt-3 border border-[#C9A24D] px-3 py-1 rounded-full inline-block">
+                          🔓 Accès aujourd’hui — paiement unique
+                        </div>
                       </div>
 
+                      <div className="space-y-3 text-left max-w-xs mx-auto py-6 border-t border-b border-[#EFEDE9]">
+                         <div className="flex items-center gap-3 text-sm text-[#2C2F4A]/80">
+                            <div className="w-5 h-5 rounded-full bg-[#00B67A]/10 flex items-center justify-center text-[#00B67A] font-bold text-xs">✔</div>
+                            <span>Accès immédiat par email</span>
+                         </div>
+                         <div className="flex items-center gap-3 text-sm text-[#2C2F4A]/80">
+                            <div className="w-5 h-5 rounded-full bg-[#00B67A]/10 flex items-center justify-center text-[#00B67A] font-bold text-xs">✔</div>
+                            <span>Paiement 100 % sécurisé</span>
+                         </div>
+                         <div className="flex items-center gap-3 text-sm text-[#2C2F4A]/80">
+                            <div className="w-5 h-5 rounded-full bg-[#00B67A]/10 flex items-center justify-center text-[#00B67A] font-bold text-xs">✔</div>
+                            <span>Aucun abonnement</span>
+                         </div>
+                      </div>
+                   </div>
+
+                   <div className="space-y-4 mt-8">
                       {/* Option Livre Mention */}
-                      <div className="py-3 px-4 bg-white rounded-lg border border-[#C9A24D]/20 text-xs text-[#2C2F4A]/70 italic">
-                        <span className="font-bold text-[#5B4B8A] block mb-1 not-italic">🎁 Bonus Optionnel</span>
-                        Possibilité d'ajouter le <strong>Livre "Roman de Vie"</strong> à l'étape suivante.
+                      <div className="py-4 px-5 bg-white rounded-xl border border-[#C9A24D]/20 text-sm text-[#2C2F4A]/80 text-left shadow-sm">
+                        <span className="font-bold text-[#5B4B8A] block mb-1 text-xs uppercase tracking-wide">🎁 Bonus optionnel (à l’étape suivante)</span>
+                        <p className="leading-snug text-xs md:text-sm">
+                          Ajoutez le livre <strong>« Roman de Vie »</strong>. Une narration personnalisée de votre trajectoire, pour intégrer ces prises de conscience sur le long terme.
+                        </p>
                       </div>
                       
                       <button 
                         onClick={onStart}
-                        className="w-full py-4 bg-[#2C2F4A] text-white rounded-xl font-bold text-lg shadow-xl hover:bg-[#C9A24D] hover:text-[#2C2F4A] transition-all flex items-center justify-center gap-2 mt-2 group"
+                        className="w-full py-4 bg-[#2C2F4A] text-white rounded-xl font-bold text-lg shadow-xl hover:bg-[#C9A24D] hover:text-[#2C2F4A] transition-all flex items-center justify-center gap-2 mt-4 group"
                       >
                         <Play className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
                         Obtenir mon accès immédiat

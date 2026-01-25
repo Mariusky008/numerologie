@@ -103,7 +103,7 @@ export default function DemoRevealPage() {
                 {!videoEnded ? (
                   <>
                     <video 
-                      src="/Ton Parcours de Vie.mp4" 
+                      src="/acceuil.mp4" 
                       className={`w-full h-full object-cover transition-opacity duration-500 ${isPlaying ? 'opacity-100' : 'opacity-60'}`}
                       playsInline
                     />

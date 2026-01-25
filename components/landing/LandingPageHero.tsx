@@ -129,7 +129,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              className="text-center max-w-2xl mx-auto"
           >
             <h2 className="text-lg md:text-xl text-[#2C2F4A]/80 font-light leading-relaxed">
-              Laissez <strong className="font-bold text-[#5B4B8A]">votre avatar personnel</strong> vous expliquer votre thème de vie, sans jargon ni détours. Découvrez enfin qui vous êtes vraiment.
+              <strong className="font-bold text-[#5B4B8A]">Je te révèle ce que tu ne vois pas encore.</strong> Laissez votre avatar personnel vous expliquer votre thème de vie, sans jargon ni détours. Découvrez enfin qui vous êtes vraiment.
             </h2>
           </motion.div>
 
@@ -196,7 +196,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               {/* Avatar Video Preview */}
               <video 
                 ref={videoRef}
-                src="/Ton Parcours de Vie.mp4" 
+                src="/video PA.mp4" 
                 // muted: Removed to ensure sound is ON when user clicks play
                 // autoPlay: Removed to prevent silent playback
                 // loop: Removed to stop at end
@@ -316,7 +316,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       {/* Photo Avatar (La même que la vidéo) */}
                       <div className="w-full h-full rounded-full overflow-hidden shadow-2xl relative z-10 bg-[#2C2F4A]">
                         <video 
-                          src="/Ton Parcours de Vie.mp4" 
+                          src="/video PA.mp4" 
                           muted 
                           autoPlay 
                           loop 
@@ -347,7 +347,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       <div className="flex items-center gap-3 animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300 fill-mode-both">
                          <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20 shrink-0 bg-[#2C2F4A]">
                             <video 
-                              src="/Ton Parcours de Vie.mp4" 
+                              src="/acceuil.mp4" 
                               muted 
                               autoPlay 
                               loop 

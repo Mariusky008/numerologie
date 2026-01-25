@@ -92,7 +92,7 @@ export default function KeyNumbersSection({ results, userData, areCardsLocked = 
                    {/* Left: Video Preview Area (Large) */}
                    <div className="md:w-5/12 relative min-h-[300px] bg-black">
                       <video 
-                        src="/Ton Parcours de Vie.mp4" 
+                        src="/acceuil.mp4" 
                         className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-700"
                         muted loop autoPlay playsInline
                       />

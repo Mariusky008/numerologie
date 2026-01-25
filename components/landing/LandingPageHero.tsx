@@ -433,6 +433,27 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           </div>
       </section>
 
+      {/* 🧩 SECTION 1.5 — POURQUOI C'EST DIFFERENT */}
+      <section className="py-16 px-6 bg-[#FAF9F7] border-b border-[#EFEDE9]">
+        <div className="max-w-3xl mx-auto text-center space-y-8">
+          <h2 className="text-2xl md:text-3xl font-serif text-[#2C2F4A]">
+            Pourquoi cette lecture est différente :
+          </h2>
+          <div className="space-y-6 text-lg text-[#2C2F4A]/80 leading-relaxed font-light">
+            <p>
+              Nos comportements ne sont pas aléatoires.<br className="hidden md:block" />
+              Ils reposent sur des schémas inconscients construits très tôt, qui influencent nos décisions, nos relations et nos trajectoires de vie.
+            </p>
+            <p>
+              <strong className="font-bold text-[#5B4B8A]">Cette lecture identifie ces schémas récurrents et les rend visibles.</strong>
+            </p>
+            <p>
+              En croisant numérologie et astrologie de manière structurée, nous mettons en lumière des patterns qui se répètent — tant qu’ils restent inconscients.
+            </p>
+          </div>
+        </div>
+      </section>
+
 
       {/* 🧩 SECTION 2 — TÉMOIGNAGE UNIQUE */}
       <section className="py-16 px-6 bg-white border-y border-[#EFEDE9]">

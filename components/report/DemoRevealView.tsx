@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Play, Lock, Star, ArrowRight, ShieldCheck, Sparkles, Brain, Heart, Zap, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { 
@@ -29,9 +29,13 @@ export default function DemoRevealView({ userData, results }: DemoRevealViewProp
 
   const [videoEnded, setVideoEnded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const handlePlay = () => {
     setIsPlaying(true);
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
     trackEvent('video_play_demo');
     setTimeout(() => {
       setIsPlaying(false);
@@ -122,6 +126,7 @@ export default function DemoRevealView({ userData, results }: DemoRevealViewProp
                 {!videoEnded ? (
                   <>
                     <video 
+                      ref={videoRef}
                       src="/videopa.mp4" 
                       className={`w-full h-full object-cover transition-opacity duration-500 ${isPlaying ? 'opacity-100' : 'opacity-60'}`}
                       playsInline

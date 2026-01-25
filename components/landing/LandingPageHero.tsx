@@ -196,7 +196,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               {/* Avatar Video Preview */}
               <video 
                 ref={videoRef}
-                src="/video PA.mp4" 
+                src="/acceuil.mp4" 
                 // muted: Removed to ensure sound is ON when user clicks play
                 // autoPlay: Removed to prevent silent playback
                 // loop: Removed to stop at end

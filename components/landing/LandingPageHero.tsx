@@ -248,7 +248,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
               className="w-full md:w-auto px-8 py-5 bg-[#2C2F4A] text-white rounded-full font-bold text-lg md:text-xl shadow-[0_10px_30px_-10px_rgba(44,47,74,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto"
             >
               <Play className="w-5 h-5 fill-current" />
-              Découvrez ce que votre avatar dit de vous
+              Voir ma lecture en 5 min maintenant
             </button>
             <div className="mt-4 max-w-sm mx-auto">
                <strong className="text-[#5B4B8A] font-bold block text-sm mb-1">Le résumé de votre Thème Astrologique et Numérologique OFFERT</strong>

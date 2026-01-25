@@ -316,7 +316,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       {/* Photo Avatar (La même que la vidéo) */}
                       <div className="w-full h-full rounded-full overflow-hidden shadow-2xl relative z-10 bg-[#2C2F4A]">
                         <video 
-                          src="/video PA.mp4" 
+                          src="/acceuil.mp4" 
                           muted 
                           autoPlay 
                           loop 

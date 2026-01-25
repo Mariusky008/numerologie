@@ -32,10 +32,11 @@ export default function DemoRevealPage() {
     if (videoRef.current) {
       videoRef.current.play();
     }
-    setTimeout(() => {
-      setIsPlaying(false);
-      setVideoEnded(true);
-    }, 8000);
+  };
+
+  const handleVideoEnd = () => {
+    setIsPlaying(false);
+    setVideoEnded(true);
   };
 
   return (
@@ -111,6 +112,7 @@ export default function DemoRevealPage() {
                       src="/videopa.mp4" 
                       className={`w-full h-full object-cover transition-opacity duration-500 ${isPlaying ? 'opacity-100' : 'opacity-60'}`}
                       playsInline
+                      onEnded={handleVideoEnd}
                     />
                     
                     {!isPlaying && (
@@ -133,7 +135,7 @@ export default function DemoRevealPage() {
                          className="h-full bg-[#C9A24D]" 
                          initial={{ width: "0%" }}
                          animate={{ width: isPlaying ? "100%" : "0%" }}
-                         transition={{ duration: 8, ease: "linear" }}
+                         transition={{ duration: 300, ease: "linear" }}
                        />
                     </div>
                   </>

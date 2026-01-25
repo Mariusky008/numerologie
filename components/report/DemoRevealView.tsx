@@ -37,11 +37,12 @@ export default function DemoRevealView({ userData, results }: DemoRevealViewProp
       videoRef.current.play();
     }
     trackEvent('video_play_demo');
-    setTimeout(() => {
-      setIsPlaying(false);
-      setVideoEnded(true);
-      trackEvent('video_ended_paywall');
-    }, 8000);
+  };
+
+  const handleVideoEnd = () => {
+    setIsPlaying(false);
+    setVideoEnded(true);
+    trackEvent('video_ended_paywall');
   };
 
   const handleUnlock = () => {
@@ -152,7 +153,7 @@ export default function DemoRevealView({ userData, results }: DemoRevealViewProp
                          className="h-full bg-[#C9A24D]" 
                          initial={{ width: "0%" }}
                          animate={{ width: isPlaying ? "100%" : "0%" }}
-                         transition={{ duration: 8, ease: "linear" }}
+                         transition={{ duration: 120, ease: "linear" }}
                        />
                     </div>
                   </>

@@ -116,9 +116,9 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#2C2F4A] leading-[1.1] text-center mb-6"
+            className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#2C2F4A] leading-[1.1] text-center mb-6"
           >
-            Votre histoire révélée<br/> en <span className="text-[#C9A24D]">5 minutes</span>
+            Comprends enfin pourquoi tu répètes les mêmes choix — et comment en sortir.
           </motion.h1>
 
           {/* Sous-titre / Description */}
@@ -126,11 +126,16 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              initial={{ opacity: 0 }}
              animate={{ opacity: 1 }}
              transition={{ delay: 0.2 }}
-             className="text-center max-w-2xl mx-auto"
+             className="text-center max-w-3xl mx-auto space-y-4"
           >
             <h2 className="text-lg md:text-xl text-[#2C2F4A]/80 font-light leading-relaxed">
-              <strong className="font-bold text-[#5B4B8A]">Je te révèle ce que tu ne vois pas encore.</strong> Laissez votre avatar personnel vous expliquer votre thème de vie, sans jargon ni détours. Découvrez enfin qui vous êtes vraiment.
+              En <span className="text-[#C9A24D] font-bold">5 minutes</span>, identifie les schémas invisibles qui influencent tes décisions, tes relations et ton parcours professionnel — et apprends comment les corriger.
             </h2>
+            
+            {/* Phrase de clarification */}
+            <p className="text-sm md:text-base text-[#2C2F4A]/60 italic font-medium">
+              "Ce n’est pas une prédiction. C’est une lecture claire de tes mécanismes de décision, construite à partir de données personnelles objectives."
+            </p>
           </motion.div>
 
           {/* Preuve Sociale (Seulement) */}

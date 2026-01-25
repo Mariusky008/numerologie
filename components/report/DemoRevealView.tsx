@@ -68,6 +68,26 @@ export default function DemoRevealView({ userData, results }: DemoRevealViewProp
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
       </div>
 
+      {/* DEBUG BUTTON - ACCES RAPIDE RAPPORT */}
+      <div className="fixed top-24 left-4 z-50">
+        <button
+          onClick={() => {
+            const params = new URLSearchParams({
+                fn: userData.firstName,
+                ln: userData.lastName,
+                bd: userData.birthDate,
+                bp: userData.birthPlace || '',
+                fo: userData.focus,
+                origin: 'demo_reveal_debug'
+            });
+            router.push(`/pdf-report?${params.toString()}`);
+          }}
+          className="bg-red-600 text-white px-4 py-2 rounded-full font-bold shadow-lg hover:bg-red-700 text-xs border border-white/20"
+        >
+          [TEST] Rapport Complet
+        </button>
+      </div>
+
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-8 flex flex-col min-h-screen">
         
         {/* HEADER SIMPLE */}

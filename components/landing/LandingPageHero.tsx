@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Play, Shield, Smartphone, User, Compass, Eye, FileText, ArrowRight, Volume2, VolumeX, BookOpen, Mic, Sparkles, Star } from 'lucide-react';
+import { Play, Shield, Smartphone, User, Compass, Eye, FileText, ArrowRight, Volume2, VolumeX, BookOpen, Mic, Sparkles, Star, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface LandingPageProps {
@@ -9,6 +9,15 @@ interface LandingPageProps {
 export default function LandingPageHero({ onStart }: LandingPageProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [isStarting, setIsStarting] = useState(false);
+
+  const handleStart = () => {
+    setIsStarting(true);
+    // Allow UI to update before triggering the next step
+    setTimeout(() => {
+      onStart();
+    }, 50);
+  };
   
   // States for Preview Video
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
@@ -244,11 +253,16 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             className="pb-8 flex flex-col items-center text-center"
           >
             <button 
-              onClick={onStart}
-              className="w-full md:w-auto px-8 py-5 bg-[#2C2F4A] text-white rounded-full font-bold text-lg md:text-xl shadow-[0_10px_30px_-10px_rgba(44,47,74,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto"
+              onClick={handleStart}
+              disabled={isStarting}
+              className="w-full md:w-auto px-8 py-5 bg-[#2C2F4A] text-white rounded-full font-bold text-lg md:text-xl shadow-[0_10px_30px_-10px_rgba(44,47,74,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto disabled:opacity-80 disabled:hover:scale-100 disabled:cursor-wait"
             >
-              <Play className="w-5 h-5 fill-current" />
-              Voir ma lecture en 5 min maintenant
+              {isStarting ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                <Play className="w-5 h-5 fill-current" />
+              )}
+              {isStarting ? "Chargement..." : "Voir ma lecture en 5 min maintenant"}
             </button>
             <div className="mt-4 max-w-sm mx-auto">
                <strong className="text-[#5B4B8A] font-bold block text-sm mb-1">Le résumé de votre Thème Astrologique et Numérologique OFFERT</strong>
@@ -420,11 +434,16 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                    
                    <div className="mt-8 flex justify-center md:justify-start">
                       <button 
-                        onClick={onStart}
-                        className="px-8 py-4 bg-[#C9A24D] text-[#2C2F4A] rounded-full font-bold shadow-[0_10px_20px_-5px_rgba(201,162,77,0.4)] hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-2 group"
+                        onClick={handleStart}
+                        disabled={isStarting}
+                        className="px-8 py-4 bg-[#C9A24D] text-[#2C2F4A] rounded-full font-bold shadow-[0_10px_20px_-5px_rgba(201,162,77,0.4)] hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-2 group disabled:opacity-80 disabled:hover:scale-100 disabled:cursor-wait"
                       >
-                        <Play className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
-                        Découvrir mon avatar maintenant
+                        {isStarting ? (
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                        ) : (
+                          <Play className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
+                        )}
+                        {isStarting ? "Chargement..." : "Découvrir mon avatar maintenant"}
                       </button>
                    </div>
                 </div>
@@ -639,11 +658,16 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       </div>
                       
                       <button 
-                        onClick={onStart}
-                        className="w-full py-4 bg-[#2C2F4A] text-white rounded-xl font-bold text-lg shadow-xl hover:bg-[#C9A24D] hover:text-[#2C2F4A] transition-all flex items-center justify-center gap-2 mt-4 group"
+                        onClick={handleStart}
+                        disabled={isStarting}
+                        className="w-full py-4 bg-[#2C2F4A] text-white rounded-xl font-bold text-lg shadow-xl hover:bg-[#C9A24D] hover:text-[#2C2F4A] transition-all flex items-center justify-center gap-2 mt-4 group disabled:opacity-80 disabled:hover:bg-[#2C2F4A] disabled:hover:text-white disabled:cursor-wait"
                       >
-                        <Play className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
-                        Obtenir mon accès immédiat
+                        {isStarting ? (
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                        ) : (
+                          <Play className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
+                        )}
+                        {isStarting ? "Chargement..." : "Obtenir mon accès immédiat"}
                       </button>
                    </div>
                 </div>
@@ -802,11 +826,16 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                
                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
                   <button 
-                    onClick={onStart}
-                    className="px-8 py-4 bg-[#C9A24D] text-[#2C2F4A] rounded-full font-bold shadow-lg hover:bg-white transition-all flex items-center justify-center gap-2 group"
+                    onClick={handleStart}
+                    disabled={isStarting}
+                    className="px-8 py-4 bg-[#C9A24D] text-[#2C2F4A] rounded-full font-bold shadow-lg hover:bg-white transition-all flex items-center justify-center gap-2 group disabled:opacity-80 disabled:hover:bg-[#C9A24D] disabled:cursor-wait"
                   >
-                    <Play className="w-4 h-4 fill-current group-hover:scale-110 transition-transform" />
-                    Voir votre lecture complète
+                    {isStarting ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Play className="w-4 h-4 fill-current group-hover:scale-110 transition-transform" />
+                    )}
+                    {isStarting ? "Chargement..." : "Voir votre lecture complète"}
                   </button>
                </div>
             </motion.div>
@@ -817,11 +846,16 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
       {/* 🧩 SECTION 5 — CTA FINAL */}
       <section className="py-12 px-6 bg-[#2C2F4A] text-center border-t border-white/10">
         <button 
-          onClick={onStart}
-          className="w-full md:w-auto px-10 py-5 bg-[#FAF9F7] text-[#2C2F4A] rounded-full font-bold text-xl shadow-lg hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-3 mx-auto"
+          onClick={handleStart}
+          disabled={isStarting}
+          className="w-full md:w-auto px-10 py-5 bg-[#FAF9F7] text-[#2C2F4A] rounded-full font-bold text-xl shadow-lg hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-3 mx-auto disabled:opacity-80 disabled:hover:scale-100 disabled:cursor-wait"
         >
-          <Play className="w-5 h-5 fill-current" />
-          Votre avatar vous montre vos forces et vos blocages
+          {isStarting ? (
+            <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+            <Play className="w-5 h-5 fill-current" />
+          )}
+          {isStarting ? "Chargement..." : "Votre avatar vous montre vos forces et vos blocages"}
         </button>
 
         {/* Trust Badges (Nouveau) */}
@@ -879,7 +913,16 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             <h4 className="font-bold text-[#C9A24D] uppercase tracking-wider text-xs">Navigation</h4>
             <ul className="space-y-3 text-sm text-white/60">
               <li><a href="#" className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3 opacity-50" /> Accueil</a></li>
-              <li><button onClick={onStart} className="hover:text-white transition-colors flex items-center gap-2 text-left"><ArrowRight className="w-3 h-3 opacity-50" /> Commencer l'expérience</button></li>
+              <li>
+                <button 
+                  onClick={handleStart} 
+                  disabled={isStarting}
+                  className="hover:text-white transition-colors flex items-center gap-2 text-left disabled:opacity-50 disabled:cursor-wait"
+                >
+                  {isStarting ? <Loader2 className="w-3 h-3 animate-spin" /> : <ArrowRight className="w-3 h-3 opacity-50" />} 
+                  Commencer l'expérience
+                </button>
+              </li>
               <li><a href="mailto:contact@votrelegende.fr" className="hover:text-white transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3 opacity-50" /> Support Client</a></li>
             </ul>
           </div>

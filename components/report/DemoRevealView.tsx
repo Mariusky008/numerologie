@@ -122,7 +122,7 @@ export default function DemoRevealView({ userData, results }: DemoRevealViewProp
                 {!videoEnded ? (
                   <>
                     <video 
-                      src="/acceuil.mp4" 
+                      src="/videopa.mp4" 
                       className={`w-full h-full object-cover transition-opacity duration-500 ${isPlaying ? 'opacity-100' : 'opacity-60'}`}
                       playsInline
                     />

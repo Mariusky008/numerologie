@@ -273,30 +273,31 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                className="text-center"
             >
                <h3 className="text-2xl md:text-3xl font-serif text-[#2C2F4A] mb-10 leading-tight">
-                 En <span className="text-[#C9A24D]">5 minutes de vidéo</span>, votre avatar vous révèle :
+                 Concrètement, qu’est-ce que ça change pour toi ?
                </h3>
                
                <ul className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left max-w-3xl mx-auto">
                  <li className="flex items-start gap-4 bg-[#FAF9F7] p-5 rounded-2xl border border-[#EFEDE9] hover:border-[#C9A24D]/30 transition-colors">
                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-sm shadow-sm">✓</div>
-                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Ce que vous portez profondément</span>
+                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Comprendre pourquoi certaines situations reviennent toujours dans ta vie</span>
                  </li>
                  <li className="flex items-start gap-4 bg-[#FAF9F7] p-5 rounded-2xl border border-[#EFEDE9] hover:border-[#C9A24D]/30 transition-colors">
                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-sm shadow-sm">✓</div>
-                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Ce que vous traversez en ce moment</span>
+                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Mettre des mots clairs sur ce que tu ressens sans réussir à l’expliquer</span>
                  </li>
                  <li className="flex items-start gap-4 bg-[#FAF9F7] p-5 rounded-2xl border border-[#EFEDE9] hover:border-[#C9A24D]/30 transition-colors">
                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-sm shadow-sm">✓</div>
-                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Les grandes dynamiques de votre vie</span>
+                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Identifier ce qui te freine inconsciemment dans tes choix</span>
                  </li>
                  <li className="flex items-start gap-4 bg-[#FAF9F7] p-5 rounded-2xl border border-[#EFEDE9] hover:border-[#C9A24D]/30 transition-colors">
                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-sm shadow-sm">✓</div>
-                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Vos forces et vos défis récurrents</span>
+                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Prendre des décisions plus alignées, sans douter pendant des semaines</span>
+                 </li>
+                 <li className="flex items-start gap-4 bg-[#FAF9F7] p-5 rounded-2xl border border-[#EFEDE9] hover:border-[#C9A24D]/30 transition-colors md:col-span-2">
+                   <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0 text-[#C9A24D] font-bold text-sm shadow-sm">✓</div>
+                   <span className="text-[#2C2F4A]/80 font-medium text-base pt-1">Arrêter de reproduire les mêmes erreurs relationnelles ou professionnelles</span>
                  </li>
                </ul>
-               <p className="text-sm text-center pt-8 italic text-[#2C2F4A]/50">
-                 "Sans jargon. Sans discours flou. Sans promesses irréalistes."
-               </p>
             </motion.div>
 
             {/* 2. Chat Feature Promo (Redesigned & Narrative) */}

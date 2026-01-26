@@ -2,7 +2,7 @@
 import PageContainer from './PageContainer';
 import { UserData, NumerologyResult } from '@/lib/types';
 import { NameData } from '@/lib/numerology/db_etymology';
-import { PLANET_INFLUENCES, ZODIAC_DETAILS, PLACE_VIBRATIONS, RESONANCE_DETAILS } from '@/lib/numerology/interpretations-astro-geo';
+import { PLANET_INFLUENCES, ZODIAC_DETAILS, PLACE_VIBRATIONS, RESONANCE_DETAILS, HOUSE_MEANINGS } from '@/lib/numerology/interpretations-astro-geo';
 
 // Helper to calculate word value
 const calculateWordValue = (word: string) => {
@@ -44,6 +44,7 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
   // Use zodiac info based on real zodiac if available
   const zodiacInfoKey = realZodiac ? realZodiac.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : zodiacKey;
   const zodiacInfo = zodiacInfoKey ? ZODIAC_DETAILS[zodiacInfoKey] : null;
+  const houseInfo = realHouse ? HOUSE_MEANINGS[realHouse as number] : null;
 
   return (
     <PageContainer className="p-4 md:p-16">
@@ -97,6 +98,22 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
                        <strong className="text-[#C9A24D] block mb-1">Vocation</strong>
                        <p>{results.advancedProfile.mcData.vocation}</p>
                      </div>
+                   </div>
+                 )}
+                 
+                 {/* ASCENDANT & MAISON (Si dispo) */}
+                 {results.realAstro && (
+                   <div className="mt-4 pt-4 border-t border-[#C9A24D]/10 space-y-3">
+                     <div className="flex justify-between items-center bg-[#2C2F4A] text-white p-3 rounded-lg">
+                       <span className="text-xs uppercase tracking-widest">Ascendant</span>
+                       <span className="font-serif font-bold text-lg">{ascendant}</span>
+                     </div>
+                     {houseInfo && (
+                       <div className="text-xs text-[#2C2F4A]/80 bg-[#FAF9F7] p-3 rounded-lg border border-[#C9A24D]/10">
+                         <div className="font-bold text-[#5B4B8A] mb-1">Position Solaire : {houseInfo.title}</div>
+                         <p className="italic leading-relaxed">"{houseInfo.sunContext}"</p>
+                       </div>
+                     )}
                    </div>
                  )}
                  

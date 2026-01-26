@@ -16,6 +16,8 @@ import Part5Future from './parts/Part5Future';
 import Part6Integration from './parts/Part6Integration';
 import Part7ConclusionKeys from './parts/Part7ConclusionKeys';
 import Part8Forecast from './parts/Part8Forecast';
+import PartAstroV2 from './parts/PartAstroV2';
+import PartMasterNumbers from './parts/PartMasterNumbers';
 import { Check } from 'lucide-react';
 import { PEDAGOGY_CONTENT } from '@/lib/numerology/modules/pedagogy';
 import { TRAINING_30D } from '@/lib/numerology/modules/training30d';
@@ -105,6 +107,9 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
             </ul>
           </div>
         </div>
+
+        {/* 2.5 NOMBRES MAÎTRES (Si présents) */}
+        <PartMasterNumbers userData={userData} results={results} />
 
         {/* 3. ANTHROPONYMIE */}
         {nameSignature && (
@@ -253,87 +258,8 @@ export default function FullReportV3({ userData, results, etymology }: FullRepor
           <Part6Integration userData={userData} results={results} />
         </div>
 
-        {/* 8. ARCHITECTURE ASTRALE */}
-        {results.advancedProfile && (
-           <div className="bg-white p-8 rounded-2xl border border-[#EFEDE9] shadow-sm mb-12">
-             <h3 className="text-2xl font-serif text-[#2C2F4A] mb-2 flex items-center gap-3">
-               <span className="text-[#C9A24D]">VII.</span> Architecture Astrale
-             </h3>
-             <p className="text-xs text-[#8FA6A0] italic mb-6 text-justify">
-               * Les positions planétaires en signes peuvent être déterminées à partir de la date de naissance. En revanche, sans l’heure et le lieu exacts, l’Ascendant et la position des planètes en Maisons ne peuvent pas être calculés avec précision : ils sont donc présentés ici à titre indicatif (approximation). Pour une carte du ciel exacte, veuillez fournir l’heure et la ville de naissance.
-             </p>
-
-             {/* Pedagogie Maisons */}
-             <div className="mb-8 bg-[#FAF9F7] p-6 rounded-xl border border-[#C9A24D]/20">
-               <h4 className="font-serif text-[#2C2F4A] text-lg mb-2">Comprendre les Maisons Astrologiques</h4>
-               <p className="text-[#2C2F4A]/80 text-sm mb-4 leading-relaxed">
-                 Les signes et planètes décrivent <strong>comment</strong> vous fonctionnez. Les maisons indiquent <strong>où</strong> cette énergie s’exprime concrètement. C'est la carte de vos domaines de vie.
-               </p>
-               <details className="group">
-                 <summary className="cursor-pointer text-[#C9A24D] text-sm font-bold flex items-center gap-2">
-                   <span>Voir les 12 domaines de vie</span>
-                   <span className="group-open:rotate-180 transition-transform">▼</span>
-                 </summary>
-                 <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-[#2C2F4A]/70">
-                   {Object.entries(HOUSE_MEANINGS).map(([num, h]) => (
-                     <div key={num}><span className="font-bold text-[#5B4B8A]">{h.title} :</span> {h.keywords}</div>
-                   ))}
-                 </div>
-               </details>
-             </div>
-
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Zodiac */}
-                <div className="bg-[#FAF9F7] p-6 rounded-xl border border-[#C9A24D]/10">
-                   <div className="flex items-center gap-4 mb-4">
-                     <div className="text-4xl">♈</div>
-                     <div>
-                       <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Signe Solaire</div>
-                       <div className="text-xl font-serif text-[#2C2F4A] font-bold">{zodiac}</div>
-                       {results.realAstro && (
-                         <div className="text-xs text-[#C9A24D] mt-1 space-y-1">
-                           <div>Ascendant : <span className="font-bold">{ascendant}</span></div>
-                           {houseInfo && (
-                             <div className="mt-2 border-t border-[#C9A24D]/20 pt-2">
-                               <div className="font-bold text-[#2C2F4A] mb-1">Soleil en {houseInfo.title}</div>
-                               <div className="text-[#2C2F4A]/70 italic leading-snug">
-                                 "{houseInfo.sunContext}"
-                               </div>
-                             </div>
-                           )}
-                         </div>
-                       )}
-                     </div>
-                   </div>
-                   {zodiacInfo && (
-                     <div className="flex gap-2 mb-4">
-                       <span className="px-3 py-1 bg-white text-[#5B4B8A] text-xs rounded-full uppercase tracking-wider font-bold border border-[#5B4B8A]/10">{zodiacInfo.element}</span>
-                       <span className="px-3 py-1 bg-white text-[#5B4B8A] text-xs rounded-full uppercase tracking-wider font-bold border border-[#5B4B8A]/10">{zodiacInfo.quality}</span>
-                     </div>
-                   )}
-                   {zodiacInfo && (
-                     <p className="mt-4 text-[#2C2F4A]/70 italic text-xs leading-relaxed border-t border-[#C9A24D]/10 pt-3">
-                       "{zodiacInfo.description}"
-                     </p>
-                   )}
-                </div>
-                {/* Planet */}
-                <div className="bg-[#FAF9F7] p-6 rounded-xl border border-[#C9A24D]/10">
-                   <div className="flex items-center gap-4 mb-4">
-                     <div className="text-4xl">🪐</div>
-                     <div>
-                       <div className="text-xs uppercase tracking-widest text-[#8FA6A0]">Planète Dominante</div>
-                       <div className="text-xl font-serif text-[#2C2F4A] font-bold">{planet}</div>
-                     </div>
-                   </div>
-                   <div className="text-sm text-[#2C2F4A]/80 leading-relaxed space-y-3">
-                     <p className="font-medium text-[#5B4B8A]">Maître du Chemin de Vie {results.lifePath}</p>
-                     <p>{planetText}</p>
-                   </div>
-                </div>
-             </div>
-           </div>
-        )}
+        {/* 8. ARCHITECTURE ASTRALE (REFONTE V2) */}
+        <PartAstroV2 userData={userData} results={results} etymology={etymology} />
 
         {/* 9. ÉCHOS ÉTYMOLOGIQUES */}
         {etymology && (

@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { render } from '@react-email/render';
-import { EmailReport, EmailDeliverables, EmailConfirmation, EmailUpsellBook } from '@/components/emails/Templates';
+import { EmailReport, EmailDeliverables, EmailConfirmation, EmailUpsellBook, EmailExpertFollowUp } from '@/components/emails/Templates';
 
 export default function EmailPreviewPage() {
-  const [activeTab, setActiveTab] = useState<'confirmation' | 'deliverables' | 'deliverables_book' | 'upsell'>('confirmation');
+  const [activeTab, setActiveTab] = useState<'confirmation' | 'deliverables' | 'deliverables_book' | 'upsell' | 'expert_followup'>('confirmation');
   const [isPaper, setIsPaper] = useState(false);
   const [htmlContent, setHtmlContent] = useState('');
 
@@ -47,6 +47,14 @@ export default function EmailPreviewPage() {
           <EmailUpsellBook 
             firstName="Jean-Philippe"
             upgradeLink="https://votrelegende.fr/upgrade-book"
+          />
+        );
+        break;
+      case 'expert_followup':
+        component = (
+          <EmailExpertFollowUp 
+            firstName="Jean-Philippe"
+            bookingLink="https://votrelegende.fr/expert-booking"
           />
         );
         break;
@@ -94,6 +102,12 @@ export default function EmailPreviewPage() {
               className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'upsell' ? 'bg-white shadow text-amber-600' : 'text-gray-500 hover:text-gray-700'}`}
             >
               3. Upsell Roman
+            </button>
+            <button 
+              onClick={() => setActiveTab('expert_followup')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'expert_followup' ? 'bg-white shadow text-pink-600' : 'text-gray-500 hover:text-gray-700'}`}
+            >
+              4. Relance Expert (J+5)
             </button>
           </div>
 

@@ -364,6 +364,62 @@ export const EmailVideo = ({
   </Html>
 );
 
+interface EmailExpertFollowUpProps {
+  firstName: string;
+  bookingLink: string;
+}
+
+export const EmailExpertFollowUp = ({
+  firstName,
+  bookingLink,
+}: EmailExpertFollowUpProps) => (
+  <Html>
+    <Head />
+    <Preview>Besoin d'éclaircir un point précis ?</Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Heading style={h1}>Parlez à un Expert 🔮</Heading>
+        <Text style={text}>Bonjour {firstName},</Text>
+        <Text style={text}>
+          Cela fait maintenant quelques jours que vous avez reçu votre analyse numérologique. J'espère que ces révélations vous aident à y voir plus clair.
+        </Text>
+        <Text style={text}>
+          Cependant, nous savons que certaines situations (amoureuses, professionnelles ou familiales) sont parfois trop complexes pour être résolues par un simple rapport écrit.
+        </Text>
+        
+        <Section style={highlightBox}>
+          <Heading as="h3" style={h3}>📞 Une voix pour vous guider</Heading>
+          <Text style={text}>
+            Parfois, on a juste besoin de parler à quelqu'un qui "voit" ce que les autres ne voient pas.
+          </Text>
+          <Text style={text}>
+            Nous avons sélectionné pour vous des experts certifiés (Numérologues, Tarologues, Voyants) disponibles immédiatement pour une consultation privée.
+          </Text>
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <Button style={button} href={bookingLink}>
+              Voir les experts disponibles
+            </Button>
+          </div>
+        </Section>
+
+        <Section style={box}>
+          <Heading as="h3" style={h3}>Pourquoi consulter ?</Heading>
+          <ul style={{ paddingLeft: '20px', margin: '10px 0', color: '#57534e' }}>
+            <li>Obtenir une réponse immédiate (Oui/Non)</li>
+            <li>Débloquer une situation amoureuse stagnante</li>
+            <li>Valider un choix professionnel important</li>
+          </ul>
+        </Section>
+
+        <Text style={footer}>
+          Service partenaire certifié. Satisfait ou remboursé.<br/>
+          L'équipe Votre Légende.
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+);
+
 const main = {
   backgroundColor: '#FAF9F7',
   fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',

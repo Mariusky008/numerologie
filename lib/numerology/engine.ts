@@ -89,9 +89,9 @@ export function reduceNumber(num: number): number {
 export function calculateLifePathDetailed(birthDate: string): NumberDetail {
   const [yearStr, monthStr, dayStr] = birthDate.split('-');
   
-  const sumDay = dayStr.split('').reduce((acc, c) => acc + parseInt(c), 0);
-  const sumMonth = monthStr.split('').reduce((acc, c) => acc + parseInt(c), 0);
-  const sumYear = yearStr.split('').reduce((acc, c) => acc + parseInt(c), 0);
+  const sumDay = parseInt(dayStr);
+  const sumMonth = parseInt(monthStr);
+  const sumYear = parseInt(yearStr);
   
   const total = sumDay + sumMonth + sumYear;
   return reduceNumberDetailed(total);

@@ -14,14 +14,22 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
   const handleStart = () => {
     setIsStarting(true);
     
-    // Pause videos to free up resources for the transition
-    if (videoRef.current) videoRef.current.pause();
-    if (previewVideoRef.current) previewVideoRef.current.pause();
+    // Aggressive video cleanup
+    const stopVideo = (ref: React.RefObject<HTMLVideoElement | null>) => {
+        if (ref.current) {
+            ref.current.pause();
+            ref.current.removeAttribute('src'); // Help GC
+            ref.current.load();
+        }
+    };
+    
+    stopVideo(videoRef);
+    stopVideo(previewVideoRef);
 
-    // Allow UI to update and show the loading state clearly
+    // Allow UI to update but keep it snappy
     setTimeout(() => {
       onStart();
-    }, 800);
+    }, 150);
   };
   
   // States for Preview Video

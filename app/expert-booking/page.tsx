@@ -4,6 +4,10 @@ import React from 'react';
 import { Calendar, Star, ShieldCheck, Clock, Phone, Video, User } from 'lucide-react';
 
 export default function ExpertBookingPage() {
+  // TODO: Remplacez ce lien par votre lien d'affiliation Wengo/Kang/Spiriteo
+  // Exemple Wengo (Goracash) : "https://www.wengo.fr/voyance/?tracker_id=VOTRE_ID"
+  const BOOKING_LINK = "https://www.wengo.fr/"; 
+
   return (
     <div className="min-h-screen bg-[#FAF9F7] font-sans text-[#2C2F4A]">
       
@@ -32,9 +36,8 @@ export default function ExpertBookingPage() {
           
           {/* Avatar Expert */}
           <div className="shrink-0 text-center">
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-lg overflow-hidden mx-auto mb-4 relative bg-gray-200">
-               {/* Placeholder pour photo astrologue */}
-               <User className="w-full h-full text-gray-400 p-8" />
+            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-lg overflow-hidden mx-auto mb-4 relative bg-[#2C2F4A]/5 flex items-center justify-center">
+               <div className="text-4xl">🔮</div>
             </div>
             <div className="flex justify-center gap-1 text-[#C9A24D] mb-1">
               <Star className="w-4 h-4 fill-current" />
@@ -43,20 +46,20 @@ export default function ExpertBookingPage() {
               <Star className="w-4 h-4 fill-current" />
               <Star className="w-4 h-4 fill-current" />
             </div>
-            <p className="text-xs text-gray-400">4.6/5 (120 avis)</p>
+            <p className="text-xs text-gray-400">4.9/5 (2500+ avis)</p>
           </div>
 
           {/* Bio Expert */}
           <div className="flex-1">
-            <h2 className="text-2xl font-serif font-bold mb-2">Marie D.</h2>
-            <p className="text-[#C9A24D] font-medium mb-4">Numérologue & Astrologue Humaniste • 15 ans d'expérience</p>
+            <h2 className="text-2xl font-serif font-bold mb-2">Les Meilleurs Experts Certifiés</h2>
+            <p className="text-[#C9A24D] font-medium mb-4">Numérologie • Astrologie • Tarologie • Voyance</p>
             <p className="text-gray-600 leading-relaxed mb-6">
-              "L'IA est un outil merveilleux pour calculer, mais seul l'humain peut ressentir. Je suis là pour vous aider à interpréter les nuances subtiles de votre thème et répondre aux questions que vous n'osez pas poser à une machine. Mon approche est bienveillante, directe et axée sur la solution."
+              "Parce que chaque situation est unique, nous avons sélectionné pour vous les meilleurs experts francophones. Que vous ayez besoin d'une réponse immédiate ou d'une analyse approfondie, trouvez le guide qui résonne avec vous parmi notre réseau de partenaires de confiance."
             </p>
             <div className="flex flex-wrap gap-3">
-              <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-600 font-medium">Compatibilité Amoureuse</span>
-              <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-600 font-medium">Orientation Pro</span>
-              <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-600 font-medium">Karma & Mission</span>
+              <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-600 font-medium">Disponibles 24/7</span>
+              <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-600 font-medium">100% Confidentiel</span>
+              <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-600 font-medium">Sélection Rigoureuse</span>
             </div>
           </div>
         </div>
@@ -72,35 +75,35 @@ export default function ExpertBookingPage() {
           <div className="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-shadow relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-full h-1 bg-gray-200 group-hover:bg-[#C9A24D] transition-colors"></div>
             <div className="mb-6">
-              <h4 className="text-xl font-bold mb-2">Consultation Flash</h4>
+              <h4 className="text-xl font-bold mb-2">Consultation Découverte</h4>
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-serif font-bold">29€</span>
-                <span className="text-gray-500">/ 15 min</span>
+                <span className="text-3xl font-serif font-bold">Dès 10€</span>
+                <span className="text-gray-500">/ 10 min</span>
               </div>
             </div>
             
             <ul className="space-y-4 mb-8 text-sm text-gray-600">
               <li className="flex gap-3">
                 <Clock className="w-5 h-5 text-[#C9A24D]" />
-                Focus sur 1 question précise
+                Réponse immédiate (sans RDV)
               </li>
               <li className="flex gap-3">
                 <Phone className="w-5 h-5 text-[#C9A24D]" />
-                Appel Audio ou Visio
+                Par Téléphone ou Chat
               </li>
               <li className="flex gap-3">
                 <ShieldCheck className="w-5 h-5 text-[#C9A24D]" />
-                Réponse immédiate et concrète
+                Idéal pour une question précise
               </li>
             </ul>
 
             <a 
-              href="https://calendly.com/contact-votrelegende" 
+              href={BOOKING_LINK}
               target="_blank" 
               rel="noopener noreferrer"
               className="block w-full text-center py-3 border-2 border-[#2C2F4A] text-[#2C2F4A] font-bold rounded-lg hover:bg-[#2C2F4A] hover:text-white transition-colors"
             >
-              Réserver un créneau
+              Voir les experts disponibles
             </a>
           </div>
 
@@ -110,38 +113,38 @@ export default function ExpertBookingPage() {
               RECOMMANDÉ
             </div>
             <div className="mb-6">
-              <h4 className="text-xl font-bold mb-2 text-[#C9A24D]">Thème Astral Profond</h4>
+              <h4 className="text-xl font-bold mb-2 text-[#C9A24D]">Consultation Approfondie</h4>
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-serif font-bold">79€</span>
-                <span className="text-gray-500">/ 45 min</span>
+                <span className="text-3xl font-serif font-bold">Sur Mesure</span>
+                <span className="text-gray-500">/ 30 à 60 min</span>
               </div>
             </div>
             
             <ul className="space-y-4 mb-8 text-sm text-gray-600">
               <li className="flex gap-3">
                 <Clock className="w-5 h-5 text-[#C9A24D]" />
-                Analyse complète & Prévisions 12 mois
+                Analyse complète de votre situation
               </li>
               <li className="flex gap-3">
                 <Video className="w-5 h-5 text-[#C9A24D]" />
-                Visio-conférence enregistrée
+                Experts les mieux notés (5 étoiles)
               </li>
               <li className="flex gap-3">
                 <ShieldCheck className="w-5 h-5 text-[#C9A24D]" />
-                Déblocage des nœuds karmiques
+                Spécialistes (Amour, Travail, Karma...)
               </li>
             </ul>
 
             <a 
-              href="https://calendly.com/contact-votrelegende" 
+              href={BOOKING_LINK}
               target="_blank" 
               rel="noopener noreferrer"
               className="block w-full text-center py-3 bg-[#C9A24D] text-white font-bold rounded-lg hover:bg-[#b08d42] transition-colors shadow-lg"
             >
-              Réserver maintenant
+              Choisir mon expert
             </a>
             <p className="text-center text-xs text-gray-400 mt-3">
-              Seulement 3 créneaux disponibles cette semaine
+              +150 experts connectés actuellement
             </p>
           </div>
 

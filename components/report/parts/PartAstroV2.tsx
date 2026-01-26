@@ -34,9 +34,13 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
   const realZodiac = results.realAstro?.['Sun']?.signe;
   const realAscendant = results.realAstro?.['Ascendant']?.signe;
   const realHouse = results.realAstro?.['Sun']?.maison;
+  const realMoon = results.realAstro?.['Moon']?.signe; // Signe Lunaire
+  const realMercury = results.realAstro?.['Mercury']?.signe; // Mercure
 
   const zodiac = realZodiac || (zodiacKey ? zodiacKey.charAt(0).toUpperCase() + zodiacKey.slice(1) : "");
   const ascendant = realAscendant || "Inconnu";
+  const moon = realMoon || "Inconnu";
+  const mercury = realMercury || "Inconnu";
 
   const planet = planetKey ? planetKey.charAt(0).toUpperCase() + planetKey.slice(1) : "";
   
@@ -45,6 +49,12 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
   const zodiacInfoKey = realZodiac ? realZodiac.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : zodiacKey;
   const zodiacInfo = zodiacInfoKey ? ZODIAC_DETAILS[zodiacInfoKey] : null;
   const houseInfo = realHouse ? HOUSE_MEANINGS[realHouse as number] : null;
+  
+  // Helpers for Lunar and Ascendant info (could be moved to a dedicated data file)
+  const getMoonInfo = (sign: string) => {
+    // Placeholder - In a real app, this should come from interpretations-astro-geo.ts
+    return "Votre monde émotionnel, vos besoins intimes et votre instinct.";
+  };
 
   return (
     <PageContainer className="p-4 md:p-16">
@@ -65,19 +75,19 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* ZODIAC CARD */}
+            {/* ZODIAC CARD (SUN) */}
             <div className="bg-white p-8 rounded-2xl border border-[#C9A24D]/20 shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
                <div className="absolute top-0 right-0 p-4 opacity-10 text-9xl font-serif pointer-events-none text-[#2C2F4A]">♈</div>
                
                <div className="relative z-10">
                  <div className="flex items-center gap-4 mb-6">
                    <div className="w-16 h-16 rounded-full bg-[#FAF9F7] border-2 border-[#C9A24D] flex items-center justify-center text-3xl shadow-sm">
-                     {/* Placeholder icon, could be dynamic based on sign */}
                      <span>☀️</span>
                    </div>
                    <div>
                      <div className="text-xs uppercase tracking-widest text-[#8FA6A0] font-bold">Signe Solaire</div>
                      <div className="text-3xl font-serif text-[#2C2F4A] font-bold">{zodiac}</div>
+                     <div className="text-xs text-[#C9A24D] mt-1">L'Essence du Moi</div>
                    </div>
                  </div>
 
@@ -88,44 +98,69 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
                    </div>
                  )}
 
-                 {results.advancedProfile.mcData && (
-                   <div className="space-y-4 text-sm text-[#2C2F4A] bg-[#FAF9F7] p-4 rounded-xl border border-[#C9A24D]/10">
-                     <div>
-                       <strong className="text-[#C9A24D] block mb-1">Image Publique</strong>
-                       <p>{results.advancedProfile.mcData.image_publique}</p>
-                     </div>
-                     <div>
-                       <strong className="text-[#C9A24D] block mb-1">Vocation</strong>
-                       <p>{results.advancedProfile.mcData.vocation}</p>
-                     </div>
-                   </div>
-                 )}
-                 
-                 {/* ASCENDANT & MAISON (Si dispo) */}
-                 {results.realAstro && (
-                   <div className="mt-4 pt-4 border-t border-[#C9A24D]/10 space-y-3">
-                     <div className="flex justify-between items-center bg-[#2C2F4A] text-white p-3 rounded-lg">
-                       <span className="text-xs uppercase tracking-widest">Ascendant</span>
-                       <span className="font-serif font-bold text-lg">{ascendant}</span>
-                     </div>
-                     {houseInfo && (
-                       <div className="text-xs text-[#2C2F4A]/80 bg-[#FAF9F7] p-3 rounded-lg border border-[#C9A24D]/10">
-                         <div className="font-bold text-[#5B4B8A] mb-1">Position Solaire : {houseInfo.title}</div>
-                         <p className="italic leading-relaxed">"{houseInfo.sunContext}"</p>
-                       </div>
-                     )}
-                   </div>
-                 )}
-                 
                  {zodiacInfo && (
-                   <p className="mt-6 text-[#2C2F4A] italic leading-relaxed border-l-2 border-[#C9A24D]/30 pl-4">
+                   <p className="text-[#2C2F4A] italic leading-relaxed border-l-2 border-[#C9A24D]/30 pl-4 text-sm">
                      "{zodiacInfo.description}"
                    </p>
                  )}
                </div>
             </div>
 
-            {/* PLANET CARD */}
+            {/* MOON CARD */}
+            {results.realAstro && (
+              <div className="bg-white p-8 rounded-2xl border border-[#5B4B8A]/20 shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
+                 <div className="absolute top-0 right-0 p-4 opacity-5 text-9xl font-serif pointer-events-none text-[#5B4B8A]">☽</div>
+                 
+                 <div className="relative z-10">
+                   <div className="flex items-center gap-4 mb-6">
+                     <div className="w-16 h-16 rounded-full bg-[#FAF9F7] border-2 border-[#5B4B8A] flex items-center justify-center text-3xl shadow-sm">
+                       <span>🌙</span>
+                     </div>
+                     <div>
+                       <div className="text-xs uppercase tracking-widest text-[#8FA6A0] font-bold">Signe Lunaire</div>
+                       <div className="text-3xl font-serif text-[#2C2F4A] font-bold">{moon}</div>
+                       <div className="text-xs text-[#5B4B8A] mt-1">L'Âme & Les Émotions</div>
+                     </div>
+                   </div>
+
+                   <p className="text-sm text-[#2C2F4A]/80 leading-relaxed">
+                     Votre Lune en <strong>{moon}</strong> révèle votre monde intérieur. C'est la part de vous qui ressent, qui a besoin de sécurité et qui réagit instinctivement. Contrairement au Soleil qui rayonne, la Lune ressent.
+                   </p>
+                 </div>
+              </div>
+            )}
+            
+            {/* ASCENDANT CARD */}
+            {results.realAstro && (
+              <div className="bg-[#2C2F4A] p-8 rounded-2xl border border-[#C9A24D]/20 shadow-sm relative overflow-hidden group hover:shadow-md transition-all text-white">
+                 <div className="relative z-10">
+                   <div className="flex items-center gap-4 mb-6">
+                     <div className="w-16 h-16 rounded-full bg-white/10 border-2 border-[#C9A24D] flex items-center justify-center text-3xl shadow-sm">
+                       <span>🏹</span>
+                     </div>
+                     <div>
+                       <div className="text-xs uppercase tracking-widest text-white/60 font-bold">Ascendant (AC)</div>
+                       <div className="text-3xl font-serif text-[#C9A24D] font-bold">{ascendant}</div>
+                       <div className="text-xs text-white/60 mt-1">Le Masque Social & La Destinée</div>
+                     </div>
+                   </div>
+
+                   <p className="text-sm text-white/80 leading-relaxed mb-4">
+                     L'Ascendant est la "porte d'entrée" de votre thème. Il décrit votre apparence, votre première impression sur les autres et la manière dont vous initiez les choses.
+                   </p>
+                   
+                   {houseInfo && (
+                     <div className="mt-4 pt-4 border-t border-white/10">
+                        <div className="text-xs uppercase tracking-widest text-[#C9A24D] mb-1">Position du Soleil</div>
+                        <div className="font-bold text-lg mb-1">{houseInfo.title}</div>
+                        <p className="text-xs text-white/60 italic">"{houseInfo.sunContext}"</p>
+                     </div>
+                   )}
+                 </div>
+              </div>
+            )}
+
+            {/* PLANET CARD (DOMINANTE) */}
             <div className="bg-white p-8 rounded-2xl border border-[#C9A24D]/20 shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
                <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-[#C9A24D]/5 rounded-full blur-3xl"></div>
                
@@ -147,12 +182,6 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
                    <p>
                      {planetText || `Votre Chemin de Vie ${results.lifePath} est gouverné par ${planet}. Cette influence colore votre destinée d'une énergie particulière.`}
                    </p>
-                   <div className="mt-6 p-4 bg-blue-50/50 rounded-lg border border-blue-100">
-                     <p className="text-blue-800 text-xs font-bold uppercase mb-1">Conseil d'Alignement</p>
-                     <p className="text-blue-900 italic">
-                       Intégrez l'énergie de {planet} pour fluidifier votre parcours. N'essayez pas de nager à contre-courant de cette vibration.
-                     </p>
-                   </div>
                  </div>
                </div>
             </div>

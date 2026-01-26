@@ -21,6 +21,54 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
     focus: 'amour'
   });
 
+  // Split fields state
+  const [dateParts, setDateParts] = useState({ day: '', month: '', year: '' });
+  const [timeParts, setTimeParts] = useState({ hour: '', minute: '' });
+
+  const updateDatePart = (part: 'day' | 'month' | 'year', value: string) => {
+    // Only allow numbers
+    if (value && !/^\d+$/.test(value)) return;
+    
+    // Max length checks
+    if (part === 'day' && value.length > 2) return;
+    if (part === 'month' && value.length > 2) return;
+    if (part === 'year' && value.length > 4) return;
+
+    const newParts = { ...dateParts, [part]: value };
+    setDateParts(newParts);
+
+    // Update main formData if all parts are present
+    if (newParts.day && newParts.month && newParts.year.length === 4) {
+      // Ensure DD and MM are 2 digits
+      const d = newParts.day.padStart(2, '0');
+      const m = newParts.month.padStart(2, '0');
+      const y = newParts.year;
+      updateField('birthDate', `${y}-${m}-${d}`);
+    } else {
+      // Clear if incomplete to prevent validation errors
+      updateField('birthDate', '');
+    }
+  };
+
+  const updateTimePart = (part: 'hour' | 'minute', value: string) => {
+    // Only allow numbers
+    if (value && !/^\d+$/.test(value)) return;
+    
+    // Max length check
+    if (value.length > 2) return;
+
+    const newParts = { ...timeParts, [part]: value };
+    setTimeParts(newParts);
+
+    if (newParts.hour && newParts.minute) {
+      const h = newParts.hour.padStart(2, '0');
+      const m = newParts.minute.padStart(2, '0');
+      updateField('birthTime', `${h}:${m}`);
+    } else {
+      updateField('birthTime', '');
+    }
+  };
+
   const handleNext = () => {
     // Step 0: Name
     if (step === 0 && (!formData.firstName || !formData.lastName)) return;
@@ -119,23 +167,58 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
               <div className="space-y-6">
                 <div>
                   <label className="block text-sm font-bold text-[#5B4B8A] mb-2 text-center uppercase tracking-wide">Date de Naissance</label>
-                  <input
-                    type="date"
-                    value={formData.birthDate}
-                    onChange={(e) => updateField('birthDate', e.target.value)}
-                    className="w-full bg-transparent border-b-2 border-[#C9A24D]/30 py-3 text-3xl focus:border-[#C9A24D] focus:outline-none transition-colors text-center text-[#2C2F4A] font-serif"
-                  />
+                  <div className="flex gap-2 justify-center">
+                    <input
+                      type="tel"
+                      value={dateParts.day}
+                      onChange={(e) => updateDatePart('day', e.target.value)}
+                      className="w-20 bg-transparent border-b-2 border-[#C9A24D]/30 py-3 text-3xl focus:border-[#C9A24D] focus:outline-none transition-colors text-center text-[#2C2F4A] font-serif placeholder-[#2C2F4A]/20"
+                      placeholder="JJ"
+                      maxLength={2}
+                    />
+                    <span className="py-3 text-3xl text-[#C9A24D]/50">/</span>
+                    <input
+                      type="tel"
+                      value={dateParts.month}
+                      onChange={(e) => updateDatePart('month', e.target.value)}
+                      className="w-20 bg-transparent border-b-2 border-[#C9A24D]/30 py-3 text-3xl focus:border-[#C9A24D] focus:outline-none transition-colors text-center text-[#2C2F4A] font-serif placeholder-[#2C2F4A]/20"
+                      placeholder="MM"
+                      maxLength={2}
+                    />
+                    <span className="py-3 text-3xl text-[#C9A24D]/50">/</span>
+                    <input
+                      type="tel"
+                      value={dateParts.year}
+                      onChange={(e) => updateDatePart('year', e.target.value)}
+                      className="w-32 bg-transparent border-b-2 border-[#C9A24D]/30 py-3 text-3xl focus:border-[#C9A24D] focus:outline-none transition-colors text-center text-[#2C2F4A] font-serif placeholder-[#2C2F4A]/20"
+                      placeholder="AAAA"
+                      maxLength={4}
+                    />
+                  </div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-bold text-[#5B4B8A] mb-2 text-center uppercase tracking-wide">Heure (HH:MM)</label>
-                    <input
-                      type="time"
-                      value={formData.birthTime}
-                      onChange={(e) => updateField('birthTime', e.target.value)}
-                      className="w-full bg-transparent border-b-2 border-[#C9A24D]/30 py-3 text-2xl focus:border-[#C9A24D] focus:outline-none transition-colors text-center text-[#2C2F4A] font-serif"
-                    />
+                    <div className="flex gap-2 justify-center items-center">
+                      <input
+                        type="tel"
+                        value={timeParts.hour}
+                        onChange={(e) => updateTimePart('hour', e.target.value)}
+                        className="w-16 bg-transparent border-b-2 border-[#C9A24D]/30 py-3 text-2xl focus:border-[#C9A24D] focus:outline-none transition-colors text-center text-[#2C2F4A] font-serif placeholder-[#2C2F4A]/20"
+                        placeholder="HH"
+                        maxLength={2}
+                      />
+                      <span className="text-2xl text-[#C9A24D]/50 font-bold">:</span>
+                      <input
+                        type="tel"
+                        value={timeParts.minute}
+                        onChange={(e) => updateTimePart('minute', e.target.value)}
+                        className="w-16 bg-transparent border-b-2 border-[#C9A24D]/30 py-3 text-2xl focus:border-[#C9A24D] focus:outline-none transition-colors text-center text-[#2C2F4A] font-serif placeholder-[#2C2F4A]/20"
+                        placeholder="MM"
+                        maxLength={2}
+                      />
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-[#5B4B8A] mb-2 text-center uppercase tracking-wide">Lieu de Naissance</label>
@@ -144,7 +227,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                       value={formData.birthPlace}
                       onChange={(e) => updateField('birthPlace', e.target.value)}
                       className="w-full bg-transparent border-b-2 border-[#C9A24D]/30 py-3 text-2xl focus:border-[#C9A24D] focus:outline-none transition-colors text-center text-[#2C2F4A] placeholder-[#2C2F4A]/30 font-serif"
-                      placeholder="Paris, France"
+                      placeholder="Paris"
                     />
                   </div>
                 </div>

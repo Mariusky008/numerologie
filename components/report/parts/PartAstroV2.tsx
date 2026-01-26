@@ -50,6 +50,10 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
   const zodiacInfo = zodiacInfoKey ? ZODIAC_DETAILS[zodiacInfoKey] : null;
   const houseInfo = realHouse ? HOUSE_MEANINGS[realHouse as number] : null;
   
+  // Ascendant Info
+  const ascendantInfoKey = realAscendant ? realAscendant.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : null;
+  const ascendantInfo = ascendantInfoKey ? ZODIAC_DETAILS[ascendantInfoKey] : null;
+  
   // Helpers for Lunar and Ascendant info (could be moved to a dedicated data file)
   const getMoonInfo = (sign: string) => {
     const key = sign.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -147,7 +151,7 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
                    </div>
 
                    <p className="text-sm text-white/80 leading-relaxed mb-4">
-                     L'Ascendant est la "porte d'entrée" de votre thème. Il décrit votre apparence, votre première impression sur les autres et la manière dont vous initiez les choses.
+                     {ascendantInfo?.ascendantDesc || "L'Ascendant est la \"porte d'entrée\" de votre thème. Il décrit votre apparence, votre première impression sur les autres et la manière dont vous initiez les choses."}
                    </p>
                    
                    {houseInfo && (

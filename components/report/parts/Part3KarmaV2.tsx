@@ -3,6 +3,7 @@ import { UserData, NumerologyResult } from '@/lib/types';
 import PageContainer from './PageContainer';
 import InclusionGridViz from '../InclusionGridViz';
 import { getKarmicLessonContent, getExcessNumberContent, getBridgeContent, getBalancedNumberContent, getChallengeContent } from '@/lib/numerology/contentGenerator';
+import { KARMIC_DEBT_DEFINITIONS } from '@/lib/numerology/definitions-karma';
 
 export default function Part3KarmaV2({ userData, results }: { userData: UserData, results: NumerologyResult }) {
   const bridgeContent = getBridgeContent(results.bridgeNumber);
@@ -13,6 +14,24 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
     (!results.missingNumbers?.includes(n)) && 
     (!results.excessNumbers?.includes(n))
   );
+
+  // Identify Karmic Debts from Core Numbers
+  const debts = new Map<number, { origins: string[] }>();
+  const checkDebt = (detail: any, name: string) => {
+    if (detail?.karmicDebt) {
+      if (!debts.has(detail.karmicDebt)) {
+        debts.set(detail.karmicDebt, { origins: [] });
+      }
+      debts.get(detail.karmicDebt)?.origins.push(name);
+    }
+  };
+
+  if (results.details) {
+    checkDebt(results.details.lifePath, "Chemin de Vie");
+    checkDebt(results.details.expression, "Expression");
+    checkDebt(results.details.soulUrge, "Élan Spirituel");
+    checkDebt(results.details.personality, "Moi Intime");
+  }
 
   // Get major challenge for exercise
   const majorChallenge = results.challenges?.major || 0;
@@ -94,6 +113,53 @@ export default function Part3KarmaV2({ userData, results }: { userData: UserData
                   <p className="text-[#2C2F4A] italic text-sm md:text-base">
                     {content.benefit}
                   </p>
+                </div>
+              );
+            })}
+          </div>
+        </PageContainer>
+      )}
+
+      {/* PAGE: DETTES KARMIQUES (13, 14, 16, 19) */}
+      {debts.size > 0 && (
+        <PageContainer className="p-4 md:p-16">
+          <h2 className="text-2xl md:text-4xl font-serif text-[#2C2F4A] mb-8 md:mb-12 border-b-2 border-purple-800 pb-4 inline-block" style={{ pageBreakBefore: 'always' }}>
+            Vos Dettes Karmiques
+          </h2>
+          <p className="text-base md:text-xl font-light mb-12 max-w-2xl text-[#2C2F4A]">
+            Ces nombres (13, 14, 16, 19) apparaissent dans vos nombres clés. Ils indiquent des leçons spécifiques non apprises dans le passé qui demandent une attention particulière aujourd'hui.
+          </p>
+          
+          <div className="space-y-8">
+            {Array.from(debts.entries()).map(([debtNumber, info]) => {
+              const def = KARMIC_DEBT_DEFINITIONS[debtNumber];
+              if (!def) return null;
+              
+              return (
+                <div key={debtNumber} className="bg-white p-6 md:p-8 border-l-4 border-purple-800 shadow-sm rounded-r-xl" style={{ pageBreakInside: 'avoid' }}>
+                  <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                    <h3 className="text-xl md:text-2xl font-serif text-purple-900">
+                      {def.title} : {def.subtitle}
+                    </h3>
+                    <div className="mt-2 md:mt-0 px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs md:text-sm font-bold uppercase tracking-wide">
+                      Présent dans : {info.origins.join(', ')}
+                    </div>
+                  </div>
+                  
+                  <p className="text-[#2C2F4A] mb-6 font-medium leading-relaxed">
+                    {def.desc}
+                  </p>
+                  
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-purple-50 p-4 rounded border border-purple-100">
+                      <h4 className="font-bold text-purple-900 mb-2 text-sm uppercase">Le Défi</h4>
+                      <p className="text-[#2C2F4A] text-sm">{def.challenge}</p>
+                    </div>
+                    <div className="bg-purple-50 p-4 rounded border border-purple-100">
+                      <h4 className="font-bold text-purple-900 mb-2 text-sm uppercase">Le Conseil</h4>
+                      <p className="text-[#2C2F4A] text-sm">{def.advice}</p>
+                    </div>
+                  </div>
                 </div>
               );
             })}

@@ -159,12 +159,16 @@ export default function ExpertBookingPage() {
           <p className="text-gray-600 mb-8">
             Si vous n'obtenez pas de clarté sur votre situation dans les 10 premières minutes de l'appel, nous vous remboursons intégralement. Sans poser de questions.
           </p>
-          <div className="flex justify-center gap-8 opacity-50 grayscale">
+          <div className="flex justify-center gap-8 opacity-50 grayscale mb-6">
              {/* Logos Stripe, Visa, etc. simulés */}
              <div className="font-bold text-xl">Stripe</div>
              <div className="font-bold text-xl">Visa</div>
              <div className="font-bold text-xl">Mastercard</div>
           </div>
+          
+          <p className="text-xs text-gray-400 max-w-lg mx-auto leading-tight">
+            Service assuré par notre partenaire certifié. La transaction et la consultation se dérouleront sur leur plateforme sécurisée, conformément à leurs conditions générales d'utilisation.
+          </p>
         </div>
       </div>
 

@@ -2,8 +2,8 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Suspense, useState } from 'react';
-import { Check, Star, ShieldCheck, ArrowLeft, Play, MessageSquare, FileText } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Check, Star, ShieldCheck, ArrowLeft, Play, MessageSquare, FileText, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 function CheckoutContent() {
   const searchParams = useSearchParams();
@@ -46,10 +46,11 @@ function CheckoutContent() {
   const TOTAL_PRICE = BASE_PRICE + (includeBook ? BOOK_PRICE : 0);
 
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showEmailError, setShowEmailError] = useState(false);
 
   const handlePayment = async () => {
     if (!deliveryInfo.email) {
-      alert("Merci de renseigner votre email pour recevoir vos documents.");
+      setShowEmailError(true);
       return;
     }
     
@@ -128,6 +129,54 @@ function CheckoutContent() {
 
       <div className="max-w-4xl mx-auto px-4 py-8 md:py-16 relative z-10">
         
+        {/* Email Warning Popup */}
+        <AnimatePresence>
+          {showEmailError && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+              onClick={() => setShowEmailError(false)}
+            >
+              <div 
+                className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl relative border-2 border-[#C9A24D]"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button 
+                  onClick={() => setShowEmailError(false)}
+                  className="absolute top-4 right-4 text-[#2C2F4A]/40 hover:text-[#2C2F4A]"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+                
+                <div className="flex flex-col items-center text-center gap-4">
+                  <div className="w-16 h-16 bg-[#C9A24D]/10 rounded-full flex items-center justify-center mb-2">
+                    <FileText className="w-8 h-8 text-[#C9A24D]" />
+                  </div>
+                  
+                  <h3 className="text-2xl font-serif font-bold text-[#2C2F4A]">Email Manquant</h3>
+                  
+                  <p className="text-[#2C2F4A]/70 leading-relaxed">
+                    Pour vous envoyer votre <strong>Dossier Numérologique</strong> et votre accès à la <strong>Vidéo Avatar</strong>, nous avons besoin d'une adresse email valide.
+                  </p>
+                  
+                  <button 
+                    onClick={() => {
+                      setShowEmailError(false);
+                      const emailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
+                      if (emailInput) emailInput.focus();
+                    }}
+                    className="mt-4 w-full py-4 bg-[#2C2F4A] text-white rounded-xl font-bold shadow-lg hover:bg-[#C9A24D] hover:text-[#2C2F4A] transition-all"
+                  >
+                    Renseigner mon email
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Navigation Back */}
         <button 
           onClick={() => {

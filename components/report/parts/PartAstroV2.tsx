@@ -52,8 +52,9 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
   
   // Helpers for Lunar and Ascendant info (could be moved to a dedicated data file)
   const getMoonInfo = (sign: string) => {
-    // Placeholder - In a real app, this should come from interpretations-astro-geo.ts
-    return "Votre monde émotionnel, vos besoins intimes et votre instinct.";
+    const key = sign.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const info = ZODIAC_DETAILS[key];
+    return info ? info.moonDesc : "Votre monde émotionnel, vos besoins intimes et votre instinct.";
   };
 
   return (
@@ -124,7 +125,7 @@ export default function PartAstroV2({ userData, results, etymology }: { userData
                    </div>
 
                    <p className="text-sm text-[#2C2F4A]/80 leading-relaxed">
-                     Votre Lune en <strong>{moon}</strong> révèle votre monde intérieur. C'est la part de vous qui ressent, qui a besoin de sécurité et qui réagit instinctivement. Contrairement au Soleil qui rayonne, la Lune ressent.
+                     Votre Lune en <strong>{moon}</strong> révèle votre monde intérieur. {getMoonInfo(moon)}
                    </p>
                  </div>
               </div>

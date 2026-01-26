@@ -12,66 +12,78 @@ export const PLANET_INFLUENCES: Record<string, string> = {
   "mars": "Mars est l'énergie de l'action, du désir et de la conquête. Il vous donne le carburant nécessaire pour initier des projets, défendre vos limites et surmonter les obstacles. C'est votre guerrier intérieur."
 };
 
-export const ZODIAC_DETAILS: Record<string, { element: string, quality: string, description: string }> = {
+export const ZODIAC_DETAILS: Record<string, { element: string, quality: string, description: string, moonDesc: string }> = {
   "bélier": {
     element: "Feu",
     quality: "Cardinal",
-    description: "Pionnier du zodiaque, vous possédez une énergie d'initiation brute. Vous êtes là pour ouvrir la voie, agir instinctivement et affirmer votre volonté d'être."
+    description: "Pionnier du zodiaque, vous possédez une énergie d'initiation brute. Vous êtes là pour ouvrir la voie, agir instinctivement et affirmer votre volonté d'être. Votre Soleil en Bélier vous demande d'oser être le premier, de prendre des risques calculés et de ne jamais laisser votre flamme s'éteindre sous le poids de la routine.",
+    moonDesc: "Avec la Lune en Bélier, vos émotions sont vives, instantanées et ardentes. Vous réagissez au quart de tour. Vous avez un besoin viscéral d'action pour vous sentir en sécurité. L'attente vous est insupportable; vous guérissez vos blessures en bougeant et en entreprenant."
   },
   "taureau": {
     element: "Terre",
     quality: "Fixe",
-    description: "Bâtisseur sensuel, vous recherchez la sécurité, le plaisir et la stabilité. Vous avez le don de faire fructifier les ressources et de créer de la beauté durable."
+    description: "Bâtisseur sensuel, vous recherchez la sécurité, le plaisir et la stabilité. Vous avez le don de faire fructifier les ressources et de créer de la beauté durable. Votre Soleil en Taureau vous invite à ralentir pour savourer la vie, à vous ancrer dans la matière et à construire pierre après pierre.",
+    moonDesc: "Avec la Lune en Taureau, votre monde intérieur est un jardin paisible. Vous avez un besoin fondamental de stabilité matérielle et de confort sensoriel pour vous sentir bien. Le changement brusque vous angoisse; vous trouvez votre paix dans la nature, les plaisirs simples et la fidélité."
   },
   "gémeaux": {
     element: "Air",
     quality: "Mutable",
-    description: "Communicant agile, vous êtes le trait d'union entre les idées et les gens. Votre curiosité et votre adaptabilité sont vos plus grands atouts pour naviguer dans la complexité."
+    description: "Communicant agile, vous êtes le trait d'union entre les idées et les gens. Votre curiosité et votre adaptabilité sont vos plus grands atouts pour naviguer dans la complexité. Votre Soleil en Gémeaux vous pousse à apprendre, à échanger et à ne jamais cesser de vous émerveiller de la diversité du monde.",
+    moonDesc: "Avec la Lune en Gémeaux, vos émotions passent par le filtre de l'intellect. Vous avez besoin de comprendre ce que vous ressentez, d'en parler, de le verbaliser. Votre sécurité émotionnelle passe par la communication et le mouvement; l'ennui est votre pire ennemi."
   },
   "cancer": {
     element: "Eau",
     quality: "Cardinal",
-    description: "Gardien du foyer et de la mémoire, vous protégez ce qui est vulnérable. Votre force émotionnelle est un socle sur lequel les autres peuvent se reposer."
+    description: "Gardien du foyer et de la mémoire, vous protégez ce qui est vulnérable. Votre force émotionnelle est un socle sur lequel les autres peuvent se reposer. Votre Soleil en Cancer vous demande de créer un clan, de nourrir vos racines et d'accepter votre grande sensibilité comme une boussole, non une faiblesse.",
+    moonDesc: "Avec la Lune en Cancer (son domicile), votre sensibilité est immense. Vous êtes une éponge émotionnelle, absorbant les ambiances environnantes. Votre besoin de sécurité, de foyer et de protection est absolu. Vous prenez soin des autres comme une mère universelle."
   },
   "lion": {
     element: "Feu",
     quality: "Fixe",
-    description: "Créateur rayonnant, vous avez besoin d'exprimer votre unicité. Votre générosité et votre charisme naturel inspirent les autres à trouver leur propre lumière."
+    description: "Créateur rayonnant, vous avez besoin d'exprimer votre unicité. Votre générosité et votre charisme naturel inspirent les autres à trouver leur propre lumière. Votre Soleil en Lion est une invitation à la souveraineté : osez briller, osez être vu et osez aimer avec noblesse et panache.",
+    moonDesc: "Avec la Lune en Lion, vous avez besoin de reconnaissance et d'admiration pour vous sentir aimé. Votre cœur est noble, généreux et théâtral. Vous exprimez vos émotions avec chaleur et dignité, ne supportant pas la médiocrité ou la mesquinerie."
   },
   "vierge": {
     element: "Terre",
     quality: "Mutable",
-    description: "Analyste perfectionniste, vous cherchez à améliorer, soigner et optimiser. Votre sens du service et du détail fait de vous un pilier indispensable."
+    description: "Analyste perfectionniste, vous cherchez à améliorer, soigner et optimiser. Votre sens du service et du détail fait de vous un pilier indispensable. Votre Soleil en Vierge vous guide vers l'excellence, l'humilité et la maîtrise technique. Vous trouvez votre sens en étant utile au monde.",
+    moonDesc: "Avec la Lune en Vierge, vous analysez vos émotions pour les maîtriser. Vous avez besoin d'ordre, de propreté et de routines saines pour vous sentir en sécurité. Vous exprimez votre affection par des gestes concrets de service et d'aide pratique."
   },
   "balance": {
     element: "Air",
     quality: "Cardinal",
-    description: "Diplomate esthète, vous recherchez l'harmonie et la justice. Vous révélez votre potentiel à travers la relation à l'autre et la création d'équilibre."
+    description: "Diplomate esthète, vous recherchez l'harmonie et la justice. Vous révélez votre potentiel à travers la relation à l'autre et la création d'équilibre. Votre Soleil en Balance vous demande de pacifier, de négocier et de créer de la beauté, tout en apprenant à ne pas vous perdre dans le désir de plaire.",
+    moonDesc: "Avec la Lune en Balance, votre équilibre émotionnel dépend de l'harmonie de vos relations. Le conflit vous est viscéralement insupportable. Vous avez besoin de paix, de beauté et de partage pour vous sentir bien. La solitude peut être une épreuve."
   },
   "scorpion": {
     element: "Eau",
     quality: "Fixe",
-    description: "Alchimiste intense, vous plongez dans les profondeurs pour transformer. Vous possédez une puissance psychologique capable de renaître de ses cendres."
+    description: "Alchimiste intense, vous plongez dans les profondeurs pour transformer. Vous possédez une puissance psychologique capable de renaître de ses cendres. Votre Soleil en Scorpion vous invite à embrasser votre vérité, même sombre, et à utiliser votre magnétisme pour guérir et révéler les secrets cachés.",
+    moonDesc: "Avec la Lune en Scorpion, vos émotions sont océaniques, secrètes et absolues. Vous ressentez tout avec une intensité extrême. Vous avez besoin de fusion, d'intimité profonde et de vérité. Vous ne tolérez pas la superficialité et possédez un instinct infaillible."
   },
   "sagittaire": {
     element: "Feu",
     quality: "Mutable",
-    description: "Explorateur philosophe, vous cherchez le sens et la vérité. Votre optimisme et votre soif d'expansion vous poussent toujours plus loin."
+    description: "Explorateur philosophe, vous cherchez le sens et la vérité. Votre optimisme et votre soif d'expansion vous poussent toujours plus loin. Votre Soleil en Sagittaire vous appelle à l'aventure, physique ou spirituelle, et à enseigner avec enthousiasme la sagesse que vous avez glanée sur votre chemin.",
+    moonDesc: "Avec la Lune en Sagittaire, vous avez besoin de liberté et d'espace pour respirer. L'optimisme est votre mécanisme de défense naturel. Vous vous sentez en sécurité lorsque vous pouvez bouger, apprendre et croire en un avenir meilleur. La routine vous étouffe."
   },
   "capricorne": {
     element: "Terre",
     quality: "Cardinal",
-    description: "Stratège ambitieux, vous visez le sommet avec patience. Votre intégrité et votre persévérance vous permettent de réaliser des ambitions concrètes."
+    description: "Stratège ambitieux, vous visez le sommet avec patience. Votre intégrité et votre persévérance vous permettent de réaliser des ambitions concrètes. Votre Soleil en Capricorne vous demande de structurer, de prendre des responsabilités et de bâtir une œuvre qui résistera à l'épreuve du temps.",
+    moonDesc: "Avec la Lune en Capricorne, vous contrôlez vos émotions avec pudeur et réserve. Vous avez besoin de structure, d'ambition et de respect pour vous sentir en sécurité. Vous ne vous plaignez jamais, préférant assumer vos responsabilités et avancer seul si nécessaire."
   },
   "verseau": {
     element: "Air",
     quality: "Fixe",
-    description: "Visionnaire libre, vous pensez le futur et le collectif. Votre originalité et votre idéalisme sont là pour réformer ce qui doit l'être."
+    description: "Visionnaire libre, vous pensez le futur et le collectif. Votre originalité et votre idéalisme sont là pour réformer ce qui doit l'être. Votre Soleil en Verseau vous pousse à vous libérer des conditionnements, à innover et à défendre des valeurs humaines et fraternelles.",
+    moonDesc: "Avec la Lune en Verseau, vous avez besoin d'indépendance émotionnelle. Vous rationalisez vos sentiments et avez horreur des drames passionnels. Vous vous sentez bien au sein d'un groupe, d'une communauté, tout en préservant farouchement votre liberté individuelle."
   },
   "poissons": {
     element: "Eau",
     quality: "Mutable",
-    description: "Mystique empathique, vous ressentez l'unité de tout. Votre intuition et votre dévouement vous connectent aux plans subtils de l'existence."
+    description: "Mystique empathique, vous ressentez l'unité de tout. Votre intuition et votre dévouement vous connectent aux plans subtils de l'existence. Votre Soleil en Poissons vous invite à lâcher prise, à faire confiance à l'invisible et à utiliser votre immense compassion pour soulager le monde.",
+    moonDesc: "Avec la Lune en Poissons, votre sensibilité est sans limite. Vous absorbez les émotions du monde comme une éponge. Vous avez besoin de moments de retrait, de rêve et de musique pour recharger vos batteries. Votre intuition est votre guide le plus fiable."
   }
 };
 

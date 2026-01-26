@@ -43,7 +43,7 @@ export default function ExpertBookingPage() {
               <Star className="w-4 h-4 fill-current" />
               <Star className="w-4 h-4 fill-current" />
             </div>
-            <p className="text-xs text-gray-400">4.9/5 (120 avis)</p>
+            <p className="text-xs text-gray-400">4.6/5 (120 avis)</p>
           </div>
 
           {/* Bio Expert */}

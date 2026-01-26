@@ -384,9 +384,14 @@ export default function DemoRevealView({ userData, results }: DemoRevealViewProp
               </div>
 
               <div className="bg-[#C9A24D]/10 rounded-xl p-6 border border-[#C9A24D]/20 relative z-10">
-                <p className="text-base text-[#C9A24D] italic text-center leading-relaxed">
+                <p className="text-base text-[#C9A24D] italic text-center leading-relaxed mb-4">
                   "Ce n'est pas une fatalité. C'est le Défi Majeur de votre thème. Votre rapport contient l'exercice pratique '{challengeData.exercise?.title || "Le Pont de la Conscience"}' pour transformer ce blocage en force dès cette semaine."
                 </p>
+                <div className="bg-[#1a1c2e]/50 rounded-lg p-4 border border-[#C9A24D]/10">
+                  <p className="text-sm text-white/80 text-center font-medium">
+                    ⚠️ Tant que ce schéma reste inconscient, il se répète automatiquement dans vos décisions, vos relations et vos choix professionnels — souvent sans que vous en ayez conscience.
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -416,22 +421,32 @@ export default function DemoRevealView({ userData, results }: DemoRevealViewProp
         </div>
 
         {/* CTA FINAL STICKY - Mobile only or Desktop floating */}
-        <div className="sticky bottom-4 z-50 md:hidden">
+        <div className="sticky bottom-4 z-50 md:hidden flex flex-col items-center gap-3">
+          <p className="text-xs text-white/60 text-center px-4 leading-tight bg-[#1a1c2e]/80 py-2 rounded-lg backdrop-blur-sm">
+            Comprendre votre dynamique est une première étape.<br/>
+            Mais sans plan précis, ce type de schéma revient toujours sous une autre forme.
+          </p>
           <button 
             onClick={handleUnlock}
             className="w-full py-4 bg-[#C9A24D] text-[#1a1c2e] font-bold rounded-xl shadow-[0_10px_30px_rgba(201,162,77,0.4)] hover:bg-white transition-all flex items-center justify-center gap-2 animate-pulse"
           >
-            Obtenir mes solutions maintenant <ArrowRight className="w-5 h-5" />
+            👉 Accéder à mon Plan d’Action personnalisé
           </button>
         </div>
         
         {/* Desktop CTA Floating */}
         <div className="hidden md:block fixed bottom-8 right-8 z-50">
+           <div className="mb-3 bg-[#1a1c2e]/90 p-3 rounded-lg border border-white/10 backdrop-blur-md max-w-xs shadow-xl">
+             <p className="text-xs text-white/80 text-center leading-relaxed">
+               Comprendre est le début. Agir est la clé.<br/>
+               Sans plan, le schéma se répète.
+             </p>
+           </div>
            <button 
             onClick={handleUnlock}
             className="py-4 px-8 bg-[#C9A24D] text-[#1a1c2e] font-bold rounded-full shadow-[0_10px_40px_rgba(201,162,77,0.6)] hover:bg-white hover:scale-105 transition-all flex items-center justify-center gap-3 animate-pulse text-lg"
            >
-            Obtenir mon Plan d'Action <ArrowRight className="w-6 h-6" />
+            👉 Accéder à mon Plan d’Action personnalisé
           </button>
         </div>
 

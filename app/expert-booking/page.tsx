@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, Star, ShieldCheck, Clock, Phone, Video, User } from 'lucide-react';
 import type { GoracashExpert } from '@/lib/goracash';
 
-const BOOKING_LINK = "https://www.wengo.fr/voyance/numerologie"; 
+const BOOKING_LINK = "https://www.wengo.fr/voyance/numerologie?tracker_id=6289"; 
 
 const STATIC_EXPERTS: GoracashExpert[] = [
   {
@@ -17,7 +17,7 @@ const STATIC_EXPERTS: GoracashExpert[] = [
     photo_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop",
     is_online: true,
     price_per_min: 2.50,
-    call_url: "https://www.wengo.fr/voyance/numerologie"
+    call_url: "https://www.wengo.fr/voyance/numerologie?tracker_id=6289"
   },
   {
     id: "2",
@@ -28,7 +28,7 @@ const STATIC_EXPERTS: GoracashExpert[] = [
     photo_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
     is_online: true,
     price_per_min: 2.90,
-    call_url: "https://www.wengo.fr/voyance/numerologie"
+    call_url: "https://www.wengo.fr/voyance/numerologie?tracker_id=6289"
   },
   {
     id: "3",
@@ -39,7 +39,7 @@ const STATIC_EXPERTS: GoracashExpert[] = [
     photo_url: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
     is_online: false,
     price_per_min: 3.10,
-    call_url: "https://www.wengo.fr/voyance/numerologie"
+    call_url: "https://www.wengo.fr/voyance/numerologie?tracker_id=6289"
   }
 ];
 

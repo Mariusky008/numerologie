@@ -8,8 +8,8 @@ const GORACASH_AUTH_URL = "https://api.goracash.com/auth/token";
 const GORACASH_API_BASE = "https://api.goracash.com/v1";
 const DEFAULT_WENGO_URL = "https://www.wengo.fr/voyance/numerologie";
 
-// Remplacez par votre ID Tracker Goracash quand vous l'aurez (ex: "1234")
-const TRACKER_ID = ""; 
+// Votre ID Tracker Goracash
+const TRACKER_ID = "6289"; 
 
 interface GoracashToken {
   access_token: string;
@@ -34,9 +34,12 @@ function buildAffiliateUrl(originalUrl?: string): string {
   const baseUrl = originalUrl || DEFAULT_WENGO_URL;
   if (!TRACKER_ID) return baseUrl;
   
-  // Append tracker parameter (usually 'tracker_id' or 'id')
+  // Goracash uses 'idw' or 'tracker_id' depending on the platform
+  // For Wengo it's usually 'tracker_id', for news-voyance it's 'idw'
+  const paramName = baseUrl.includes('wengo.fr') ? 'tracker_id' : 'idw';
+  
   const separator = baseUrl.includes('?') ? '&' : '?';
-  return `${baseUrl}${separator}tracker_id=${TRACKER_ID}`;
+  return `${baseUrl}${separator}${paramName}=${TRACKER_ID}`;
 }
 
 let cachedToken: { token: string; expiry: number } | null = null;

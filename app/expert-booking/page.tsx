@@ -1,12 +1,75 @@
+
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, Star, ShieldCheck, Clock, Phone, Video, User } from 'lucide-react';
+import type { GoracashExpert } from '@/lib/goracash';
+
+const BOOKING_LINK = "https://www.wengo.fr/"; 
+
+const STATIC_EXPERTS: GoracashExpert[] = [
+  {
+    id: "1",
+    name: "Marie-Hélène",
+    specialties: ["Numérologie", "Astrologie"],
+    rating: 4.9,
+    review_count: 1250,
+    photo_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop",
+    is_online: true,
+    price_per_min: 2.50,
+    call_url: BOOKING_LINK
+  },
+  {
+    id: "2",
+    name: "Jean-Pierre",
+    specialties: ["Tarologie", "Voyance"],
+    rating: 4.8,
+    review_count: 890,
+    photo_url: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+    is_online: true,
+    price_per_min: 2.90,
+    call_url: BOOKING_LINK
+  },
+  {
+    id: "3",
+    name: "Clara",
+    specialties: ["Médiumnité", "Canalisation"],
+    rating: 5.0,
+    review_count: 450,
+    photo_url: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+    is_online: false,
+    price_per_min: 3.10,
+    call_url: BOOKING_LINK
+  }
+];
 
 export default function ExpertBookingPage() {
-  // TODO: Remplacez ce lien par votre lien d'affiliation Wengo/Kang/Spiriteo
-  // Exemple Wengo (Goracash) : "https://www.wengo.fr/voyance/?tracker_id=VOTRE_ID"
-  const BOOKING_LINK = "https://www.wengo.fr/"; 
+  const [experts, setExperts] = useState<GoracashExpert[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchExperts() {
+      try {
+        const response = await fetch('/api/experts');
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0) {
+            setExperts(data);
+          } else {
+            setExperts(STATIC_EXPERTS);
+          }
+        } else {
+          setExperts(STATIC_EXPERTS);
+        }
+      } catch (error) {
+        console.error("Error fetching experts:", error);
+        setExperts(STATIC_EXPERTS);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchExperts();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#FAF9F7] font-sans text-[#2C2F4A]">
@@ -18,7 +81,7 @@ export default function ExpertBookingPage() {
         
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#C9A24D]/20 border border-[#C9A24D]/30 text-[#C9A24D] text-xs font-bold uppercase tracking-widest mb-6">
-            <Star className="w-3 h-3 fill-current" /> Service Premium
+            <Star className="w-3 h-3 fill-current" /> Service Premium d'Affiliation
           </div>
           <h1 className="text-3xl md:text-5xl font-serif font-bold mb-6">
             Parlez à un Expert Humain
@@ -30,145 +93,91 @@ export default function ExpertBookingPage() {
         </div>
       </div>
 
-      {/* EXPERT PROFILE */}
-      <div className="max-w-5xl mx-auto px-4 -mt-12 relative z-20">
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-[#EFEDE9] flex flex-col md:flex-row gap-8 items-center md:items-start">
-          
-          {/* Avatar Expert */}
-          <div className="shrink-0 text-center">
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-lg overflow-hidden mx-auto mb-4 relative bg-[#2C2F4A]/5 flex items-center justify-center">
-               <div className="text-4xl">🔮</div>
-            </div>
-            <div className="flex justify-center gap-1 text-[#C9A24D] mb-1">
-              <Star className="w-4 h-4 fill-current" />
-              <Star className="w-4 h-4 fill-current" />
-              <Star className="w-4 h-4 fill-current" />
-              <Star className="w-4 h-4 fill-current" />
-              <Star className="w-4 h-4 fill-current" />
-            </div>
-            <p className="text-xs text-gray-400">4.9/5 (2500+ avis)</p>
-          </div>
+      {/* EXPERTS GRID */}
+      <div className="max-w-6xl mx-auto px-4 -mt-12 relative z-20 pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {loading ? (
+            [1, 2, 3].map((n) => (
+              <div key={n} className="bg-white rounded-2xl h-[450px] animate-pulse border border-gray-200"></div>
+            ))
+          ) : (
+            experts.map((expert) => (
+              <div key={expert.id} className="bg-white rounded-2xl shadow-xl border border-[#EFEDE9] overflow-hidden flex flex-col group hover:scale-[1.02] transition-transform duration-300">
+                {/* Photo */}
+                <div className="relative h-64 overflow-hidden">
+                  <img 
+                    src={expert.photo_url} 
+                    alt={expert.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  {expert.is_online && (
+                    <div className="absolute top-4 right-4 bg-green-500 text-white text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1.5 shadow-lg border border-white/20">
+                      <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+                      EN LIGNE
+                    </div>
+                  )}
+                  <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent">
+                    <h3 className="text-xl font-bold text-white font-serif">{expert.name}</h3>
+                    <div className="flex items-center gap-1 text-[#C9A24D]">
+                      <Star className="w-4 h-4 fill-current" />
+                      <span className="text-white text-sm font-medium">{expert.rating} <span className="text-white/60 text-xs">({expert.review_count} avis)</span></span>
+                    </div>
+                  </div>
+                </div>
 
-          {/* Bio Expert */}
-          <div className="flex-1">
-            <h2 className="text-2xl font-serif font-bold mb-2">Les Meilleurs Experts Certifiés</h2>
-            <p className="text-[#C9A24D] font-medium mb-4">Numérologie • Astrologie • Tarologie • Voyance</p>
-            <p className="text-gray-600 leading-relaxed mb-6">
-              "Parce que chaque situation est unique, nous avons sélectionné pour vous les meilleurs experts francophones. Que vous ayez besoin d'une réponse immédiate ou d'une analyse approfondie, trouvez le guide qui résonne avec vous parmi notre réseau de partenaires de confiance."
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-600 font-medium">Disponibles 24/7</span>
-              <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-600 font-medium">100% Confidentiel</span>
-              <span className="px-3 py-1 bg-gray-100 rounded-full text-xs text-gray-600 font-medium">Sélection Rigoureuse</span>
-            </div>
-          </div>
-        </div>
-      </div>
+                {/* Content */}
+                <div className="p-6 flex-1 flex flex-col">
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {expert.specialties.map(s => (
+                      <span key={s} className="px-2 py-0.5 bg-gray-100 rounded-md text-[10px] text-gray-600 font-bold uppercase tracking-wider">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <div className="flex items-center justify-between mb-8 py-4 border-y border-gray-50">
+                    <div className="flex items-center gap-2 text-gray-500 text-sm">
+                      <Clock className="w-4 h-4" />
+                      <span>Réponse immédiate</span>
+                    </div>
+                    <div className="text-[#2C2F4A] font-bold">
+                      {expert.price_per_min}€<span className="text-xs text-gray-400 font-normal">/min</span>
+                    </div>
+                  </div>
 
-      {/* PRICING CARDS */}
-      <div className="max-w-5xl mx-auto px-4 py-16 md:py-24">
-        <h3 className="text-2xl font-bold text-center mb-12">Choisissez votre consultation</h3>
-        
-        <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-          
-          {/* Option 1: Flash */}
-          <div className="bg-white rounded-xl border border-gray-200 p-8 hover:shadow-lg transition-shadow relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gray-200 group-hover:bg-[#C9A24D] transition-colors"></div>
-            <div className="mb-6">
-              <h4 className="text-xl font-bold mb-2">Consultation Découverte</h4>
-              <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-serif font-bold">Dès 10€</span>
-                <span className="text-gray-500">/ 10 min</span>
+                  <a 
+                    href={expert.call_url || BOOKING_LINK}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="mt-auto block w-full text-center py-4 bg-[#2C2F4A] text-white font-bold rounded-xl hover:bg-[#1a1c2e] transition-all shadow-lg flex items-center justify-center gap-2 group-hover:gap-4"
+                  >
+                    <Phone className="w-4 h-4" />
+                    Consulter maintenant
+                  </a>
+                </div>
               </div>
+            ))
+          )}
+        </div>
+
+        {/* REASSURANCE SECTION */}
+        <div className="mt-20 max-w-3xl mx-auto text-center">
+          <div className="bg-white rounded-2xl shadow-lg p-10 border border-[#EFEDE9]">
+            <ShieldCheck className="w-12 h-12 text-[#C9A24D] mx-auto mb-6" />
+            <h3 className="text-2xl font-serif font-bold mb-4">Votre consultation est protégée</h3>
+            <p className="text-gray-600 mb-8 leading-relaxed">
+              Nous collaborons exclusivement avec des plateformes certifiées. Votre anonymat est garanti et le paiement est 100% sécurisé via notre partenaire de confiance.
+            </p>
+            <div className="flex justify-center gap-8 opacity-40 grayscale mb-10">
+               <div className="font-bold text-xl">Stripe</div>
+               <div className="font-bold text-xl">Visa</div>
+               <div className="font-bold text-xl">Mastercard</div>
             </div>
             
-            <ul className="space-y-4 mb-8 text-sm text-gray-600">
-              <li className="flex gap-3">
-                <Clock className="w-5 h-5 text-[#C9A24D]" />
-                Réponse immédiate (sans RDV)
-              </li>
-              <li className="flex gap-3">
-                <Phone className="w-5 h-5 text-[#C9A24D]" />
-                Par Téléphone ou Chat
-              </li>
-              <li className="flex gap-3">
-                <ShieldCheck className="w-5 h-5 text-[#C9A24D]" />
-                Idéal pour une question précise
-              </li>
-            </ul>
-
-            <a 
-              href={BOOKING_LINK}
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="block w-full text-center py-3 border-2 border-[#2C2F4A] text-[#2C2F4A] font-bold rounded-lg hover:bg-[#2C2F4A] hover:text-white transition-colors"
-            >
-              Voir les experts disponibles
-            </a>
-          </div>
-
-          {/* Option 2: Deep Dive (Featured) */}
-          <div className="bg-white rounded-xl border border-[#C9A24D] p-8 shadow-xl relative overflow-hidden transform md:-translate-y-4">
-            <div className="absolute top-0 right-0 bg-[#C9A24D] text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
-              RECOMMANDÉ
-            </div>
-            <div className="mb-6">
-              <h4 className="text-xl font-bold mb-2 text-[#C9A24D]">Consultation Approfondie</h4>
-              <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-serif font-bold">Sur Mesure</span>
-                <span className="text-gray-500">/ 30 à 60 min</span>
-              </div>
-            </div>
-            
-            <ul className="space-y-4 mb-8 text-sm text-gray-600">
-              <li className="flex gap-3">
-                <Clock className="w-5 h-5 text-[#C9A24D]" />
-                Analyse complète de votre situation
-              </li>
-              <li className="flex gap-3">
-                <Video className="w-5 h-5 text-[#C9A24D]" />
-                Experts les mieux notés (5 étoiles)
-              </li>
-              <li className="flex gap-3">
-                <ShieldCheck className="w-5 h-5 text-[#C9A24D]" />
-                Spécialistes (Amour, Travail, Karma...)
-              </li>
-            </ul>
-
-            <a 
-              href={BOOKING_LINK}
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="block w-full text-center py-3 bg-[#C9A24D] text-white font-bold rounded-lg hover:bg-[#b08d42] transition-colors shadow-lg"
-            >
-              Choisir mon expert
-            </a>
-            <p className="text-center text-xs text-gray-400 mt-3">
-              +150 experts connectés actuellement
+            <p className="text-[10px] text-gray-400 uppercase tracking-widest leading-relaxed border-t pt-8">
+              SERVICE D'AFFILIATION INDÉPENDANT • VOTRE LÉGENDE N'EST PAS RESPONSABLE DES CONSEILS DONNÉS PAR LES EXPERTS EXTERNES • TOUTE TRANSACTION S'EFFECTUE SUR LA PLATEFORME DU PARTENAIRE.
             </p>
           </div>
-
-        </div>
-      </div>
-
-      {/* FAQ & Reassurance */}
-      <div className="bg-white py-16 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <ShieldCheck className="w-12 h-12 text-[#C9A24D] mx-auto mb-4" />
-          <h3 className="text-xl font-bold mb-4">Garantie Satisfaction</h3>
-          <p className="text-gray-600 mb-8">
-            Si vous n'obtenez pas de clarté sur votre situation dans les 10 premières minutes de l'appel, nous vous remboursons intégralement. Sans poser de questions.
-          </p>
-          <div className="flex justify-center gap-8 opacity-50 grayscale mb-6">
-             {/* Logos Stripe, Visa, etc. simulés */}
-             <div className="font-bold text-xl">Stripe</div>
-             <div className="font-bold text-xl">Visa</div>
-             <div className="font-bold text-xl">Mastercard</div>
-          </div>
-          
-          <p className="text-xs text-gray-400 max-w-lg mx-auto leading-tight">
-            Service assuré par notre partenaire certifié. La transaction et la consultation se dérouleront sur leur plateforme sécurisée, conformément à leurs conditions générales d'utilisation.
-          </p>
         </div>
       </div>
 

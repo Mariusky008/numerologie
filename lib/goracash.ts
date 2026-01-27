@@ -6,7 +6,8 @@
 
 const GORACASH_AUTH_URL = "https://api.goracash.com/auth/token";
 const GORACASH_API_BASE = "https://api.goracash.com/v1";
-const DEFAULT_WENGO_URL = "https://www.wengo.fr/voyance/numerologie";
+const DEFAULT_WENGO_URL = "https://www.wengo.fr/voyance-astrologie-1270/thema/specialite-numerologie";
+const FALLBACK_AFFILIATE_URL = "https://www.news-voyance.com/fr_FR/?thematic=338";
 
 // Votre ID Tracker Goracash
 const TRACKER_ID = "6289"; 
@@ -29,17 +30,36 @@ export interface GoracashExpert {
   call_url: string;
 }
 
-// Helper to build affiliate URL
+/**
+ * Construit l'URL d'affiliation avec le tracker ID.
+ * Gère les URLs absolues, relatives et les fallbacks.
+ */
 function buildAffiliateUrl(originalUrl?: string): string {
-  const baseUrl = originalUrl || DEFAULT_WENGO_URL;
+  let baseUrl = originalUrl;
+  
+  if (!baseUrl || baseUrl === "" || baseUrl === "#") {
+    baseUrl = FALLBACK_AFFILIATE_URL;
+  }
+
+  // Si l'URL est relative (commence par /), on la préfixe par wengo.fr
+  if (baseUrl.startsWith('/')) {
+    baseUrl = `https://www.wengo.fr${baseUrl}`;
+  }
+
   if (!TRACKER_ID) return baseUrl;
   
-  // Goracash uses 'idw' or 'tracker_id' depending on the platform
-  // For Wengo it's usually 'tracker_id', for news-voyance it's 'idw'
-  const paramName = baseUrl.includes('wengo.fr') ? 'tracker_id' : 'idw';
+  // Utilise 'idw' comme demandé par l'utilisateur pour son tracking
+  const paramName = 'idw';
   
-  const separator = baseUrl.includes('?') ? '&' : '?';
-  return `${baseUrl}${separator}${paramName}=${TRACKER_ID}`;
+  try {
+    const url = new URL(baseUrl);
+    url.searchParams.set(paramName, TRACKER_ID);
+    return url.toString();
+  } catch (e) {
+    // Fallback si l'URL est malformée
+    const separator = baseUrl.includes('?') ? '&' : '?';
+    return `${baseUrl}${separator}${paramName}=${TRACKER_ID}`;
+  }
 }
 
 let cachedToken: { token: string; expiry: number } | null = null;

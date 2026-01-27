@@ -6,6 +6,10 @@
 
 const GORACASH_AUTH_URL = "https://api.goracash.com/auth/token";
 const GORACASH_API_BASE = "https://api.goracash.com/v1";
+const DEFAULT_WENGO_URL = "https://www.wengo.fr/voyance/numerologie";
+
+// Remplacez par votre ID Tracker Goracash quand vous l'aurez (ex: "1234")
+const TRACKER_ID = ""; 
 
 interface GoracashToken {
   access_token: string;
@@ -23,6 +27,16 @@ export interface GoracashExpert {
   price_per_min: number;
   is_online: boolean;
   call_url: string;
+}
+
+// Helper to build affiliate URL
+function buildAffiliateUrl(originalUrl?: string): string {
+  const baseUrl = originalUrl || DEFAULT_WENGO_URL;
+  if (!TRACKER_ID) return baseUrl;
+  
+  // Append tracker parameter (usually 'tracker_id' or 'id')
+  const separator = baseUrl.includes('?') ? '&' : '?';
+  return `${baseUrl}${separator}tracker_id=${TRACKER_ID}`;
 }
 
 let cachedToken: { token: string; expiry: number } | null = null;
@@ -93,7 +107,6 @@ export async function getExperts(limit: number = 6): Promise<GoracashExpert[]> {
     const data = await response.json();
     
     // Transform the API response to our internal GoracashExpert interface
-    // Note: Adjust the mapping based on the actual API response structure
     return (data.experts || []).map((expert: any) => ({
       id: expert.id,
       name: expert.display_name || expert.name,
@@ -103,11 +116,11 @@ export async function getExperts(limit: number = 6): Promise<GoracashExpert[]> {
       specialties: expert.specialties || ["Astrologie", "Numérologie"],
       price_per_min: expert.price || 0,
       is_online: expert.status === "online" || expert.is_available,
-      call_url: expert.url || expert.booking_url,
+      call_url: buildAffiliateUrl(expert.url || expert.booking_url),
     }));
   } catch (error) {
     console.error("Error fetching experts from Goracash:", error);
-    // Return mock data for development if API fails, or empty array
+    // Return empty array if API fails
     return [];
   }
 }

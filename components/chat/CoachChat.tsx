@@ -9,62 +9,64 @@ interface CoachChatProps {
   userName: string;
 }
 
-// --- TTS HELPER (Streaming Queue) ---
-let speechQueue: string[] = [];
-let isSpeakingGlobal = false;
+// --- TTS HELPER (Professional OpenAI TTS) ---
+let audioQueue: HTMLAudioElement[] = [];
+let isPlayingGlobal = false;
 
-const speakText = (text: string, forceReset = false) => {
-  if (!('speechSynthesis' in window)) return;
+const playNextInQueue = () => {
+  if (isPlayingGlobal || audioQueue.length === 0) return;
+  
+  isPlayingGlobal = true;
+  const audio = audioQueue.shift()!;
+  
+  audio.play().catch(err => {
+    console.error("Playback error:", err);
+    isPlayingGlobal = false;
+    playNextInQueue();
+  });
 
+  audio.onended = () => {
+    isPlayingGlobal = false;
+    playNextInQueue();
+  };
+};
+
+const speakText = async (text: string, forceReset = false) => {
   if (forceReset) {
-    window.speechSynthesis.cancel();
-    speechQueue = [];
-    isSpeakingGlobal = false;
+    audioQueue.forEach(a => {
+      a.pause();
+      a.src = "";
+    });
+    audioQueue = [];
+    isPlayingGlobal = false;
+    return;
   }
 
-  // 1. Clean emojis and markdown artifacts
   const cleanText = text
     .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}]/gu, '')
     .replace(/\*/g, '')
     .trim();
 
-  if (!cleanText) return;
+  if (!cleanText || cleanText.length < 2) return;
 
-  speechQueue.push(cleanText);
-  processSpeechQueue();
-};
+  try {
+    const response = await fetch('/api/tts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: cleanText })
+    });
 
-const processSpeechQueue = () => {
-  if (isSpeakingGlobal || speechQueue.length === 0) return;
+    if (!response.ok) throw new Error("TTS failed");
 
-  isSpeakingGlobal = true;
-  const textToSpeak = speechQueue.shift()!;
-
-  const utterance = new SpeechSynthesisUtterance(textToSpeak);
-  utterance.lang = 'fr-FR';
-  utterance.rate = 0.85; // Ralenti pour plus de solennité
-  utterance.pitch = 0.8; // Voix plus grave, moins métallique
-  
-  // Voice Selection Strategy: Prioritize soft/natural female voices
-  const voices = window.speechSynthesis.getVoices();
-  const bestVoice = voices.find(v => v.name.includes("Google") && v.lang.includes("fr")) 
-                 || voices.find(v => v.name.includes("Premium") && v.lang.includes("fr"))
-                 || voices.find(v => v.name === "Amelie") 
-                 || voices.find(v => v.lang.includes("fr") && !v.name.includes("Thomas")); 
-  
-  if (bestVoice) utterance.voice = bestVoice;
-
-  utterance.onend = () => {
-    isSpeakingGlobal = false;
-    processSpeechQueue(); // Next phrase
-  };
-
-  utterance.onerror = () => {
-    isSpeakingGlobal = false;
-    processSpeechQueue();
-  };
-
-  window.speechSynthesis.speak(utterance);
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const audio = new Audio(url);
+    
+    audioQueue.push(audio);
+    playNextInQueue();
+  } catch (err) {
+    console.error("TTS Error:", err);
+  }
 };
 
 // --- CUSTOM CHAT HOOK ---
@@ -81,7 +83,7 @@ function useCustomChat({ api, body, initialMessages, onFinish, isMuted }: any) {
       abortControllerRef.current = null;
     }
     setIsLoading(false);
-    window.speechSynthesis.cancel();
+    speakText("", true); // Stop OpenAI TTS
     setIsSpeaking(false);
     setError(null);
   };
@@ -183,8 +185,8 @@ function useCustomChat({ api, body, initialMessages, onFinish, isMuted }: any) {
   // We need to sync isSpeaking state with the queue status
   useEffect(() => {
     const interval = setInterval(() => {
-       if (isSpeakingGlobal && !isSpeaking) setIsSpeaking(true);
-       if (!isSpeakingGlobal && isSpeaking && !isLoading) setIsSpeaking(false);
+       if (isPlayingGlobal && !isSpeaking) setIsSpeaking(true);
+       if (!isPlayingGlobal && isSpeaking && !isLoading) setIsSpeaking(false);
     }, 200);
     return () => clearInterval(interval);
   }, [isSpeaking, isLoading]);
@@ -338,7 +340,7 @@ export default function CoachChat({ userId, userName }: CoachChatProps) {
             onClick={() => {
               const newMuted = !isMuted;
               setIsMuted(newMuted);
-              if (newMuted) window.speechSynthesis.cancel();
+              if (newMuted) speakText("", true);
             }}
             className="p-3 rounded-full text-[#FDFBF7]/60 hover:text-[#C9A24D] hover:bg-white/5 transition-all duration-300 border border-white/5 hover:border-[#C9A24D]/30 backdrop-blur-sm"
           >

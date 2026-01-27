@@ -7,7 +7,7 @@
 const GORACASH_AUTH_URL = "https://api.goracash.com/auth/token";
 const GORACASH_API_BASE = "https://api.goracash.com/v1";
 const DEFAULT_WENGO_URL = "https://www.wengo.fr/voyance-astrologie-1270/thema/specialite-numerologie";
-const FALLBACK_AFFILIATE_URL = "https://www.news-voyance.com/fr_FR/?thematic=338";
+const FALLBACK_AFFILIATE_URL = "https://www.news-voyance.com/fr_FR/experts/numerologie";
 
 // Votre ID Tracker Goracash
 const TRACKER_ID = "6289"; 
@@ -41,22 +41,29 @@ function buildAffiliateUrl(originalUrl?: string): string {
     baseUrl = FALLBACK_AFFILIATE_URL;
   }
 
-  // Si l'URL est relative (commence par /), on la préfixe par wengo.fr
+  // Si l'URL est relative (commence par /), on la préfixe par le domaine du white-label
+  // pour rester dans l'écosystème du tracker de l'utilisateur
   if (baseUrl.startsWith('/')) {
-    baseUrl = `https://www.wengo.fr${baseUrl}`;
+    baseUrl = `https://www.news-voyance.com${baseUrl}`;
   }
 
   if (!TRACKER_ID) return baseUrl;
   
-  // Utilise 'idw' comme demandé par l'utilisateur pour son tracking
   const paramName = 'idw';
   
   try {
     const url = new URL(baseUrl);
     url.searchParams.set(paramName, TRACKER_ID);
+    
+    // Si on est sur la racine, on s'assure d'avoir la thématique numérologie (1270 ou 338 selon le site)
+    if (url.pathname === '/' || url.pathname === '/fr_FR/') {
+      // Sur news-voyance, le lien fourni par l'utilisateur utilisait 338
+      // On va essayer d'utiliser 1270 qui est le standard Wengo pour la numérologie
+      url.searchParams.set('thematic', '1270');
+    }
+    
     return url.toString();
   } catch (e) {
-    // Fallback si l'URL est malformée
     const separator = baseUrl.includes('?') ? '&' : '?';
     return `${baseUrl}${separator}${paramName}=${TRACKER_ID}`;
   }
@@ -114,9 +121,8 @@ export async function getExperts(limit: number = 6): Promise<GoracashExpert[]> {
   try {
     const token = await getAccessToken();
     
-    // Note: The exact endpoint and parameters may vary based on Goracash API version
-    // This is a standard implementation for Wengo/Goracash Experts API
-    const response = await fetch(`${GORACASH_API_BASE}/experts?limit=${limit}&thematic=ASTRO`, {
+    // Note: Use thematic 1270 or 'NUMERO' for Numerology
+    const response = await fetch(`${GORACASH_API_BASE}/experts?limit=${limit}&thematic=1270`, {
       headers: {
         "Authorization": `Bearer ${token}`,
         "Accept": "application/json",

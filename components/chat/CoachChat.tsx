@@ -42,15 +42,15 @@ const processSpeechQueue = () => {
 
   const utterance = new SpeechSynthesisUtterance(textToSpeak);
   utterance.lang = 'fr-FR';
-  utterance.rate = 0.9; // Slower for a more soothing, oracle-like pace
-  utterance.pitch = 0.95; // Slightly lower pitch for warmth and softness
+  utterance.rate = 0.85; // Ralenti pour plus de solennité
+  utterance.pitch = 0.8; // Voix plus grave, moins métallique
   
   // Voice Selection Strategy: Prioritize soft/natural female voices
   const voices = window.speechSynthesis.getVoices();
-  const bestVoice = voices.find(v => v.name.includes("Google") && v.lang.includes("fr")) // Google Français (souvent la meilleure neuronale gratuite)
-                 || voices.find(v => v.name === "Amelie") // Apple Amelie (douce)
-                 || voices.find(v => v.name === "Marie") // Windows Marie
-                 || voices.find(v => v.lang.includes("fr") && !v.name.includes("Thomas")); // Generic FR (avoid Thomas/Male if possible)
+  const bestVoice = voices.find(v => v.name.includes("Google") && v.lang.includes("fr")) 
+                 || voices.find(v => v.name.includes("Premium") && v.lang.includes("fr"))
+                 || voices.find(v => v.name === "Amelie") 
+                 || voices.find(v => v.lang.includes("fr") && !v.name.includes("Thomas")); 
   
   if (bestVoice) utterance.voice = bestVoice;
 

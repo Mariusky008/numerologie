@@ -24,7 +24,14 @@ export default function ResultPsyMirror() {
   useEffect(() => {
     const saved = localStorage.getItem('psy_mirror_result');
     if (saved) {
-      setResult(JSON.parse(saved));
+      const parsed = JSON.parse(saved);
+      // Vérification de la structure (compatibilité avec les anciens résultats)
+      if (!parsed.insights?.dimension_insights) {
+        localStorage.removeItem('psy_mirror_result');
+        router.push('/miroir/experience');
+        return;
+      }
+      setResult(parsed);
     } else {
       router.push('/miroir/experience');
     }
@@ -73,16 +80,16 @@ export default function ResultPsyMirror() {
               L'Écart Central (Le Miroir)
             </h2>
             <p className="text-xl md:text-2xl font-medium leading-relaxed italic">
-              "{result.insights.mirror_sentence}"
+              "{result.insights?.mirror_sentence}"
             </p>
             <div className="pt-8 border-t border-white/10 grid md:grid-cols-2 gap-8">
               <div className="space-y-2">
                 <div className="text-[10px] font-bold uppercase tracking-widest opacity-40">Votre Angle Mort</div>
-                <p className="text-sm leading-relaxed text-white/80">{result.insights.blind_spot}</p>
+                <p className="text-sm leading-relaxed text-white/80">{result.insights?.blind_spot}</p>
               </div>
               <div className="space-y-2">
                 <div className="text-[10px] font-bold uppercase tracking-widest opacity-40">Levier Prioritaire</div>
-                <p className="text-sm leading-relaxed text-white/80">{result.insights.lever}</p>
+                <p className="text-sm leading-relaxed text-white/80">{result.insights?.lever}</p>
               </div>
             </div>
           </div>
@@ -106,7 +113,7 @@ export default function ResultPsyMirror() {
                   />
                 </div>
                 <p className="text-sm text-[#1A1C2E]/60 leading-relaxed">
-                  {result.insights.dimension_insights.find(i => i.id === dimId)?.text || "Analyse en cours..."}
+                  {result.insights?.dimension_insights?.find(i => i.id === dimId)?.text || "Analyse en cours..."}
                 </p>
               </div>
             ))}

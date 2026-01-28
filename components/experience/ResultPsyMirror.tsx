@@ -79,7 +79,7 @@ export default function ResultPsyMirror() {
               "{result.insights?.mirror_sentence}"
             </p>
             
-            <div className="max-w-none text-[#1A1C2E]/60 leading-relaxed text-lg md:text-xl font-light text-left space-y-6">
+            <div className="max-w-none text-[#1A1C2E]/70 leading-relaxed text-lg md:text-xl font-light text-left space-y-6">
               {result.insights?.mirror_full?.split('\n\n').map((para: string, i: number) => (
                 <p key={i} className="last:mb-0">{para.replace('### ', '')}</p>
               ))}
@@ -89,7 +89,7 @@ export default function ResultPsyMirror() {
           <motion.div 
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="pt-12 text-[#1A1C2E]/10"
+            className="pt-12 text-[#1A1C2E]/20"
           >
             <ChevronDown className="w-12 h-12 mx-auto" />
           </motion.div>
@@ -101,7 +101,7 @@ export default function ResultPsyMirror() {
         <div className="max-w-6xl mx-auto space-y-24">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#1A1C2E]">Le Laboratoire des Réflexes</h2>
-            <p className="text-[#1A1C2E]/40 text-xl max-w-2xl mx-auto">Preuves factuelles issues de vos épreuves de stress en temps réel.</p>
+            <p className="text-[#1A1C2E]/50 text-xl max-w-2xl mx-auto">Preuves factuelles issues de vos épreuves de stress en temps réel.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-10">
@@ -152,7 +152,7 @@ export default function ResultPsyMirror() {
               Ton Angle Mort : <br />
               <span className="text-[#C9A24D] italic">{result.insights?.blind_spot_label}</span>
             </h2>
-            <div className="text-[#1A1C2E]/60 leading-relaxed text-xl md:text-2xl font-light space-y-8">
+            <div className="text-[#1A1C2E]/70 leading-relaxed text-xl md:text-2xl font-light space-y-8">
               {result.insights?.blind_spot?.split('\n\n').map((para: string, i: number) => (
                 <p key={i} className={para.startsWith('**') ? "font-bold text-[#1A1C2E]/90" : ""}>
                   {para.replace('### ', '')}
@@ -186,7 +186,7 @@ export default function ResultPsyMirror() {
         <div className="max-w-6xl mx-auto space-y-24">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#1A1C2E]">Analyse Dimensionnelle</h2>
-            <p className="text-[#1A1C2E]/40 text-xl">Décomposition précise de votre mode opératoire.</p>
+            <p className="text-[#1A1C2E]/50 text-xl">Décomposition précise de votre mode opératoire.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-10">
@@ -207,7 +207,7 @@ export default function ResultPsyMirror() {
                       className="h-full bg-gradient-to-r from-[#C9A24D] to-[#D4B46B]"
                     />
                   </div>
-                  <p className="text-[#1A1C2E]/60 leading-relaxed font-light text-lg">
+                  <p className="text-[#1A1C2E]/70 leading-relaxed font-light text-lg">
                     {di.text}
                   </p>
                 </div>
@@ -222,7 +222,7 @@ export default function ResultPsyMirror() {
         <div className="max-w-4xl mx-auto space-y-24">
           <div className="text-center space-y-6">
             <h2 className="text-5xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Protocole 7 Jours</h2>
-            <p className="text-[#1A1C2E]/40 text-xl">Une action par jour pour ancrer le changement.</p>
+            <p className="text-[#1A1C2E]/50 text-xl">Une action par jour pour ancrer le changement.</p>
           </div>
 
           <div className="relative">
@@ -259,7 +259,7 @@ export default function ResultPsyMirror() {
               Soutien Illimité
             </div>
             <h2 className="text-5xl md:text-8xl font-serif font-bold text-[#1A1C2E]">L'Oracle du Miroir</h2>
-            <p className="text-[#1A1C2E]/50 text-2xl font-light max-w-3xl mx-auto leading-relaxed">
+            <p className="text-[#1A1C2E]/60 text-2xl font-light max-w-3xl mx-auto leading-relaxed">
               Discutez avec l'intelligence qui a analysé vos réflexes pour lever vos derniers blocages.
             </p>
           </div>

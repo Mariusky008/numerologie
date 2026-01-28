@@ -1,5 +1,5 @@
 import { ProfileScores, DimensionId, Option, PsyMirrorResult } from './types';
-import { DIMENSIONS, INITIAL_SCORE } from './config';
+import { DIMENSIONS, INITIAL_SCORE, AVOIDANCE_LEXICON } from './config';
 
 /**
  * Clamps a number between min and max
@@ -67,15 +67,33 @@ export function calculateGaps(selfProfile: ProfileScores, behaviorProfile: Profi
  * Calculates derived indices for the report
  */
 export function calculateIndices(behaviorOptions: Option[], behaviorProfile: ProfileScores) {
-  // 1. Coherence: Simplified version based on internal variance of weights 
-  // In a real impl, we'd check if choices in similar scenarios are consistent
-  const coherence = 0.75; // Placeholder for now
+  // 1. Coherence: Simplified version based on internal variance
+  const coherence = 0.75; 
 
-  // 2. Avoidance: Frequency of "delay/validate/wait" options
-  // This would need specific marking on the Option type or keyword matching
-  const avoidance = 0.20; // Placeholder
+  // 2. Avoidance Index calculation
+  let avoidanceScore = 0;
+  behaviorOptions.forEach(option => {
+    const text = option.text.toLowerCase();
+    
+    if (AVOIDANCE_LEXICON.REPORT_INFO.some(kw => text.includes(kw.toLowerCase()))) {
+      avoidanceScore += 1;
+    }
+    if (AVOIDANCE_LEXICON.VALIDATION_RELATIONAL.some(kw => text.includes(kw.toLowerCase()))) {
+      avoidanceScore += 2;
+    }
+    if (AVOIDANCE_LEXICON.COVERAGE.some(kw => text.includes(kw.toLowerCase()))) {
+      avoidanceScore += 1;
+    }
+    if (AVOIDANCE_LEXICON.ANTI_AVOIDANCE.some(kw => text.includes(kw.toLowerCase()))) {
+      avoidanceScore -= 2;
+    }
+  });
 
-  // 3. Overcontrol: High D3 + Low D6 + Low D2 (meaning high need for certainty)
+  // Normalization (max score approx based on 24 steps with avg weight)
+  const maxPossibleScore = behaviorOptions.length * 1.5; 
+  const avoidanceIndex = clamp(avoidanceScore / maxPossibleScore, 0, 1);
+
+  // 3. Overcontrol: High D3 + Low D6 + Low D2
   const d3 = behaviorProfile['D3'] || 0;
   const d6 = behaviorProfile['D6'] || 0;
   const d2 = behaviorProfile['D2'] || 0;
@@ -84,7 +102,7 @@ export function calculateIndices(behaviorOptions: Option[], behaviorProfile: Pro
 
   return {
     coherence: clamp(coherence, 0, 1),
-    avoidance: clamp(avoidance, 0, 1),
+    avoidance: avoidanceIndex,
     overcontrol: clamp(overcontrol, 0, 1)
   };
 }

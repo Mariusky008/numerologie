@@ -14,8 +14,10 @@ import {
   Zap,
   ChevronDown
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function PsyMirrorLanding() {
+  const router = useRouter();
   const scrollToNext = () => {
     window.scrollTo({
       top: window.innerHeight,
@@ -50,7 +52,7 @@ export default function PsyMirrorLanding() {
           
           <div className="flex flex-col items-center gap-4">
             <button 
-              onClick={() => document.getElementById('steps')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => router.push('/miroir/experience')}
               className="group flex items-center gap-3 px-8 py-4 bg-[#1A1C2E] text-white rounded-full font-bold hover:bg-[#2C2F4A] transition-all shadow-[0_10px_30px_rgba(26,28,46,0.2)] hover:scale-105"
             >
               Découvrir mon miroir psychologique
@@ -332,7 +334,10 @@ export default function PsyMirrorLanding() {
           </div>
 
           <div className="flex flex-col items-center gap-6">
-            <button className="w-full md:w-auto px-12 py-5 bg-[#1A1C2E] text-white rounded-full font-bold text-lg hover:bg-[#2C2F4A] transition-all shadow-2xl hover:scale-105 active:scale-95">
+            <button 
+              onClick={() => router.push('/miroir/experience')}
+              className="w-full md:w-auto px-12 py-5 bg-[#1A1C2E] text-white rounded-full font-bold text-lg hover:bg-[#2C2F4A] transition-all shadow-2xl hover:scale-105 active:scale-95"
+            >
               Accéder à mon miroir psychologique — 29 €
             </button>
             

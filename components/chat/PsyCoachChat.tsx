@@ -203,64 +203,62 @@ export default function PsyCoachChat({ psyResult }: PsyCoachChatProps) {
       </div>
 
       {/* CHAT AREA */}
-      <div className="flex-1 flex flex-col items-center justify-start relative z-10 px-6 pt-20 pb-24">
-        <div className="w-full max-w-2xl flex-1 flex flex-col">
-          <div className="flex-1 overflow-y-auto custom-scrollbar px-4 py-4 space-y-6" ref={messagesEndRef}>
-            {messages.map((m, i) => (
-              <motion.div
-                key={m.id || i}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div className={`max-w-[85%] p-4 rounded-2xl ${
-                  m.role === 'user' 
-                    ? 'bg-[#C9A24D]/20 border border-[#C9A24D]/30 text-white' 
-                    : 'bg-white/5 border border-white/10 text-[#FDFBF7] font-serif italic'
-                }`}>
-                  {m.content}
-                </div>
-              </motion.div>
-            ))}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
-                  <Loader2 className="w-5 h-5 text-[#C9A24D] animate-spin" />
-                </div>
+      <div className="flex-1 flex flex-col relative z-10 overflow-hidden pt-20">
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-6 py-4 space-y-6" ref={messagesEndRef}>
+          {messages.map((m, i) => (
+            <motion.div
+              key={m.id || i}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <div className={`max-w-[85%] p-4 rounded-2xl ${
+                m.role === 'user' 
+                  ? 'bg-[#C9A24D]/20 border border-[#C9A24D]/30 text-white' 
+                  : 'bg-white/5 border border-white/10 text-[#FDFBF7] font-serif italic'
+              }`}>
+                {m.content}
               </div>
-            )}
-          </div>
+            </motion.div>
+          ))}
+          {isLoading && (
+            <div className="flex justify-start">
+              <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
+                <Loader2 className="w-5 h-5 text-[#C9A24D] animate-spin" />
+              </div>
+            </div>
+          )}
+          
+          {/* SUGGESTIONS INSIDE SCROLL AREA */}
+          {!isLoading && (
+            <div className="w-full flex flex-wrap justify-center gap-2 pt-4 pb-8">
+              {suggestions.map((s, i) => (
+                <button
+                  key={i}
+                  onClick={() => append({ role: 'user', content: s })}
+                  className="px-4 py-2 bg-white/5 hover:bg-[#C9A24D]/20 border border-white/10 rounded-xl text-xs text-white/70 transition-all backdrop-blur-sm"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
-
-        {/* SUGGESTIONS */}
-        {!isLoading && (
-          <div className="w-full flex flex-wrap justify-center gap-2 mt-4">
-            {suggestions.map((s, i) => (
-              <button
-                key={i}
-                onClick={() => append({ role: 'user', content: s })}
-                className="px-4 py-2 bg-white/5 hover:bg-[#C9A24D]/20 border border-white/10 rounded-xl text-xs text-white/70 transition-all"
-              >
-                {s}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
-      {/* INPUT */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 z-50 bg-gradient-to-t from-[#0F0B15] to-transparent">
+      {/* INPUT - NON ABSOLUTE FOR BETTER FLOW */}
+      <div className="p-6 z-50 bg-[#0F0B15] border-t border-white/5">
         <form onSubmit={handleSubmit} className="max-w-2xl mx-auto flex gap-2">
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Interrogez votre reflet..."
-            className="flex-1 bg-[#1F2235]/80 border border-[#C9A24D]/30 rounded-full px-6 py-3 text-white outline-none focus:border-[#C9A24D]"
+            className="flex-1 bg-[#1F2235]/80 border border-[#C9A24D]/30 rounded-full px-6 py-3 text-white outline-none focus:border-[#C9A24D] transition-all"
           />
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="w-12 h-12 bg-[#C9A24D] text-[#1F2235] rounded-full flex items-center justify-center hover:scale-110 transition-transform disabled:opacity-50"
+            className="w-12 h-12 bg-[#C9A24D] text-[#1F2235] rounded-full flex items-center justify-center hover:scale-110 transition-transform disabled:opacity-50 disabled:scale-100 shadow-[0_0_20px_rgba(201,162,77,0.3)]"
           >
             <Send className="w-5 h-5" />
           </button>

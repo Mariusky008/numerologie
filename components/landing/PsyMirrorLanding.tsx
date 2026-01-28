@@ -68,7 +68,7 @@ export default function PsyMirrorLanding() {
           >
             Tu ne te connais pas <br />
             <span className="italic text-[#C9A24D]">encore.</span>
-          </h1 >
+          </motion.h1>
           
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

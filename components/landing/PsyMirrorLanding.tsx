@@ -37,9 +37,8 @@ export default function PsyMirrorLanding() {
   return (
     <div className="min-h-screen bg-[#08090F] text-[#FDFBF7] font-sans selection:bg-[#C9A24D]/30">
       
-      {/* 🌌 HERO SECTION - WOW EFFECT */}
+      {/* 1. HERO SECTION */}
       <section className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden">
-        {/* Background Elements */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#5B4B8A]/20 blur-[120px] rounded-full"></div>
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#C9A24D]/10 blur-[120px] rounded-full"></div>
@@ -76,7 +75,7 @@ export default function PsyMirrorLanding() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg md:text-2xl text-white/60 mb-12 leading-relaxed max-w-3xl mx-auto font-light"
           >
-            Découvre l’écart invisible entre ton intention consciente et tes réflexes réels face à la pression. 
+            Découvre l'écart invisible entre ton intention consciente et tes réflexes réels face à la pression. 
             Une immersion de 20 minutes pour voir ton <span className="text-white font-medium">véritable reflet.</span>
           </motion.p>
           
@@ -95,14 +94,13 @@ export default function PsyMirrorLanding() {
               <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </button>
             <div className="flex items-center gap-6 text-[10px] text-white/30 uppercase tracking-[0.2em] font-bold">
-              <span className="flex items-center gap-2"><Clock className="w-3 h-3" /> 20 Minutes</span>
+              <span className="flex items-center gap-2"><ClockIcon className="w-3 h-3" /> 20 Minutes</span>
               <span className="flex items-center gap-2"><ShieldCheck className="w-3 h-3" /> Privé & Sécurisé</span>
               <span className="flex items-center gap-2"><Zap className="w-3 h-3" /> Accès Immédiat</span>
             </div>
           </motion.div>
         </motion.div>
 
-        {/* Floating Mirror Visual */}
         <motion.div 
           animate={{ 
             y: [0, -20, 0],
@@ -122,7 +120,7 @@ export default function PsyMirrorLanding() {
         </motion.button>
       </section>
 
-      {/* 2️⃣ SECTION — COMPARISON - DARK GLASSMORPISM */}
+      {/* 2. COMPARISON SECTION */}
       <section className="py-32 px-6 relative">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-24 space-y-4">
@@ -183,7 +181,7 @@ export default function PsyMirrorLanding() {
         </div>
       </section>
 
-      {/* 3️⃣ SECTION — THE PROCESS - VISUAL STEPS */}
+      {/* 3. PROCESS SECTION */}
       <section className="py-32 px-6 bg-[#0F0B15]/50 border-y border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-24 space-y-4">
@@ -233,7 +231,7 @@ export default function PsyMirrorLanding() {
         </div>
       </section>
 
-      {/* 4️⃣ SECTION — THE REVELATION - DARK & INTENSE */}
+      {/* 4. REVELATION SECTION */}
       <section className="py-32 px-6 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(201,162,77,0.05),_transparent_70%)]"></div>
         
@@ -267,7 +265,7 @@ export default function PsyMirrorLanding() {
         </div>
       </section>
 
-      {/* 5️⃣ SECTION — THE DELIVERABLE - 3D FEEL */}
+      {/* 5. DELIVERABLE SECTION */}
       <section className="py-32 px-6 bg-white/5 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center gap-24">
@@ -345,7 +343,7 @@ export default function PsyMirrorLanding() {
         </div>
       </section>
 
-      {/* 6️⃣ SECTION — CADRE & ETHIQUE - MINIMALIST */}
+      {/* 6. ETHICS SECTION */}
       <section className="py-24 px-6 text-center border-b border-white/5 bg-[#08090F]">
         <div className="max-w-3xl mx-auto space-y-8">
           <ShieldCheck className="w-12 h-12 text-[#C9A24D]/20 mx-auto" />
@@ -360,7 +358,7 @@ export default function PsyMirrorLanding() {
         </div>
       </section>
 
-      {/* 7️⃣ CTA FINAL - MASSIVE & GLOWING */}
+      {/* 7. FINAL CTA */}
       <section className="py-40 px-6 text-center relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[150px] rounded-full"></div>
         
@@ -408,7 +406,7 @@ export default function PsyMirrorLanding() {
   );
 }
 
-function Clock({ className }: { className?: string }) {
+function ClockIcon({ className }: { className?: string }) {
   return (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>

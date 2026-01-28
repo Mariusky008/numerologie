@@ -8,14 +8,16 @@ import {
   CheckCircle2, 
   AlertCircle,
   Download,
-  Share2,
-  ChevronRight,
   Target,
   Sparkles,
   Activity,
   Brain,
   TrendingUp,
-  Repeat
+  Repeat,
+  ChevronDown,
+  Eye,
+  ShieldCheck,
+  Layout
 } from 'lucide-react';
 import { PsyMirrorResult } from '@/lib/psy-mirror/types';
 import { useRouter } from 'next/navigation';
@@ -29,8 +31,7 @@ export default function ResultPsyMirror() {
     const saved = localStorage.getItem('psy_mirror_result');
     if (saved) {
       const parsed = JSON.parse(saved);
-      // Vérification de la structure (compatibilité avec les anciens résultats)
-      if (!parsed.insights?.dimension_insights || parsed.video_script?.startsWith('Ouverture')) {
+      if (!parsed.insights?.dimension_insights) {
         localStorage.removeItem('psy_mirror_result');
         router.push('/miroir/experience');
         return;
@@ -44,225 +45,250 @@ export default function ResultPsyMirror() {
   if (!result) return null;
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-[#1A1C2E] font-sans pb-20">
+    <div className="min-h-screen bg-[#08090F] text-[#FDFBF7] font-sans selection:bg-[#C9A24D]/30 pb-20 overflow-x-hidden">
       
-      {/* HEADER SECTION */}
-      <section className="bg-white border-b border-[#1A1C2E]/5 pt-20 pb-12 px-6">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 text-[10px] font-bold uppercase tracking-widest">
-                Analyse Terminée
-              </div>
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Votre Miroir Psychologique</h1>
-              <p className="text-[#1A1C2E]/60 text-lg">Analyse générée le {new Date().toLocaleDateString('fr-FR')}</p>
+      {/* 1. HERO REVEAL SECTION */}
+      <section className="min-h-[90vh] flex flex-col items-center justify-center px-6 relative border-b border-white/5 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#5B4B8A]/20 blur-[120px] rounded-full"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#C9A24D]/10 blur-[120px] rounded-full"></div>
+        </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-5xl z-10 text-center space-y-12"
+        >
+          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-[#C9A24D] text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
+            <Eye className="w-4 h-4" />
+            Analyse de Restitution V2
+          </div>
+          
+          <h1 className="text-4xl md:text-7xl font-serif font-bold tracking-tight leading-tight">
+            Voici ton <span className="italic text-[#C9A24D]">vrai</span> reflet.
+          </h1>
+
+          <div className="bg-white/5 border border-white/10 backdrop-blur-xl p-8 md:p-12 rounded-[50px] shadow-2xl relative group max-w-4xl mx-auto">
+            <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#C9A24D] text-[#08090F] px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest shadow-xl">
+              L'Écart Central
             </div>
-            <div className="flex gap-3">
-              <button className="flex items-center gap-2 px-6 py-3 bg-[#1A1C2E] text-white rounded-full font-bold text-sm hover:bg-[#2C2F4A] transition-all shadow-lg">
-                <Download className="w-4 h-4" />
-                Dossier PDF
-              </button>
+            
+            <p className="text-2xl md:text-4xl font-serif font-medium leading-relaxed italic text-white/90 mb-8">
+              "{result.insights?.mirror_sentence}"
+            </p>
+            
+            <div className="prose prose-invert max-w-none text-white/60 leading-relaxed text-lg font-light text-left">
+              {result.insights?.mirror_full?.split('\n\n').map((para: string, i: number) => (
+                <p key={i} className="mb-6 last:mb-0">{para.replace('### ', '')}</p>
+              ))}
             </div>
+          </div>
+
+          <motion.div 
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="pt-12 text-white/20"
+          >
+            <ChevronDown className="w-10 h-10 mx-auto" />
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* 2. THE LABORATORY (DATA PROOF) */}
+      <section className="py-32 px-6 relative bg-gradient-to-b from-[#08090F] to-[#0F111A]">
+        <div className="max-w-6xl mx-auto space-y-24">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl md:text-5xl font-serif font-bold">Le Laboratoire des Réflexes</h2>
+            <p className="text-white/40 text-lg max-w-2xl mx-auto">Preuves factuelles issues de vos épreuves de stress en temps réel.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {result.insights?.reflex_insights?.map((ri, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="p-10 rounded-[45px] bg-white/5 border border-white/10 hover:border-[#C9A24D]/30 transition-all group relative overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                  {ri.title.includes('Attention') && <Brain className="w-24 h-24" />}
+                  {ri.title.includes('Rupture') && <Activity className="w-24 h-24" />}
+                  {ri.title.includes('Risque') && <TrendingUp className="w-24 h-24" />}
+                  {ri.title.includes('Agilité') && <Repeat className="w-24 h-24" />}
+                </div>
+
+                <div className="space-y-6 relative z-10">
+                  <div className="text-[#C9A24D] text-[10px] font-bold uppercase tracking-[0.4em]">{ri.title}</div>
+                  <h3 className="text-2xl md:text-3xl font-serif font-bold leading-tight">{ri.observation}</h3>
+                  
+                  <div className="pt-8 border-t border-white/5">
+                    <div className="flex items-center gap-2 text-white/30 mb-4">
+                      <Target className="w-4 h-4" />
+                      <span className="text-[10px] font-bold uppercase tracking-widest">Entraînement Recommandé</span>
+                    </div>
+                    <p className="text-lg text-[#C9A24D] italic font-medium leading-relaxed">
+                      "{ri.exercise}"
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      <div className="max-w-4xl mx-auto px-6 mt-12 space-y-16">
-        
-        {/* SYNTHESE / MIROIR CENTRAL */}
-        <motion.section 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-[#1A1C2E] text-white p-8 md:p-12 rounded-[40px] shadow-2xl relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 p-8 opacity-10">
-            <Zap className="w-32 h-32" />
-          </div>
-          <div className="relative z-10 space-y-10">
-            <div className="space-y-4">
-              <h2 className="text-2xl font-bold flex items-center gap-3">
-                <AlertCircle className="w-6 h-6 text-emerald-400" />
-                L'Écart Central (Le Miroir)
-              </h2>
-              <p className="text-xl md:text-2xl font-medium leading-relaxed italic text-emerald-50">
-                "{result.insights?.mirror_sentence}"
-              </p>
+      {/* 3. THE BLIND SPOT & LEVER (ACTION CENTER) */}
+      <section className="py-32 px-6 bg-[#161925]/50 border-y border-white/5">
+        <div className="max-w-4xl mx-auto space-y-20">
+          <div className="space-y-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-[10px] font-bold uppercase tracking-widest">
+              Point Critique
             </div>
-            
-            <div className="prose prose-invert max-w-none text-white/80 leading-relaxed text-lg">
-              {result.insights?.mirror_full?.split('\n\n').map((para: string, i: number) => (
-                <p key={i} className="mb-4">{para.replace('### ', '')}</p>
-              ))}
-            </div>
-          </div>
-        </motion.section>
-
-        {/* LABORATOIRE DES REFLEXES */}
-        {result.insights?.reflex_insights && result.insights.reflex_insights.length > 0 && (
-          <section className="space-y-10">
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl font-bold">Le Laboratoire des Réflexes</h2>
-              <p className="text-[#1A1C2E]/60 text-lg max-w-2xl mx-auto">
-                Observations directes de vos capacités cognitives mesurées lors des épreuves de stress en temps réel.
-              </p>
-            </div>
-            
-            <div className="grid gap-6">
-              {result.insights.reflex_insights.map((ri, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="p-8 md:p-10 border rounded-[40px] bg-white shadow-sm space-y-6 relative overflow-hidden group"
-                >
-                  <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                    {ri.title.includes('Attention') && <Brain className="w-24 h-24" />}
-                    {ri.title.includes('Rupture') && <Activity className="w-24 h-24" />}
-                    {ri.title.includes('Risque') && <TrendingUp className="w-24 h-24" />}
-                    {ri.title.includes('Agilité') && <Repeat className="w-24 h-24" />}
-                  </div>
-                  
-                  <div className="space-y-4 relative z-10">
-                    <div className="flex items-center gap-3 text-[#C9A24D]">
-                      <span className="font-bold uppercase tracking-[0.2em] text-xs">{ri.title}</span>
-                    </div>
-                    <p className="text-xl md:text-2xl font-bold leading-tight text-[#1A1C2E]">
-                      {ri.observation}
-                    </p>
-                    <div className="p-8 bg-[#F8F9FA] rounded-[30px] border border-[#1A1C2E]/5 space-y-3">
-                      <div className="flex items-center gap-2 text-[#1A1C2E]/40">
-                        <Target className="w-4 h-4" />
-                        <span className="text-xs font-bold uppercase tracking-widest">Exercice Correctif</span>
-                      </div>
-                      <p className="text-lg md:text-xl text-[#1A1C2E] font-medium italic leading-relaxed">
-                        "{ri.exercise}"
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* ANGLE MORT */}
-        <section className="bg-white p-8 md:p-12 rounded-[40px] border border-[#1A1C2E]/5 shadow-xl space-y-8">
-          <h2 className="text-3xl font-bold text-[#1A1C2E]">Votre Angle Mort : {result.insights?.blind_spot_label}</h2>
-          <div className="prose max-w-none text-[#1A1C2E]/80 leading-relaxed text-lg">
-            {result.insights?.blind_spot?.split('\n\n').map((para: string, i: number) => (
-              <p key={i} className={para.startsWith('**') ? "font-bold text-[#1A1C2E]" : "mb-4"}>
-                {para.replace('### ', '')}
-              </p>
-            ))}
-          </div>
-        </section>
-
-        {/* LEVIER PRIORITAIRE */}
-        <section className="bg-emerald-600 text-white p-8 md:p-12 rounded-[40px] shadow-xl relative overflow-hidden">
-          <div className="relative z-10 space-y-6">
-            <h2 className="text-2xl font-bold flex items-center gap-3">
-              <Target className="w-6 h-6" />
-              Levier de Transformation Prioritaire
+            <h2 className="text-4xl md:text-6xl font-serif font-bold leading-tight">
+              Ton Angle Mort : <br />
+              <span className="text-[#C9A24D] italic">{result.insights?.blind_spot_label}</span>
             </h2>
-            <p className="text-xl leading-relaxed font-medium">
-              {result.insights?.lever}
-            </p>
+            <div className="prose prose-invert max-w-none text-white/50 leading-relaxed text-xl font-light">
+              {result.insights?.blind_spot?.split('\n\n').map((para: string, i: number) => (
+                <p key={i} className={para.startsWith('**') ? "font-bold text-white/90" : "mb-6 last:mb-0"}>
+                  {para.replace('### ', '')}
+                </p>
+              ))}
+            </div>
           </div>
-        </section>
 
-        {/* DIMENSIONS GRID */}
-        <section className="space-y-10">
-          <h2 className="text-3xl font-bold text-center">Analyse des 6 Dimensions</h2>
-          <div className="grid gap-8">
+          <motion.div 
+            whileHover={{ scale: 1.02 }}
+            className="p-10 md:p-14 rounded-[50px] bg-[#C9A24D] text-[#08090F] shadow-[0_40px_80px_rgba(201,162,77,0.2)] relative overflow-hidden group"
+          >
+            <div className="absolute top-0 right-0 p-12 opacity-10 rotate-12 group-hover:rotate-45 transition-transform duration-1000">
+              <Zap className="w-48 h-48" />
+            </div>
+            <div className="relative z-10 space-y-6">
+              <div className="flex items-center gap-3 font-black text-xs uppercase tracking-[0.3em] opacity-60">
+                <Target className="w-5 h-5" />
+                Levier Prioritaire
+              </div>
+              <p className="text-2xl md:text-4xl font-serif font-bold leading-tight">
+                {result.insights?.lever}
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 4. THE 6 DIMENSIONS (DEEP DIVE) */}
+      <section className="py-32 px-6">
+        <div className="max-w-6xl mx-auto space-y-24">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl md:text-5xl font-serif font-bold italic">Analyse Dimensionnelle</h2>
+            <p className="text-white/40 text-lg">Décomposition chirurgicale de votre mode opératoire.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
             {result.insights?.dimension_insights?.map((di) => (
-              <div key={di.id} className="bg-white p-8 md:p-10 rounded-[40px] border border-[#1A1C2E]/5 shadow-sm space-y-6 hover:shadow-md transition-all">
-                <div className="flex justify-between items-center border-b border-[#1A1C2E]/5 pb-6">
-                  <h3 className="font-bold text-2xl">{di.name}</h3>
-                  <div className="text-lg font-bold px-4 py-2 bg-[#F8F9FA] rounded-full text-[#1A1C2E]">
+              <div key={di.id} className="p-10 rounded-[45px] bg-white/5 border border-white/10 space-y-8">
+                <div className="flex justify-between items-center">
+                  <h3 className="font-serif text-2xl font-bold tracking-tight">{di.name}</h3>
+                  <div className="px-4 py-1.5 bg-white/5 rounded-full text-[#C9A24D] font-bold text-xs tracking-widest border border-white/10">
                     {result.behavior_profile[di.id]}/100
                   </div>
                 </div>
+                
                 <div className="space-y-6">
-                  <div className="h-3 w-full bg-[#F8F9FA] rounded-full overflow-hidden">
+                  <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
-                      animate={{ width: `${result.behavior_profile[di.id]}%` }}
-                      className="h-full bg-[#1A1C2E]"
+                      whileInView={{ width: `${result.behavior_profile[di.id]}%` }}
+                      className="h-full bg-gradient-to-r from-[#C9A24D]/50 to-[#C9A24D]"
                     />
                   </div>
-                  <p className="text-lg text-[#1A1C2E]/80 leading-relaxed">
+                  <p className="text-white/50 leading-relaxed font-light">
                     {di.text}
                   </p>
                 </div>
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* PLAN 7 JOURS */}
-        <section className="bg-emerald-50 p-8 md:p-12 rounded-[40px] border border-emerald-100 space-y-10">
-          <div className="space-y-4">
-            <h2 className="text-3xl font-bold text-emerald-900 flex items-center gap-3">
-              <CheckCircle2 className="w-8 h-8 text-emerald-600" />
-              Votre Plan d'Action — 7 Jours
-            </h2>
-            <p className="text-emerald-800/70 text-lg">Un parcours quotidien pour ancrer votre levier de transformation.</p>
+      {/* 5. THE 7-DAY ROADMAP */}
+      <section className="py-32 px-6 bg-gradient-to-br from-[#1A1C2E] to-[#08090F] border-y border-white/5">
+        <div className="max-w-4xl mx-auto space-y-20">
+          <div className="text-center space-y-4">
+            <h2 className="text-4xl md:text-6xl font-serif font-bold">Protocole 7 Jours</h2>
+            <p className="text-white/40 text-lg">7 micro-actions pour ancrer votre transformation.</p>
           </div>
-          <div className="grid gap-4">
-            {result.insights?.plan_7_days?.map((step, i) => (
-              <div key={i} className="flex items-start gap-6 p-6 bg-white rounded-3xl border border-emerald-100 shadow-sm hover:scale-[1.02] transition-transform">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center text-xl font-bold shrink-0 shadow-lg shadow-emerald-200">
-                  {step.day}
-                </div>
-                <div className="pt-2">
-                  <span className="text-lg font-semibold text-emerald-900 leading-tight">{step.action}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
 
-        {/* PSY COACH CHAT SECTION */}
-        <section className="space-y-8">
-          <div className="text-center space-y-2">
-            <h2 className="text-3xl font-bold flex items-center justify-center gap-3">
-              <Sparkles className="w-8 h-8 text-[#C9A24D]" />
-              Converser avec l'Oracle du Miroir
-            </h2>
-            <p className="text-[#1A1C2E]/60">Posez vos questions précises sur votre profil et vos mécanismes de décision.</p>
+          <div className="relative">
+            <div className="absolute left-6 top-0 bottom-0 w-px bg-white/10 hidden md:block"></div>
+            <div className="grid gap-6">
+              {result.insights?.plan_7_days?.map((step, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-start gap-8 p-8 rounded-[35px] bg-white/5 border border-white/10 hover:bg-white/[0.08] transition-all relative z-10 group"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-[#C9A24D] text-[#08090F] flex items-center justify-center text-xl font-black shrink-0 shadow-[0_10px_20px_rgba(201,162,77,0.3)] group-hover:scale-110 transition-transform">
+                    {step.day}
+                  </div>
+                  <div className="pt-2">
+                    <span className="text-xl font-medium text-white/90 leading-tight block">{step.action}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
-          <PsyCoachChat psyResult={result} />
-        </section>
+        </div>
+      </section>
 
-        {/* PHRASE FINALE */}
-        <div className="text-center space-y-8 py-12 border-t border-[#1A1C2E]/5">
-          <p className="text-2xl md:text-3xl font-bold text-[#1A1C2E] leading-tight max-w-2xl mx-auto italic">
+      {/* 6. THE ORACLE (INTERACTIVE CHAT) */}
+      <section className="py-32 px-6">
+        <div className="max-w-5xl mx-auto space-y-16">
+          <div className="text-center space-y-6">
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[#C9A24D]/10 border border-[#C9A24D]/20 text-[#C9A24D] text-[10px] font-bold uppercase tracking-[0.3em]">
+              <Sparkles className="w-4 h-4" />
+              Soutien Illimité
+            </div>
+            <h2 className="text-4xl md:text-6xl font-serif font-bold">Converser avec l'Oracle</h2>
+            <p className="text-white/40 text-xl font-light max-w-2xl mx-auto">
+              L'IA qui a analysé votre dossier est prête à répondre à vos questions et lever vos derniers blocages.
+            </p>
+          </div>
+
+          <div className="p-4 bg-white/[0.02] border border-white/10 rounded-[60px] shadow-3xl">
+            <PsyCoachChat psyResult={result} />
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER ACTIONS */}
+      <section className="py-20 px-6 border-t border-white/5 bg-[#08090F] text-center space-y-12">
+        <div className="max-w-2xl mx-auto space-y-8">
+          <p className="text-2xl font-serif italic text-white/40 leading-relaxed">
             "{result.final_phrase}"
           </p>
-          <button 
-            onClick={() => router.push('/miroir')}
-            className="text-sm font-bold text-[#1A1C2E]/40 hover:text-[#1A1C2E] transition-colors flex items-center gap-2 mx-auto uppercase tracking-widest"
-          >
-            Retour à l'accueil
-          </button>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+            <button className="flex items-center gap-3 px-10 py-5 bg-white text-[#08090F] rounded-full font-bold hover:bg-[#FDFBF7] transition-all">
+              <Download className="w-5 h-5" />
+              Télécharger mon Dossier PDF
+            </button>
+            <button 
+              onClick={() => router.push('/miroir')}
+              className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 hover:text-[#C9A24D] transition-colors"
+            >
+              Retour à l'accueil
+            </button>
+          </div>
         </div>
-
-      </div>
+      </section>
 
     </div>
   );
-}
-
-function getDimensionName(id: string): string {
-  const names: Record<string, string> = {
-    D1: 'Décision',
-    D2: 'Incertitude',
-    D3: 'Contrôle',
-    D4: 'Orientation sociale',
-    D5: 'Stress émotionnel',
-    D6: 'Flexibilité'
-  };
-  return names[id] || id;
 }

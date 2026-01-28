@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  FileText, 
-  Video, 
   Zap, 
   ArrowRight, 
   CheckCircle2, 
@@ -12,10 +10,12 @@ import {
   Download,
   Share2,
   ChevronRight,
-  Target
+  Target,
+  Sparkles
 } from 'lucide-react';
 import { PsyMirrorResult } from '@/lib/psy-mirror/types';
 import { useRouter } from 'next/navigation';
+import PsyCoachChat from '@/components/chat/PsyCoachChat';
 
 export default function ResultPsyMirror() {
   const router = useRouter();
@@ -170,33 +170,16 @@ export default function ResultPsyMirror() {
           </div>
         </section>
 
-        {/* VIDEO SCRIPT SECTION */}
-        <section className="bg-white p-8 md:p-12 rounded-[40px] border border-[#1A1C2E]/5 shadow-xl space-y-10">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="space-y-2">
-              <h2 className="text-2xl font-bold flex items-center gap-3">
-                <FileText className="w-6 h-6 text-[#1A1C2E]" />
-                Script de Coaching Personnalisé
-              </h2>
-              <p className="text-sm text-[#1A1C2E]/60">Ce script est conçu pour un décryptage narratif complet de votre profil.</p>
-            </div>
+        {/* PSY COACH CHAT SECTION */}
+        <section className="space-y-8">
+          <div className="text-center space-y-2">
+            <h2 className="text-3xl font-bold flex items-center justify-center gap-3">
+              <Sparkles className="w-8 h-8 text-[#C9A24D]" />
+              Converser avec l'Oracle du Miroir
+            </h2>
+            <p className="text-[#1A1C2E]/60">Posez vos questions précises sur votre profil et vos mécanismes de décision.</p>
           </div>
-          <div className="p-8 bg-[#F8F9FA] rounded-3xl border border-dashed border-[#1A1C2E]/10">
-            <div className="prose prose-sm max-w-none text-[#1A1C2E]/80 leading-relaxed">
-              {result.video_script.split('\n\n').map((paragraph, i) => (
-                <div key={i} className="mb-6 last:mb-0">
-                  {paragraph.split('\n').map((line, j) => {
-                    const isHeader = line.startsWith('[') || line.includes(' :') || (line.includes(':') && line.split(':')[0].length < 30);
-                    return (
-                      <p key={j} className={isHeader ? "font-bold text-[#1A1C2E] text-base mb-2" : "italic ml-4 border-l-2 border-[#1A1C2E]/5 pl-4 mb-2"}>
-                        {line}
-                      </p>
-                    );
-                  })}
-                </div>
-              ))}
-            </div>
-          </div>
+          <PsyCoachChat psyResult={result} />
         </section>
 
         {/* PHRASE FINALE */}

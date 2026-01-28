@@ -106,7 +106,7 @@ export default function ResultPsyMirror() {
                   />
                 </div>
                 <p className="text-sm text-[#1A1C2E]/60 leading-relaxed">
-                  {result.report_sections.find(s => s.id === 'dimensions')?.html.match(new RegExp(`<h4>${getDimensionName(dimId)}</h4><p class="text-sm">(.*?)</p>`, 's'))?.[1] || "Analyse en cours..."}
+                  {result.insights.dimension_insights.find(i => i.id === dimId)?.text || "Analyse en cours..."}
                 </p>
               </div>
             ))}

@@ -105,7 +105,8 @@ Action: Votre levier prioritaire cette semaine : ${generateLever(primaryGap, beh
     insights: {
       mirror_sentence: mirrorSentence,
       blind_spot: formattedBlindSpot,
-      lever: blindSpotData.lever
+      lever: blindSpotData.lever,
+      dimension_insights: dimensionInsights
     },
     report_sections,
     video_script

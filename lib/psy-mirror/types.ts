@@ -61,6 +61,11 @@ export interface PsyMirrorResult {
     mirror_sentence: string;
     blind_spot: string;
     lever: string;
+    dimension_insights: {
+      id: DimensionId;
+      name: string;
+      text: string;
+    }[];
   };
   report_sections: {
     id: string;

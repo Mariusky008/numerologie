@@ -79,7 +79,7 @@ export default function ResultPsyMirror() {
               "{result.insights?.mirror_sentence}"
             </p>
             
-            <div className="max-w-none text-[#1A1C2E]/70 leading-relaxed text-lg md:text-xl font-light text-left space-y-6">
+            <div className="max-w-none text-[#1A1C2E] leading-relaxed text-lg md:text-xl font-normal text-left space-y-6">
               {result.insights?.mirror_full?.split('\n\n').map((para: string, i: number) => (
                 <p key={i} className="last:mb-0">{para.replace('### ', '')}</p>
               ))}
@@ -89,7 +89,7 @@ export default function ResultPsyMirror() {
           <motion.div 
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="pt-12 text-[#1A1C2E]/20"
+            className="pt-12 text-[#1A1C2E]/30"
           >
             <ChevronDown className="w-12 h-12 mx-auto" />
           </motion.div>
@@ -101,7 +101,7 @@ export default function ResultPsyMirror() {
         <div className="max-w-6xl mx-auto space-y-24">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#1A1C2E]">Le Laboratoire des Réflexes</h2>
-            <p className="text-[#1A1C2E]/50 text-xl max-w-2xl mx-auto">Preuves factuelles issues de vos épreuves de stress en temps réel.</p>
+            <p className="text-[#1A1C2E]/80 text-xl max-w-2xl mx-auto">Preuves factuelles issues de vos épreuves de stress en temps réel.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-10">
@@ -126,9 +126,9 @@ export default function ResultPsyMirror() {
                   <h3 className="text-3xl md:text-4xl font-serif font-bold leading-tight text-[#1A1C2E]">{ri.observation}</h3>
                   
                   <div className="pt-10 border-t border-[#1A1C2E]/5">
-                    <div className="flex items-center gap-3 text-[#1A1C2E]/30 mb-5">
+                    <div className="flex items-center gap-3 text-[#1A1C2E]/40 mb-5">
                       <Target className="w-5 h-5" />
-                      <span className="text-xs font-bold uppercase tracking-widest text-[#1A1C2E]/60">Protocole d'Entraînement</span>
+                      <span className="text-xs font-bold uppercase tracking-widest text-[#1A1C2E]/80">Protocole d'Entraînement</span>
                     </div>
                     <p className="text-xl text-[#5B4B8A] italic font-medium leading-relaxed">
                       "{ri.exercise}"
@@ -152,9 +152,9 @@ export default function ResultPsyMirror() {
               Ton Angle Mort : <br />
               <span className="text-[#C9A24D] italic">{result.insights?.blind_spot_label}</span>
             </h2>
-            <div className="text-[#1A1C2E]/70 leading-relaxed text-xl md:text-2xl font-light space-y-8">
+            <div className="text-[#1A1C2E] leading-relaxed text-xl md:text-2xl font-normal space-y-8">
               {result.insights?.blind_spot?.split('\n\n').map((para: string, i: number) => (
-                <p key={i} className={para.startsWith('**') ? "font-bold text-[#1A1C2E]/90" : ""}>
+                <p key={i} className={para.startsWith('**') ? "font-bold text-[#1A1C2E]" : ""}>
                   {para.replace('### ', '')}
                 </p>
               ))}
@@ -186,28 +186,28 @@ export default function ResultPsyMirror() {
         <div className="max-w-6xl mx-auto space-y-24">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#1A1C2E]">Analyse Dimensionnelle</h2>
-            <p className="text-[#1A1C2E]/50 text-xl">Décomposition précise de votre mode opératoire.</p>
+            <p className="text-[#1A1C2E]/80 text-xl">Décomposition précise de votre mode opératoire.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-10">
             {result.insights?.dimension_insights?.map((di) => (
-              <div key={di.id} className="p-12 rounded-[50px] bg-white border border-[#1A1C2E]/5 shadow-sm space-y-8 hover:shadow-xl hover:shadow-[#1A1C2E]/5 transition-all">
+              <div key={di.id} className="p-12 rounded-[50px] bg-white border border-[#1A1C2E]/10 shadow-sm space-y-8 hover:shadow-xl hover:shadow-[#1A1C2E]/5 transition-all">
                 <div className="flex justify-between items-center">
                   <h3 className="font-serif text-3xl font-bold tracking-tight text-[#1A1C2E]">{di.name}</h3>
-                  <div className="px-5 py-2 bg-[#FDFBF7] rounded-full text-[#C9A24D] font-bold text-sm tracking-widest border border-[#C9A24D]/10">
+                  <div className="px-5 py-2 bg-[#FDFBF7] rounded-full text-[#C9A24D] font-bold text-sm tracking-widest border border-[#C9A24D]/20">
                     {result.behavior_profile[di.id]}/100
                   </div>
                 </div>
                 
                 <div className="space-y-8">
-                  <div className="h-2 w-full bg-[#1A1C2E]/5 rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-[#1A1C2E]/10 rounded-full overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       whileInView={{ width: `${result.behavior_profile[di.id]}%` }}
                       className="h-full bg-gradient-to-r from-[#C9A24D] to-[#D4B46B]"
                     />
                   </div>
-                  <p className="text-[#1A1C2E]/70 leading-relaxed font-light text-lg">
+                  <p className="text-[#1A1C2E] leading-relaxed font-normal text-lg">
                     {di.text}
                   </p>
                 </div>
@@ -222,7 +222,7 @@ export default function ResultPsyMirror() {
         <div className="max-w-4xl mx-auto space-y-24">
           <div className="text-center space-y-6">
             <h2 className="text-5xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Protocole 7 Jours</h2>
-            <p className="text-[#1A1C2E]/50 text-xl">Une action par jour pour ancrer le changement.</p>
+            <p className="text-[#1A1C2E]/80 text-xl">Une action par jour pour ancrer le changement.</p>
           </div>
 
           <div className="relative">
@@ -259,7 +259,7 @@ export default function ResultPsyMirror() {
               Soutien Illimité
             </div>
             <h2 className="text-5xl md:text-8xl font-serif font-bold text-[#1A1C2E]">L'Oracle du Miroir</h2>
-            <p className="text-[#1A1C2E]/60 text-2xl font-light max-w-3xl mx-auto leading-relaxed">
+            <p className="text-[#1A1C2E]/80 text-2xl font-light max-w-3xl mx-auto leading-relaxed">
               Discutez avec l'intelligence qui a analysé vos réflexes pour lever vos derniers blocages.
             </p>
           </div>

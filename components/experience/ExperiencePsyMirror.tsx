@@ -15,14 +15,19 @@ import {
 import { AUTO_PERCEPTION_ITEMS, BEHAVIOR_SCENARIOS } from '@/lib/psy-mirror/data';
 import { Option, PsyMirrorResult } from '@/lib/psy-mirror/types';
 import { useRouter } from 'next/navigation';
+import AttentionTest from './reflex-tests/AttentionTest';
+import BreakingPointTest from './reflex-tests/BreakingPointTest';
+import RiskBalloonTest from './reflex-tests/RiskBalloonTest';
 
 export default function ExperiencePsyMirror() {
   const router = useRouter();
-  const [step, setStep] = useState<'intro' | 'moduleA' | 'moduleB' | 'loading'>('intro');
+  const [step, setStep] = useState<'intro' | 'moduleA' | 'moduleB' | 'moduleC' | 'loading'>('intro');
   const [currentModuleIndex, setCurrentModuleIndex] = useState(0);
   const [currentScenarioStep, setCurrentScenarioStep] = useState(0);
+  const [currentReflexStep, setCurrentReflexStep] = useState(0);
   const [moduleAAnswers, setModuleAAnswers] = useState<Option[]>([]);
   const [moduleBAnswers, setModuleBAnswers] = useState<Option[]>([]);
+  const [reflexResults, setReflexResults] = useState<any>({});
   const [isLoading, setIsLoading] = useState(false);
 
   // --- Module A (Auto-perception) ---
@@ -50,11 +55,23 @@ export default function ExperiencePsyMirror() {
       setCurrentModuleIndex(currentModuleIndex + 1);
       setCurrentScenarioStep(0);
     } else {
-      finishExperience(newAnswers);
+      setStep('moduleC');
     }
   };
 
-  const finishExperience = async (finalModuleBAnswers: Option[]) => {
+  // --- Module C (Reflex Tests) ---
+  const handleReflexComplete = (testKey: string, result: any) => {
+    const newReflexResults = { ...reflexResults, [testKey]: result };
+    setReflexResults(newReflexResults);
+
+    if (currentReflexStep < 2) {
+      setCurrentReflexStep(currentReflexStep + 1);
+    } else {
+      finishExperience(newReflexResults);
+    }
+  };
+
+  const finishExperience = async (finalReflexResults: any) => {
     setStep('loading');
     setIsLoading(true);
 
@@ -64,7 +81,8 @@ export default function ExperiencePsyMirror() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           moduleA_answers: moduleAAnswers,
-          moduleB_answers: finalModuleBAnswers,
+          moduleB_answers: moduleBAnswers,
+          moduleC_results: finalReflexResults,
           user_meta: { lang: 'fr', session_id: Math.random().toString(36).substring(7) }
         }),
       });
@@ -222,6 +240,27 @@ export default function ExperiencePsyMirror() {
                 ))}
               </div>
             </div>
+          </motion.div>
+        )}
+
+        {/* MODULE C: REFLEX TESTS */}
+        {step === 'moduleC' && (
+          <motion.div 
+            key="moduleC"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            className="w-full flex flex-col items-center"
+          >
+            {currentReflexStep === 0 && (
+              <AttentionTest onComplete={(res) => handleReflexComplete('attention', res)} />
+            )}
+            {currentReflexStep === 1 && (
+              <BreakingPointTest onComplete={(res) => handleReflexComplete('breaking_point', res)} />
+            )}
+            {currentReflexStep === 2 && (
+              <RiskBalloonTest onComplete={(res) => handleReflexComplete('risk_balloon', res)} />
+            )}
           </motion.div>
         )}
 

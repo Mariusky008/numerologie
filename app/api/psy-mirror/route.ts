@@ -6,7 +6,7 @@ import { Option } from '@/lib/psy-mirror/types';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { moduleA_answers, moduleB_answers, user_meta } = body;
+    const { moduleA_answers, moduleB_answers, moduleC_results, user_meta } = body;
 
     // 1. Calculate Profiles
     const selfProfile = calculateProfile(moduleA_answers as Option[]);
@@ -19,7 +19,14 @@ export async function POST(req: Request) {
     const indices = calculateIndices(moduleB_answers as Option[], behaviorProfile);
 
     // 4. Generate Content
-    const narrative = generateNarrative(selfProfile, behaviorProfile, gaps, primaryGap, indices);
+    const narrative = generateNarrative(
+      selfProfile, 
+      behaviorProfile, 
+      gaps, 
+      primaryGap, 
+      indices,
+      moduleC_results
+    );
 
     // 5. Build Final Result
     const result = {
@@ -30,6 +37,7 @@ export async function POST(req: Request) {
       primary_gap: primaryGap,
       secondary_gap: secondaryGap,
       indices,
+      reflex_results: moduleC_results,
       ...narrative
     };
 

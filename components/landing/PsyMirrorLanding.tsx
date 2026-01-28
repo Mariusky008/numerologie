@@ -203,8 +203,8 @@ export default function PsyMirrorLanding() {
               },
               {
                 step: "Phase 02",
-                title: "Réflexes de Crise",
-                desc: "Série de scénarios immersifs où le temps et l'enjeu forcent votre cerveau à révéler ses vrais patterns.",
+                title: "Le Laboratoire",
+                desc: "Épreuves de réflexes en temps réel : Filtre attentionnel, point de rupture et gestion du risque sous pression.",
                 icon: <Activity className="w-10 h-10" />
               },
               {

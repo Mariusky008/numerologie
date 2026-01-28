@@ -151,7 +151,8 @@ export function generateNarrative(
   behaviorProfile: ProfileScores,
   gaps: Record<string, number>,
   primaryGap: DimensionId,
-  indices: { coherence: number; avoidance: number; overcontrol: number }
+  indices: { coherence: number; avoidance: number; overcontrol: number },
+  reflexResults?: any
 ) {
   // 1. Generate Mirror Section (150-200 words)
   const mirrorData = generateMirrorSection(primaryGap, selfProfile[primaryGap], behaviorProfile[primaryGap]);
@@ -177,7 +178,10 @@ export function generateNarrative(
   // 5. Generate 7-Day Plan (7 distinct actions)
   const plan7Days = generate7DayPlan(blindSpotData, primaryGap);
 
-  // 6. Generate Video Script (6-7 minutes)
+  // 6. Generate Reflex Laboratory Section
+  const reflexInsights = generateReflexInsights(reflexResults, behaviorProfile);
+
+  // 7. Generate Video Script (6-7 minutes)
   const videoScript = generateVideoScriptV2(selfProfile, behaviorProfile, primaryGap, blindSpotData, plan7Days, indices);
 
   return {
@@ -188,13 +192,30 @@ export function generateNarrative(
       blind_spot_label: blindSpotData.label,
       lever: priorityLeverText,
       dimension_insights: dimensionInsights,
-      plan_7_days: plan7Days
+      plan_7_days: plan7Days,
+      reflex_insights: reflexInsights
     },
     report_sections: [
       {
         id: 'mirror',
         title: 'L\'Écart Central (Le Miroir)',
         html: `<div class="space-y-4 text-lg leading-relaxed">${mirrorData.fullText}</div>`
+      },
+      {
+        id: 'reflex_lab',
+        title: 'Le Laboratoire des Réflexes',
+        html: `<div class="space-y-8">${reflexInsights.map(ri => `
+          <div class="p-8 border rounded-[40px] bg-white shadow-sm space-y-4">
+            <div class="flex items-center gap-3 text-[#C9A24D]">
+              <span class="font-bold uppercase tracking-widest text-xs">${ri.title}</span>
+            </div>
+            <p class="text-xl font-bold leading-tight">${ri.observation}</p>
+            <div class="p-6 bg-[#F8F9FA] rounded-3xl border border-[#1A1C2E]/5">
+              <p class="text-sm font-bold text-[#1A1C2E]/40 uppercase mb-2">Exercice correctif</p>
+              <p class="text-lg text-[#1A1C2E] font-medium italic">"${ri.exercise}"</p>
+            </div>
+          </div>
+        `).join('')}</div>`
       },
       {
         id: 'blind_spot',
@@ -215,6 +236,62 @@ export function generateNarrative(
     video_script: videoScript,
     final_phrase: "Ce miroir ne te dit pas qui tu es. Il te montre comment tu fonctionnes quand ça compte vraiment."
   };
+}
+
+/**
+ * Generates insights for reflex tests
+ */
+function generateReflexInsights(results: any, behavior: ProfileScores) {
+  if (!results) return [];
+
+  const insights = [];
+
+  // 1. Attention Filter (Concentration / Stress)
+  const att = results.attention;
+  if (att) {
+    let obs = "";
+    let ex = "";
+    if (att.degradation > 1.5) {
+      obs = "Votre concentration s'effondre littéralement dès que le bruit visuel augmente. Vous êtes très sensible à la pollution environnementale.";
+      ex = "Pratiquez le 'Single-Tasking' strict : coupez toutes les notifications pendant 25 minutes pour réhabituer votre cerveau au focus profond.";
+    } else {
+      obs = "Vous possédez une résilience cognitive impressionnante. Le stress extérieur ne dégrade pas la qualité de votre traitement d'information.";
+      ex = "Utilisez cette force pour agir comme 'tampon' dans les situations de crise pour votre équipe.";
+    }
+    insights.push({ title: "Filtre Attentionnel", observation: obs, exercise: ex });
+  }
+
+  // 2. Breaking Point (Impulsivity / Control)
+  const bp = results.breaking_point;
+  if (bp) {
+    let obs = "";
+    let ex = "";
+    if (bp.inhibitionError > 20) {
+      obs = "Sous pression de vitesse, votre cerveau reptilien prend le contrôle total. Vous agissez par réflexe impulsif plutôt que par choix.";
+      ex = "Appliquez la règle des '3 secondes' : devant chaque sollicitation urgente, comptez jusqu'à 3 avant de toucher votre clavier ou de parler.";
+    } else {
+      obs = "Même dans l'urgence extrême, vous gardez une capacité d'inhibition forte. Votre self-contrôle est votre ancrage.";
+      ex = "Travaillez votre vitesse de décision, car votre excès de contrôle pourrait vous faire perdre en agilité.";
+    }
+    insights.push({ title: "Point de Rupture", observation: obs, exercise: ex });
+  }
+
+  // 3. Risk Balloon (Risk / Uncertainty)
+  const rb = results.risk_balloon;
+  if (rb) {
+    let obs = "";
+    let ex = "";
+    if (rb.riskScore > 60) {
+      obs = "Vous avez une tolérance au risque très élevée, flirtant souvent avec le point de rupture par appât du gain ou de l'adrénaline.";
+      ex = "Fixez-vous un 'Seuil de Sortie' non négociable avant de lancer un projet risqué. Ne changez pas ce seuil en cours de route.";
+    } else {
+      obs = "Votre prudence est votre armure. Vous préférez sécuriser de petits gains plutôt que de risquer une perte totale.";
+      ex = "Forcez-vous une fois par semaine à 'over-pumper' une décision mineure (prendre un risque calculé sans filet) pour muscler votre audace.";
+    }
+    insights.push({ title: "Ballon de Risque", observation: obs, exercise: ex });
+  }
+
+  return insights;
 }
 
 /**

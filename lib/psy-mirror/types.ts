@@ -57,6 +57,11 @@ export interface PsyMirrorResult {
     avoidance: number;
     overcontrol: number;
   };
+  reflex_results?: {
+    attention: { accuracy: number; avgSpeed: number; degradation: number };
+    breaking_point: { inhibitionError: number; omissionRate: number; peakSpeed: number };
+    risk_balloon: { avgPumps: number; pops: number; riskScore: number };
+  };
   insights: {
     mirror_sentence: string;
     mirror_full: string;
@@ -71,6 +76,11 @@ export interface PsyMirrorResult {
     plan_7_days: {
       day: number;
       action: string;
+    }[];
+    reflex_insights: {
+      title: string;
+      observation: string;
+      exercise: string;
     }[];
   };
   report_sections: {

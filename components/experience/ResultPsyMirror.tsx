@@ -11,7 +11,10 @@ import {
   Share2,
   ChevronRight,
   Target,
-  Sparkles
+  Sparkles,
+  Activity,
+  Brain,
+  TrendingUp
 } from 'lucide-react';
 import { PsyMirrorResult } from '@/lib/psy-mirror/types';
 import { useRouter } from 'next/navigation';
@@ -92,6 +95,55 @@ export default function ResultPsyMirror() {
             </div>
           </div>
         </motion.section>
+
+        {/* LABORATOIRE DES REFLEXES */}
+        {result.insights?.reflex_insights && result.insights.reflex_insights.length > 0 && (
+          <section className="space-y-10">
+            <div className="text-center space-y-4">
+              <h2 className="text-3xl font-bold">Le Laboratoire des Réflexes</h2>
+              <p className="text-[#1A1C2E]/60 text-lg max-w-2xl mx-auto">
+                Observations directes de vos capacités cognitives mesurées lors des épreuves de stress en temps réel.
+              </p>
+            </div>
+            
+            <div className="grid gap-6">
+              {result.insights.reflex_insights.map((ri, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="p-8 md:p-10 border rounded-[40px] bg-white shadow-sm space-y-6 relative overflow-hidden group"
+                >
+                  <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                    {ri.title.includes('Attention') && <Brain className="w-24 h-24" />}
+                    {ri.title.includes('Rupture') && <Activity className="w-24 h-24" />}
+                    {ri.title.includes('Risque') && <TrendingUp className="w-24 h-24" />}
+                  </div>
+                  
+                  <div className="space-y-4 relative z-10">
+                    <div className="flex items-center gap-3 text-[#C9A24D]">
+                      <span className="font-bold uppercase tracking-[0.2em] text-xs">{ri.title}</span>
+                    </div>
+                    <p className="text-xl md:text-2xl font-bold leading-tight text-[#1A1C2E]">
+                      {ri.observation}
+                    </p>
+                    <div className="p-8 bg-[#F8F9FA] rounded-[30px] border border-[#1A1C2E]/5 space-y-3">
+                      <div className="flex items-center gap-2 text-[#1A1C2E]/40">
+                        <Target className="w-4 h-4" />
+                        <span className="text-xs font-bold uppercase tracking-widest">Exercice Correctif</span>
+                      </div>
+                      <p className="text-lg md:text-xl text-[#1A1C2E] font-medium italic leading-relaxed">
+                        "{ri.exercise}"
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* ANGLE MORT */}
         <section className="bg-white p-8 md:p-12 rounded-[40px] border border-[#1A1C2E]/5 shadow-xl space-y-8">

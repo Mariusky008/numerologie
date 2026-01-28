@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, AlertTriangle } from 'lucide-react';
+import { Zap, AlertTriangle, Volume2, VolumeX } from 'lucide-react';
 
 interface AttentionTestProps {
   onComplete: (results: {
@@ -29,24 +29,85 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
   const [timeLeft, setTimeLeft] = useState(45); // 45 seconds test
   const [stressErrors, setStressErrors] = useState(0);
   const [normalErrors, setNormalErrors] = useState(0);
+  const [audioEnabled, setAudioEnabled] = useState(false);
+
+  // Audio refs
+  const ambientRef = useRef<HTMLAudioElement | null>(null);
+  const stressRef = useRef<HTMLAudioElement | null>(null);
+
+  const speakColor = useCallback((colorName: string) => {
+    if (!audioEnabled || !isStressed) return;
+    
+    // Stop any current speech
+    window.speechSynthesis.cancel();
+    
+    // Pick a DIFFERENT color name to destabilize
+    const wrongColors = COLORS.filter(c => c.name !== colorName);
+    const randomWrong = wrongColors[Math.floor(Math.random() * wrongColors.length)];
+    
+    const utterance = new SpeechSynthesisUtterance(randomWrong.name);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 1.2;
+    utterance.pitch = 0.8; // Deeper, more "authoritative" voice
+    window.speechSynthesis.speak(utterance);
+  }, [audioEnabled, isStressed]);
 
   const generateChallenge = useCallback(() => {
     const wordIdx = Math.floor(Math.random() * COLORS.length);
     let colorIdx = Math.floor(Math.random() * COLORS.length);
     
-    // Ensure word and color are different most of the time (Stroop effect)
     if (Math.random() > 0.2) {
       while (colorIdx === wordIdx) {
         colorIdx = Math.floor(Math.random() * COLORS.length);
       }
     }
 
-    setCurrentChallenge({
+    const challenge = {
       word: COLORS[wordIdx].name,
       color: COLORS[colorIdx].value,
-    });
+    };
+    
+    setCurrentChallenge(challenge);
     setStartTime(Date.now());
-  }, []);
+    
+    // Voice destabilization
+    if (isStressed) {
+      speakColor(COLORS[colorIdx].name);
+    }
+  }, [isStressed, speakColor]);
+
+  // Audio effect management
+  useEffect(() => {
+    if (!audioEnabled) return;
+
+    // Background Audio setup (Soft ambient vs Stress noise)
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    if (isStressed) {
+      // Stressful noise: discordant frequencies
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(150, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.5);
+      gain.gain.setValueAtTime(0.05, ctx.currentTime);
+    } else {
+      // Soft ambient: sine wave
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(220, ctx.currentTime);
+      gain.gain.setValueAtTime(0.02, ctx.currentTime);
+    }
+
+    osc.start();
+
+    return () => {
+      osc.stop();
+      ctx.close();
+    };
+  }, [audioEnabled, isStressed]);
 
   useEffect(() => {
     generateChallenge();
@@ -96,6 +157,24 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
 
   return (
     <div className="flex flex-col items-center justify-center space-y-12 w-full max-w-2xl relative">
+      {/* SOUND TOGGLE */}
+      <button 
+        onClick={() => setAudioEnabled(!audioEnabled)}
+        className="absolute top-[-60px] right-0 flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-white/10 transition-all z-50"
+      >
+        {audioEnabled ? (
+          <>
+            <Volume2 className="w-3 h-3 text-[#C9A24D]" />
+            Son Activé
+          </>
+        ) : (
+          <>
+            <VolumeX className="w-3 h-3 text-red-400" />
+            Son Désactivé
+          </>
+        )}
+      </button>
+
       {/* STRESS OVERLAY */}
       <AnimatePresence>
         {isStressed && (

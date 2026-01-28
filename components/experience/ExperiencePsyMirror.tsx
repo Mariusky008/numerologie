@@ -30,6 +30,15 @@ export default function ExperiencePsyMirror() {
   const [reflexResults, setReflexResults] = useState<any>({});
   const [isLoading, setIsLoading] = useState(false);
 
+  const loadingSteps = [
+    "Analyse de l'intention consciente (Module A)...",
+    "Décodage des réflexes sous pression (Module B)...",
+    "Calcul des capacités cognitives (Laboratoire)...",
+    "Identification des angles morts invisibles...",
+    "Génération de votre miroir psychologique...",
+    "Préparation de votre Oracle personnel..."
+  ];
+
   // --- Module A (Auto-perception) ---
   const handleModuleASelect = (option: Option) => {
     const newAnswers = [...moduleAAnswers, option];

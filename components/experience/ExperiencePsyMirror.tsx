@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import AttentionTest from './reflex-tests/AttentionTest';
 import BreakingPointTest from './reflex-tests/BreakingPointTest';
 import RiskBalloonTest from './reflex-tests/RiskBalloonTest';
+import MentalAgilityTest from './reflex-tests/MentalAgilityTest';
 
 export default function ExperiencePsyMirror() {
   const router = useRouter();
@@ -73,7 +74,7 @@ export default function ExperiencePsyMirror() {
     const newReflexResults = { ...reflexResults, [testKey]: result };
     setReflexResults(newReflexResults);
 
-    if (currentReflexStep < 2) {
+    if (currentReflexStep < 3) {
       setCurrentReflexStep(currentReflexStep + 1);
     } else {
       finishExperience(newReflexResults);
@@ -269,6 +270,9 @@ export default function ExperiencePsyMirror() {
             )}
             {currentReflexStep === 2 && (
               <RiskBalloonTest onComplete={(res) => handleReflexComplete('risk_balloon', res)} />
+            )}
+            {currentReflexStep === 3 && (
+              <MentalAgilityTest onComplete={(res) => handleReflexComplete('mental_agility', res)} />
             )}
           </motion.div>
         )}

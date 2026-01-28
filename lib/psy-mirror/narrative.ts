@@ -291,6 +291,21 @@ function generateReflexInsights(results: any, behavior: ProfileScores) {
     insights.push({ title: "Ballon de Risque", observation: obs, exercise: ex });
   }
 
+  // 4. Mental Agility (Cognitive Flexibility)
+  const ma = results.mental_agility;
+  if (ma) {
+    let obs = "";
+    let ex = "";
+    if (ma.switchCost > 400) {
+      obs = "Votre cerveau a un 'coût de commutation' élevé. Passer d'une règle à une autre vous demande un effort d'adaptation qui ralentit vos décisions.";
+      ex = "Entraînez votre flexibilité en changeant vos habitudes quotidiennes (trajet différent, nouvel ordre dans vos tâches) pour 'défiger' vos automatismes.";
+    } else {
+      obs = "Votre agilité mentale est remarquable. Vous passez d'un contexte à un autre avec une fluidité qui vous permet de rester efficace dans le chaos.";
+      ex = "Misez sur des rôles de coordination ou de pivot où la capacité à changer de perspective rapidement est un avantage stratégique.";
+    }
+    insights.push({ title: "Agilité Mentale", observation: obs, exercise: ex });
+  }
+
   return insights;
 }
 

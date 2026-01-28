@@ -61,6 +61,7 @@ export interface PsyMirrorResult {
     attention: { accuracy: number; avgSpeed: number; degradation: number };
     breaking_point: { inhibitionError: number; omissionRate: number; peakSpeed: number };
     risk_balloon: { avgPumps: number; pops: number; riskScore: number };
+    mental_agility: { switchCost: number; accuracy: number; agilityScore: number };
   };
   insights: {
     mirror_sentence: string;

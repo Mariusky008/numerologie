@@ -14,7 +14,8 @@ import {
   Sparkles,
   Activity,
   Brain,
-  TrendingUp
+  TrendingUp,
+  Repeat
 } from 'lucide-react';
 import { PsyMirrorResult } from '@/lib/psy-mirror/types';
 import { useRouter } from 'next/navigation';
@@ -120,6 +121,7 @@ export default function ResultPsyMirror() {
                     {ri.title.includes('Attention') && <Brain className="w-24 h-24" />}
                     {ri.title.includes('Rupture') && <Activity className="w-24 h-24" />}
                     {ri.title.includes('Risque') && <TrendingUp className="w-24 h-24" />}
+                    {ri.title.includes('Agilité') && <Repeat className="w-24 h-24" />}
                   </div>
                   
                   <div className="space-y-4 relative z-10">

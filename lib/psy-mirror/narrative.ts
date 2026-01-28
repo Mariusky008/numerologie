@@ -251,11 +251,14 @@ function generateReflexInsights(results: any, behavior: ProfileScores) {
   if (att) {
     let obs = "";
     let ex = "";
-    if (att.degradation > 1.5) {
-      obs = "Votre concentration s'effondre littéralement dès que le bruit visuel augmente. Vous êtes très sensible à la pollution environnementale.";
+    if (att.degradation > 1.8 || att.accuracy < 70) {
+      obs = "Votre concentration s'effondre sous la pression. Le bruit visuel et sonore sature votre capacité de traitement, vous faisant perdre le fil de vos priorités.";
       ex = "Pratiquez le 'Single-Tasking' strict : coupez toutes les notifications pendant 25 minutes pour réhabituer votre cerveau au focus profond.";
+    } else if (att.degradation > 1.3) {
+      obs = "Votre focus est sensible à l'environnement. Vous parvenez à rester efficace, mais au prix d'un effort mental intense qui vous épuise rapidement.";
+      ex = "Utilisez des outils de réduction de bruit (casque, bureau isolé) pour protéger votre énergie lors des tâches complexes.";
     } else {
-      obs = "Vous possédez une résilience cognitive impressionnante. Le stress extérieur ne dégrade pas la qualité de votre traitement d'information.";
+      obs = "Vous possédez une résilience cognitive impressionnante. Le stress et les distractions extérieures ne dégradent pas la qualité de votre travail.";
       ex = "Utilisez cette force pour agir comme 'tampon' dans les situations de crise pour votre équipe.";
     }
     insights.push({ title: "Filtre Attentionnel", observation: obs, exercise: ex });
@@ -266,12 +269,15 @@ function generateReflexInsights(results: any, behavior: ProfileScores) {
   if (bp) {
     let obs = "";
     let ex = "";
-    if (bp.inhibitionError > 20) {
-      obs = "Sous pression de vitesse, votre cerveau reptilien prend le contrôle total. Vous agissez par réflexe impulsif plutôt que par choix.";
+    if (bp.inhibitionError > 30) {
+      obs = "Sous pression de vitesse, votre cerveau reptilien prend le contrôle total. Vous agissez par réflexe impulsif, sacrifiant la précision pour la rapidité.";
       ex = "Appliquez la règle des '3 secondes' : devant chaque sollicitation urgente, comptez jusqu'à 3 avant de toucher votre clavier ou de parler.";
+    } else if (bp.inhibitionError > 15) {
+      obs = "Votre self-contrôle est fragile dans l'urgence. Vous parvenez à rester maître de vous, mais vos réflexes impulsifs tentent souvent de prendre le dessus.";
+      ex = "Pratiquez des exercices de 'Stop-Action' : interrompez volontairement une tâche en cours pendant 10 secondes pour muscler votre inhibition.";
     } else {
-      obs = "Même dans l'urgence extrême, vous gardez une capacité d'inhibition forte. Votre self-contrôle est votre ancrage.";
-      ex = "Travaillez votre vitesse de décision, car votre excès de contrôle pourrait vous faire perdre en agilité.";
+      obs = "Même dans l'urgence extrême, vous gardez une capacité d'inhibition forte. Votre self-contrôle est votre ancrage naturel.";
+      ex = "Travaillez votre vitesse de décision, car votre excès de contrôle pourrait vous faire perdre en agilité tactique.";
     }
     insights.push({ title: "Point de Rupture", observation: obs, exercise: ex });
   }
@@ -281,12 +287,15 @@ function generateReflexInsights(results: any, behavior: ProfileScores) {
   if (rb) {
     let obs = "";
     let ex = "";
-    if (rb.riskScore > 60) {
-      obs = "Vous avez une tolérance au risque très élevée, flirtant souvent avec le point de rupture par appât du gain ou de l'adrénaline.";
+    if (rb.riskScore > 70) {
+      obs = "Vous avez une soif de risque élevée. Vous flirtez souvent avec le point de rupture par appât du gain, quitte à tout perdre sur un coup de tête.";
       ex = "Fixez-vous un 'Seuil de Sortie' non négociable avant de lancer un projet risqué. Ne changez pas ce seuil en cours de route.";
+    } else if (rb.riskScore < 30) {
+      obs = "Votre prudence est votre armure, mais elle peut devenir votre prison. Vous sécurisez vos acquis au point de passer à côté d'opportunités majeures.";
+      ex = "Forcez-vous une fois par semaine à prendre un risque calculé sans filet (une décision mineure mais audacieuse) pour muscler votre audace.";
     } else {
-      obs = "Votre prudence est votre armure. Vous préférez sécuriser de petits gains plutôt que de risquer une perte totale.";
-      ex = "Forcez-vous une fois par semaine à 'over-pumper' une décision mineure (prendre un risque calculé sans filet) pour muscler votre audace.";
+      obs = "Votre gestion du risque est pragmatique. Vous savez quand accélérer et quand sécuriser vos gains sans vous laisser aveugler par l'adrénaline.";
+      ex = "Continuez à utiliser des critères factuels pour vos prises de risque plutôt que de vous fier uniquement à votre intuition.";
     }
     insights.push({ title: "Ballon de Risque", observation: obs, exercise: ex });
   }
@@ -296,11 +305,14 @@ function generateReflexInsights(results: any, behavior: ProfileScores) {
   if (ma) {
     let obs = "";
     let ex = "";
-    if (ma.switchCost > 400) {
-      obs = "Votre cerveau a un 'coût de commutation' élevé. Passer d'une règle à une autre vous demande un effort d'adaptation qui ralentit vos décisions.";
+    if (ma.switchCost > 500 || ma.accuracy < 75) {
+      obs = "Votre cerveau a un 'coût de commutation' important. Passer d'une règle à une autre demande un effort d'adaptation qui vous ralentit et génère des erreurs.";
       ex = "Entraînez votre flexibilité en changeant vos habitudes quotidiennes (trajet différent, nouvel ordre dans vos tâches) pour 'défiger' vos automatismes.";
+    } else if (ma.switchCost > 250) {
+      obs = "Votre agilité mentale est en cours de développement. Vous parvenez à pivoter, mais ce changement de contexte crée une friction mentale notable.";
+      ex = "Pratiquez le passage rapide entre deux types de tâches (ex: 10 min de mail, 10 min de création) pour fluidifier vos transitions cérébrales.";
     } else {
-      obs = "Votre agilité mentale est remarquable. Vous passez d'un contexte à un autre avec une fluidité qui vous permet de rester efficace dans le chaos.";
+      obs = "Votre agilité mentale est remarquable. Vous passez d'un contexte à un autre avec une fluidité qui vous permet de rester efficace même dans le chaos.";
       ex = "Misez sur des rôles de coordination ou de pivot où la capacité à changer de perspective rapidement est un avantage stratégique.";
     }
     insights.push({ title: "Agilité Mentale", observation: obs, exercise: ex });

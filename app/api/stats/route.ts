@@ -83,3 +83,27 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Failed to update stat' }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const password = searchParams.get('password');
+
+    if (password !== process.env.ADMIN_PASSWORD && password !== 'oracle2024') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    // Reset all counts to 0
+    const { error } = await supabase
+      .from('site_stats')
+      .update({ count: 0 })
+      .neq('count', -1); // Dummy condition to update all rows
+
+    if (error) throw error;
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error resetting stats:', error);
+    return NextResponse.json({ error: 'Failed to reset stats' }, { status: 500 });
+  }
+}

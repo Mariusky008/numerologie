@@ -1,7 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 
-// HARDCODED KEYS (Updated with correct project keys provided by user)
-const supabaseUrl = 'https://ymmepfqrvutjihubijtv.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltbWVwZnFydnV0amlodWJpanR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg0ODI2ODgsImV4cCI6MjA4NDA1ODY4OH0.djAoYDLd-GwsFdXYevDBTHslXuamEhto5A_xNDf6Q-c';
+// Environment variables are now used for security
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://ymmepfqrvutjihubijtv.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+if (!supabaseAnonKey && typeof window !== 'undefined') {
+  console.warn("Supabase Anon Key is missing. Check your .env.local file.");
+}
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

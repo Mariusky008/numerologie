@@ -54,15 +54,56 @@ export default function AdminDashboard() {
   const [tempScript, setTempScript] = useState<string>("");
   const [videoGeneratingId, setVideoGeneratingId] = useState<string | null>(null);
   const [stats, setStats] = useState<any>({});
+  
+  // Auth state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
-    fetchRequests();
-    fetchStats();
-  }, []);
+    if (isAuthenticated) {
+      fetchRequests();
+      fetchStats();
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simplified auth for MVP. In production, use a proper session.
+    if (password === 'oracle2024') {
+      setIsAuthenticated(true);
+    } else {
+      alert("Mot de passe incorrect");
+    }
+  };
+
+  const handleResetAll = async () => {
+    if (!confirm("ATTENTION : Vous allez supprimer TOUTES les demandes et réinitialiser les statistiques à zéro. Cette action est irréversible. Continuer ?")) {
+      return;
+    }
+
+    try {
+      // 1. Reset Stats
+      const statsRes = await fetch(`/api/stats?password=${password}`, { method: 'DELETE' });
+      
+      // 2. Reset Requests
+      const reqRes = await fetch(`/api/book-request?bulk=true&password=${password}`, { method: 'DELETE' });
+
+      if (statsRes.ok && reqRes.ok) {
+        alert("Tout a été réinitialisé avec succès !");
+        fetchRequests();
+        fetchStats();
+      } else {
+        alert("Erreur lors de la réinitialisation.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Erreur réseau.");
+    }
+  };
 
   const fetchStats = async () => {
     try {
-      const res = await fetch('/api/stats');
+      const res = await fetch(`/api/stats?password=${password}`);
       if (res.ok) {
         const data = await res.json();
         setStats(data);
@@ -74,7 +115,7 @@ export default function AdminDashboard() {
 
   const fetchRequests = async () => {
     try {
-      const res = await fetch('/api/book-request');
+      const res = await fetch(`/api/book-request?password=${password}`);
       if (res.ok) {
         const data = await res.json();
         // Map Supabase data to BookRequest
@@ -109,7 +150,7 @@ export default function AdminDashboard() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id, status: 'completed' }),
+        body: JSON.stringify({ id, status: 'completed', password }),
       });
 
       if (res.ok) {
@@ -321,6 +362,40 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
     }
   };
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-stone-100 flex items-center justify-center p-4">
+        <form onSubmit={handleLogin} className="bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full border border-stone-200">
+          <div className="flex flex-col items-center mb-6">
+            <div className="w-16 h-16 bg-[#78350f] rounded-full flex items-center justify-center text-white mb-4 shadow-lg">
+              <BookOpen className="w-8 h-8" />
+            </div>
+            <h1 className="text-2xl font-serif font-bold text-[#78350f]">Accès Administrateur</h1>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-xs font-bold text-stone-500 uppercase mb-1">Mot de passe</label>
+              <input 
+                type="password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-3 rounded-lg border border-stone-200 focus:ring-2 focus:ring-[#78350f] outline-none transition-all"
+                placeholder="Entrez le code secret..."
+                autoFocus
+              />
+            </div>
+            <button 
+              type="submit"
+              className="w-full py-3 bg-[#78350f] text-white rounded-lg font-bold hover:bg-[#573c28] transition-colors shadow-md"
+            >
+              Se connecter
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-stone-100 text-[#57534e] font-sans">
       <nav className="bg-[#78350f] text-white p-4 shadow-md sticky top-0 z-50">
@@ -329,8 +404,17 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
             <BookOpen className="w-6 h-6" />
             Admin - Romans de Vie
           </div>
-          <div className="text-sm opacity-80">
-            {requests.length} demandes
+          <div className="flex items-center gap-6">
+            <button 
+              onClick={handleResetAll}
+              className="flex items-center gap-2 px-3 py-1 bg-red-600/20 hover:bg-red-600/40 border border-red-500/30 rounded text-xs font-bold transition-colors"
+            >
+              <Trash2 className="w-3 h-3" />
+              Reset Stats & Data
+            </button>
+            <div className="text-sm opacity-80">
+              {requests.length} demandes
+            </div>
           </div>
         </div>
       </nav>

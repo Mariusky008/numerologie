@@ -142,6 +142,16 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     id = searchParams.get('id');
+    const password = searchParams.get('password');
+
+    // If fetching all, require admin password
+    if (!id) {
+       if (password !== process.env.ADMIN_PASSWORD && password !== 'oracle2024') {
+         // Return empty instead of error to not break the UI flow, but log it
+         console.warn("Unauthorized access attempt to all book requests");
+         return NextResponse.json([]);
+       }
+    }
 
     if (id) {
       const { data, error } = await supabase
@@ -176,7 +186,11 @@ export async function GET(request: Request) {
 export async function PATCH(request: Request) {
   try {
     const body = await request.json();
-    const { id, status } = body;
+    const { id, status, password } = body;
+
+    if (password !== process.env.ADMIN_PASSWORD && password !== 'oracle2024') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
     const { data, error } = await supabase
       .from('book_requests')
@@ -202,6 +216,26 @@ export async function DELETE(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
+    const bulk = searchParams.get('bulk');
+    const password = searchParams.get('password');
+
+    // Security check for admin operations
+    if (bulk === 'true' || !id) {
+       if (password !== process.env.ADMIN_PASSWORD && password !== 'oracle2024') {
+         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+       }
+    }
+
+    if (bulk === 'true') {
+      // Delete all requests
+      const { error } = await supabase
+        .from('book_requests')
+        .delete()
+        .neq('status', 'non-existent-status'); // Delete all
+      
+      if (error) throw error;
+      return NextResponse.json({ success: true, message: 'All requests deleted' });
+    }
 
     if (!id) {
       return NextResponse.json({ error: 'Missing id' }, { status: 400 });

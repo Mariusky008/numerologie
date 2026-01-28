@@ -26,7 +26,7 @@ export default function ResultPsyMirror() {
     if (saved) {
       const parsed = JSON.parse(saved);
       // Vérification de la structure (compatibilité avec les anciens résultats)
-      if (!parsed.insights?.dimension_insights) {
+      if (!parsed.insights?.dimension_insights || parsed.video_script?.startsWith('Ouverture')) {
         localStorage.removeItem('psy_mirror_result');
         router.push('/miroir/experience');
         return;
@@ -63,7 +63,7 @@ export default function ResultPsyMirror() {
         </div>
       </section>
 
-      <div className="max-w-4xl mx-auto px-6 mt-12 space-y-12">
+      <div className="max-w-4xl mx-auto px-6 mt-12 space-y-16">
         
         {/* SYNTHESE / MIROIR CENTRAL */}
         <motion.section 
@@ -74,47 +74,97 @@ export default function ResultPsyMirror() {
           <div className="absolute top-0 right-0 p-8 opacity-10">
             <Zap className="w-32 h-32" />
           </div>
-          <div className="relative z-10 space-y-8">
-            <h2 className="text-2xl font-bold flex items-center gap-3">
-              <AlertCircle className="w-6 h-6 text-emerald-400" />
-              L'Écart Central (Le Miroir)
-            </h2>
-            <p className="text-xl md:text-2xl font-medium leading-relaxed italic">
-              "{result.insights?.mirror_sentence}"
-            </p>
-            <div className="pt-8 border-t border-white/10 grid md:grid-cols-2 gap-8">
-              <div className="space-y-2">
-                <div className="text-[10px] font-bold uppercase tracking-widest opacity-40">Votre Angle Mort</div>
-                <p className="text-sm leading-relaxed text-white/80">{result.insights?.blind_spot}</p>
-              </div>
-              <div className="space-y-2">
-                <div className="text-[10px] font-bold uppercase tracking-widest opacity-40">Levier Prioritaire</div>
-                <p className="text-sm leading-relaxed text-white/80">{result.insights?.lever}</p>
-              </div>
+          <div className="relative z-10 space-y-10">
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold flex items-center gap-3">
+                <AlertCircle className="w-6 h-6 text-emerald-400" />
+                L'Écart Central (Le Miroir)
+              </h2>
+              <p className="text-xl md:text-2xl font-medium leading-relaxed italic text-emerald-50">
+                "{result.insights?.mirror_sentence}"
+              </p>
+            </div>
+            
+            <div className="prose prose-invert max-w-none text-white/80 leading-relaxed text-lg">
+              {result.insights?.mirror_full?.split('\n\n').map((para: string, i: number) => (
+                <p key={i} className="mb-4">{para.replace('### ', '')}</p>
+              ))}
             </div>
           </div>
         </motion.section>
 
+        {/* ANGLE MORT */}
+        <section className="bg-white p-8 md:p-12 rounded-[40px] border border-[#1A1C2E]/5 shadow-xl space-y-8">
+          <h2 className="text-3xl font-bold text-[#1A1C2E]">Votre Angle Mort : {result.insights?.blind_spot_label}</h2>
+          <div className="prose max-w-none text-[#1A1C2E]/80 leading-relaxed text-lg">
+            {result.insights?.blind_spot?.split('\n\n').map((para: string, i: number) => (
+              <p key={i} className={para.startsWith('**') ? "font-bold text-[#1A1C2E]" : "mb-4"}>
+                {para.replace('### ', '')}
+              </p>
+            ))}
+          </div>
+        </section>
+
+        {/* LEVIER PRIORITAIRE */}
+        <section className="bg-emerald-600 text-white p-8 md:p-12 rounded-[40px] shadow-xl relative overflow-hidden">
+          <div className="relative z-10 space-y-6">
+            <h2 className="text-2xl font-bold flex items-center gap-3">
+              <Target className="w-6 h-6" />
+              Levier de Transformation Prioritaire
+            </h2>
+            <p className="text-xl leading-relaxed font-medium">
+              {result.insights?.lever}
+            </p>
+          </div>
+        </section>
+
         {/* DIMENSIONS GRID */}
-        <section className="space-y-8">
-          <h2 className="text-2xl font-bold">Vos 6 Dimensions Comportementales</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {Object.entries(result.behavior_profile).map(([dimId, score]) => (
-              <div key={dimId} className="bg-white p-8 rounded-3xl border border-[#1A1C2E]/5 shadow-sm space-y-6 hover:shadow-md transition-all">
-                <div className="flex justify-between items-center">
-                  <h3 className="font-bold text-lg">{getDimensionName(dimId)}</h3>
-                  <div className="text-xs font-bold px-2 py-1 bg-[#F8F9FA] rounded">{score}/100</div>
+        <section className="space-y-10">
+          <h2 className="text-3xl font-bold text-center">Analyse des 6 Dimensions</h2>
+          <div className="grid gap-8">
+            {result.insights?.dimension_insights?.map((di) => (
+              <div key={di.id} className="bg-white p-8 md:p-10 rounded-[40px] border border-[#1A1C2E]/5 shadow-sm space-y-6 hover:shadow-md transition-all">
+                <div className="flex justify-between items-center border-b border-[#1A1C2E]/5 pb-6">
+                  <h3 className="font-bold text-2xl">{di.name}</h3>
+                  <div className="text-lg font-bold px-4 py-2 bg-[#F8F9FA] rounded-full text-[#1A1C2E]">
+                    {result.behavior_profile[di.id]}/100
+                  </div>
                 </div>
-                <div className="h-2 w-full bg-[#F8F9FA] rounded-full overflow-hidden">
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${score}%` }}
-                    className="h-full bg-[#1A1C2E]"
-                  />
+                <div className="space-y-6">
+                  <div className="h-3 w-full bg-[#F8F9FA] rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: `${result.behavior_profile[di.id]}%` }}
+                      className="h-full bg-[#1A1C2E]"
+                    />
+                  </div>
+                  <p className="text-lg text-[#1A1C2E]/80 leading-relaxed">
+                    {di.text}
+                  </p>
                 </div>
-                <p className="text-sm text-[#1A1C2E]/60 leading-relaxed">
-                  {result.insights?.dimension_insights?.find(i => i.id === dimId)?.text || "Analyse en cours..."}
-                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* PLAN 7 JOURS */}
+        <section className="bg-emerald-50 p-8 md:p-12 rounded-[40px] border border-emerald-100 space-y-10">
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold text-emerald-900 flex items-center gap-3">
+              <CheckCircle2 className="w-8 h-8 text-emerald-600" />
+              Votre Plan d'Action — 7 Jours
+            </h2>
+            <p className="text-emerald-800/70 text-lg">Un parcours quotidien pour ancrer votre levier de transformation.</p>
+          </div>
+          <div className="grid gap-4">
+            {result.insights?.plan_7_days?.map((step, i) => (
+              <div key={i} className="flex items-start gap-6 p-6 bg-white rounded-3xl border border-emerald-100 shadow-sm hover:scale-[1.02] transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center text-xl font-bold shrink-0 shadow-lg shadow-emerald-200">
+                  {step.day}
+                </div>
+                <div className="pt-2">
+                  <span className="text-lg font-semibold text-emerald-900 leading-tight">{step.action}</span>
+                </div>
               </div>
             ))}
           </div>
@@ -125,53 +175,38 @@ export default function ResultPsyMirror() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-2">
               <h2 className="text-2xl font-bold flex items-center gap-3">
-                <Video className="w-6 h-6" />
-                Script Vidéo Personnalisé
+                <FileText className="w-6 h-6 text-[#1A1C2E]" />
+                Script de Coaching Personnalisé
               </h2>
-              <p className="text-sm text-[#1A1C2E]/60">6-7 minutes de décryptage visuel de votre profil.</p>
+              <p className="text-sm text-[#1A1C2E]/60">Ce script est conçu pour un décryptage narratif complet de votre profil.</p>
             </div>
-            <button className="flex items-center gap-2 px-6 py-3 bg-[#1A1C2E]/5 hover:bg-[#1A1C2E]/10 rounded-full font-bold text-sm transition-all">
-              <Share2 className="w-4 h-4" />
-              Générer la vidéo
-            </button>
           </div>
           <div className="p-8 bg-[#F8F9FA] rounded-3xl border border-dashed border-[#1A1C2E]/10">
-            <pre className="whitespace-pre-wrap font-sans text-sm text-[#1A1C2E]/80 leading-relaxed italic">
-              {result.video_script}
-            </pre>
-          </div>
-        </section>
-
-        {/* PLAN 7 JOURS */}
-        <section className="bg-emerald-50 p-8 md:p-12 rounded-[40px] border border-emerald-100 space-y-8">
-          <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-emerald-900 flex items-center gap-3">
-              <Target className="w-6 h-6" />
-              Plan d'Action - 7 Jours
-            </h2>
-            <p className="text-emerald-800/60 text-sm">Des micro-actions concrètes pour ajuster votre fonctionnement.</p>
-          </div>
-          <div className="grid gap-4">
-            {[
-              "Jour 1-2 : Observation de l'angle mort dans vos interactions.",
-              "Jour 3-5 : Application du levier prioritaire défini ci-dessus.",
-              "Jour 6-7 : Bilan des réactions et ajustement du seuil décisionnel."
-            ].map((step, i) => (
-              <div key={i} className="flex items-center gap-4 p-5 bg-white rounded-2xl border border-emerald-100 shadow-sm">
-                <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold shrink-0">
-                  {i + 1}
+            <div className="prose prose-sm max-w-none text-[#1A1C2E]/80 leading-relaxed">
+              {result.video_script.split('\n\n').map((paragraph, i) => (
+                <div key={i} className="mb-6 last:mb-0">
+                  {paragraph.split('\n').map((line, j) => {
+                    const isHeader = line.startsWith('[') || line.includes(' :') || (line.includes(':') && line.split(':')[0].length < 30);
+                    return (
+                      <p key={j} className={isHeader ? "font-bold text-[#1A1C2E] text-base mb-2" : "italic ml-4 border-l-2 border-[#1A1C2E]/5 pl-4 mb-2"}>
+                        {line}
+                      </p>
+                    );
+                  })}
                 </div>
-                <span className="text-sm font-medium text-emerald-900">{step}</span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* CTA FINAL */}
-        <div className="text-center pt-12">
+        {/* PHRASE FINALE */}
+        <div className="text-center space-y-8 py-12 border-t border-[#1A1C2E]/5">
+          <p className="text-2xl md:text-3xl font-bold text-[#1A1C2E] leading-tight max-w-2xl mx-auto italic">
+            "{result.final_phrase}"
+          </p>
           <button 
             onClick={() => router.push('/miroir')}
-            className="text-sm font-bold text-[#1A1C2E]/40 hover:text-[#1A1C2E] transition-colors flex items-center gap-2 mx-auto"
+            className="text-sm font-bold text-[#1A1C2E]/40 hover:text-[#1A1C2E] transition-colors flex items-center gap-2 mx-auto uppercase tracking-widest"
           >
             Retour à l'accueil
           </button>

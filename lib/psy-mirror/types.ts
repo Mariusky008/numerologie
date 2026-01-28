@@ -59,17 +59,25 @@ export interface PsyMirrorResult {
   };
   insights: {
     mirror_sentence: string;
+    mirror_full: string;
     blind_spot: string;
+    blind_spot_label: string;
     lever: string;
     dimension_insights: {
       id: DimensionId;
       name: string;
       text: string;
     }[];
+    plan_7_days: {
+      day: number;
+      action: string;
+    }[];
   };
   report_sections: {
     id: string;
+    title: string;
     html: string;
   }[];
   video_script: string;
+  final_phrase: string;
 }

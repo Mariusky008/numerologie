@@ -19,7 +19,8 @@ import {
   ShieldCheck,
   Layout,
   MessageCircle,
-  Clock
+  Clock,
+  Star
 } from 'lucide-react';
 import { PsyMirrorResult } from '@/lib/psy-mirror/types';
 import { useRouter } from 'next/navigation';
@@ -89,12 +90,73 @@ export default function ResultPsyMirror() {
           <motion.div 
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="pt-12 text-[#1A1C2E]/30"
+            className="pt-12 text-[#1A1C2E]/20"
           >
             <ChevronDown className="w-12 h-12 mx-auto" />
           </motion.div>
         </motion.div>
       </section>
+
+      {/* NEW: COSMIC ALIGNMENT (THE TIKTOK WOW FACTOR) */}
+      {result.insights?.cosmic_alignment && (
+        <section className="py-32 px-6 relative overflow-hidden bg-white border-b border-[#1A1C2E]/5">
+          <div className="absolute inset-0 z-0">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(201,162,77,0.05),_transparent_70%)]"></div>
+          </div>
+          
+          <div className="max-w-4xl mx-auto relative z-10 text-center space-y-16">
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#C9A24D]/10 border border-[#C9A24D]/20 text-[#C9A24D] text-[10px] font-bold uppercase tracking-[0.4em]">
+                <Star className="w-4 h-4" />
+                Dissonance de Destinée
+              </div>
+              <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#1A1C2E]">
+                Es-tu aligné avec ton <br />
+                <span className="text-[#C9A24D] italic">empreinte de naissance ?</span>
+              </h2>
+            </div>
+
+            <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20 justify-center">
+              {/* Cosmic Venn Diagram */}
+              <div className="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center">
+                <motion.div 
+                  animate={{ scale: [1, 1.05, 1], rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 8, repeat: Infinity }}
+                  className="absolute w-48 h-48 md:w-60 md:h-60 rounded-full bg-[#C9A24D]/20 border-2 border-[#C9A24D]/40 backdrop-blur-sm -translate-x-10 flex items-center justify-center"
+                >
+                  <div className="text-[10px] font-bold text-[#C9A24D] uppercase tracking-widest mt-20">Destinée</div>
+                </motion.div>
+                <motion.div 
+                  animate={{ scale: [1, 1.02, 1], rotate: [0, -3, 3, 0] }}
+                  transition={{ duration: 6, repeat: Infinity }}
+                  className="absolute w-48 h-48 md:w-60 md:h-60 rounded-full bg-[#1A1C2E]/10 border-2 border-[#1A1C2E]/20 backdrop-blur-sm translate-x-10 flex items-center justify-center"
+                >
+                  <div className="text-[10px] font-bold text-[#1A1C2E] uppercase tracking-widest mt-20">Réalité</div>
+                </motion.div>
+                <div className="relative z-10 text-5xl md:text-6xl font-black text-[#1A1C2E]">
+                  {result.insights.cosmic_alignment.score}%
+                </div>
+              </div>
+
+              <div className="flex-1 text-left space-y-8">
+                <div className="p-8 rounded-[40px] bg-[#FDFBF7] border border-[#1A1C2E]/5 shadow-sm space-y-4">
+                  <h4 className="text-2xl font-serif font-bold text-[#C9A24D] italic">
+                    {result.insights.cosmic_alignment.title}
+                  </h4>
+                  <p className="text-xl leading-relaxed text-[#1A1C2E]/80 font-light">
+                    {result.insights.cosmic_alignment.text}
+                  </p>
+                </div>
+                
+                <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-[#1A1C2E]/40">
+                  <div className="w-12 h-px bg-[#1A1C2E]/10"></div>
+                  Basé sur ton Chemin de Vie {result.cosmic_data?.pathNum}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 2. THE LABORATORY - SOFT BLUE/GREY GRADIENT */}
       <section className="py-32 px-6 relative bg-gradient-to-b from-[#FDFBF7] via-[#F0F2F5] to-[#FDFBF7]">

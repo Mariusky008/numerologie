@@ -19,10 +19,14 @@ import AttentionTest from './reflex-tests/AttentionTest';
 import BreakingPointTest from './reflex-tests/BreakingPointTest';
 import RiskBalloonTest from './reflex-tests/RiskBalloonTest';
 import MentalAgilityTest from './reflex-tests/MentalAgilityTest';
+import { calculateLifePathNumber, getLifePathData, getMoonSign } from '@/lib/psy-mirror/cosmic';
+import { Moon, Star, Calendar } from 'lucide-react';
 
 export default function ExperiencePsyMirror() {
   const router = useRouter();
-  const [step, setStep] = useState<'intro' | 'moduleA' | 'moduleB' | 'moduleC' | 'loading'>('intro');
+  const [step, setStep] = useState<'intro' | 'birthDate' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'loading'>('intro');
+  const [birthDate, setBirthDate] = useState('');
+  const [cosmicData, setCosmicData] = useState<any>(null);
   const [currentModuleIndex, setCurrentModuleIndex] = useState(0);
   const [currentScenarioStep, setCurrentScenarioStep] = useState(0);
   const [currentReflexStep, setCurrentReflexStep] = useState(0);
@@ -39,6 +43,27 @@ export default function ExperiencePsyMirror() {
     "Génération de votre miroir psychologique...",
     "Préparation de votre Oracle personnel..."
   ];
+
+  // --- Intro & Cosmic Identity ---
+  const handleIntroStart = () => {
+    setStep('birthDate');
+  };
+
+  const handleBirthDateSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!birthDate) return;
+
+    const pathNum = calculateLifePathNumber(birthDate);
+    const pathData = getLifePathData(pathNum);
+    const moon = getMoonSign(birthDate);
+
+    setCosmicData({ pathNum, ...pathData, moon });
+    setStep('cosmicReveal');
+  };
+
+  const proceedFromCosmic = () => {
+    setStep('moduleA');
+  };
 
   // --- Module A (Auto-perception) ---
   const handleModuleASelect = (option: Option) => {
@@ -93,6 +118,7 @@ export default function ExperiencePsyMirror() {
           moduleA_answers: moduleAAnswers,
           moduleB_answers: moduleBAnswers,
           moduleC_results: finalReflexResults,
+          cosmic_data: cosmicData,
           user_meta: { lang: 'fr', session_id: Math.random().toString(36).substring(7) }
         }),
       });
@@ -152,6 +178,101 @@ export default function ExperiencePsyMirror() {
             >
               Commencer l'expérience
             </button>
+          </motion.div>
+        )}
+
+        {/* STEP: BIRTH DATE (THE HOOK) */}
+        {step === 'birthDate' && (
+          <motion.div 
+            key="birthDate"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="w-full max-w-xl text-center space-y-12"
+          >
+            <div className="space-y-6">
+              <div className="w-20 h-20 bg-[#C9A24D]/10 rounded-full flex items-center justify-center mx-auto border border-[#C9A24D]/20">
+                <Calendar className="w-10 h-10 text-[#C9A24D]" />
+              </div>
+              <h2 className="text-4xl md:text-6xl font-serif font-bold">Le Sceau de Naissance</h2>
+              <p className="text-[#1A1C2E]/60 text-lg leading-relaxed">
+                Ta date de naissance définit ton potentiel pur. <br />
+                Tes réflexes définissent ta réalité actuelle.
+              </p>
+            </div>
+
+            <form onSubmit={handleBirthDateSubmit} className="space-y-8">
+              <div className="relative group">
+                <input 
+                  type="date" 
+                  required
+                  value={birthDate}
+                  onChange={(e) => setBirthDate(e.target.value)}
+                  className="w-full bg-white border-2 border-[#1A1C2E]/5 rounded-[30px] px-8 py-6 text-xl font-bold focus:border-[#C9A24D] outline-none transition-all appearance-none"
+                />
+                <div className="absolute inset-0 rounded-[30px] pointer-events-none group-hover:bg-[#1A1C2E]/[0.02] transition-colors"></div>
+              </div>
+
+              <button 
+                type="submit"
+                className="w-full py-6 bg-[#1A1C2E] text-white rounded-[30px] font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-xl flex items-center justify-center gap-4"
+              >
+                Calculer mon Empreinte
+                <ArrowRight className="w-6 h-6" />
+              </button>
+            </form>
+          </motion.div>
+        )}
+
+        {/* STEP: COSMIC REVEAL */}
+        {step === 'cosmicReveal' && (
+          <motion.div 
+            key="cosmicReveal"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            className="w-full max-w-2xl text-center space-y-12"
+          >
+            <div className="p-12 md:p-16 rounded-[60px] bg-gradient-to-br from-[#1A1C2E] to-[#08090F] text-white shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-12 opacity-10 rotate-12 group-hover:rotate-45 transition-transform duration-1000">
+                <Star className="w-48 h-48" />
+              </div>
+              
+              <div className="relative z-10 space-y-8">
+                <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#C9A24D] text-[10px] font-bold uppercase tracking-[0.3em]">
+                  <Moon className="w-4 h-4" />
+                  Potentiel de Naissance
+                </div>
+                
+                <div className="space-y-4">
+                  <h3 className="text-5xl md:text-7xl font-serif font-bold italic">{cosmicData?.title}</h3>
+                  <div className="text-[#C9A24D] text-2xl font-bold tracking-[0.2em]">Chemin de Vie {cosmicData?.pathNum}</div>
+                </div>
+
+                <p className="text-white/60 text-xl leading-relaxed font-light">
+                  "{cosmicData?.potential}"
+                </p>
+
+                <div className="pt-8 border-t border-white/10 text-white/40 text-sm uppercase tracking-widest font-bold">
+                  Lune en {cosmicData?.moon} • Identité Émotionnelle
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <p className="text-[#1A1C2E]/60 text-lg italic">
+                Mais est-ce que ton cerveau suit réellement ce chemin ? <br />
+                Entrons dans le Miroir pour mesurer l'écart.
+              </p>
+              
+              <button 
+                onClick={proceedFromCosmic}
+                className="w-full py-6 bg-[#C9A24D] text-white rounded-[30px] font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-xl flex items-center justify-center gap-4"
+              >
+                Commencer les Tests de Réflexes
+                <ArrowRight className="w-6 h-6" />
+              </button>
+            </div>
           </motion.div>
         )}
 

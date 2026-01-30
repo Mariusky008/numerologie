@@ -45,6 +45,12 @@ export interface PsyMirrorResult {
     lang: string;
     session_id: string;
   };
+  cosmic_data?: {
+    pathNum: number;
+    title: string;
+    potential: string;
+    moon: string;
+  };
   self_profile: ProfileScores;
   behavior_profile: ProfileScores;
   gaps: {
@@ -83,6 +89,11 @@ export interface PsyMirrorResult {
       observation: string;
       exercise: string;
     }[];
+    cosmic_alignment?: {
+      title: string;
+      text: string;
+      score: number;
+    };
   };
   report_sections: {
     id: string;

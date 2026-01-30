@@ -152,7 +152,8 @@ export function generateNarrative(
   gaps: Record<string, number>,
   primaryGap: DimensionId,
   indices: { coherence: number; avoidance: number; overcontrol: number },
-  reflexResults?: any
+  reflexResults?: any,
+  cosmicData?: any
 ) {
   // 1. Generate Mirror Section (150-200 words)
   const mirrorData = generateMirrorSection(primaryGap, selfProfile[primaryGap], behaviorProfile[primaryGap]);
@@ -181,7 +182,10 @@ export function generateNarrative(
   // 6. Generate Reflex Laboratory Section
   const reflexInsights = generateReflexInsights(reflexResults, behaviorProfile);
 
-  // 7. Generate Video Script (6-7 minutes)
+  // 7. Generate Cosmic Alignment
+  const cosmicAlignment = generateCosmicAlignment(cosmicData, behaviorProfile);
+
+  // 8. Generate Video Script (6-7 minutes)
   const videoScript = generateVideoScriptV2(selfProfile, behaviorProfile, primaryGap, blindSpotData, plan7Days, indices);
 
   return {
@@ -193,13 +197,20 @@ export function generateNarrative(
       lever: priorityLeverText,
       dimension_insights: dimensionInsights,
       plan_7_days: plan7Days,
-      reflex_insights: reflexInsights
+      reflex_insights: reflexInsights,
+      cosmic_alignment: cosmicAlignment
     },
     report_sections: [
       {
-        id: 'mirror',
-        title: 'L\'Écart Central (Le Miroir)',
-        html: `<div class="space-y-4 text-lg leading-relaxed">${mirrorData.fullText}</div>`
+        id: 'cosmic',
+        title: 'Alignement Cosmique',
+        html: `<div class="p-8 bg-[#C9A24D]/10 rounded-[40px] border border-[#C9A24D]/20 space-y-4">
+          <h4 class="text-2xl font-serif font-bold text-[#C9A24D] italic">${cosmicAlignment.title}</h4>
+          <p class="text-xl leading-relaxed text-[#1A1C2E]">${cosmicAlignment.text}</p>
+          <div className="pt-4 border-t border-[#C9A24D]/20">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#C9A24D]">Score d'alignement : ${cosmicAlignment.score}%</span>
+          </div>
+        </div>`
       },
       {
         id: 'reflex_lab',
@@ -319,6 +330,37 @@ function generateReflexInsights(results: any, behavior: ProfileScores) {
   }
 
   return insights;
+}
+
+/**
+ * Generates cosmic alignment insight
+ */
+function generateCosmicAlignment(cosmic: any, behavior: ProfileScores) {
+  if (!cosmic) return { title: "Alignement en attente", text: "Données cosmiques manquantes.", score: 0 };
+
+  const keyDim = cosmic.key_dimension;
+  const behaviorScore = behavior[keyDim];
+  
+  // Logic for alignment: if behavior score is high (>66) on the key dimension of the life path
+  let score = 0;
+  let text = "";
+  let title = "";
+
+  if (behaviorScore > 66) {
+    score = 90 + Math.floor(Math.random() * 10);
+    title = "Alignement Cosmique Total";
+    text = `Ton comportement réel fait parfaitement honneur à ton empreinte de ${cosmic.title}. Tu exploites ton potentiel de ${cosmic.potential.toLowerCase()} avec une fluidité naturelle. Tu es sur ton chemin.`;
+  } else if (behaviorScore > 33) {
+    score = 60 + Math.floor(Math.random() * 20);
+    title = "Dissonance Émergente";
+    text = `Tu es sur la voie, mais des blocages réflexes t'empêchent d'incarner pleinement ton potentiel de ${cosmic.title}. Ton intention est là, mais tes mécanismes de survie freinent encore ton élan cosmique.`;
+  } else {
+    score = 30 + Math.floor(Math.random() * 20);
+    title = "Rupture de Destinée";
+    text = `Il existe un écart majeur entre ton empreinte de ${cosmic.title} et tes réflexes actuels. Tu vis en mode protection là où tu devrais être en mode expansion. Tes tests montrent que ton stress étouffe ta véritable nature.`;
+  }
+
+  return { title, text, score };
 }
 
 /**

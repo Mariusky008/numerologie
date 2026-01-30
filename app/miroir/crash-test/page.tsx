@@ -48,108 +48,126 @@ export default function CrashTestLanding() {
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#1A1C2E] font-sans selection:bg-[#C9A24D]/20 overflow-x-hidden">
       
-      {/* 0. FLOATING NAV */}
-      <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-6 py-4 ${scrolled ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className="max-w-xl mx-auto bg-white/80 backdrop-blur-xl border border-[#1A1C2E]/5 rounded-full py-3 px-6 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.05)] flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Zap className="w-5 h-5 text-[#C9A24D]" />
-            <span className="text-[10px] font-black uppercase tracking-widest">Crash-Test</span>
-          </div>
-          <button 
-            onClick={() => router.push('/miroir/experience')}
-            className="bg-[#1A1C2E] text-white text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full hover:bg-[#C9A24D] transition-colors"
-          >
-            Commencer
-          </button>
-        </div>
-      </nav>
-
-      {/* 1. HERO — ÉCRAN 1 */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden bg-[#FDFBF7]">
-        {/* Modern Animated Background */}
+      {/* 1. HERO — MOBILE-FIRST CRASH-TEST */}
+      <section className="min-h-screen flex flex-col items-center justify-start pt-8 pb-12 px-6 relative overflow-hidden bg-white">
+        {/* Subtle Background Glow */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_20%,_rgba(201,162,77,0.08),_transparent_40%)]"></div>
-          <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_80%,_rgba(91,75,138,0.08),_transparent_40%)]"></div>
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1A1C2E 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[60%] bg-[radial-gradient(circle_at_center,_rgba(201,162,77,0.03),_transparent_70%)]"></div>
         </div>
 
-        <div className="max-w-4xl w-full z-10 text-center space-y-12">
+        <div className="w-full max-w-[390px] z-10 flex flex-col gap-6 text-center h-full">
+          {/* Header */}
           <motion.div 
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white border border-[#1A1C2E]/5 shadow-sm text-[#1A1C2E] text-[11px] font-black uppercase tracking-[0.4em]"
+            className="space-y-2"
           >
-            <Cpu className="w-4 h-4 text-[#C9A24D]" />
-            Protocole Mi-Bio Mi-Astro
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="space-y-6"
-          >
-            <h1 className="text-6xl md:text-9xl font-serif font-bold tracking-tight leading-[0.95] text-[#1A1C2E]">
+            <h1 className="text-3xl font-serif font-bold tracking-tight leading-tight text-[#1A1C2E]">
               Le Crash-Test <br />
-              <span className="text-[#C9A24D] italic relative">
-                de ton Destin
-                <motion.span 
-                  initial={{ width: 0 }}
-                  animate={{ width: '100%' }}
-                  transition={{ delay: 1, duration: 1 }}
-                  className="absolute bottom-4 left-0 h-1 bg-[#C9A24D]/20 -z-10"
-                ></motion.span>
-              </span>
+              <span className="text-[#C9A24D] italic">de ton Destin</span>
             </h1>
+            <p className="text-sm text-[#1A1C2E]/60 leading-relaxed px-4">
+              Compare ton potentiel de naissance (astro + numérologie) <br />
+              à ce que tes choix révèlent aujourd’hui.
+            </p>
           </motion.div>
 
+          {/* CENTRAL VISUAL (SPLIT) */}
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="space-y-8 text-xl md:text-2xl text-[#1A1C2E]/60 font-normal leading-relaxed max-w-2xl mx-auto"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="relative flex flex-col items-center py-4"
           >
-            <p>
-              Ton potentiel correspond-il à tes choix réels ?
-            </p>
-            <div className="p-8 bg-white/50 backdrop-blur-md border border-[#1A1C2E]/5 rounded-[40px] shadow-2xl shadow-black/5 space-y-4">
-              <p className="text-lg">
-                Nous comparons ton profil symbolique <br />
-                <span className="text-[#1A1C2E] font-bold uppercase tracking-widest text-xs">(astrologie & numérologie)</span> <br />
-                avec tes réactions réelles face aux choix.
-              </p>
-              <div className="h-px w-12 bg-[#C9A24D]/30 mx-auto"></div>
-              <p className="text-[#C9A24D] font-bold text-2xl">
-                👉 Le décalage explique souvent <br />
-                pourquoi certaines choses bloquent.
-              </p>
+            {/* The SVG Visual */}
+            <div className="relative w-full aspect-[4/3] bg-[#FDFBF7] rounded-[40px] border border-[#1A1C2E]/5 overflow-hidden shadow-sm">
+              <svg viewBox="0 0 400 300" className="w-full h-full">
+                {/* Left Side: Innate Potential (Bright/Structured) */}
+                <defs>
+                  <linearGradient id="leftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#C9A24D" stopOpacity="0.2" />
+                    <stop offset="100%" stopColor="#C9A24D" stopOpacity="0.05" />
+                  </linearGradient>
+                  <filter id="blurFilter">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+                  </filter>
+                </defs>
+                
+                <rect x="0" y="0" width="200" height="300" fill="url(#leftGrad)" />
+                {/* Structured geometry on left */}
+                <circle cx="100" cy="150" r="60" stroke="#C9A24D" strokeWidth="0.5" fill="none" opacity="0.5" />
+                <path d="M100 80 L100 220 M40 150 L160 150" stroke="#C9A24D" strokeWidth="0.5" opacity="0.3" />
+                <circle cx="100" cy="150" r="40" stroke="#C9A24D" strokeWidth="1" fill="none" />
+                <path d="M70 120 L130 180 M130 120 L70 180" stroke="#C9A24D" strokeWidth="0.5" opacity="0.3" />
+
+                {/* Right Side: Today's Identity (Fragmented/Blurred) */}
+                <rect x="200" y="0" width="200" height="300" fill="#1A1C2E" fillOpacity="0.02" />
+                {/* Fragmented geometry on right */}
+                <g filter="url(#blurFilter)">
+                  <path d="M250 100 L350 130 L320 220 L240 180 Z" stroke="#1A1C2E" strokeWidth="1" fill="none" opacity="0.2" />
+                  <circle cx="300" cy="150" r="50" stroke="#1A1C2E" strokeWidth="0.5" fill="none" opacity="0.1" />
+                  <path d="M280 80 L340 250" stroke="#1A1C2E" strokeWidth="2" opacity="0.05" />
+                  <path d="M220 180 L380 140" stroke="#1A1C2E" strokeWidth="1" opacity="0.05" />
+                </g>
+                <path d="M260 120 L310 190 M330 110 L280 210" stroke="#1A1C2E" strokeWidth="0.5" opacity="0.1" />
+
+                {/* Center Crash Line */}
+                <line x1="200" y1="0" x2="200" y2="300" stroke="#1A1C2E" strokeWidth="0.5" strokeDasharray="4 4" opacity="0.1" />
+                
+                {/* Lightning Bolt */}
+                <motion.path 
+                  animate={{ opacity: [0.3, 1, 0.3], scaleY: [0.98, 1.02, 0.98] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  d="M200 80 L195 140 L205 160 L200 220" 
+                  stroke="#C9A24D" 
+                  strokeWidth="1.5" 
+                  fill="none" 
+                  strokeLinecap="round"
+                />
+
+                {/* "L'écart" Label in center */}
+                <rect x="175" y="135" width="50" height="30" rx="15" fill="white" stroke="#C9A24D" strokeWidth="0.5" />
+                <text x="200" y="154" textAnchor="middle" fill="#C9A24D" fontSize="10" fontWeight="900" style={{ letterSpacing: '1px' }}>ÉCART</text>
+              </svg>
+
+              {/* Micro-labels (Chips) overlay */}
+              <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2 px-4">
+                <span className="bg-white/90 backdrop-blur shadow-sm border border-[#C9A24D]/20 px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest text-[#C9A24D]">À la naissance</span>
+                <span className="bg-white/90 backdrop-blur shadow-sm border border-[#1A1C2E]/10 px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest text-[#1A1C2E]/60">Aujourd’hui</span>
+                <span className="bg-[#C9A24D] shadow-md px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest text-white">L’écart</span>
+              </div>
             </div>
           </motion.div>
 
+          {/* Value Phrase */}
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-base text-[#1A1C2E] font-medium leading-relaxed px-2"
+          >
+            Parfois, l’adaptation a pris le dessus. <br />
+            <span className="text-[#C9A24D]">On te montre où — et quoi faire.</span>
+          </motion.p>
+
+          {/* CTA Section */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="pt-6"
+            className="space-y-4 pt-2"
           >
             <button 
               onClick={() => router.push('/miroir/experience')}
-              className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold text-xl hover:bg-[#C9A24D] transition-all shadow-[0_40px_80px_-20px_rgba(26,28,46,0.3)] hover:shadow-[#C9A24D]/40 active:scale-95 overflow-hidden"
+              className="w-full relative inline-flex flex-col items-center gap-1 px-8 py-5 bg-[#1A1C2E] text-white rounded-[24px] font-bold shadow-xl active:scale-[0.98] transition-all overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              <span className="relative z-10">👉 Faire mon Crash-Test</span>
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
+              <span className="text-xl font-black tracking-tight">Faire mon Crash-Test</span>
             </button>
+            <p className="text-[10px] text-[#1A1C2E]/40 font-bold uppercase tracking-widest">
+              20 min • Dossier + vidéo • Sans diagnostic ni prédiction
+            </p>
           </motion.div>
         </div>
-
-        <motion.div 
-          animate={{ y: [0, 15, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#1A1C2E]/10"
-        >
-          <ArrowDown className="w-10 h-10" />
-        </motion.div>
       </section>
 
       {/* 2. SECTION — LE PRINCIPE (MODERN CARDS) */}

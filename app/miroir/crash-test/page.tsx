@@ -125,8 +125,8 @@ export default function CrashTestLanding() {
               </p>
               <div className="h-px w-12 bg-[#C9A24D]/30 mx-auto"></div>
               <p className="text-[#C9A24D] font-bold text-2xl">
-                👉 Le décalage explique souvent <br />
-                pourquoi certaines choses bloquent.
+                👉 Identifie enfin les schémas invisibles <br />
+                qui bloquent tes décisions et ton parcours.
               </p>
             </div>
           </motion.div>
@@ -332,11 +332,11 @@ export default function CrashTestLanding() {
 
           <div className="space-y-4">
             {[
-              { text: "Ton écart principal entre potentiel et fonctionnement réel", icon: Zap },
-              { text: "Ton style de réaction dominant face aux décisions", icon: Activity },
-              { text: "Ton frein invisible le plus fréquent", icon: Lock },
-              { text: "Une clé concrète pour réaligner les deux", icon: Sparkles },
-              { text: "Un plan simple sur 7 jours, sans jargon", icon: Compass }
+              { text: "Comprendre pourquoi certaines situations reviennent toujours dans ta vie", icon: Activity },
+              { text: "Identifier les schémas que tu reproduis sans t’en rendre compte", icon: Lock },
+              { text: "Arrêter de reproduire les mêmes erreurs relationnelles ou professionnelles", icon: X },
+              { text: "Voir où ton adaptation a pris le dessus sur ton potentiel profond", icon: Zap },
+              { text: "Découvrir une clé concrète pour te réaligner et apaiser tes tensions", icon: Sparkles }
             ].map((item, i) => (
               <motion.div 
                 key={i}

@@ -92,23 +92,23 @@ export default function DemoLaboPage() {
           
           <div className="max-w-6xl mx-auto relative z-10 space-y-24">
             {/* THE PROTOCOL / RULES OF THE GAME */}
-            <div className="bg-[#1A1C2E]/[0.02] border border-[#1A1C2E]/5 rounded-[40px] p-8 md:p-12">
+            <div className="bg-[#1A1C2E]/[0.02] border border-[#1A1C2E]/5 rounded-[40px] p-8 md:p-12 text-left">
               <div className="flex flex-col md:flex-row gap-10 items-start">
                 <div className="flex-1 space-y-6">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5B4B8A]/10 text-[#5B4B8A] text-[10px] font-black uppercase tracking-widest">
-                    Le Protocole
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C9A24D]/10 text-[#C9A24D] text-[10px] font-black uppercase tracking-widest">
+                    Mode d'Emploi
                   </div>
-                  <h3 className="text-3xl font-serif font-bold text-[#1A1C2E]">Comprendre les règles de ton analyse</h3>
+                  <h3 className="text-3xl font-serif font-bold text-[#1A1C2E]">Comment lire ton analyse ?</h3>
                   <p className="text-lg text-[#1A1C2E]/70 leading-relaxed">
-                    Ton score d'alignement n'est pas une note de performance. C'est la mesure de la cohérence entre trois forces qui dirigent ta vie :
+                    Ce n'est pas un examen. C'est un comparatif entre ce que les astres disent de toi, ce que tes réflexes font réellement, et l'image que tu penses projeter.
                   </p>
                 </div>
                 <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    { title: "Identité Astro", desc: "Ton potentiel de naissance (Tes Astres)", icon: Star, color: "text-[#C9A24D]" },
-                    { title: "Réalité Bio", desc: "Tes réflexes instinctifs (Le Labo)", icon: Activity, color: "text-[#1A1C2E]" },
-                    { title: "Ton Idéal", desc: "Ce que tu crois être (Tes Réponses)", icon: Eye, color: "text-[#5B4B8A]" },
-                    { title: "L'Alignement", desc: "Le match entre ces 3 forces", icon: Zap, color: "text-[#C9A24D]" }
+                    { title: "Ton Potentiel", desc: "Ce que les Astres ont prévu", icon: Star, color: "text-[#C9A24D]" },
+                    { title: "Tes Réflexes", desc: "Ce que ton Corps fait (Labo)", icon: Activity, color: "text-[#1A1C2E]" },
+                    { title: "Ton Image", desc: "Ce que tu penses faire", icon: Eye, color: "text-[#5B4B8A]" },
+                    { title: "L'Alignement", desc: "Est-ce que tout le monde est d'accord ?", icon: Zap, color: "text-[#C9A24D]" }
                   ].map((item, i) => (
                     <div key={i} className="bg-white p-5 rounded-3xl border border-[#1A1C2E]/5 shadow-sm space-y-2">
                       <item.icon className={`w-5 h-5 ${item.color}`} />

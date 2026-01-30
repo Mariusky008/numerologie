@@ -413,8 +413,8 @@ export default function CrashTestLanding() {
                 onClick={() => router.push('/miroir/experience')}
                 className="group relative inline-flex flex-col items-center gap-2 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95 overflow-hidden"
               >
-                <span className="text-2xl md:text-3xl">Accéder à mon Crash-Test — 29 €</span>
-                <span className="text-[10px] uppercase tracking-[0.2em] opacity-60">Accès immédiat • Dossier + Vidéo + Coach IA</span>
+                <span className="text-2xl md:text-3xl">Je fais le Crash-Test — 49 €</span>
+                <span className="text-[10px] uppercase tracking-[0.2em] opacity-60">Accès immédiat • Dossier + Vidéo + Coaching</span>
               </button>
             </div>
           </motion.div>
@@ -617,9 +617,9 @@ export default function CrashTestLanding() {
               className="group relative inline-flex flex-col items-center gap-4 px-16 py-10 bg-[#1A1C2E] text-white rounded-[40px] shadow-[0_50px_100px_-20px_rgba(26,28,46,0.4)] hover:shadow-[#C9A24D]/40 transition-all duration-700 hover:scale-105 active:scale-95 overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              <span className="text-3xl md:text-5xl font-bold relative z-10">👉 Accéder à mon Crash-Test</span>
+              <span className="text-3xl md:text-5xl font-bold relative z-10">👉 Je fais le Crash-Test</span>
               <div className="flex items-center gap-4 relative z-10">
-                <span className="text-4xl md:text-6xl font-serif italic text-[#C9A24D]">29 €</span>
+                <span className="text-4xl md:text-6xl font-serif italic text-[#C9A24D]">49 €</span>
                 <div className="h-8 w-px bg-white/20"></div>
                 <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] opacity-60 text-left">Paiement sécurisé <br /> Accès immédiat</span>
               </div>

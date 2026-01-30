@@ -21,9 +21,12 @@ import {
   Lock,
   ArrowDown,
   Quote,
-  Users
-} from 'lucide-react';
-import { useRouter } from 'next/navigation';
+  Users,
+  Mic,
+  Calendar,
+  Heart,
+  Target
+} from 'lucide-react';import { useRouter } from 'next/navigation';
 
 export default function CrashTestLanding() {
   const router = useRouter();
@@ -358,18 +361,22 @@ export default function CrashTestLanding() {
         </div>
       </section>
 
-      {/* 5. SECTION — LE FORMAT (PREMIUM DELIVERABLES) */}
+      {/* 5. SECTION — UNE EXPÉRIENCE COMPLÈTE (PREMIUM DELIVERABLES) */}
       <section className="py-40 px-6 relative overflow-hidden bg-[#FDFBF7]">
         <div className="max-w-6xl mx-auto space-y-24 relative z-10">
           <motion.div {...fadeIn} className="text-center space-y-6">
-            <h2 className="text-5xl md:text-8xl font-serif font-bold">Ce que tu reçois</h2>
+            <div className="text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.5em]">Le Pack Révélation</div>
+            <h2 className="text-5xl md:text-8xl font-serif font-bold">Une expérience complète</h2>
+            <p className="text-xl md:text-2xl text-[#1A1C2E]/50 max-w-2xl mx-auto">
+              Ce n'est pas juste un PDF. C'est une immersion interactive avec une IA pour comprendre tes mécanismes.
+            </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: "Dossier Personnalisé", desc: "Clair, structuré et complet.", icon: BookOpen, tag: "PDF 20+ pages" },
-              { title: "Vidéo Explicative", desc: "6–7 minutes d'analyse profonde.", icon: Video, tag: "Accès Privé" },
-              { title: "Plan d’Ajustement", desc: "Simple, actionnable immédiatement.", icon: Compass, tag: "Protocole 7 Jours" }
+              { title: "Dossier Personnalisé", desc: "40 pages d'analyse croisée : astro, numérologie et psychologie décisionnelle.", icon: BookOpen, tag: "PDF 40 pages" },
+              { title: "Vidéo de l'Avatar", desc: "Une vidéo immersive de 5 à 7 minutes où ton avatar te parle directement.", icon: Video, tag: "Vidéo Personnalisée" },
+              { title: "Coach Vocal IA", desc: "Une conversation vocale de 30 minutes avec l'IA pour approfondir tes résultats.", icon: Mic, tag: "Échange Interactif" }
             ].map((item, i) => (
               <motion.div 
                 key={i}
@@ -392,6 +399,104 @@ export default function CrashTestLanding() {
             <p className="text-4xl md:text-5xl font-serif italic text-[#1A1C2E] leading-tight">
               Tu ne lis pas ton destin. <br />
               <span className="text-[#C9A24D] not-italic font-bold tracking-tight">Tu observes comment tu fonctionnes vraiment.</span>
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 5.5 SECTION — ALLER PLUS LOIN (NOUVEAU) */}
+      <section className="py-40 px-6 bg-white relative">
+        <div className="max-w-5xl mx-auto space-y-24">
+          <motion.div {...fadeIn} className="text-center space-y-8">
+            <div className="text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.5em]">L'Après Crash-Test</div>
+            <h2 className="text-5xl md:text-8xl font-serif font-bold">Et après le Crash-Test ?</h2>
+            
+            <div className="space-y-6 max-w-3xl mx-auto">
+              <p className="text-2xl text-[#1A1C2E]/80 leading-relaxed">
+                Le Crash-Test met en lumière l’écart entre ton potentiel naturel et ton fonctionnement actuel.
+              </p>
+              <p className="text-xl text-[#1A1C2E]/50 leading-relaxed italic">
+                Pour celles et ceux qui le souhaitent, il est possible d’aller plus loin avec des exercices guidés conçus pour favoriser un rééquilibrage progressif.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Benefits Grid */}
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { text: "Des exercices simples, intégrés au quotidien", icon: Sparkles },
+              { text: "Basés sur l’observation, les choix et les habitudes", icon: Activity },
+              { text: "Sans diagnostic, sans thérapie, sans contrainte", icon: ShieldCheck }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                {...fadeIn}
+                className="flex items-center gap-6 p-8 rounded-[40px] bg-[#FDFBF7] border border-[#1A1C2E]/5"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-sm text-[#C9A24D]">
+                  <item.icon className="w-6 h-6" />
+                </div>
+                <span className="text-lg font-medium text-[#1A1C2E]/70 leading-tight">{item.text}</span>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Durations / Paths */}
+          <div className="space-y-12 pt-10">
+            <motion.h3 {...fadeIn} className="text-2xl font-serif font-bold text-center text-[#1A1C2E]/40 uppercase tracking-[0.2em]">Parcours disponibles (en option)</motion.h3>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { 
+                  duration: "3 mois", 
+                  points: ["Reprendre conscience de ses schémas dominants", "Ajuster ses réactions clés"],
+                  icon: Calendar,
+                  color: "border-[#1A1C2E]/5"
+                },
+                { 
+                  duration: "6 mois", 
+                  points: ["Stabiliser de nouveaux repères", "Sortir des répétitions automatiques"],
+                  icon: Target,
+                  color: "border-[#C9A24D]/30 bg-[#C9A24D]/[0.02]"
+                },
+                { 
+                  duration: "12 mois", 
+                  points: ["Intégrer durablement un fonctionnement plus aligné", "Retrouver clarté, fluidité et dynamisme"],
+                  icon: Heart,
+                  color: "border-[#1A1C2E]/5"
+                }
+              ].map((path, i) => (
+                <motion.div 
+                  key={i}
+                  {...fadeIn}
+                  className={`p-10 rounded-[50px] border ${path.color} space-y-6 hover:shadow-xl transition-all duration-500`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-sm text-[#C9A24D]">
+                      <path.icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-2xl font-black text-[#1A1C2E]">{path.duration}</span>
+                  </div>
+                  <ul className="space-y-4">
+                    {path.points.map((p, j) => (
+                      <li key={j} className="flex items-start gap-3 text-[#1A1C2E]/60 text-sm leading-relaxed">
+                        <ArrowRight className="w-4 h-4 text-[#C9A24D] shrink-0 mt-1" />
+                        {p}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          <motion.div {...fadeIn} className="max-w-2xl mx-auto p-10 rounded-[40px] bg-[#1A1C2E]/[0.02] border border-[#1A1C2E]/5 text-center space-y-6">
+            <p className="text-2xl font-serif italic text-[#C9A24D]">
+              « Le but n’est pas de changer qui tu es, mais de réduire ce qui te désaligne. »
+            </p>
+            <p className="text-xs font-bold text-[#1A1C2E]/30 uppercase tracking-widest leading-relaxed">
+              Il s’agit d’un accompagnement de compréhension et d’ajustement personnel, <br />
+              pas d’un suivi médical ou thérapeutique.
             </p>
           </motion.div>
         </div>

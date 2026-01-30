@@ -97,6 +97,8 @@ export interface PsyMirrorResult {
       score: number;
       astroElement: string;
       bioElement: string;
+      details?: string;
+      intentElement?: string;
     };
   };
   report_sections: {

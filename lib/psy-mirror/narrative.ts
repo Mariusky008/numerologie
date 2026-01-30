@@ -183,7 +183,7 @@ export function generateNarrative(
   const reflexInsights = generateReflexInsights(reflexResults, behaviorProfile);
 
   // 7. Generate Cosmic Alignment
-  const cosmicAlignment = generateCosmicAlignment(cosmicData, behaviorProfile);
+  const cosmicAlignment = generateCosmicAlignment(cosmicData, behaviorProfile, selfProfile);
 
   // 8. Generate Video Script (6-7 minutes)
   const videoScript = generateVideoScriptV2(selfProfile, behaviorProfile, primaryGap, blindSpotData, plan7Days, indices);
@@ -335,69 +335,103 @@ function generateReflexInsights(results: any, behavior: ProfileScores) {
 /**
  * Generates cosmic alignment insight
  */
-function generateCosmicAlignment(cosmic: any, behavior: ProfileScores) {
-  if (!cosmic) return { title: "Alignement en attente", text: "Données cosmiques manquantes.", score: 0 };
+function generateCosmicAlignment(cosmic: any, behavior: ProfileScores, self: ProfileScores) {
+  if (!cosmic) return { title: "Alignement en attente", text: "Données cosmiques manquantes.", score: 0, details: "" };
 
-  const keyDim = cosmic.key_dimension;
+  const keyDim = cosmic.key_dimension as DimensionId;
   const behaviorScore = behavior[keyDim];
-
+  const selfScore = self[keyDim];
+  
   // 1. Determine Biological Element based on Reflexes
   let bioElement = "";
-  if (behavior.d3_control > 65) bioElement = "Glace"; // Inhibé / Contrôlé
-  else if (behavior.d6_flexibility > 65) bioElement = "Air"; // Agile / Dispersé
-  else if (behavior.d1_decision > 65) bioElement = "Feu"; // Impulsif / Rapide
-  else bioElement = "Terre"; // Analytique / Lent
+  if (behavior.d3_control > 65) bioElement = "Glace"; 
+  else if (behavior.d6_flexibility > 65) bioElement = "Air"; 
+  else if (behavior.d1_decision > 65) bioElement = "Feu"; 
+  else bioElement = "Terre"; 
 
-  // 2. Alignment Logic
+  // 2. Determine Intentional Element based on Self-perception
+  let intentElement = "";
+  if (self.d3_control > 65) intentElement = "Glace";
+  else if (self.d6_flexibility > 65) intentElement = "Air";
+  else if (self.d1_decision > 65) intentElement = "Feu";
+  else intentElement = "Terre";
+
+  // 3. Alignment Logic
   let score = 0;
   let text = "";
   let title = "";
+  let details = "";
 
-  // Interaction Logic (Astro Element vs Bio Element)
   const astroElement = cosmic.moon_element;
   
+  // Interaction Logic (Astro Element vs Bio Element)
   if (astroElement === "Feu") {
     if (bioElement === "Glace") {
       title = "Extinction Vitale";
-      text = "Tu es un Feu naturel étouffé par la Glace de tes peurs. Ton stress éteint ta lumière et ton charisme naturel.";
+      text = `Ton empreinte cosmique est celle du **Feu**, mais tes réflexes de laboratoire révèlent de la **Glace**.`;
+      details = `Tu es né pour briller et diriger, mais ton système nerveux a mémorisé des mécanismes de retrait. Ce conflit crée une fatigue immense : tu essaies de rugir, mais ton corps freine chaque impulsion. Tes réponses au questionnaire montrent que tu te crois ${getDimensionLabel(keyDim, selfScore)}, alors que ton corps est déjà en mode survie.`;
       score = 35;
     } else if (bioElement === "Feu") {
-      title = "Fusion Totale";
-      text = "Ton énergie vitale est pure. Tes réflexes sont aussi vifs que ton esprit. Tu es une force de la nature.";
+      title = "Fusion Solaire";
+      text = "Ton énergie vitale est en parfaite harmonie avec ton empreinte de naissance.";
+      details = "C'est un alignement rare. Tes réflexes instinctifs servent directement ta destinée de leader. Tu n'as pas besoin de forcer, tu es simplement dans ton élément. Le monde te perçoit exactement comme tu es : une force de propulsion pure.";
       score = 95;
     } else {
-      title = "Combustion Contrôlée";
-      text = `Ton Feu intérieur est modéré par ta nature de ${bioElement}. Tu avances, mais sans l'étincelle explosive de ton potentiel.`;
+      title = "Combustion Interne";
+      text = `Ton Feu intérieur est canalisé par une nature de ${bioElement}.`;
+      details = `Ton potentiel de Feu est bien présent, mais il est filtré par tes mécanismes de ${bioElement}. Tu es plus efficace que la moyenne, mais tu n'exploites pas encore la pleine puissance de ton charisme cosmique.`;
       score = 65;
     }
   } else if (astroElement === "Eau") {
      if (bioElement === "Feu") {
-      title = "Ébullition Interne";
-      text = "Ton Eau émotionnelle bout sous l'impulsion de tes réflexes de Feu. Tu vis dans une tension permanente.";
+      title = "Vapeur de Stress";
+      text = "Ton Eau émotionnelle s'évapore sous la chaleur de tes réflexes impulsifs.";
+      details = "Tu es une nature intuitive et profonde (Eau), mais tes réflexes de laboratoire montrent une impulsivité (Feu) qui crée une tension permanente. Tu agis avant de ressentir, ce qui te déconnecte de ta boussole intérieure.";
       score = 45;
     } else if (bioElement === "Glace") {
-      title = "Cristallisation";
-      text = "Ton Eau s'est figée en Glace pour te protéger. Tu es devenu une forteresse impénétrable, coupée de ton flux.";
+      title = "Cristallisation Protectrice";
+      text = "Ton Eau s'est figée en Glace pour ne plus ressentir la douleur du monde.";
+      details = "Ta nature sensible est devenue une forteresse. Tes réflexes de contrôle absolu étouffent ton intuition. Tu es devenu efficace, mais au prix de ta joie de vivre et de ta créativité naturelle.";
       score = 40;
     } else {
-      title = "Flux Harmonieux";
-      text = `Ton Eau coule avec fluidité grâce à ton ancrage ${bioElement}. Tu navigues dans la vie avec intuition.`;
+      title = "Flux de Sagesse";
+      text = "Ton Eau coule avec la force tranquille de ton ancrage naturel.";
+      details = "Tu as réussi à préserver ta nature intuitive tout en développant des réflexes sains. Ton alignement est solide, tu navigues dans les crises avec une sérénité qui impressionne ton entourage.";
       score = 85;
     }
-  } else {
-    // Generic Fallback for Air/Earth
-     if (astroElement === bioElement) {
-      title = "Résonance Élémentaire";
-      text = `Ta nature de ${astroElement} est parfaitement soutenue par tes réflexes. Tu es en phase.`;
-      score = 90;
+  } else if (astroElement === "Air") {
+    if (bioElement === "Terre") {
+      title = "Enclume Céleste";
+      text = "Ton esprit d'Air est cloué au sol par des réflexes de Terre trop lourds.";
+      details = "Tu devrais voler, explorer, innover. Mais tes réflexes montrent un besoin de sécurité et de lenteur qui t'enchaîne. Tu penses être libre, mais ton corps cherche désespérément un sol ferme qui n'existe pas dans ta destinée.";
+      score = 50;
     } else {
-      title = "Friction Élémentaire";
-      text = `Ta nature de ${astroElement} est contrariée par tes réflexes de ${bioElement}. Il y a une perte d'énergie dans la conversion.`;
+      title = "Souffle Inspiré";
+      text = `Ton Air circule librement à travers ta structure de ${bioElement}.`;
+      details = "Tu as trouvé le bon équilibre entre ton besoin de liberté et tes réflexes opérationnels. Tu es capable de changer de direction sans perdre ton énergie vitale.";
+      score = 80;
+    }
+  } else {
+    // Terre
+    if (bioElement === "Air") {
+      title = "Érosion Volatile";
+      text = "Ta fondation de Terre s'effrite sous l'agitation de tes réflexes d'Air.";
+      details = "Tu es né pour bâtir (Terre), mais tes réflexes montrent une dispersion qui t'empêche de finir ce que tu commences. Tu t'épuises dans le mouvement alors que ta force réside dans l'immobilité et la structure.";
       score = 55;
+    } else {
+      title = "Ancrage Souverain";
+      text = "Ta Terre est le socle indestructible de ta destinée.";
+      details = "Tu es parfaitement aligné. Tes réflexes de laboratoire confirment ta solidité naturelle. Tu es le bâtisseur que ta numérologie a prévu, capable de porter des projets immenses sur tes épaules.";
+      score = 92;
     }
   }
 
-  return { title, text, score, astroElement, bioElement };
+  // Final check: comparison with self-perception (Module A)
+  if (Math.abs(selfScore - behaviorScore) > 30) {
+    details += `\n\n**Note de Dissonance :** Tes réponses au questionnaire montrent que tu te vois comme quelqu'un de ${getDimensionLabel(keyDim, selfScore)}, mais ton corps agit comme quelqu'un de ${getDimensionLabel(keyDim, behaviorScore)}. Ce "mensonge inconscient" que tu te racontes est le premier verrou à faire sauter pour retrouver ton alignement.`;
+  }
+
+  return { title, text, score, astroElement, bioElement, details, intentElement };
 }
 
 /**

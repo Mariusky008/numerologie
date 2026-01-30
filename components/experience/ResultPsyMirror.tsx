@@ -123,11 +123,22 @@ export default function ResultPsyMirror() {
 
             <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20 justify-center">
               {/* Cosmic Venn Diagram */}
-              <div className="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center">
+              <div className="relative w-64 h-64 md:w-96 md:h-96 flex items-center justify-center">
+                {/* Intent Circle (Module A) */}
+                <motion.div 
+                  animate={{ scale: [1, 1.03, 1], x: [0, 5, -5, 0] }}
+                  transition={{ duration: 10, repeat: Infinity }}
+                  className="absolute w-40 h-40 md:w-56 md:h-56 rounded-full border border-dashed border-[#1A1C2E]/30 -translate-y-20 flex items-center justify-center opacity-40"
+                >
+                  <div className="text-[8px] font-bold text-[#1A1C2E]/60 uppercase tracking-widest mt-12 text-center px-4">
+                    Intention <br /> ({result.insights.cosmic_alignment.intentElement})
+                  </div>
+                </motion.div>
+
                 <motion.div 
                   animate={{ scale: [1, 1.05, 1], rotate: [0, 5, -5, 0] }}
                   transition={{ duration: 8, repeat: Infinity }}
-                  className="absolute w-48 h-48 md:w-60 md:h-60 rounded-full bg-[#C9A24D]/20 border-2 border-[#C9A24D]/40 backdrop-blur-sm -translate-x-10 flex items-center justify-center overflow-hidden"
+                  className="absolute w-56 h-56 md:w-72 md:h-72 rounded-full bg-[#C9A24D]/20 border-2 border-[#C9A24D]/40 backdrop-blur-sm -translate-x-12 flex items-center justify-center overflow-hidden shadow-2xl shadow-[#C9A24D]/10"
                 >
                   <div className="absolute inset-0 opacity-20">
                     {result.insights.cosmic_alignment.astroElement === 'Feu' && <Flame className="w-full h-full text-[#C9A24D]" />}
@@ -135,7 +146,7 @@ export default function ResultPsyMirror() {
                     {result.insights.cosmic_alignment.astroElement === 'Air' && <Wind className="w-full h-full text-[#C9A24D]" />}
                     {result.insights.cosmic_alignment.astroElement === 'Terre' && <Mountain className="w-full h-full text-[#C9A24D]" />}
                   </div>
-                  <div className="relative z-10 text-[10px] font-bold text-[#C9A24D] uppercase tracking-widest mt-20">
+                  <div className="relative z-10 text-[10px] font-bold text-[#C9A24D] uppercase tracking-widest mt-24">
                     Nature {result.insights.cosmic_alignment.astroElement}
                   </div>
                 </motion.div>
@@ -143,7 +154,7 @@ export default function ResultPsyMirror() {
                 <motion.div 
                   animate={{ scale: [1, 1.02, 1], rotate: [0, -3, 3, 0] }}
                   transition={{ duration: 6, repeat: Infinity }}
-                  className="absolute w-48 h-48 md:w-60 md:h-60 rounded-full bg-[#1A1C2E]/10 border-2 border-[#1A1C2E]/20 backdrop-blur-sm translate-x-10 flex items-center justify-center overflow-hidden"
+                  className="absolute w-56 h-56 md:w-72 md:h-72 rounded-full bg-[#1A1C2E]/10 border-2 border-[#1A1C2E]/20 backdrop-blur-sm translate-x-12 flex items-center justify-center overflow-hidden shadow-2xl shadow-[#1A1C2E]/5"
                 >
                   <div className="absolute inset-0 opacity-20">
                     {result.insights.cosmic_alignment.bioElement === 'Feu' && <Flame className="w-full h-full text-[#1A1C2E]" />}
@@ -151,29 +162,50 @@ export default function ResultPsyMirror() {
                     {result.insights.cosmic_alignment.bioElement === 'Air' && <Wind className="w-full h-full text-[#1A1C2E]" />}
                     {result.insights.cosmic_alignment.bioElement === 'Terre' && <Mountain className="w-full h-full text-[#1A1C2E]" />}
                   </div>
-                  <div className="relative z-10 text-[10px] font-bold text-[#1A1C2E] uppercase tracking-widest mt-20">
+                  <div className="relative z-10 text-[10px] font-bold text-[#1A1C2E] uppercase tracking-widest mt-24">
                     Réflexe {result.insights.cosmic_alignment.bioElement}
                   </div>
                 </motion.div>
                 
-                <div className="relative z-10 text-5xl md:text-6xl font-black text-[#1A1C2E]">
+                <div className="relative z-20 text-6xl md:text-8xl font-black text-[#1A1C2E] drop-shadow-sm">
                   {result.insights.cosmic_alignment.score}%
                 </div>
               </div>
 
               <div className="flex-1 text-left space-y-8">
-                <div className="p-8 rounded-[40px] bg-[#FDFBF7] border border-[#1A1C2E]/5 shadow-sm space-y-4">
-                  <h4 className="text-2xl font-serif font-bold text-[#C9A24D] italic">
-                    {result.insights.cosmic_alignment.title}
-                  </h4>
-                  <p className="text-xl leading-relaxed text-[#1A1C2E]/80 font-normal">
-                    {result.insights.cosmic_alignment.text}
-                  </p>
+                <div className="p-10 rounded-[50px] bg-white border border-[#1A1C2E]/5 shadow-xl space-y-6">
+                  <div className="flex items-center gap-4 border-b border-[#1A1C2E]/5 pb-6">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${result.insights.cosmic_alignment.score > 70 ? 'bg-green-100 text-green-600' : 'bg-red-50 text-red-500'}`}>
+                      {result.insights.cosmic_alignment.score > 70 ? <CheckCircle2 className="w-6 h-6" /> : <Zap className="w-6 h-6" />}
+                    </div>
+                    <h4 className="text-3xl font-serif font-bold text-[#1A1C2E]">
+                      {result.insights.cosmic_alignment.title}
+                    </h4>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <p className="text-2xl leading-relaxed text-[#1A1C2E] font-medium">
+                      {result.insights.cosmic_alignment.text}
+                    </p>
+                    <div className="text-[#1A1C2E]/70 leading-relaxed text-lg font-light space-y-4 whitespace-pre-line">
+                      {result.insights.cosmic_alignment.details?.split('\n\n').map((para: string, i: number) => (
+                        <p key={i} className={para.startsWith('**') ? "font-bold text-[#C9A24D]" : ""}>
+                          {para}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
                 
-                <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-[#1A1C2E]/40">
-                  <div className="w-12 h-px bg-[#1A1C2E]/10"></div>
-                  Basé sur ton Chemin de Vie {result.cosmic_data?.pathNum}
+                <div className="flex items-center gap-6 text-xs font-bold uppercase tracking-[0.2em] text-[#1A1C2E]/40 px-6">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-[#C9A24D]"></div>
+                    Potentiel {result.cosmic_data?.title}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-[#1A1C2E]"></div>
+                    Réalité Biologique
+                  </div>
                 </div>
               </div>
             </div>

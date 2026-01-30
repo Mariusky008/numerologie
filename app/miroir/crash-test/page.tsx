@@ -395,11 +395,21 @@ export default function CrashTestLanding() {
             ))}
           </div>
 
-          <motion.div {...fadeIn} className="text-center max-w-3xl mx-auto pt-20">
+          <motion.div {...fadeIn} className="text-center max-w-3xl mx-auto pt-20 space-y-12">
             <p className="text-4xl md:text-5xl font-serif italic text-[#1A1C2E] leading-tight">
               Tu ne lis pas ton destin. <br />
               <span className="text-[#C9A24D] not-italic font-bold tracking-tight">Tu observes comment tu fonctionnes vraiment.</span>
             </p>
+
+            <div className="pt-4">
+              <button 
+                onClick={() => router.push('/miroir/experience')}
+                className="group relative inline-flex flex-col items-center gap-2 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95 overflow-hidden"
+              >
+                <span className="text-2xl md:text-3xl">Accéder à mon Crash-Test — 29 €</span>
+                <span className="text-[10px] uppercase tracking-[0.2em] opacity-60">Accès immédiat • Dossier + Vidéo + Coach IA</span>
+              </button>
+            </div>
           </motion.div>
         </div>
       </section>

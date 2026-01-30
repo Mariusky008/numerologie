@@ -480,7 +480,7 @@ export default function PsyMirrorLanding() {
               onClick={() => router.push('/miroir/experience')}
               className="w-full md:w-auto px-20 py-8 bg-[#C9A24D] text-[#08090F] rounded-full font-bold text-2xl hover:bg-[#D4B46B] transition-all shadow-[0_0_70px_rgba(201,162,77,0.5)] hover:scale-105 active:scale-95 tracking-tight"
             >
-              Obtenir mon Miroir Psychologique — 29 €
+              Obtenir mon Miroir Psychologique — 49 €
             </button>
             
             <div className="flex flex-wrap justify-center gap-14 opacity-50">

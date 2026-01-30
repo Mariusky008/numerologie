@@ -31,7 +31,7 @@ export async function POST(request: Request) {
               name: 'Option : Le Roman de Votre Vie (PDF)',
               description: 'Biographie romancée de 100 pages basée sur votre numérologie (Upgrade).',
             },
-            unit_amount: 2900, // 29.00€
+            unit_amount: 4900, // 49.00€
           },
           quantity: 1,
         },

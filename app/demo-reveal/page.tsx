@@ -157,7 +157,7 @@ export default function DemoRevealPage() {
                     <div className="bg-white/5 p-5 rounded-2xl text-left mb-6 border border-white/10 w-full max-w-xs shadow-inner">
                       <div className="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
                         <span className="text-xs font-bold text-[#C9A24D] uppercase tracking-wider">Pack Révélation</span>
-                        <span className="text-sm font-bold text-white">29€</span>
+                        <span className="text-sm font-bold text-white">49€</span>
                       </div>
                       
                       <ul className="space-y-3">

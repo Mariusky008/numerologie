@@ -639,7 +639,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                    <div className="space-y-6">
                       <div className="pt-4">
                         <div className="text-base text-[#2C2F4A]/40 line-through mb-1 font-medium">💰 Valeur réelle : 129 €</div>
-                        <div className="text-5xl md:text-6xl font-serif text-[#2C2F4A] font-bold tracking-tight">29 €</div>
+                        <div className="text-5xl md:text-6xl font-serif text-[#2C2F4A] font-bold tracking-tight">49 €</div>
                         <div className="text-[#C9A24D] text-xs font-bold uppercase tracking-widest mt-3 border border-[#C9A24D] px-3 py-1 rounded-full inline-block">
                           🔓 Accès aujourd’hui — paiement unique
                         </div>

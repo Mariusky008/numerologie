@@ -48,7 +48,7 @@ Un système complet a été mis en place pour permettre aux clients d'acheter le
 ### Page de Vente dédiée (`/upgrade-book`)
 *   **Accès sécurisé :** La page ne fonctionne que si l'on possède un lien valide contenant l'ID de la commande originale.
 *   **Personnalisation :** Elle accueille le client par son prénom ("Complétez votre Légende, Jean-Philippe").
-*   **Paiement simplifié :** Un bouton unique pour acheter l'option à 29€.
+*   **Paiement simplifié :** Un bouton unique pour acheter l'option à 49€.
 
 ### Tunnel de Paiement (`/api/checkout/upgrade`)
 *   Crée une session Stripe spécifique marquée comme "Upgrade".

@@ -510,7 +510,7 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                       {/* Order Info Badge */}
                       <div className="mt-2 flex flex-wrap gap-2">
                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border ${req.userData.plan === 'bundle' ? 'bg-[#78350f] text-white border-[#78350f]' : 'bg-white text-stone-500 border-stone-200'}`}>
-                          {req.userData.plan === 'bundle' ? 'Pack Révélation (29€)' : 'Rapport Simple'}
+                          {req.userData.plan === 'bundle' ? 'Pack Révélation (49€)' : 'Rapport Simple'}
                         </span>
                         <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 border border-green-200">
                           {req.userData.totalPrice}€

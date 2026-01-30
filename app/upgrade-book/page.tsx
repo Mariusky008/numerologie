@@ -179,7 +179,7 @@ function UpgradeContent() {
 
               <div>
                 <div className="flex items-end gap-3 mb-6">
-                  <div className="text-4xl font-bold text-[#2C2F4A]">29,00 €</div>
+                  <div className="text-4xl font-bold text-[#2C2F4A]">49,00 €</div>
                   <div className="text-gray-400 line-through mb-1.5">59,00 €</div>
                 </div>
 

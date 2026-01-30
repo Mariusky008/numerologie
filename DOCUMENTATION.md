@@ -125,14 +125,14 @@ Remplacement de l'avatar vidéo interactif (HeyGen) par une solution Chatbot tex
 ### 7.2 Le Pack Révélation (Offre Unique)
 Simplification radicale de l'offre commerciale pour maximiser la conversion.
 *   **Produit Unique** : "Le Pack Révélation".
-*   **Prix** : **29,00 €** (au lieu de 49€ + options).
+*   **Prix** : **49,00 €** (au lieu de 49€ + options).
 *   **Contenu du Pack** :
     1.  **Vidéo Avatar** (5 min) : Analyse émotionnelle générée par HeyGen.
     2.  **Dossier PDF** (40 pages) : Rapport technique complet généré par l'algorithme.
     3.  **Coach IA** (30 min) : Accès offert au chatbot expert pour poser des questions.
 *   **Modifications Checkout** :
     *   Mise à jour de `app/checkout/page.tsx` pour afficher le prix unique et les nouvelles inclusions.
-    *   Sécurisation de `app/api/checkout/route.ts` pour forcer le montant de 29€ côté serveur Stripe.
+    *   Sécurisation de `app/api/checkout/route.ts` pour forcer le montant de 49€ côté serveur Stripe.
 
 ### 7.3 Expérience Post-Achat
 *   **Emails Transactionnels** : Ajout d'un bouton "Accéder à mon Coach" dans l'email de livraison de la vidéo.

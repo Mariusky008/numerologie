@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, 
-  CheckCircle2, 
   Clock, 
   Target, 
   Zap,
@@ -13,7 +12,7 @@ import {
   Brain
 } from 'lucide-react';
 import { AUTO_PERCEPTION_ITEMS, BEHAVIOR_SCENARIOS } from '@/lib/psy-mirror/data';
-import { Option, PsyMirrorResult } from '@/lib/psy-mirror/types';
+import { Option } from '@/lib/psy-mirror/types';
 import { useRouter } from 'next/navigation';
 import AttentionTest from './reflex-tests/AttentionTest';
 import BreakingPointTest from './reflex-tests/BreakingPointTest';
@@ -30,11 +29,80 @@ export default function ExperiencePsyMirror() {
   const [currentModuleIndex, setCurrentModuleIndex] = useState(0);
   const [currentScenarioStep, setCurrentScenarioStep] = useState(0);
   const [currentReflexStep, setCurrentReflexStep] = useState(0);
+  const [showInstructions, setShowInstructions] = useState(false);
   const [moduleAAnswers, setModuleAAnswers] = useState<Option[]>([]);
   const [moduleBAnswers, setModuleBAnswers] = useState<Option[]>([]);
   const [reflexResults, setReflexResults] = useState<any>({});
-  const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState<any>(null);
+
+  const reflexTests = [
+    { 
+      id: 'attention', 
+      title: 'Test d\'Attention', 
+      instruction: 'Cliquez sur les cibles dès qu\'elles apparaissent. Soyez le plus rapide possible.',
+      component: AttentionTest 
+    },
+    { 
+      id: 'breaking', 
+      title: 'Point de Rupture', 
+      instruction: 'Maintenez le bouton enfoncé le plus longtemps possible, mais relâchez avant que la barre ne devienne rouge.',
+      component: BreakingPointTest 
+    },
+    { 
+      id: 'agility', 
+      title: 'Agilité Mentale', 
+      instruction: (
+        <div className="space-y-6 text-left">
+          <p className="text-lg font-medium text-center">Vous allez devoir trier des nombres selon une règle qui change.</p>
+          <div className="grid gap-4">
+            <div className="p-6 bg-[#C9A24D]/10 rounded-[30px] border-2 border-[#C9A24D]/20 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#C9A24D] text-white flex items-center justify-center font-bold text-xs">A</div>
+                <p className="font-black text-[#C9A24D] uppercase tracking-widest text-xs">Règle : PARITÉ</p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white p-3 rounded-2xl text-center shadow-sm">
+                  <p className="text-[10px] uppercase opacity-40 mb-1">Si Pair</p>
+                  <p className="font-bold">GAUCHE</p>
+                </div>
+                <div className="bg-white p-3 rounded-2xl text-center shadow-sm">
+                  <p className="text-[10px] uppercase opacity-40 mb-1">Si Impair</p>
+                  <p className="font-bold">DROITE</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="p-6 bg-[#5B4B8A]/10 rounded-[30px] border-2 border-[#5B4B8A]/20 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-[#5B4B8A] text-white flex items-center justify-center font-bold text-xs">B</div>
+                <p className="font-black text-[#5B4B8A] uppercase tracking-widest text-xs">Règle : MAGNITUDE</p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white p-3 rounded-2xl text-center shadow-sm">
+                  <p className="text-[10px] uppercase opacity-40 mb-1">Si &gt; 5</p>
+                  <p className="font-bold">GAUCHE</p>
+                </div>
+                <div className="bg-white p-3 rounded-2xl text-center shadow-sm">
+                  <p className="text-[10px] uppercase opacity-40 mb-1">Si ≤ 5</p>
+                  <p className="font-bold">DROITE</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="text-sm text-[#1A1C2E]/50 italic text-center px-4">
+            Restez vigilant : la règle (Parité ou Magnitude) s'affiche en haut de l'écran et peut changer à tout moment.
+          </p>
+        </div>
+      ),
+      component: MentalAgilityTest 
+    },
+    { 
+      id: 'balloon', 
+      title: 'Prise de Risque', 
+      instruction: 'Gonflez le ballon pour gagner des points. Plus il est gros, plus vous gagnez, mais s\'il éclate, vous perdez tout pour ce ballon.',
+      component: RiskBalloonTest 
+    }
+  ];
 
   useEffect(() => {
     // Check if we have data from the Astro landing page
@@ -62,15 +130,6 @@ export default function ExperiencePsyMirror() {
       }
     }
   }, []);
-
-  const loadingSteps = [
-    "Analyse de l'intention consciente (Module A)...",
-    "Décodage des réflexes sous pression (Module B)...",
-    "Calcul des capacités cognitives (Laboratoire)...",
-    "Identification des angles morts invisibles...",
-    "Génération de votre miroir psychologique...",
-    "Préparation de votre Oracle personnel..."
-  ];
 
   // --- Intro & Cosmic Identity ---
   const handleIntroStart = () => {
@@ -123,16 +182,22 @@ export default function ExperiencePsyMirror() {
       setCurrentScenarioStep(0);
     } else {
       setStep('moduleC');
+      setShowInstructions(true);
     }
   };
 
   // --- Module C (Reflex Tests) ---
+  const startTest = () => {
+    setShowInstructions(false);
+  };
+
   const handleReflexComplete = (testKey: string, result: any) => {
     const newReflexResults = { ...reflexResults, [testKey]: result };
     setReflexResults(newReflexResults);
 
-    if (currentReflexStep < 3) {
+    if (currentReflexStep < reflexTests.length - 1) {
       setCurrentReflexStep(currentReflexStep + 1);
+      setShowInstructions(true);
     } else {
       finishExperience(newReflexResults);
     }
@@ -140,35 +205,24 @@ export default function ExperiencePsyMirror() {
 
   const finishExperience = async (finalReflexResults: any) => {
     setStep('loading');
-    setIsLoading(true);
 
     try {
-      const response = await fetch('/api/psy-mirror', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          moduleA_answers: moduleAAnswers,
-          moduleB_answers: moduleBAnswers,
-          moduleC_results: finalReflexResults,
-          cosmic_data: cosmicData,
-          user_meta: { lang: 'fr', session_id: Math.random().toString(36).substring(7) }
-        }),
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        localStorage.setItem('psy_mirror_result', JSON.stringify(result));
-        router.push('/miroir/resultat');
-      } else {
-        alert("Une erreur est survenue lors du calcul. Veuillez réessayer.");
-        setStep('intro');
-      }
+      // Stockage des données de session pour la page d'onboarding
+      const sessionData = {
+        moduleA_answers: moduleAAnswers,
+        moduleB_answers: moduleBAnswers,
+        moduleC_results: finalReflexResults,
+        cosmic_data: cosmicData,
+      };
+      localStorage.setItem('psy_mirror_session_data', JSON.stringify(sessionData));
+      
+      // Simulation de calcul pour l'effet "Wow"
+      setTimeout(() => {
+        router.push('/miroir/onboarding');
+      }, 3000);
     } catch (error) {
-      console.error(error);
-      alert("Erreur réseau.");
+      console.error("Erreur lors de la finalisation:", error);
       setStep('intro');
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -205,7 +259,7 @@ export default function ExperiencePsyMirror() {
               </div>
             </div>
             <button 
-              onClick={() => setStep('moduleA')}
+              onClick={handleIntroStart}
               className="w-full py-5 bg-[#1A1C2E] text-white rounded-full font-bold text-lg hover:bg-[#2C2F4A] transition-all shadow-xl hover:scale-105"
             >
               Commencer l'expérience
@@ -410,23 +464,57 @@ export default function ExperiencePsyMirror() {
         {step === 'moduleC' && (
           <motion.div 
             key="moduleC"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            className="w-full flex flex-col items-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="w-full max-w-4xl h-full flex flex-col"
           >
-            {currentReflexStep === 0 && (
-              <AttentionTest onComplete={(res) => handleReflexComplete('attention', res)} />
-            )}
-            {currentReflexStep === 1 && (
-              <BreakingPointTest onComplete={(res) => handleReflexComplete('breaking_point', res)} />
-            )}
-            {currentReflexStep === 2 && (
-              <RiskBalloonTest onComplete={(res) => handleReflexComplete('risk_balloon', res)} />
-            )}
-            {currentReflexStep === 3 && (
-              <MentalAgilityTest onComplete={(res) => handleReflexComplete('mental_agility', res)} />
-            )}
+            <AnimatePresence mode="wait">
+              {showInstructions ? (
+                <motion.div
+                  key={`instr-${currentReflexStep}`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.1 }}
+                  className="max-w-xl w-full mx-auto bg-white p-12 rounded-[50px] shadow-2xl border border-[#1A1C2E]/5 text-center space-y-10"
+                >
+                  <div className="w-20 h-20 bg-[#C9A24D]/10 rounded-3xl flex items-center justify-center text-[#C9A24D] mx-auto">
+                    <Zap className="w-10 h-10" />
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h2 className="text-sm font-black uppercase tracking-[0.3em] text-[#C9A24D]">
+                      Test {currentReflexStep + 1} / {reflexTests.length}
+                    </h2>
+                    <h1 className="text-4xl font-serif font-bold text-[#1A1C2E]">
+                      {reflexTests[currentReflexStep].title}
+                    </h1>
+                  </div>
+
+                  <div className="text-xl text-[#1A1C2E]/60 leading-relaxed">
+                    {reflexTests[currentReflexStep].instruction}
+                  </div>
+
+                  <button
+                    onClick={startTest}
+                    className="w-full py-6 bg-[#1A1C2E] text-white rounded-full font-bold text-xl hover:bg-[#2C2F4A] transition-all shadow-xl hover:scale-[1.02] active:scale-95"
+                  >
+                    C'est compris
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key={`test-${currentReflexStep}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex-1"
+                >
+                  {React.createElement(reflexTests[currentReflexStep].component as any, {
+                    onComplete: (res: any) => handleReflexComplete(reflexTests[currentReflexStep].id, res)
+                  })}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         )}
 

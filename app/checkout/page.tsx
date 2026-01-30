@@ -41,8 +41,8 @@ function CheckoutContent() {
   };
 
   // Prix
-  const BASE_PRICE = 29;
-  const BOOK_PRICE = 29; // Promo spéciale bump
+  const BASE_PRICE = 49;
+  const BOOK_PRICE = 49; // Promo spéciale bump
   const TOTAL_PRICE = BASE_PRICE + (includeBook ? BOOK_PRICE : 0);
 
   const [isProcessing, setIsProcessing] = useState(false);
@@ -301,8 +301,8 @@ function CheckoutContent() {
                        Ajouter "Le Roman de Votre Vie"
                     </h3>
                     <div className="flex items-center gap-2">
-                       <span className="text-sm text-[#2C2F4A]/40 line-through decoration-red-400">49€</span>
-                       <span className="font-bold text-[#C9A24D] text-xl">+29€</span>
+                       <span className="text-sm text-[#2C2F4A]/40 line-through decoration-red-400">99€</span>
+                       <span className="font-bold text-[#C9A24D] text-xl">+49€</span>
                     </div>
                  </div>
                  <p className="text-[#2C2F4A]/70 mb-4 leading-relaxed max-w-2xl">

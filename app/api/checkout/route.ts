@@ -32,7 +32,7 @@ export async function POST(request: Request) {
           name: "Le Pack Révélation (Complet)",
           description: "Vidéo Avatar (5 min) + Dossier PDF (40 pages) + Coach IA (30 min)",
         },
-        unit_amount: 2900, // 29.00€
+        unit_amount: 4900, // 49.00€
       },
       quantity: 1,
     });
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
             name: 'Option : Le Roman de Votre Vie (PDF)',
             description: 'Biographie romancée de 100 pages basée sur votre numérologie.',
           },
-          unit_amount: 2900, // +29.00€
+          unit_amount: 4900, // +49.00€
         },
         quantity: 1,
       });

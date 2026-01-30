@@ -190,7 +190,7 @@ export default function DemoRevealView({ userData, results }: DemoRevealViewProp
                       <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4 relative z-10">
                         <span className="text-xl font-bold text-[#C9A24D] uppercase tracking-widest drop-shadow-md">Pack Révélation</span>
                         <div className="flex flex-col items-end">
-                          <span className="text-3xl font-bold text-white drop-shadow-lg">29€</span>
+                          <span className="text-3xl font-bold text-white drop-shadow-lg">49€</span>
                           <span className="text-[10px] text-white/50 line-through">99€</span>
                         </div>
                       </div>

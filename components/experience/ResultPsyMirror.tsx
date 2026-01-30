@@ -109,8 +109,37 @@ export default function ResultPsyMirror() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(201,162,77,0.05),_transparent_70%)]"></div>
           </div>
           
-          <div className="max-w-4xl mx-auto relative z-10 text-center space-y-16">
-            <div className="space-y-6">
+          <div className="max-w-6xl mx-auto relative z-10 space-y-24">
+            {/* THE PROTOCOL / RULES OF THE GAME */}
+            <div className="bg-[#1A1C2E]/[0.02] border border-[#1A1C2E]/5 rounded-[40px] p-8 md:p-12">
+              <div className="flex flex-col md:flex-row gap-10 items-start">
+                <div className="flex-1 space-y-6">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5B4B8A]/10 text-[#5B4B8A] text-[10px] font-black uppercase tracking-widest">
+                    Le Protocole
+                  </div>
+                  <h3 className="text-3xl font-serif font-bold text-[#1A1C2E]">Comprendre les règles de ton analyse</h3>
+                  <p className="text-lg text-[#1A1C2E]/70 leading-relaxed">
+                    Ton score d'alignement n'est pas une note de performance. C'est la mesure de la cohérence entre trois forces qui dirigent ta vie :
+                  </p>
+                </div>
+                <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { title: "Identité Astro", desc: "Ton potentiel de naissance (Tes Astres)", icon: Star, color: "text-[#C9A24D]" },
+                    { title: "Réalité Bio", desc: "Tes réflexes instinctifs (Le Labo)", icon: Activity, color: "text-[#1A1C2E]" },
+                    { title: "Ton Idéal", desc: "Ce que tu crois être (Tes Réponses)", icon: Eye, color: "text-[#5B4B8A]" },
+                    { title: "L'Alignement", desc: "Le match entre ces 3 forces", icon: Zap, color: "text-[#C9A24D]" }
+                  ].map((item, i) => (
+                    <div key={i} className="bg-white p-5 rounded-3xl border border-[#1A1C2E]/5 shadow-sm space-y-2">
+                      <item.icon className={`w-5 h-5 ${item.color}`} />
+                      <div className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]">{item.title}</div>
+                      <div className="text-[11px] text-[#1A1C2E]/60 font-medium leading-tight">{item.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center space-y-6">
               <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#C9A24D]/10 border border-[#C9A24D]/20 text-[#C9A24D] text-[10px] font-bold uppercase tracking-[0.4em]">
                 <Star className="w-4 h-4" />
                 Dissonance de Destinée

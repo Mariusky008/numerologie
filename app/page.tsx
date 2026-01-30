@@ -78,6 +78,51 @@ export default function Home() {
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_20%,_rgba(201,162,77,0.08),_transparent_40%)]"></div>
           <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_80%,_rgba(91,75,138,0.08),_transparent_40%)]"></div>
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1A1C2E 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
+          
+          {/* Red/Orange Pulsing Animation (Flooding the Hero) */}
+          <motion.div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] rounded-full blur-[120px] mix-blend-multiply pointer-events-none"
+            animate={{
+              scale: [0.8, 1.2, 0.8],
+              opacity: [0.05, 0.15, 0.05],
+              backgroundColor: ["#EF4444", "#F97316", "#EF4444"]
+            }}
+            transition={{
+              duration: 5,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+
+          {/* Mystic Particles */}
+          {Array.from({ length: 15 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-[#C9A24D] font-serif font-bold pointer-events-none z-0"
+              initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
+              animate={{ 
+                opacity: [0, 0.4, 0],
+                x: (Math.random() - 0.5) * 800,
+                y: (Math.random() - 0.5) * 600,
+                scale: [0.5, 1.2, 0.5],
+                rotate: Math.random() * 360
+              }}
+              transition={{ 
+                duration: 4 + Math.random() * 4,
+                repeat: Infinity,
+                delay: Math.random() * 3,
+                ease: "easeOut"
+              }}
+              style={{
+                top: '50%',
+                left: '50%',
+                fontSize: Math.random() > 0.5 ? '24px' : '14px',
+                filter: 'blur(1px)'
+              }}
+            >
+              {['1', '7', '4', 'A', 'Ω', '✨', '☾', '9', '3', '∞', '⚡', '8'][i % 12]}
+            </motion.div>
+          ))}
         </div>
 
         <div className="max-w-4xl w-full z-10 text-center space-y-12">

@@ -71,7 +71,6 @@ export function getLifePathData(num: number) {
 
 export function getMoonSign(birthDate: string) {
   const date = new Date(birthDate);
-  const day = date.getDate();
   const month = date.getMonth() + 1;
   
   const signs = [
@@ -84,4 +83,37 @@ export function getMoonSign(birthDate: string) {
   ];
   
   return signs[month - 1];
+}
+
+export function getSunSign(birthDate: string) {
+  const date = new Date(birthDate);
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+
+  if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return { name: "Bélier", element: "Feu" };
+  if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return { name: "Taureau", element: "Terre" };
+  if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return { name: "Gémeaux", element: "Air" };
+  if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return { name: "Cancer", element: "Eau" };
+  if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return { name: "Lion", element: "Feu" };
+  if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return { name: "Vierge", element: "Terre" };
+  if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return { name: "Balance", element: "Air" };
+  if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return { name: "Scorpion", element: "Eau" };
+  if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return { name: "Sagittaire", element: "Feu" };
+  if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return { name: "Capricorne", element: "Terre" };
+  if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return { name: "Verseau", element: "Air" };
+  return { name: "Poissons", element: "Eau" };
+}
+
+export function getAscendant(birthTime: string) {
+  // Simplified ascendant calculation based on birth time
+  const [hour] = birthTime.split(':').map(Number);
+  
+  const signs = [
+    "Bélier", "Taureau", "Gémeaux", "Cancer", "Lion", "Vierge", 
+    "Balance", "Scorpion", "Sagittaire", "Capricorne", "Verseau", "Poissons"
+  ];
+  
+  // Rule of thumb: Ascendant changes roughly every 2 hours
+  const index = Math.floor(hour / 2);
+  return signs[index % 12];
 }

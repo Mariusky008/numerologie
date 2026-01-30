@@ -309,15 +309,22 @@ export default function Home() {
           </motion.div>
 
           {/* Social Proof Stats */}
-          <motion.div {...fadeIn} className="flex flex-wrap justify-center gap-12 pt-10">
+          <motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12">
             {[
-              { label: "Vérifié", value: "4.6/5" },
-              { label: "Utilisateurs", value: "1,200+" },
-              { label: "Recommandé", value: "94%" }
+              { label: "Vérifié", value: "4.6/5", icon: Star, sub: "Basé sur 1,200+ avis" },
+              { label: "Utilisateurs", value: "1,200+", icon: Users, sub: "Légendes révélées" },
+              { label: "Recommandé", value: "94%", icon: Sparkles, sub: "Taux de satisfaction" }
             ].map((stat, i) => (
-              <div key={i} className="text-center space-y-1">
-                <div className="text-2xl font-serif font-bold text-[#1A1C2E]">{stat.value}</div>
-                <div className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/20">{stat.label}</div>
+              <div key={i} className="relative group p-8 rounded-[40px] bg-white border border-[#1A1C2E]/5 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden text-center">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#C9A24D]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="flex justify-center mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-[#FDFBF7] flex items-center justify-center text-[#C9A24D] group-hover:scale-110 transition-transform">
+                    <stat.icon className="w-6 h-6 fill-current" />
+                  </div>
+                </div>
+                <div className="text-4xl font-serif font-bold text-[#1A1C2E] mb-1">{stat.value}</div>
+                <div className="text-[11px] font-black uppercase tracking-[0.2em] text-[#C9A24D] mb-2">{stat.label}</div>
+                <div className="text-[10px] font-medium text-[#1A1C2E]/30 uppercase tracking-widest">{stat.sub}</div>
               </div>
             ))}
           </motion.div>

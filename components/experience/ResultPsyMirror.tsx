@@ -20,7 +20,12 @@ import {
   Layout,
   MessageCircle,
   Clock,
-  Star
+  Star,
+  Flame,
+  Droplets,
+  Wind,
+  Mountain,
+  Snowflake
 } from 'lucide-react';
 import { PsyMirrorResult } from '@/lib/psy-mirror/types';
 import { useRouter } from 'next/navigation';
@@ -122,17 +127,35 @@ export default function ResultPsyMirror() {
                 <motion.div 
                   animate={{ scale: [1, 1.05, 1], rotate: [0, 5, -5, 0] }}
                   transition={{ duration: 8, repeat: Infinity }}
-                  className="absolute w-48 h-48 md:w-60 md:h-60 rounded-full bg-[#C9A24D]/20 border-2 border-[#C9A24D]/40 backdrop-blur-sm -translate-x-10 flex items-center justify-center"
+                  className="absolute w-48 h-48 md:w-60 md:h-60 rounded-full bg-[#C9A24D]/20 border-2 border-[#C9A24D]/40 backdrop-blur-sm -translate-x-10 flex items-center justify-center overflow-hidden"
                 >
-                  <div className="text-[10px] font-bold text-[#C9A24D] uppercase tracking-widest mt-20">Destinée</div>
+                  <div className="absolute inset-0 opacity-20">
+                    {result.insights.cosmic_alignment.astroElement === 'Feu' && <Flame className="w-full h-full text-[#C9A24D]" />}
+                    {result.insights.cosmic_alignment.astroElement === 'Eau' && <Droplets className="w-full h-full text-[#C9A24D]" />}
+                    {result.insights.cosmic_alignment.astroElement === 'Air' && <Wind className="w-full h-full text-[#C9A24D]" />}
+                    {result.insights.cosmic_alignment.astroElement === 'Terre' && <Mountain className="w-full h-full text-[#C9A24D]" />}
+                  </div>
+                  <div className="relative z-10 text-[10px] font-bold text-[#C9A24D] uppercase tracking-widest mt-20">
+                    Nature {result.insights.cosmic_alignment.astroElement}
+                  </div>
                 </motion.div>
+
                 <motion.div 
                   animate={{ scale: [1, 1.02, 1], rotate: [0, -3, 3, 0] }}
                   transition={{ duration: 6, repeat: Infinity }}
-                  className="absolute w-48 h-48 md:w-60 md:h-60 rounded-full bg-[#1A1C2E]/10 border-2 border-[#1A1C2E]/20 backdrop-blur-sm translate-x-10 flex items-center justify-center"
+                  className="absolute w-48 h-48 md:w-60 md:h-60 rounded-full bg-[#1A1C2E]/10 border-2 border-[#1A1C2E]/20 backdrop-blur-sm translate-x-10 flex items-center justify-center overflow-hidden"
                 >
-                  <div className="text-[10px] font-bold text-[#1A1C2E] uppercase tracking-widest mt-20">Réalité</div>
+                  <div className="absolute inset-0 opacity-20">
+                    {result.insights.cosmic_alignment.bioElement === 'Feu' && <Flame className="w-full h-full text-[#1A1C2E]" />}
+                    {result.insights.cosmic_alignment.bioElement === 'Glace' && <Snowflake className="w-full h-full text-[#1A1C2E]" />}
+                    {result.insights.cosmic_alignment.bioElement === 'Air' && <Wind className="w-full h-full text-[#1A1C2E]" />}
+                    {result.insights.cosmic_alignment.bioElement === 'Terre' && <Mountain className="w-full h-full text-[#1A1C2E]" />}
+                  </div>
+                  <div className="relative z-10 text-[10px] font-bold text-[#1A1C2E] uppercase tracking-widest mt-20">
+                    Réflexe {result.insights.cosmic_alignment.bioElement}
+                  </div>
                 </motion.div>
+                
                 <div className="relative z-10 text-5xl md:text-6xl font-black text-[#1A1C2E]">
                   {result.insights.cosmic_alignment.score}%
                 </div>
@@ -143,7 +166,7 @@ export default function ResultPsyMirror() {
                   <h4 className="text-2xl font-serif font-bold text-[#C9A24D] italic">
                     {result.insights.cosmic_alignment.title}
                   </h4>
-                  <p className="text-xl leading-relaxed text-[#1A1C2E]/80 font-light">
+                  <p className="text-xl leading-relaxed text-[#1A1C2E]/80 font-normal">
                     {result.insights.cosmic_alignment.text}
                   </p>
                 </div>

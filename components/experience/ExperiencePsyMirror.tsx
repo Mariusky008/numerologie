@@ -55,9 +55,9 @@ export default function ExperiencePsyMirror() {
 
     const pathNum = calculateLifePathNumber(birthDate);
     const pathData = getLifePathData(pathNum);
-    const moon = getMoonSign(birthDate);
+    const moonData = getMoonSign(birthDate);
 
-    setCosmicData({ pathNum, ...pathData, moon });
+    setCosmicData({ pathNum, ...pathData, moon: moonData.name, moon_element: moonData.element });
     setStep('cosmicReveal');
   };
 

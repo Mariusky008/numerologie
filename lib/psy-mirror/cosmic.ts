@@ -70,13 +70,18 @@ export function getLifePathData(num: number) {
 }
 
 export function getMoonSign(birthDate: string) {
-  // Simplified calculation for demonstration (requires ephemeral data for precision)
-  // For now, we'll return a data structure based on the month to keep it light
   const date = new Date(birthDate);
+  const day = date.getDate();
   const month = date.getMonth() + 1;
+  
   const signs = [
-    "Capricorne", "Verseau", "Poissons", "Bélier", "Taureau", "Gémeaux", 
-    "Cancer", "Lion", "Vierge", "Balance", "Scorpion", "Sagittaire"
+    { name: "Capricorne", element: "Terre" }, { name: "Verseau", element: "Air" },
+    { name: "Poissons", element: "Eau" }, { name: "Bélier", element: "Feu" },
+    { name: "Taureau", element: "Terre" }, { name: "Gémeaux", element: "Air" },
+    { name: "Cancer", element: "Eau" }, { name: "Lion", element: "Feu" },
+    { name: "Vierge", element: "Terre" }, { name: "Balance", element: "Air" },
+    { name: "Scorpion", element: "Eau" }, { name: "Sagittaire", element: "Feu" }
   ];
+  
   return signs[month - 1];
 }

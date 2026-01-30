@@ -340,27 +340,64 @@ function generateCosmicAlignment(cosmic: any, behavior: ProfileScores) {
 
   const keyDim = cosmic.key_dimension;
   const behaviorScore = behavior[keyDim];
-  
-  // Logic for alignment: if behavior score is high (>66) on the key dimension of the life path
+
+  // 1. Determine Biological Element based on Reflexes
+  let bioElement = "";
+  if (behavior.d3_control > 65) bioElement = "Glace"; // Inhibé / Contrôlé
+  else if (behavior.d6_flexibility > 65) bioElement = "Air"; // Agile / Dispersé
+  else if (behavior.d1_decision > 65) bioElement = "Feu"; // Impulsif / Rapide
+  else bioElement = "Terre"; // Analytique / Lent
+
+  // 2. Alignment Logic
   let score = 0;
   let text = "";
   let title = "";
 
-  if (behaviorScore > 66) {
-    score = 90 + Math.floor(Math.random() * 10);
-    title = "Alignement Cosmique Total";
-    text = `Ton comportement réel fait parfaitement honneur à ton empreinte de ${cosmic.title}. Tu exploites ton potentiel de ${cosmic.potential.toLowerCase()} avec une fluidité naturelle. Tu es sur ton chemin.`;
-  } else if (behaviorScore > 33) {
-    score = 60 + Math.floor(Math.random() * 20);
-    title = "Dissonance Émergente";
-    text = `Tu es sur la voie, mais des blocages réflexes t'empêchent d'incarner pleinement ton potentiel de ${cosmic.title}. Ton intention est là, mais tes mécanismes de survie freinent encore ton élan cosmique.`;
+  // Interaction Logic (Astro Element vs Bio Element)
+  const astroElement = cosmic.moon_element;
+  
+  if (astroElement === "Feu") {
+    if (bioElement === "Glace") {
+      title = "Extinction Vitale";
+      text = "Tu es un Feu naturel étouffé par la Glace de tes peurs. Ton stress éteint ta lumière et ton charisme naturel.";
+      score = 35;
+    } else if (bioElement === "Feu") {
+      title = "Fusion Totale";
+      text = "Ton énergie vitale est pure. Tes réflexes sont aussi vifs que ton esprit. Tu es une force de la nature.";
+      score = 95;
+    } else {
+      title = "Combustion Contrôlée";
+      text = `Ton Feu intérieur est modéré par ta nature de ${bioElement}. Tu avances, mais sans l'étincelle explosive de ton potentiel.`;
+      score = 65;
+    }
+  } else if (astroElement === "Eau") {
+     if (bioElement === "Feu") {
+      title = "Ébullition Interne";
+      text = "Ton Eau émotionnelle bout sous l'impulsion de tes réflexes de Feu. Tu vis dans une tension permanente.";
+      score = 45;
+    } else if (bioElement === "Glace") {
+      title = "Cristallisation";
+      text = "Ton Eau s'est figée en Glace pour te protéger. Tu es devenu une forteresse impénétrable, coupée de ton flux.";
+      score = 40;
+    } else {
+      title = "Flux Harmonieux";
+      text = `Ton Eau coule avec fluidité grâce à ton ancrage ${bioElement}. Tu navigues dans la vie avec intuition.`;
+      score = 85;
+    }
   } else {
-    score = 30 + Math.floor(Math.random() * 20);
-    title = "Rupture de Destinée";
-    text = `Il existe un écart majeur entre ton empreinte de ${cosmic.title} et tes réflexes actuels. Tu vis en mode protection là où tu devrais être en mode expansion. Tes tests montrent que ton stress étouffe ta véritable nature.`;
+    // Generic Fallback for Air/Earth
+     if (astroElement === bioElement) {
+      title = "Résonance Élémentaire";
+      text = `Ta nature de ${astroElement} est parfaitement soutenue par tes réflexes. Tu es en phase.`;
+      score = 90;
+    } else {
+      title = "Friction Élémentaire";
+      text = `Ta nature de ${astroElement} est contrariée par tes réflexes de ${bioElement}. Il y a une perte d'énergie dans la conversion.`;
+      score = 55;
+    }
   }
 
-  return { title, text, score };
+  return { title, text, score, astroElement, bioElement };
 }
 
 /**

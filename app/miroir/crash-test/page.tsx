@@ -19,7 +19,9 @@ import {
   Layers,
   Sparkles,
   Lock,
-  ArrowDown
+  ArrowDown,
+  Quote,
+  Users
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -249,6 +251,71 @@ export default function CrashTestLanding() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* 3.5 SECTION — LA PREUVE SOCIALE (NOUVEAU) */}
+      <section className="py-40 px-6 bg-white relative overflow-hidden">
+        <div className="max-w-6xl mx-auto space-y-24 relative z-10">
+          {/* Counter Header */}
+          <motion.div {...fadeIn} className="text-center space-y-6">
+            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-[#FDFBF7] border border-[#1A1C2E]/5 text-[#C9A24D] text-xs font-black uppercase tracking-[0.3em]">
+              <Users className="w-4 h-4" />
+              Déjà + de 1 200 légendes révélées
+            </div>
+            <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#1A1C2E]">Ils ont fait l’expérience</h2>
+          </motion.div>
+
+          {/* Thomas Testimonial */}
+          <motion.div 
+            {...fadeIn}
+            className="group relative max-w-4xl mx-auto p-12 md:p-20 rounded-[80px] bg-[#FDFBF7] border border-[#1A1C2E]/5 shadow-2xl shadow-black/[0.02] overflow-hidden"
+          >
+            <Quote className="absolute top-12 right-12 w-24 h-24 text-[#C9A24D]/5 rotate-180" />
+            
+            <div className="flex flex-col md:flex-row gap-12 items-center relative z-10">
+              {/* Photo Placeholder */}
+              <div className="w-32 h-32 md:w-48 md:h-48 rounded-[40px] bg-[#1A1C2E]/5 border-2 border-white shadow-xl overflow-hidden shrink-0 grayscale hover:grayscale-0 transition-all duration-700">
+                <img 
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400" 
+                  alt="Thomas"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div className="space-y-8 text-center md:text-left">
+                <div className="flex justify-center md:justify-start gap-1 text-[#C9A24D]">
+                  {[1, 2, 3, 4, 5].map((s) => <Star key={s} className="w-5 h-5 fill-current" />)}
+                </div>
+                
+                <p className="text-2xl md:text-4xl font-serif italic leading-relaxed text-[#1A1C2E]">
+                  « J’étais très sceptique au départ. Le crash-test m’a surtout montré un décalage que je n’avais jamais vu chez moi. Une prise de conscience brutale mais nécessaire. »
+                </p>
+
+                <div className="pt-4">
+                  <p className="text-lg font-black uppercase tracking-[0.2em] text-[#1A1C2E]">Thomas, 34 ans</p>
+                  <p className="text-xs font-bold uppercase tracking-widest text-[#1A1C2E]/30">Entrepreneur • Chemin de Vie 5</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Subtle floating decoration */}
+            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#C9A24D]/5 blur-3xl rounded-full"></div>
+          </motion.div>
+
+          {/* Social Proof Stats */}
+          <motion.div {...fadeIn} className="flex flex-wrap justify-center gap-12 pt-10">
+            {[
+              { label: "Vérifié", value: "4.6/5" },
+              { label: "Utilisateurs", value: "1,200+" },
+              { label: "Recommandé", value: "94%" }
+            ].map((stat, i) => (
+              <div key={i} className="text-center space-y-1">
+                <div className="text-2xl font-serif font-bold text-[#1A1C2E]">{stat.value}</div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/20">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
 

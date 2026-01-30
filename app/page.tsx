@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { 
   Zap, 
   Star, 
@@ -33,6 +33,12 @@ import CrashTestAnimation from '@/components/experience/CrashTestAnimation';
 export default function Home() {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
+  const { scrollYProgress } = useScroll();
+  
+  // Parallax and opacity effects for the background
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
+  const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.15, 0.08, 0.15]);
+  const particleY = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -55,6 +61,54 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#1A1C2E] font-sans selection:bg-[#C9A24D]/20 overflow-x-hidden">
       
+      {/* GLOBAL FIXED BACKGROUND ANIMATION */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        {/* Red/Orange Pulsing Animation (Following Scroll) */}
+        <motion.div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1400px] h-[1400px] rounded-full blur-[140px] mix-blend-multiply"
+          style={{ y: backgroundY, opacity: backgroundOpacity }}
+          animate={{
+            scale: [0.9, 1.1, 0.9],
+            backgroundColor: ["#EF4444", "#F97316", "#EF4444"]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+
+        {/* Floating Particles (Following Scroll) */}
+        <motion.div style={{ y: particleY }} className="absolute inset-0">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-[#C9A24D] font-serif font-bold opacity-20"
+              initial={{ 
+                x: Math.random() * 100 + '%', 
+                y: Math.random() * 100 + '%',
+                scale: Math.random() * 0.5 + 0.5
+              }}
+              animate={{ 
+                y: [null, (Math.random() - 0.5) * 200],
+                opacity: [0.1, 0.3, 0.1]
+              }}
+              transition={{ 
+                duration: 5 + Math.random() * 5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              style={{
+                fontSize: Math.random() > 0.5 ? '24px' : '14px',
+                filter: 'blur(1px)'
+              }}
+            >
+              {['1', '7', '4', 'A', 'Ω', '✨', '☾', '9', '3', '∞', '⚡', '8'][i % 12]}
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
       {/* 0. FLOATING NAV */}
       <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-6 py-4 ${scrolled ? 'translate-y-0' : '-translate-y-full'}`}>
         <div className="max-w-xl mx-auto bg-white/80 backdrop-blur-xl border border-[#1A1C2E]/5 rounded-full py-3 px-6 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.05)] flex items-center justify-between">
@@ -78,51 +132,6 @@ export default function Home() {
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_20%,_rgba(201,162,77,0.08),_transparent_40%)]"></div>
           <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_80%,_rgba(91,75,138,0.08),_transparent_40%)]"></div>
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1A1C2E 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
-          
-          {/* Red/Orange Pulsing Animation (Flooding the Hero) */}
-          <motion.div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] rounded-full blur-[120px] mix-blend-multiply pointer-events-none"
-            animate={{
-              scale: [0.8, 1.2, 0.8],
-              opacity: [0.05, 0.15, 0.05],
-              backgroundColor: ["#EF4444", "#F97316", "#EF4444"]
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-
-          {/* Mystic Particles */}
-          {Array.from({ length: 15 }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-[#C9A24D] font-serif font-bold pointer-events-none z-0"
-              initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
-              animate={{ 
-                opacity: [0, 0.4, 0],
-                x: (Math.random() - 0.5) * 800,
-                y: (Math.random() - 0.5) * 600,
-                scale: [0.5, 1.2, 0.5],
-                rotate: Math.random() * 360
-              }}
-              transition={{ 
-                duration: 4 + Math.random() * 4,
-                repeat: Infinity,
-                delay: Math.random() * 3,
-                ease: "easeOut"
-              }}
-              style={{
-                top: '50%',
-                left: '50%',
-                fontSize: Math.random() > 0.5 ? '24px' : '14px',
-                filter: 'blur(1px)'
-              }}
-            >
-              {['1', '7', '4', 'A', 'Ω', '✨', '☾', '9', '3', '∞', '⚡', '8'][i % 12]}
-            </motion.div>
-          ))}
         </div>
 
         <div className="max-w-4xl w-full z-10 text-center space-y-12">

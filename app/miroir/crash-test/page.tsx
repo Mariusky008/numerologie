@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Zap, 
   Star, 
@@ -13,152 +13,223 @@ import {
   BookOpen, 
   Video, 
   Compass,
-  AlertCircle
+  AlertCircle,
+  Cpu,
+  Fingerprint,
+  Layers,
+  Sparkles,
+  Lock,
+  ArrowDown
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function CrashTestLanding() {
   const router = useRouter();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const fadeIn = {
-    initial: { opacity: 0, y: 20 },
+    initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.6 }
+    viewport: { once: true, margin: "-100px" },
+    transition: { duration: 0.8 }
+  } as any;
+
+  const staggerContainer = {
+    initial: {},
+    whileInView: { transition: { staggerChildren: 0.1 } }
   };
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] text-[#1A1C2E] font-sans selection:bg-[#C9A24D]/20 overflow-x-hidden">
       
-      {/* HERO — ÉCRAN 1 */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden bg-gradient-to-b from-white to-[#FDFBF7]">
+      {/* 0. FLOATING NAV */}
+      <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-6 py-4 ${scrolled ? 'translate-y-0' : '-translate-y-full'}`}>
+        <div className="max-w-xl mx-auto bg-white/80 backdrop-blur-xl border border-[#1A1C2E]/5 rounded-full py-3 px-6 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.05)] flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Zap className="w-5 h-5 text-[#C9A24D]" />
+            <span className="text-[10px] font-black uppercase tracking-widest">Crash-Test</span>
+          </div>
+          <button 
+            onClick={() => router.push('/miroir/experience')}
+            className="bg-[#1A1C2E] text-white text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full hover:bg-[#C9A24D] transition-colors"
+          >
+            Commencer
+          </button>
+        </div>
+      </nav>
+
+      {/* 1. HERO — ÉCRAN 1 */}
+      <section className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden bg-[#FDFBF7]">
+        {/* Modern Animated Background */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[#C9A24D]/5 blur-[120px] rounded-full"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-[#5B4B8A]/5 blur-[120px] rounded-full"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_20%,_rgba(201,162,77,0.08),_transparent_40%)]"></div>
+          <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_80%,_rgba(91,75,138,0.08),_transparent_40%)]"></div>
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1A1C2E 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
         </div>
 
-        <div className="max-w-3xl w-full z-10 text-center space-y-10">
+        <div className="max-w-4xl w-full z-10 text-center space-y-12">
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1A1C2E] text-white text-[10px] font-black uppercase tracking-[0.3em]"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white border border-[#1A1C2E]/5 shadow-sm text-[#1A1C2E] text-[11px] font-black uppercase tracking-[0.4em]"
           >
-            <Zap className="w-4 h-4 text-[#C9A24D]" />
-            Le Crash-Test de ton Destin
+            <Cpu className="w-4 h-4 text-[#C9A24D]" />
+            Protocole Mi-Bio Mi-Astro
           </motion.div>
           
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-5xl md:text-7xl font-serif font-bold tracking-tight leading-[1.1]"
-          >
-            Tu connais ton potentiel. <br />
-            <span className="text-[#C9A24D] italic">Mais est-ce vraiment comme ça que tu fonctionnes ?</span>
-          </motion.h1>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="space-y-6 text-xl md:text-2xl text-[#1A1C2E]/70 font-normal leading-relaxed max-w-2xl mx-auto"
-          >
-            <p>
-              Nous comparons ton profil symbolique <br />
-              <span className="text-[#1A1C2E] font-bold">(astrologie & numérologie)</span> <br />
-              avec tes réactions réelles face aux choix.
-            </p>
-            <p className="text-[#C9A24D] font-bold">
-              👉 Le décalage explique souvent <br />
-              pourquoi certaines choses bloquent.
-            </p>
-          </motion.div>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="space-y-6"
+          >
+            <h1 className="text-6xl md:text-9xl font-serif font-bold tracking-tight leading-[0.95] text-[#1A1C2E]">
+              Le Crash-Test <br />
+              <span className="text-[#C9A24D] italic relative">
+                de ton Destin
+                <motion.span 
+                  initial={{ width: 0 }}
+                  animate={{ width: '100%' }}
+                  transition={{ delay: 1, duration: 1 }}
+                  className="absolute bottom-4 left-0 h-1 bg-[#C9A24D]/20 -z-10"
+                ></motion.span>
+              </span>
+            </h1>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="space-y-8 text-xl md:text-2xl text-[#1A1C2E]/60 font-normal leading-relaxed max-w-2xl mx-auto"
+          >
+            <p>
+              Tu connais ton potentiel. <br />
+              <span className="text-[#1A1C2E] font-medium italic">Mais est-ce vraiment comme ça que tu fonctionnes ?</span>
+            </p>
+            <div className="p-8 bg-white/50 backdrop-blur-md border border-[#1A1C2E]/5 rounded-[40px] shadow-2xl shadow-black/5 space-y-4">
+              <p className="text-lg">
+                Nous comparons ton profil symbolique <br />
+                <span className="text-[#1A1C2E] font-bold uppercase tracking-widest text-xs">(astrologie & numérologie)</span> <br />
+                avec tes réactions réelles face aux choix.
+              </p>
+              <div className="h-px w-12 bg-[#C9A24D]/30 mx-auto"></div>
+              <p className="text-[#C9A24D] font-bold text-2xl">
+                👉 Le décalage explique souvent <br />
+                pourquoi certaines choses bloquent.
+              </p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6 }}
             className="pt-6"
           >
             <button 
               onClick={() => router.push('/miroir/experience')}
-              className="group relative inline-flex items-center gap-4 px-10 py-6 bg-[#1A1C2E] text-white rounded-full font-bold text-xl hover:bg-[#2A2D45] transition-all shadow-2xl hover:shadow-[#C9A24D]/20 active:scale-95"
+              className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold text-xl hover:bg-[#C9A24D] transition-all shadow-[0_40px_80px_-20px_rgba(26,28,46,0.3)] hover:shadow-[#C9A24D]/40 active:scale-95 overflow-hidden"
             >
-              👉 Faire mon Crash-Test
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <span className="relative z-10">👉 Faire mon Crash-Test</span>
+              <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
             </button>
           </motion.div>
         </div>
 
         <motion.div 
-          animate={{ y: [0, 10, 0] }}
+          animate={{ y: [0, 15, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#1A1C2E]/20"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#1A1C2E]/10"
         >
-          <ArrowRight className="w-8 h-8 rotate-90" />
+          <ArrowDown className="w-10 h-10" />
         </motion.div>
       </section>
 
-      {/* SECTION — LE PRINCIPE */}
-      <section className="py-32 px-6 bg-white border-y border-[#1A1C2E]/5">
-        <div className="max-w-5xl mx-auto space-y-20">
-          <motion.div {...fadeIn} className="text-center space-y-4">
-            <h2 className="text-4xl md:text-6xl font-serif font-bold">Deux lectures. Une confrontation.</h2>
+      {/* 2. SECTION — LE PRINCIPE (MODERN CARDS) */}
+      <section className="py-40 px-6 relative bg-white">
+        <div className="max-w-6xl mx-auto space-y-32">
+          <motion.div {...fadeIn} className="text-center space-y-6">
+            <div className="text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.5em] mb-4">La Méthodologie</div>
+            <h2 className="text-5xl md:text-8xl font-serif font-bold text-[#1A1C2E]">Deux lectures. <br /><span className="text-[#C9A24D] italic">Une confrontation.</span></h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <motion.div 
+            variants={staggerContainer}
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            className="grid md:grid-cols-3 gap-12"
+          >
             {[
               { 
-                step: "1️⃣", 
+                num: "01", 
                 title: "Ton Empreinte", 
                 desc: "Une lecture symbolique basée sur ta date de naissance. Ce qu’on dit souvent de ton potentiel.",
-                icon: Star,
-                color: "bg-[#C9A24D]/10 text-[#C9A24D]"
+                icon: Fingerprint,
+                color: "text-[#C9A24D]"
               },
               { 
-                step: "2️⃣", 
+                num: "02", 
                 title: "Tes Réflexes", 
                 desc: "Des mini-tests interactifs de décision, où tu fais des choix concrets, sans “bonne réponse”.",
                 icon: Activity,
-                color: "bg-[#1A1C2E]/5 text-[#1A1C2E]"
+                color: "text-[#5B4B8A]"
               },
               { 
-                step: "3️⃣", 
+                num: "03", 
                 title: "Le Choc", 
                 desc: "Là où ce que tu crois être ne correspond pas toujours à ce que tu fais.",
                 icon: Zap,
-                color: "bg-[#5B4B8A]/10 text-[#5B4B8A]"
+                color: "text-[#1A1C2E]"
               }
             ].map((item, i) => (
               <motion.div 
                 key={i}
-                {...fadeIn}
-                transition={{ delay: i * 0.2 }}
-                className="p-10 rounded-[40px] bg-[#FDFBF7] border border-[#1A1C2E]/5 space-y-6"
+                variants={fadeIn}
+                className="group relative p-12 rounded-[60px] bg-[#FDFBF7] border border-[#1A1C2E]/5 hover:border-[#C9A24D]/20 transition-all duration-500 hover:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.05)]"
               >
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${item.color}`}>
-                  <item.icon className="w-7 h-7" />
+                <div className="absolute top-10 right-10 text-6xl font-black text-[#1A1C2E]/[0.03] group-hover:text-[#C9A24D]/10 transition-colors">
+                  {item.num}
                 </div>
-                <h3 className="text-2xl font-serif font-bold">{item.step} {item.title}</h3>
-                <p className="text-[#1A1C2E]/70 text-lg leading-relaxed">{item.desc}</p>
+                <div className={`w-16 h-16 rounded-[24px] bg-white flex items-center justify-center mb-10 shadow-sm ${item.color}`}>
+                  <item.icon className="w-8 h-8" />
+                </div>
+                <h3 className="text-3xl font-serif font-bold mb-6">{item.title}</h3>
+                <p className="text-[#1A1C2E]/60 text-xl leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          <motion.p {...fadeIn} className="text-center text-2xl font-serif italic text-[#C9A24D]">
-            C’est là que la prise de conscience commence.
-          </motion.p>
+          <motion.div {...fadeIn} className="relative py-20 text-center">
+            <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C9A24D]/20 to-transparent"></div>
+            <span className="relative z-10 bg-white px-10 text-3xl md:text-5xl font-serif italic text-[#C9A24D]">
+              C’est là que la prise de conscience commence.
+            </span>
+          </motion.div>
         </div>
       </section>
 
-      {/* SECTION — POURQUOI C’EST DIFFÉRENT */}
-      <section className="py-32 px-6 bg-[#1A1C2E]/[0.02]">
-        <div className="max-w-4xl mx-auto space-y-16">
-          <motion.h2 {...fadeIn} className="text-4xl md:text-6xl font-serif font-bold text-center">
-            Ce n’est pas un horoscope de plus.
-          </motion.h2>
+      {/* 3. SECTION — POURQUOI C’EST DIFFÉRENT (HIGH CONTRAST) */}
+      <section className="py-40 px-6 bg-[#1A1C2E] text-white rounded-[100px] mx-4 md:mx-12 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[#C9A24D]/10 blur-[120px] rounded-full"></div>
+        
+        <div className="max-w-5xl mx-auto space-y-24 relative z-10">
+          <motion.div {...fadeIn} className="text-center space-y-6">
+            <h2 className="text-5xl md:text-8xl font-serif font-bold leading-tight">
+              Ce n’est pas un <br />
+              <span className="text-[#C9A24D] italic underline underline-offset-8 decoration-white/10">horoscope de plus.</span>
+            </h2>
+          </motion.div>
 
-          <div className="space-y-6">
+          <div className="grid gap-6">
             {[
               { text: "Ce n’est pas une prédiction", positive: false },
               { text: "Ce n’est pas un test de personnalité figé", positive: false },
@@ -168,13 +239,12 @@ export default function CrashTestLanding() {
               <motion.div 
                 key={i}
                 {...fadeIn}
-                transition={{ delay: i * 0.1 }}
-                className={`flex items-center gap-6 p-8 rounded-3xl border ${item.positive ? 'bg-white border-[#C9A24D] shadow-xl shadow-[#C9A24D]/5' : 'bg-white/50 border-[#1A1C2E]/5'}`}
+                className={`group flex items-center gap-8 p-10 rounded-[40px] border transition-all duration-500 ${item.positive ? 'bg-[#C9A24D] border-[#C9A24D] shadow-[0_30px_60px_-15px_rgba(201,162,77,0.3)]' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}
               >
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${item.positive ? 'bg-[#C9A24D] text-white' : 'bg-red-50 text-red-400'}`}>
-                  {item.positive ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${item.positive ? 'bg-white text-[#C9A24D]' : 'bg-white/10 text-white/30 group-hover:text-white/60 transition-colors'}`}>
+                  {item.positive ? <Check className="w-6 h-6 font-bold" /> : <X className="w-6 h-6" />}
                 </div>
-                <span className={`text-xl md:text-2xl ${item.positive ? 'font-bold text-[#1A1C2E]' : 'text-[#1A1C2E]/50'}`}>
+                <span className={`text-2xl md:text-4xl ${item.positive ? 'font-bold text-[#1A1C2E]' : 'text-white/40 group-hover:text-white/80 transition-colors'}`}>
                   {item.text}
                 </span>
               </motion.div>
@@ -183,107 +253,124 @@ export default function CrashTestLanding() {
         </div>
       </section>
 
-      {/* SECTION — CE QUE TU DÉCOUVRES */}
-      <section className="py-32 px-6 bg-white">
-        <div className="max-w-4xl mx-auto space-y-16">
-          <motion.h2 {...fadeIn} className="text-4xl md:text-6xl font-serif font-bold text-center">
-            Ce que révèle ton Crash-Test
-          </motion.h2>
-
-          <div className="grid gap-4">
-            {[
-              "Ton écart principal entre potentiel et fonctionnement réel",
-              "Ton style de réaction dominant face aux décisions",
-              "Ton frein invisible le plus fréquent",
-              "Une clé concrète pour réaligner les deux",
-              "Un plan simple sur 7 jours, sans jargon"
-            ].map((text, i) => (
-              <motion.div 
-                key={i}
-                {...fadeIn}
-                transition={{ delay: i * 0.1 }}
-                className="flex items-center gap-6 p-6 rounded-2xl bg-[#FDFBF7] border border-[#1A1C2E]/5"
-              >
-                <div className="w-2 h-2 rounded-full bg-[#C9A24D]"></div>
-                <span className="text-xl text-[#1A1C2E]/80 font-medium">{text}</span>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div {...fadeIn} className="text-center space-y-2 pt-8">
-            <p className="text-2xl font-serif font-bold">Pas de jugement. Pas d’étiquette.</p>
-            <p className="text-xl text-[#C9A24D] italic">Juste une lecture claire et exploitable.</p>
+      {/* 4. SECTION — CE QUE TU DÉCOUVRES (ELEGANT LIST) */}
+      <section className="py-40 px-6 bg-white">
+        <div className="max-w-4xl mx-auto space-y-24">
+          <motion.div {...fadeIn} className="text-center space-y-6">
+            <div className="text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.5em]">L'Output</div>
+            <h2 className="text-5xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Ce que révèle ton Crash-Test</h2>
           </motion.div>
-        </div>
-      </section>
 
-      {/* SECTION — LE FORMAT */}
-      <section className="py-32 px-6 bg-[#1A1C2E] text-white rounded-[60px] mx-4 md:mx-10 my-20">
-        <div className="max-w-5xl mx-auto space-y-20">
-          <motion.h2 {...fadeIn} className="text-4xl md:text-6xl font-serif font-bold text-center">
-            Ce que tu reçois
-          </motion.h2>
-
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className="space-y-4">
             {[
-              { title: "Un dossier personnalisé", desc: "Clair, structuré et complet.", icon: BookOpen },
-              { title: "Une vidéo explicative", desc: "6–7 minutes d'analyse profonde.", icon: Video },
-              { title: "Un plan d’ajustement", desc: "Simple, actionnable immédiatement.", icon: Compass }
+              { text: "Ton écart principal entre potentiel et fonctionnement réel", icon: Zap },
+              { text: "Ton style de réaction dominant face aux décisions", icon: Activity },
+              { text: "Ton frein invisible le plus fréquent", icon: Lock },
+              { text: "Une clé concrète pour réaligner les deux", icon: Sparkles },
+              { text: "Un plan simple sur 7 jours, sans jargon", icon: Compass }
             ].map((item, i) => (
               <motion.div 
                 key={i}
                 {...fadeIn}
-                transition={{ delay: i * 0.2 }}
-                className="text-center space-y-6"
+                transition={{ delay: i * 0.1 }}
+                className="group flex items-center gap-8 p-10 rounded-[40px] bg-[#FDFBF7] border border-[#1A1C2E]/5 hover:bg-white hover:shadow-xl transition-all duration-500"
               >
-                <div className="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center mx-auto border border-white/10 backdrop-blur-sm">
-                  <item.icon className="w-10 h-10 text-[#C9A24D]" />
+                <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-sm group-hover:bg-[#C9A24D] group-hover:text-white transition-all">
+                  <item.icon className="w-6 h-6" />
                 </div>
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-bold">{item.title}</h3>
-                  <p className="text-white/60 text-lg">{item.desc}</p>
+                <span className="text-2xl text-[#1A1C2E]/80 font-medium">{item.text}</span>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div {...fadeIn} className="text-center space-y-4 pt-10">
+            <div className="inline-block p-10 rounded-[60px] bg-[#FDFBF7] border border-[#1A1C2E]/5">
+              <p className="text-3xl font-serif font-bold mb-2">Pas de jugement. Pas d’étiquette.</p>
+              <p className="text-2xl text-[#C9A24D] italic font-medium">Juste une lecture claire et exploitable.</p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 5. SECTION — LE FORMAT (PREMIUM DELIVERABLES) */}
+      <section className="py-40 px-6 relative overflow-hidden bg-[#FDFBF7]">
+        <div className="max-w-6xl mx-auto space-y-24 relative z-10">
+          <motion.div {...fadeIn} className="text-center space-y-6">
+            <h2 className="text-5xl md:text-8xl font-serif font-bold">Ce que tu reçois</h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { title: "Dossier Personnalisé", desc: "Clair, structuré et complet.", icon: BookOpen, tag: "PDF 20+ pages" },
+              { title: "Vidéo Explicative", desc: "6–7 minutes d'analyse profonde.", icon: Video, tag: "Accès Privé" },
+              { title: "Plan d’Ajustement", desc: "Simple, actionnable immédiatement.", icon: Compass, tag: "Protocole 7 Jours" }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                {...fadeIn}
+                className="p-12 rounded-[60px] bg-white border border-[#1A1C2E]/5 shadow-sm hover:shadow-2xl transition-all duration-700 space-y-8 group"
+              >
+                <div className="w-20 h-20 bg-[#FDFBF7] rounded-[28px] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#C9A24D] group-hover:text-white transition-all duration-500">
+                  <item.icon className="w-10 h-10" />
+                </div>
+                <div className="space-y-4">
+                  <div className="text-[10px] font-black text-[#C9A24D] uppercase tracking-widest">{item.tag}</div>
+                  <h3 className="text-3xl font-serif font-bold">{item.title}</h3>
+                  <p className="text-[#1A1C2E]/50 text-xl leading-relaxed">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          <motion.p {...fadeIn} className="text-center text-2xl md:text-3xl font-serif italic text-white/80">
-            Tu ne lis pas ton destin. <br />
-            <span className="text-[#C9A24D]">Tu observes comment tu fonctionnes vraiment.</span>
-          </motion.p>
+          <motion.div {...fadeIn} className="text-center max-w-3xl mx-auto pt-20">
+            <p className="text-4xl md:text-5xl font-serif italic text-[#1A1C2E] leading-tight">
+              Tu ne lis pas ton destin. <br />
+              <span className="text-[#C9A24D] not-italic font-bold tracking-tight">Tu observes comment tu fonctionnes vraiment.</span>
+            </p>
+          </motion.div>
         </div>
       </section>
 
-      {/* SECTION — POUR QUI / POUR QUI PAS */}
-      <section className="py-32 px-6">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20">
-          <motion.div {...fadeIn} className="space-y-10">
-            <h3 className="text-3xl font-serif font-bold text-[#C9A24D]">C’est pour toi si :</h3>
-            <div className="space-y-6">
+      {/* 6. SECTION — POUR QUI / POUR QUI PAS (MINIMALIST) */}
+      <section className="py-40 px-6 bg-white border-y border-[#1A1C2E]/5">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-32">
+          <motion.div {...fadeIn} className="space-y-12">
+            <div className="space-y-4">
+              <h3 className="text-4xl font-serif font-bold text-[#C9A24D]">C’est pour toi si :</h3>
+              <div className="h-1 w-12 bg-[#C9A24D]/20"></div>
+            </div>
+            <div className="space-y-8">
               {[
                 "Tu es curieux(se) de te comprendre autrement",
                 "Tu aimes confronter les idées à la réalité",
                 "Tu veux arrêter de tourner en rond"
               ].map((text, i) => (
-                <div key={i} className="flex items-start gap-4">
-                  <Check className="w-6 h-6 text-[#C9A24D] shrink-0 mt-1" />
-                  <span className="text-xl text-[#1A1C2E]/80">{text}</span>
+                <div key={i} className="flex items-start gap-6 group">
+                  <div className="w-8 h-8 rounded-full bg-[#C9A24D]/10 flex items-center justify-center shrink-0 mt-1 group-hover:bg-[#C9A24D] group-hover:text-white transition-all">
+                    <Check className="w-5 h-5" />
+                  </div>
+                  <span className="text-2xl text-[#1A1C2E] font-medium leading-tight">{text}</span>
                 </div>
               ))}
             </div>
           </motion.div>
 
-          <motion.div {...fadeIn} className="space-y-10">
-            <h3 className="text-3xl font-serif font-bold text-[#1A1C2E]/40">Ce n’est pas pour toi si :</h3>
-            <div className="space-y-6">
+          <motion.div {...fadeIn} className="space-y-12">
+            <div className="space-y-4">
+              <h3 className="text-4xl font-serif font-bold text-[#1A1C2E]/30">Ce n’est pas pour toi si :</h3>
+              <div className="h-1 w-12 bg-[#1A1C2E]/10"></div>
+            </div>
+            <div className="space-y-8">
               {[
                 "Tu cherches une prédiction magique",
                 "Tu veux qu’on te dise qui tu es",
                 "Tu veux une réponse toute faite"
               ].map((text, i) => (
-                <div key={i} className="flex items-start gap-4">
-                  <X className="w-6 h-6 text-[#1A1C2E]/20 shrink-0 mt-1" />
-                  <span className="text-xl text-[#1A1C2E]/40">{text}</span>
+                <div key={i} className="flex items-start gap-6 text-[#1A1C2E]/30">
+                  <div className="w-8 h-8 rounded-full bg-[#1A1C2E]/5 flex items-center justify-center shrink-0 mt-1">
+                    <X className="w-5 h-5" />
+                  </div>
+                  <span className="text-2xl font-medium leading-tight">{text}</span>
                 </div>
               ))}
             </div>
@@ -291,15 +378,15 @@ export default function CrashTestLanding() {
         </div>
       </section>
 
-      {/* SECTION — CADRE & TRANSPARENCE */}
-      <section className="py-32 px-6 bg-white border-y border-[#1A1C2E]/5">
-        <div className="max-w-3xl mx-auto space-y-12">
-          <motion.div {...fadeIn} className="flex items-center gap-4 justify-center text-[#1A1C2E]/40">
-            <ShieldCheck className="w-6 h-6" />
-            <h3 className="text-xl font-black uppercase tracking-[0.2em]">Important à savoir</h3>
+      {/* 7. SECTION — CADRE & TRANSPARENCE (TRUST) */}
+      <section className="py-32 px-6 bg-[#FDFBF7]">
+        <div className="max-w-3xl mx-auto bg-white p-16 md:p-24 rounded-[80px] border border-[#1A1C2E]/5 shadow-2xl shadow-black/[0.02] space-y-16">
+          <motion.div {...fadeIn} className="flex items-center gap-4 justify-center text-[#1A1C2E]/30">
+            <ShieldCheck className="w-8 h-8" />
+            <h3 className="text-sm font-black uppercase tracking-[0.4em]">Cadre & Transparence</h3>
           </motion.div>
 
-          <div className="space-y-6">
+          <div className="grid gap-8">
             {[
               "Lecture symbolique + interactive",
               "Aucun diagnostic médical",
@@ -309,48 +396,63 @@ export default function CrashTestLanding() {
               <motion.div 
                 key={i}
                 {...fadeIn}
-                transition={{ delay: i * 0.1 }}
-                className="flex items-center gap-4 text-lg text-[#1A1C2E]/60"
+                className="flex items-center gap-6 text-xl text-[#1A1C2E]/50 font-medium"
               >
-                <div className="w-1.5 h-1.5 rounded-full bg-[#1A1C2E]/20"></div>
+                <div className="w-2 h-2 rounded-full bg-[#C9A24D]/30"></div>
                 <span>{text}</span>
               </motion.div>
             ))}
           </div>
 
-          <motion.div {...fadeIn} className="space-y-4 pt-6 text-center">
-            <p className="text-xl font-bold text-[#1A1C2E]">👉 Outil de compréhension personnelle, rien de plus.</p>
-            <p className="text-lg text-[#C9A24D] font-bold">👉 Et c’est déjà beaucoup.</p>
+          <motion.div {...fadeIn} className="space-y-6 pt-10 text-center border-t border-[#1A1C2E]/5">
+            <p className="text-2xl font-bold text-[#1A1C2E]">👉 Outil de compréhension personnelle, rien de plus.</p>
+            <p className="text-xl text-[#C9A24D] font-black uppercase tracking-widest">Et c’est déjà beaucoup.</p>
           </motion.div>
         </div>
       </section>
 
-      {/* CTA FINAL */}
-      <section className="py-40 px-6 text-center relative overflow-hidden">
+      {/* CTA FINAL (HIGH IMPACT) */}
+      <section className="py-60 px-6 text-center relative overflow-hidden bg-white">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(201,162,77,0.1),_transparent_70%)]"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(201,162,77,0.15),_transparent_70%)]"></div>
         </div>
 
-        <motion.div {...fadeIn} className="max-w-4xl mx-auto space-y-12 relative z-10">
-          <h2 className="text-4xl md:text-7xl font-serif font-bold">
-            Prêt à confronter ton potentiel à la réalité ?
+        <motion.div {...fadeIn} className="max-w-5xl mx-auto space-y-16 relative z-10">
+          <h2 className="text-6xl md:text-9xl font-serif font-bold text-[#1A1C2E] leading-[0.9]">
+            Prêt à confronter ton potentiel <br />
+            <span className="text-[#C9A24D] italic underline decoration-[#C9A24D]/20 underline-offset-[16px]">à la réalité ?</span>
           </h2>
 
-          <div className="space-y-8">
+          <div className="space-y-10 pt-10">
             <button 
               onClick={() => router.push('/miroir/experience')}
-              className="group relative inline-flex flex-col items-center gap-2 px-12 py-8 bg-[#C9A24D] text-white rounded-full font-bold shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95"
+              className="group relative inline-flex flex-col items-center gap-4 px-16 py-10 bg-[#1A1C2E] text-white rounded-[40px] shadow-[0_50px_100px_-20px_rgba(26,28,46,0.4)] hover:shadow-[#C9A24D]/40 transition-all duration-700 hover:scale-105 active:scale-95 overflow-hidden"
             >
-              <span className="text-2xl md:text-3xl">👉 Accéder à mon Crash-Test – 29 €</span>
-              <span className="text-xs uppercase tracking-[0.2em] opacity-80">Paiement sécurisé · Accès immédiat · Expérience unique</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <span className="text-3xl md:text-5xl font-bold relative z-10">👉 Accéder à mon Crash-Test</span>
+              <div className="flex items-center gap-4 relative z-10">
+                <span className="text-4xl md:text-6xl font-serif italic text-[#C9A24D]">29 €</span>
+                <div className="h-8 w-px bg-white/20"></div>
+                <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] opacity-60 text-left">Paiement sécurisé <br /> Accès immédiat</span>
+              </div>
             </button>
+            <p className="text-[#1A1C2E]/40 text-sm font-bold uppercase tracking-[0.4em]">Expérience Unique · Révélation Immédiate</p>
           </div>
         </motion.div>
       </section>
 
       {/* FOOTER */}
-      <footer className="py-10 px-6 border-t border-[#1A1C2E]/5 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-[#1A1C2E]/20">
-        © {new Date().getFullYear()} MIROIR PSYCHOLOGIQUE · LE CRASH-TEST DU DESTIN
+      <footer className="py-20 px-6 bg-[#FDFBF7] border-t border-[#1A1C2E]/5 text-center space-y-8">
+        <div className="flex items-center justify-center gap-4 text-[#C9A24D]">
+          <Zap className="w-6 h-6" />
+          <div className="h-4 w-px bg-[#1A1C2E]/10"></div>
+          <Fingerprint className="w-6 h-6" />
+          <div className="h-4 w-px bg-[#1A1C2E]/10"></div>
+          <Activity className="w-6 h-6" />
+        </div>
+        <div className="text-[11px] font-black uppercase tracking-[0.5em] text-[#1A1C2E]/20">
+          © {new Date().getFullYear()} MIROIR PSYCHOLOGIQUE · LE CRASH-TEST DU DESTIN
+        </div>
       </footer>
 
     </div>

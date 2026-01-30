@@ -50,6 +50,8 @@ export interface PsyMirrorResult {
     title: string;
     potential: string;
     moon: string;
+    firstName?: string;
+    lastName?: string;
   };
   self_profile: ProfileScores;
   behavior_profile: ProfileScores;

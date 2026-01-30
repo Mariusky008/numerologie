@@ -34,6 +34,34 @@ export default function ExperiencePsyMirror() {
   const [moduleBAnswers, setModuleBAnswers] = useState<Option[]>([]);
   const [reflexResults, setReflexResults] = useState<any>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [userData, setUserData] = useState<any>(null);
+
+  useEffect(() => {
+    // Check if we have data from the Astro landing page
+    const savedCosmicData = localStorage.getItem('cosmic_user_data');
+    if (savedCosmicData) {
+      try {
+        const parsed = JSON.parse(savedCosmicData);
+        setUserData(parsed);
+        if (parsed.birthDate) {
+          setBirthDate(parsed.birthDate);
+          const pathNum = calculateLifePathNumber(parsed.birthDate);
+          const pathData = getLifePathData(pathNum);
+          const moonData = getMoonSign(parsed.birthDate);
+          setCosmicData({ 
+            pathNum, 
+            ...pathData, 
+            moon: moonData.name, 
+            moon_element: moonData.element,
+            firstName: parsed.firstName,
+            lastName: parsed.lastName
+          });
+        }
+      } catch (e) {
+        console.error("Error parsing cosmic data", e);
+      }
+    }
+  }, []);
 
   const loadingSteps = [
     "Analyse de l'intention consciente (Module A)...",
@@ -46,7 +74,11 @@ export default function ExperiencePsyMirror() {
 
   // --- Intro & Cosmic Identity ---
   const handleIntroStart = () => {
-    setStep('birthDate');
+    if (userData && userData.birthDate) {
+      setStep('cosmicReveal');
+    } else {
+      setStep('birthDate');
+    }
   };
 
   const handleBirthDateSubmit = (e: React.FormEvent) => {

@@ -43,12 +43,18 @@ function HomeContent() {
     setHasStarted(true);
   };
 
+  const handleOnboardingComplete = (data: UserData) => {
+    // Save to localStorage for other experiences (PsyMirror)
+    localStorage.setItem('cosmic_user_data', JSON.stringify(data));
+    setUserData(data);
+  };
+
   return (
     <main className="min-h-screen bg-[#FAF9F7] text-[#2C2F4A]">
       {!hasStarted ? (
         <LandingPageHero onStart={handleStart} />
       ) : !userData ? (
-        <OnboardingFlow onComplete={setUserData} />
+        <OnboardingFlow onComplete={handleOnboardingComplete} />
       ) : (
         <ReportView userData={userData} />
       )}

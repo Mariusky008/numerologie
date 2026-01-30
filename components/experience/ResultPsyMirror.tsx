@@ -73,7 +73,7 @@ export default function ResultPsyMirror() {
           </div>
           
           <h1 className="text-5xl md:text-8xl font-serif font-bold tracking-tight leading-[1.1] text-[#1A1C2E]">
-            Voici ton <span className="italic text-[#C9A24D]">vrai</span> reflet.
+            {result.cosmic_data?.firstName ? `Voici ton reflet, ${result.cosmic_data.firstName}.` : "Voici ton vrai reflet."}
           </h1>
 
           <div className="bg-white border border-[#1A1C2E]/5 p-8 md:p-14 rounded-[60px] shadow-[0_40px_100px_-20px_rgba(26,28,46,0.08)] relative group max-w-4xl mx-auto">

@@ -22,7 +22,6 @@ import {
   ArrowDown
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import CrashTestAnimation from '@/components/experience/CrashTestAnimation';
 
 export default function CrashTestLanding() {
   const router = useRouter();
@@ -113,12 +112,6 @@ export default function CrashTestLanding() {
             <p>
               Ton potentiel correspond-il à tes choix réels ?
             </p>
-
-            {/* ANIMATION HERO */}
-            <div className="py-4">
-              <CrashTestAnimation />
-            </div>
-
             <div className="p-8 bg-white/50 backdrop-blur-md border border-[#1A1C2E]/5 rounded-[40px] shadow-2xl shadow-black/5 space-y-4">
               <p className="text-lg">
                 Nous comparons ton profil symbolique <br />

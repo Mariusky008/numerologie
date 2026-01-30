@@ -115,13 +115,13 @@ export default function CrashTestLanding() {
             className="space-y-8 text-xl md:text-2xl text-[#1A1C2E]/60 font-normal leading-relaxed max-w-2xl mx-auto"
           >
             <p>
-              Ton potentiel correspond-il à tes choix réels ?
+              Vis-tu vraiment ce pour quoi tu es né ?
             </p>
             <div className="p-8 bg-white/50 backdrop-blur-md border border-[#1A1C2E]/5 rounded-[40px] shadow-2xl shadow-black/5 space-y-4">
               <p className="text-lg">
-                Nous comparons ton profil symbolique <br />
+                Nous comparons ce que ta date de naissance révèle de ton potentiel <br />
                 <span className="text-[#1A1C2E] font-bold uppercase tracking-widest text-xs">(astrologie & numérologie)</span> <br />
-                avec tes réactions réelles face aux choix.
+                avec la façon dont tu prends réellement tes décisions aujourd’hui.
               </p>
               <div className="h-px w-12 bg-[#C9A24D]/30 mx-auto"></div>
               <p className="text-[#C9A24D] font-bold text-2xl">

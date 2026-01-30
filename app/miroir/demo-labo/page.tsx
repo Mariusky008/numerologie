@@ -90,8 +90,37 @@ export default function DemoLaboPage() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(201,162,77,0.05),_transparent_70%)]"></div>
           </div>
           
-          <div className="max-w-4xl mx-auto relative z-10 text-center space-y-16">
-            <div className="space-y-6">
+          <div className="max-w-6xl mx-auto relative z-10 space-y-24">
+            {/* THE PROTOCOL / RULES OF THE GAME */}
+            <div className="bg-[#1A1C2E]/[0.02] border border-[#1A1C2E]/5 rounded-[40px] p-8 md:p-12">
+              <div className="flex flex-col md:flex-row gap-10 items-start">
+                <div className="flex-1 space-y-6">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#5B4B8A]/10 text-[#5B4B8A] text-[10px] font-black uppercase tracking-widest">
+                    Le Protocole
+                  </div>
+                  <h3 className="text-3xl font-serif font-bold text-[#1A1C2E]">Comprendre les règles de ton analyse</h3>
+                  <p className="text-lg text-[#1A1C2E]/70 leading-relaxed">
+                    Ton score d'alignement n'est pas une note de performance. C'est la mesure de la cohérence entre trois forces qui dirigent ta vie :
+                  </p>
+                </div>
+                <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { title: "Identité Astro", desc: "Ton potentiel de naissance (Tes Astres)", icon: Star, color: "text-[#C9A24D]" },
+                    { title: "Réalité Bio", desc: "Tes réflexes instinctifs (Le Labo)", icon: Activity, color: "text-[#1A1C2E]" },
+                    { title: "Ton Idéal", desc: "Ce que tu crois être (Tes Réponses)", icon: Eye, color: "text-[#5B4B8A]" },
+                    { title: "L'Alignement", desc: "Le match entre ces 3 forces", icon: Zap, color: "text-[#C9A24D]" }
+                  ].map((item, i) => (
+                    <div key={i} className="bg-white p-5 rounded-3xl border border-[#1A1C2E]/5 shadow-sm space-y-2">
+                      <item.icon className={`w-5 h-5 ${item.color}`} />
+                      <div className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]">{item.title}</div>
+                      <div className="text-[11px] text-[#1A1C2E]/60 font-medium leading-tight">{item.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center space-y-6">
               <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#C9A24D]/10 border border-[#C9A24D]/20 text-[#C9A24D] text-[10px] font-bold uppercase tracking-[0.4em]">
                 <Star className="w-4 h-4" />
                 Dissonance de Destinée
@@ -102,57 +131,71 @@ export default function DemoLaboPage() {
               </h2>
             </div>
 
-            <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20 justify-center">
-              <div className="relative w-64 h-64 md:w-96 md:h-96 flex items-center justify-center">
+            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 justify-center">
+              {/* Cosmic Venn Diagram */}
+              <div className="relative w-72 h-72 md:w-[450px] md:h-[450px] flex items-center justify-center">
+                {/* Background Glow */}
+                <div className="absolute inset-0 bg-[#C9A24D]/5 blur-[100px] rounded-full"></div>
+
+                {/* Intent Circle (Module A) - Small & Faded */}
                 <motion.div 
                   animate={{ scale: [1, 1.03, 1], x: [0, 5, -5, 0] }}
                   transition={{ duration: 10, repeat: Infinity }}
-                  className="absolute w-40 h-40 md:w-56 md:h-56 rounded-full border border-dashed border-[#1A1C2E]/30 -translate-y-20 flex items-center justify-center opacity-40"
+                  className="absolute w-40 h-40 md:w-56 md:h-56 rounded-full border border-dashed border-[#1A1C2E]/20 -translate-y-24 flex flex-col items-center justify-center opacity-30"
                 >
-                  <div className="text-[8px] font-bold text-[#1A1C2E]/60 uppercase tracking-widest mt-12 text-center px-4">
-                    Intention <br /> ({result.insights.cosmic_alignment.intentElement})
+                  <div className="text-[7px] font-black text-[#1A1C2E] uppercase tracking-[0.2em] mb-1">Ton Idéal</div>
+                  <div className="text-[9px] font-bold text-[#1A1C2E]/60 uppercase tracking-widest text-center px-4">
+                    {result.insights.cosmic_alignment.intentElement}
                   </div>
                 </motion.div>
 
+                {/* Birth Nature Circle */}
                 <motion.div 
                   animate={{ scale: [1, 1.05, 1], rotate: [0, 5, -5, 0] }}
                   transition={{ duration: 8, repeat: Infinity }}
-                  className="absolute w-56 h-56 md:w-72 md:h-72 rounded-full bg-[#C9A24D]/20 border-2 border-[#C9A24D]/40 backdrop-blur-sm -translate-x-12 flex items-center justify-center overflow-hidden shadow-2xl shadow-[#C9A24D]/10"
+                  className="absolute w-64 h-64 md:w-80 md:h-80 rounded-full bg-[#C9A24D]/10 border-2 border-[#C9A24D]/30 backdrop-blur-sm -translate-x-16 flex flex-col items-center justify-center overflow-hidden shadow-2xl shadow-[#C9A24D]/10 group"
                 >
-                  <div className="absolute inset-0 opacity-20">
+                  <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
                     {result.insights.cosmic_alignment.astroElement === 'Feu' && <Flame className="w-full h-full text-[#C9A24D]" />}
                     {result.insights.cosmic_alignment.astroElement === 'Eau' && <Droplets className="w-full h-full text-[#C9A24D]" />}
                     {result.insights.cosmic_alignment.astroElement === 'Air' && <Wind className="w-full h-full text-[#C9A24D]" />}
                     {result.insights.cosmic_alignment.astroElement === 'Terre' && <Mountain className="w-full h-full text-[#C9A24D]" />}
                   </div>
-                  <div className="relative z-10 text-[10px] font-bold text-[#C9A24D] uppercase tracking-widest mt-24">
-                    Nature {result.insights.cosmic_alignment.astroElement}
+                  <div className="relative z-10 text-[9px] font-black text-[#C9A24D] uppercase tracking-[0.3em] mb-2">Identité de Naissance</div>
+                  <div className="relative z-10 text-2xl font-serif font-bold text-[#C9A24D]">
+                    {result.insights.cosmic_alignment.astroElement}
                   </div>
                 </motion.div>
 
+                {/* Bio Reality Circle */}
                 <motion.div 
                   animate={{ scale: [1, 1.02, 1], rotate: [0, -3, 3, 0] }}
                   transition={{ duration: 6, repeat: Infinity }}
-                  className="absolute w-56 h-56 md:w-72 md:h-72 rounded-full bg-[#1A1C2E]/10 border-2 border-[#1A1C2E]/20 backdrop-blur-sm translate-x-12 flex items-center justify-center overflow-hidden shadow-2xl shadow-[#1A1C2E]/5"
+                  className="absolute w-64 h-64 md:w-80 md:h-80 rounded-full bg-[#1A1C2E]/5 border-2 border-[#1A1C2E]/10 backdrop-blur-sm translate-x-16 flex flex-col items-center justify-center overflow-hidden shadow-2xl shadow-[#1A1C2E]/5 group"
                 >
-                  <div className="absolute inset-0 opacity-20">
+                  <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
                     {result.insights.cosmic_alignment.bioElement === 'Feu' && <Flame className="w-full h-full text-[#1A1C2E]" />}
                     {result.insights.cosmic_alignment.bioElement === 'Glace' && <Snowflake className="w-full h-full text-[#1A1C2E]" />}
                     {result.insights.cosmic_alignment.bioElement === 'Air' && <Wind className="w-full h-full text-[#1A1C2E]" />}
                     {result.insights.cosmic_alignment.bioElement === 'Terre' && <Mountain className="w-full h-full text-[#1A1C2E]" />}
                   </div>
-                  <div className="relative z-10 text-[10px] font-bold text-[#1A1C2E] uppercase tracking-widest mt-24">
-                    Réflexe {result.insights.cosmic_alignment.bioElement}
+                  <div className="relative z-10 text-[9px] font-black text-[#1A1C2E]/60 uppercase tracking-[0.3em] mb-2">Réalité Biologique</div>
+                  <div className="relative z-10 text-2xl font-serif font-bold text-[#1A1C2E]">
+                    {result.insights.cosmic_alignment.bioElement}
                   </div>
                 </motion.div>
                 
-                <div className="relative z-20 text-6xl md:text-8xl font-black text-[#1A1C2E] drop-shadow-sm">
-                  {result.insights.cosmic_alignment.score}%
+                {/* Score Intersection */}
+                <div className="relative z-20 flex flex-col items-center bg-white/80 backdrop-blur-md px-8 py-4 rounded-3xl border border-[#C9A24D]/20 shadow-xl">
+                  <div className="text-[10px] font-black text-[#C9A24D] uppercase tracking-[0.4em] mb-1">Alignement</div>
+                  <div className="text-5xl md:text-7xl font-black text-[#1A1C2E]">
+                    {result.insights.cosmic_alignment.score}%
+                  </div>
                 </div>
               </div>
 
-              <div className="flex-1 text-left space-y-8">
-                <div className="p-10 rounded-[50px] bg-white border border-[#1A1C2E]/5 shadow-xl space-y-6">
+              <div className="flex-1 text-left space-y-6">
+                <div className="p-8 md:p-12 rounded-[50px] bg-white border border-[#1A1C2E]/5 shadow-xl space-y-8">
                   <div className="flex items-center gap-4 border-b border-[#1A1C2E]/5 pb-6">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center ${result.insights.cosmic_alignment.score > 70 ? 'bg-green-100 text-green-600' : 'bg-red-50 text-red-500'}`}>
                       {result.insights.cosmic_alignment.score > 70 ? <CheckCircle2 className="w-6 h-6" /> : <Zap className="w-6 h-6" />}
@@ -162,17 +205,41 @@ export default function DemoLaboPage() {
                     </h4>
                   </div>
                   
-                  <div className="space-y-6">
-                    <p className="text-2xl leading-relaxed text-[#1A1C2E] font-medium">
-                      {result.insights.cosmic_alignment.text}
-                    </p>
-                    <div className="text-[#1A1C2E]/70 leading-relaxed text-lg font-normal space-y-4 whitespace-pre-line">
-                      {result.insights.cosmic_alignment.details?.split('\n\n').map((para: string, i: number) => (
-                        <p key={i} className={para.startsWith('**') ? "font-bold text-[#C9A24D]" : ""}>
-                          {para}
-                        </p>
-                      ))}
+                  <div className="space-y-8">
+                    <div className="space-y-4">
+                      <p className="text-2xl leading-relaxed text-[#1A1C2E] font-medium">
+                        {result.insights.cosmic_alignment.text}
+                      </p>
+                      <p className="text-[#1A1C2E]/70 leading-relaxed text-lg font-normal italic">
+                        {result.insights.cosmic_alignment.details?.split('\n\n')[0]}
+                      </p>
                     </div>
+
+                    {/* WHY Section */}
+                    {result.insights.cosmic_alignment.origin && (
+                      <div className="p-6 bg-[#FDFBF7] border-l-4 border-[#C9A24D] rounded-r-3xl space-y-2">
+                        <div className="text-[10px] font-black text-[#C9A24D] uppercase tracking-widest">D'où vient cette dissonance ?</div>
+                        <p className="text-[#1A1C2E] text-lg leading-relaxed font-normal">
+                          {result.insights.cosmic_alignment.origin}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* REMEDY Section */}
+                    {result.insights.cosmic_alignment.remedy && (
+                      <div className="p-6 bg-[#5B4B8A]/5 border-l-4 border-[#5B4B8A] rounded-r-3xl space-y-2">
+                        <div className="text-[10px] font-black text-[#5B4B8A] uppercase tracking-widest">Comment y remédier ?</div>
+                        <p className="text-[#1A1C2E] text-lg leading-relaxed font-normal">
+                          {result.insights.cosmic_alignment.remedy}
+                        </p>
+                      </div>
+                    )}
+
+                    {result.insights.cosmic_alignment.details?.includes('**Note de Dissonance') && (
+                      <div className="text-[#C9A24D] text-sm font-bold bg-[#C9A24D]/5 p-4 rounded-2xl border border-[#C9A24D]/10">
+                        {result.insights.cosmic_alignment.details.split('**Note de Dissonance :**')[1]}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

@@ -361,6 +361,8 @@ function generateCosmicAlignment(cosmic: any, behavior: ProfileScores, self: Pro
   let text = "";
   let title = "";
   let details = "";
+  let origin = "";
+  let remedy = "";
 
   const astroElement = cosmic.moon_element;
   
@@ -369,16 +371,22 @@ function generateCosmicAlignment(cosmic: any, behavior: ProfileScores, self: Pro
     if (bioElement === "Glace") {
       title = "Extinction Vitale";
       text = `Ton empreinte cosmique est celle du **Feu**, mais tes réflexes de laboratoire révèlent de la **Glace**.`;
-      details = `Tu es né pour briller et diriger, mais ton système nerveux a mémorisé des mécanismes de retrait. Ce conflit crée une fatigue immense : tu essaies de rugir, mais ton corps freine chaque impulsion. Tes réponses au questionnaire montrent que tu te crois ${getDimensionLabel(keyDim, selfScore)}, alors que ton corps est déjà en mode survie.`;
+      origin = "Cette dissonance vient d'un mécanisme de survie ancien : pour te protéger d'un environnement perçu comme instable, tu as appris à 'geler' ton enthousiasme naturel. Ton Feu est toujours là, mais il est enfermé derrière une armure de glace émotionnelle.";
+      remedy = "Pratique le 'dégel' progressif : autorise-toi des micro-décisions impulsives (moins de 2 secondes) sur des sujets sans enjeu pour réveiller ta réactivité biologique.";
+      details = `Tu es né pour briller et diriger, mais ton système nerveux a mémorisé des mécanismes de retrait. Ce conflit crée une fatigue immense : tu essaies de rugir, mais ton corps freine chaque impulsion.`;
       score = 35;
     } else if (bioElement === "Feu") {
       title = "Fusion Solaire";
       text = "Ton énergie vitale est en parfaite harmonie avec ton empreinte de naissance.";
-      details = "C'est un alignement rare. Tes réflexes instinctifs servent directement ta destinée de leader. Tu n'as pas besoin de forcer, tu es simplement dans ton élément. Le monde te perçoit exactement comme tu es : une force de propulsion pure.";
+      origin = "Ton éducation et ton parcours ont respecté ta nature profonde. Tu n'as pas eu à créer de faux-self biologique pour survivre.";
+      remedy = "Canalise cette puissance brute vers des objectifs de haute altitude. Ta seule limite est l'absence de direction.";
+      details = "C'est un alignement rare. Tes réflexes instinctifs servent directement ta destinée de leader. Tu n'as pas besoin de forcer, tu es simplement dans ton élément.";
       score = 95;
     } else {
       title = "Combustion Interne";
       text = `Ton Feu intérieur est canalisé par une nature de ${bioElement}.`;
+      origin = "Tu as appris à tempérer ton ardeur pour mieux t'intégrer socialement. C'est une adaptation réussie, mais parfois frustrante.";
+      remedy = "Réserve-toi des espaces de liberté totale où tu peux agir sans filtre élémentaire.";
       details = `Ton potentiel de Feu est bien présent, mais il est filtré par tes mécanismes de ${bioElement}. Tu es plus efficace que la moyenne, mais tu n'exploites pas encore la pleine puissance de ton charisme cosmique.`;
       score = 65;
     }
@@ -386,29 +394,39 @@ function generateCosmicAlignment(cosmic: any, behavior: ProfileScores, self: Pro
      if (bioElement === "Feu") {
       title = "Vapeur de Stress";
       text = "Ton Eau émotionnelle s'évapore sous la chaleur de tes réflexes impulsifs.";
-      details = "Tu es une nature intuitive et profonde (Eau), mais tes réflexes de laboratoire montrent une impulsivité (Feu) qui crée une tension permanente. Tu agis avant de ressentir, ce qui te déconnecte de ta boussole intérieure.";
+      origin = "Une urgence de performance a pris le pas sur ton écoute intérieure. Tu as appris que 'faire' était plus sûr que 'ressentir'.";
+      remedy = "Installe des rituels de 'refroidissement' : 5 minutes de silence avant chaque passage à l'action pour laisser ton intuition remonter à la surface.";
+      details = "Tu es une nature intuitive et profonde (Eau), mais tes réflexes de laboratoire montrent une impulsivité (Feu) qui crée une tension permanente.";
       score = 45;
     } else if (bioElement === "Glace") {
       title = "Cristallisation Protectrice";
       text = "Ton Eau s'est figée en Glace pour ne plus ressentir la douleur du monde.";
-      details = "Ta nature sensible est devenue une forteresse. Tes réflexes de contrôle absolu étouffent ton intuition. Tu es devenu efficace, mais au prix de ta joie de vivre et de ta créativité naturelle.";
+      origin = "Ta grande sensibilité a été perçue comme une vulnérabilité. La Glace est devenue ton bouclier, transformant ton intuition en contrôle rigide.";
+      remedy = "Le mouvement corporel fluide (danse, natation) aide à casser cette rigidité nerveuse et à libérer ton flux créatif.";
+      details = "Ta nature sensible est devenue une forteresse. Tes réflexes de contrôle absolu étouffent ton intuition.";
       score = 40;
     } else {
       title = "Flux de Sagesse";
       text = "Ton Eau coule avec la force tranquille de ton ancrage naturel.";
-      details = "Tu as réussi à préserver ta nature intuitive tout en développant des réflexes sains. Ton alignement est solide, tu navigues dans les crises avec une sérénité qui impressionne ton entourage.";
+      origin = "Tu as su cultiver ton jardin intérieur tout en restant opérationnel. Ton alignement est le fruit d'une grande maturité émotionnelle.";
+      remedy = "Deviens un guide pour les autres : ta capacité à rester fluide dans le chaos est une ressource rare.";
+      details = "Tu as réussi à préserver ta nature intuitive tout en développant des réflexes sains.";
       score = 85;
     }
   } else if (astroElement === "Air") {
     if (bioElement === "Terre") {
       title = "Enclume Céleste";
       text = "Ton esprit d'Air est cloué au sol par des réflexes de Terre trop lourds.";
-      details = "Tu devrais voler, explorer, innover. Mais tes réflexes montrent un besoin de sécurité et de lenteur qui t'enchaîne. Tu penses être libre, mais ton corps cherche désespérément un sol ferme qui n'existe pas dans ta destinée.";
+      origin = "Tu as probablement grandi dans un cadre où l'on valorisait uniquement le 'concret' et le 'solide', t'obligeant à alourdir ta légèreté naturelle pour être pris au sérieux.";
+      remedy = "Reconnecte-toi à l'éphémère. Pratique des activités qui demandent de l'improvisation pure et sans trace durable.";
+      details = "Tu devrais voler, explorer, innover. Mais tes réflexes montrent un besoin de sécurité et de lenteur qui t'enchaîne.";
       score = 50;
     } else {
       title = "Souffle Inspiré";
       text = `Ton Air circule librement à travers ta structure de ${bioElement}.`;
-      details = "Tu as trouvé le bon équilibre entre ton besoin de liberté et tes réflexes opérationnels. Tu es capable de changer de direction sans perdre ton énergie vitale.";
+      origin = "Ta curiosité a été ton moteur et tu n'as jamais laissé la peur de l'échec brider ton agilité.";
+      remedy = "Nourris ton besoin de nouveauté constante pour éviter la stagnation, qui est le seul vrai danger pour toi.";
+      details = "Tu as trouvé le bon équilibre entre ton besoin de liberté et tes réflexes opérationnels.";
       score = 80;
     }
   } else {
@@ -416,22 +434,26 @@ function generateCosmicAlignment(cosmic: any, behavior: ProfileScores, self: Pro
     if (bioElement === "Air") {
       title = "Érosion Volatile";
       text = "Ta fondation de Terre s'effrite sous l'agitation de tes réflexes d'Air.";
-      details = "Tu es né pour bâtir (Terre), mais tes réflexes montrent une dispersion qui t'empêche de finir ce que tu commences. Tu t'épuises dans le mouvement alors que ta force réside dans l'immobilité et la structure.";
+      origin = "L'accélération du monde moderne a fragmenté ta capacité naturelle de bâtisseur. Tu as adopté une agitation nerveuse qui ne te ressemble pas.";
+      remedy = "Reviens à la matière. Le travail manuel ou le contact direct avec la nature t'aideront à retrouver ta solidité originelle.";
+      details = "Tu es né pour bâtir (Terre), mais tes réflexes montrent une dispersion qui t'empêche de finir ce que tu commences.";
       score = 55;
     } else {
       title = "Ancrage Souverain";
       text = "Ta Terre est le socle indestructible de ta destinée.";
-      details = "Tu es parfaitement aligné. Tes réflexes de laboratoire confirment ta solidité naturelle. Tu es le bâtisseur que ta numérologie a prévu, capable de porter des projets immenses sur tes épaules.";
+      origin = "Ton ancrage est ta plus grande force. Tu as su résister aux distractions pour construire des fondations inébranlables.";
+      remedy = "Attention à ne pas devenir trop rigide. Ta solidité doit rester fertile, pas devenir de la pierre morte.";
+      details = "Tu es parfaitement aligné. Tes réflexes de laboratoire confirment ta solidité naturelle.";
       score = 92;
     }
   }
 
   // Final check: comparison with self-perception (Module A)
   if (Math.abs(selfScore - behaviorScore) > 30) {
-    details += `\n\n**Note de Dissonance :** Tes réponses au questionnaire montrent que tu te vois comme quelqu'un de ${getDimensionLabel(keyDim, selfScore)}, mais ton corps agit comme quelqu'un de ${getDimensionLabel(keyDim, behaviorScore)}. Ce "mensonge inconscient" que tu te racontes est le premier verrou à faire sauter pour retrouver ton alignement.`;
+    details += `\n\n**Note de Dissonance :** Tes réponses au questionnaire montrent que tu te vois comme quelqu'un de ${getDimensionLabel(keyDim, selfScore)}, mais ton corps agit comme quelqu'un de ${getDimensionLabel(keyDim, behaviorScore)}.`;
   }
 
-  return { title, text, score, astroElement, bioElement, details, intentElement };
+  return { title, text, score, astroElement, bioElement, details, intentElement, origin, remedy };
 }
 
 /**

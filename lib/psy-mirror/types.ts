@@ -99,6 +99,8 @@ export interface PsyMirrorResult {
       bioElement: string;
       details?: string;
       intentElement?: string;
+      origin?: string;
+      remedy?: string;
     };
   };
   report_sections: {

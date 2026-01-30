@@ -62,7 +62,9 @@ export const mockDemoResult: PsyMirrorResult = {
       astroElement: 'Air',
       bioElement: 'Terre',
       intentElement: 'Feu',
-      details: "**Dissonance Détectée**\n\nTes astres te poussent vers la fluidité et l'échange (Air), mais ton corps réagit avec la lourdeur et la méfiance de la Terre.\n\n**Note de l'Expert**\nCe décalage de 58% explique pourquoi tu te sens souvent 'bloqué' dans des situations où tu devrais briller par ta répartie. Ton intelligence est rapide, mais ton système nerveux est en mode 'sécurité maximale'."
+      origin: "Cette dissonance provient d'une adaptation forcée durant ton parcours : pour réussir dans un environnement exigeant une fiabilité absolue, tu as 'alourdi' ton agilité naturelle par des mécanismes de contrôle Terre. Ton corps a appris à privilégier la sécurité sur l'exploration.",
+      remedy: "Pour retrouver ton souffle, pratique des exercices de 'micro-pivots' : change une habitude sans réfléchir 5 fois par jour. Cela va fluidifier tes connexions nerveuses et redonner de la place à ton élément Air.",
+      details: "**Dissonance Détectée**\n\nTes astres te poussent vers la fluidité et l'échange (Air), mais ton corps réagit avec la lourdeur et la méfiance de la Terre.\n\n**Note de Dissonance :** Tes réponses au questionnaire montrent que tu te vois comme quelqu'un de Feu (Action), mais ton corps agit avec la lenteur de la Terre."
     }
   },
   report_sections: [],

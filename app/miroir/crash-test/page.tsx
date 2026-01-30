@@ -110,8 +110,7 @@ export default function CrashTestLanding() {
             className="space-y-8 text-xl md:text-2xl text-[#1A1C2E]/60 font-normal leading-relaxed max-w-2xl mx-auto"
           >
             <p>
-              Tu connais ton potentiel. <br />
-              <span className="text-[#1A1C2E] font-medium italic">Mais est-ce vraiment comme ça que tu fonctionnes ?</span>
+              Ton potentiel correspond-il à tes choix réels ?
             </p>
             <div className="p-8 bg-white/50 backdrop-blur-md border border-[#1A1C2E]/5 rounded-[40px] shadow-2xl shadow-black/5 space-y-4">
               <p className="text-lg">

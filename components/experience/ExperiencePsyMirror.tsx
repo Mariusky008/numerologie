@@ -297,7 +297,7 @@ export default function ExperiencePsyMirror() {
             <div className="space-y-4">
               <h1 className="text-3xl font-bold tracking-tight">Prêt à voir votre reflet ?</h1>
               <p className="text-[#1A1C2E]/60 leading-relaxed">
-                Cette expérience dure environ 15 à 20 minutes. Elle se compose de deux parties : vos croyances conscientes, puis vos réactions face à des scénarios réels.
+                Cette expérience dure environ 15 à 20 minutes. Elle se compose de deux parties : ce que tu penses de toi, puis la façon dont tu réagis réellement.
               </p>
             </div>
             <div className="space-y-4">

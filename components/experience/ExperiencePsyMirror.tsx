@@ -490,20 +490,26 @@ export default function ExperiencePsyMirror() {
             </div>
 
             <div className="space-y-8">
-              <div className="p-8 md:p-12 bg-white/50 backdrop-blur-md border border-[#1A1C2E]/5 rounded-[40px] space-y-6 shadow-sm">
+              <div className="p-8 md:p-12 bg-white/50 backdrop-blur-md border border-[#1A1C2E]/5 rounded-[40px] space-y-6 shadow-sm text-left">
                 <p className="text-[#1A1C2E]/80 text-xl font-medium leading-relaxed">
-                  Maintenant que nous avons ta première base...
+                  Maintenant que nous avons une première base,
                 </p>
-                <div className="h-px w-12 bg-[#C9A24D]/30 mx-auto"></div>
-                <p className="text-[#1A1C2E]/60 text-lg leading-relaxed italic">
-                  "Comparons ce que ta date de naissance révèle de ton potentiel <br className="hidden md:block" />
-                  <span className="text-[#1A1C2E] font-bold not-italic">(astrologie & numérologie)</span> <br className="hidden md:block" />
-                  avec la façon dont tu prends réellement tes décisions aujourd’hui."
-                </p>
-                <p className="text-[#1A1C2E]/70 text-base leading-relaxed">
-                  Pour ce faire, tu vas passer par le <span className="font-bold text-[#C9A24D]">Laboratoire des Réflexes</span>. <br />
-                  Nous aurons ensuite l'explication de ce qui te bloque et t'empêche d'avancer sereinement.
-                </p>
+                <div className="h-px w-12 bg-[#C9A24D]/30"></div>
+                <div className="space-y-4 text-[#1A1C2E]/70 text-lg leading-relaxed">
+                  <p>
+                    nous allons comparer ce que ta date de naissance révèle de ton potentiel de départ <br className="hidden md:block" />
+                    <span className="text-[#1A1C2E] font-bold">(numérologie et astrologie)</span> <br className="hidden md:block" />
+                    avec la manière dont tu prends tes décisions aujourd’hui.
+                  </p>
+                  <p>
+                    Pour cela, tu vas passer par le <span className="font-bold text-[#C9A24D]">Laboratoire des Réflexes et psychologique</span>.
+                  </p>
+                  <p className="italic">
+                    Cette étape permet d’observer certains automatismes <br className="hidden md:block" />
+                    et de mieux comprendre les zones de tension ou d’incohérence <br className="hidden md:block" />
+                    qui peuvent apparaître dans ton parcours.
+                  </p>
+                </div>
               </div>
               
               <button 

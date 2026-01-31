@@ -117,3 +117,21 @@ export function getAscendant(birthTime: string) {
   const index = Math.floor(hour / 2);
   return signs[index % 12];
 }
+
+export function getChartMaster(ascendant: string) {
+  const masters: Record<string, { planet: string; house: string }> = {
+    "Bélier": { planet: "Mars", house: "I" },
+    "Taureau": { planet: "Vénus", house: "II" },
+    "Gémeaux": { planet: "Mercure", house: "III" },
+    "Cancer": { planet: "Lune", house: "IV" },
+    "Lion": { planet: "Soleil", house: "V" },
+    "Vierge": { planet: "Mercure", house: "VI" },
+    "Balance": { planet: "Vénus", house: "VII" },
+    "Scorpion": { planet: "Pluton", house: "VIII" },
+    "Sagittaire": { planet: "Jupiter", house: "IX" },
+    "Capricorne": { planet: "Saturne", house: "X" },
+    "Verseau": { planet: "Uranus", house: "XI" },
+    "Poissons": { planet: "Neptune", house: "XII" }
+  };
+  return masters[ascendant] || { planet: "Soleil", house: "I" };
+}

@@ -26,7 +26,22 @@ export default function OnboardingPage() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        setFormData(prev => ({ ...prev, ...parsed }));
+        setFormData(prev => ({ ...prev, ...parsed, birthPlace: parsed.birthCity || parsed.birthPlace || '' }));
+        
+        // If we have all required data, we can skip directly to the "gratuit" page 
+        // but let's show the "Génération de votre miroir" loading state for UX
+        if (parsed.firstName && parsed.lastName && parsed.birthDate && parsed.birthTime) {
+          const sessionData = JSON.parse(localStorage.getItem('psy_mirror_session_data') || '{}');
+          const finalData = { ...sessionData, user_info: { ...parsed, birthPlace: parsed.birthCity || parsed.birthPlace || '' } };
+          localStorage.setItem('psy_mirror_final_data', JSON.stringify(finalData));
+          
+          setStep(2);
+          setTimeout(() => {
+            router.push('/miroir/gratuit');
+          }, 3500);
+          return;
+        }
+
         if (parsed.birthDate) {
           const [y, m, d] = parsed.birthDate.split('-');
           setDateParts({ year: y, month: m, day: d });

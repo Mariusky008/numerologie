@@ -9,22 +9,31 @@ import {
   Zap,
   ChevronRight,
   ShieldCheck,
-  Brain
+  Brain,
+  Sparkles,
+  Star,
+  User,
+  MapPin
 } from 'lucide-react';
-import { AUTO_PERCEPTION_ITEMS, BEHAVIOR_SCENARIOS } from '@/lib/psy-mirror/data';
-import { Option } from '@/lib/psy-mirror/types';
 import { useRouter } from 'next/navigation';
+import { AUTO_PERCEPTION_ITEMS, BEHAVIOR_SCENARIOS } from '@/lib/psy-mirror/data';
+import type { Option } from '@/lib/psy-mirror/types';
 import AttentionTest from './reflex-tests/AttentionTest';
 import BreakingPointTest from './reflex-tests/BreakingPointTest';
 import RiskBalloonTest from './reflex-tests/RiskBalloonTest';
 import MentalAgilityTest from './reflex-tests/MentalAgilityTest';
-import { calculateLifePathNumber, getLifePathData, getMoonSign } from '@/lib/psy-mirror/cosmic';
-import { Moon, Star, Calendar } from 'lucide-react';
+import { calculateLifePathNumber, getLifePathData, getMoonSign, getSunSign, getAscendant, getChartMaster } from '@/lib/psy-mirror/cosmic';
 
 export default function ExperiencePsyMirror() {
   const router = useRouter();
-  const [step, setStep] = useState<'intro' | 'birthDate' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'loading'>('intro');
-  const [birthDate, setBirthDate] = useState('');
+  const [step, setStep] = useState<'intro' | 'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'loading'>('intro');
+  const [personalInfo, setPersonalInfo] = useState({
+    firstName: '',
+    lastName: '',
+    birthDate: '',
+    birthTime: '',
+    birthCity: ''
+  });
   const [cosmicData, setCosmicData] = useState<any>(null);
   const [currentModuleIndex, setCurrentModuleIndex] = useState(0);
   const [currentScenarioStep, setCurrentScenarioStep] = useState(0);
@@ -112,15 +121,31 @@ export default function ExperiencePsyMirror() {
         const parsed = JSON.parse(savedCosmicData);
         setUserData(parsed);
         if (parsed.birthDate) {
-          setBirthDate(parsed.birthDate);
+          setPersonalInfo({
+            firstName: parsed.firstName || '',
+            lastName: parsed.lastName || '',
+            birthDate: parsed.birthDate || '',
+            birthTime: parsed.birthTime || '',
+            birthCity: parsed.birthCity || ''
+          });
+          
           const pathNum = calculateLifePathNumber(parsed.birthDate);
           const pathData = getLifePathData(pathNum);
           const moonData = getMoonSign(parsed.birthDate);
+          const sunData = getSunSign(parsed.birthDate);
+          const ascendant = parsed.birthTime ? getAscendant(parsed.birthTime) : 'Inconnu';
+          const chartMaster = ascendant !== 'Inconnu' ? getChartMaster(ascendant) : null;
+
           setCosmicData({ 
             pathNum, 
             ...pathData, 
             moon: moonData.name, 
             moon_element: moonData.element,
+            sun: sunData.name,
+            sun_element: sunData.element,
+            ascendant: ascendant,
+            masterPlanet: chartMaster?.planet,
+            masterHouse: chartMaster?.house,
             firstName: parsed.firstName,
             lastName: parsed.lastName
           });
@@ -133,22 +158,43 @@ export default function ExperiencePsyMirror() {
 
   // --- Intro & Cosmic Identity ---
   const handleIntroStart = () => {
-    if (userData && userData.birthDate) {
+    if (userData && userData.birthDate && userData.firstName && userData.birthTime) {
       setStep('cosmicReveal');
     } else {
-      setStep('birthDate');
+      setStep('collectInfo');
     }
   };
 
-  const handleBirthDateSubmit = (e: React.FormEvent) => {
+  const handleInfoSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!birthDate) return;
+    if (!personalInfo.birthDate || !personalInfo.firstName) return;
 
-    const pathNum = calculateLifePathNumber(birthDate);
+    const pathNum = calculateLifePathNumber(personalInfo.birthDate);
     const pathData = getLifePathData(pathNum);
-    const moonData = getMoonSign(birthDate);
+    const moonData = getMoonSign(personalInfo.birthDate);
+    const sunData = getSunSign(personalInfo.birthDate);
+    const ascendant = personalInfo.birthTime ? getAscendant(personalInfo.birthTime) : 'Bélier';
+    const masterData = getChartMaster(ascendant);
 
-    setCosmicData({ pathNum, ...pathData, moon: moonData.name, moon_element: moonData.element });
+    setCosmicData({ 
+      pathNum, 
+      ...pathData, 
+      moon: moonData.name, 
+      moon_element: moonData.element,
+      sun: sunData.name,
+      sun_element: sunData.element,
+      ascendant: ascendant,
+      masterPlanet: masterData.planet,
+      masterHouse: masterData.house,
+      firstName: personalInfo.firstName,
+      lastName: personalInfo.lastName
+    });
+    
+    // Update userData for persistence
+    const updatedUserData = { ...personalInfo };
+    setUserData(updatedUserData);
+    localStorage.setItem('cosmic_user_data', JSON.stringify(updatedUserData));
+
     setStep('cosmicReveal');
   };
 
@@ -267,41 +313,92 @@ export default function ExperiencePsyMirror() {
           </motion.div>
         )}
 
-        {/* STEP: BIRTH DATE (THE HOOK) */}
-        {step === 'birthDate' && (
+        {/* STEP: COLLECT INFO */}
+        {step === 'collectInfo' && (
           <motion.div 
-            key="birthDate"
+            key="collectInfo"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="w-full max-w-xl text-center space-y-12"
+            className="w-full max-w-2xl bg-white p-8 md:p-12 rounded-[50px] shadow-2xl border border-[#1A1C2E]/5 space-y-10"
           >
-            <div className="space-y-6">
+            <div className="text-center space-y-4">
               <div className="w-20 h-20 bg-[#C9A24D]/10 rounded-full flex items-center justify-center mx-auto border border-[#C9A24D]/20">
-                <Calendar className="w-10 h-10 text-[#C9A24D]" />
+                <User className="w-10 h-10 text-[#C9A24D]" />
               </div>
-              <h2 className="text-4xl md:text-6xl font-serif font-bold">Le Sceau de Naissance</h2>
-              <p className="text-[#1A1C2E]/60 text-lg leading-relaxed">
-                Ta date de naissance définit ton potentiel pur. <br />
-                Tes réflexes définissent ta réalité actuelle.
+              <h2 className="text-3xl md:text-5xl font-serif font-bold">Le Sceau de Naissance</h2>
+              <p className="text-[#1A1C2E]/60 text-lg">
+                Pour calculer ton empreinte cosmique, nous avons besoin de tes coordonnées de naissance exactes.
               </p>
             </div>
 
-            <form onSubmit={handleBirthDateSubmit} className="space-y-8">
-              <div className="relative group">
+            <form onSubmit={handleInfoSubmit} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Prénom</label>
+                  <input 
+                    type="text" 
+                    required
+                    placeholder="Ton prénom"
+                    value={personalInfo.firstName}
+                    onChange={(e) => setPersonalInfo({...personalInfo, firstName: e.target.value})}
+                    className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Nom</label>
+                  <input 
+                    type="text" 
+                    required
+                    placeholder="Ton nom"
+                    value={personalInfo.lastName}
+                    onChange={(e) => setPersonalInfo({...personalInfo, lastName: e.target.value})}
+                    className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Date de Naissance</label>
                 <input 
                   type="date" 
                   required
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
-                  className="w-full bg-white border-2 border-[#1A1C2E]/5 rounded-[30px] px-8 py-6 text-xl font-bold focus:border-[#C9A24D] outline-none transition-all appearance-none"
+                  value={personalInfo.birthDate}
+                  onChange={(e) => setPersonalInfo({...personalInfo, birthDate: e.target.value})}
+                  className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
                 />
-                <div className="absolute inset-0 rounded-[30px] pointer-events-none group-hover:bg-[#1A1C2E]/[0.02] transition-colors"></div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Heure de Naissance</label>
+                  <input 
+                    type="time" 
+                    required
+                    value={personalInfo.birthTime}
+                    onChange={(e) => setPersonalInfo({...personalInfo, birthTime: e.target.value})}
+                    className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Ville de Naissance</label>
+                  <div className="relative">
+                    <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-[#1A1C2E]/20" />
+                    <input 
+                      type="text" 
+                      required
+                      placeholder="Ta ville"
+                      value={personalInfo.birthCity}
+                      onChange={(e) => setPersonalInfo({...personalInfo, birthCity: e.target.value})}
+                      className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl pl-14 pr-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                    />
+                  </div>
+                </div>
               </div>
 
               <button 
                 type="submit"
-                className="w-full py-6 bg-[#1A1C2E] text-white rounded-[30px] font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-xl flex items-center justify-center gap-4"
+                className="w-full py-6 bg-[#1A1C2E] text-white rounded-2xl font-bold text-xl hover:scale-[1.02] active:scale-95 transition-all shadow-xl flex items-center justify-center gap-4 mt-4"
               >
                 Calculer mon Empreinte
                 <ArrowRight className="w-6 h-6" />
@@ -317,46 +414,98 @@ export default function ExperiencePsyMirror() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
-            className="w-full max-w-2xl text-center space-y-12"
+            className="w-full max-w-3xl text-center space-y-12"
           >
             <div className="p-12 md:p-16 rounded-[60px] bg-gradient-to-br from-[#1A1C2E] to-[#08090F] text-white shadow-2xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-12 opacity-10 rotate-12 group-hover:rotate-45 transition-transform duration-1000">
                 <Star className="w-48 h-48" />
               </div>
               
-              <div className="relative z-10 space-y-8">
+              <div className="relative z-10 space-y-10">
                 <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#C9A24D] text-[10px] font-bold uppercase tracking-[0.3em]">
-                  <Moon className="w-4 h-4" />
-                  Potentiel de Naissance
+                  <Sparkles className="w-4 h-4" />
+                  Potentiel de Naissance Révélé
                 </div>
                 
                 <div className="space-y-4">
+                  <p className="text-[#C9A24D] text-lg font-bold tracking-[0.2em] uppercase">
+                    {cosmicData?.firstName} {cosmicData?.lastName}
+                  </p>
                   <h3 className="text-5xl md:text-7xl font-serif font-bold italic">{cosmicData?.title}</h3>
-                  <div className="text-[#C9A24D] text-2xl font-bold tracking-[0.2em]">Chemin de Vie {cosmicData?.pathNum}</div>
+                  <div className="flex flex-wrap justify-center gap-4 pt-4">
+                    <div className="px-6 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-bold">
+                      Chemin de Vie {cosmicData?.pathNum}
+                    </div>
+                    <div className="px-6 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-bold">
+                      Soleil en {cosmicData?.sun}
+                    </div>
+                    <div className="px-6 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-bold">
+                      Lune en {cosmicData?.moon}
+                    </div>
+                    <div className="px-6 py-2 rounded-full bg-[#C9A24D]/20 border border-[#C9A24D]/30 text-[#C9A24D] text-sm font-bold">
+                      Ascendant {cosmicData?.ascendant}
+                    </div>
+                    {cosmicData?.masterPlanet && (
+                      <div className="px-6 py-2 rounded-full bg-[#5B4B8A]/20 border border-[#5B4B8A]/30 text-[#A78BFA] text-sm font-bold">
+                        Maître : {cosmicData?.masterPlanet} (Maison {cosmicData?.masterHouse})
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                <p className="text-white/60 text-xl leading-relaxed font-light">
-                  "{cosmicData?.potential}"
-                </p>
+                <div className="max-w-xl mx-auto p-8 rounded-3xl bg-white/5 border border-white/10 space-y-4">
+                  <p className="text-white/80 text-xl leading-relaxed font-light">
+                    "{cosmicData?.potential}"
+                  </p>
+                </div>
 
-                <div className="pt-8 border-t border-white/10 text-white/40 text-sm uppercase tracking-widest font-bold">
-                  Lune en {cosmicData?.moon} • Identité Émotionnelle
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-[10px] font-black uppercase tracking-widest text-white/30">
+                  <div className="space-y-1">
+                    <p>Élément Solaire</p>
+                    <p className="text-white">{cosmicData?.sun_element}</p>
+                  </div>
+                  <div className="space-y-1">
+                    <p>Élément Lunaire</p>
+                    <p className="text-white">{cosmicData?.moon_element}</p>
+                  </div>
+                  <div className="space-y-1">
+                    <p>Ville</p>
+                    <p className="text-white">{personalInfo.birthCity}</p>
+                  </div>
+                  <div className="space-y-1">
+                    <p>Heure</p>
+                    <p className="text-white">{personalInfo.birthTime}</p>
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="space-y-8">
-              <p className="text-[#1A1C2E]/60 text-lg italic">
-                Mais est-ce que ton cerveau suit réellement ce chemin ? <br />
-                Entrons dans le Miroir pour mesurer l'écart.
-              </p>
+              <div className="p-8 md:p-12 bg-white/50 backdrop-blur-md border border-[#1A1C2E]/5 rounded-[40px] space-y-6 shadow-sm">
+                <p className="text-[#1A1C2E]/80 text-xl font-medium leading-relaxed">
+                  Maintenant que nous avons ta première base...
+                </p>
+                <div className="h-px w-12 bg-[#C9A24D]/30 mx-auto"></div>
+                <p className="text-[#1A1C2E]/60 text-lg leading-relaxed italic">
+                  "Comparons ce que ta date de naissance révèle de ton potentiel <br className="hidden md:block" />
+                  <span className="text-[#1A1C2E] font-bold not-italic">(astrologie & numérologie)</span> <br className="hidden md:block" />
+                  avec la façon dont tu prends réellement tes décisions aujourd’hui."
+                </p>
+                <p className="text-[#1A1C2E]/70 text-base leading-relaxed">
+                  Pour ce faire, tu vas passer par le <span className="font-bold text-[#C9A24D]">Laboratoire des Réflexes</span>. <br />
+                  Nous aurons ensuite l'explication de ce qui te bloque et t'empêche d'avancer sereinement.
+                </p>
+              </div>
               
               <button 
                 onClick={proceedFromCosmic}
-                className="w-full py-6 bg-[#C9A24D] text-white rounded-[30px] font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-xl flex items-center justify-center gap-4"
+                className="w-full py-7 bg-[#1A1C2E] text-white rounded-[30px] font-bold text-2xl hover:scale-105 active:scale-95 transition-all shadow-2xl flex flex-col items-center justify-center gap-1 group"
               >
-                Commencer les Tests de Réflexes
-                <ArrowRight className="w-6 h-6" />
+                <div className="flex items-center gap-4">
+                  Entrer dans le Laboratoire
+                  <ArrowRight className="w-7 h-7 group-hover:translate-x-2 transition-transform" />
+                </div>
+                <span className="text-[10px] uppercase tracking-[0.3em] opacity-40 font-black">Démarrer le Crash-Test</span>
               </button>
             </div>
           </motion.div>

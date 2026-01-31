@@ -29,7 +29,11 @@ export default function GratuitPage() {
   const [displayedText, setDisplayedText] = useState('');
   const [isFinished, setIsFinished] = useState(false);
 
-  const fullText = data ? `Bonjour ${data.firstName}. À partir de tes réponses et de tes réflexes lors du test, on observe un décalage entre certains traits associés à ton potentiel (ce que la numérologie et l’astrologie mettent en lumière) et la manière dont tu réagis lorsque tu es sous pression. Il ne s’agit pas d’un problème, mais d’une tension fréquente entre ce que l’on porte profondément et ce que l’on met en place dans le quotidien. La suite de l’analyse permet de mieux comprendre comment ce décalage s’installe et comment le lire avec plus de clarté.` : '';
+  const fullText = data ? `Bonjour ${data.firstName}. À partir de tes réponses et de tes réflexes lors du test, on observe un décalage entre certains traits associés à ton potentiel (ce que la numérologie et l’astrologie mettent en lumière) et la manière dont tu réagis lorsque tu es sous pression. Il ne s’agit pas d’un problème, mais d’une tension fréquente entre ce que l’on porte profondément et ce que l’on met en place dans le quotidien. La suite de l’analyse permet de mieux comprendre comment :
+- ce décalage s’installe
+- comment le lire avec plus de clarté
+- vous défaire de vos blocages
+- changer durablement.` : '';
 
   useEffect(() => {
     if (isPlaying && !isFinished) {

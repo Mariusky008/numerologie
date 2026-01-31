@@ -46,19 +46,14 @@ export default function BreakingPointTest({ onComplete }: BreakingPointTestProps
     // Clear shape after duration
     setTimeout(() => {
       setCurrentShape(null);
-    }, speed * 0.8);
+    }, Math.min(600, speed * 0.6)); // Adaptive duration based on speed
 
   }, [speed]);
 
   useEffect(() => {
-    const mainInterval = setInterval(() => {
-      spawnShape();
-    }, speed);
-
     const countdown = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
-          clearInterval(mainInterval);
           clearInterval(countdown);
           finishTest();
           return 0;
@@ -67,11 +62,18 @@ export default function BreakingPointTest({ onComplete }: BreakingPointTestProps
       });
     }, 1000);
 
-    return () => {
-      clearInterval(mainInterval);
-      clearInterval(countdown);
-    };
-  }, [speed, spawnShape]);
+    return () => clearInterval(countdown);
+  }, []);
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+
+    const timeoutId = setTimeout(() => {
+      spawnShape();
+    }, speed);
+
+    return () => clearTimeout(timeoutId);
+  }, [speed, spawnShape, timeLeft]);
 
   const handleInteraction = (type: 'click' | 'miss') => {
     if (currentShape === 'circle') {
@@ -133,9 +135,12 @@ export default function BreakingPointTest({ onComplete }: BreakingPointTestProps
               onClick={() => handleInteraction('click')}
               className={`relative group w-48 h-48 transition-all duration-150 flex items-center justify-center ${
                 currentShape === 'circle' 
-                  ? 'rounded-[60px] bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-[0_20px_50px_rgba(16,185,129,0.3)]' 
-                  : 'rounded-2xl bg-gradient-to-br from-red-500 to-red-700 shadow-[0_20px_50px_rgba(239,68,68,0.3)]'
+                  ? 'rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-[0_20px_50px_rgba(16,185,129,0.3)]' 
+                  : 'bg-gradient-to-br from-red-500 to-red-700 shadow-[0_20px_50px_rgba(239,68,68,0.3)]'
               }`}
+              style={{
+                clipPath: currentShape === 'triangle' ? 'polygon(50% 0%, 0% 100%, 100% 100%)' : 'none'
+              }}
             >
               {/* INNER DECORATION */}
               <div className="absolute inset-2 border-2 border-white/20 rounded-[inherit] pointer-events-none" />

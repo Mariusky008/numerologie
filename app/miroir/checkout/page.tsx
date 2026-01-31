@@ -119,31 +119,39 @@ export default function CheckoutPage() {
           <div className="space-y-8">
             <div className="space-y-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Numéro de carte</label>
-              <div className="w-full bg-[#F8F9FA] rounded-2xl py-5 px-6 text-xl flex items-center justify-between opacity-50">
-                <span>•••• •••• •••• ••••</span>
-                <Lock className="w-5 h-5" />
+              <div className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-2xl py-5 px-6 text-xl flex items-center justify-between">
+                <input 
+                  type="text"
+                  placeholder="•••• •••• •••• ••••"
+                  className="bg-transparent border-none outline-none w-full text-[#1A1C2E]"
+                />
+                <CreditCard className="w-5 h-5 text-[#1A1C2E]/20" />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Expiration</label>
-                <div className="w-full bg-[#F8F9FA] rounded-2xl py-5 px-6 text-xl opacity-50">
-                  MM / AA
-                </div>
+                <input 
+                  type="text"
+                  placeholder="MM / AA"
+                  className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-2xl py-5 px-6 text-xl text-[#1A1C2E] outline-none"
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">CVC</label>
-                <div className="w-full bg-[#F8F9FA] rounded-2xl py-5 px-6 text-xl opacity-50">
-                  •••
-                </div>
+                <input 
+                  type="text"
+                  placeholder="•••"
+                  className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-2xl py-5 px-6 text-xl text-[#1A1C2E] outline-none"
+                />
               </div>
             </div>
 
             <button
               onClick={handlePayment}
               disabled={loading}
-              className="w-full py-8 bg-[#1A1C2E] text-white rounded-full font-bold text-2xl hover:bg-[#C9A24D] transition-all shadow-xl hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-4 overflow-hidden relative"
+              className="w-full py-8 bg-[#C9A24D] text-white rounded-full font-bold text-2xl hover:bg-[#1A1C2E] transition-all shadow-xl hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-4 overflow-hidden relative"
             >
               {loading ? (
                 <motion.div
@@ -153,7 +161,7 @@ export default function CheckoutPage() {
                 />
               ) : (
                 <>
-                  <span>Je fais le Crash-Test</span>
+                  <span>Payer 49 € et Débloquer mon Analyse</span>
                   <ArrowRight className="w-8 h-8" />
                 </>
               )}

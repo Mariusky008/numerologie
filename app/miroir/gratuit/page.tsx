@@ -30,10 +30,10 @@ export default function GratuitPage() {
   const [isFinished, setIsFinished] = useState(false);
 
   const fullText = data ? `Bonjour ${data.firstName}. À partir de tes réponses et de tes réflexes lors du test, on observe un décalage entre certains traits associés à ton potentiel (ce que la numérologie et l’astrologie mettent en lumière) et la manière dont tu réagis lorsque tu es sous pression. Il ne s’agit pas d’un problème, mais d’une tension fréquente entre ce que l’on porte profondément et ce que l’on met en place dans le quotidien. La suite de l’analyse permet de mieux comprendre comment :
-- ce décalage s’installe
-- comment le lire avec plus de clarté
-- vous défaire de vos blocages
-- changer durablement.` : '';
+- mieux comprendre comment ce décalage s’installe
+- le lire avec plus de clarté
+- identifier ce qui freine certaines décisions
+- explorer des pistes d’ajustement progressif.` : '';
 
   useEffect(() => {
     if (isPlaying && !isFinished) {
@@ -183,13 +183,13 @@ export default function GratuitPage() {
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/20 text-red-400 text-[10px] font-black uppercase tracking-[0.3em] border border-red-500/30">
                 <Zap className="w-4 h-4" />
-                Alerte Dissonance Détectée
+                ALERTE — ÉCART DE FONCTIONNEMENT OBSERVÉ
               </div>
               <h2 className="text-3xl md:text-5xl font-serif font-bold leading-tight italic">
-                Ton potentiel cosmique est en <span className="text-red-400">conflit</span> avec tes réflexes.
+                Les tests que tu viens de passer mettent en lumière <span className="text-red-400">un écart notable</span> entre ton potentiel de naissance et ta manière actuelle de réagir face aux choix.
               </h2>
               <p className="text-white/60 text-lg leading-relaxed">
-                Les tests de réflexes que tu viens de passer révèlent un décalage majeur entre ton <strong>{data.pathTitle}</strong> et la réalité de ton système nerveux aujourd'hui.
+                Cela ne signifie pas un problème, mais une tension fréquente entre potentiel et adaptation.
               </p>
             </div>
             
@@ -199,14 +199,14 @@ export default function GratuitPage() {
                   <Target className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-widest opacity-40">Niveau de Stress Décisionnel</p>
-                  <p className="text-xl font-bold text-red-400 italic">Anormalement Élevé</p>
+                  <p className="text-xs uppercase tracking-widest opacity-40">Tendance de tension décisionnelle</p>
+                  <p className="text-xl font-bold text-red-400 italic">Élevée</p>
                 </div>
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between text-xs uppercase tracking-widest opacity-40 font-bold">
-                  <span>Alignement Potentiel</span>
-                  <span>34%</span>
+                  <span>Alignement actuel estimé</span>
+                  <span>Faible à modéré</span>
                 </div>
                 <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
                   <motion.div 
@@ -218,7 +218,7 @@ export default function GratuitPage() {
                 </div>
               </div>
               <p className="text-xs text-white/40 italic">
-                * Ce décalage explique probablement votre sentiment de stagnation ou de fatigue mentale actuelle.
+                * Ce type de décalage est souvent associé à une sensation de flottement, de fatigue mentale ou de perte de clarté.
               </p>
             </div>
           </div>

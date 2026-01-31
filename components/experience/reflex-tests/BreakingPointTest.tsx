@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Target, AlertCircle } from 'lucide-react';
+import { Target, AlertCircle, Brain, Zap, ShieldAlert } from 'lucide-react';
 
 interface BreakingPointTestProps {
   onComplete: (results: {
@@ -108,27 +108,60 @@ export default function BreakingPointTest({ onComplete }: BreakingPointTestProps
         </div>
       </div>
 
-      <div className="h-64 flex items-center justify-center w-full">
+      <div className="h-96 flex items-center justify-center w-full relative">
+        {/* BACKGROUND GLOW */}
+        <AnimatePresence>
+          {currentShape && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 0.2, scale: 1.5 }}
+              exit={{ opacity: 0 }}
+              className={`absolute inset-0 blur-[100px] rounded-full ${
+                currentShape === 'circle' ? 'bg-emerald-500' : 'bg-red-500'
+              }`}
+            />
+          )}
+        </AnimatePresence>
+
         <AnimatePresence mode="wait">
           {currentShape && (
             <motion.button
               key={currentShape + speed}
-              initial={{ scale: 0, rotate: -45 }}
-              animate={{ scale: 1, rotate: 0 }}
-              exit={{ scale: 0, opacity: 0 }}
+              initial={{ scale: 0, rotate: -45, filter: 'blur(20px)' }}
+              animate={{ scale: 1, rotate: 0, filter: 'blur(0px)' }}
+              exit={{ scale: 2, opacity: 0, filter: 'blur(40px)' }}
               onClick={() => handleInteraction('click')}
-              className={`w-40 h-40 shadow-2xl transition-shadow flex items-center justify-center ${
+              className={`relative group w-48 h-48 transition-all duration-150 flex items-center justify-center ${
                 currentShape === 'circle' 
-                  ? 'rounded-full bg-emerald-500 shadow-emerald-500/20' 
-                  : 'bg-red-500 shadow-red-500/20'
+                  ? 'rounded-[60px] bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-[0_20px_50px_rgba(16,185,129,0.3)]' 
+                  : 'rounded-2xl bg-gradient-to-br from-red-500 to-red-700 shadow-[0_20px_50px_rgba(239,68,68,0.3)]'
               }`}
-              style={{
-                clipPath: currentShape === 'triangle' ? 'polygon(50% 0%, 0% 100%, 100% 100%)' : 'none'
-              }}
             >
-              <span className="text-white font-bold uppercase tracking-tighter">
-                {currentShape === 'circle' ? 'Vite !' : 'STOP'}
-              </span>
+              {/* INNER DECORATION */}
+              <div className="absolute inset-2 border-2 border-white/20 rounded-[inherit] pointer-events-none" />
+              
+              <div className="flex flex-col items-center gap-2">
+                {currentShape === 'circle' ? (
+                  <>
+                    <Zap className="w-10 h-10 text-white animate-pulse" />
+                    <span className="text-white font-black uppercase tracking-[0.2em] text-sm">Action</span>
+                  </>
+                ) : (
+                  <>
+                    <ShieldAlert className="w-10 h-10 text-white animate-bounce" />
+                    <span className="text-white font-black uppercase tracking-[0.2em] text-sm">Inhiber</span>
+                  </>
+                )}
+              </div>
+
+              {/* RADAR EFFECT */}
+              {currentShape === 'circle' && (
+                <motion.div 
+                  animate={{ scale: [1, 1.5], opacity: [0.5, 0] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                  className="absolute inset-0 border-4 border-emerald-400 rounded-[inherit]"
+                />
+              )}
             </motion.button>
           )}
         </AnimatePresence>

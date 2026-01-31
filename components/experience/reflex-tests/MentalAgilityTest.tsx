@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Repeat, Zap, AlertCircle } from 'lucide-react';
+import { Repeat, Zap, AlertCircle, Brain, Layers } from 'lucide-react';
 
 interface MentalAgilityTestProps {
   onComplete: (results: {
@@ -100,37 +100,76 @@ export default function MentalAgilityTest({ onComplete }: MentalAgilityTestProps
         </div>
       </div>
 
-      <div className="w-full grid grid-rows-2 gap-4 h-80 relative">
-        {/* TOP RULE: PARITY */}
-        <div className={`flex flex-col items-center justify-center rounded-[40px] border-2 transition-all duration-500 ${rule === 'parity' ? 'bg-purple-500/10 border-purple-500 shadow-lg' : 'bg-white/5 border-transparent opacity-20'}`}>
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] mb-2">Règle A : Parité</span>
-          <div className="flex gap-8 text-xs font-bold text-purple-600">
-            <span>PAIR = GAUCHE</span>
-            <span>IMPAIR = DROITE</span>
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 h-auto relative">
+        {/* RULE A: PARITY */}
+        <div className={`relative p-8 rounded-[40px] border-4 transition-all duration-500 overflow-hidden ${rule === 'parity' ? 'bg-[#5B4B8A]/10 border-[#5B4B8A] shadow-[0_0_40px_rgba(91,75,138,0.2)]' : 'bg-white/5 border-transparent opacity-20'}`}>
+          <div className="flex items-center gap-3 mb-4">
+            <Layers className="w-5 h-5 text-[#5B4B8A]" />
+            <span className="text-xs font-black uppercase tracking-[0.3em] text-[#5B4B8A]">Module : Parité</span>
           </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-white p-4 rounded-2xl text-center shadow-sm">
+              <p className="text-[10px] uppercase opacity-40 mb-1">PAIR</p>
+              <p className="font-black text-[#5B4B8A]">GAUCHE</p>
+            </div>
+            <div className="bg-white p-4 rounded-2xl text-center shadow-sm">
+              <p className="text-[10px] uppercase opacity-40 mb-1">IMPAIR</p>
+              <p className="font-black text-[#5B4B8A]">DROITE</p>
+            </div>
+          </div>
+          {rule === 'parity' && (
+            <motion.div 
+              layoutId="activeRule"
+              className="absolute inset-0 bg-gradient-to-br from-white/0 to-[#5B4B8A]/5 pointer-events-none"
+            />
+          )}
         </div>
 
-        {/* BOTTOM RULE: MAGNITUDE */}
-        <div className={`flex flex-col items-center justify-center rounded-[40px] border-2 transition-all duration-500 ${rule === 'magnitude' ? 'bg-purple-500/10 border-purple-500 shadow-lg' : 'bg-white/5 border-transparent opacity-20'}`}>
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] mb-2">Règle B : Magnitude</span>
-          <div className="flex gap-8 text-xs font-bold text-purple-600">
-            <span>{'>'} 5 = GAUCHE</span>
-            <span>{'≤'} 5 = DROITE</span>
+        {/* RULE B: MAGNITUDE */}
+        <div className={`relative p-8 rounded-[40px] border-4 transition-all duration-500 overflow-hidden ${rule === 'magnitude' ? 'bg-[#C9A24D]/10 border-[#C9A24D] shadow-[0_0_40px_rgba(201,162,77,0.2)]' : 'bg-white/5 border-transparent opacity-20'}`}>
+          <div className="flex items-center gap-3 mb-4">
+            <Brain className="w-5 h-5 text-[#C9A24D]" />
+            <span className="text-xs font-black uppercase tracking-[0.3em] text-[#C9A24D]">Module : Magnitude</span>
           </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-white p-4 rounded-2xl text-center shadow-sm">
+              <p className="text-[10px] uppercase opacity-40 mb-1">{'>'} 5</p>
+              <p className="font-black text-[#C9A24D]">GAUCHE</p>
+            </div>
+            <div className="bg-white p-4 rounded-2xl text-center shadow-sm">
+              <p className="text-[10px] uppercase opacity-40 mb-1">{'≤'} 5</p>
+              <p className="font-black text-[#C9A24D]">DROITE</p>
+            </div>
+          </div>
+          {rule === 'magnitude' && (
+            <motion.div 
+              layoutId="activeRule"
+              className="absolute inset-0 bg-gradient-to-br from-white/0 to-[#C9A24D]/5 pointer-events-none"
+            />
+          )}
         </div>
 
-        {/* FLOATING NUMBER */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={number + rule}
-            initial={{ scale: 0, y: rule === 'parity' ? 40 : -40 }}
-            animate={{ scale: 1, y: 0 }}
-            exit={{ scale: 0 }}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white rounded-full shadow-2xl flex items-center justify-center text-6xl font-black text-purple-600 border-4 border-purple-100 z-10"
-          >
-            {number}
-          </motion.div>
-        </AnimatePresence>
+        {/* FLOATING NUMBER CONTAINER */}
+        <div className="md:col-span-2 flex justify-center py-12 relative">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={number + rule}
+              initial={{ scale: 0, rotate: -180, filter: 'blur(20px)' }}
+              animate={{ scale: 1, rotate: 0, filter: 'blur(0px)' }}
+              exit={{ scale: 1.5, opacity: 0, filter: 'blur(40px)' }}
+              className={`w-40 h-40 bg-white rounded-[40px] shadow-[0_30px_60px_rgba(0,0,0,0.1)] flex items-center justify-center text-7xl font-black border-8 transition-colors duration-500 ${rule === 'parity' ? 'text-[#5B4B8A] border-[#5B4B8A]/10' : 'text-[#C9A24D] border-[#C9A24D]/10'}`}
+            >
+              {number}
+              
+              {/* SCANLINE EFFECT */}
+              <motion.div 
+                animate={{ y: [-80, 80] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                className={`absolute inset-x-0 h-1 blur-md ${rule === 'parity' ? 'bg-[#5B4B8A]/30' : 'bg-[#C9A24D]/30'}`}
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
 
       <div className="flex gap-6 w-full">

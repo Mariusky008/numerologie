@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Zap, TrendingUp, AlertTriangle } from 'lucide-react';
+import { Zap, TrendingUp, AlertTriangle, Brain, Sparkles, Bomb } from 'lucide-react';
 
 interface RiskBalloonTestProps {
   onComplete: (results: {
@@ -78,34 +78,63 @@ export default function RiskBalloonTest({ onComplete }: RiskBalloonTestProps) {
         </div>
       </div>
 
-      <div className="h-80 flex items-center justify-center w-full relative">
+      <div className="h-96 flex items-center justify-center w-full relative">
         <AnimatePresence>
           {message && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className={`absolute top-0 font-black text-4xl ${isPopped ? 'text-red-500' : 'text-emerald-500'}`}
+              initial={{ opacity: 0, y: 20, scale: 0.5 }}
+              animate={{ opacity: 1, y: -140, scale: 1.2 }}
+              exit={{ opacity: 0, scale: 2 }}
+              className={`absolute z-20 font-black text-5xl tracking-tighter ${isPopped ? 'text-red-500' : 'text-[#C9A24D]'}`}
             >
               {message}
             </motion.div>
           )}
         </AnimatePresence>
 
-        <motion.div
-          animate={{
-            scale: isPopped ? [1, 1.5, 0] : balloonSize,
-            rotate: isPopped ? [0, 10, -10, 0] : 0,
-          }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          className={`w-32 h-40 rounded-full shadow-2xl relative ${
-            isPopped ? 'bg-red-200' : 'bg-gradient-to-br from-blue-400 to-blue-600'
-          }`}
-        >
+        <div className="relative flex items-center justify-center">
+          {/* ENERGY FIELD */}
           {!isPopped && (
-            <div className="absolute top-1/4 left-1/4 w-4 h-8 bg-white/30 rounded-full blur-sm rotate-12" />
+            <motion.div
+              animate={{
+                scale: [balloonSize * 0.9, balloonSize * 1.1, balloonSize * 0.9],
+                opacity: [0.1, 0.3, 0.1],
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="absolute w-64 h-64 bg-blue-400 rounded-full blur-3xl pointer-events-none"
+            />
           )}
-        </motion.div>
+
+          <motion.div
+            animate={{
+              scale: isPopped ? [1, 2, 0] : balloonSize,
+              rotate: isPopped ? [0, 15, -15, 0] : 0,
+              filter: isPopped ? 'contrast(200%) brightness(200%)' : 'none',
+            }}
+            transition={{ type: "spring", stiffness: 400, damping: 15 }}
+            className={`w-40 h-40 rounded-[60px] shadow-2xl relative flex items-center justify-center overflow-hidden ${
+              isPopped ? 'bg-red-500' : 'bg-gradient-to-br from-[#1A1C2E] to-[#5B4B8A]'
+            }`}
+          >
+            {/* BRAIN CORE */}
+            {!isPopped ? (
+              <div className="relative flex flex-col items-center gap-2">
+                <Brain className="w-12 h-12 text-white animate-pulse" />
+                <div className="flex items-center gap-1 text-white/50 text-[10px] font-black uppercase">
+                  <Sparkles className="w-3 h-3" />
+                  Potentiel
+                </div>
+              </div>
+            ) : (
+              <Bomb className="w-20 h-20 text-white animate-bounce" />
+            )}
+
+            {/* GLOSS EFFECT */}
+            {!isPopped && (
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
+            )}
+          </motion.div>
+        </div>
       </div>
 
       <div className="flex gap-6 w-full max-w-sm">

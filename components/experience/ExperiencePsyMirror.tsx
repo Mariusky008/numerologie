@@ -630,7 +630,7 @@ export default function ExperiencePsyMirror() {
             key="moduleC"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="w-full max-w-4xl h-full flex flex-col"
+            className="w-full max-w-4xl min-h-[80vh] flex flex-col items-center justify-center py-12"
           >
             <AnimatePresence mode="wait">
               {showInstructions ? (
@@ -668,10 +668,10 @@ export default function ExperiencePsyMirror() {
               ) : (
                 <motion.div
                   key={`test-${currentReflexStep}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="flex-1"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  className="w-full flex items-center justify-center"
                 >
                   {React.createElement(reflexTests[currentReflexStep].component as any, {
                     onComplete: (res: any) => handleReflexComplete(reflexTests[currentReflexStep].id, res)

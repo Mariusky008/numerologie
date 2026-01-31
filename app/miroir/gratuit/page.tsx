@@ -84,7 +84,7 @@ export default function GratuitPage() {
           </div>
           <h1 className="text-4xl md:text-6xl font-serif font-bold tracking-tight">
             Bonjour {data.firstName}, <br />
-            <span className="text-[#C9A24D] italic">voici vos premières clés.</span>
+            <span className="text-[#C9A24D] italic">voici tes premières clés.</span>
           </h1>
         </motion.div>
 
@@ -162,10 +162,10 @@ export default function GratuitPage() {
                 Alerte Dissonance Détectée
               </div>
               <h2 className="text-3xl md:text-5xl font-serif font-bold leading-tight italic">
-                Votre potentiel cosmique est en <span className="text-red-400">conflit</span> avec vos réflexes.
+                Ton potentiel cosmique est en <span className="text-red-400">conflit</span> avec tes réflexes.
               </h2>
               <p className="text-white/60 text-lg leading-relaxed">
-                Les tests de réflexes que vous venez de passer révèlent un décalage majeur entre votre <strong>{data.pathTitle}</strong> et la réalité de votre système nerveux aujourd'hui.
+                Les tests de réflexes que tu viens de passer révèlent un décalage majeur entre ton <strong>{data.pathTitle}</strong> et la réalité de ton système nerveux aujourd'hui.
               </p>
             </div>
             
@@ -204,8 +204,8 @@ export default function GratuitPage() {
       {/* 2. VIDEO - PREVIEW PERSONNALISÉE */}
       <section className="py-20 px-6 max-w-4xl mx-auto space-y-12 text-center">
         <motion.div {...fadeIn} className="space-y-4">
-          <h2 className="text-3xl md:text-5xl font-serif font-bold">Aperçu de votre analyse profonde</h2>
-          <p className="text-[#1A1C2E]/60 text-lg">Votre avatar a commencé à décoder vos mécanismes. Regardez ces quelques secondes pour comprendre l'enjeu.</p>
+          <h2 className="text-3xl md:text-5xl font-serif font-bold">Aperçu de ton analyse profonde</h2>
+          <p className="text-[#1A1C2E]/60 text-lg">Ton avatar a commencé à décoder tes mécanismes. Regarde ces quelques secondes pour comprendre l'enjeu.</p>
         </motion.div>
 
         <motion.div 
@@ -233,10 +233,12 @@ export default function GratuitPage() {
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="text-white font-serif italic text-xl md:text-3xl leading-relaxed"
+                  className="text-white font-serif italic text-lg md:text-2xl leading-relaxed max-w-2xl"
                 >
-                  "Bonjour {data.firstName}. D'après vos réflexes lors du test, on remarque un <span className="text-red-400">blocage inconscient</span> entre votre {data.pathTitle} et vos réactions sous pression... <br /><br />
-                  <span className="text-[#C9A24D]">Vous agissez à l'opposé de votre nature profonde."</span>
+                  "Bonjour {data.firstName}. <br /><br />
+                  À partir de tes réponses et de tes réflexes lors du test, on observe un <span className="text-red-400 font-bold">décalage</span> entre certains traits associés à ton potentiel (ce que la numérologie et l’astrologie mettent en lumière) et la manière dont tu réagis lorsque tu es sous pression. <br /><br />
+                  Il ne s’agit pas d’un problème, mais d’une <span className="text-[#C9A24D] font-bold">tension fréquente</span> entre ce que l’on porte profondément et ce que l’on met en place dans le quotidien. <br /><br />
+                  La suite de l’analyse permet de mieux comprendre comment ce décalage s’installe et comment le lire avec plus de clarté."
                 </motion.div>
                 <div className="flex gap-2">
                   <div className="w-2 h-2 bg-[#C9A24D] rounded-full animate-bounce" style={{ animationDelay: '0s' }}></div>
@@ -269,20 +271,20 @@ export default function GratuitPage() {
           
           <div className="space-y-6 relative z-10">
             <h2 className="text-4xl md:text-7xl font-serif font-bold leading-tight">
-              Découvrez le miroir <br />
-              <span className="text-[#C9A24D] italic">complet de votre âme.</span>
+              Découvre le miroir <br />
+              <span className="text-[#C9A24D] italic">complet de ton âme.</span>
             </h2>
             <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              Le Crash-Test a révélé l'écart. <span className="text-[#C9A24D] font-bold">Ne restez pas dans le flou.</span> Accédez maintenant à votre dossier complet de 40 pages et à votre conversation vocale avec l'IA pour lever vos blocages.
+              Le Crash-Test a révélé l'écart. <span className="text-[#C9A24D] font-bold">Ne reste pas dans le flou.</span> Accède maintenant à ton dossier complet de 40 pages et à ta conversation vocale avec l'IA pour lever tes blocages.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 relative z-10 text-left">
             {[
               { text: "Rapport Intégral de 40 pages (PDF)", icon: BookOpen, desc: "Numérologie, Astro & Analyse Labo fusionnés." },
-              { text: "Coaching Vocal Privé avec l'IA", icon: MessageSquare, desc: "Posez toutes vos questions à votre miroir." },
-              { text: "Vidéo d'Analyse Comportementale", icon: VideoIcon, desc: "7 minutes pour comprendre vos réflexes." },
-              { text: "Plan d'Action 'Réalignement'", icon: ShieldCheck, desc: "7 jours pour retrouver votre trajectoire." }
+              { text: "Coaching Vocal Privé avec l'IA", icon: MessageSquare, desc: "Pose toutes tes questions à ton miroir." },
+              { text: "Vidéo d'Analyse Comportementale", icon: VideoIcon, desc: "7 minutes pour comprendre tes réflexes." },
+              { text: "Plan d'Action 'Réalignement'", icon: ShieldCheck, desc: "7 jours pour retrouver ta trajectoire." }
             ].map((benefit, i) => (
               <div key={i} className="flex flex-col gap-2 bg-white/5 p-8 rounded-[40px] border border-white/10 hover:bg-white/10 transition-colors">
                 <div className="flex items-center gap-4">

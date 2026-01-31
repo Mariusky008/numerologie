@@ -29,11 +29,23 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
   const [timeLeft, setTimeLeft] = useState(45); // 45 seconds test
   const [stressErrors, setStressErrors] = useState(0);
   const [normalErrors, setNormalErrors] = useState(0);
-  const [audioEnabled, setAudioEnabled] = useState(false);
+  const [audioEnabled, setAudioEnabled] = useState(true);
+  const [combo, setCombo] = useState(0);
+  const [maxCombo, setMaxCombo] = useState(0);
+  const [feedback, setFeedback] = useState<{ id: number; text: string; x: number; y: number }[]>([]);
 
   // Audio refs
   const ambientRef = useRef<HTMLAudioElement | null>(null);
   const stressRef = useRef<HTMLAudioElement | null>(null);
+  const feedbackIdCounter = useRef(0);
+
+  const addFeedback = (text: string, isError: boolean = false) => {
+    const id = feedbackIdCounter.current++;
+    setFeedback(prev => [...prev, { id, text, x: Math.random() * 40 - 20, y: Math.random() * 20 - 10 }]);
+    setTimeout(() => {
+      setFeedback(prev => prev.filter(f => f.id !== id));
+    }, 1000);
+  };
 
   const speakColor = useCallback((colorName: string) => {
     if (!audioEnabled || !isStressed) return;
@@ -135,9 +147,15 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
 
     if (colorValue === currentChallenge.color) {
       setScore((prev) => prev + 1);
+      const newCombo = combo + 1;
+      setCombo(newCombo);
+      setMaxCombo(prev => Math.max(prev, newCombo));
+      addFeedback(reactionTime < 400 ? 'PARFAIT !' : 'BIEN !');
     } else {
       if (isStressed) setStressErrors((prev) => prev + 1);
       else setNormalErrors((prev) => prev + 1);
+      setCombo(0);
+      addFeedback('ERREUR', true);
     }
 
     generateChallenge();
@@ -156,7 +174,39 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-12 w-full max-w-2xl relative">
+    <div className="flex flex-col items-center justify-center space-y-12 w-full max-w-2xl relative py-12">
+      {/* COMBO INDICATOR */}
+      <AnimatePresence>
+        {combo > 1 && (
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            className="absolute top-0 left-0 bg-[#C9A24D] text-white px-6 py-2 rounded-2xl font-black text-xl shadow-lg z-20"
+          >
+            COMBO X{combo}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* FLOATING FEEDBACK */}
+      <div className="absolute inset-0 pointer-events-none z-30 overflow-hidden">
+        <AnimatePresence>
+          {feedback.map(f => (
+            <motion.div
+              key={f.id}
+              initial={{ opacity: 0, scale: 0.5, y: 0 }}
+              animate={{ opacity: 1, scale: 1.2, y: -100 }}
+              exit={{ opacity: 0 }}
+              className={`absolute left-1/2 top-1/2 font-black text-2xl tracking-tighter ${f.text === 'ERREUR' ? 'text-red-500' : 'text-[#C9A24D]'}`}
+              style={{ marginLeft: f.x, marginTop: f.y }}
+            >
+              {f.text}
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+
       {/* SOUND TOGGLE */}
       <button 
         onClick={() => setAudioEnabled(!audioEnabled)}
@@ -229,10 +279,14 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
           <button
             key={color.value}
             onClick={() => handleAnswer(color.value)}
-            className="h-20 rounded-3xl border-2 border-[#1A1C2E]/5 hover:scale-105 active:scale-95 transition-all shadow-lg flex items-center justify-center text-white font-bold text-lg"
+            className="h-24 rounded-[32px] border-4 border-white shadow-xl hover:scale-105 active:scale-95 transition-all flex flex-col items-center justify-center text-white font-black text-xs uppercase tracking-widest overflow-hidden group relative"
             style={{ backgroundColor: color.value }}
           >
-            Cliquez
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+            <div className="relative z-10 flex flex-col items-center gap-1">
+              <Zap className="w-4 h-4 opacity-50 group-hover:scale-125 transition-transform" />
+              <span>{color.name}</span>
+            </div>
           </button>
         ))}
       </div>

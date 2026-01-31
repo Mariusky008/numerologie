@@ -54,7 +54,7 @@ export default function ExperiencePsyMirror() {
     { 
       id: 'breaking', 
       title: 'Point de Rupture', 
-      instruction: 'Maintenez le bouton enfoncé le plus longtemps possible, mais relâchez avant que la barre ne devienne rouge.',
+      instruction: 'Cliquez sur les CERCLES dès qu\'ils apparaissent. Ignorez absolument les triangles rouges.',
       component: BreakingPointTest 
     },
     { 

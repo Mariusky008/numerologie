@@ -30,7 +30,12 @@ export default function BreakingPointTest({ onComplete }: BreakingPointTestProps
   
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  const [isActive, setIsActive] = useState(true);
+  const speedRef = useRef(1200);
+
   const spawnShape = useCallback(() => {
+    if (!isActive) return;
+
     const isCircle = Math.random() > 0.3; // 70% circles
     const shape: Shape = isCircle ? 'circle' : 'triangle';
     
@@ -41,20 +46,22 @@ export default function BreakingPointTest({ onComplete }: BreakingPointTestProps
     }));
 
     // Speed up
-    setSpeed(prev => Math.max(400, prev * 0.96));
+    speedRef.current = Math.max(400, speedRef.current * 0.96);
+    setSpeed(speedRef.current);
 
     // Clear shape after duration
     setTimeout(() => {
       setCurrentShape(null);
-    }, Math.min(600, speed * 0.6)); // Adaptive duration based on speed
+    }, Math.min(600, speedRef.current * 0.6));
 
-  }, [speed]);
+  }, [isActive]);
 
   useEffect(() => {
     const countdown = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(countdown);
+          setIsActive(false);
           finishTest();
           return 0;
         }
@@ -66,14 +73,26 @@ export default function BreakingPointTest({ onComplete }: BreakingPointTestProps
   }, []);
 
   useEffect(() => {
-    if (timeLeft <= 0) return;
+    if (!isActive) return;
 
-    const timeoutId = setTimeout(() => {
-      spawnShape();
-    }, speed);
+    let timeoutId: NodeJS.Timeout;
 
-    return () => clearTimeout(timeoutId);
-  }, [speed, spawnShape, timeLeft]);
+    const scheduleNext = (delay?: number) => {
+      if (!isActive) return;
+      
+      const nextDelay = delay !== undefined ? delay : speedRef.current;
+      timeoutId = setTimeout(() => {
+        spawnShape();
+        scheduleNext();
+      }, nextDelay);
+    };
+
+    scheduleNext(500); // Start first shape after 500ms instead of full speed interval
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [isActive, spawnShape]);
 
   const handleInteraction = (type: 'click' | 'miss') => {
     if (currentShape === 'circle') {
@@ -125,7 +144,7 @@ export default function BreakingPointTest({ onComplete }: BreakingPointTestProps
           )}
         </AnimatePresence>
 
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {currentShape && (
             <motion.button
               key={currentShape + speed}

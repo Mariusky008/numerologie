@@ -3,15 +3,23 @@
  */
 
 export function calculateLifePathNumber(birthDate: string): number {
-  // birthDate format: YYYY-MM-DD
-  const digits = birthDate.replace(/-/g, '').split('').map(Number);
-  let sum = digits.reduce((a, b) => a + b, 0);
+  const [year, month, day] = birthDate.split('-').map(Number);
   
-  while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
-    sum = sum.toString().split('').map(Number).reduce((a, b) => a + b, 0);
-  }
+  // Method: Sum of reduced components (Day + Month + Year)
+  // This is the most accurate method for detecting Master Numbers
+  const reduce = (n: number) => {
+    let s = n;
+    while (s > 9 && s !== 11 && s !== 22 && s !== 33) {
+      s = s.toString().split('').map(Number).reduce((a, b) => a + b, 0);
+    }
+    return s;
+  };
+
+  const rDay = reduce(day);
+  const rMonth = reduce(month);
+  const rYear = reduce(year);
   
-  return sum;
+  return reduce(rDay + rMonth + rYear);
 }
 
 export function getLifePathData(num: number) {
@@ -93,20 +101,51 @@ export function getLifePathData(num: number) {
   return data[num] || data[1];
 }
 
-export function getMoonSign(birthDate: string) {
+export function getMoonSign(birthDate: string, birthTime?: string) {
   const date = new Date(birthDate);
-  const month = date.getMonth() + 1;
+  let hour = 12;
+  let minute = 0;
+  
+  if (birthTime) {
+    const [h, m] = birthTime.split(':').map(Number);
+    if (!isNaN(h)) hour = h;
+    if (!isNaN(m)) minute = m;
+  }
+
+  // Use UTC to ensure consistency across timezones and match the reference date
+  const utcDate = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute, 0);
   
   const signs = [
-    { name: "Capricorne", element: "Terre" }, { name: "Verseau", element: "Air" },
-    { name: "Poissons", element: "Eau" }, { name: "Bélier", element: "Feu" },
-    { name: "Taureau", element: "Terre" }, { name: "Gémeaux", element: "Air" },
-    { name: "Cancer", element: "Eau" }, { name: "Lion", element: "Feu" },
-    { name: "Vierge", element: "Terre" }, { name: "Balance", element: "Air" },
-    { name: "Scorpion", element: "Eau" }, { name: "Sagittaire", element: "Feu" }
+    { name: "Bélier", element: "Feu", description: "Identité émotionnelle vive et instinctive. Vous réagissez avec passion." },
+    { name: "Taureau", element: "Terre", description: "Besoins de stabilité et de confort. Vos émotions sont ancrées et durables." },
+    { name: "Gémeaux", element: "Air", description: "Besoin de comprendre vos émotions par les mots. Curiosité affective." },
+    { name: "Cancer", element: "Eau", description: "Sensibilité extrême et besoin de sécurité. Très attaché aux racines." },
+    { name: "Lion", element: "Feu", description: "Besoin de reconnaissance et de chaleur. Émotions généreuses et théâtrales." },
+    { name: "Vierge", element: "Terre", description: "Analyse des sentiments. Besoin d'ordre et de pureté émotionnelle." },
+    { name: "Balance", element: "Air", description: "Recherche d'harmonie dans les relations. Émotions portées vers l'autre." },
+    { name: "Scorpion", element: "Eau", description: "Intensité émotionnelle et passion secrète. Besoin de transformation." },
+    { name: "Sagittaire", element: "Feu", description: "Besoin d'indépendance et d'aventure affective. Optimisme émotionnel." },
+    { name: "Capricorne", element: "Terre", description: "Émotions contenues et sérieuses. Besoin de temps pour faire confiance." },
+    { name: "Verseau", element: "Air", description: "Besoin de liberté et d'originalité émotionnelle. Amitié avant tout." },
+    { name: "Poissons", element: "Eau", description: "Empathie totale et rêve. Vos émotions sont vastes comme l'océan." }
   ];
   
-  return signs[month - 1];
+  // High-precision sidereal month calculation
+  // Reference: Jan 1, 2000, 12:00 UTC - Moon was at approx 224.85° (14° Scorpio/Scorpion)
+  // Scorpio is index 7. Position in signs: 7 + (14.85/30) = 7.495
+  const refDate = Date.UTC(2000, 0, 1, 12, 0, 0);
+  const refPosition = 7.495; 
+  
+  const diffTime = utcDate - refDate;
+  const diffDays = diffTime / (1000 * 60 * 60 * 24);
+  
+  // Sidereal month (time to return to same spot in zodiac): 27.321661 days
+  const siderealMonth = 27.321661;
+  
+  let moonPosition = (refPosition + (diffDays / (siderealMonth / 12))) % 12;
+  if (moonPosition < 0) moonPosition += 12;
+  
+  return signs[Math.floor(moonPosition)];
 }
 
 export function getSunSign(birthDate: string) {

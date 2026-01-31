@@ -131,7 +131,7 @@ export default function ExperiencePsyMirror() {
           
           const pathNum = calculateLifePathNumber(parsed.birthDate);
           const pathData = getLifePathData(pathNum);
-          const moonData = getMoonSign(parsed.birthDate);
+          const moonData = getMoonSign(parsed.birthDate, parsed.birthTime);
           const sunData = getSunSign(parsed.birthDate);
           const ascendantData = parsed.birthTime ? getAscendant(parsed.birthDate, parsed.birthTime) : { name: 'Bélier', description: '' };
           const chartMaster = getChartMaster(ascendantData.name);
@@ -174,7 +174,7 @@ export default function ExperiencePsyMirror() {
 
     const pathNum = calculateLifePathNumber(personalInfo.birthDate);
     const pathData = getLifePathData(pathNum);
-    const moonData = getMoonSign(personalInfo.birthDate);
+    const moonData = getMoonSign(personalInfo.birthDate, personalInfo.birthTime);
     const sunData = getSunSign(personalInfo.birthDate);
     const ascendantData = personalInfo.birthTime ? getAscendant(personalInfo.birthDate, personalInfo.birthTime) : { name: 'Bélier', description: '' };
     const masterData = getChartMaster(ascendantData.name);

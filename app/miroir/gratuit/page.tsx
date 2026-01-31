@@ -19,7 +19,7 @@ import {
   Zap,
   Target
 } from 'lucide-react';
-import { calculateLifePathNumber, getLifePathData, getSunSign, getAscendant, getChartMaster } from '@/lib/psy-mirror/cosmic';
+import { calculateLifePathNumber, getLifePathData, getSunSign, getMoonSign, getAscendant, getChartMaster } from '@/lib/psy-mirror/cosmic';
 
 export default function GratuitPage() {
   const router = useRouter();
@@ -36,6 +36,7 @@ export default function GratuitPage() {
         const pathNum = calculateLifePathNumber(userInfo.birthDate);
         const pathData = getLifePathData(pathNum);
         const sunSignData = getSunSign(userInfo.birthDate);
+        const moonSignData = getMoonSign(userInfo.birthDate, userInfo.birthTime);
         const ascendantData = getAscendant(userInfo.birthDate, userInfo.birthTime);
         const masterData = getChartMaster(ascendantData.name);
 
@@ -47,6 +48,9 @@ export default function GratuitPage() {
           sunSign: sunSignData.name,
           sunElement: sunSignData.element,
           sunDesc: sunSignData.description,
+          moonSign: moonSignData.name,
+          moonElement: moonSignData.element,
+          moonDesc: moonSignData.description,
           ascendant: ascendantData.name,
           ascendantDesc: ascendantData.description,
           masterPlanet: masterData.planet,

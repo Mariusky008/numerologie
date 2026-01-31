@@ -43,18 +43,72 @@ export default function ExperiencePsyMirror() {
   const [moduleBAnswers, setModuleBAnswers] = useState<Option[]>([]);
   const [reflexResults, setReflexResults] = useState<any>({});
   const [userData, setUserData] = useState<any>(null);
+  const [intermediateFeedback, setIntermediateFeedback] = useState<{
+    title: string;
+    message: string;
+    type: 'insight' | 'presell';
+  } | null>(null);
+
+  const getRemainingTime = () => {
+    if (step === 'moduleA') {
+      const rem = (AUTO_PERCEPTION_ITEMS.length - currentModuleIndex) * 10 + 5 * 60 + 8 * 60;
+      return Math.ceil(rem / 60);
+    }
+    if (step === 'moduleB') {
+      const currentStepCount = currentModuleIndex * 4 + currentScenarioStep;
+      const rem = (12 - currentStepCount) * 25 + 8 * 60;
+      return Math.ceil(rem / 60);
+    }
+    if (step === 'moduleC') {
+      const rem = (reflexTests.length - currentReflexStep) * 2 * 60;
+      return Math.ceil(rem / 60);
+    }
+    return 15;
+  };
+
+  const checkFeedback = (count: number, type: 'moduleA' | 'moduleB' | 'moduleC') => {
+    if (type === 'moduleA' && count === 6) {
+      setIntermediateFeedback({
+        title: "Première tendance observée…",
+        message: "Tes réponses suggèrent une recherche d'équilibre entre tes besoins personnels et ton environnement.",
+        type: 'insight'
+      });
+    } else if (type === 'moduleC' && count === 2) {
+      setIntermediateFeedback({
+        title: "Première tendance observée…",
+        message: "Sous pression, tes réflexes montrent une grande capacité d'adaptation immédiate.",
+        type: 'insight'
+      });
+    } else if ((type === 'moduleA' || type === 'moduleB') && count % 4 === 0 && count !== 0) {
+      setIntermediateFeedback({
+        title: "Analyse en cours...",
+        message: "Ce point sera analysé en détail dans ton rapport final.",
+        type: 'presell'
+      });
+    }
+  };
 
   const reflexTests = [
     { 
       id: 'attention', 
       title: 'Test d\'Attention', 
-      instruction: 'Cliquez sur les cibles dès qu\'elles apparaissent. Soyez le plus rapide possible.',
+      instruction: (
+        <div className="space-y-4">
+          <p>Cliquez sur les cibles dès qu'elles apparaissent. Soyez le plus rapide possible.</p>
+          <p className="text-sm font-bold text-[#C9A24D] uppercase tracking-widest italic">Ce test ne mesure pas ta performance, mais ton style de réaction.</p>
+        </div>
+      ),
       component: AttentionTest 
     },
     { 
       id: 'breaking', 
       title: 'Point de Rupture', 
-      instruction: 'Cliquez sur les CERCLES dès qu\'ils apparaissent. Ignorez absolument les triangles rouges.',
+      instruction: (
+        <div className="space-y-4">
+          <p>Cliquez sur les CERCLES dès qu'ils apparaissent. Ignorez absolument les triangles rouges.</p>
+          <p className="text-sm font-bold text-[#C9A24D] uppercase tracking-widest italic">Ce test ne mesure pas ta performance, mais ton style de réaction.</p>
+        </div>
+      ),
       component: BreakingPointTest 
     },
     { 
@@ -101,6 +155,7 @@ export default function ExperiencePsyMirror() {
           <p className="text-sm text-[#1A1C2E]/50 italic text-center px-4">
             Restez vigilant : la règle (Parité ou Magnitude) s'affiche en haut de l'écran et peut changer à tout moment.
           </p>
+          <p className="text-sm font-bold text-[#C9A24D] uppercase tracking-widest italic text-center">Ce test ne mesure pas ta performance, mais ton style de réaction.</p>
         </div>
       ),
       component: MentalAgilityTest 
@@ -108,7 +163,12 @@ export default function ExperiencePsyMirror() {
     { 
       id: 'balloon', 
       title: 'Prise de Risque', 
-      instruction: 'Gonflez le ballon pour gagner des points. Plus il est gros, plus vous gagnez, mais s\'il éclate, vous perdez tout pour ce ballon.',
+      instruction: (
+        <div className="space-y-4">
+          <p>Gonflez le ballon pour gagner des points. Plus il est gros, plus vous gagnez, mais s'il éclate, vous perdez tout pour ce ballon.</p>
+          <p className="text-sm font-bold text-[#C9A24D] uppercase tracking-widest italic">Ce test ne mesure pas ta performance, mais ton style de réaction.</p>
+        </div>
+      ),
       component: RiskBalloonTest 
     }
   ];
@@ -213,6 +273,8 @@ export default function ExperiencePsyMirror() {
     const newAnswers = [...moduleAAnswers, option];
     setModuleAAnswers(newAnswers);
     
+    checkFeedback(newAnswers.length, 'moduleA');
+
     if (currentModuleIndex < AUTO_PERCEPTION_ITEMS.length - 1) {
       setCurrentModuleIndex(currentModuleIndex + 1);
     } else {
@@ -226,6 +288,8 @@ export default function ExperiencePsyMirror() {
     const newAnswers = [...moduleBAnswers, option];
     setModuleBAnswers(newAnswers);
     
+    checkFeedback(newAnswers.length, 'moduleB');
+
     const currentScenario = BEHAVIOR_SCENARIOS[currentModuleIndex];
     if (currentScenarioStep < currentScenario.steps.length - 1) {
       setCurrentScenarioStep(currentScenarioStep + 1);
@@ -246,6 +310,9 @@ export default function ExperiencePsyMirror() {
   const handleReflexComplete = (testKey: string, result: any) => {
     const newReflexResults = { ...reflexResults, [testKey]: result };
     setReflexResults(newReflexResults);
+
+    const testCount = Object.keys(newReflexResults).length;
+    checkFeedback(testCount, 'moduleC');
 
     if (currentReflexStep < reflexTests.length - 1) {
       setCurrentReflexStep(currentReflexStep + 1);
@@ -536,9 +603,12 @@ export default function ExperiencePsyMirror() {
             className="max-w-2xl w-full space-y-12"
           >
             <div className="space-y-2">
-              <div className="flex justify-between items-end text-[10px] font-bold uppercase tracking-widest text-[#1A1C2E]/40">
-                <span>Partie 1: Auto-perception</span>
-                <span>{currentModuleIndex + 1} / {AUTO_PERCEPTION_ITEMS.length}</span>
+              <div className="flex justify-between items-end text-[10px] font-bold uppercase tracking-widest">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[#1A1C2E]/40">Partie 1: Auto-perception</span>
+                  <span className="text-[#C9A24D]">Encore ~{getRemainingTime()} minutes</span>
+                </div>
+                <span className="text-[#1A1C2E]/40">{currentModuleIndex + 1} / {AUTO_PERCEPTION_ITEMS.length}</span>
               </div>
               <div className="h-1.5 w-full bg-[#1A1C2E]/5 rounded-full overflow-hidden">
                 <motion.div 
@@ -581,9 +651,12 @@ export default function ExperiencePsyMirror() {
             className="max-w-2xl w-full space-y-12"
           >
             <div className="space-y-4">
-              <div className="flex justify-between items-end text-[10px] font-bold uppercase tracking-widest text-[#1A1C2E]/40">
-                <span>Partie 2: Scénarios Réels</span>
-                <span>Scénario {currentModuleIndex + 1} / {BEHAVIOR_SCENARIOS.length}</span>
+              <div className="flex justify-between items-end text-[10px] font-bold uppercase tracking-widest">
+                <div className="flex flex-col gap-1">
+                  <span className="text-[#1A1C2E]/40">Partie 2: Scénarios Réels</span>
+                  <span className="text-[#C9A24D]">Encore ~{getRemainingTime()} minutes</span>
+                </div>
+                <span className="text-[#1A1C2E]/40">Scénario {currentModuleIndex + 1} / {BEHAVIOR_SCENARIOS.length}</span>
               </div>
               <div className="h-1.5 w-full bg-[#1A1C2E]/5 rounded-full overflow-hidden">
                 <motion.div 
@@ -641,14 +714,16 @@ export default function ExperiencePsyMirror() {
                   exit={{ opacity: 0, scale: 1.1 }}
                   className="max-w-xl w-full mx-auto bg-white p-12 rounded-[50px] shadow-2xl border border-[#1A1C2E]/5 text-center space-y-10"
                 >
+                  <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-[#C9A24D]">
+                    <span>Test {currentReflexStep + 1} / {reflexTests.length}</span>
+                    <span>Encore ~{getRemainingTime()} minutes</span>
+                  </div>
+                  
                   <div className="w-20 h-20 bg-[#C9A24D]/10 rounded-3xl flex items-center justify-center text-[#C9A24D] mx-auto">
                     <Zap className="w-10 h-10" />
                   </div>
                   
                   <div className="space-y-4">
-                    <h2 className="text-sm font-black uppercase tracking-[0.3em] text-[#C9A24D]">
-                      Test {currentReflexStep + 1} / {reflexTests.length}
-                    </h2>
                     <h1 className="text-4xl font-serif font-bold text-[#1A1C2E]">
                       {reflexTests[currentReflexStep].title}
                     </h1>
@@ -704,6 +779,39 @@ export default function ExperiencePsyMirror() {
               <h2 className="text-2xl font-bold">Analyse en cours...</h2>
               <p className="text-[#1A1C2E]/60">Le moteur calcule vos écarts comportementaux.</p>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {intermediateFeedback && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-[#1A1C2E]/20 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              className="bg-white p-8 md:p-12 rounded-[40px] shadow-2xl border border-[#1A1C2E]/5 max-w-md w-full text-center space-y-8"
+            >
+              <div className={`w-16 h-16 rounded-2xl mx-auto flex items-center justify-center ${intermediateFeedback.type === 'insight' ? 'bg-[#C9A24D]/10 text-[#C9A24D]' : 'bg-[#5B4B8A]/10 text-[#5B4B8A]'}`}>
+                {intermediateFeedback.type === 'insight' ? <Target className="w-8 h-8" /> : <Sparkles className="w-8 h-8" />}
+              </div>
+              <div className="space-y-4">
+                <h3 className="text-sm font-black uppercase tracking-widest opacity-40">{intermediateFeedback.title}</h3>
+                <p className="text-xl md:text-2xl font-serif font-bold italic leading-tight">
+                  {intermediateFeedback.message}
+                </p>
+              </div>
+              <button
+                onClick={() => setIntermediateFeedback(null)}
+                className="w-full py-4 bg-[#1A1C2E] text-white rounded-full font-bold hover:scale-105 transition-all shadow-lg"
+              >
+                Continuer l'expérience
+              </button>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -349,21 +349,90 @@ export default function GratuitPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 relative z-10 text-left">
+          <div className="grid md:grid-cols-2 gap-8 relative z-10 text-left">
             {[
-              { text: "Rapport Intégral de 40 pages (PDF)", icon: BookOpen, desc: "Numérologie, Astro & Analyse Labo fusionnés." },
-              { text: "Coaching Vocal Privé avec l'IA", icon: MessageSquare, desc: "Pose toutes tes questions à ton miroir." },
-              { text: "Vidéo d'Analyse Comportementale", icon: VideoIcon, desc: "7 minutes pour comprendre tes réflexes." },
-              { text: "Plan d'Action 'Réalignement'", icon: ShieldCheck, desc: "7 jours pour retrouver ta trajectoire." }
+              { 
+                text: "Rapport Intégral de 40 pages (PDF)", 
+                icon: BookOpen, 
+                desc: "Numérologie, Astro & Analyse Labo fusionnés.",
+                preview: (
+                  <div className="absolute right-4 bottom-4 w-24 h-32 bg-white/10 rounded-lg border border-white/20 overflow-hidden rotate-6 group-hover:rotate-12 transition-transform origin-bottom-right hidden sm:block">
+                    <div className="w-full h-4 bg-white/20 mb-2"></div>
+                    <div className="space-y-1 p-2">
+                      <div className="w-full h-1 bg-white/10"></div>
+                      <div className="w-4/5 h-1 bg-white/10"></div>
+                      <div className="w-full h-1 bg-white/10"></div>
+                      <div className="w-2/3 h-1 bg-white/10"></div>
+                    </div>
+                    <div className="absolute bottom-2 right-2 w-6 h-6 rounded-full bg-[#C9A24D]/40 flex items-center justify-center">
+                      <BookOpen className="w-3 h-3 text-white" />
+                    </div>
+                  </div>
+                )
+              },
+              { 
+                text: "Coaching Vocal Privé avec l'IA", 
+                icon: MessageSquare, 
+                desc: "Pose toutes tes questions à ton miroir.",
+                preview: (
+                  <div className="absolute right-6 bottom-6 flex items-end gap-1 h-12 hidden sm:flex">
+                    {[0.4, 0.7, 0.3, 0.9, 0.5, 0.8, 0.4].map((h, i) => (
+                      <motion.div
+                        key={i}
+                        animate={{ height: [h * 40, (1-h) * 40, h * 40] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.1 }}
+                        className="w-1.5 bg-[#C9A24D]/40 rounded-full"
+                      />
+                    ))}
+                  </div>
+                )
+              },
+              { 
+                text: "Vidéo d'Analyse Comportementale", 
+                icon: VideoIcon, 
+                desc: "7 minutes pour comprendre tes réflexes.",
+                preview: (
+                  <div className="absolute right-4 bottom-4 w-32 h-20 bg-black/40 rounded-xl border border-white/20 flex items-center justify-center hidden sm:flex overflow-hidden group-hover:scale-110 transition-transform">
+                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                      <Play className="w-4 h-4 text-white fill-current" />
+                    </div>
+                    <div className="absolute bottom-2 left-2 right-2 h-1 bg-white/10 rounded-full overflow-hidden">
+                      <motion.div 
+                        animate={{ x: ["-100%", "100%"] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                        className="w-1/3 h-full bg-[#C9A24D]"
+                      />
+                    </div>
+                  </div>
+                )
+              },
+              { 
+                text: "Plan d'Action 'Réalignement'", 
+                icon: ShieldCheck, 
+                desc: "7 jours pour retrouver ta trajectoire.",
+                preview: (
+                  <div className="absolute right-4 bottom-4 w-28 h-24 bg-white/5 rounded-xl border border-white/10 p-3 space-y-2 hidden sm:block group-hover:-translate-y-2 transition-transform">
+                    {[1, 2, 3].map(i => (
+                      <div key={i} className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-sm border border-[#C9A24D]/40 flex items-center justify-center">
+                          {i < 3 && <Check className="w-2 h-2 text-[#C9A24D]" />}
+                        </div>
+                        <div className={`h-1 bg-white/10 rounded-full ${i === 1 ? 'w-full' : i === 2 ? 'w-4/5' : 'w-2/3'}`}></div>
+                      </div>
+                    ))}
+                  </div>
+                )
+              }
             ].map((benefit, i) => (
-              <div key={i} className="flex flex-col gap-2 bg-white/5 p-8 rounded-[40px] border border-white/10 hover:bg-white/10 transition-colors">
-                <div className="flex items-center gap-4">
+              <div key={i} className="flex flex-col gap-2 bg-white/5 p-8 rounded-[40px] border border-white/10 hover:bg-white/10 transition-all group relative overflow-hidden">
+                <div className="flex items-center gap-4 relative z-10">
                   <div className="w-10 h-10 rounded-2xl bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D]">
                     <benefit.icon className="w-5 h-5" />
                   </div>
                   <span className="text-lg font-bold">{benefit.text}</span>
                 </div>
-                <p className="text-white/40 text-sm ml-14">{benefit.desc}</p>
+                <p className="text-white/40 text-sm ml-14 relative z-10 max-w-[200px]">{benefit.desc}</p>
+                {benefit.preview}
               </div>
             ))}
           </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { 
@@ -17,14 +17,93 @@ import {
 export default function CheckoutPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [userData, setUserData] = useState<any>(null);
+  const [email, setEmail] = useState('');
 
-  const handlePayment = () => {
+  useEffect(() => {
+    const finalData = localStorage.getItem('psy_mirror_final_data');
+    if (finalData) {
+      try {
+        const parsed = JSON.parse(finalData);
+        setUserData(parsed.user_info);
+        // Pre-fill email if available
+        if (parsed.user_info?.email) setEmail(parsed.user_info.email);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, []);
+
+  const handlePayment = async () => {
+    if (!userData) {
+      alert("Erreur : Données utilisateur introuvables. Veuillez recommencer l'expérience.");
+      return;
+    }
+
     setLoading(true);
-    // Simulate payment processing
-    setTimeout(() => {
+    
+    try {
+      const orderId = `PM-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+      
+      const orderInfo = {
+        plan: 'bundle',
+        totalPrice: 49,
+        delivery: {
+          email: email || userData.email || 'client@votrelegende.fr'
+        }
+      };
+
+      // 1. Enregistrer la commande dans la base de données (Supabase)
+      // Cela permet à l'admin de voir la commande même si le paiement Stripe échoue
+      const dbResponse = await fetch('/api/book-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userData: { ...userData, email: email || userData.email },
+          orderInfo,
+          orderId
+        })
+      });
+
+      if (!dbResponse.ok) {
+        throw new Error("Erreur lors de l'enregistrement de la commande");
+      }
+
+      // 2. Enregistrer la stat de clic de paiement
+      await fetch('/api/stats', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event: 'payment_click' })
+      }).catch(err => console.error("Stat tracking failed", err));
+
+      // 3. Créer la session Stripe et rediriger
+      const stripeResponse = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userData: { ...userData, email: email || userData.email },
+          orderInfo,
+          orderId
+        })
+      });
+
+      const stripeData = await stripeResponse.json();
+
+      if (stripeData.url) {
+        window.location.href = stripeData.url;
+      } else {
+        // Fallback simulation if Stripe key is missing or error
+        console.warn("Stripe URL missing, simulating success...");
+        setTimeout(() => {
+          setLoading(false);
+          router.push('/miroir/resultat');
+        }, 2000);
+      }
+    } catch (error) {
+      console.error("Erreur de paiement:", error);
+      alert("Une erreur est survenue lors de l'initialisation du paiement. Veuillez réessayer.");
       setLoading(false);
-      router.push('/miroir/resultat');
-    }, 3000);
+    }
   };
 
   return (
@@ -117,6 +196,20 @@ export default function CheckoutPage() {
           </div>
 
           <div className="space-y-8">
+            <div className="space-y-2">
+              <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Ton adresse Email (pour recevoir l'analyse)</label>
+              <div className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-2xl py-5 px-6 text-xl flex items-center justify-between">
+                <input 
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="ton@email.com"
+                  className="bg-transparent border-none outline-none w-full text-[#1A1C2E]"
+                />
+              </div>
+            </div>
+
             <div className="space-y-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Numéro de carte</label>
               <div className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-2xl py-5 px-6 text-xl flex items-center justify-between">

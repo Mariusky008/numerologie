@@ -466,14 +466,14 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                 <PenTool className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs text-stone-500 uppercase tracking-wider font-bold">Écritures Commencées</p>
+                <p className="text-xs text-stone-500 uppercase tracking-wider font-bold">Clics Paiement</p>
                 <p className="text-2xl font-bold text-[#78350f]">
-                  {stats.write_click || 0}
+                  {stats.payment_click || 0}
                 </p>
               </div>
             </div>
             <p className="text-xs text-stone-400">
-              Clics sur "Commencer l'écriture"
+              Tentatives de commande
             </p>
           </div>
         </div>

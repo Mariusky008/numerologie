@@ -36,7 +36,7 @@ export default function GratuitPage() {
         const pathNum = calculateLifePathNumber(userInfo.birthDate);
         const pathData = getLifePathData(pathNum);
         const sunSignData = getSunSign(userInfo.birthDate);
-        const ascendantData = getAscendant(userInfo.birthTime);
+        const ascendantData = getAscendant(userInfo.birthDate, userInfo.birthTime);
         const masterData = getChartMaster(ascendantData.name);
 
         setData({

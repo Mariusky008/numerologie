@@ -145,9 +145,28 @@ export function getSunSign(birthDate: string) {
   return data[signName];
 }
 
-export function getAscendant(birthTime: string) {
-  const [hour] = birthTime.split(':').map(Number);
+export function getAscendant(birthDate: string, birthTime: string) {
+  const [hour, minute] = birthTime.split(':').map(Number);
+  const totalMinutes = hour * 60 + minute;
   
+  // 1. Get Sun Sign index (Bélier=0, ..., Verseau=10, Poissons=11)
+  const sunSign = getSunSign(birthDate);
+  const signs = [
+    "Bélier", "Taureau", "Gémeaux", "Cancer", "Lion", "Vierge", 
+    "Balance", "Scorpion", "Sagittaire", "Capricorne", "Verseau", "Poissons"
+  ];
+  const sunSignIndex = signs.indexOf(sunSign.name);
+
+  // 2. Approximation: Sunrise is around 7:00 AM (420 minutes)
+  // At sunrise, the Ascendant is the Sun Sign.
+  // The Ascendant moves ~1 degree every 4 minutes, or 1 sign (30 degrees) every 120 minutes.
+  let minutesSinceSunrise = totalMinutes - 420;
+  if (minutesSinceSunrise < 0) minutesSinceSunrise += 1440; // Handle pre-sunrise births
+
+  const signOffset = Math.floor(minutesSinceSunrise / 120);
+  const ascendantIndex = (sunSignIndex + signOffset) % 12;
+  const ascendantName = signs[ascendantIndex];
+
   const data: Record<string, { name: string; description: string }> = {
     "Bélier": { name: "Bélier", description: "Une apparence dynamique et directe. Vous abordez la vie avec franchise." },
     "Taureau": { name: "Taureau", description: "Une présence calme et rassurante. Vous inspirez la stabilité immédiate." },
@@ -163,13 +182,7 @@ export function getAscendant(birthTime: string) {
     "Poissons": { name: "Poissons", description: "Une aura rêveuse et inspirée. Vous semblez connecté à une autre dimension." }
   };
 
-  const signs = [
-    "Bélier", "Taureau", "Gémeaux", "Cancer", "Lion", "Vierge", 
-    "Balance", "Scorpion", "Sagittaire", "Capricorne", "Verseau", "Poissons"
-  ];
-  
-  const index = Math.floor(hour / 2);
-  return data[signs[index % 12]];
+  return data[ascendantName];
 }
 
 export function getChartMaster(ascendant: string) {

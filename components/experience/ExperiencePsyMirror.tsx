@@ -133,7 +133,7 @@ export default function ExperiencePsyMirror() {
           const pathData = getLifePathData(pathNum);
           const moonData = getMoonSign(parsed.birthDate);
           const sunData = getSunSign(parsed.birthDate);
-          const ascendantData = parsed.birthTime ? getAscendant(parsed.birthTime) : { name: 'Bélier', description: '' };
+          const ascendantData = parsed.birthTime ? getAscendant(parsed.birthDate, parsed.birthTime) : { name: 'Bélier', description: '' };
           const chartMaster = getChartMaster(ascendantData.name);
 
           setCosmicData({ 
@@ -176,7 +176,7 @@ export default function ExperiencePsyMirror() {
     const pathData = getLifePathData(pathNum);
     const moonData = getMoonSign(personalInfo.birthDate);
     const sunData = getSunSign(personalInfo.birthDate);
-    const ascendantData = personalInfo.birthTime ? getAscendant(personalInfo.birthTime) : { name: 'Bélier', description: '' };
+    const ascendantData = personalInfo.birthTime ? getAscendant(personalInfo.birthDate, personalInfo.birthTime) : { name: 'Bélier', description: '' };
     const masterData = getChartMaster(ascendantData.name);
 
     setCosmicData({ 

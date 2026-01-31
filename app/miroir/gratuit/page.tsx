@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { 
   Sparkles, 
@@ -17,7 +17,8 @@ import {
   Video as VideoIcon,
   Compass,
   Zap,
-  Target
+  Target,
+  Brain
 } from 'lucide-react';
 import { calculateLifePathNumber, getLifePathData, getSunSign, getMoonSign, getAscendant, getChartMaster } from '@/lib/psy-mirror/cosmic';
 
@@ -25,6 +26,25 @@ export default function GratuitPage() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [displayedText, setDisplayedText] = useState('');
+  const [isFinished, setIsFinished] = useState(false);
+
+  const fullText = data ? `Bonjour ${data.firstName}. À partir de tes réponses et de tes réflexes lors du test, on observe un décalage entre certains traits associés à ton potentiel (ce que la numérologie et l’astrologie mettent en lumière) et la manière dont tu réagis lorsque tu es sous pression. Il ne s’agit pas d’un problème, mais d’une tension fréquente entre ce que l’on porte profondément et ce que l’on met en place dans le quotidien. La suite de l’analyse permet de mieux comprendre comment ce décalage s’installe et comment le lire avec plus de clarté.` : '';
+
+  useEffect(() => {
+    if (isPlaying && !isFinished) {
+      let i = 0;
+      const timer = setInterval(() => {
+        setDisplayedText(fullText.slice(0, i));
+        i++;
+        if (i > fullText.length) {
+          clearInterval(timer);
+          setIsFinished(true);
+        }
+      }, 30);
+      return () => clearInterval(timer);
+    }
+  }, [isPlaying, fullText, isFinished]);
 
   useEffect(() => {
     const finalData = localStorage.getItem('psy_mirror_final_data');
@@ -210,53 +230,99 @@ export default function GratuitPage() {
 
         <motion.div 
           {...fadeIn}
-          className="relative aspect-video bg-[#1A1C2E] rounded-[40px] overflow-hidden shadow-2xl group cursor-pointer border-4 border-white"
+          className="relative min-h-[400px] md:min-h-[500px] bg-[#08090F] rounded-[40px] overflow-hidden shadow-2xl group cursor-pointer border-4 border-white flex items-center justify-center"
           onClick={() => setIsPlaying(true)}
         >
-          {/* Mock Video Placeholder */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            {!isPlaying ? (
-              <>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1C2E] to-transparent opacity-80"></div>
-                <div className="z-10 flex flex-col items-center gap-6">
-                  <div className="w-24 h-24 bg-[#C9A24D] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-xl">
-                    <Play className="w-10 h-10 text-white fill-current" />
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-white font-bold uppercase tracking-[0.3em] text-xs">Lecture de l'extrait personnalisé</p>
-                    <p className="text-white/40 text-[10px] uppercase tracking-widest">Durée : 30 secondes</p>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="w-full h-full flex flex-col items-center justify-center bg-[#08090F] p-12 text-center space-y-8">
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-white font-serif italic text-lg md:text-2xl leading-relaxed max-w-2xl"
-                >
-                  "Bonjour {data.firstName}. <br /><br />
-                  À partir de tes réponses et de tes réflexes lors du test, on observe un <span className="text-red-400 font-bold">décalage</span> entre certains traits associés à ton potentiel (ce que la numérologie et l’astrologie mettent en lumière) et la manière dont tu réagis lorsque tu es sous pression. <br /><br />
-                  Il ne s’agit pas d’un problème, mais d’une <span className="text-[#C9A24D] font-bold">tension fréquente</span> entre ce que l’on porte profondément et ce que l’on met en place dans le quotidien. <br /><br />
-                  La suite de l’analyse permet de mieux comprendre comment ce décalage s’installe et comment le lire avec plus de clarté."
-                </motion.div>
-                <div className="flex gap-2">
-                  <div className="w-2 h-2 bg-[#C9A24D] rounded-full animate-bounce" style={{ animationDelay: '0s' }}></div>
-                  <div className="w-2 h-2 bg-[#C9A24D] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                  <div className="w-2 h-2 bg-[#C9A24D] rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
-                </div>
-                <button 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    router.push('/miroir/checkout');
-                  }}
-                  className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white rounded-full text-sm font-bold transition-all border border-white/10"
-                >
-                  Débloquer la suite de la vidéo
-                </button>
-              </div>
-            )}
+          {/* BACKGROUND AMBIENCE */}
+          <div className="absolute inset-0 z-0">
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(201,162,77,0.1),_transparent_70%)]"></div>
+            <motion.div 
+              animate={{ 
+                scale: [1, 1.2, 1],
+                opacity: [0.1, 0.2, 0.1]
+              }}
+              transition={{ duration: 8, repeat: Infinity }}
+              className="absolute -top-24 -left-24 w-96 h-96 bg-[#5B4B8A] rounded-full blur-[100px]"
+            />
+            <motion.div 
+              animate={{ 
+                scale: [1, 1.3, 1],
+                opacity: [0.05, 0.15, 0.05]
+              }}
+              transition={{ duration: 10, repeat: Infinity, delay: 1 }}
+              className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#C9A24D] rounded-full blur-[120px]"
+            />
           </div>
+
+          {/* CONTENT */}
+          {!isPlaying ? (
+            <div className="relative z-10 flex flex-col items-center gap-8">
+              <div className="relative">
+                <motion.div 
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-28 h-28 bg-[#C9A24D] rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(201,162,77,0.4)]"
+                >
+                  <Play className="w-12 h-12 text-white fill-current" />
+                </motion.div>
+                <div className="absolute -inset-4 border border-[#C9A24D]/30 rounded-full animate-ping"></div>
+              </div>
+              <div className="space-y-3">
+                <p className="text-[#C9A24D] font-black uppercase tracking-[0.4em] text-xs">Analyse comportementale IA</p>
+                <p className="text-white/40 text-[10px] uppercase tracking-widest">Durée de l'extrait : 30 secondes</p>
+              </div>
+            </div>
+          ) : (
+            <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-8 md:p-16 text-center space-y-10">
+              {/* VIDEO INTERFACE ELEMENTS */}
+              <div className="absolute top-8 left-8 flex items-center gap-3">
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Live decoding...</span>
+              </div>
+              <div className="absolute top-8 right-8">
+                <Brain className="w-6 h-6 text-white/20" />
+              </div>
+
+              <div className="flex-1 flex items-center justify-center max-w-3xl mx-auto">
+                <motion.p 
+                  className="text-white font-serif italic text-xl md:text-3xl leading-relaxed"
+                >
+                  {displayedText}
+                  <motion.span 
+                    animate={{ opacity: [1, 0] }}
+                    transition={{ duration: 0.5, repeat: Infinity }}
+                    className="inline-block w-1 h-8 md:h-10 bg-[#C9A24D] ml-2 align-middle"
+                  />
+                </motion.p>
+              </div>
+
+              <AnimatePresence>
+                {isFinished && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="space-y-6 pt-4"
+                  >
+                    <div className="flex justify-center gap-3">
+                      <div className="w-2 h-2 bg-[#C9A24D] rounded-full"></div>
+                      <div className="w-2 h-2 bg-[#C9A24D] rounded-full"></div>
+                      <div className="w-2 h-2 bg-[#C9A24D] rounded-full"></div>
+                    </div>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push('/miroir/checkout');
+                      }}
+                      className="group flex items-center gap-4 px-10 py-5 bg-[#C9A24D] text-white rounded-full text-lg font-bold transition-all shadow-2xl hover:scale-105 active:scale-95"
+                    >
+                      Débloquer l'analyse complète
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          )}
         </motion.div>
 
         <p className="text-[#1A1C2E]/40 text-sm italic">

@@ -412,21 +412,30 @@ export default function UnifiedMiroirReport({
       </section>
 
       {/* FINAL ACTIONS */}
-      <section className="py-24 px-6 border-t border-[#1A1C2E]/5 bg-[#FDFBF7] text-center space-y-16">
+      <section className="py-24 px-6 border-t border-[#1A1C2E]/5 bg-white text-center space-y-16">
         <div className="max-w-3xl mx-auto space-y-12">
-          <p className="text-3xl md:text-4xl font-serif italic text-[#1A1C2E]/30 leading-relaxed px-6">
-            "{psyResult.final_phrase}"
-          </p>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-            <button className="w-full md:w-auto flex items-center justify-center gap-3 px-12 py-6 bg-[#1A1C2E] text-white rounded-full font-bold text-lg hover:bg-[#2A2D45] transition-all shadow-xl group">
-              <Download className="w-6 h-6 group-hover:animate-bounce" />
-              Télécharger mon Dossier PDF Complet
-            </button>
+          <div className="space-y-8 text-[#1A1C2E] text-lg md:text-xl leading-relaxed">
+            <p>
+              Ce rapport te donne une lecture structurée de ton thème et met en lumière certaines dynamiques clés.
+            </p>
+            <p>
+              Certaines personnes choisissent ensuite de mettre cette lecture en pratique dans leur quotidien.
+            </p>
+            <p>
+              Pour cela, il existe un parcours de 12 mois, composé d’exercices concrets, de temps de réflexion guidés et de points de lecture réguliers, pensés pour expérimenter, ajuster et observer son évolution au fil des cycles personnels.
+            </p>
+            <p className="font-medium">
+              Ce parcours est une démarche volontaire de progression personnelle, basée sur l’observation et l’expérimentation.
+            </p>
+          </div>
+
+          <div className="pt-8">
             <button 
-              onClick={() => window.location.href = '/'}
-              className="text-xs font-black uppercase tracking-[0.5em] text-[#1A1C2E]/30 hover:text-[#C9A24D] transition-colors flex items-center gap-2"
+              onClick={() => window.location.href = '/parcours-12-mois'}
+              className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#C9A24D] text-white rounded-full font-bold text-2xl shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95"
             >
-              Retour à l'accueil <ArrowRight className="w-3 h-3" />
+              <span>Découvrir le parcours de 12 mois</span>
+              <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
             </button>
           </div>
         </div>

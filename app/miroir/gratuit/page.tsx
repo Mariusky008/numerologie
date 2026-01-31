@@ -35,20 +35,23 @@ export default function GratuitPage() {
         
         const pathNum = calculateLifePathNumber(userInfo.birthDate);
         const pathData = getLifePathData(pathNum);
-        const sunSign = getSunSign(userInfo.birthDate);
-        const ascendant = getAscendant(userInfo.birthTime);
-        const masterData = getChartMaster(ascendant);
+        const sunSignData = getSunSign(userInfo.birthDate);
+        const ascendantData = getAscendant(userInfo.birthTime);
+        const masterData = getChartMaster(ascendantData.name);
 
         setData({
           firstName: userInfo.firstName,
           pathNum,
           pathTitle: pathData.title,
-          pathDesc: pathData.potential,
-          sunSign: sunSign.name,
-          sunElement: sunSign.element,
-          ascendant: ascendant,
+          pathDesc: pathData.description,
+          sunSign: sunSignData.name,
+          sunElement: sunSignData.element,
+          sunDesc: sunSignData.description,
+          ascendant: ascendantData.name,
+          ascendantDesc: ascendantData.description,
           masterPlanet: masterData.planet,
-          masterHouse: masterData.house
+          masterHouse: masterData.house,
+          masterDesc: masterData.description
         });
       } catch (e) {
         console.error(e);
@@ -81,28 +84,63 @@ export default function GratuitPage() {
           </h1>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto pt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto pt-12">
           {[
-            { label: "Chemin de Vie", value: data.pathNum, sub: data.pathTitle, icon: Star, color: "text-[#C9A24D] bg-[#C9A24D]/5" },
-            { label: "Signe Solaire", value: data.sunSign, sub: data.sunElement, icon: Sun, color: "text-[#1A1C2E] bg-[#1A1C2E]/5" },
-            { label: "Ascendant", value: data.ascendant, sub: "Personnalité", icon: Moon, color: "text-[#5B4B8A] bg-[#5B4B8A]/5" },
-            { label: "Maison Maître", value: data.masterPlanet, sub: `Maison ${data.masterHouse}`, icon: Compass, color: "text-[#A78BFA] bg-[#A78BFA]/5" }
+            { 
+              label: "Chemin de Vie", 
+              value: data.pathNum, 
+              title: data.pathTitle, 
+              desc: data.pathDesc, 
+              icon: Star, 
+              color: "text-[#C9A24D] bg-[#C9A24D]/5" 
+            },
+            { 
+              label: "Signe Solaire", 
+              value: data.sunSign, 
+              title: data.sunElement, 
+              desc: data.sunDesc, 
+              icon: Sun, 
+              color: "text-[#1A1C2E] bg-[#1A1C2E]/5" 
+            },
+            { 
+              label: "Ascendant", 
+              value: data.ascendant, 
+              title: "Personnalité", 
+              desc: data.ascendantDesc, 
+              icon: Moon, 
+              color: "text-[#5B4B8A] bg-[#5B4B8A]/5" 
+            },
+            { 
+              label: "Maison Maître", 
+              value: data.masterPlanet, 
+              title: `Maison ${data.masterHouse}`, 
+              desc: data.masterDesc, 
+              icon: Compass, 
+              color: "text-[#A78BFA] bg-[#A78BFA]/5" 
+            }
           ].map((item, i) => (
             <motion.div 
               key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="p-6 md:p-8 rounded-[40px] bg-white border border-[#1A1C2E]/5 shadow-sm space-y-4"
+              className="p-8 rounded-[50px] bg-white border border-[#1A1C2E]/5 shadow-sm hover:shadow-md transition-shadow flex flex-col gap-6"
             >
-              <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center mx-auto ${item.color}`}>
-                <item.icon className="w-5 h-5 md:w-6 md:h-6" />
+              <div className="flex items-center justify-between">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${item.color}`}>
+                  <item.icon className="w-6 h-6" />
+                </div>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1C2E]/30">{item.label}</p>
               </div>
-              <div>
-                <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30 mb-1">{item.label}</p>
-                <p className="text-xl md:text-3xl font-serif font-bold">{item.value}</p>
-                <p className="text-[11px] md:text-sm font-medium opacity-60 italic">{item.sub}</p>
+              
+              <div className="space-y-2">
+                <p className="text-3xl font-serif font-bold tracking-tight">{item.value}</p>
+                <p className="text-sm font-bold text-[#C9A24D] uppercase tracking-widest">{item.title}</p>
               </div>
+
+              <p className="text-sm leading-relaxed text-[#1A1C2E]/60 italic">
+                {item.desc}
+              </p>
             </motion.div>
           ))}
         </div>

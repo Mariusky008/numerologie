@@ -133,8 +133,8 @@ export default function ExperiencePsyMirror() {
           const pathData = getLifePathData(pathNum);
           const moonData = getMoonSign(parsed.birthDate);
           const sunData = getSunSign(parsed.birthDate);
-          const ascendant = parsed.birthTime ? getAscendant(parsed.birthTime) : 'Inconnu';
-          const chartMaster = ascendant !== 'Inconnu' ? getChartMaster(ascendant) : null;
+          const ascendantData = parsed.birthTime ? getAscendant(parsed.birthTime) : { name: 'Bélier', description: '' };
+          const chartMaster = getChartMaster(ascendantData.name);
 
           setCosmicData({ 
             pathNum, 
@@ -143,9 +143,12 @@ export default function ExperiencePsyMirror() {
             moon_element: moonData.element,
             sun: sunData.name,
             sun_element: sunData.element,
-            ascendant: ascendant,
+            sun_desc: sunData.description,
+            ascendant: ascendantData.name,
+            ascendant_desc: ascendantData.description,
             masterPlanet: chartMaster?.planet,
             masterHouse: chartMaster?.house,
+            master_desc: chartMaster?.description,
             firstName: parsed.firstName,
             lastName: parsed.lastName
           });
@@ -173,8 +176,8 @@ export default function ExperiencePsyMirror() {
     const pathData = getLifePathData(pathNum);
     const moonData = getMoonSign(personalInfo.birthDate);
     const sunData = getSunSign(personalInfo.birthDate);
-    const ascendant = personalInfo.birthTime ? getAscendant(personalInfo.birthTime) : 'Bélier';
-    const masterData = getChartMaster(ascendant);
+    const ascendantData = personalInfo.birthTime ? getAscendant(personalInfo.birthTime) : { name: 'Bélier', description: '' };
+    const masterData = getChartMaster(ascendantData.name);
 
     setCosmicData({ 
       pathNum, 
@@ -183,9 +186,12 @@ export default function ExperiencePsyMirror() {
       moon_element: moonData.element,
       sun: sunData.name,
       sun_element: sunData.element,
-      ascendant: ascendant,
+      sun_desc: sunData.description,
+      ascendant: ascendantData.name,
+      ascendant_desc: ascendantData.description,
       masterPlanet: masterData.planet,
       masterHouse: masterData.house,
+      master_desc: masterData.description,
       firstName: personalInfo.firstName,
       lastName: personalInfo.lastName
     });
@@ -432,22 +438,25 @@ export default function ExperiencePsyMirror() {
                     {cosmicData?.firstName} {cosmicData?.lastName}
                   </p>
                   <h3 className="text-5xl md:text-7xl font-serif font-bold italic">{cosmicData?.title}</h3>
-                  <div className="flex flex-wrap justify-center gap-4 pt-4">
-                    <div className="px-6 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-bold">
-                      Chemin de Vie {cosmicData?.pathNum}
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-8 text-left max-w-2xl mx-auto">
+                    <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-[#C9A24D]">Chemin de Vie {cosmicData?.pathNum}</p>
+                      <p className="text-sm font-bold text-white/90">{cosmicData?.potential}</p>
+                      <p className="text-xs text-white/50 italic">{cosmicData?.description}</p>
                     </div>
-                    <div className="px-6 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-bold">
-                      Soleil en {cosmicData?.sun}
+                    <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Soleil en {cosmicData?.sun} ({cosmicData?.sun_element})</p>
+                      <p className="text-xs text-white/50 italic">{cosmicData?.sun_desc}</p>
                     </div>
-                    <div className="px-6 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-bold">
-                      Lune en {cosmicData?.moon}
-                    </div>
-                    <div className="px-6 py-2 rounded-full bg-[#C9A24D]/20 border border-[#C9A24D]/30 text-[#C9A24D] text-sm font-bold">
-                      Ascendant {cosmicData?.ascendant}
+                    <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Ascendant {cosmicData?.ascendant}</p>
+                      <p className="text-xs text-white/50 italic">{cosmicData?.ascendant_desc}</p>
                     </div>
                     {cosmicData?.masterPlanet && (
-                      <div className="px-6 py-2 rounded-full bg-[#5B4B8A]/20 border border-[#5B4B8A]/30 text-[#A78BFA] text-sm font-bold">
-                        Maître : {cosmicData?.masterPlanet} (Maison {cosmicData?.masterHouse})
+                      <div className="p-4 rounded-2xl bg-[#5B4B8A]/10 border border-[#5B4B8A]/20 space-y-1">
+                        <p className="text-[10px] font-black uppercase tracking-widest text-[#A78BFA]">Maître : {cosmicData?.masterPlanet} (Maison {cosmicData?.masterHouse})</p>
+                        <p className="text-xs text-white/50 italic">{cosmicData?.master_desc}</p>
                       </div>
                     )}
                   </div>

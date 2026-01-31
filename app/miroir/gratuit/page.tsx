@@ -14,9 +14,12 @@ import {
   ShieldCheck,
   BookOpen,
   MessageSquare,
-  Video as VideoIcon
+  Video as VideoIcon,
+  Compass,
+  Zap,
+  Target
 } from 'lucide-react';
-import { calculateLifePathNumber, getLifePathData, getSunSign, getAscendant } from '@/lib/psy-mirror/cosmic';
+import { calculateLifePathNumber, getLifePathData, getSunSign, getAscendant, getChartMaster } from '@/lib/psy-mirror/cosmic';
 
 export default function GratuitPage() {
   const router = useRouter();
@@ -34,6 +37,7 @@ export default function GratuitPage() {
         const pathData = getLifePathData(pathNum);
         const sunSign = getSunSign(userInfo.birthDate);
         const ascendant = getAscendant(userInfo.birthTime);
+        const masterData = getChartMaster(ascendant);
 
         setData({
           firstName: userInfo.firstName,
@@ -42,7 +46,9 @@ export default function GratuitPage() {
           pathDesc: pathData.potential,
           sunSign: sunSign.name,
           sunElement: sunSign.element,
-          ascendant: ascendant
+          ascendant: ascendant,
+          masterPlanet: masterData.planet,
+          masterHouse: masterData.house
         });
       } catch (e) {
         console.error(e);
@@ -75,63 +81,143 @@ export default function GratuitPage() {
           </h1>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto pt-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto pt-8">
           {[
             { label: "Chemin de Vie", value: data.pathNum, sub: data.pathTitle, icon: Star, color: "text-[#C9A24D] bg-[#C9A24D]/5" },
             { label: "Signe Solaire", value: data.sunSign, sub: data.sunElement, icon: Sun, color: "text-[#1A1C2E] bg-[#1A1C2E]/5" },
-            { label: "Ascendant", value: data.ascendant, sub: "Personnalité", icon: Moon, color: "text-[#5B4B8A] bg-[#5B4B8A]/5" }
+            { label: "Ascendant", value: data.ascendant, sub: "Personnalité", icon: Moon, color: "text-[#5B4B8A] bg-[#5B4B8A]/5" },
+            { label: "Maison Maître", value: data.masterPlanet, sub: `Maison ${data.masterHouse}`, icon: Compass, color: "text-[#A78BFA] bg-[#A78BFA]/5" }
           ].map((item, i) => (
             <motion.div 
               key={i}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: i * 0.1 }}
-              className="p-8 rounded-[40px] bg-white border border-[#1A1C2E]/5 shadow-sm space-y-4"
+              className="p-6 md:p-8 rounded-[40px] bg-white border border-[#1A1C2E]/5 shadow-sm space-y-4"
             >
-              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mx-auto ${item.color}`}>
-                <item.icon className="w-6 h-6" />
+              <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl flex items-center justify-center mx-auto ${item.color}`}>
+                <item.icon className="w-5 h-5 md:w-6 md:h-6" />
               </div>
               <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30 mb-1">{item.label}</p>
-                <p className="text-3xl font-serif font-bold">{item.value}</p>
-                <p className="text-sm font-medium opacity-60 italic">{item.sub}</p>
+                <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30 mb-1">{item.label}</p>
+                <p className="text-xl md:text-3xl font-serif font-bold">{item.value}</p>
+                <p className="text-[11px] md:text-sm font-medium opacity-60 italic">{item.sub}</p>
               </div>
             </motion.div>
           ))}
         </div>
       </section>
 
+      {/* 1.5 DISSONANCE TEASER */}
+      <section className="py-20 px-6 max-w-5xl mx-auto">
+        <div className="bg-[#1A1C2E] rounded-[60px] p-10 md:p-16 relative overflow-hidden text-white">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/10 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          
+          <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/20 text-red-400 text-[10px] font-black uppercase tracking-[0.3em] border border-red-500/30">
+                <Zap className="w-4 h-4" />
+                Alerte Dissonance Détectée
+              </div>
+              <h2 className="text-3xl md:text-5xl font-serif font-bold leading-tight italic">
+                Votre potentiel cosmique est en <span className="text-red-400">conflit</span> avec vos réflexes.
+              </h2>
+              <p className="text-white/60 text-lg leading-relaxed">
+                Les tests de réflexes que vous venez de passer révèlent un décalage majeur entre votre <strong>{data.pathTitle}</strong> et la réalité de votre système nerveux aujourd'hui.
+              </p>
+            </div>
+            
+            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 space-y-6">
+              <div className="flex items-center gap-4 border-b border-white/10 pb-4">
+                <div className="w-12 h-12 bg-[#C9A24D]/20 rounded-xl flex items-center justify-center text-[#C9A24D]">
+                  <Target className="w-6 h-6" />
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-widest opacity-40">Niveau de Stress Décisionnel</p>
+                  <p className="text-xl font-bold text-red-400 italic">Anormalement Élevé</p>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex justify-between text-xs uppercase tracking-widest opacity-40 font-bold">
+                  <span>Alignement Potentiel</span>
+                  <span>34%</span>
+                </div>
+                <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "34%" }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    className="h-full bg-red-500"
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-white/40 italic">
+                * Ce décalage explique probablement votre sentiment de stagnation ou de fatigue mentale actuelle.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 2. VIDEO - PREVIEW PERSONNALISÉE */}
       <section className="py-20 px-6 max-w-4xl mx-auto space-y-12 text-center">
         <motion.div {...fadeIn} className="space-y-4">
-          <h2 className="text-3xl font-serif font-bold">Aperçu de votre analyse</h2>
-          <p className="text-[#1A1C2E]/60">Votre avatar a commencé à décoder vos mécanismes. Regardez ces quelques secondes.</p>
+          <h2 className="text-3xl md:text-5xl font-serif font-bold">Aperçu de votre analyse profonde</h2>
+          <p className="text-[#1A1C2E]/60 text-lg">Votre avatar a commencé à décoder vos mécanismes. Regardez ces quelques secondes pour comprendre l'enjeu.</p>
         </motion.div>
 
         <motion.div 
           {...fadeIn}
-          className="relative aspect-video bg-[#1A1C2E] rounded-[40px] overflow-hidden shadow-2xl group cursor-pointer"
+          className="relative aspect-video bg-[#1A1C2E] rounded-[40px] overflow-hidden shadow-2xl group cursor-pointer border-4 border-white"
           onClick={() => setIsPlaying(true)}
         >
           {/* Mock Video Placeholder */}
           <div className="absolute inset-0 flex items-center justify-center">
             {!isPlaying ? (
               <>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1C2E] to-transparent opacity-80"></div>
                 <div className="z-10 flex flex-col items-center gap-6">
-                  <div className="w-24 h-24 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                  <div className="w-24 h-24 bg-[#C9A24D] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-xl">
                     <Play className="w-10 h-10 text-white fill-current" />
                   </div>
-                  <p className="text-white font-bold uppercase tracking-widest text-xs">Lancer l'aperçu (30s)</p>
+                  <div className="space-y-2">
+                    <p className="text-white font-bold uppercase tracking-[0.3em] text-xs">Lecture de l'extrait personnalisé</p>
+                    <p className="text-white/40 text-[10px] uppercase tracking-widest">Durée : 30 secondes</p>
+                  </div>
                 </div>
               </>
             ) : (
-              <div className="text-white font-serif italic text-2xl animate-pulse px-10">
-                "D'après vos réflexes lors du test, on remarque un décalage entre votre {data.pathTitle} et vos réactions sous pression..."
+              <div className="w-full h-full flex flex-col items-center justify-center bg-[#08090F] p-12 text-center space-y-8">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-white font-serif italic text-xl md:text-3xl leading-relaxed"
+                >
+                  "Bonjour {data.firstName}. D'après vos réflexes lors du test, on remarque un <span className="text-red-400">blocage inconscient</span> entre votre {data.pathTitle} et vos réactions sous pression... <br /><br />
+                  <span className="text-[#C9A24D]">Vous agissez à l'opposé de votre nature profonde."</span>
+                </motion.div>
+                <div className="flex gap-2">
+                  <div className="w-2 h-2 bg-[#C9A24D] rounded-full animate-bounce" style={{ animationDelay: '0s' }}></div>
+                  <div className="w-2 h-2 bg-[#C9A24D] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 bg-[#C9A24D] rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                </div>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    router.push('/miroir/checkout');
+                  }}
+                  className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white rounded-full text-sm font-bold transition-all border border-white/10"
+                >
+                  Débloquer la suite de la vidéo
+                </button>
               </div>
             )}
           </div>
         </motion.div>
+
+        <p className="text-[#1A1C2E]/40 text-sm italic">
+          * Cet extrait est généré en temps réel par notre moteur d'analyse comportementale.
+        </p>
       </section>
 
       {/* 3. CTA - LE DOSSIER COMPLET */}
@@ -145,22 +231,25 @@ export default function GratuitPage() {
               <span className="text-[#C9A24D] italic">complet de votre âme.</span>
             </h2>
             <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              Le Crash-Test a révélé l'écart. Accédez maintenant à votre dossier complet de 40 pages et à votre conversation vocale avec l'IA.
+              Le Crash-Test a révélé l'écart. <span className="text-[#C9A24D] font-bold">Ne restez pas dans le flou.</span> Accédez maintenant à votre dossier complet de 40 pages et à votre conversation vocale avec l'IA pour lever vos blocages.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 relative z-10 text-left">
             {[
-              { text: "Dossier Personnalisé de 40 pages", icon: BookOpen },
-              { text: "30 min de Coaching Vocal avec l'IA", icon: MessageSquare },
-              { text: "Vidéo d'Analyse Profonde (7 min)", icon: VideoIcon },
-              { text: "Plan de Réalignement sur 7 jours", icon: ShieldCheck }
+              { text: "Rapport Intégral de 40 pages (PDF)", icon: BookOpen, desc: "Numérologie, Astro & Analyse Labo fusionnés." },
+              { text: "Coaching Vocal Privé avec l'IA", icon: MessageSquare, desc: "Posez toutes vos questions à votre miroir." },
+              { text: "Vidéo d'Analyse Comportementale", icon: VideoIcon, desc: "7 minutes pour comprendre vos réflexes." },
+              { text: "Plan d'Action 'Réalignement'", icon: ShieldCheck, desc: "7 jours pour retrouver votre trajectoire." }
             ].map((benefit, i) => (
-              <div key={i} className="flex items-center gap-4 bg-white/5 p-6 rounded-3xl border border-white/10">
-                <div className="w-8 h-8 rounded-full bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D]">
-                  <Check className="w-5 h-5" />
+              <div key={i} className="flex flex-col gap-2 bg-white/5 p-8 rounded-[40px] border border-white/10 hover:bg-white/10 transition-colors">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-2xl bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D]">
+                    <benefit.icon className="w-5 h-5" />
+                  </div>
+                  <span className="text-lg font-bold">{benefit.text}</span>
                 </div>
-                <span className="text-sm font-medium">{benefit.text}</span>
+                <p className="text-white/40 text-sm ml-14">{benefit.desc}</p>
               </div>
             ))}
           </div>
@@ -168,12 +257,23 @@ export default function GratuitPage() {
           <div className="pt-10 relative z-10 space-y-8">
             <button 
               onClick={() => router.push('/miroir/checkout')}
-              className="group relative inline-flex flex-col items-center gap-2 px-16 py-8 bg-[#C9A24D] text-white rounded-full font-bold shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95"
+              className="group relative inline-flex flex-col items-center gap-2 px-12 md:px-20 py-8 md:py-10 bg-[#C9A24D] text-white rounded-full font-bold shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95"
             >
-              <span className="text-2xl md:text-4xl">Je fais le Crash-Test — 49 €</span>
-              <span className="text-[10px] uppercase tracking-[0.2em] opacity-80">Accès Immédiat • Expérience Interactive</span>
+              <div className="flex items-center gap-4">
+                <span className="text-2xl md:text-4xl">Accéder à mon Miroir Intégral</span>
+                <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
+              </div>
+              <span className="text-sm md:text-lg opacity-90 tracking-widest">49 € — PAIEMENT SÉCURISÉ</span>
             </button>
-            <p className="text-white/30 text-[10px] font-black uppercase tracking-[0.4em]">Garanti sans diagnostic ni prédiction médicale</p>
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-white/30 text-[10px] font-black uppercase tracking-[0.4em]">Accès immédiat après paiement • Rapport unique au monde</p>
+              <div className="flex gap-4 opacity-20">
+                {/* Simplified payment icons */}
+                <div className="h-6 w-10 bg-white rounded-md"></div>
+                <div className="h-6 w-10 bg-white rounded-md"></div>
+                <div className="h-6 w-10 bg-white rounded-md"></div>
+              </div>
+            </div>
           </div>
         </motion.div>
       </section>

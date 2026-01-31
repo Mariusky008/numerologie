@@ -23,7 +23,8 @@ import {
   Snowflake,
   Clock,
   Compass,
-  ArrowRight
+  ArrowRight,
+  Layout
 } from 'lucide-react';
 import { PsyMirrorResult } from '@/lib/psy-mirror/types';
 import { UserData, NumerologyResult } from '@/lib/types';
@@ -154,77 +155,95 @@ export default function UnifiedMiroirReport({
         </div>
       </section>
 
-      {/* 3. PARTIE II : LE LABORATOIRE DES RÉFLEXES (RÉALITÉ) */}
+      {/* 3. PARTIE II : LE LABORATOIRE DES COMPORTEMENTS (RÉALITÉ) */}
       <section className="py-32 px-6 bg-[#FDFBF7] border-b border-[#1A1C2E]/5">
         <div className="max-w-6xl mx-auto space-y-24">
           <div className="text-center space-y-6">
             <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#1A1C2E]/5 border border-[#1A1C2E]/10 text-[#1A1C2E] text-[10px] font-bold uppercase tracking-[0.4em]">
               <Activity className="w-4 h-4" />
-              Dimension II : Réalité Biologique
+              Dimension II : Réalité Comportementale
             </div>
-            <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Le Laboratoire des Réflexes</h2>
+            <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Le Laboratoire de l'Action</h2>
             <p className="text-[#1A1C2E]/60 text-xl max-w-2xl mx-auto leading-relaxed">
-              Ce que votre corps fait réellement sous pression. Ici, vos intentions s'effacent devant vos automatismes de survie.
+              L'analyse de tes choix réels. Ici, nous croisons tes réactions aux scénarios de vie et tes réflexes biologiques pour révéler ton mode de fonctionnement instinctif.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-10">
-            {psyResult.insights?.reflex_insights?.map((ri, i) => (
-              <motion.div 
-                key={i}
-                {...fadeIn}
-                className="p-12 rounded-[50px] bg-white border border-[#1A1C2E]/5 hover:shadow-2xl hover:shadow-[#1A1C2E]/5 transition-all group relative overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 p-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity text-[#1A1C2E]">
-                  {ri.title.includes('Attention') && <Brain className="w-28 h-28" />}
-                  {ri.title.includes('Rupture') && <Activity className="w-28 h-28" />}
-                  {ri.title.includes('Risque') && <TrendingUp className="w-28 h-28" />}
-                  {ri.title.includes('Agilité') && <Repeat className="w-28 h-28" />}
-                </div>
-
-                <div className="space-y-8 relative z-10">
-                  <div className="text-[#C9A24D] text-xs font-bold uppercase tracking-[0.4em]">{ri.title}</div>
-                  <h3 className="text-3xl md:text-4xl font-serif font-bold leading-tight text-[#1A1C2E]">{ri.observation}</h3>
-                  
-                  <div className="pt-10 border-t border-[#1A1C2E]/5">
-                    <div className="flex items-center gap-3 text-[#1A1C2E]/40 mb-5">
-                      <Target className="w-5 h-5" />
-                      <span className="text-xs font-bold uppercase tracking-widest text-[#1A1C2E]/80">Protocole d'Entraînement</span>
-                    </div>
-                    <p className="text-xl text-[#5B4B8A] italic font-medium leading-relaxed">
-                      "{ri.exercise}"
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* 6 Psych Dimensions */}
-          <div className="grid md:grid-cols-2 gap-10 pt-12">
-            {psyResult.insights?.dimension_insights?.map((di) => (
-              <div key={di.id} className="p-12 rounded-[50px] bg-white border border-[#1A1C2E]/10 shadow-sm space-y-8 hover:shadow-xl hover:shadow-[#1A1C2E]/5 transition-all">
-                <div className="flex justify-between items-center">
-                  <h3 className="font-serif text-3xl font-bold tracking-tight text-[#1A1C2E]">{di.name}</h3>
-                  <div className="px-5 py-2 bg-[#FDFBF7] rounded-full text-[#C9A24D] font-bold text-sm tracking-widest border border-[#C9A24D]/20">
-                    {psyResult.behavior_profile[di.id]}/100
-                  </div>
-                </div>
-                
-                <div className="space-y-8">
-                  <div className="h-2 w-full bg-[#1A1C2E]/10 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${psyResult.behavior_profile[di.id]}%` }}
-                      className="h-full bg-gradient-to-r from-[#C9A24D] to-[#D4B46B]"
-                    />
-                  </div>
-                  <p className="text-[#1A1C2E] leading-relaxed font-normal text-lg">
-                    {di.text}
-                  </p>
-                </div>
+            {/* REFLEX INSIGHTS */}
+            <div className="md:col-span-2 space-y-12">
+              <div className="flex items-center gap-4 border-b border-[#1A1C2E]/5 pb-6">
+                <Zap className="w-6 h-6 text-[#C9A24D]" />
+                <h3 className="text-3xl font-serif font-bold">Analyses Biologiques & Réflexes</h3>
               </div>
-            ))}
+              <div className="grid md:grid-cols-2 gap-10">
+                {psyResult.insights?.reflex_insights?.map((ri, i) => (
+                  <motion.div 
+                    key={i}
+                    {...fadeIn}
+                    className="p-12 rounded-[50px] bg-white border border-[#1A1C2E]/5 hover:shadow-2xl hover:shadow-[#1A1C2E]/5 transition-all group relative overflow-hidden"
+                  >
+                    <div className="absolute top-0 right-0 p-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity text-[#1A1C2E]">
+                      {ri.title.includes('Attention') && <Brain className="w-28 h-28" />}
+                      {ri.title.includes('Rupture') && <Activity className="w-28 h-28" />}
+                      {ri.title.includes('Risque') && <TrendingUp className="w-28 h-28" />}
+                      {ri.title.includes('Agilité') && <Repeat className="w-28 h-28" />}
+                    </div>
+
+                    <div className="space-y-8 relative z-10">
+                      <div className="text-[#C9A24D] text-xs font-bold uppercase tracking-[0.4em]">{ri.title}</div>
+                      <h3 className="text-3xl md:text-4xl font-serif font-bold leading-tight text-[#1A1C2E]">{ri.observation}</h3>
+                      
+                      <div className="pt-10 border-t border-[#1A1C2E]/5">
+                        <div className="flex items-center gap-3 text-[#1A1C2E]/40 mb-5">
+                          <Target className="w-5 h-5" />
+                          <span className="text-xs font-bold uppercase tracking-widest text-[#1A1C2E]/80">Protocole d'Entraînement</span>
+                        </div>
+                        <p className="text-xl text-[#5B4B8A] italic font-medium leading-relaxed">
+                          "{ri.exercise}"
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* BEHAVIORAL DIMENSIONS */}
+            <div className="md:col-span-2 space-y-12 pt-12">
+              <div className="flex items-center gap-4 border-b border-[#1A1C2E]/5 pb-6">
+                <Layout className="w-6 h-6 text-[#C9A24D]" />
+                <h3 className="text-3xl font-serif font-bold">Décryptage des Scénarios de Vie</h3>
+              </div>
+              <p className="text-[#1A1C2E]/60 text-lg max-w-3xl">
+                Ces dimensions sont calculées à partir de tes choix face aux situations concrètes proposées. Elles révèlent tes piliers comportementaux en situation réelle.
+              </p>
+              <div className="grid md:grid-cols-2 gap-10">
+                {psyResult.insights?.dimension_insights?.map((di) => (
+                  <div key={di.id} className="p-12 rounded-[50px] bg-white border border-[#1A1C2E]/10 shadow-sm space-y-8 hover:shadow-xl hover:shadow-[#1A1C2E]/5 transition-all">
+                    <div className="flex justify-between items-center">
+                      <h3 className="font-serif text-3xl font-bold tracking-tight text-[#1A1C2E]">{di.name}</h3>
+                      <div className="px-5 py-2 bg-[#FDFBF7] rounded-full text-[#C9A24D] font-bold text-sm tracking-widest border border-[#C9A24D]/20">
+                        {psyResult.behavior_profile[di.id]}/100
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-8">
+                      <div className="h-2 w-full bg-[#1A1C2E]/10 rounded-full overflow-hidden">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${psyResult.behavior_profile[di.id]}%` }}
+                          className="h-full bg-gradient-to-r from-[#C9A24D] to-[#D4B46B]"
+                        />
+                      </div>
+                      <p className="text-[#1A1C2E] leading-relaxed font-normal text-lg">
+                        {di.text}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>

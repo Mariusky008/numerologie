@@ -67,26 +67,86 @@ export default function ExperiencePsyMirror() {
   };
 
   const checkFeedback = (count: number, type: 'moduleA' | 'moduleB' | 'moduleC') => {
-    if (type === 'moduleA' && count === 6) {
-      setIntermediateFeedback({
-        title: "Première tendance observée…",
-        message: "Tes réponses suggèrent une recherche d'équilibre entre tes besoins personnels et ton environnement.",
-        type: 'insight'
-      });
-    } else if (type === 'moduleC' && count === 2) {
-      setIntermediateFeedback({
-        title: "Première tendance observée…",
-        message: "Sous pression, tes réflexes montrent une grande capacité d'adaptation immédiate.",
-        type: 'insight'
-      });
-    } else if ((type === 'moduleA' || type === 'moduleB') && count % 4 === 0 && count !== 0) {
-      setIntermediateFeedback({
-        title: "Analyse en cours...",
-        message: "Ce point sera analysé en détail dans ton rapport final.",
-        type: 'presell'
-      });
-    }
-  };
+     if (type === 'moduleA') {
+       if (count === 3) {
+         setIntermediateFeedback({
+           title: "Analyse en cours...",
+           message: "Ta vision de tes propres mécanismes commence à dessiner un profil cohérent.",
+           type: 'presell'
+         });
+       } else if (count === 6) {
+         setIntermediateFeedback({
+           title: "Première tendance observée…",
+           message: "Tes réponses suggèrent une recherche d'équilibre entre tes besoins personnels et ton environnement.",
+           type: 'insight'
+         });
+       } else if (count === 9) {
+         setIntermediateFeedback({
+           title: "Analyse en cours...",
+           message: "La façon dont tu te situes par rapport aux autres est un marqueur fort de ton identité.",
+           type: 'presell'
+         });
+       } else if (count === 12) {
+         setIntermediateFeedback({
+           title: "Analyse en cours...",
+           message: "Ce point sera analysé en détail dans ton rapport final.",
+           type: 'presell'
+         });
+       }
+     } else if (type === 'moduleB') {
+       if (count === 4) {
+         setIntermediateFeedback({
+           title: "Analyse en cours...",
+           message: "Ta réaction face au manque d'information révèle ton niveau de tolérance à l'incertitude.",
+           type: 'presell'
+         });
+       } else if (count === 8) {
+         setIntermediateFeedback({
+           title: "Analyse en cours...",
+           message: "Ce point sera analysé en détail dans ton rapport final.",
+           type: 'presell'
+         });
+       } else if (count === 12) {
+         setIntermediateFeedback({
+           title: "Analyse en cours...",
+           message: "Le poids que tu accordes au regard des autres impacte directement ta fluidité d'action.",
+           type: 'presell'
+         });
+       } else if (count === 16) {
+         setIntermediateFeedback({
+           title: "Analyse en cours...",
+           message: "Ta gestion de la tension émotionnelle est un pilier de ton équilibre global.",
+           type: 'presell'
+         });
+       } else if (count === 20) {
+         setIntermediateFeedback({
+           title: "Analyse en cours...",
+           message: "Ta capacité à structurer le chaos définit ton style de leadership naturel.",
+           type: 'presell'
+         });
+       } else if (count === 24) {
+         setIntermediateFeedback({
+           title: "Analyse en cours...",
+           message: "Ce point sera analysé en détail dans ton rapport final.",
+           type: 'presell'
+         });
+       }
+     } else if (type === 'moduleC') {
+       if (count === 2) {
+         setIntermediateFeedback({
+           title: "Première tendance observée…",
+           message: "Sous pression, tes réflexes montrent une grande capacité d'adaptation immédiate.",
+           type: 'insight'
+         });
+       } else if (count === 4) {
+         setIntermediateFeedback({
+           title: "Analyse en cours...",
+           message: "Ce point sera analysé en détail dans ton rapport final.",
+           type: 'presell'
+         });
+       }
+     }
+   };
 
   const reflexTests = [
     { 

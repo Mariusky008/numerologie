@@ -101,7 +101,7 @@ export default function ResultPsyMirror() {
         <div className="space-y-4">
           <h2 className="text-3xl font-serif font-bold italic">Fusion des données en cours...</h2>
           <p className="text-[#1A1C2E]/60 max-w-sm mx-auto">
-            Nous assemblons votre empreinte de naissance et vos réflexes biologiques pour créer votre miroir intégral.
+            Nous assemblons ton empreinte de naissance, tes choix comportementaux et tes réflexes biologiques pour créer ton miroir intégral.
           </p>
         </div>
       </div>

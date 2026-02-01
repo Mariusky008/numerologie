@@ -7,14 +7,19 @@ import { Compass, Info, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
 interface COPProps {
   tensionLevel: number;
   dayTheme: string;
+  onOrientationChange?: (orientation: string) => void;
 }
 
-export default function COPModule({ tensionLevel, dayTheme }: COPProps) {
+export default function COPModule({ tensionLevel, dayTheme, onOrientationChange }: COPProps) {
   const [step, setStep] = useState(1);
   const [decisionType, setDecisionType] = useState<string | null>(null);
   const [filterResponses, setFilterResponses] = useState<Record<number, string>>({});
   
-  // Logic: Calculate posture based on tension and theme
+  useEffect(() => {
+    if (step === 4 && onOrientationChange) {
+      onOrientationChange(getFinalOrientation().text);
+    }
+  }, [step, filterResponses]);
   const getPosture = () => {
     if (tensionLevel >= 4) return { label: 'Posture d\'observation', color: 'text-blue-400', bg: 'bg-blue-400/10', icon: '🔵' };
     if (tensionLevel >= 2) return { label: 'Posture d\'ajustement', color: 'text-yellow-400', bg: 'bg-yellow-400/10', icon: '🟡' };

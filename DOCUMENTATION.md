@@ -190,3 +190,23 @@ Le processus de livraison a été optimisé pour gérer le délai de génératio
 
 ---
 *Document mis à jour le 1er Février 2026 - Version 3.0*
+
+## 9. Mises à jour V3.1 - Automatisation & Flux Immédiat (Février 2026)
+
+### 9.1 Suppression de l'Intervention Manuelle
+*   **Adieu la Vidéo Manuelle** : Le processus de génération vidéo (HeyGen) et les scripts IA manuels ont été retirés pour garantir une livraison **instantanée**.
+*   **Simplification Admin** : Le Dashboard Admin (`/admin`) a été épuré pour se concentrer sur le suivi des ventes et les statistiques de conversion. Les boutons de génération vidéo et d'envoi manuel ont été supprimés.
+
+### 9.2 Automatisation du Flux Email
+*   **Livraison Instantanée** : Dès la validation du paiement Stripe, le système envoie immédiatement l'email **Miroir Intégral**.
+*   **Contenu de l'Email** : Regroupe le lien vers le Rapport PDF (~40 pages) et l'accès à l'Oracle Vocal (Coach IA).
+*   **Rassurance Post-Achat** : La page de succès (`/success`) a été mise à jour pour confirmer l'envoi immédiat et inviter l'utilisateur à vérifier ses spams.
+
+### 9.3 Séquence de Relance (Marketing Automation)
+Mise en place de templates d'emails pour une séquence post-achat automatisée :
+1.  **J+0 (Immédiat)** : Livraison du Miroir Intégral (Rapport + Oracle).
+2.  **J+3 (Le Roman)** : Email `EmailRomanOffer` proposant de transformer l'analyse en une biographie romancée unique.
+3.  **J+5 (Le Parcours)** : Email `EmailParcoursOffer` invitant à rejoindre le programme d'accompagnement sur 12 mois.
+
+---
+*Document mis à jour le 1er Février 2026 - Version 3.1*

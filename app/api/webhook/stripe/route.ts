@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
-import { EmailReport, EmailConfirmation } from '@/components/emails/Templates';
+import { EmailReport, EmailConfirmation, EmailMiroirIntegral } from '@/components/emails/Templates';
 
 // Configuration Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -110,9 +110,20 @@ export async function POST(request: Request) {
             isPaper: false,
           }),
         });
+      } else if (plan === 'bundle') {
+        // NOUVEAU: Envoi immédiat pour le Pack Miroir Intégral (49€)
+        await resend.emails.send({
+          from: 'Votre Légende <contact@votrelegende.fr>',
+          to: [customerEmail!],
+          subject: 'Accès immédiat : Votre Miroir Intégral est prêt ✨',
+          react: EmailMiroirIntegral({
+            firstName,
+            reportLink: `${baseUrl}/pdf-report-v2?order_id=${orderId}`,
+            coachLink: `${baseUrl}/coach?id=${orderId}&name=${encodeURIComponent(firstName)}`,
+          }),
+        });
       } else {
-        // Pour le Bundle (Vidéo + Rapport + Chat) ou tout autre plan
-        // On envoie d'abord une confirmation de commande "En traitement"
+        // Autres plans (si existants)
         await resend.emails.send({
           from: 'Votre Légende <contact@votrelegende.fr>',
           to: [customerEmail!],

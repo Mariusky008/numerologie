@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BookOpen, Sparkles, User, Calendar, MapPin, Heart, CheckCircle, Clock, Music, Compass, Star, TrendingUp, AlertTriangle, GitBranch, Copy, FileJson, Trash2, Eye, Download, PenTool, ExternalLink } from 'lucide-react';
+import { BookOpen, User, Calendar, MapPin, Heart, CheckCircle, Clock, Compass, Star, TrendingUp, AlertTriangle, Copy, FileJson, Trash2, Eye, Download, ExternalLink, Sparkles, Music, CreditCard } from 'lucide-react';
 import { UserData, NumerologyResult } from '@/lib/types';
 
 export interface BookRequest {
@@ -48,11 +48,6 @@ export interface BookRequest {
 export default function AdminDashboard() {
   const [requests, setRequests] = useState<BookRequest[]>([]);
   const [loading, setLoading] = useState(true);
-  const [generatingId, setGeneratingId] = useState<string | null>(null);
-  const [scriptGeneratingId, setScriptGeneratingId] = useState<string | null>(null);
-  const [editingScriptId, setEditingScriptId] = useState<string | null>(null);
-  const [tempScript, setTempScript] = useState<string>("");
-  const [videoGeneratingId, setVideoGeneratingId] = useState<string | null>(null);
   const [stats, setStats] = useState<any>({});
   
   // Auth state
@@ -135,209 +130,6 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleGenerate = async (id: string) => {
-    setGeneratingId(id);
-    
-    // Simulate generation time
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    
-    try {
-      // Call API to update status in DB
-      const res = await fetch('/api/book-request', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id, status: 'completed', password }),
-      });
-
-      if (res.ok) {
-        // Update local state to show completed
-        setRequests(requests.map(req => 
-          req.id === id ? { ...req, status: 'completed' } : req
-        ));
-        alert("Livre généré avec succès ! Statut mis à jour.");
-      } else {
-        alert("Erreur lors de la mise à jour du statut.");
-      }
-    } catch (error) {
-      console.error('Error updating status:', error);
-      alert("Erreur réseau.");
-    } finally {
-      setGeneratingId(null);
-    }
-  };
-
-  const handleGenerateScript = async (req: BookRequest) => {
-    setScriptGeneratingId(req.id);
-    try {
-      const res = await fetch('/api/generate-script', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: req.id, requestData: req }),
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        setRequests(requests.map(r => 
-          r.id === req.id ? { ...r, generated_script: data.script } : r
-        ));
-        alert("Script généré avec succès !");
-      } else {
-        alert("Erreur: " + data.error);
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Erreur réseau");
-    } finally {
-      setScriptGeneratingId(null);
-    }
-  };
-
-  const handleEditScript = (req: BookRequest) => {
-    setEditingScriptId(req.id);
-    setTempScript(req.generated_script || "");
-  };
-
-  const handleSaveScript = async (id: string) => {
-    // Here we should save to DB, for now we just update local state
-    // Ideally create an endpoint to update just the script
-    setRequests(requests.map(r => 
-      r.id === id ? { ...r, generated_script: tempScript } : r
-    ));
-    setEditingScriptId(null);
-  };
-
-  const handleGenerateVideo = async (req: BookRequest) => {
-    if (!req.generated_script) return;
-    
-    if (!confirm("Voulez-vous lancer la production vidéo HeyGen ? Cela consommera des crédits.")) {
-      return;
-    }
-
-    setVideoGeneratingId(req.id);
-    try {
-      const res = await fetch('/api/generate-video', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: req.id, script: req.generated_script }),
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        alert("Production vidéo lancée ! ID HeyGen: " + data.video_id);
-        // Refresh requests to show processing status
-        fetchRequests();
-      } else {
-        alert("Erreur HeyGen: " + data.error);
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Erreur réseau");
-    } finally {
-      setVideoGeneratingId(null);
-    }
-  };
-
-  const handleSendEmail = async (req: BookRequest) => {
-    if (!req.userData?.video_url || !req.userData.delivery?.email) return;
-
-    if (!confirm(`Envoyer la vidéo à ${req.userData.delivery.email} ?`)) return;
-
-    try {
-      const res = await fetch('/api/send-video', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: req.userData.delivery.email,
-          firstName: req.userData.firstName,
-          videoUrl: req.userData.video_url,
-          requestId: req.id, // Pass request ID for coach link
-        }),
-      });
-
-      if (res.ok) {
-        alert("Email envoyé avec succès !");
-      } else {
-        const err = await res.json();
-        alert("Erreur envoi email: " + err.error);
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Erreur réseau");
-    }
-  };
-
-  const copyToClipboard = (req: BookRequest) => {
-    const prompt = `
-Agis comme un écrivain biographe expert en numérologie.
-Voici le profil complet du sujet pour écrire son "Roman de Vie".
-
---- PROFIL NUMÉROLOGIQUE ---
-Prénom: ${req.userData.firstName}
-Nom: ${req.userData.lastName}
-Date de Naissance: ${req.userData.birthDate}
-Focus de lecture: ${req.userData.focus || 'Non spécifié'}
-
-Chemin de Vie: ${req.reportResults.lifePath}
-Nombre d'Expression: ${req.reportResults.expression}
-Élan Spirituel: ${req.reportResults.soulUrge}
-Image Sociale: ${req.reportResults.personality}
-Année Personnelle: ${req.reportResults.personalYear}
-
-Grille d'Inclusion: ${req.reportResults.inclusionGrid ? Object.entries(req.reportResults.inclusionGrid).map(([k, v]) => `${k}:${v}`).join(', ') : 'Non calculée'}
-Dettes Karmiques (Manques): ${req.reportResults.missingNumbers?.join(', ') || 'Aucune'}
-Forces (Excès): ${req.reportResults.excessNumbers?.join(', ') || 'Aucune'}
-Moi Subconscient: ${req.reportResults.subconsciousSelf || 'Non calculé'}
-Le Pont: ${req.reportResults.bridgeNumber || 'Non calculé'}
-
-Cycles de Vie:
-- Cycle 1 (Formatif): ${req.reportResults.cycles.cycle1}
-- Cycle 2 (Productif): ${req.reportResults.cycles.cycle2}
-- Cycle 3 (Moisson): ${req.reportResults.cycles.cycle3}
-- Cycle 4 (Sagesse): ${req.reportResults.cycles.cycle4}
-
-Défis de Vie:
-- Mineur 1: ${req.reportResults.challenges.minor1}
-- Mineur 2: ${req.reportResults.challenges.minor2}
-- Majeur: ${req.reportResults.challenges.major}
-- Ultime: ${req.reportResults.challenges.major2}
-
-Défis Profonds (Module 3): ${req.reportResults.deepChallenges?.join(', ') || 'Non calculé'}
-Vibration Lieu de Naissance: ${req.reportResults.astroResonance?.birthPlaceVibration || 'Non calculé'}
-
-Prévisions Carrière (10 ans):
-${req.reportResults.careerForecast ? req.reportResults.careerForecast.map(f => `- ${f.year}: AP ${f.personalYear}`).join('\n') : 'Non calculé'}
-
---- ÉLÉMENTS BIOGRAPHIQUES (SOUVENIRS) ---
-Thème du Livre: ${req.lifeDetails.bookTheme || 'Non spécifié'}
-Pire Galère (Héros humain): ${req.lifeDetails.worstOrdeal || '-'}
-Anecdote Bonus: ${req.lifeDetails.bonusAnecdote || '-'}
-
-Lieux de vie: ${req.lifeDetails.placesLived}
-Déménagements: ${req.lifeDetails.moves}
-Vie Sentimentale: ${req.lifeDetails.relationships}
-Événements Majeurs: ${req.lifeDetails.majorEvents}
-Souvenirs d'Enfance: ${req.lifeDetails.childhoodMemories || '-'}
-Passions: ${req.lifeDetails.passions || '-'}
-Rêves & Regrets: ${req.lifeDetails.dreams || '-'}
-Mentors: ${req.lifeDetails.mentors || '-'}
-Rituels: ${req.lifeDetails.dailyRituals || '-'}
-Peurs: ${req.lifeDetails.fears || '-'}
-Notes Personnelles: ${req.lifeDetails.otherNotes || '-'}
-
---- CONSIGNE ---
-Écris le premier chapitre d'un roman à la troisième personne centré sur ce personnage.
-Le genre littéraire souhaité est : ${req.lifeDetails.bookTheme || 'Roman Initiatique'}.
-L'axe principal du récit doit être : ${req.userData.focus || 'Le développement personnel'}.
-Utilise les cycles et les défis pour structurer l'intrigue et les éléments biographiques pour donner de la chair à l'histoire.
-Le ton doit être inspirant, mystérieux et profondément psychologique.
-    `;
-    
-    navigator.clipboard.writeText(prompt);
-    alert("Prompt complet copié dans le presse-papier !");
   };
 
   const handleDelete = async (id: string) => {
@@ -463,7 +255,7 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
           <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
             <div className="flex items-center gap-4 mb-2">
               <div className="p-3 bg-amber-100 text-amber-600 rounded-full">
-                <PenTool className="w-6 h-6" />
+                <CreditCard className="w-6 h-6" />
               </div>
               <div>
                 <p className="text-xs text-stone-500 uppercase tracking-wider font-bold">Clics Paiement</p>
@@ -719,117 +511,6 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                 </div>
 
                 {/* Actions */}
-                
-                {/* STUDIO VIDEO SECTION */}
-                <div className="bg-slate-50 p-6 border-t border-stone-100">
-                  <h4 className="font-serif font-bold text-[#78350f] mb-4 flex items-center gap-2">
-                    <Music className="w-4 h-4" /> Studio Vidéo IA
-                  </h4>
-                  
-                  {!req.generated_script ? (
-                    <div className="text-center py-6 border-2 border-dashed border-slate-200 rounded-lg">
-                      <p className="text-sm text-slate-500 mb-4">Aucun script généré pour le moment</p>
-                      <button
-                        onClick={() => handleGenerateScript(req)}
-                        disabled={!!scriptGeneratingId}
-                        className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm inline-flex items-center gap-2 disabled:opacity-50"
-                      >
-                        {scriptGeneratingId === req.id ? (
-                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></div>
-                        ) : (
-                          <Sparkles className="w-4 h-4" />
-                        )}
-                        Rédiger avec ChatGPT
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="space-y-4">
-                      {editingScriptId === req.id ? (
-                        <div className="space-y-2">
-                          <textarea
-                            value={tempScript}
-                            onChange={(e) => setTempScript(e.target.value)}
-                            className="w-full h-64 p-4 rounded-lg border border-slate-300 focus:ring-2 focus:ring-indigo-500 font-mono text-sm"
-                          />
-                          <div className="flex justify-end gap-2">
-                            <button 
-                              onClick={() => setEditingScriptId(null)}
-                              className="px-3 py-1 text-slate-600 hover:text-slate-800"
-                            >
-                              Annuler
-                            </button>
-                            <button 
-                              onClick={() => handleSaveScript(req.id)}
-                              className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                            >
-                              Valider le Script
-                            </button>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="relative group">
-                          <div className="bg-white p-4 rounded-lg border border-slate-200 text-sm leading-relaxed whitespace-pre-wrap max-h-60 overflow-y-auto">
-                            {req.generated_script}
-                          </div>
-                          <button
-                            onClick={() => handleEditScript(req)}
-                            className="absolute top-2 right-2 p-2 bg-white/90 shadow rounded-full text-slate-500 hover:text-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity"
-                          >
-                            <PenTool className="w-4 h-4" />
-                          </button>
-                        </div>
-                      )}
-                      
-                      {/* HeyGen Action */}
-                      <div className="flex justify-end pt-2">
-                        {/* Status Display */}
-                         {req.userData?.video_status && (
-                            <div className="mr-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider">
-                              {req.userData.video_status === 'completed' && <span className="text-green-600">Vidéo Prête</span>}
-                              {req.userData.video_status === 'processing' && <span className="text-amber-600 animate-pulse">En cours...</span>}
-                              {req.userData.video_status === 'failed' && <span className="text-red-600">Échec</span>}
-                            </div>
-                         )}
-
-                         <button 
-                           onClick={() => handleGenerateVideo(req)}
-                           disabled={!!videoGeneratingId || req.userData?.video_status === 'processing'}
-                           className="flex items-center gap-2 px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-wait"
-                         >
-                            {videoGeneratingId === req.id ? (
-                               <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></div>
-                            ) : (
-                               <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-                            )}
-                            Production HeyGen
-                         </button>
-                      </div>
-
-                      {/* Video Player */}
-                      {req.userData?.video_url && (
-                        <div className="mt-4 border rounded-lg overflow-hidden bg-black">
-                           <video 
-                             src={req.userData.video_url} 
-                             controls 
-                             className="w-full h-auto max-h-[400px] mx-auto"
-                           />
-                           <div className="p-2 bg-stone-100 flex justify-center gap-4">
-                              <a href={req.userData.video_url} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline flex items-center gap-1">
-                                <Eye className="w-3 h-3" /> Voir
-                              </a>
-                              <button 
-                                onClick={() => handleSendEmail(req)}
-                                className="text-xs text-green-600 hover:underline flex items-center gap-1 font-bold"
-                              >
-                                <Sparkles className="w-3 h-3" /> Envoyer Pack Complet
-                              </button>
-                           </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-
                 <div className="p-4 bg-stone-50 border-t border-stone-100 flex justify-between gap-3">
                   <button
                     onClick={() => handleDelete(req.id)}
@@ -837,36 +518,24 @@ Le ton doit être inspirant, mystérieux et profondément psychologique.
                     title="Supprimer la demande"
                   >
                     <Trash2 className="w-4 h-4" />
+                    Supprimer
                   </button>
                   
                   <div className="flex gap-3">
                     <button
-                      onClick={() => copyToClipboard(req)}
-                      className="flex items-center gap-2 px-4 py-3 bg-stone-200 text-stone-700 rounded-lg hover:bg-stone-300 transition-colors font-medium text-sm"
+                      onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/pdf-report-v2?order_id=${req.id}`)}
+                      className="flex items-center gap-2 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors font-medium text-sm"
                     >
                       <Copy className="w-4 h-4" />
-                      Copier Prompt IA
+                      Lien PDF
                     </button>
-                    
-                    {req.status !== 'completed' && (
-                      <button
-                        onClick={() => handleGenerate(req.id)}
-                        disabled={generatingId === req.id}
-                        className="flex items-center gap-2 px-6 py-3 bg-[#78350f] text-white rounded-lg hover:bg-[#573c28] transition-colors shadow-lg disabled:opacity-70 disabled:cursor-wait"
-                      >
-                        {generatingId === req.id ? (
-                          <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></div>
-                            Écriture...
-                          </>
-                        ) : (
-                          <>
-                            <Sparkles className="w-5 h-5" />
-                            Générer (Simu)
-                          </>
-                        )}
-                      </button>
-                    )}
+                    <button
+                      onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/coach?id=${req.id}&name=${encodeURIComponent(req.userData.firstName)}`)}
+                      className="flex items-center gap-2 px-4 py-3 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors font-medium text-sm"
+                    >
+                      <Copy className="w-4 h-4" />
+                      Lien Oracle
+                    </button>
                   </div>
                 </div>
               </div>

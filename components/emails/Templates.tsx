@@ -13,6 +13,64 @@ import {
 } from '@react-email/components';
 import * as React from 'react';
 
+interface EmailMiroirIntegralProps {
+  firstName: string;
+  reportLink: string;
+  coachLink: string;
+}
+
+export const EmailMiroirIntegral = ({
+  firstName,
+  reportLink,
+  coachLink,
+}: EmailMiroirIntegralProps) => (
+  <Html>
+    <Head />
+    <Preview>Votre Miroir Intégral est prêt ✨</Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Heading style={h1}>Votre Révélation est là ✨</Heading>
+        <Text style={text}>Bonjour {firstName},</Text>
+        <Text style={text}>
+          L'analyse de votre fonctionnement est terminée. Voici votre accès complet au Miroir Intégral.
+        </Text>
+        
+        <Section style={highlightBox}>
+          <Heading as="h3" style={h3}>1. Votre Dossier PDF (~40 pages)</Heading>
+          <Text style={text}>
+            Numérologie, astrologie et analyse comportementale fusionnées dans une lecture structurée.
+          </Text>
+          <Button style={button} href={reportLink}>
+            📄 Accéder à mon Rapport
+          </Button>
+        </Section>
+
+        <Section style={box}>
+          <Heading as="h3" style={h3}>2. Votre Oracle Vocal</Heading>
+          <Text style={text}>
+            Posez toutes vos questions à l'Oracle pour explorer vos blocages et vos potentiels.
+          </Text>
+          <Button style={secondaryButton} href={coachLink}>
+            🎙️ Parler à l'Oracle
+          </Button>
+        </Section>
+
+        <Section style={box}>
+          <Heading as="h3" style={h3}>🧭 Plan d’Action “Réalignement”</Heading>
+          <Text style={text}>
+            Retrouvez votre protocole de 7 jours à la fin de votre dossier PDF pour commencer à réduire l'écart entre votre potentiel et votre fonctionnement actuel.
+          </Text>
+        </Section>
+
+        <Text style={footer}>
+          L'équipe Votre Légende.<br/>
+          Pensez à vérifier vos spams pour nos futurs messages.
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+);
+
 interface EmailConfirmationProps {
   firstName: string;
 }
@@ -413,6 +471,96 @@ export const EmailExpertFollowUp = ({
 
         <Text style={footer}>
           Service partenaire certifié. Satisfait ou remboursé.<br/>
+          L'équipe Votre Légende.
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+);
+
+interface EmailRomanOfferProps {
+  firstName: string;
+  romanLink: string;
+}
+
+export const EmailRomanOffer = ({
+  firstName,
+  romanLink,
+}: EmailRomanOfferProps) => (
+  <Html>
+    <Head />
+    <Preview>Et si votre vie était un roman ? 📖</Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Heading style={h1}>Le Roman de Votre Vie 📖</Heading>
+        <Text style={text}>Bonjour {firstName},</Text>
+        <Text style={text}>
+          Cela fait 3 jours que vous avez découvert votre Miroir Intégral. J'espère que cette lecture vous a apporté les premières clés de compréhension que vous cherchiez.
+        </Text>
+        <Text style={text}>
+          Aujourd'hui, j'ai une proposition unique pour vous.
+        </Text>
+        
+        <Section style={box}>
+          <Heading as="h3" style={h3}>Imaginez-vous comme le héros d'une quête épique...</Heading>
+          <Text style={text}>
+            Nous pouvons transformer vos données numérologiques et vos expériences de vie en un véritable <strong>Roman de Vie personnalisé</strong>.
+          </Text>
+          <ul style={{ paddingLeft: '20px', margin: '10px 0', color: '#57534e' }}>
+            <li>Un récit de 100 pages dont vous êtes le personnage principal.</li>
+            <li>Vos défis transformés en étapes initiatiques.</li>
+            <li>Une lecture captivante pour porter un nouveau regard sur votre parcours.</li>
+          </ul>
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <Button style={button} href={romanLink}>
+              Découvrir mon Roman de Vie
+            </Button>
+          </div>
+        </Section>
+
+        <Text style={footer}>
+          L'équipe Votre Légende.
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+);
+
+interface EmailParcoursOfferProps {
+  firstName: string;
+}
+
+export const EmailParcoursOffer = ({
+  firstName,
+}: EmailParcoursOfferProps) => (
+  <Html>
+    <Head />
+    <Preview>Prêt pour la prochaine étape de votre voyage ? 🧭</Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Heading style={h1}>Votre Trajectoire sur 12 Mois 🧭</Heading>
+        <Text style={text}>Bonjour {firstName},</Text>
+        <Text style={text}>
+          Le Miroir Intégral vous a montré <strong>où vous en êtes</strong>. Mais comment maintenir cet alignement dans la durée ?
+        </Text>
+        
+        <Section style={highlightBox}>
+          <Heading as="h3" style={h3}>Le Parcours des 12 Mois</Heading>
+          <Text style={text}>
+            Un accompagnement structuré, mois après mois, pour naviguer selon vos cycles personnels et ne plus jamais avancer à l'aveugle.
+          </Text>
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <Button style={button} href="https://www.votrelegende.fr/parcours-12-mois">
+              Découvrir le Parcours 12 Mois
+            </Button>
+          </div>
+        </Section>
+
+        <Text style={text}>
+          Ne laissez pas vos découvertes du Miroir Intégral rester de simples informations. Transformez-les en une boussole quotidienne.
+        </Text>
+
+        <Text style={footer}>
           L'équipe Votre Légende.
         </Text>
       </Container>

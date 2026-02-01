@@ -2,7 +2,7 @@
 
 import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { CheckCircle, Mail, Package, ArrowRight, BookOpen, Download } from 'lucide-react';
+import { CheckCircle, Mail, Package, ArrowRight, BookOpen, Download, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 function SuccessContent() {
@@ -69,28 +69,22 @@ function SuccessContent() {
               </div>
             )}
 
-            {/* Cas 3 à 8 : Livre (Bundle) */}
+            {/* Cas 3 à 8 : Miroir Intégral (Bundle) */}
             {isBundle && (
               <div className="flex items-start gap-4">
                 <div className="bg-[#C9A24D]/10 p-2 rounded-lg">
-                   <BookOpen className="w-6 h-6 text-[#C9A24D]" />
+                   <Sparkles className="w-6 h-6 text-[#C9A24D]" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#2C2F4A]">Votre Roman de Vie</h3>
+                  <h3 className="font-bold text-[#2C2F4A]">Votre Miroir Intégral</h3>
                   <p className="text-sm text-[#2C2F4A]/70 mt-1">
-                    Vous avez reçu un email à <strong>{email}</strong> contenant votre Dossier Essentiel (PDF) ainsi que le lien pour configurer votre Livre.
+                    Félicitations ! Votre accès complet est prêt. Vous allez recevoir un email à <strong>{email}</strong> contenant le lien de votre rapport personnalisé, votre accès à l'Oracle (Coach Vocal) et votre plan d'action.
                   </p>
                   
-                  {isPaper ? (
-                     <div className="mt-3 flex items-start gap-2 text-sm text-[#C9A24D] font-bold bg-[#C9A24D]/5 p-3 rounded-lg border border-[#C9A24D]/20">
-                      <Package className="w-4 h-4 shrink-0 mt-0.5" />
-                      <span>Une fois configuré, votre livre sera imprimé et expédié à votre adresse.</span>
-                    </div>
-                  ) : (
-                    <div className="mt-3 text-sm text-[#5B4B8A] bg-[#5B4B8A]/5 p-3 rounded-lg border border-[#5B4B8A]/10">
-                      <span>Votre livre numérique sera généré dès que vous aurez complété les informations via le lien reçu.</span>
-                    </div>
-                  )}
+                  <div className="mt-4 flex items-start gap-2 text-sm text-[#5B4B8A] bg-[#5B4B8A]/5 p-3 rounded-lg border border-[#5B4B8A]/10">
+                    <Mail className="w-4 h-4 shrink-0 mt-0.5" />
+                    <span><strong>Attention :</strong> Pensez à vérifier vos courriers indésirables (spams) si vous ne recevez rien dans les 2 prochaines minutes.</span>
+                  </div>
                 </div>
               </div>
             )}

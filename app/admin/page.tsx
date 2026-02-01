@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BookOpen, User, Calendar, MapPin, Heart, CheckCircle, Clock, Compass, Star, TrendingUp, AlertTriangle, Copy, FileJson, Trash2, Eye, Download, ExternalLink, Sparkles, Music, CreditCard, Brain } from 'lucide-react';
+import { BookOpen, User, Calendar, MapPin, Heart, CheckCircle, Clock, Compass, Star, TrendingUp, AlertTriangle, Copy, FileJson, Trash2, Eye, Download, ExternalLink, Sparkles, Music, CreditCard, Brain, Zap } from 'lucide-react';
 import { UserData, NumerologyResult } from '@/lib/types';
 
 export interface BookRequest {

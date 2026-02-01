@@ -1,6 +1,5 @@
-import React from 'react';
 import { PROGRAM_DATA } from '@/lib/programme/data';
-import DayDetailClient from './DayDetailClient';
+import DayDetailClient from '@/components/programme/DayDetailClient';
 import { notFound } from 'next/navigation';
 
 export async function generateStaticParams() {

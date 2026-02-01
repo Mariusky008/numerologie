@@ -30,7 +30,7 @@ import { PsyMirrorResult } from '@/lib/psy-mirror/types';
 import { UserData, NumerologyResult } from '@/lib/types';
 import { NameData } from '@/lib/numerology/db_etymology';
 import PsyCoachChat from '@/components/chat/PsyCoachChat';
-import { TARGETED_LECTURES } from '@/lib/psy-mirror/lectures';
+import { getPersonalizedLectures, TargetedLecture } from '@/lib/psy-mirror/lectures';
 import PersonalityRadar from './PersonalityRadar';
 import KeyNumbersSection from './design-system/KeyNumbersSection';
 import PartAstroV2 from './parts/PartAstroV2';
@@ -57,6 +57,7 @@ export default function UnifiedMiroirReport({
   const [isOracleOpen, setIsOracleOpen] = React.useState(false);
 
   const decadeForecast = generateDecadeForecast(userData.birthDate);
+  const personalizedLectures = getPersonalizedLectures(psyResult);
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -431,7 +432,7 @@ export default function UnifiedMiroirReport({
           </div>
 
           <div className="grid grid-cols-1 gap-16">
-            {TARGETED_LECTURES.map((lecture, index) => (
+            {personalizedLectures.map((lecture: TargetedLecture, index: number) => (
               <motion.div 
                 key={lecture.id}
                 {...fadeIn}
@@ -453,7 +454,7 @@ export default function UnifiedMiroirReport({
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 pt-2">
-                      {lecture.questions.map(q => (
+                      {lecture.questions.map((q: string) => (
                         <span key={q} className="text-[9px] font-bold px-2 py-1 rounded-md bg-[#1A1C2E]/5 text-[#1A1C2E]/40 uppercase">
                           {q}
                         </span>
@@ -491,7 +492,7 @@ export default function UnifiedMiroirReport({
                       <div className="space-y-4">
                         <p className="text-2xl font-serif font-bold italic text-[#1A1C2E]">{lecture.exercise.title}</p>
                         <ul className="space-y-3">
-                          {lecture.exercise.steps.map((step, i) => (
+                          {lecture.exercise.steps.map((step: string, i: number) => (
                             <li key={i} className="flex items-start gap-3 text-[#1A1C2E]/70">
                               <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24D] mt-2 shrink-0" />
                               <span>{step}</span>

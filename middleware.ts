@@ -18,16 +18,19 @@ export function middleware(req: NextRequest) {
     const basicAuth = req.headers.get('authorization');
 
     if (basicAuth) {
-      const authValue = basicAuth.split(' ')[1];
-      const [user, pwd] = atob(authValue).split(':');
+      try {
+        const authValue = basicAuth.split(' ')[1];
+        const decoded = Buffer.from(authValue, 'base64').toString();
+        const [user, pwd] = decoded.split(':');
 
-      // Récupération des identifiants depuis les variables d'environnement
-      // Fallback sur des valeurs par défaut si non définies (DEV uniquement)
-      const validUser = process.env.ADMIN_USER || 'admin';
-      const validPass = process.env.ADMIN_PASSWORD || 'numerologie2024';
+        const validUser = process.env.ADMIN_USER || 'admin';
+        const validPass = process.env.ADMIN_PASSWORD || 'numerologie2024';
 
-      if (user === validUser && pwd === validPass) {
-        return NextResponse.next();
+        if (user === validUser && pwd === validPass) {
+          return NextResponse.next();
+        }
+      } catch (e) {
+        console.error("Middleware Auth Decoding Error:", e);
       }
     }
 

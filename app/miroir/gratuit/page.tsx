@@ -25,30 +25,6 @@ import { calculateLifePathNumber, getLifePathData, getSunSign, getMoonSign, getA
 export default function GratuitPage() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [displayedText, setDisplayedText] = useState('');
-  const [isFinished, setIsFinished] = useState(false);
-
-  const fullText = data ? `Bonjour ${data.firstName}. À partir de tes réponses et de tes réflexes lors du test, on observe un décalage entre certains traits associés à ton potentiel (ce que la numérologie et l’astrologie mettent en lumière) et la manière dont tu réagis lorsque tu es sous pression. Il ne s’agit pas d’un problème, mais d’une tension fréquente entre ce que l’on porte profondément et ce que l’on met en place dans le quotidien. La suite de l’analyse permet de mieux comprendre comment :
-- mieux comprendre comment ce décalage s’installe
-- le lire avec plus de clarté
-- identifier ce qui freine certaines décisions
-- explorer des pistes d’ajustement progressif.` : '';
-
-  useEffect(() => {
-    if (isPlaying && !isFinished) {
-      let i = 0;
-      const timer = setInterval(() => {
-        setDisplayedText(fullText.slice(0, i));
-        i++;
-        if (i > fullText.length) {
-          clearInterval(timer);
-          setIsFinished(true);
-        }
-      }, 30);
-      return () => clearInterval(timer);
-    }
-  }, [isPlaying, fullText, isFinished]);
 
   useEffect(() => {
     const finalData = localStorage.getItem('psy_mirror_final_data');
@@ -188,9 +164,14 @@ export default function GratuitPage() {
               <h2 className="text-3xl md:text-5xl font-serif font-bold leading-tight italic">
                 Les tests que tu viens de passer mettent en lumière <span className="text-red-400">un écart notable</span> entre ton potentiel de naissance et ta manière actuelle de réagir face aux choix.
               </h2>
-              <p className="text-white/60 text-lg leading-relaxed">
-                Cela ne signifie pas un problème, mais une tension fréquente entre potentiel et adaptation.
-              </p>
+              <div className="space-y-4 text-white/60 text-lg leading-relaxed">
+                <p>
+                  Cela ne signifie pas un problème, mais une tension fréquente entre potentiel et adaptation.
+                </p>
+                <p className="border-l-2 border-[#C9A24D]/30 pl-4 py-1 italic">
+                  Cette observation repose à la fois sur tes <span className="text-white">réflexes biologiques</span> mesurés en laboratoire et sur tes <span className="text-white">réponses aux scénarios psychologiques</span>. La convergence de ces deux analyses confirme un décalage dans la gestion de tes ressources actuelles.
+                </p>
+              </div>
             </div>
             
             <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 space-y-6">
@@ -223,115 +204,6 @@ export default function GratuitPage() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* 2. VIDEO - PREVIEW PERSONNALISÉE */}
-      <section className="py-20 px-6 max-w-4xl mx-auto space-y-12 text-center">
-        <motion.div {...fadeIn} className="space-y-4">
-          <h2 className="text-3xl md:text-5xl font-serif font-bold">Aperçu de ton analyse profonde</h2>
-          <p className="text-[#1A1C2E]/60 text-lg">Ton avatar a commencé à décoder tes mécanismes. Regarde ces quelques secondes pour comprendre l'enjeu.</p>
-        </motion.div>
-
-        <motion.div 
-          {...fadeIn}
-          className="relative min-h-[400px] md:min-h-[500px] bg-[#08090F] rounded-[40px] overflow-hidden shadow-2xl group cursor-pointer border-4 border-white flex items-center justify-center"
-          onClick={() => setIsPlaying(true)}
-        >
-          {/* BACKGROUND AMBIENCE */}
-          <div className="absolute inset-0 z-0">
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(201,162,77,0.1),_transparent_70%)]"></div>
-            <motion.div 
-              animate={{ 
-                scale: [1, 1.2, 1],
-                opacity: [0.1, 0.2, 0.1]
-              }}
-              transition={{ duration: 8, repeat: Infinity }}
-              className="absolute -top-24 -left-24 w-96 h-96 bg-[#5B4B8A] rounded-full blur-[100px]"
-            />
-            <motion.div 
-              animate={{ 
-                scale: [1, 1.3, 1],
-                opacity: [0.05, 0.15, 0.05]
-              }}
-              transition={{ duration: 10, repeat: Infinity, delay: 1 }}
-              className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#C9A24D] rounded-full blur-[120px]"
-            />
-          </div>
-
-          {/* CONTENT */}
-          {!isPlaying ? (
-            <div className="relative z-10 flex flex-col items-center gap-8">
-              <div className="relative">
-                <motion.div 
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-28 h-28 bg-[#C9A24D] rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(201,162,77,0.4)]"
-                >
-                  <Play className="w-12 h-12 text-white fill-current" />
-                </motion.div>
-                <div className="absolute -inset-4 border border-[#C9A24D]/30 rounded-full animate-ping"></div>
-              </div>
-              <div className="space-y-3">
-                <p className="text-[#C9A24D] font-black uppercase tracking-[0.4em] text-xs">Analyse comportementale IA</p>
-                <p className="text-white/40 text-[10px] uppercase tracking-widest">Durée de l'extrait : 30 secondes</p>
-              </div>
-            </div>
-          ) : (
-            <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-8 md:p-16 text-center space-y-10">
-              {/* VIDEO INTERFACE ELEMENTS */}
-              <div className="absolute top-8 left-8 flex items-center gap-3">
-                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Live decoding...</span>
-              </div>
-              <div className="absolute top-8 right-8">
-                <Brain className="w-6 h-6 text-white/20" />
-              </div>
-
-              <div className="flex-1 flex items-center justify-center max-w-3xl mx-auto">
-                <motion.p 
-                  className="text-white font-serif italic text-xl md:text-3xl leading-relaxed"
-                >
-                  {displayedText}
-                  <motion.span 
-                    animate={{ opacity: [1, 0] }}
-                    transition={{ duration: 0.5, repeat: Infinity }}
-                    className="inline-block w-1 h-8 md:h-10 bg-[#C9A24D] ml-2 align-middle"
-                  />
-                </motion.p>
-              </div>
-
-              <AnimatePresence>
-                {isFinished && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="space-y-6 pt-4"
-                  >
-                    <div className="flex justify-center gap-3">
-                      <div className="w-2 h-2 bg-[#C9A24D] rounded-full"></div>
-                      <div className="w-2 h-2 bg-[#C9A24D] rounded-full"></div>
-                      <div className="w-2 h-2 bg-[#C9A24D] rounded-full"></div>
-                    </div>
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        router.push('/miroir/checkout');
-                      }}
-                      className="group flex items-center gap-4 px-10 py-5 bg-[#C9A24D] text-white rounded-full text-lg font-bold transition-all shadow-2xl hover:scale-105 active:scale-95"
-                    >
-                      Débloquer l'analyse complète
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          )}
-        </motion.div>
-
-        <p className="text-[#1A1C2E]/40 text-sm italic">
-          * Cet extrait est généré en temps réel par notre moteur d'analyse comportementale.
-        </p>
       </section>
 
       {/* 3. CTA - LE DOSSIER COMPLET */}
@@ -448,13 +320,18 @@ export default function GratuitPage() {
               </div>
               <span className="text-sm md:text-lg opacity-90 tracking-widest">49 € — PAIEMENT SÉCURISÉ</span>
             </button>
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col items-center gap-4">
               <p className="text-white/30 text-[10px] font-black uppercase tracking-[0.4em]">Accès immédiat après paiement • Rapport unique au monde</p>
-              <div className="flex gap-4 opacity-20">
-                {/* Simplified payment icons */}
-                <div className="h-6 w-10 bg-white rounded-md"></div>
-                <div className="h-6 w-10 bg-white rounded-md"></div>
-                <div className="h-6 w-10 bg-white rounded-md"></div>
+              <div className="flex gap-4 opacity-40">
+                <div className="h-8 bg-white/10 rounded-lg px-3 flex items-center border border-white/10">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-3 w-auto brightness-0 invert" alt="Visa" />
+                </div>
+                <div className="h-8 bg-white/10 rounded-lg px-3 flex items-center border border-white/10">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" className="h-5 w-auto brightness-0 invert" alt="Mastercard" />
+                </div>
+                <div className="h-8 bg-white/10 rounded-lg px-3 flex items-center border border-white/10">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" className="h-4 w-auto brightness-0 invert" alt="PayPal" />
+                </div>
               </div>
             </div>
           </div>

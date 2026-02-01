@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { 
@@ -33,6 +34,7 @@ import CrashTestAnimation from '@/components/experience/CrashTestAnimation';
 export default function Home() {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
   const { scrollYProgress } = useScroll();
   
   // Parallax and opacity effects for the background
@@ -116,12 +118,13 @@ export default function Home() {
             <Zap className="w-5 h-5 text-[#C9A24D]" />
             <span className="text-[10px] font-black uppercase tracking-widest">Crash-Test</span>
           </div>
-          <button 
-            onClick={() => router.push('/miroir/experience')}
+          <Link 
+            href="/miroir/experience"
+            onClick={() => setIsNavigating(true)}
             className="bg-[#1A1C2E] text-white text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full hover:bg-[#C9A24D] transition-colors"
           >
-            Commencer
-          </button>
+            {isNavigating ? 'Chargement...' : 'Commencer'}
+          </Link>
         </div>
       </nav>
 
@@ -193,14 +196,17 @@ export default function Home() {
             transition={{ delay: 0.6 }}
             className="pt-6"
           >
-            <button 
-              onClick={() => router.push('/miroir/experience')}
+            <Link 
+              href="/miroir/experience"
+              onClick={() => setIsNavigating(true)}
               className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold text-xl hover:bg-[#C9A24D] transition-all shadow-[0_40px_80px_-20px_rgba(26,28,46,0.3)] hover:shadow-[#C9A24D]/40 active:scale-95 overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              <span className="relative z-10">👉 Faire mon Crash-Test</span>
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
-            </button>
+              <span className="relative z-10">
+                {isNavigating ? 'Préparation du Test...' : '👉 Faire mon Crash-Test'}
+              </span>
+              <ArrowRight className={`w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10 ${isNavigating ? 'animate-pulse' : ''}`} />
+            </Link>
           </motion.div>
         </div>
 
@@ -465,13 +471,16 @@ export default function Home() {
             </p>
 
             <div className="pt-4">
-              <button 
-                onClick={() => router.push('/miroir/experience')}
+              <Link 
+                href="/miroir/experience"
+                onClick={() => setIsNavigating(true)}
                 className="group relative inline-flex flex-col items-center gap-2 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95 overflow-hidden"
               >
-                <span className="text-2xl md:text-3xl">Je fais le Crash-Test — 49 €</span>
+                <span className="text-2xl md:text-3xl">
+                  {isNavigating ? 'Chargement...' : 'Je fais le Crash-Test — 49 €'}
+                </span>
                 <span className="text-[10px] uppercase tracking-[0.2em] opacity-60">Accès immédiat • Dossier + Vidéo + Coaching</span>
-              </button>
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -668,18 +677,21 @@ export default function Home() {
           </h2>
 
           <div className="space-y-10 pt-10">
-            <button 
-              onClick={() => router.push('/miroir/experience')}
+            <Link 
+              href="/miroir/experience"
+              onClick={() => setIsNavigating(true)}
               className="group relative inline-flex flex-col items-center gap-4 px-16 py-10 bg-[#1A1C2E] text-white rounded-[40px] shadow-[0_50px_100px_-20px_rgba(26,28,46,0.4)] hover:shadow-[#C9A24D]/40 transition-all duration-700 hover:scale-105 active:scale-95 overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              <span className="text-3xl md:text-5xl font-bold relative z-10">👉 Je fais le Crash-Test</span>
+              <span className="text-3xl md:text-5xl font-bold relative z-10">
+                {isNavigating ? 'Démarrage...' : '👉 Je fais le Crash-Test'}
+              </span>
               <div className="flex items-center gap-4 relative z-10">
                 <span className="text-4xl md:text-6xl font-serif italic text-[#C9A24D]">49 €</span>
                 <div className="h-8 w-px bg-white/20"></div>
                 <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] opacity-60 text-left">Paiement sécurisé <br /> Accès immédiat</span>
               </div>
-            </button>
+            </Link>
             <p className="text-[#1A1C2E]/40 text-sm font-bold uppercase tracking-[0.4em]">Expérience Unique · Révélation Immédiate</p>
           </div>
         </motion.div>

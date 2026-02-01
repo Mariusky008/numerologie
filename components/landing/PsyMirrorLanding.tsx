@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import Link from 'next/link';
+import React, { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   CheckCircle2, 
@@ -26,6 +27,7 @@ import { useRouter } from 'next/navigation';
 
 export default function PsyMirrorLanding() {
   const router = useRouter();
+  const [isNavigating, setIsNavigating] = useState(false);
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
@@ -88,14 +90,15 @@ export default function PsyMirrorLanding() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col items-center gap-6"
           >
-            <button 
-              onClick={() => router.push('/miroir/experience')}
+            <Link 
+              href="/miroir/experience"
+              onClick={() => setIsNavigating(true)}
               className="group relative flex items-center gap-4 px-12 py-6 bg-[#C9A24D] text-[#08090F] rounded-full font-bold text-xl hover:bg-[#D4B46B] transition-all shadow-[0_20px_60px_rgba(201,162,77,0.4)] hover:scale-105 active:scale-95 overflow-hidden"
             >
               <div className="absolute inset-0 bg-white/30 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-              Entrer dans l'expérience
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-            </button>
+              {isNavigating ? 'Ouverture...' : "Entrer dans l'expérience"}
+              <ArrowRight className={`w-6 h-6 group-hover:translate-x-1 transition-transform ${isNavigating ? 'animate-pulse' : ''}`} />
+            </Link>
             <div className="flex items-center gap-8 text-[11px] text-white/40 uppercase tracking-[0.25em] font-bold">
               <span className="flex items-center gap-2"><ClockIcon className="w-4 h-4" /> 20 Minutes</span>
               <span className="flex items-center gap-2"><ShieldCheck className="w-4 h-4" /> Privé & Sécurisé</span>
@@ -476,12 +479,13 @@ export default function PsyMirrorLanding() {
           </div>
 
           <div className="flex flex-col items-center gap-10">
-            <button 
-              onClick={() => router.push('/miroir/experience')}
+            <Link 
+              href="/miroir/experience"
+              onClick={() => setIsNavigating(true)}
               className="w-full md:w-auto px-20 py-8 bg-[#C9A24D] text-[#08090F] rounded-full font-bold text-2xl hover:bg-[#D4B46B] transition-all shadow-[0_0_70px_rgba(201,162,77,0.5)] hover:scale-105 active:scale-95 tracking-tight"
             >
-              Obtenir mon Miroir Psychologique — 49 €
-            </button>
+              {isNavigating ? 'Lancement...' : "Obtenir mon Miroir Psychologique — 49 €"}
+            </Link>
             
             <div className="flex flex-wrap justify-center gap-14 opacity-50">
               <div className="flex items-center gap-3">

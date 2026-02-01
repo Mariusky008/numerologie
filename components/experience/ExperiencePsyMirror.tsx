@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -18,10 +19,11 @@ import {
 import { useRouter } from 'next/navigation';
 import { AUTO_PERCEPTION_ITEMS, BEHAVIOR_SCENARIOS } from '@/lib/psy-mirror/data';
 import type { Option } from '@/lib/psy-mirror/types';
-import AttentionTest from './reflex-tests/AttentionTest';
-import BreakingPointTest from './reflex-tests/BreakingPointTest';
-import RiskBalloonTest from './reflex-tests/RiskBalloonTest';
-import MentalAgilityTest from './reflex-tests/MentalAgilityTest';
+
+const AttentionTest = dynamic(() => import('./reflex-tests/AttentionTest'), { ssr: false });
+const BreakingPointTest = dynamic(() => import('./reflex-tests/BreakingPointTest'), { ssr: false });
+const RiskBalloonTest = dynamic(() => import('./reflex-tests/RiskBalloonTest'), { ssr: false });
+const MentalAgilityTest = dynamic(() => import('./reflex-tests/MentalAgilityTest'), { ssr: false });
 import { calculateLifePathNumber, getLifePathData, getMoonSign, getSunSign, getAscendant, getChartMaster } from '@/lib/psy-mirror/cosmic';
 
 export default function ExperiencePsyMirror() {

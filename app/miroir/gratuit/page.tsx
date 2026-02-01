@@ -269,7 +269,10 @@ export default function GratuitPage() {
               <div className="space-y-4">
                 <div className="flex justify-between text-xs font-black uppercase tracking-[0.2em] opacity-60">
                   <span>Alignement actuel estimé</span>
-                  <span className="text-red-500">FAIBLE À MODÉRÉ (34%)</span>
+                  <span className="text-red-500 text-right">
+                    FAIBLE À MODÉRÉ (34%)<br />
+                    <span className="text-[10px] opacity-60">(écart significatif entre potentiel et fonctionnement actuel)</span>
+                  </span>
                 </div>
                 <div className="h-4 w-full bg-[#1A1C2E]/5 rounded-full overflow-hidden p-1 border border-[#1A1C2E]/5">
                   <motion.div 
@@ -307,6 +310,10 @@ export default function GratuitPage() {
               </p>
             </div>
           </div>
+
+          <p className="text-white/80 text-xl font-medium italic relative z-10 max-w-2xl mx-auto">
+            C’est précisément cet écart — souvent invisible de l’intérieur — que le Miroir Intégral te permet de lire clairement.
+          </p>
 
           {/* Section: Ce que tu en retires */}
           <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[40px] p-8 md:p-12 space-y-10 relative z-10">
@@ -398,8 +405,8 @@ export default function GratuitPage() {
             </button>
             <div className="flex flex-col items-center gap-4">
               <div className="space-y-1">
-                <p className="text-white font-bold text-xl tracking-tight">49 € — Paiement sécurisé</p>
-                <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.4em]">Accès immédiat après paiement • Analyse personnelle • Expérience unique</p>
+                <p className="text-white font-bold text-xl tracking-tight">49 € — Paiement sécurisé • Accès immédiat</p>
+                <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.4em]">Analyse personnelle • Expérience unique</p>
               </div>
               <div className="flex gap-4 opacity-40">
                 <div className="h-8 bg-white/10 rounded-lg px-3 flex items-center border border-white/10">

@@ -43,6 +43,12 @@ export default function DashboardPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-12 pb-20">
       
+      {/* BRANDING HEADER */}
+      <div className="text-center space-y-4">
+        <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-[#C9A24D]">SYSTÈME D'ALIGNEMENT DÉCISION-ACTION</h2>
+        <p className="text-2xl font-serif italic text-[#1A1C2E]/40">Décider et agir de manière cohérente avec sa structure personnelle.</p>
+      </div>
+
       {/* 1. HERO / CURRENT STATUS */}
       <section className="relative p-10 md:p-16 rounded-[60px] bg-[#1A1C2E] text-white overflow-hidden shadow-2xl">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#C9A24D]/10 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2"></div>

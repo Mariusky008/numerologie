@@ -12,10 +12,14 @@ import {
   Save,
   MessageCircle,
   Sparkles,
-  AlertTriangle
+  AlertTriangle,
+  Compass,
+  Hammer
 } from 'lucide-react';
 import { useRouter, useParams } from 'next/navigation';
 import { PROGRAM_DATA, DayContent } from '@/lib/programme/data';
+import COPModule from '@/components/programme/COPModule';
+import CAAModule from '@/components/programme/CAAModule';
 
 export default function DayDetailPage() {
   const router = useRouter();
@@ -26,7 +30,7 @@ export default function DayDetailPage() {
   const [journalText, setJournalText] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
-  const [activeTab, setActiveTab] = useState<'video' | 'action' | 'journal'>('video');
+  const [activeTab, setActiveTab] = useState<'video' | 'action' | 'journal' | 'cop' | 'caa'>('video');
 
   useEffect(() => {
     // Find day in PROGRAM_DATA
@@ -103,8 +107,9 @@ export default function DayDetailPage() {
       <div className="flex border-b border-[#1A1C2E]/5 overflow-x-auto no-scrollbar">
         {[
           { id: 'video', label: '1. Vidéo', icon: Play },
-          { id: 'action', label: '2. L\'Action', icon: BookOpen },
-          { id: 'journal', label: '3. Mon Journal', icon: PenLine }
+          { id: 'journal', label: '2. Mon Journal', icon: PenLine },
+          { id: 'cop', label: '3. Décider (COP)', icon: Compass },
+          { id: 'caa', label: '4. Agir (CAA)', icon: Hammer }
         ].map((tab) => (
           <button
             key={tab.id}
@@ -118,7 +123,7 @@ export default function DayDetailPage() {
       </div>
 
       {/* Main Interaction Area */}
-      <div className="bg-white rounded-[60px] shadow-2xl border border-[#1A1C2E]/5 min-h-[500px] overflow-hidden flex flex-col">
+      <div className="space-y-12">
         <AnimatePresence mode="wait">
           {activeTab === 'video' && (
             <motion.div 
@@ -126,7 +131,7 @@ export default function DayDetailPage() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              className="p-8 md:p-16 space-y-10 flex-1 flex flex-col"
+              className="bg-white rounded-[60px] shadow-2xl border border-[#1A1C2E]/5 p-8 md:p-16 space-y-10"
             >
               <div className="aspect-video bg-[#1A1C2E] rounded-[40px] flex items-center justify-center relative group overflow-hidden shadow-2xl">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -141,71 +146,14 @@ export default function DayDetailPage() {
                 <div className="flex items-start gap-4 p-6 bg-[#F8F9FA] rounded-3xl border border-[#1A1C2E]/5">
                   <Info className="w-6 h-6 text-[#C9A24D] shrink-0 mt-1" />
                   <p className="text-lg text-[#1A1C2E]/60 leading-relaxed italic">
-                    Cette vidéo pose les bases de ta réflexion aujourd'hui. Regarde-la attentivement avant de passer à l'action concrète.
+                    Cette vidéo pose les bases de ta réflexion aujourd'hui. Regarde-la attentivement avant de passer à ton journal.
                   </p>
                 </div>
-                <button 
-                  onClick={() => setActiveTab('action')}
-                  className="inline-flex items-center gap-4 text-[#C9A24D] font-bold text-sm uppercase tracking-widest hover:translate-x-2 transition-all"
-                >
-                  Passer à l'action <ChevronLeft className="w-4 h-4 rotate-180" />
-                </button>
-              </div>
-            </motion.div>
-          )}
-
-          {activeTab === 'action' && (
-            <motion.div 
-              key="action"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="p-8 md:p-16 space-y-12 flex-1 flex flex-col"
-            >
-              <div className="space-y-8 max-w-3xl">
-                <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#5B4B8A]/10 text-[#5B4B8A] text-[10px] font-black uppercase tracking-[0.3em]">
-                  L'expérience concrète
-                </div>
-                <h2 className="text-4xl font-serif font-bold italic">{day.actionTitle}</h2>
-                
-                {day.frictionNote && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-6 bg-red-400/5 border border-red-400/20 rounded-3xl flex items-start gap-4"
-                  >
-                    <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-1" />
-                    <div className="space-y-1">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-red-400">Point de Friction Détecté</p>
-                      <p className="text-sm text-[#1A1C2E]/60 italic leading-relaxed">
-                        {day.frictionNote}
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
-
-                <div className="p-10 bg-[#FDFBF7] border border-[#C9A24D]/20 rounded-[40px] shadow-sm">
-                  <p className="text-2xl text-[#1A1C2E]/80 leading-relaxed font-light">
-                    {day.actionDescription}
-                  </p>
-                </div>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="p-6 bg-[#F8F9FA] rounded-3xl border border-[#1A1C2E]/5 space-y-3">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30">Objectif</p>
-                    <p className="text-sm font-medium">Identifier les répétitions automatiques de ton mental.</p>
-                  </div>
-                  <div className="p-6 bg-[#F8F9FA] rounded-3xl border border-[#1A1C2E]/5 space-y-3">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30">Attention</p>
-                    <p className="text-sm font-medium">Observe sans juger. Il n'y a pas de mauvaise observation.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-auto pt-10">
                 <button 
                   onClick={() => setActiveTab('journal')}
-                  className="w-full md:w-auto px-12 py-6 bg-[#1A1C2E] text-white rounded-full font-bold text-sm uppercase tracking-widest hover:bg-[#C9A24D] transition-colors shadow-xl"
+                  className="inline-flex items-center gap-4 text-[#C9A24D] font-bold text-sm uppercase tracking-widest hover:translate-x-2 transition-all"
                 >
-                  Ouvrir mon journal d'observation
+                  Ouvrir mon journal <ChevronLeft className="w-4 h-4 rotate-180" />
                 </button>
               </div>
             </motion.div>
@@ -217,15 +165,21 @@ export default function DayDetailPage() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              className="p-8 md:p-16 space-y-10 flex-1 flex flex-col"
+              className="bg-white rounded-[60px] shadow-2xl border border-[#1A1C2E]/5 p-8 md:p-16 space-y-10"
             >
               <div className="space-y-8 max-w-3xl">
                 <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#C9A24D]/10 text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.3em]">
                   Ancrage personnel
                 </div>
-                <h2 className="text-2xl font-serif font-bold italic leading-relaxed text-[#1A1C2E]/60">
-                  {day.journalQuestion}
-                </h2>
+                
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-serif font-bold italic leading-relaxed text-[#1A1C2E]/60">
+                    {day.journalQuestion}
+                  </h2>
+                  <p className="text-sm text-[#1A1C2E]/40 italic">
+                    Action recommandée : {day.actionDescription}
+                  </p>
+                </div>
                 
                 <div className="relative">
                   <textarea 
@@ -249,8 +203,47 @@ export default function DayDetailPage() {
                   </button>
                 </div>
               </div>
+              <div className="pt-10">
+                <button 
+                  onClick={() => setActiveTab('cop')}
+                  className="inline-flex items-center gap-4 text-[#C9A24D] font-bold text-sm uppercase tracking-widest hover:translate-x-2 transition-all"
+                >
+                  Passer au Cadre d'Orientation <ChevronLeft className="w-4 h-4 rotate-180" />
+                </button>
+              </div>
+            </motion.div>
+          )}
 
-              <div className="mt-auto pt-10 flex flex-col md:flex-row items-center gap-8">
+          {activeTab === 'cop' && (
+            <motion.div 
+              key="cop"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+            >
+              <COPModule tensionLevel={day.tensionLevel} dayTheme={day.theme} />
+              <div className="mt-10">
+                <button 
+                  onClick={() => setActiveTab('caa')}
+                  className="inline-flex items-center gap-4 text-[#C9A24D] font-bold text-sm uppercase tracking-widest hover:translate-x-2 transition-all"
+                >
+                  Passer au Cadre d'Action <ChevronLeft className="w-4 h-4 rotate-180" />
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'caa' && (
+            <motion.div 
+              key="caa"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="space-y-12"
+            >
+              <CAAModule tensionLevel={day.tensionLevel} />
+              
+              <div className="flex flex-col md:flex-row items-center justify-center gap-8 pt-12 border-t border-[#1A1C2E]/5">
                 <button 
                   onClick={handleValidate}
                   disabled={isValidated || journalText.length < 10}
@@ -265,11 +258,6 @@ export default function DayDetailPage() {
                     <span>J'ai terminé ma journée</span>
                   )}
                 </button>
-                {!isValidated && journalText.length < 10 && (
-                  <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30">
-                    Écris au moins 10 caractères pour valider
-                  </p>
-                )}
               </div>
             </motion.div>
           )}

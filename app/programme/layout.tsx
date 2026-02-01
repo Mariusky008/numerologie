@@ -168,8 +168,8 @@ export default function ProgrammeLayout({ children }: { children: React.ReactNod
         {/* TOP BAR / BREADCRUMBS */}
         <header className="h-24 px-10 flex items-center justify-between border-b border-[#1A1C2E]/5 bg-white/50 backdrop-blur-md sticky top-0 z-40 hidden md:flex">
           <div>
-            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-[#1A1C2E]/30">Mon Parcours Guidé</h2>
-            <p className="font-serif font-bold text-xl italic">Bienvenue, Jean-Philippe</p>
+            <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-[#1A1C2E]/30">Méthode d’Alignement Décision–Action</h2>
+            <p className="font-serif font-bold text-xl italic">Décider et agir de manière cohérente</p>
           </div>
           
           <div className="flex items-center gap-6">

@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { render } from '@react-email/render';
-import { EmailReport, EmailDeliverables, EmailConfirmation, EmailUpsellBook, EmailExpertFollowUp } from '@/components/emails/Templates';
+import { EmailReport, EmailDeliverables, EmailConfirmation, EmailUpsellBook, EmailExpertFollowUp, EmailMiroirIntegral, EmailRomanOffer, EmailParcoursOffer } from '@/components/emails/Templates';
 
 export default function EmailPreviewPage() {
-  const [activeTab, setActiveTab] = useState<'confirmation' | 'deliverables' | 'deliverables_book' | 'upsell' | 'expert_followup'>('confirmation');
+  const [activeTab, setActiveTab] = useState<'miroir_integral' | 'roman_offer' | 'parcours_offer' | 'confirmation' | 'deliverables' | 'upsell' | 'expert_followup'>('miroir_integral');
   const [isPaper, setIsPaper] = useState(false);
   const [htmlContent, setHtmlContent] = useState('');
 
@@ -13,6 +13,30 @@ export default function EmailPreviewPage() {
     let component;
     
     switch (activeTab) {
+      case 'miroir_integral':
+        component = (
+          <EmailMiroirIntegral 
+            firstName="Jean-Philippe"
+            reportLink="https://www.votrelegende.fr/pdf-report-v2?order_id=DEMO"
+            coachLink="https://www.votrelegende.fr/coach?id=DEMO&name=Jean-Philippe"
+          />
+        );
+        break;
+      case 'roman_offer':
+        component = (
+          <EmailRomanOffer 
+            firstName="Jean-Philippe"
+            romanLink="https://www.votrelegende.fr/miroir/checkout"
+          />
+        );
+        break;
+      case 'parcours_offer':
+        component = (
+          <EmailParcoursOffer 
+            firstName="Jean-Philippe"
+          />
+        );
+        break;
       case 'confirmation':
         component = (
           <EmailConfirmation 
@@ -27,18 +51,6 @@ export default function EmailPreviewPage() {
             videoLink="https://votrelegende.fr/video/demo"
             reportLink="https://votrelegende.fr/download/demo"
             coachLink="https://votrelegende.fr/coach/demo"
-            // Pas de bookLink ici
-          />
-        );
-        break;
-      case 'deliverables_book':
-        component = (
-          <EmailDeliverables 
-            firstName="Jean-Philippe"
-            videoLink="https://votrelegende.fr/video/demo"
-            reportLink="https://votrelegende.fr/download/demo"
-            coachLink="https://votrelegende.fr/coach/demo"
-            bookLink="https://votrelegende.fr/book/demo"
           />
         );
         break;
@@ -71,56 +83,66 @@ export default function EmailPreviewPage() {
     <div className="min-h-screen bg-gray-100 p-8 font-sans text-gray-800">
       <div className="max-w-6xl mx-auto h-[calc(100vh-4rem)] flex flex-col">
         <h1 className="text-3xl font-bold mb-8 flex items-center gap-4">
-          Prévisualisation des Emails
-          <span className="text-sm font-normal bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Mode Simulation Réelle</span>
+          Contrôle des Emails
+          <span className="text-sm font-normal bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Version 3.1 — Flux Automatisé</span>
         </h1>
         
         {/* Contrôles */}
-        <div className="bg-white p-6 rounded-xl shadow-sm mb-6 flex flex-wrap gap-6 items-center border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-sm mb-6 space-y-6 border border-gray-200">
           
-          <div className="flex gap-2 p-1 bg-gray-100 rounded-lg flex-wrap">
-            <button 
-              onClick={() => setActiveTab('confirmation')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'confirmation' ? 'bg-white shadow text-green-600' : 'text-gray-500 hover:text-gray-700'}`}
-            >
-              1. Confirmation (Immédiat)
-            </button>
-            <button 
-              onClick={() => setActiveTab('deliverables')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'deliverables' ? 'bg-white shadow text-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
-            >
-              2. Livraison (Standard)
-            </button>
-            <button 
-              onClick={() => setActiveTab('deliverables_book')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'deliverables_book' ? 'bg-white shadow text-purple-600' : 'text-gray-500 hover:text-gray-700'}`}
-            >
-              2b. Livraison (+ Roman)
-            </button>
-            <button 
-              onClick={() => setActiveTab('upsell')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'upsell' ? 'bg-white shadow text-amber-600' : 'text-gray-500 hover:text-gray-700'}`}
-            >
-              3. Upsell Roman
-            </button>
-            <button 
-              onClick={() => setActiveTab('expert_followup')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'expert_followup' ? 'bg-white shadow text-pink-600' : 'text-gray-500 hover:text-gray-700'}`}
-            >
-              4. Relance Expert (J+5)
-            </button>
+          <div className="space-y-4">
+            <h2 className="text-xs font-black uppercase tracking-widest text-gray-400">Nouveau Flux Miroir Intégral (V3.1)</h2>
+            <div className="flex gap-2 p-1 bg-gray-100 rounded-lg flex-wrap">
+              <button 
+                onClick={() => setActiveTab('miroir_integral')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'miroir_integral' ? 'bg-[#1A1C2E] text-white shadow' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                J+0 : Livraison Miroir
+              </button>
+              <button 
+                onClick={() => setActiveTab('parcours_offer')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'parcours_offer' ? 'bg-[#5B4B8A] text-white shadow' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                J+3 : Offre Parcours 12 mois
+              </button>
+              <button 
+                onClick={() => setActiveTab('roman_offer')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'roman_offer' ? 'bg-[#C9A24D] text-white shadow' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                J+5 : Offre Roman
+              </button>
+            </div>
           </div>
 
-          <label className="flex items-center gap-2 cursor-pointer select-none">
-            <input 
-              type="checkbox" 
-              checked={isPaper}
-              onChange={(e) => setIsPaper(e.target.checked)}
-              className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-            />
-            <span className="font-medium">Simuler Option Papier (+ Livraison)</span>
-          </label>
-
+          <div className="space-y-4">
+            <h2 className="text-xs font-black uppercase tracking-widest text-gray-400">Archives & Autres Templates</h2>
+            <div className="flex gap-2 p-1 bg-gray-100 rounded-lg flex-wrap">
+              <button 
+                onClick={() => setActiveTab('confirmation')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'confirmation' ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                Confirmation (Ancien)
+              </button>
+              <button 
+                onClick={() => setActiveTab('deliverables')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'deliverables' ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                Livraison Vidéo (Ancien)
+              </button>
+              <button 
+                onClick={() => setActiveTab('upsell')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'upsell' ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                Upsell Livre (Ancien)
+              </button>
+              <button 
+                onClick={() => setActiveTab('expert_followup')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'expert_followup' ? 'bg-white shadow text-gray-800' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                Relance Expert (J+5)
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Prévisualisation Iframe */}

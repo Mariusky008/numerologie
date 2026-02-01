@@ -741,7 +741,7 @@ export default function UnifiedMiroirReport({
           </div>
 
           <div className="p-2 bg-[#FDFBF7] border border-[#1A1C2E]/5 rounded-[70px] shadow-[0_40px_120px_-20px_rgba(0,0,0,0.05)]">
-            <PsyCoachChat psyResult={psyResult} />
+            <PsyCoachChat psyResult={psyResult} userData={userData} numerologyResult={numerologyResult} />
           </div>
         </div>
       </section>
@@ -800,7 +800,7 @@ export default function UnifiedMiroirReport({
               </button>
             </div>
             <div className="flex-1 overflow-hidden">
-              <PsyCoachChat psyResult={psyResult} />
+              <PsyCoachChat psyResult={psyResult} userData={userData} numerologyResult={numerologyResult} />
             </div>
           </motion.div>
         )}

@@ -541,15 +541,27 @@ export const EmailParcoursOffer = ({
         <Heading style={h1}>Votre Trajectoire sur 12 Mois 🧭</Heading>
         <Text style={text}>Bonjour {firstName},</Text>
         <Text style={text}>
-          Le Miroir Intégral vous a montré <strong>où vous en êtes</strong>. Mais comment maintenir cet alignement dans la durée ?
+          Il y a quelques jours, le <strong>Miroir Intégral</strong> vous a permis de mettre des mots clairs sur votre fonctionnement, vos tensions, et l’écart entre votre potentiel et la façon dont vous avancez aujourd’hui.
+        </Text>
+        <Text style={text}>
+          Cette prise de conscience est une étape importante. Mais une question revient souvent après coup :
         </Text>
         
-        <Section style={highlightBox}>
-          <Heading as="h3" style={h3}>Le Parcours des 12 Mois</Heading>
+        <Section style={box}>
+          <Heading as="h3" style={h3}>Comment éviter de retomber dans les anciens automatismes ?</Heading>
           <Text style={text}>
-            Un accompagnement structuré, mois après mois, pour naviguer selon vos cycles personnels et ne plus jamais avancer à l'aveugle.
+            Car sans cadre dans la durée, l’alignement que l’on ressent après une analyse a tendance à s’estomper peu à peu.
           </Text>
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <Text style={text}>
+            C’est précisément pour cela que nous avons conçu le <strong>Parcours des 12 Mois</strong>.
+          </Text>
+          <Text style={text}>
+            Un accompagnement structuré, mois après mois, pour continuer à avancer en cohérence avec votre trajectoire, en tenant compte de vos cycles personnels et de votre rythme réel.
+          </Text>
+          <Text style={text}>
+            Il ne s’agit pas de “faire plus”, mais d’<strong>éviter de s’éparpiller</strong> et de garder une boussole claire dans vos décisions.
+          </Text>
+          <div style={{ textAlign: 'center', marginTop: '30px' }}>
             <Button style={button} href="https://www.votrelegende.fr/parcours-12-mois">
               Découvrir le Parcours 12 Mois
             </Button>
@@ -557,7 +569,7 @@ export const EmailParcoursOffer = ({
         </Section>
 
         <Text style={text}>
-          Ne laissez pas vos découvertes du Miroir Intégral rester de simples informations. Transformez-les en une boussole quotidienne.
+          Prenez le temps de regarder si cette suite logique fait sens pour vous.
         </Text>
 
         <Text style={footer}>

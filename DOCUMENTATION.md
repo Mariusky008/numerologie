@@ -205,8 +205,8 @@ Le processus de livraison a été optimisé pour gérer le délai de génératio
 ### 9.3 Séquence de Relance (Marketing Automation)
 Mise en place de templates d'emails pour une séquence post-achat automatisée :
 1.  **J+0 (Immédiat)** : Livraison du Miroir Intégral (Rapport + Oracle).
-2.  **J+3 (Le Roman)** : Email `EmailRomanOffer` proposant de transformer l'analyse en une biographie romancée unique.
-3.  **J+5 (Le Parcours)** : Email `EmailParcoursOffer` invitant à rejoindre le programme d'accompagnement sur 12 mois.
+2.  **J+3 (Le Parcours)** : Email `EmailParcoursOffer` invitant à rejoindre le programme d'accompagnement sur 12 mois pour maintenir l'alignement.
+3.  **J+5 (Le Roman)** : Email `EmailRomanOffer` proposant de transformer l'analyse en une biographie romancée unique.
 
 ---
 *Document mis à jour le 1er Février 2026 - Version 3.1*

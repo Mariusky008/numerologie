@@ -4,9 +4,12 @@ import { useRef, useEffect, useState } from 'react';
 import { Send, Mic, User, Sparkles, Loader2, StopCircle, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PsyMirrorResult } from '@/lib/psy-mirror/types';
+import { UserData, NumerologyResult } from '@/lib/types';
 
 interface PsyCoachChatProps {
   psyResult: PsyMirrorResult;
+  userData?: UserData;
+  numerologyResult?: NumerologyResult;
 }
 
 // --- TTS HELPER ---
@@ -144,19 +147,19 @@ function useCustomChat({ api, body, initialMessages, isMuted }: any) {
   return { messages, append, isLoading, isSpeaking, error, stop };
 }
 
-export default function PsyCoachChat({ psyResult }: PsyCoachChatProps) {
+export default function PsyCoachChat({ psyResult, userData, numerologyResult }: PsyCoachChatProps) {
   const [input, setInput] = useState('');
   const [isMuted, setIsMuted] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const { messages, append, isLoading, isSpeaking, error, stop } = useCustomChat({
     api: '/api/psy-chat',
-    body: { psyResult },
+    body: { psyResult, userData, numerologyResult },
     initialMessages: [
       {
         id: 'welcome',
         role: 'assistant',
-        content: `Bonjour. Je suis l'Oracle du Miroir. J'ai analysé tes choix et tes écarts. Je vois clair dans ton angle mort. Quelle partie de ton reflet souhaites-tu explorer avec moi ?`
+        content: `Bonjour ${userData?.firstName || ''}. Je suis l'Oracle du Miroir Intégral. J'ai analysé ton profil complet : ton Code Source (Numérologie & Astrologie) et ton Mode Réflexe (Comportement). Quelle partie de ton reflet souhaites-tu explorer avec moi ?`
       }
     ],
     isMuted

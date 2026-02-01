@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { trackEvent } from '@/lib/analytics';
 import { 
   Lock, 
   CreditCard, 
@@ -26,6 +27,7 @@ export default function CheckoutPage() {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
+    trackEvent('checkout_view');
     const finalData = localStorage.getItem('psy_mirror_final_data');
     if (finalData) {
       try {
@@ -58,15 +60,30 @@ export default function CheckoutPage() {
         }
       };
 
+      // Get psy result from localStorage if available
+      const sessionDataRaw = localStorage.getItem('psy_mirror_session_data');
+      let psyResult = null;
+      if (sessionDataRaw) {
+        try {
+          const sessionData = JSON.parse(sessionDataRaw);
+          // We can't easily generate the full result here without the engine, 
+          // but we can pass the raw session data and let the API handle it if needed,
+          // or just pass the profile scores if they are already calculated.
+          psyResult = sessionData.profile; // This might be enough for admin
+        } catch (e) {
+          console.error("Error parsing session data", e);
+        }
+      }
+
       // 1. Enregistrer la commande dans la base de données (Supabase)
-      // Cela permet à l'admin de voir la commande même si le paiement Stripe échoue
       const dbResponse = await fetch('/api/book-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userData: { ...userData, email: email || userData.email },
           orderInfo,
-          orderId
+          orderId,
+          psyResult // Pass the psy result here
         })
       });
 
@@ -75,11 +92,7 @@ export default function CheckoutPage() {
       }
 
       // 2. Enregistrer la stat de clic de paiement
-      await fetch('/api/stats', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ event: 'payment_click' })
-      }).catch(err => console.error("Stat tracking failed", err));
+      trackEvent('payment_click');
 
       // 3. Créer la session Stripe et rediriger
       const stripeResponse = await fetch('/api/checkout', {

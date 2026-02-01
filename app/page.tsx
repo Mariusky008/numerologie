@@ -29,6 +29,7 @@ import {
   Target
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { trackEvent } from '@/lib/analytics';
 
 export default function Home() {
   const router = useRouter();
@@ -42,6 +43,9 @@ export default function Home() {
   const particleY = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   useEffect(() => {
+    // Track home view
+    trackEvent('home_view');
+    
     // Force prefetch of the experience page
     router.prefetch('/miroir/experience');
     
@@ -49,6 +53,11 @@ export default function Home() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleCtaClick = () => {
+    trackEvent('cta_click');
+    setIsNavigating(true);
+  };
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -126,7 +135,7 @@ export default function Home() {
           </div>
           <Link 
             href="/miroir/experience"
-            onClick={() => setIsNavigating(true)}
+            onClick={handleCtaClick}
             className="bg-[#1A1C2E] text-white text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full hover:bg-[#C9A24D] transition-colors"
           >
             {isNavigating ? 'Chargement...' : 'Commencer'}
@@ -204,7 +213,7 @@ export default function Home() {
           >
             <Link 
               href="/miroir/experience"
-              onClick={() => setIsNavigating(true)}
+              onClick={handleCtaClick}
               className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold text-xl hover:bg-[#C9A24D] transition-all shadow-[0_40px_80px_-20px_rgba(26,28,46,0.3)] hover:shadow-[#C9A24D]/40 active:scale-95 overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
@@ -479,7 +488,7 @@ export default function Home() {
             <div className="pt-4">
               <Link 
                 href="/miroir/experience"
-                onClick={() => setIsNavigating(true)}
+                onClick={handleCtaClick}
                 className="group relative inline-flex flex-col items-center gap-2 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95 overflow-hidden"
               >
                 <span className="text-2xl md:text-3xl">
@@ -685,7 +694,7 @@ export default function Home() {
           <div className="space-y-10 pt-10">
             <Link 
               href="/miroir/experience"
-              onClick={() => setIsNavigating(true)}
+              onClick={handleCtaClick}
               className="group relative inline-flex flex-col items-center gap-4 px-16 py-10 bg-[#1A1C2E] text-white rounded-[40px] shadow-[0_50px_100px_-20px_rgba(26,28,46,0.4)] hover:shadow-[#C9A24D]/40 transition-all duration-700 hover:scale-105 active:scale-95 overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>

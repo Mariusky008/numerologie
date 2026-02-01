@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { BookOpen, User, Calendar, MapPin, Heart, CheckCircle, Clock, Compass, Star, TrendingUp, AlertTriangle, Copy, FileJson, Trash2, Eye, Download, ExternalLink, Sparkles, Music, CreditCard } from 'lucide-react';
+import { BookOpen, User, Calendar, MapPin, Heart, CheckCircle, Clock, Compass, Star, TrendingUp, AlertTriangle, Copy, FileJson, Trash2, Eye, Download, ExternalLink, Sparkles, Music, CreditCard, Brain } from 'lucide-react';
 import { UserData, NumerologyResult } from '@/lib/types';
 
 export interface BookRequest {
@@ -27,6 +27,7 @@ export interface BookRequest {
   };
   generated_script?: string; // Direct column
   reportResults: NumerologyResult;
+  psyResult?: any;
   lifeDetails: {
     placesLived: string;
     moves: string;
@@ -108,6 +109,11 @@ export default function AdminDashboard() {
     }
   };
 
+  const calculateConversion = (val: number, base: number) => {
+    if (!base) return '0%';
+    return `${Math.round((val / base) * 100)}%`;
+  };
+
   const fetchRequests = async () => {
     try {
       const res = await fetch(`/api/book-request?password=${password}`);
@@ -121,7 +127,8 @@ export default function AdminDashboard() {
           generated_script: item.generated_script || item.user_data?.generated_script, // Load script
           userData: item.user_data,
           reportResults: item.numerology_result.reportResults,
-          lifeDetails: item.numerology_result.lifeDetails
+          lifeDetails: item.numerology_result.lifeDetails,
+          psyResult: item.numerology_result.psyResult
         }));
         setRequests(mappedData);
       }
@@ -213,64 +220,181 @@ export default function AdminDashboard() {
 
       <main className="max-w-7xl mx-auto p-4 md:p-8">
         
-        {/* STATS SECTION */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {/* Stat 1: Visiteurs sans action */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-            <div className="flex items-center gap-4 mb-2">
-              <div className="p-3 bg-stone-100 text-stone-600 rounded-full">
-                <Eye className="w-6 h-6" />
+        {/* FUNNEL STATS SECTION */}
+        <div className="space-y-6 mb-12">
+          <h2 className="text-xl font-serif font-bold text-[#78350f] flex items-center gap-2">
+            <TrendingUp className="w-5 h-5" />
+            Entonnoir de Conversion (Miroir)
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* 1. Acquisition */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-black uppercase tracking-widest text-stone-400">Acquisition</span>
+                <Eye className="w-4 h-4 text-stone-300" />
               </div>
-              <div>
-                <p className="text-xs text-stone-500 uppercase tracking-wider font-bold">Visiteurs (Sans Profil)</p>
-                <p className="text-2xl font-bold text-[#78350f]">
-                  {Math.max(0, (stats.home_view || 0) - (stats.reveal_click || 0))}
-                </p>
+              <div className="space-y-1">
+                <p className="text-3xl font-bold text-[#78350f]">{stats.home_view || 0}</p>
+                <p className="text-xs text-stone-500">Vues page d'accueil</p>
+              </div>
+              <div className="pt-4 border-t border-stone-100">
+                <div className="flex justify-between items-end">
+                  <div>
+                    <p className="text-xl font-bold text-stone-700">{stats.cta_click || 0}</p>
+                    <p className="text-[10px] uppercase font-bold text-stone-400">Clics CTA</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-bold text-green-600">{calculateConversion(stats.cta_click || 0, stats.home_view || 0)}</p>
+                    <p className="text-[9px] uppercase font-bold text-stone-300">Taux d'engagement</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <p className="text-xs text-stone-400">
-              Sur {stats.home_view || 0} vues totales
-            </p>
-          </div>
 
-          {/* Stat 2: Téléchargements PDF */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-            <div className="flex items-center gap-4 mb-2">
-              <div className="p-3 bg-blue-100 text-blue-600 rounded-full">
-                <Download className="w-6 h-6" />
+            {/* 2. Questionnaire Progress */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-black uppercase tracking-widest text-stone-400">Questionnaire</span>
+                <Brain className="w-4 h-4 text-stone-300" />
               </div>
-              <div>
-                <p className="text-xs text-stone-500 uppercase tracking-wider font-bold">Téléchargements PDF</p>
-                <p className="text-2xl font-bold text-[#78350f]">
-                  {stats.download_click || 0}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-medium text-stone-600">Module A (Psy)</span>
+                  <span className="text-sm font-bold">{stats.moduleA_start || 0}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-medium text-stone-600">Module B (Situations)</span>
+                  <span className="text-sm font-bold">{stats.moduleB_start || 0}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-medium text-stone-600">Module C (Réflexes)</span>
+                  <span className="text-sm font-bold">{stats.moduleC_start || 0}</span>
+                </div>
+                <div className="flex justify-between items-center pt-2 border-t border-stone-100">
+                  <span className="text-xs font-bold text-[#78350f]">Terminés</span>
+                  <span className="text-sm font-bold text-[#78350f]">{stats.experience_finished || 0}</span>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-xs font-bold text-stone-400">
+                  Abandon : <span className="text-red-500">{calculateConversion((stats.cta_click || 0) - (stats.experience_finished || 0), stats.cta_click || 0)}</span>
                 </p>
               </div>
             </div>
-            <p className="text-xs text-stone-400">
-              Rapports générés
-            </p>
-          </div>
 
-          {/* Stat 3: Écritures commencées */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
-            <div className="flex items-center gap-4 mb-2">
-              <div className="p-3 bg-amber-100 text-amber-600 rounded-full">
-                <CreditCard className="w-6 h-6" />
+            {/* 3. Intention d'achat */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-black uppercase tracking-widest text-stone-400">Vente</span>
+                <CreditCard className="w-4 h-4 text-stone-300" />
               </div>
-              <div>
-                <p className="text-xs text-stone-500 uppercase tracking-wider font-bold">Clics Paiement</p>
-                <p className="text-2xl font-bold text-[#78350f]">
-                  {stats.payment_click || 0}
-                </p>
+              <div className="space-y-1">
+                <p className="text-3xl font-bold text-[#78350f]">{stats.checkout_view || 0}</p>
+                <p className="text-xs text-stone-500">Vues page Checkout</p>
+              </div>
+              <div className="pt-4 border-t border-stone-100">
+                <div className="flex justify-between items-end">
+                  <div>
+                    <p className="text-xl font-bold text-stone-700">{stats.payment_click || 0}</p>
+                    <p className="text-[10px] uppercase font-bold text-stone-400">Clics Payer</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-bold text-amber-600">{calculateConversion(stats.payment_click || 0, stats.checkout_view || 0)}</p>
+                    <p className="text-[9px] uppercase font-bold text-stone-300">Intention</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <p className="text-xs text-stone-400">
-              Tentatives de commande
-            </p>
+
+            {/* 4. Conversions */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200 space-y-4 bg-[#78350f]/5">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-black uppercase tracking-widest text-[#78350f]/40">Résultats</span>
+                <Sparkles className="w-4 h-4 text-[#78350f]/30" />
+              </div>
+              <div className="space-y-1">
+                <p className="text-4xl font-black text-[#78350f]">{stats.report_purchase || 0}</p>
+                <p className="text-xs font-bold text-[#78350f]/60 uppercase">Ventes Totales</p>
+              </div>
+              <div className="pt-4 border-t border-[#78350f]/10">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-lg font-bold text-[#78350f]">{calculateConversion(stats.report_purchase || 0, stats.home_view || 0)}</p>
+                    <p className="text-[9px] uppercase font-bold text-stone-400">CVR Totale</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-lg font-bold text-[#78350f]">{calculateConversion(stats.report_purchase || 0, stats.experience_finished || 0)}</p>
+                    <p className="text-[9px] uppercase font-bold text-stone-400">CVR Post-Test</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <h1 className="text-3xl font-serif text-[#78350f] mb-8">File d'attente de production</h1>
+        {/* PROGRESS DETAILS (DROP-OFF) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+            <h3 className="text-xs font-black uppercase tracking-widest text-stone-400 mb-4">Drop-off Module A</h3>
+            <div className="space-y-2">
+              {[3, 6, 9, 12].map(step => (
+                <div key={step} className="flex justify-between items-center text-sm">
+                  <span className="text-stone-500">Q{step}</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-24 h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-blue-400" 
+                        style={{ width: calculateConversion(stats[`moduleA_progress_${step}`] || 0, stats.moduleA_start || 1) }}
+                      />
+                    </div>
+                    <span className="font-bold w-8 text-right">{stats[`moduleA_progress_${step}`] || 0}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+            <h3 className="text-xs font-black uppercase tracking-widest text-stone-400 mb-4">Drop-off Module B</h3>
+            <div className="space-y-2">
+              {[1, 2, 3, 4, 5, 6].map(step => (
+                <div key={step} className="flex justify-between items-center text-sm">
+                  <span className="text-stone-500">Scénario {step}</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-24 h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-amber-400" 
+                        style={{ width: calculateConversion(stats[`moduleB_progress_${step}`] || 0, stats.moduleB_start || 1) }}
+                      />
+                    </div>
+                    <span className="font-bold w-8 text-right">{stats[`moduleB_progress_${step}`] || 0}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+            <h3 className="text-xs font-black uppercase tracking-widest text-stone-400 mb-4">Drop-off Module C</h3>
+            <div className="space-y-2">
+              {[1, 2, 3, 4].map(step => (
+                <div key={step} className="flex justify-between items-center text-sm">
+                  <span className="text-stone-500">Test {step}</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-24 h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-purple-400" 
+                        style={{ width: calculateConversion(stats[`moduleC_progress_${step}`] || 0, stats.moduleC_start || 1) }}
+                      />
+                    </div>
+                    <span className="font-bold w-8 text-right">{stats[`moduleC_progress_${step}`] || 0}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <h1 className="text-3xl font-serif text-[#78350f] mb-8">Détail des Commandes</h1>
 
         {loading ? (
           <div className="flex justify-center py-20">
@@ -426,6 +550,23 @@ export default function AdminDashboard() {
                         </div>
                       </div>
                     </div>
+
+                    {/* Psy Mirror Profile (New) */}
+                    {req.psyResult && (
+                      <div className="mt-4 pt-4 border-t border-[#d97706]/10">
+                        <span className="flex items-center gap-2 font-bold text-[#78350f] mb-2">
+                          <Brain className="w-3 h-3" /> Profil Psy Mirror
+                        </span>
+                        <div className="grid grid-cols-3 gap-2">
+                          {Object.entries(req.psyResult).map(([dim, score]: [string, any]) => (
+                            <div key={dim} className="bg-stone-50 p-2 rounded text-[10px]">
+                              <span className="block text-stone-400 uppercase">{dim}</span>
+                              <span className="font-bold text-[#78350f]">{score}%</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Right: Life Story Context */}

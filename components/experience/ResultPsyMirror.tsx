@@ -31,6 +31,7 @@ import { PsyMirrorResult } from '@/lib/psy-mirror/types';
 import { UserData, NumerologyResult } from '@/lib/types';
 import { NameData } from '@/lib/numerology/db_etymology';
 import { useRouter } from 'next/navigation';
+import { trackEvent } from '@/lib/analytics';
 import UnifiedMiroirReport from '@/components/report/UnifiedMiroirReport';
 import { generateFullUnifiedResult } from '@/lib/psy-mirror/resultGenerator';
 
@@ -48,6 +49,7 @@ export default function ResultPsyMirror() {
   useEffect(() => {
     const processResult = async () => {
       try {
+        trackEvent('report_view');
         // 1. Check if we already have the full result
         const savedResult = localStorage.getItem('unified_miroir_result');
         if (savedResult) {
@@ -74,6 +76,9 @@ export default function ResultPsyMirror() {
         const combinedData = { psyResult, numResult, userData, etymology };
         localStorage.setItem('unified_miroir_result', JSON.stringify(combinedData));
         setData(combinedData);
+        
+        // Track purchase only when it's first generated (from checkout)
+        trackEvent('report_purchase');
       } catch (err: any) {
         console.error(err);
         setError(err.message || "Une erreur est survenue lors de la génération de votre rapport.");

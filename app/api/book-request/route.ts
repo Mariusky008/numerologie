@@ -14,7 +14,7 @@ import { calculerTransits as calculerTransitsAstro } from '@/lib/astro/engine';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    let { userData, reportResults, lifeDetails, orderInfo } = body;
+    let { userData, reportResults, lifeDetails, orderInfo, psyResult } = body;
 
     // If reportResults is missing (from Checkout), calculate it
     if (!reportResults && userData) {
@@ -116,7 +116,7 @@ export async function POST(request: Request) {
       .insert([
         {
           user_data: enrichedUserData,
-          numerology_result: { reportResults, lifeDetails },
+          numerology_result: { reportResults, lifeDetails, psyResult },
           status: 'pending'
         }
       ])

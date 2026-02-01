@@ -17,6 +17,7 @@ import {
   MapPin
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { trackEvent } from '@/lib/analytics';
 import { AUTO_PERCEPTION_ITEMS, BEHAVIOR_SCENARIOS } from '@/lib/psy-mirror/data';
 import { ROTATING_FEEDBACKS, SYNTHESIS } from '@/lib/psy-mirror/feedbacks';
 import type { Option } from '@/lib/psy-mirror/types';
@@ -260,6 +261,7 @@ export default function ExperiencePsyMirror() {
 
   // --- Intro & Cosmic Identity ---
   const handleIntroStart = () => {
+    trackEvent('experience_start');
     if (userData && userData.birthDate && userData.firstName && userData.birthTime) {
       setStep('cosmicReveal');
     } else {
@@ -271,6 +273,7 @@ export default function ExperiencePsyMirror() {
     e.preventDefault();
     if (!personalInfo.birthDate || !personalInfo.firstName) return;
 
+    trackEvent('info_submitted');
     const pathNum = calculateLifePathNumber(personalInfo.birthDate);
     const pathData = getLifePathData(pathNum);
     const moonData = getMoonSign(personalInfo.birthDate, personalInfo.birthTime);
@@ -304,6 +307,7 @@ export default function ExperiencePsyMirror() {
   };
 
   const proceedFromCosmic = () => {
+    trackEvent('moduleA_start');
     setStep('moduleA');
   };
 
@@ -314,6 +318,11 @@ export default function ExperiencePsyMirror() {
     const newAnswers = [...moduleAAnswers, option];
     setModuleAAnswers(newAnswers);
     
+    // Track every 3 questions or so to see where they drop
+    if (newAnswers.length % 3 === 0) {
+      trackEvent(`moduleA_progress_${newAnswers.length}`);
+    }
+
     const hasFeedback = checkFeedback(newAnswers.length, 'moduleA');
 
     if (hasFeedback) {
@@ -343,6 +352,11 @@ export default function ExperiencePsyMirror() {
     const newAnswers = [...moduleBAnswers, option];
     setModuleBAnswers(newAnswers);
     
+    // Track every scenario (4 steps)
+    if (newAnswers.length % 4 === 0) {
+      trackEvent(`moduleB_progress_${newAnswers.length / 4}`);
+    }
+
     const hasFeedback = checkFeedback(newAnswers.length, 'moduleB');
 
     if (hasFeedback) {
@@ -386,10 +400,12 @@ export default function ExperiencePsyMirror() {
     if (!intermediateFeedback) return;
 
     if (step === 'moduleA') {
+      trackEvent('moduleB_start');
       setStep('moduleB');
       setCurrentModuleIndex(0);
       setCurrentScenarioStep(0);
     } else if (step === 'moduleB') {
+      trackEvent('moduleC_start');
       setStep('moduleC');
       setShowInstructions(true);
       setCurrentModuleIndex(0);
@@ -405,12 +421,14 @@ export default function ExperiencePsyMirror() {
     setReflexResults(newReflexResults);
 
     const testCount = Object.keys(newReflexResults).length;
+    trackEvent(`moduleC_progress_${testCount}`);
     checkFeedback(testCount, 'moduleC');
 
     if (currentReflexStep < reflexTests.length - 1) {
       setCurrentReflexStep(currentReflexStep + 1);
       setShowInstructions(true);
     } else {
+      trackEvent('experience_finished');
       finishExperience(newReflexResults);
     }
   };

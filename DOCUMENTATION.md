@@ -159,5 +159,34 @@ Le processus de livraison a été optimisé pour gérer le délai de génératio
         *   📄 Lien de téléchargement du **Rapport PDF**.
         *   🎙️ Accès direct à **L'Oracle Vocal** (Chatbot).
 
+## 8. Mises à jour V3.0 - Le Miroir Intégral (Février 2026)
+
+### 8.1 Refonte Visuelle & UX
+*   **Design "Premium Vertical"** : Passage de tous les modules (Cycles, Année Personnelle, Vision Décennale, Orientation Pro) en **colonne unique centrée**.
+*   **Navigation** : Intégration d'un bouton flottant **"L'Oracle du Miroir"** accessible sur toutes les pages du rapport pour un coaching contextuel immédiat.
+*   **Esthétique** : Utilisation de typographies serif imposantes, de flous gaussiens et d'animations de révélation (`framer-motion`) pour un effet "Wow".
+
+### 8.2 Laboratoire de l'Action (Analyse Comportementale)
+*   **Nouveaux Indices** :
+    *   *Indice de Cohérence* : Alignement entre intentions et actes.
+    *   *Indice d'Évitement* : Tendance à contourner les frictions.
+    *   *Indice d'Hyper-Contrôle* : Besoin de maîtrise.
+*   **Insights de Rupture** : Ajout des sections **"Angle Mort Détecté"** et **"Levier Prioritaire"** pour transformer la lecture en plan d'action.
+
+### 8.3 L'Alignement Sacré (Synthèse Ultime)
+*   **Venn Diagram Interactif** : Visualisation de l'intersection entre le **Code Source** (Astro/Numéro) et le **Mode Réflexe** (Biologie/Comportement).
+*   **Analyse de la Dissonance** : Explication détaillée du score d'alignement (%) avec l'origine du désalignement et les remèdes spécifiques.
+
+### 8.4 Architecture Astrale & Numérologique
+*   **Normalisation des Données** : Correction de la récupération des données (Soleil, Lune, Ascendant) via une normalisation des clés (suppression des accents pour les lookups dans `interpretations-astro-geo.ts`).
+*   **Mission de Vie** : Section dédiée au Chemin de Vie comme fréquence d'incarnation principale.
+
+### 8.5 Plan d'Action "Réalignement" (7 Jours)
+*   **Promesse Phare** : Détail approfondi pour chaque journée incluant :
+    1.  **Objectif du Jour** (Action).
+    2.  **Enjeu Psychologique** (Pourquoi).
+    3.  **Protocole Pratique** (Comment).
+    4.  **Bénéfice Attendu** (Résultat).
+
 ---
-*Document mis à jour le 22 Janvier 2026 - Version 2.7*
+*Document mis à jour le 1er Février 2026 - Version 3.0*

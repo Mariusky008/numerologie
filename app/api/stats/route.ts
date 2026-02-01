@@ -10,22 +10,20 @@ export async function GET() {
       .select('*');
 
     if (error) {
-        // En cas d'erreur de table manquante ou de droits, on renvoie un objet vide
-        // au lieu d'une erreur 500 pour ne pas bloquer l'UI
         console.error("Supabase site_stats GET Error:", error);
-        return NextResponse.json({});
+        // On renvoie l'erreur pour qu'elle soit visible dans la console Network
+        return NextResponse.json({ error: error.message, details: error }, { status: 500 });
     }
 
-    // Convert array to object
     const stats = data ? data.reduce((acc: any, curr: any) => {
       acc[curr.event_name] = curr.count;
       return acc;
     }, {}) : {};
 
     return NextResponse.json(stats);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Critical error in stats GET:', error);
-    return NextResponse.json({});
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 

@@ -54,6 +54,7 @@ export default function AdminDashboard() {
   // Auth state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
+  const [testLoading, setTestLoading] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -61,6 +62,28 @@ export default function AdminDashboard() {
       fetchStats();
     }
   }, [isAuthenticated]);
+
+  const sendTestEvent = async () => {
+    setTestLoading(true);
+    try {
+      const res = await fetch('/api/stats', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event: 'test_event' })
+      });
+      if (res.ok) {
+        alert("Événement de test envoyé avec succès ! Rafraîchissement...");
+        fetchStats();
+      } else {
+        const err = await res.json();
+        alert("Erreur lors de l'envoi : " + JSON.stringify(err));
+      }
+    } catch (e) {
+      alert("Erreur réseau : " + String(e));
+    } finally {
+      setTestLoading(false);
+    }
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -205,6 +228,14 @@ export default function AdminDashboard() {
             Admin - Romans de Vie
           </div>
           <div className="flex items-center gap-6">
+            <button 
+              onClick={sendTestEvent}
+              disabled={testLoading}
+              className="flex items-center gap-2 px-3 py-1 bg-amber-600/20 hover:bg-amber-600/40 border border-amber-500/30 rounded text-xs font-bold transition-colors text-amber-200"
+            >
+              <Zap className="w-3 h-3" />
+              {testLoading ? 'Envoi...' : 'Diagnostic : Tester Tracking'}
+            </button>
             <button 
               onClick={handleResetAll}
               className="flex items-center gap-2 px-3 py-1 bg-red-600/20 hover:bg-red-600/40 border border-red-500/30 rounded text-xs font-bold transition-colors"

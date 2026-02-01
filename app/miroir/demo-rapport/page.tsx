@@ -19,10 +19,10 @@ const MOCK_NUMEROLOGY = {
   personality: 2,
   personalYear: 8,
   details: {
-    lifePath: { value: 1, title: "Le Leader", description: "Un potentiel de création et d'indépendance massif." },
-    expression: { value: 5, title: "Le Voyageur", description: "Un besoin de liberté et d'adaptabilité constant." },
-    soulUrge: { value: 3, title: "L'Artiste", description: "Une soif d'expression et de communication profonde." },
-    personality: { value: 2, title: "Le Médiateur", description: "Une apparence douce et diplomate." }
+    lifePath: { value: 1, subNumber: 10, isMaster: false, title: "Le Leader", description: "Un potentiel de création et d'indépendance massif. Votre chemin est celui du pionnier qui ouvre la voie pour les autres." },
+    expression: { value: 5, subNumber: 14, isMaster: false, title: "Le Voyageur", description: "Un besoin de liberté et d'adaptabilité constant. Vous vibrez par le changement et l'exploration." },
+    soulUrge: { value: 3, subNumber: 12, isMaster: false, title: "L'Artiste", description: "Une soif d'expression et de communication profonde. Votre âme cherche la joie et la transmission." },
+    personality: { value: 2, subNumber: 11, isMaster: true, title: "Le Médiateur", description: "Une apparence douce et diplomate qui cache une grande force intuitive." }
   },
   professionalAxes: ["Direction", "Innovation", "Communication"],
   inclusionGrid: [0, 1, 2, 1, 0, 3, 0, 1, 0, 1],
@@ -49,7 +49,18 @@ const MOCK_NUMEROLOGY = {
   careerForecast: [],
   transits: [],
   planesOfExpression: { physical: 5, mental: 8, emotional: 4, intuitive: 2 },
-  advancedProfile: { core: "Leader Visionnaire" }
+  advancedProfile: { 
+    core: "Leader Visionnaire",
+    zodiac: "Taureau",
+    dominantPlanet: "Venus",
+    pathData: { title: "La Voie du Pionnier", description: "Votre chemin est celui de l'innovation et de l'autonomie." }
+  },
+  realAstro: {
+    'Sun': { signe: 'Taureau', maison: 10, position_degres: 25 },
+    'Moon': { signe: 'Lion', maison: 1, position_degres: 12 },
+    'Ascendant': { signe: 'Lion', position_degres: 10 },
+    'Mercury': { signe: 'Gemeaux', maison: 11 }
+  }
 };
 
 const MOCK_PSY_RESULT = {

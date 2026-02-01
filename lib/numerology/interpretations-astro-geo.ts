@@ -13,7 +13,7 @@ export const PLANET_INFLUENCES: Record<string, string> = {
 };
 
 export const ZODIAC_DETAILS: Record<string, { element: string, quality: string, description: string, moonDesc: string, ascendantDesc: string }> = {
-  "bélier": {
+  "belier": {
     element: "Feu",
     quality: "Cardinal",
     description: "Premier signe du zodiaque, le Bélier incarne l'étincelle de vie initiale, l'élan pur et l'audace sans filtre. Vous possédez une force d'initiation brute qui vous pousse à agir avant même de réfléchir, guidé par un instinct infaillible. Votre mission solaire est d'ouvrir de nouvelles voies, de prendre la tête de projets novateurs et d'affirmer votre identité avec courage. Vous détestez la stagnation et la bureaucratie; vous avez besoin de défis constants pour vous sentir vivant. Apprenez à canaliser votre impatience pour que votre feu intérieur soit une source de chaleur constante plutôt qu'un incendie passager.",
@@ -27,7 +27,7 @@ export const ZODIAC_DETAILS: Record<string, { element: string, quality: string, 
     moonDesc: "La Lune est en exaltation en Taureau, ce qui vous donne l'un des mondes émotionnels les plus stables et les plus riches du zodiaque. Vos émotions sont profondes, calmes et persistantes. Pour vous sentir bien, vous avez besoin de sécurité matérielle, de routines apaisantes et d'un environnement esthétique. Vous n'aimez pas les drames émotionnels inutiles et préférez exprimer votre affection par des gestes concrets : un bon repas, un cadeau de qualité ou une présence physique rassurante. Votre paix intérieure se trouve dans le contact avec la nature et la lenteur, loin du tumulte du monde moderne.",
     ascendantDesc: "L'Ascendant Taureau vous confère une présence physique solide, calme et souvent très séduisante. Vous dégagez une impression de fiabilité et de bon sens qui rassure instantanément votre entourage. Vous abordez la vie avec prudence, prenant le temps de observer avant de vous engager, mais une fois lancé, rien ne peut vous arrêter. On remarque chez vous un amour pour la qualité et le beau, que ce soit dans votre tenue ou votre manière de parler. Votre rythme est lent mais puissant, et vous possédez un talent naturel pour faire fructifier les ressources autour de vous."
   },
-  "gémeaux": {
+  "gemeaux": {
     element: "Air",
     quality: "Mutable",
     description: "Signe de la dualité et de l'échange, le Gémeaux est l'éternel étudiant du zodiaque. Votre esprit est une machine à traiter l'information, toujours en quête de nouvelles connaissances, de nouveaux liens et de nouvelles perspectives. Votre Soleil vous pousse à communiquer, à écrire, à parler et à diffuser des idées. Vous possédez une agilité mentale et une adaptabilité qui vous permettent de naviguer avec aisance dans des environnements complexes ou changeants. Votre curiosité insatiable fait de vous une personne polyvalente, capable de s'intéresser à mille sujets. Votre défi est de trouver un fil conducteur pour ne pas vous éparpiller et pour donner de la profondeur à vos multiples talents.",

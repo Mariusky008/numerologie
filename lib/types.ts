@@ -33,6 +33,8 @@ export interface NumberDetail {
   subNumber: number; // Origine (ex: 13)
   isMaster: boolean; // (ex: false car 13/4 n'est pas maître, mais 11 oui)
   karmicDebt?: number; // (ex: 13 si c'est une dette)
+  title?: string; // Optionnel : Titre du nombre (ex: "Le Leader")
+  description?: string; // Optionnel : Description courte
 }
 
 export interface Transits {

@@ -1,11 +1,31 @@
 
 import { UserData, NumerologyResult } from '@/lib/types';
 import PageContainer from './PageContainer';
+import { motion } from 'framer-motion';
 import { getPersonalYearContent, getCycleContent, getExpressionContent } from '@/lib/numerology/contentGenerator';
+import { generateDecadeForecast } from '@/lib/numerology/modules/decade';
+import { 
+  Zap, 
+  Compass, 
+  Calendar, 
+  ArrowRight, 
+  Sparkles,
+  Target,
+  Activity,
+  History,
+  Lightbulb
+} from 'lucide-react';
 
 export default function Part5Future({ userData, results }: { userData: UserData, results: NumerologyResult }) {
   const pyContent = getPersonalYearContent(results.personalYear);
-  const expContent = getExpressionContent(results.expression);
+  const decadeForecast = generateDecadeForecast(userData.birthDate);
+  
+  const fadeIn = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.8 }
+  };
   
   // Calculate Cycle Ranges
   const birthYear = new Date(userData.birthDate).getFullYear();
@@ -23,10 +43,6 @@ export default function Part5Future({ userData, results }: { userData: UserData,
     currentCycleNum = results.cycles.cycle2;
     currentCycleName = "Cycle Productif";
   } else if (age > c2End) {
-    currentCycleNum = results.cycles.cycle3; // Assuming cycle3 corresponds to the last cycle in the results object structure if available, otherwise fallback logic
-    // Actually results.cycles usually has cycle1, cycle2, cycle3. Let's assume standard 3 cycles.
-    // Wait, type definition says cycle1, cycle2, cycle3, cycle4? 
-    // Standard is 3 Major Cycles. 
     currentCycleNum = results.cycles.cycle3;
     currentCycleName = "Cycle de Sagesse";
   }
@@ -34,46 +50,72 @@ export default function Part5Future({ userData, results }: { userData: UserData,
   const cycleContent = getCycleContent(currentCycleNum);
 
   return (
-    <>
-      {/* PAGE 31: CYCLES DE VIE */}
-      <PageContainer className="p-4 md:p-16">
-        <div className="max-w-4xl mx-auto space-y-16">
-          <div className="text-center space-y-6">
-            <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Vos Cycles de Vie</h2>
-            <p className="text-[#1A1C2E]/60 text-xl leading-relaxed font-light">
-              Votre existence est rythmée par trois grands cycles. Chaque phase impose une thématique majeure à votre évolution.
-            </p>
+    <div className="space-y-32">
+      {/* 1. VOS CYCLES DE VIE */}
+      <section className="px-6 max-w-6xl mx-auto space-y-16">
+        <motion.div {...fadeIn} className="text-center space-y-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1A1C2E]/5 text-[#1A1C2E]/60 text-[10px] font-black uppercase tracking-[0.3em]">
+            <History className="w-4 h-4" />
+            Les Grandes Saisons
           </div>
+          <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Vos Cycles de Vie</h2>
+          <p className="text-[#1A1C2E]/60 text-xl leading-relaxed font-light max-w-2xl mx-auto italic">
+            "Votre existence est rythmée par trois grands cycles. Chaque phase impose une thématique majeure à votre évolution."
+          </p>
+        </motion.div>
 
-          <div className="space-y-12">
-            {[
-              { range: `0 - ${c1End} ans`, label: "Cycle Formatif", num: results.cycles.cycle1, active: age <= c1End, color: "#f59e0b" },
-              { range: `${c1End} - ${c2End} ans`, label: "Cycle Productif", num: results.cycles.cycle2, active: age > c1End && age <= c2End, color: "#C9A24D" },
-              { range: `${c2End}+ ans`, label: "Cycle Sagesse", num: results.cycles.cycle3, active: age > c2End, color: "#1A1C2E" }
-            ].map((c, i) => (
-              <div key={i} className={`flex flex-col md:flex-row gap-6 items-center p-8 rounded-[40px] border transition-all duration-500 ${c.active ? 'bg-white border-[#C9A24D] shadow-xl scale-105' : 'bg-stone-50 border-stone-200 opacity-60'}`}>
-                <div className="w-40 text-center font-serif text-xl text-[#1A1C2E] font-bold">{c.range}</div>
-                <div className="flex-1 w-full h-3 bg-stone-200 rounded-full relative overflow-hidden">
-                  <div className="absolute top-0 left-0 h-full w-full rounded-full" style={{ backgroundColor: c.color }}></div>
-                </div>
-                <div className="w-60 text-center md:text-right">
-                  <div className="text-[10px] font-black uppercase tracking-widest text-[#C9A24D] mb-1">{c.label}</div>
-                  <div className="text-2xl font-serif font-bold text-[#1A1C2E]">Cycle {c.num}</div>
-                </div>
+        <div className="space-y-8">
+          {[
+            { range: `0 - ${c1End} ans`, label: "Cycle Formatif", num: results.cycles.cycle1, active: age <= c1End, color: "#f59e0b" },
+            { range: `${c1End} - ${c2End} ans`, label: "Cycle Productif", num: results.cycles.cycle2, active: age > c1End && age <= c2End, color: "#C9A24D" },
+            { range: `${c2End}+ ans`, label: "Cycle Sagesse", num: results.cycles.cycle3, active: age > c2End, color: "#1A1C2E" }
+          ].map((c, i) => (
+            <motion.div 
+              key={i} 
+              {...fadeIn}
+              className={`flex flex-col md:flex-row gap-8 items-center p-10 rounded-[60px] border transition-all duration-700 ${c.active ? 'bg-white border-[#C9A24D] shadow-2xl scale-105 relative z-10' : 'bg-[#FAF9F7] border-stone-100 opacity-40'}`}
+            >
+              <div className="w-40 text-center font-serif text-2xl text-[#1A1C2E] font-bold">{c.range}</div>
+              <div className="flex-1 w-full h-2 bg-stone-100 rounded-full relative overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  whileInView={{ width: '100%' }}
+                  transition={{ duration: 1.5, delay: i * 0.2 }}
+                  className="absolute top-0 left-0 h-full rounded-full" 
+                  style={{ backgroundColor: c.color }}
+                />
               </div>
-            ))}
-          </div>
+              <div className="w-64 text-center md:text-right space-y-1">
+                <div className="text-[10px] font-black uppercase tracking-widest text-[#C9A24D]">{c.label}</div>
+                <div className="text-3xl font-serif font-bold text-[#1A1C2E]">Vibration {c.num}</div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        
+        <motion.div 
+          {...fadeIn}
+          className="p-12 md:p-20 bg-[#1A1C2E] rounded-[80px] text-white relative overflow-hidden group shadow-2xl"
+        >
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#C9A24D]/10 blur-[120px] rounded-full" />
           
-          <div className="p-10 md:p-16 bg-white border border-[#C9A24D]/20 rounded-[60px] shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-3 h-full bg-[#C9A24D]"></div>
-            <div className="space-y-8 relative z-10">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#C9A24D]/10 text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.4em]">
-                Vibration Actuelle
+          <div className="relative z-10 space-y-12">
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.3em] border border-white/10">
+                <Zap className="w-4 h-4" />
+                Cycle Actuel
               </div>
-              <h3 className="text-3xl md:text-5xl font-serif text-[#1A1C2E] italic font-bold">Vous êtes ici : {currentCycleName}</h3>
-              <div className="space-y-6">
-                <h4 className="text-2xl font-bold text-[#C9A24D]">Cycle en vibration {currentCycleNum}</h4>
-                <p className="text-xl text-[#1A1C2E] leading-relaxed font-medium italic">
+              <h3 className="text-3xl md:text-6xl font-serif italic font-bold">Vous êtes ici : {currentCycleName}</h3>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+              <div className="lg:col-span-4 space-y-4">
+                <div className="text-[10rem] md:text-[14rem] font-serif text-[#C9A24D] leading-none">{currentCycleNum}</div>
+                <div className="text-[10px] font-black uppercase tracking-[0.5em] text-white/40">Fréquence Maîtresse</div>
+              </div>
+              
+              <div className="lg:col-span-8 space-y-10">
+                <p className="text-2xl md:text-3xl text-white/80 leading-relaxed font-light italic border-l-4 border-[#C9A24D]/50 pl-10">
                   "Ce cycle vous invite à développer l'énergie du {currentCycleNum}. C'est une période propice pour : {currentCycleNum === 1 ? "Indépendance, Leadership, Innovation, Courage, Action" : 
                     currentCycleNum === 2 ? "Collaboration, Patience, Sensibilité, Équilibre" :
                     currentCycleNum === 3 ? "Expression, Créativité, Vie Sociale, Communication" :
@@ -83,140 +125,203 @@ export default function Part5Future({ userData, results }: { userData: UserData,
                     currentCycleNum === 7 ? "Réflexion, Spiritualité, Analyse, Sagesse" :
                     currentCycleNum === 8 ? "Pouvoir, Réussite, Matérialité, Justice" : "Bilan, Humanisme, Idéalisme, Transmission"}."
                 </p>
-                <div className="p-8 bg-[#FAF9F7] rounded-[40px] border border-stone-100 text-[#1A1C2E] text-lg leading-relaxed font-light">
+                <div className="p-10 bg-white/5 backdrop-blur-sm rounded-[50px] border border-white/10 text-white/70 text-xl leading-relaxed font-light italic">
                   {cycleContent.detailed}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </PageContainer>
+        </motion.div>
+      </section>
 
-      {/* PAGE 32: ANNEE PERSONNELLE */}
-      <PageContainer className="p-4 md:p-16 bg-[#FAF9F7]">
-        <div className="max-w-4xl mx-auto space-y-16 text-center">
-          <div className="space-y-6">
-            <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Année Personnelle</h2>
-            <div className="relative inline-block">
-              <div className="text-[12rem] md:text-[18rem] font-serif text-[#C9A24D] leading-none">{results.personalYear}</div>
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap px-6 py-2 bg-[#1A1C2E] text-white text-xs font-black uppercase tracking-[0.5em] rounded-full">
+      {/* 2. ANNÉE PERSONNELLE */}
+      <section className="px-6 max-w-6xl mx-auto space-y-16">
+        <motion.div {...fadeIn} className="text-center space-y-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FAF9F7] text-[#1A1C2E]/60 text-[10px] font-black uppercase tracking-[0.3em] border border-stone-100">
+            <Calendar className="w-4 h-4" />
+            La Météo de l'Année
+          </div>
+          <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Année Personnelle</h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5">
+            <motion.div 
+              {...fadeIn}
+              className="aspect-square bg-white rounded-full border border-stone-100 shadow-2xl flex flex-col items-center justify-center relative group"
+            >
+              <div className="absolute inset-0 bg-[#C9A24D]/5 blur-[80px] rounded-full group-hover:scale-110 transition-transform duration-1000" />
+              <div className="text-[12rem] md:text-[16rem] font-serif text-[#C9A24D] leading-none relative z-10">{results.personalYear}</div>
+              <div className="px-6 py-2 bg-[#1A1C2E] text-white text-[10px] font-black uppercase tracking-[0.5em] rounded-full relative z-10">
                 Vibration {new Date().getFullYear()}
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          <div className="bg-white p-10 md:p-16 rounded-[60px] border border-[#C9A24D]/10 shadow-xl">
-            <p className="text-xl md:text-2xl text-[#1A1C2E] leading-relaxed font-light italic">
-              {pyContent}
-            </p>
-          </div>
+          <div className="lg:col-span-7 space-y-8">
+            <motion.div {...fadeIn} className="bg-white p-12 md:p-16 rounded-[60px] border border-stone-100 shadow-xl">
+              <p className="text-2xl md:text-3xl text-[#1A1C2E] leading-relaxed font-light italic">
+                {pyContent}
+              </p>
+            </motion.div>
 
-          {results.transits && (
-            <div className="space-y-12 pt-16">
-              <h3 className="text-3xl md:text-5xl font-serif text-[#1A1C2E] italic font-bold">Météo Vibratoire (Transits)</h3>
-              <div className="grid grid-cols-1 gap-8">
+            {results.transits && (
+              <div className="grid grid-cols-1 gap-4">
                 {[
-                  { label: "Plan Physique", val: results.transits.physical, desc: "Influence sur votre santé et vos actions concrètes." },
-                  { label: "Plan Mental", val: results.transits.mental, desc: "Influence sur vos pensées et vos projets intellectuels." },
-                  { label: "Plan Spirituel", val: results.transits.spiritual, desc: "Influence sur votre âme et votre évolution intérieure." }
+                  { label: "Plan Physique", val: results.transits.physical, icon: Activity },
+                  { label: "Plan Mental", val: results.transits.mental, icon: Brain },
+                  { label: "Plan Spirituel", val: results.transits.spiritual, icon: Sparkles }
                 ].map((t, i) => (
-                  <div key={i} className="bg-white p-10 rounded-[40px] border border-stone-200 shadow-sm flex flex-col md:flex-row items-center gap-8 group hover:border-[#C9A24D]/50 transition-all">
-                    <div className="text-7xl font-serif text-[#C9A24D] font-bold group-hover:scale-110 transition-transform">{t.val}</div>
-                    <div className="text-center md:text-left space-y-2">
-                      <div className="text-xs uppercase tracking-widest text-[#C9A24D] font-black">{t.label}</div>
-                      <p className="text-lg text-[#1A1C2E]/60 font-light">{t.desc}</p>
+                  <motion.div key={i} {...fadeIn} className="flex items-center justify-between p-6 bg-[#FAF9F7] rounded-full border border-stone-100 px-10">
+                    <div className="flex items-center gap-4">
+                      <t.icon className="w-4 h-4 text-[#C9A24D]" />
+                      <span className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/60">{t.label}</span>
                     </div>
-                  </div>
+                    <span className="text-2xl font-serif font-bold text-[#1A1C2E]">{t.val}</span>
+                  </motion.div>
                 ))}
               </div>
-            </div>
-          )}
-        </div>
-      </PageContainer>
-
-      {/* PAGE 33-34: VISION DÉCENNALE */}
-      <PageContainer className="p-4 md:p-16">
-        <div className="max-w-4xl mx-auto space-y-16">
-          <div className="text-center space-y-6">
-            <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Vision Décennale</h2>
-            <p className="text-[#1A1C2E]/60 text-xl font-light">Les 10 prochaines années de votre trajectoire.</p>
+            )}
           </div>
+        </div>
+      </section>
 
-          <div className="space-y-6">
-            <div className="grid grid-cols-3 p-6 text-[10px] font-black uppercase tracking-widest text-[#C9A24D] border-b border-[#C9A24D]/20">
-              <div>Année</div>
-              <div className="text-center">Année Personnelle</div>
-              <div className="text-right">Énergie Dominante</div>
-            </div>
-            {results.careerForecast?.map((item) => {
-              const py = item.personalYear > 9 ? (item.personalYear === 11 ? 2 : item.personalYear === 22 ? 4 : item.personalYear === 33 ? 6 : item.personalYear % 9 || 9) : item.personalYear;
-              return (
-                <div key={item.year} className="grid grid-cols-3 items-center p-8 rounded-3xl bg-white border border-stone-100 hover:shadow-lg transition-all group">
-                  <div className="text-2xl font-bold text-[#1A1C2E]">{item.year}</div>
-                  <div className="flex justify-center">
-                    <span className="w-12 h-12 rounded-full bg-[#FAF9F7] text-[#C9A24D] flex items-center justify-center text-xl font-bold border border-[#C9A24D]/20 group-hover:bg-[#C9A24D] group-hover:text-white transition-all">
-                      {py}
+      {/* 3. VISION DÉCENNALE */}
+      <section className="px-6 max-w-6xl mx-auto space-y-16">
+        <motion.div {...fadeIn} className="text-center space-y-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1A1C2E]/5 text-[#1A1C2E]/60 text-[10px] font-black uppercase tracking-[0.3em]">
+            <Compass className="w-4 h-4" />
+            Trajectoire Future
+          </div>
+          <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Vision Décennale</h2>
+          <p className="text-[#1A1C2E]/60 text-xl font-light max-w-2xl mx-auto italic">
+            "Les 10 prochaines années de votre trajectoire. Une vision panoramique pour anticiper les courants."
+          </p>
+        </motion.div>
+
+        <div className="space-y-6">
+          {decadeForecast.map((item, i) => (
+            <motion.div 
+              key={item.year} 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="group bg-white p-8 md:p-12 rounded-[50px] border border-stone-100 hover:border-[#C9A24D]/30 hover:shadow-2xl transition-all"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="lg:col-span-2 flex flex-col items-center lg:items-start">
+                  <div className="text-3xl font-serif font-black text-[#1A1C2E] group-hover:text-[#C9A24D] transition-colors">{item.year}</div>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="w-8 h-8 rounded-full bg-[#1A1C2E] text-[#C9A24D] flex items-center justify-center text-xs font-bold border border-white/10">
+                      {item.personalYear}
                     </span>
-                  </div>
-                  <div className="text-right text-sm font-medium text-[#1A1C2E]/60">
-                    {py === 1 ? "Nouveau Départ" : py === 2 ? "Collaboration" : py === 3 ? "Créativité" : py === 4 ? "Construction" : py === 5 ? "Changement" : py === 6 ? "Responsabilité" : py === 7 ? "Réflexion" : py === 8 ? "Réussite" : "Bilan"}
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40">AP</span>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+
+                <div className="lg:col-span-4 space-y-1">
+                  <h4 className="text-xl font-serif font-bold text-[#1A1C2E] italic">{item.theme}</h4>
+                  <p className="text-sm text-[#C9A24D] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                    {item.mantra}
+                  </p>
+                </div>
+
+                <div className="lg:col-span-6">
+                  <p className="text-lg text-[#1A1C2E]/60 font-light leading-relaxed italic border-l-2 border-stone-100 pl-8 group-hover:border-[#C9A24D]/30 transition-colors">
+                    {item.focus}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      </PageContainer>
+      </section>
 
-      {/* PAGE 35: ORIENTATION PRO & ENVIRONNEMENT */}
-      <PageContainer className="p-4 md:p-16 bg-[#FDFBF7]">
-        <div className="max-w-4xl mx-auto space-y-16">
-          <div className="text-center space-y-6">
-            <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Orientation Professionnelle</h2>
-            <p className="text-[#1A1C2E]/60 text-xl font-light">Les secteurs où votre vibration est la plus forte.</p>
+      {/* 4. ORIENTATION PRO & ENVIRONNEMENT */}
+      <section className="px-6 max-w-6xl mx-auto space-y-16">
+        <motion.div {...fadeIn} className="text-center space-y-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FAF9F7] text-[#1A1C2E]/60 text-[10px] font-black uppercase tracking-[0.3em] border border-stone-100">
+            <Target className="w-4 h-4" />
+            Réalisation
           </div>
+          <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Orientation Pro</h2>
+        </motion.div>
 
-          <div className="space-y-6">
-            {results.professionalAxes.map((axis, i) => (
-              <div key={i} className="p-10 rounded-[40px] bg-white border border-stone-200 hover:shadow-xl transition-all group">
-                <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 rounded-2xl bg-[#C9A24D]/10 text-[#C9A24D] flex items-center justify-center font-serif text-2xl font-bold group-hover:bg-[#C9A24D] group-hover:text-white transition-all">
-                    {i + 1}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {results.professionalAxes.map((axis, i) => (
+            <motion.div 
+              key={i} 
+              {...fadeIn}
+              className="p-10 rounded-[50px] bg-white border border-stone-100 hover:border-[#C9A24D]/30 hover:shadow-xl transition-all group"
+            >
+              <div className="space-y-6">
+                <div className="w-14 h-14 rounded-2xl bg-[#FAF9F7] text-[#C9A24D] flex items-center justify-center font-serif text-2xl font-bold border border-stone-100 group-hover:bg-[#C9A24D] group-hover:text-white transition-all">
+                  {i + 1}
+                </div>
+                <h3 className="text-2xl font-serif font-bold text-[#1A1C2E] italic leading-tight">{axis}</h3>
+                <p className="text-sm text-[#1A1C2E]/40 font-light italic">Secteur à haut potentiel vibratoire pour votre profil.</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div 
+          {...fadeIn}
+          className="bg-[#FDFBF7] p-12 md:p-20 rounded-[80px] border-2 border-[#C9A24D]/20 shadow-2xl relative overflow-hidden"
+        >
+          <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-[#C9A24D]/5 blur-[100px] rounded-full" />
+          
+          <div className="relative z-10 space-y-12">
+            <div className="text-center space-y-4">
+              <h3 className="text-3xl md:text-5xl font-serif font-bold italic text-[#1A1C2E]">L'Environnement Idéal</h3>
+              <p className="text-xl text-[#1A1C2E]/60 font-light max-w-2xl mx-auto">
+                "Pour vous épanouir pleinement, votre cadre de vie et de travail doit nourrir vos besoins fondamentaux."
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                { label: "AUTONOMIE", val: results.lifePath, text: "Gestion du temps & indépendance.", icon: ArrowRight },
+                { label: "EXPRESSION", val: results.expression, text: "Liberté d'idées & créativité.", icon: Lightbulb },
+                { label: "SENS", val: results.soulUrge, text: "Contribution & éthique profonde.", icon: Sparkles }
+              ].map((item, i) => (
+                <div key={i} className="bg-white p-10 rounded-[50px] shadow-sm border border-stone-100 space-y-6 group hover:shadow-lg transition-all">
+                  <div className="flex items-center justify-between">
+                    <div className="text-[10px] font-black uppercase tracking-widest text-[#C9A24D]">{item.label}</div>
+                    <item.icon className="w-4 h-4 text-stone-200 group-hover:text-[#C9A24D] transition-colors" />
                   </div>
-                  <div className="space-y-1">
-                    <h3 className="text-2xl font-serif font-bold text-[#1A1C2E]">{axis}</h3>
-                    <p className="text-[#1A1C2E]/50 font-light">Ce secteur résonne naturellement avec vos nombres.</p>
+                  <div className="space-y-2">
+                    <div className="text-sm text-[#1A1C2E]/40 font-bold">Besoin du {item.val}</div>
+                    <p className="text-lg font-serif font-bold text-[#1A1C2E] italic leading-tight">{item.text}</p>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="p-12 md:p-20 bg-[#1A1C2E] rounded-[80px] text-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#C9A24D]/10 blur-[100px] rounded-full"></div>
-            <div className="relative z-10 space-y-10">
-              <div className="space-y-4">
-                <h3 className="text-3xl md:text-5xl font-serif font-bold italic text-[#C9A24D]">Environnement Idéal</h3>
-                <p className="text-white/60 text-xl font-light leading-relaxed">
-                  Pour vous épanouir pleinement, votre environnement de travail doit respecter ces critères :
-                </p>
-              </div>
-              <div className="space-y-6">
-                {[
-                  { icon: "✨", text: `Autonomie dans la gestion du temps (Besoin du ${results.lifePath})` },
-                  { icon: "💡", text: `Possibilité d'exprimer vos idées (Besoin du ${results.expression})` },
-                  { icon: "🌍", text: `Sens et contribution éthique (Besoin du ${results.soulUrge})` }
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-6 p-8 bg-white/5 backdrop-blur-md rounded-[30px] border border-white/10 hover:bg-white/10 transition-all">
-                    <div className="text-3xl">{item.icon}</div>
-                    <span className="text-xl font-light">{item.text}</span>
-                  </div>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
-        </div>
-      </PageContainer>
-    </>
+        </motion.div>
+      </section>
+    </div>
   );
+}
+
+// Sub-components used in Part5Future
+function Brain(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1 .34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 3.8-2.04Z" />
+      <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0-.34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-3.8-2.04Z" />
+    </svg>
+  )
 }

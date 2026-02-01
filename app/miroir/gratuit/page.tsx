@@ -283,122 +283,119 @@ export default function GratuitPage() {
         </div>
       </section>
 
-      {/* 3. CTA - LE DOSSIER COMPLET */}
+      {/* 3. CTA - LE DOSSIER COMPLET - REDESIGNED CONTENT */}
       <section className="py-20 px-6 max-w-5xl mx-auto space-y-16">
-        <motion.div {...fadeIn} className="p-12 md:p-20 bg-[#1A1C2E] text-white rounded-[80px] text-center space-y-12 relative overflow-hidden">
+        <motion.div {...fadeIn} className="p-8 md:p-20 bg-[#1A1C2E] text-white rounded-[80px] text-center space-y-16 relative overflow-hidden shadow-2xl">
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#C9A24D]/20 blur-[100px] rounded-full"></div>
           
-          <div className="space-y-6 relative z-10">
+          <div className="space-y-8 relative z-10">
             <h2 className="text-4xl md:text-7xl font-serif font-bold leading-tight">
-              Découvre le miroir <br />
-              <span className="text-[#C9A24D] italic">complet de ton âme.</span>
+              Découvre le <br />
+              <span className="text-[#C9A24D] italic">Miroir Intégral</span>
             </h2>
-            <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-              Le Crash-Test a révélé l'écart. <span className="text-[#C9A24D] font-bold">Ne reste pas dans le flou.</span> Accède maintenant à ton dossier complet de 40 pages et à ta conversation vocale avec l'IA pour lever tes blocages.
+            <div className="max-w-3xl mx-auto space-y-6 text-white/70 text-lg md:text-xl leading-relaxed font-light">
+              <p>
+                Le Crash-Test a mis en lumière un écart entre ton potentiel de naissance et la façon dont tu fonctionnes aujourd’hui.
+              </p>
+              <p>
+                Le Miroir Intégral te permet de comprendre cet écart, d’en identifier les causes, et de repartir avec des clés concrètes pour retrouver plus de cohérence dans tes choix.
+              </p>
+            </div>
+          </div>
+
+          {/* Section: Ce que tu en retires */}
+          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-[40px] p-8 md:p-12 space-y-10 relative z-10">
+            <div className="space-y-2">
+              <h3 className="text-2xl md:text-3xl font-serif font-bold">Ce que tu en retires concrètement</h3>
+              <p className="text-white/40 text-sm uppercase tracking-widest font-black">Après cette analyse, tu repars avec :</p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8 text-left">
+              {[
+                "une lecture claire de tes mécanismes décisionnels actuels",
+                "une meilleure compréhension de ce qui te désaligne aujourd’hui",
+                "un cadre simple pour retrouver plus de clarté, d’élan et de stabilité intérieure"
+              ].map((item, i) => (
+                <div key={i} className="space-y-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D]">
+                    <Check className="w-6 h-6" />
+                  </div>
+                  <p className="text-white/80 leading-relaxed font-medium">{item}</p>
+                </div>
+              ))}
+            </div>
+            
+            <p className="text-[10px] text-white/30 uppercase tracking-[0.2em] pt-4 border-t border-white/5 font-bold">
+              (outil de compréhension personnelle — sans diagnostic ni prédiction)
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 relative z-10 text-left">
-            {[
-              { 
-                text: "Rapport Intégral de 40 pages (PDF)", 
-                icon: BookOpen, 
-                desc: "Numérologie, Astro & Analyse Labo fusionnés.",
-                preview: (
-                  <div className="absolute right-4 bottom-4 w-24 h-32 bg-white/10 rounded-lg border border-white/20 overflow-hidden rotate-6 group-hover:rotate-12 transition-transform origin-bottom-right hidden sm:block">
-                    <div className="w-full h-4 bg-white/20 mb-2"></div>
-                    <div className="space-y-1 p-2">
-                      <div className="w-full h-1 bg-white/10"></div>
-                      <div className="w-4/5 h-1 bg-white/10"></div>
-                      <div className="w-full h-1 bg-white/10"></div>
-                      <div className="w-2/3 h-1 bg-white/10"></div>
-                    </div>
-                    <div className="absolute bottom-2 right-2 w-6 h-6 rounded-full bg-[#C9A24D]/40 flex items-center justify-center">
-                      <BookOpen className="w-3 h-3 text-white" />
-                    </div>
+          {/* Section: Contenu du Miroir */}
+          <div className="space-y-12 relative z-10">
+            <div className="space-y-2">
+              <h3 className="text-2xl md:text-3xl font-serif font-bold">Ce que contient le Miroir Intégral</h3>
+            </div>
+
+            <div className="grid md:grid-cols-1 gap-6 text-left max-w-4xl mx-auto">
+              {[
+                {
+                  title: "🗣️ Conversation vocale privée avec l’IA ⭐",
+                  desc: "Pose toutes tes questions et explore ton fonctionnement en profondeur, à ton rythme, de manière interactive et personnalisée.",
+                  icon: MessageSquare,
+                  color: "bg-gradient-to-br from-[#C9A24D]/20 to-[#C9A24D]/5"
+                },
+                {
+                  title: "🧭 Plan d’Action “Réalignement” — 7 jours",
+                  desc: "Des exercices simples pour observer, ajuster et commencer à réduire l’écart entre potentiel et fonctionnement réel.",
+                  icon: ShieldCheck,
+                  color: "bg-white/5"
+                },
+                {
+                  title: "📘 Rapport Intégral personnalisé (≈ 40 pages — PDF)",
+                  desc: "Numérologie, astrologie et analyse comportementale fusionnées dans une lecture structurée et cohérente.",
+                  icon: BookOpen,
+                  color: "bg-white/5"
+                }
+              ].map((item, i) => (
+                <div key={i} className={`p-8 rounded-[40px] border border-white/10 ${item.color} flex flex-col md:flex-row gap-8 items-start hover:scale-[1.02] transition-transform group`}>
+                  <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-[#C9A24D] shrink-0 group-hover:scale-110 transition-transform">
+                    <item.icon className="w-7 h-7" />
                   </div>
-                )
-              },
-              { 
-                text: "Coaching Vocal Privé avec l'IA", 
-                icon: MessageSquare, 
-                desc: "Pose toutes tes questions à ton miroir.",
-                preview: (
-                  <div className="absolute right-6 bottom-6 flex items-end gap-1 h-12 hidden sm:flex">
-                    {[0.4, 0.7, 0.3, 0.9, 0.5, 0.8, 0.4].map((h, i) => (
-                      <motion.div
-                        key={i}
-                        animate={{ height: [h * 40, (1-h) * 40, h * 40] }}
-                        transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.1 }}
-                        className="w-1.5 bg-[#C9A24D]/40 rounded-full"
-                      />
-                    ))}
+                  <div className="space-y-3">
+                    <h4 className="text-xl font-bold">{item.title}</h4>
+                    <p className="text-white/60 leading-relaxed">{item.desc}</p>
                   </div>
-                )
-              },
-              { 
-                text: "Vidéo d'Analyse Comportementale", 
-                icon: VideoIcon, 
-                desc: "7 minutes pour comprendre tes réflexes.",
-                preview: (
-                  <div className="absolute right-4 bottom-4 w-32 h-20 bg-black/40 rounded-xl border border-white/20 flex items-center justify-center hidden sm:flex overflow-hidden group-hover:scale-110 transition-transform">
-                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                      <Play className="w-4 h-4 text-white fill-current" />
-                    </div>
-                    <div className="absolute bottom-2 left-2 right-2 h-1 bg-white/10 rounded-full overflow-hidden">
-                      <motion.div 
-                        animate={{ x: ["-100%", "100%"] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                        className="w-1/3 h-full bg-[#C9A24D]"
-                      />
-                    </div>
-                  </div>
-                )
-              },
-              { 
-                text: "Plan d'Action 'Réalignement'", 
-                icon: ShieldCheck, 
-                desc: "7 jours pour retrouver ta trajectoire.",
-                preview: (
-                  <div className="absolute right-4 bottom-4 w-28 h-24 bg-white/5 rounded-xl border border-white/10 p-3 space-y-2 hidden sm:block group-hover:-translate-y-2 transition-transform">
-                    {[1, 2, 3].map(i => (
-                      <div key={i} className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-sm border border-[#C9A24D]/40 flex items-center justify-center">
-                          {i < 3 && <Check className="w-2 h-2 text-[#C9A24D]" />}
-                        </div>
-                        <div className={`h-1 bg-white/10 rounded-full ${i === 1 ? 'w-full' : i === 2 ? 'w-4/5' : 'w-2/3'}`}></div>
-                      </div>
-                    ))}
-                  </div>
-                )
-              }
-            ].map((benefit, i) => (
-              <div key={i} className="flex flex-col gap-2 bg-white/5 p-8 rounded-[40px] border border-white/10 hover:bg-white/10 transition-all group relative overflow-hidden">
-                <div className="flex items-center gap-4 relative z-10">
-                  <div className="w-10 h-10 rounded-2xl bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D]">
-                    <benefit.icon className="w-5 h-5" />
-                  </div>
-                  <span className="text-lg font-bold">{benefit.text}</span>
                 </div>
-                <p className="text-white/40 text-sm ml-14 relative z-10 max-w-[200px]">{benefit.desc}</p>
-                {benefit.preview}
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Section: Pourquoi aller au bout */}
+          <div className="max-w-2xl mx-auto space-y-6 relative z-10 pt-8">
+            <h3 className="text-2xl font-serif font-bold italic text-[#C9A24D]">Pourquoi aller jusqu’au bout</h3>
+            <div className="space-y-4 text-white/60 text-lg leading-relaxed font-light">
+              <p>Tu n’achètes pas un rapport.</p>
+              <p>
+                Tu achètes une <span className="text-white font-bold">lecture claire de ton fonctionnement</span>, et un point de départ structuré pour retrouver plus de cohérence dans ta trajectoire.
+              </p>
+            </div>
           </div>
 
           <div className="pt-10 relative z-10 space-y-8">
             <button 
               onClick={() => router.push('/miroir/checkout')}
-              className="group relative inline-flex flex-col items-center gap-2 px-12 md:px-20 py-8 md:py-10 bg-[#C9A24D] text-white rounded-full font-bold shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95"
+              className="group relative inline-flex flex-col items-center gap-2 px-12 md:px-20 py-8 md:py-10 bg-[#C9A24D] text-[#1A1C2E] rounded-full font-bold shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95"
             >
               <div className="flex items-center gap-4">
                 <span className="text-2xl md:text-4xl">Accéder à mon Miroir Intégral</span>
                 <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
               </div>
-              <span className="text-sm md:text-lg opacity-90 tracking-widest">49 € — PAIEMENT SÉCURISÉ</span>
             </button>
             <div className="flex flex-col items-center gap-4">
-              <p className="text-white/30 text-[10px] font-black uppercase tracking-[0.4em]">Accès immédiat après paiement • Rapport unique au monde</p>
+              <div className="space-y-1">
+                <p className="text-white font-bold text-xl tracking-tight">49 € — Paiement sécurisé</p>
+                <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.4em]">Accès immédiat après paiement • Analyse personnelle • Expérience unique</p>
+              </div>
               <div className="flex gap-4 opacity-40">
                 <div className="h-8 bg-white/10 rounded-lg px-3 flex items-center border border-white/10">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-3 w-auto brightness-0 invert" alt="Visa" />

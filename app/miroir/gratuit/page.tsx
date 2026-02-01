@@ -171,9 +171,14 @@ export default function GratuitPage() {
               <h2 className="text-4xl md:text-6xl font-serif font-bold leading-tight italic">
                 Ton potentiel est <span className="text-red-400">en décalage</span> avec ta réalité.
               </h2>
-              <p className="text-white/60 text-lg md:text-xl font-light">
-                Les tests que tu viens de passer révèlent une tension entre ton identité profonde et tes mécanismes d'adaptation actuels.
-              </p>
+              <div className="text-white/60 text-lg md:text-xl font-light space-y-4">
+                <p>
+                  Les tests que tu viens de passer mettent en lumière une tension entre ton potentiel de départ et la manière dont tu t’adaptes aujourd’hui dans tes choix et tes réactions.
+                </p>
+                <p>
+                  Cela ne signifie pas un problème, mais un écart fréquent entre potentiel et adaptation.
+                </p>
+              </div>
             </div>
 
             {/* The Two Pillars */}
@@ -188,19 +193,19 @@ export default function GratuitPage() {
                     <Zap className="w-8 h-8" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold uppercase tracking-widest">Labo des Réflexes</h3>
-                    <p className="text-white/40 text-xs font-black">ANALYSE BIOLOGIQUE</p>
+                    <h3 className="text-xl font-bold uppercase tracking-widest">Laboratoire des Réflexes</h3>
+                    <p className="text-white/40 text-xs font-black">OBSERVATION DES RÉACTIONS SOUS PRESSION</p>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <p className="text-white/70 leading-relaxed italic">
-                    "Tes temps de réaction et tes choix sous pression montrent une hyper-vigilance qui sature ton système nerveux."
+                    "Tes temps de réaction et tes choix face à l’urgence montrent une hyper-vigilance qui génère une surcharge mentale dans la durée."
                   </p>
                   <ul className="space-y-3">
                     {[
-                      "Saturation décisionnelle détectée",
-                      "Réaction instinctive vs Réflexion",
-                      "Fatigue nerveuse accumulée"
+                      "Accumulation de tension décisionnelle",
+                      "Réaction instinctive dominante sous pression",
+                      "Fatigue mentale progressive"
                     ].map((item, i) => (
                       <li key={i} className="flex items-center gap-3 text-sm text-white/50">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
@@ -221,19 +226,19 @@ export default function GratuitPage() {
                     <Brain className="w-8 h-8" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold uppercase tracking-widest">Profil Psy</h3>
-                    <p className="text-white/40 text-xs font-black">ANALYSE COMPORTEMENTALE</p>
+                    <h3 className="text-xl font-bold uppercase tracking-widest">Analyse Comportementale</h3>
+                    <p className="text-white/40 text-xs font-black">PROFIL PSY</p>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <p className="text-white/70 leading-relaxed italic">
-                    "Tes réponses aux scénarios confirment un sentiment de stagnation malgré un potentiel de création élevé."
+                    "Tes réponses aux scénarios indiquent une tension entre ton potentiel de création et ta mise en action actuelle."
                   </p>
                   <ul className="space-y-3">
                     {[
-                      "Conflit de valeurs identifié",
-                      "Schémas d'auto-sabotage",
-                      "Écart entre vision et action"
+                      "Conflit de valeurs internes",
+                      "Mécanismes de protection limitants",
+                      "Écart entre vision et passage à l’action"
                     ].map((item, i) => (
                       <li key={i} className="flex items-center gap-3 text-sm text-white/50">
                         <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24D]" />
@@ -275,7 +280,7 @@ export default function GratuitPage() {
                   />
                 </div>
                 <p className="text-sm text-[#1A1C2E]/60 leading-relaxed max-w-4xl italic">
-                  * Ce décalage massif entre ton potentiel (numérologie/astro) et ton fonctionnement réel (labo/psy) est la source directe de ton sentiment de fatigue mentale et de stagnation actuelle.
+                  * Ce type d’écart est fréquemment associé à une sensation de surcharge mentale, de perte de clarté ou de ralentissement intérieur.
                 </p>
               </div>
             </div>

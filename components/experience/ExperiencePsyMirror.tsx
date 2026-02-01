@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { AUTO_PERCEPTION_ITEMS, BEHAVIOR_SCENARIOS } from '@/lib/psy-mirror/data';
+import { ROTATING_FEEDBACKS, SYNTHESIS } from '@/lib/psy-mirror/feedbacks';
 import type { Option } from '@/lib/psy-mirror/types';
 
 const AttentionTest = dynamic(() => import('./reflex-tests/AttentionTest'), { ssr: false });
@@ -45,10 +46,12 @@ export default function ExperiencePsyMirror() {
   const [moduleBAnswers, setModuleBAnswers] = useState<Option[]>([]);
   const [reflexResults, setReflexResults] = useState<any>({});
   const [userData, setUserData] = useState<any>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [intermediateFeedback, setIntermediateFeedback] = useState<{
     title: string;
     message: string;
-    type: 'insight' | 'presell';
+    type: 'insight' | 'presell' | 'synthesis';
+    autoClose?: boolean;
   } | null>(null);
 
   const getRemainingTime = () => {
@@ -69,86 +72,54 @@ export default function ExperiencePsyMirror() {
   };
 
   const checkFeedback = (count: number, type: 'moduleA' | 'moduleB' | 'moduleC') => {
-     if (type === 'moduleA') {
-       if (count === 3) {
-         setIntermediateFeedback({
-           title: "Analyse en cours...",
-           message: "Ta vision de tes propres mécanismes commence à dessiner un profil cohérent.",
-           type: 'presell'
-         });
-       } else if (count === 6) {
-         setIntermediateFeedback({
-           title: "Première tendance observée…",
-           message: "Tes réponses suggèrent une recherche d'équilibre entre tes besoins personnels et ton environnement.",
-           type: 'insight'
-         });
-       } else if (count === 9) {
-         setIntermediateFeedback({
-           title: "Analyse en cours...",
-           message: "La façon dont tu te situes par rapport aux autres est un marqueur fort de ton identité.",
-           type: 'presell'
-         });
-       } else if (count === 12) {
-         setIntermediateFeedback({
-           title: "Analyse en cours...",
-           message: "Ce point sera analysé en détail dans ton rapport final.",
-           type: 'presell'
-         });
-       }
-     } else if (type === 'moduleB') {
-       if (count === 4) {
-         setIntermediateFeedback({
-           title: "Analyse en cours...",
-           message: "Ta réaction face au manque d'information révèle ton niveau de tolérance à l'incertitude.",
-           type: 'presell'
-         });
-       } else if (count === 8) {
-         setIntermediateFeedback({
-           title: "Analyse en cours...",
-           message: "Ce point sera analysé en détail dans ton rapport final.",
-           type: 'presell'
-         });
-       } else if (count === 12) {
-         setIntermediateFeedback({
-           title: "Analyse en cours...",
-           message: "Le poids que tu accordes au regard des autres impacte directement ta fluidité d'action.",
-           type: 'presell'
-         });
-       } else if (count === 16) {
-         setIntermediateFeedback({
-           title: "Analyse en cours...",
-           message: "Ta gestion de la tension émotionnelle est un pilier de ton équilibre global.",
-           type: 'presell'
-         });
-       } else if (count === 20) {
-         setIntermediateFeedback({
-           title: "Analyse en cours...",
-           message: "Ta capacité à structurer le chaos définit ton style de leadership naturel.",
-           type: 'presell'
-         });
-       } else if (count === 24) {
-         setIntermediateFeedback({
-           title: "Analyse en cours...",
-           message: "Ce point sera analysé en détail dans ton rapport final.",
-           type: 'presell'
-         });
-       }
-     } else if (type === 'moduleC') {
-       if (count === 2) {
-         setIntermediateFeedback({
-           title: "Première tendance observée…",
-           message: "Sous pression, tes réflexes montrent une grande capacité d'adaptation immédiate.",
-           type: 'insight'
-         });
-       } else if (count === 4) {
-         setIntermediateFeedback({
-           title: "Analyse en cours...",
-           message: "Ce point sera analysé en détail dans ton rapport final.",
-           type: 'presell'
-         });
-       }
-     }
-   };
+    if (type === 'moduleA') {
+      // Fréquence 1 feedback toutes les 2 questions
+      if (count % 2 === 0 && count < AUTO_PERCEPTION_ITEMS.length) {
+        const feedbackIndex = (count / 2 - 1) % ROTATING_FEEDBACKS.length;
+        setIntermediateFeedback({
+          title: "Analyse en cours...",
+          message: ROTATING_FEEDBACKS[feedbackIndex],
+          type: 'insight',
+          autoClose: true
+        });
+        return true; // Feedback affiché
+      }
+      
+      // Fin du module A
+      if (count === AUTO_PERCEPTION_ITEMS.length) {
+        setIntermediateFeedback({
+          title: SYNTHESIS.MODULE_A.title,
+          message: SYNTHESIS.MODULE_A.message,
+          type: 'synthesis',
+          autoClose: false
+        });
+        return true;
+      }
+    } else if (type === 'moduleB') {
+      // 1 feedback par scénario (toutes les 4 étapes)
+      if (count % 4 === 0 && count < BEHAVIOR_SCENARIOS.length * 4) {
+        setIntermediateFeedback({
+          title: "Scénario terminé",
+          message: "Les choix effectués ici apportent des informations clés sur ta manière de réagir sous pression.",
+          type: 'insight',
+          autoClose: true
+        });
+        return true;
+      }
+
+      // Fin du module B
+      if (count === BEHAVIOR_SCENARIOS.length * 4) {
+        setIntermediateFeedback({
+          title: SYNTHESIS.MODULE_B.title,
+          message: SYNTHESIS.MODULE_B.message,
+          type: 'synthesis',
+          autoClose: false
+        });
+        return true;
+      }
+    }
+    return false;
+  };
 
   const reflexTests = [
     { 
@@ -338,41 +309,95 @@ export default function ExperiencePsyMirror() {
 
   // --- Module A (Auto-perception) ---
   const handleModuleASelect = (option: Option) => {
+    if (isProcessing) return;
+    
     const newAnswers = [...moduleAAnswers, option];
     setModuleAAnswers(newAnswers);
     
-    checkFeedback(newAnswers.length, 'moduleA');
+    const hasFeedback = checkFeedback(newAnswers.length, 'moduleA');
 
-    if (currentModuleIndex < AUTO_PERCEPTION_ITEMS.length - 1) {
-      setCurrentModuleIndex(currentModuleIndex + 1);
+    if (hasFeedback) {
+      setIsProcessing(true);
+      // Si c'est un feedback auto-fermant (toutes les 2 questions)
+      if (newAnswers.length < AUTO_PERCEPTION_ITEMS.length) {
+        setTimeout(() => {
+          setIntermediateFeedback(null);
+          setIsProcessing(false);
+          if (currentModuleIndex < AUTO_PERCEPTION_ITEMS.length - 1) {
+            setCurrentModuleIndex(currentModuleIndex + 1);
+          }
+        }, 2000);
+      }
+      // Si c'est la synthèse (fin du module), on ne fait rien, l'utilisateur cliquera sur le bouton
     } else {
-      setStep('moduleB');
-      setCurrentModuleIndex(0);
+      if (currentModuleIndex < AUTO_PERCEPTION_ITEMS.length - 1) {
+        setCurrentModuleIndex(currentModuleIndex + 1);
+      }
     }
   };
 
   // --- Module B (Behavior Scenarios) ---
   const handleModuleBSelect = (option: Option) => {
+    if (isProcessing) return;
+
     const newAnswers = [...moduleBAnswers, option];
     setModuleBAnswers(newAnswers);
     
-    checkFeedback(newAnswers.length, 'moduleB');
+    const hasFeedback = checkFeedback(newAnswers.length, 'moduleB');
 
-    const currentScenario = BEHAVIOR_SCENARIOS[currentModuleIndex];
-    if (currentScenarioStep < currentScenario.steps.length - 1) {
-      setCurrentScenarioStep(currentScenarioStep + 1);
-    } else if (currentModuleIndex < BEHAVIOR_SCENARIOS.length - 1) {
-      setCurrentModuleIndex(currentModuleIndex + 1);
-      setCurrentScenarioStep(0);
+    if (hasFeedback) {
+      setIsProcessing(true);
+      // Si c'est un feedback auto-fermant (fin de scénario)
+      if (newAnswers.length < BEHAVIOR_SCENARIOS.length * 4) {
+        setTimeout(() => {
+          setIntermediateFeedback(null);
+          setIsProcessing(false);
+          
+          const currentScenario = BEHAVIOR_SCENARIOS[currentModuleIndex];
+          if (currentScenarioStep < currentScenario.steps.length - 1) {
+            setCurrentScenarioStep(currentScenarioStep + 1);
+          } else if (currentModuleIndex < BEHAVIOR_SCENARIOS.length - 1) {
+            setCurrentModuleIndex(currentModuleIndex + 1);
+            setCurrentScenarioStep(0);
+          }
+        }, 2000);
+      }
+      // Si c'est la synthèse finale du module B
     } else {
-      setStep('moduleC');
-      setShowInstructions(true);
+      const currentScenario = BEHAVIOR_SCENARIOS[currentModuleIndex];
+      if (currentScenarioStep < currentScenario.steps.length - 1) {
+        setCurrentScenarioStep(currentScenarioStep + 1);
+      } else if (currentModuleIndex < BEHAVIOR_SCENARIOS.length - 1) {
+        setCurrentModuleIndex(currentModuleIndex + 1);
+        setCurrentScenarioStep(0);
+      } else {
+        setStep('moduleC');
+        setShowInstructions(true);
+      }
     }
   };
 
   // --- Module C (Reflex Tests) ---
   const startTest = () => {
     setShowInstructions(false);
+  };
+
+  const handleContinueFromSynthesis = () => {
+    if (!intermediateFeedback) return;
+
+    if (step === 'moduleA') {
+      setStep('moduleB');
+      setCurrentModuleIndex(0);
+      setCurrentScenarioStep(0);
+    } else if (step === 'moduleB') {
+      setStep('moduleC');
+      setShowInstructions(true);
+      setCurrentModuleIndex(0);
+      setCurrentReflexStep(0);
+    }
+    
+    setIntermediateFeedback(null);
+    setIsProcessing(false);
   };
 
   const handleReflexComplete = (testKey: string, result: any) => {
@@ -882,8 +907,8 @@ export default function ExperiencePsyMirror() {
               animate={{ scale: 1, y: 0 }}
               className="bg-white p-8 md:p-12 rounded-[40px] shadow-2xl border border-[#1A1C2E]/5 max-w-md w-full text-center space-y-8"
             >
-              <div className={`w-16 h-16 rounded-2xl mx-auto flex items-center justify-center ${intermediateFeedback.type === 'insight' ? 'bg-[#C9A24D]/10 text-[#C9A24D]' : 'bg-[#5B4B8A]/10 text-[#5B4B8A]'}`}>
-                {intermediateFeedback.type === 'insight' ? <Target className="w-8 h-8" /> : <Sparkles className="w-8 h-8" />}
+              <div className={`w-16 h-16 rounded-2xl mx-auto flex items-center justify-center ${intermediateFeedback.type === 'insight' ? 'bg-[#C9A24D]/10 text-[#C9A24D]' : intermediateFeedback.type === 'synthesis' ? 'bg-[#1A1C2E]/10 text-[#1A1C2E]' : 'bg-[#5B4B8A]/10 text-[#5B4B8A]'}`}>
+                {intermediateFeedback.type === 'insight' ? <Target className="w-8 h-8" /> : intermediateFeedback.type === 'synthesis' ? <Brain className="w-8 h-8" /> : <Sparkles className="w-8 h-8" />}
               </div>
               <div className="space-y-4">
                 <h3 className="text-sm font-black uppercase tracking-widest opacity-40">{intermediateFeedback.title}</h3>
@@ -891,12 +916,31 @@ export default function ExperiencePsyMirror() {
                   {intermediateFeedback.message}
                 </p>
               </div>
-              <button
-                onClick={() => setIntermediateFeedback(null)}
-                className="w-full py-4 bg-[#1A1C2E] text-white rounded-full font-bold hover:scale-105 transition-all shadow-lg"
-              >
-                Continuer l'expérience
-              </button>
+              
+              {!intermediateFeedback.autoClose && (
+                <button
+                  onClick={handleContinueFromSynthesis}
+                  className="w-full py-4 bg-[#1A1C2E] text-white rounded-full font-bold hover:scale-105 transition-all shadow-lg flex items-center justify-center gap-2"
+                >
+                  {intermediateFeedback.type === 'synthesis' 
+                    ? (step === 'moduleA' ? SYNTHESIS.MODULE_A.cta : SYNTHESIS.MODULE_B.cta) 
+                    : "Continuer l'expérience"}
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              )}
+              
+              {intermediateFeedback.autoClose && (
+                <div className="pt-4">
+                  <div className="h-1 w-24 bg-[#1A1C2E]/10 mx-auto rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 2, ease: "linear" }}
+                      className="h-full bg-[#1A1C2E]"
+                    />
+                  </div>
+                </div>
+              )}
             </motion.div>
           </motion.div>
         )}

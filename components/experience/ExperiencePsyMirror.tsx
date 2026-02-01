@@ -624,19 +624,37 @@ export default function ExperiencePsyMirror() {
                   Maintenant que nous avons une première base,
                 </p>
                 <div className="h-px w-12 bg-[#C9A24D]/30"></div>
-                <div className="space-y-4 text-[#1A1C2E]/70 text-lg leading-relaxed">
+                <div className="space-y-6 text-[#1A1C2E]/70 text-lg leading-relaxed">
                   <p>
-                    nous allons comparer ce que ta date de naissance révèle de ton potentiel de départ <br className="hidden md:block" />
-                    <span className="text-[#1A1C2E] font-bold">(numérologie et astrologie)</span> <br className="hidden md:block" />
-                    avec la manière dont tu prends tes décisions aujourd’hui.
+                    ce que tu viens de découvrir correspond à un extrait de ton potentiel de naissance, tel qu’il ressort de ta date de naissance <span className="text-[#1A1C2E] font-bold">(numérologie et astrologie)</span>.
                   </p>
                   <p>
-                    Pour cela, tu vas passer par le <span className="font-bold text-[#C9A24D]">Laboratoire des Réflexes et psychologique</span>.
+                    👉 Le portrait complet est bien plus vaste et détaillé. Il sert de fondation à l’analyse, mais il ne dit pas encore comment ce potentiel s’exprime dans ta réalité actuelle, notamment lorsque tu dois décider, t’adapter ou réagir sous pression.
                   </p>
-                  <p className="italic">
-                    Cette étape permet d’observer certains automatismes <br className="hidden md:block" />
-                    et de mieux comprendre les zones de tension ou d’incohérence <br className="hidden md:block" />
-                    qui peuvent apparaître dans ton parcours.
+                  <p>
+                    Pour comprendre cet écart éventuel, tu vas entrer dans le <span className="font-bold text-[#C9A24D]">Laboratoire des Réflexes et des choix</span>.
+                  </p>
+                  
+                  <div className="space-y-3 pt-2">
+                    <p className="font-bold text-[#1A1C2E]/80">Cette étape permet d’observer :</p>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24D]"></div>
+                        <span>tes automatismes décisionnels</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24D]"></div>
+                        <span>tes réactions spontanées</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24D]"></div>
+                        <span>la cohérence (ou non) entre potentiel et fonctionnement réel</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="italic text-sm pt-4 border-t border-[#1A1C2E]/5">
+                    Il n’y a pas de bonne ou de mauvaise réponse. Il s’agit uniquement d’observer ton style naturel d’action.
                   </p>
                 </div>
               </div>
@@ -649,7 +667,7 @@ export default function ExperiencePsyMirror() {
                   Entrer dans le Laboratoire
                   <ArrowRight className="w-7 h-7 group-hover:translate-x-2 transition-transform" />
                 </div>
-                <span className="text-[10px] uppercase tracking-[0.3em] opacity-40 font-black">Démarrer le Crash-Test</span>
+                <span className="text-[10px] uppercase tracking-[0.3em] opacity-40 font-black">Durée estimée : ~10 minutes</span>
               </button>
             </div>
           </motion.div>

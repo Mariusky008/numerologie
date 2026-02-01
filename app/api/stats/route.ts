@@ -30,7 +30,11 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const { event } = await request.json();
-    console.log("Analytics POST received for event:", event);
+    
+    // Debug log for keys (safe version)
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    console.log(`Tracking attempt: ${event} | URL present: ${!!url} | Key valid format: ${key?.startsWith('ey')}`);
 
     if (!event) {
       return NextResponse.json({ error: 'Event name is required' }, { status: 400 });

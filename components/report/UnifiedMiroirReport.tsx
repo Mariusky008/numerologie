@@ -53,7 +53,10 @@ export default function UnifiedMiroirReport({
   numerologyResult,
   etymology
 }: UnifiedMiroirReportProps) {
-  
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [isOracleOpen, setIsOracleOpen] = React.useState(false);
 
   const decadeForecast = generateDecadeForecast(userData.birthDate);

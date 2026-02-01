@@ -1,6 +1,7 @@
 
 import { UserData, NumerologyResult } from '@/lib/types';
 import { NameData } from '@/lib/numerology/db_etymology';
+import { useEffect } from 'react';
 import Part1IntroV2 from './parts/Part1IntroV2';
 import Part1Identity from './parts/Part1Identity';
 import PartAstroV2 from './parts/PartAstroV2';
@@ -19,6 +20,10 @@ interface FullReportProps {
 }
 
 export default function FullReportV2({ userData, results, etymology }: FullReportProps) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="w-full max-w-[210mm] mx-auto bg-[#FAF9F7] text-[#2C2F4A] shadow-2xl print:shadow-none font-sans">
       <Part1IntroV2 userData={userData} results={results} />

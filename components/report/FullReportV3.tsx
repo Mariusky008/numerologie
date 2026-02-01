@@ -25,6 +25,7 @@ import { analyzeNameSignature } from '@/lib/numerology/modules/anthroponymy';
 import { generateDecadeForecast } from '@/lib/numerology/modules/decade';
 import { PLANET_INFLUENCES, ZODIAC_DETAILS, HOUSE_MEANINGS } from '@/lib/numerology/interpretations-astro-geo';
 import interpretations from '@/lib/numerology/interpretations.json';
+import { useEffect } from 'react';
 
 interface FullReportProps {
   userData: UserData;
@@ -33,6 +34,9 @@ interface FullReportProps {
 }
 
 export default function FullReportV3({ userData, results, etymology }: FullReportProps) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   
   // Calculations
   const decadeForecast = generateDecadeForecast(userData.birthDate);

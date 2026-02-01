@@ -213,6 +213,12 @@ function PrintContent() {
     initData();
   }, [searchParams]);
 
+  useEffect(() => {
+    if (data) {
+      window.scrollTo(0, 0);
+    }
+  }, [data]);
+
   if (!data) return <div className="p-12 text-center text-stone-500">Chargement de l'étude...</div>;
 
   return (

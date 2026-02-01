@@ -150,57 +150,134 @@ export default function GratuitPage() {
         </div>
       </section>
 
-      {/* 1.5 DISSONANCE TEASER */}
-      <section className="py-20 px-6 max-w-5xl mx-auto">
-        <div className="bg-[#1A1C2E] rounded-[60px] p-10 md:p-16 relative overflow-hidden text-white">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/10 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
+      {/* 1.5 DISSONANCE TEASER - REDESIGNED */}
+      <section className="py-24 px-6 max-w-6xl mx-auto">
+        <div className="bg-[#1A1C2E] rounded-[60px] p-8 md:p-20 relative overflow-hidden text-white shadow-2xl">
+          {/* Background effects */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-500/10 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#C9A24D]/10 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2"></div>
           
-          <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/20 text-red-400 text-[10px] font-black uppercase tracking-[0.3em] border border-red-500/30">
+          <div className="relative z-10 space-y-16">
+            {/* Header */}
+            <div className="text-center max-w-3xl mx-auto space-y-6">
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-red-500/20 text-red-400 text-[10px] font-black uppercase tracking-[0.4em] border border-red-500/30"
+              >
                 <Zap className="w-4 h-4" />
                 ALERTE — ÉCART DE FONCTIONNEMENT OBSERVÉ
-              </div>
-              <h2 className="text-3xl md:text-5xl font-serif font-bold leading-tight italic">
-                Les tests que tu viens de passer mettent en lumière <span className="text-red-400">un écart notable</span> entre ton potentiel de naissance et ta manière actuelle de réagir face aux choix.
+              </motion.div>
+              <h2 className="text-4xl md:text-6xl font-serif font-bold leading-tight italic">
+                Ton potentiel est <span className="text-red-400">en décalage</span> avec ta réalité.
               </h2>
-              <div className="space-y-4 text-white/60 text-lg leading-relaxed">
-                <p>
-                  Cela ne signifie pas un problème, mais une tension fréquente entre potentiel et adaptation.
-                </p>
-                <p className="border-l-2 border-[#C9A24D]/30 pl-4 py-1 italic">
-                  Cette observation repose à la fois sur tes <span className="text-white">réflexes biologiques</span> mesurés en laboratoire et sur tes <span className="text-white">réponses aux scénarios psychologiques</span>. La convergence de ces deux analyses confirme un décalage dans la gestion de tes ressources actuelles.
-                </p>
-              </div>
+              <p className="text-white/60 text-lg md:text-xl font-light">
+                Les tests que tu viens de passer révèlent une tension entre ton identité profonde et tes mécanismes d'adaptation actuels.
+              </p>
             </div>
-            
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 space-y-6">
-              <div className="flex items-center gap-4 border-b border-white/10 pb-4">
-                <div className="w-12 h-12 bg-[#C9A24D]/20 rounded-xl flex items-center justify-center text-[#C9A24D]">
-                  <Target className="w-6 h-6" />
+
+            {/* The Two Pillars */}
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Pillar 1: Reflexes */}
+              <motion.div 
+                {...fadeIn}
+                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[40px] p-10 space-y-8 group hover:bg-white/10 transition-all"
+              >
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 rounded-2xl bg-red-500/20 flex items-center justify-center text-red-400 shadow-[0_0_30px_rgba(239,68,68,0.2)]">
+                    <Zap className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold uppercase tracking-widest">Labo des Réflexes</h3>
+                    <p className="text-white/40 text-xs font-black">ANALYSE BIOLOGIQUE</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs uppercase tracking-widest opacity-40">Tendance de tension décisionnelle</p>
-                  <p className="text-xl font-bold text-red-400 italic">Élevée</p>
+                <div className="space-y-4">
+                  <p className="text-white/70 leading-relaxed italic">
+                    "Tes temps de réaction et tes choix sous pression montrent une hyper-vigilance qui sature ton système nerveux."
+                  </p>
+                  <ul className="space-y-3">
+                    {[
+                      "Saturation décisionnelle détectée",
+                      "Réaction instinctive vs Réflexion",
+                      "Fatigue nerveuse accumulée"
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-center gap-3 text-sm text-white/50">
+                        <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+
+              {/* Pillar 2: Psychology */}
+              <motion.div 
+                {...fadeIn}
+                className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[40px] p-10 space-y-8 group hover:bg-white/10 transition-all"
+              >
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 rounded-2xl bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D] shadow-[0_0_30px_rgba(201,162,77,0.2)]">
+                    <Brain className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold uppercase tracking-widest">Profil Psy</h3>
+                    <p className="text-white/40 text-xs font-black">ANALYSE COMPORTEMENTALE</p>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <p className="text-white/70 leading-relaxed italic">
+                    "Tes réponses aux scénarios confirment un sentiment de stagnation malgré un potentiel de création élevé."
+                  </p>
+                  <ul className="space-y-3">
+                    {[
+                      "Conflit de valeurs identifié",
+                      "Schémas d'auto-sabotage",
+                      "Écart entre vision et action"
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-center gap-3 text-sm text-white/50">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24D]" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Synthesis / Verdict */}
+            <div className="bg-white rounded-[40px] p-10 md:p-12 text-[#1A1C2E] space-y-10">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div className="space-y-2 text-center md:text-left">
+                  <p className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Verdict de l'analyse</p>
+                  <h4 className="text-3xl font-serif font-bold italic">Convergence de la dissonance</h4>
+                </div>
+                <div className="flex items-center gap-4 bg-[#1A1C2E]/5 px-8 py-4 rounded-3xl border border-[#1A1C2E]/10">
+                  <Target className="w-8 h-8 text-red-500" />
+                  <div>
+                    <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Tension décisionnelle</p>
+                    <p className="text-2xl font-bold text-red-500 italic">ÉLEVÉE</p>
+                  </div>
                 </div>
               </div>
-              <div className="space-y-2">
-                <div className="flex justify-between text-xs uppercase tracking-widest opacity-40 font-bold">
+
+              <div className="space-y-4">
+                <div className="flex justify-between text-xs font-black uppercase tracking-[0.2em] opacity-60">
                   <span>Alignement actuel estimé</span>
-                  <span>Faible à modéré</span>
+                  <span className="text-red-500">FAIBLE À MODÉRÉ (34%)</span>
                 </div>
-                <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+                <div className="h-4 w-full bg-[#1A1C2E]/5 rounded-full overflow-hidden p-1 border border-[#1A1C2E]/5">
                   <motion.div 
                     initial={{ width: 0 }}
                     whileInView={{ width: "34%" }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
-                    className="h-full bg-red-500"
+                    transition={{ duration: 2, ease: "easeOut" }}
+                    className="h-full bg-gradient-to-r from-red-500 to-orange-400 rounded-full"
                   />
                 </div>
+                <p className="text-sm text-[#1A1C2E]/60 leading-relaxed max-w-4xl italic">
+                  * Ce décalage massif entre ton potentiel (numérologie/astro) et ton fonctionnement réel (labo/psy) est la source directe de ton sentiment de fatigue mentale et de stagnation actuelle.
+                </p>
               </div>
-              <p className="text-xs text-white/40 italic">
-                * Ce type de décalage est souvent associé à une sensation de flottement, de fatigue mentale ou de perte de clarté.
-              </p>
             </div>
           </div>
         </div>

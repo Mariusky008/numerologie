@@ -275,13 +275,19 @@ export default function ParcoursPage() {
 
           <div className="grid lg:grid-cols-3 gap-8">
             {/* OPTION 1 */}
-            <motion.div {...fadeIn} className="flex flex-col p-12 rounded-[60px] bg-white/5 border border-white/10 backdrop-blur-sm space-y-10 hover:bg-white/10 transition-all">
+            <motion.div 
+              {...fadeIn} 
+              className="flex flex-col p-12 rounded-[60px] bg-[#C9A24D] text-white space-y-10 shadow-2xl scale-105 relative z-20"
+            >
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-white text-[#C9A24D] px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">
+                LE PLUS POPULAIRE
+              </div>
               <div className="space-y-4">
-                <div className="w-16 h-16 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400">
+                <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-white">
                   <Compass className="w-10 h-10" />
                 </div>
                 <h3 className="text-3xl font-serif font-bold">Parcours Autonome</h3>
-                <p className="text-white/40 text-sm font-bold uppercase tracking-widest">🔵 Option 1</p>
+                <p className="text-white/60 text-sm font-bold uppercase tracking-widest">🔵 Option 1</p>
               </div>
 
               <ul className="space-y-4 flex-1">
@@ -291,44 +297,6 @@ export default function ParcoursPage() {
                   "Accès pendant 12 mois",
                   "Sans rendez-vous individuel"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-lg opacity-80">
-                    <Check className="w-5 h-5 text-blue-400 shrink-0 mt-1" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="space-y-6 pt-10 border-t border-white/10">
-                <div className="text-4xl font-serif font-bold text-blue-400">297 €</div>
-                <button className="w-full py-5 bg-white text-[#1A1C2E] rounded-full font-bold text-lg hover:bg-blue-400 hover:text-white transition-all">
-                  Choisir ce format
-                </button>
-              </div>
-            </motion.div>
-
-            {/* OPTION 2 */}
-            <motion.div 
-              {...fadeIn}
-              className="flex flex-col p-12 rounded-[60px] bg-[#C9A24D] text-white space-y-10 shadow-2xl scale-105 relative z-20"
-            >
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-white text-[#C9A24D] px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">
-                LE PLUS POPULAIRE
-              </div>
-              <div className="space-y-4">
-                <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-white">
-                  <MessageCircle className="w-10 h-10" />
-                </div>
-                <h3 className="text-3xl font-serif font-bold">Parcours + Coach Mensuel</h3>
-                <p className="text-white/60 text-sm font-bold uppercase tracking-widest">🟣 Option 2</p>
-              </div>
-
-              <ul className="space-y-4 flex-1">
-                {[
-                  "Tout le parcours autonome",
-                  "1 session individuelle (30 min/mois)",
-                  "Échange autour des exercices",
-                  "Aide à clarifier et prendre du recul"
-                ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-lg">
                     <Check className="w-5 h-5 text-white shrink-0 mt-1" />
                     <span>{item}</span>
@@ -337,8 +305,43 @@ export default function ParcoursPage() {
               </ul>
 
               <div className="space-y-6 pt-10 border-t border-white/20">
-                <div className="text-4xl font-serif font-bold text-white">697 €</div>
+                <div className="text-4xl font-serif font-bold text-white">499 €/an</div>
                 <button className="w-full py-5 bg-white text-[#C9A24D] rounded-full font-bold text-lg hover:scale-105 transition-all">
+                  Choisir ce format
+                </button>
+              </div>
+            </motion.div>
+
+            {/* OPTION 2 */}
+            <motion.div 
+              {...fadeIn}
+              className="flex flex-col p-12 rounded-[60px] bg-white/5 border border-white/10 backdrop-blur-sm space-y-10 hover:bg-white/10 transition-all"
+            >
+              <div className="space-y-4">
+                <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-white">
+                  <MessageCircle className="w-10 h-10" />
+                </div>
+                <h3 className="text-3xl font-serif font-bold">Parcours + Coach Mensuel</h3>
+                <p className="text-white/40 text-sm font-bold uppercase tracking-widest">🟣 Option 2</p>
+              </div>
+
+              <ul className="space-y-4 flex-1">
+                {[
+                  "Tout le parcours autonome",
+                  "1 session individuelle (1 heure/mois)",
+                  "Échange autour des exercices",
+                  "Aide à clarifier et prendre du recul"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-lg opacity-80">
+                    <Check className="w-5 h-5 text-white shrink-0 mt-1" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="space-y-6 pt-10 border-t border-white/10">
+                <div className="text-4xl font-serif font-bold text-white">1 599 €/an</div>
+                <button className="w-full py-5 bg-white text-[#1A1C2E] rounded-full font-bold text-lg hover:bg-[#C9A24D] hover:text-white transition-all">
                   Choisir ce format
                 </button>
               </div>
@@ -357,7 +360,7 @@ export default function ParcoursPage() {
               <ul className="space-y-4 flex-1">
                 {[
                   "Tout le parcours autonome",
-                  "1 session (30 min/semaine)",
+                  "1 session (1 heure/semaine)",
                   "Cadre plus soutenu",
                   "Ajustement des expérimentations",
                   "Engagement maximum"
@@ -370,7 +373,7 @@ export default function ParcoursPage() {
               </ul>
 
               <div className="space-y-6 pt-10 border-t border-white/10">
-                <div className="text-4xl font-serif font-bold text-red-400">1 997 €</div>
+                <div className="text-4xl font-serif font-bold text-red-400">2 999 €/an</div>
                 <button className="w-full py-5 bg-white text-[#1A1C2E] rounded-full font-bold text-lg hover:bg-red-400 hover:text-white transition-all">
                   Choisir ce format
                 </button>

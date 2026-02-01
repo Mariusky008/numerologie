@@ -29,42 +29,55 @@ export const EmailMiroirIntegral = ({
     <Preview>Votre Miroir Intégral est prêt ✨</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Heading style={h1}>Votre Révélation est là ✨</Heading>
+        <Heading style={h1}>Votre Miroir Intégral ✨</Heading>
         <Text style={text}>Bonjour {firstName},</Text>
         <Text style={text}>
-          L'analyse de votre fonctionnement est terminée. Voici votre accès complet au Miroir Intégral.
+          Votre analyse est maintenant complète. Vous pouvez accéder dès à présent à l’ensemble de votre <strong>Miroir Intégral</strong>.
+        </Text>
+        <Text style={text}>
+          Prenez le temps de la découvrir à votre rythme. Il n’y a rien à réussir, rien à valider — simplement à observer et à comprendre.
         </Text>
         
-        <Section style={highlightBox}>
-          <Heading as="h3" style={h3}>1. Votre Dossier PDF (~40 pages)</Heading>
+        <Hr style={hr} />
+
+        <Section style={box}>
+          <Heading as="h3" style={h3}>📘 Votre dossier personnalisé (≈ 40 pages)</Heading>
           <Text style={text}>
-            Numérologie, astrologie et analyse comportementale fusionnées dans une lecture structurée.
+            Numérologie, astrologie et analyse comportementale fusionnées dans une lecture structurée et cohérente.
           </Text>
           <Button style={button} href={reportLink}>
-            📄 Accéder à mon Rapport
+            � Accéder à mon dossier
           </Button>
         </Section>
 
         <Section style={box}>
-          <Heading as="h3" style={h3}>2. Votre Oracle Vocal</Heading>
+          <Heading as="h3" style={h3}>🎧 Votre conversation vocale personnalisée</Heading>
           <Text style={text}>
-            Posez toutes vos questions à l'Oracle pour explorer vos blocages et vos potentiels.
+            Un espace d’échange pour explorer votre fonctionnement, poser vos questions, et mettre des mots clairs sur ce que vous ressentez.
           </Text>
           <Button style={secondaryButton} href={coachLink}>
-            🎙️ Parler à l'Oracle
+            👉 Accéder à la conversation vocale
           </Button>
         </Section>
 
         <Section style={box}>
-          <Heading as="h3" style={h3}>🧭 Plan d’Action “Réalignement”</Heading>
+          <Heading as="h3" style={h3}>🧭 Votre plan d’action “Réalignement” (7 jours)</Heading>
           <Text style={text}>
-            Retrouvez votre protocole de 7 jours à la fin de votre dossier PDF pour commencer à réduire l'écart entre votre potentiel et votre fonctionnement actuel.
+            À la fin du dossier, vous trouverez un protocole simple pour commencer à réduire l’écart entre votre potentiel et votre fonctionnement actuel.
           </Text>
         </Section>
 
+        <Text style={text}>
+          Vous pouvez avancer par petites touches. Revenez-y quand vous le souhaitez.
+        </Text>
+
+        <Text style={text}>
+          Nous vous écrirons dans quelques jours pour vous proposer, si vous le souhaitez, des pistes pour prolonger cette expérience.
+        </Text>
+
         <Text style={footer}>
-          L'équipe Votre Légende.<br/>
-          Pensez à vérifier vos spams pour nos futurs messages.
+          L’équipe <strong>Votre Légende</strong><br/>
+          <span style={{ fontSize: '10px', fontStyle: 'italic' }}>(Si vous ne voyez pas nos prochains messages, pensez à vérifier vos spams.)</span>
         </Text>
       </Container>
     </Body>

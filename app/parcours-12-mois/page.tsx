@@ -391,31 +391,6 @@ export default function ParcoursPage() {
         </div>
       </section>
 
-      {/* 6. CTA FINAL */}
-      <section className="py-20 px-6 text-center space-y-12">
-        <div className="max-w-3xl mx-auto space-y-8">
-          <h2 className="text-4xl md:text-6xl font-serif font-bold">Prêt à commencer l'aventure ?</h2>
-          <p className="text-[#1A1C2E]/60 text-xl italic">
-            "Tu vends le temps, le cadre et la disponibilité humaine."
-          </p>
-        </div>
-        
-        <div className="flex flex-col items-center gap-8">
-          <button 
-            onClick={() => router.push('/miroir/checkout?plan=parcours')}
-            className="group relative inline-flex items-center gap-6 px-16 py-10 bg-[#C9A24D] text-white rounded-full font-bold text-3xl shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95"
-          >
-            <span>Accéder au parcours 12 mois</span>
-            <ArrowRight className="w-10 h-10 group-hover:translate-x-3 transition-transform" />
-          </button>
-          
-          <div className="flex items-center gap-4 text-[#1A1C2E]/30 uppercase tracking-[0.4em] text-[10px] font-black">
-            <Lock className="w-4 h-4" />
-            Paiement 100% Sécurisé • Accès Immédiat
-          </div>
-        </div>
-      </section>
-
     </div>
   );
 }

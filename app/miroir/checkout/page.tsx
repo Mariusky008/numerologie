@@ -11,7 +11,12 @@ import {
   Check,
   Star,
   Zap,
-  ChevronLeft
+  ChevronLeft,
+  Search,
+  Brain,
+  Layers,
+  BookOpen,
+  Compass
 } from 'lucide-react';
 
 export default function CheckoutPage() {
@@ -123,58 +128,53 @@ export default function CheckoutPage() {
         {/* LEFT: ORDER SUMMARY */}
         <div className="space-y-12">
           <div className="space-y-6">
-            <h1 className="text-4xl md:text-6xl font-serif font-bold">Le Crash-Test de ton Destin</h1>
-            <p className="text-xl text-[#1A1C2E]/60 leading-relaxed">
-              Une expérience complète pour comprendre tes schémas profonds et reprendre le contrôle de tes décisions.
+            <h1 className="text-4xl md:text-6xl font-serif font-bold italic">Le Crash-Test de ton Destin</h1>
+            <p className="text-xl text-[#1A1C2E]/60 leading-relaxed font-light">
+              L’analyse complète pour comprendre l’écart entre ton potentiel de naissance et la façon dont tu fonctionnes aujourd’hui.
             </p>
           </div>
 
-          <div className="space-y-4">
-            {[
-              "Analyse numérologique & astrologique de ton potentiel de naissance",
-              "Analyse psychologique de tes choix et réactions réelles",
-              "Comparaison claire entre potentiel, comportements et image perçue",
-              "Dossier personnalisé (PDF)",
-              "Vidéo explicative personnalisée",
-              "Exercices simples pour favoriser un réalignement progressif"
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-4">
-                <div className="w-6 h-6 rounded-full bg-[#C9A24D]/10 flex items-center justify-center text-[#C9A24D] shrink-0 mt-1">
-                  <Check className="w-4 h-4" />
+          <div className="space-y-6">
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A24D]">Ce que tu reçois immédiatement :</p>
+            <div className="space-y-5">
+              {[
+                { icon: Search, text: "Analyse numérologique & astrologique de ton potentiel de naissance" },
+                { icon: Brain, text: "Analyse de tes choix et réactions réelles face aux situations" },
+                { icon: Layers, text: "Comparaison claire entre potentiel, comportements et image perçue" },
+                { icon: BookOpen, text: "Dossier personnalisé (PDF) pour approfondir à ton rythme" },
+                { icon: Compass, text: "Exercices simples pour amorcer un réalignement progressif" }
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-5 group">
+                  <div className="w-10 h-10 rounded-xl bg-white shadow-sm border border-[#1A1C2E]/5 flex items-center justify-center text-[#C9A24D] shrink-0 group-hover:scale-110 transition-transform">
+                    <item.icon className="w-5 h-5" />
+                  </div>
+                  <span className="text-lg font-medium opacity-80 leading-snug pt-1">{item.text}</span>
                 </div>
-                <span className="text-lg font-medium opacity-80 leading-tight">{item}</span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          <div className="p-8 rounded-[40px] bg-white border border-[#1A1C2E]/5 space-y-6">
-            <div className="flex justify-between items-end">
+          <div className="p-8 md:p-10 rounded-[40px] bg-[#1A1C2E] text-white space-y-6 relative overflow-hidden shadow-2xl">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A24D]/20 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+            <div className="relative z-10 space-y-6">
               <div>
-                <p className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/30 mb-2">Total de la commande</p>
-                <p className="text-5xl font-serif font-bold">49 €</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A24D] mb-3">Accès complet au Crash-Test de ton Destin</p>
+                <div className="flex items-baseline gap-2">
+                  <p className="text-5xl md:text-6xl font-serif font-bold">49 €</p>
+                  <p className="text-lg font-light opacity-40 italic">TTC — paiement unique</p>
+                </div>
               </div>
-              <div className="text-right">
-                <p className="text-[10px] font-black uppercase tracking-widest text-[#C9A24D] mb-1">TVA Incluse</p>
-                <p className="text-xs font-bold opacity-30">Paiement 100% Sécurisé</p>
+              <div className="pt-6 border-t border-white/10 flex items-center gap-3 text-white/60">
+                <Lock className="w-4 h-4 text-[#C9A24D]" />
+                <span className="text-[10px] font-black uppercase tracking-[0.2em]">Paiement 100 % sécurisé — données protégées (SSL & RGPD)</span>
               </div>
             </div>
           </div>
 
           <div className="space-y-6">
-            <p className="text-xl font-serif italic text-[#1A1C2E]/60 leading-relaxed">
-              « Tu ne paies pas pour une prédiction. <br />
-              Tu paies pour une lecture claire de ton fonctionnement et des clés concrètes. »
+            <p className="text-xl font-serif italic text-[#1A1C2E]/60 leading-relaxed border-l-2 border-[#C9A24D]/30 pl-8">
+              « Tu ne paies pas pour une prédiction. Tu paies pour une <span className="text-[#1A1C2E] font-bold">lecture claire de ton fonctionnement</span>, et un point de départ concret pour retrouver plus de cohérence dans tes décisions. »
             </p>
-            <div className="flex items-center gap-8 opacity-40">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5" />
-                <span className="text-[10px] font-black uppercase tracking-widest">RGPD Compliant</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Lock className="w-5 h-5" />
-                <span className="text-[10px] font-black uppercase tracking-widest">SSL Encrypted</span>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -182,61 +182,61 @@ export default function CheckoutPage() {
         <motion.div 
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="bg-white p-12 md:p-16 rounded-[60px] shadow-2xl border border-[#1A1C2E]/5 space-y-12"
+          className="bg-white p-10 md:p-16 rounded-[60px] shadow-2xl border border-[#1A1C2E]/5 space-y-12"
         >
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2 px-4 py-2 bg-[#F8F9FA] rounded-full border border-[#1A1C2E]/5">
               <CreditCard className="w-4 h-4 text-[#1A1C2E]/40" />
-              <span className="text-[10px] font-black uppercase tracking-widest">Paiement par carte</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/60 font-bold">Informations de paiement</span>
             </div>
-            <div className="flex gap-2">
-              <div className="w-8 h-5 bg-[#F8F9FA] rounded border border-[#1A1C2E]/5"></div>
-              <div className="w-8 h-5 bg-[#F8F9FA] rounded border border-[#1A1C2E]/5"></div>
+            <div className="flex gap-2 opacity-40 grayscale">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" className="h-3 w-auto" alt="Visa" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" className="h-4 w-auto" alt="Mastercard" />
             </div>
           </div>
 
           <div className="space-y-8">
-            <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Ton adresse Email (pour recevoir l'analyse)</label>
-              <div className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-2xl py-5 px-6 text-xl flex items-center justify-between">
+            <div className="space-y-3">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1C2E]/40 ml-4">Ton adresse email (pour recevoir l’analyse)</label>
+              <div className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-[30px] py-5 px-8 text-xl flex items-center focus-within:border-[#C9A24D] transition-colors">
                 <input 
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="ton@email.com"
-                  className="bg-transparent border-none outline-none w-full text-[#1A1C2E]"
+                  className="bg-transparent border-none outline-none w-full text-[#1A1C2E] placeholder:opacity-20"
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Numéro de carte</label>
-              <div className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-2xl py-5 px-6 text-xl flex items-center justify-between">
+            <div className="space-y-3">
+              <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1C2E]/40 ml-4">Numéro de carte</label>
+              <div className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-[30px] py-5 px-8 text-xl flex items-center justify-between focus-within:border-[#C9A24D] transition-colors">
                 <input 
                   type="text"
                   placeholder="•••• •••• •••• ••••"
-                  className="bg-transparent border-none outline-none w-full text-[#1A1C2E]"
+                  className="bg-transparent border-none outline-none w-full text-[#1A1C2E] placeholder:opacity-20"
                 />
                 <CreditCard className="w-5 h-5 text-[#1A1C2E]/20" />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Expiration</label>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1C2E]/40 ml-4">Expiration</label>
                 <input 
                   type="text"
                   placeholder="MM / AA"
-                  className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-2xl py-5 px-6 text-xl text-[#1A1C2E] outline-none"
+                  className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-[30px] py-5 px-8 text-xl text-[#1A1C2E] outline-none focus:border-[#C9A24D] transition-colors placeholder:opacity-20"
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">CVC</label>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1C2E]/40 ml-4">CVC</label>
                 <input 
                   type="text"
                   placeholder="•••"
-                  className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-2xl py-5 px-6 text-xl text-[#1A1C2E] outline-none"
+                  className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-[30px] py-5 px-8 text-xl text-[#1A1C2E] outline-none focus:border-[#C9A24D] transition-colors placeholder:opacity-20"
                 />
               </div>
             </div>
@@ -244,7 +244,7 @@ export default function CheckoutPage() {
             <button
               onClick={handlePayment}
               disabled={loading}
-              className="w-full py-8 bg-[#C9A24D] text-white rounded-full font-bold text-2xl hover:bg-[#1A1C2E] transition-all shadow-xl hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-4 overflow-hidden relative"
+              className="w-full py-8 bg-[#C9A24D] text-[#1A1C2E] rounded-full font-bold text-2xl hover:bg-[#1A1C2E] hover:text-white transition-all shadow-2xl hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-4 overflow-hidden relative group"
             >
               {loading ? (
                 <motion.div
@@ -254,16 +254,19 @@ export default function CheckoutPage() {
                 />
               ) : (
                 <>
-                  <span>Payer 49 € et Débloquer mon Analyse</span>
-                  <ArrowRight className="w-8 h-8" />
+                  <span>Payer 49 € et débloquer mon analyse</span>
+                  <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
                 </>
               )}
             </button>
             
-            <p className="text-center text-[10px] font-bold text-[#1A1C2E]/30 uppercase tracking-[0.2em] leading-relaxed">
-              En cliquant sur payer, vous acceptez nos conditions générales de vente <br />
-              et reconnaissez que le contenu est à but de divertissement et de compréhension personnelle.
-            </p>
+            <div className="text-center space-y-4 px-4">
+              <p className="text-[10px] font-bold text-[#1A1C2E]/30 uppercase tracking-[0.1em] leading-relaxed">
+                En cliquant sur “Payer”, vous acceptez nos conditions générales de vente. <br />
+                Le contenu proposé est un outil de compréhension personnelle et de réflexion. <br />
+                Il ne constitue ni un diagnostic, ni un avis médical ou professionnel.
+              </p>
+            </div>
           </div>
         </motion.div>
 

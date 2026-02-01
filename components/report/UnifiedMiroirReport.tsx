@@ -130,22 +130,26 @@ export default function UnifiedMiroirReport({
           {/* Key Numbers Grid */}
           <KeyNumbersSection results={numerologyResult} userData={userData} areCardsLocked={false} />
 
-          {/* Identity & Incarnation */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="space-y-12">
-              <Part2Incarnation userData={userData} results={numerologyResult} />
+          {/* Identity & Incarnation - VERTICAL CENTERED LAYOUT */}
+          <div className="max-w-4xl mx-auto space-y-24">
+            <Part2Incarnation userData={userData} results={numerologyResult} />
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               <PartMasterNumbers userData={userData} results={numerologyResult} />
-            </div>
-            <div className="space-y-12">
-              <Part3KarmaV2 userData={userData} results={numerologyResult} />
-              <div className="bg-[#FAF9F7] p-8 rounded-[40px] border border-[#1A1C2E]/5 space-y-6">
-                <h3 className="text-2xl font-serif font-bold">Radar de Potentiel</h3>
-                <PersonalityRadar data={numerologyResult} />
-                <p className="text-xs text-[#1A1C2E]/40 italic text-center">
-                  Distribution énergétique théorique selon votre nom et date de naissance.
-                </p>
+              <div className="bg-[#FAF9F7] p-8 md:p-12 rounded-[60px] border border-[#1A1C2E]/5 space-y-8 shadow-sm">
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-serif font-bold italic">Radar de Potentiel</h3>
+                  <p className="text-sm text-[#1A1C2E]/40 leading-relaxed">
+                    Visualisation de ta distribution énergétique selon ton empreinte de naissance.
+                  </p>
+                </div>
+                <div className="py-4">
+                  <PersonalityRadar data={numerologyResult} />
+                </div>
               </div>
             </div>
+
+            <Part3KarmaV2 userData={userData} results={numerologyResult} />
           </div>
 
           {/* Astro Architecture */}
@@ -169,14 +173,14 @@ export default function UnifiedMiroirReport({
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 gap-12">
             {/* REFLEX INSIGHTS */}
-            <div className="md:col-span-2 space-y-12">
+            <div className="space-y-12">
               <div className="flex items-center gap-4 border-b border-[#1A1C2E]/5 pb-6">
                 <Zap className="w-6 h-6 text-[#C9A24D]" />
-                <h3 className="text-3xl font-serif font-bold">Analyses Biologiques & Réflexes</h3>
+                <h3 className="text-3xl font-serif font-bold">Observation des Réactions sous Pression</h3>
               </div>
-              <div className="grid md:grid-cols-2 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 {psyResult.insights?.reflex_insights?.map((ri, i) => (
                   <motion.div 
                     key={i}
@@ -210,15 +214,15 @@ export default function UnifiedMiroirReport({
             </div>
 
             {/* BEHAVIORAL DIMENSIONS */}
-            <div className="md:col-span-2 space-y-12 pt-12">
+            <div className="space-y-12 pt-12">
               <div className="flex items-center gap-4 border-b border-[#1A1C2E]/5 pb-6">
                 <Layout className="w-6 h-6 text-[#C9A24D]" />
-                <h3 className="text-3xl font-serif font-bold">Décryptage des Scénarios de Vie</h3>
+                <h3 className="text-3xl font-serif font-bold">Analyse Comportementale</h3>
               </div>
               <p className="text-[#1A1C2E]/60 text-lg max-w-3xl">
                 Ces dimensions sont calculées à partir de tes choix face aux situations concrètes proposées. Elles révèlent tes piliers comportementaux en situation réelle.
               </p>
-              <div className="grid md:grid-cols-2 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 {psyResult.insights?.dimension_insights?.map((di) => (
                   <div key={di.id} className="p-12 rounded-[50px] bg-white border border-[#1A1C2E]/10 shadow-sm space-y-8 hover:shadow-xl hover:shadow-[#1A1C2E]/5 transition-all">
                     <div className="flex justify-between items-center">
@@ -365,22 +369,25 @@ export default function UnifiedMiroirReport({
             <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Le Plan d'Action</h2>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 gap-12">
             {/* 7-Day Protocol */}
-            <div className="lg:col-span-2 space-y-10">
-              <h3 className="text-3xl font-serif font-bold">Protocole 7 Jours</h3>
+            <div className="space-y-12 max-w-4xl mx-auto w-full">
+              <div className="space-y-4 text-center mb-12">
+                <h3 className="text-3xl md:text-5xl font-serif font-bold italic">Protocole 7 Jours</h3>
+                <p className="text-[#1A1C2E]/60 text-lg">Un exercice par jour pour amorcer ton réalignement.</p>
+              </div>
               <div className="grid gap-6">
                 {psyResult.insights?.plan_7_days?.map((step, i) => (
                   <motion.div 
                     key={i}
                     {...fadeIn}
-                    className="flex items-start gap-8 p-8 rounded-[40px] bg-white border border-[#1A1C2E]/5 hover:shadow-xl transition-all group"
+                    className="flex items-start gap-8 p-8 md:p-10 rounded-[40px] bg-white border border-[#1A1C2E]/5 hover:shadow-xl transition-all group"
                   >
-                    <div className="w-14 h-14 rounded-2xl bg-[#1A1C2E] text-white flex items-center justify-center text-xl font-black shrink-0 shadow-lg group-hover:bg-[#C9A24D] transition-colors">
+                    <div className="w-16 h-16 rounded-2xl bg-[#1A1C2E] text-white flex items-center justify-center text-2xl font-black shrink-0 shadow-lg group-hover:bg-[#C9A24D] transition-colors">
                       {step.day}
                     </div>
-                    <div className="pt-2">
-                      <span className="text-xl font-medium text-[#1A1C2E] leading-tight block">{step.action}</span>
+                    <div className="pt-3">
+                      <span className="text-xl md:text-2xl font-serif font-medium text-[#1A1C2E] leading-tight block italic">{step.action}</span>
                     </div>
                   </motion.div>
                 ))}
@@ -388,23 +395,37 @@ export default function UnifiedMiroirReport({
             </div>
 
             {/* Decade Forecast */}
-            <div className="space-y-10">
-              <h3 className="text-3xl font-serif font-bold">Projection 10 ans</h3>
-              <div className="bg-white p-8 rounded-[40px] border border-[#1A1C2E]/5 shadow-sm space-y-6 max-h-[600px] overflow-y-auto custom-scrollbar">
-                {decadeForecast.map((yearData, i) => (
-                  <div key={i} className="flex items-center gap-4 py-4 border-b border-[#1A1C2E]/5 last:border-0">
-                    <div className="w-14 shrink-0 text-center">
-                      <div className="text-lg font-bold">{yearData.year}</div>
-                      <div className="text-[8px] text-[#C9A24D] font-black uppercase">An {yearData.personalYear}</div>
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-bold leading-tight mb-0.5">{yearData.theme}</div>
-                      <div className="text-[10px] text-[#1A1C2E]/50 leading-tight italic">"{yearData.mantra}"</div>
-                    </div>
-                  </div>
-                ))}
+            <div className="space-y-12 max-w-4xl mx-auto w-full pt-20 border-t border-[#1A1C2E]/5">
+              <div className="space-y-4 text-center mb-12">
+                <h3 className="text-3xl md:text-5xl font-serif font-bold italic">Projection 10 ans</h3>
+                <p className="text-[#1A1C2E]/60 text-lg">Ta trajectoire cyclique à long terme.</p>
               </div>
-              <Part5Future userData={userData} results={numerologyResult} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="bg-white p-10 rounded-[50px] border border-[#1A1C2E]/5 shadow-sm space-y-8 max-h-[700px] overflow-y-auto custom-scrollbar">
+                  {decadeForecast.map((yearData, i) => (
+                    <div key={i} className="flex items-start gap-6 py-6 border-b border-[#1A1C2E]/5 last:border-0 hover:bg-[#FDFBF7]/50 transition-colors px-4 -mx-4 rounded-2xl">
+                      <div className="w-20 shrink-0 text-center space-y-1">
+                        <div className="text-2xl font-black text-[#1A1C2E]">{yearData.year}</div>
+                        <div className="text-[10px] text-[#C9A24D] font-black uppercase tracking-widest bg-[#C9A24D]/10 py-1 rounded-full">An {yearData.personalYear}</div>
+                      </div>
+                      <div className="flex-1 space-y-2">
+                        <div className="text-lg font-bold leading-tight text-[#1A1C2E]">{yearData.theme}</div>
+                        <div className="text-sm text-[#1A1C2E]/50 leading-relaxed italic font-serif">"{yearData.mantra}"</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="space-y-8">
+                  <Part5Future userData={userData} results={numerologyResult} />
+                  <div className="bg-[#1A1C2E] p-10 rounded-[50px] text-white space-y-6 shadow-2xl relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A24D]/10 blur-3xl rounded-full"></div>
+                    <h4 className="text-2xl font-serif font-bold italic text-[#C9A24D]">Conseil Stratégique</h4>
+                    <p className="text-white/70 leading-relaxed italic">
+                      L'alignement ne se fait pas en un jour. Utilise ces cycles pour naviguer avec intention plutôt que de subir les événements.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

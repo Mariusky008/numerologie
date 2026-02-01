@@ -22,6 +22,18 @@ import { PROGRAM_DATA, DayContent } from '@/lib/programme/data';
 import COPModule from '@/components/programme/COPModule';
 import CAAModule from '@/components/programme/CAAModule';
 
+export async function generateStaticParams() {
+  const params = [];
+  for (const month of PROGRAM_DATA) {
+    for (const week of month.weeks) {
+      for (const day of week.days) {
+        params.push({ id: day.id });
+      }
+    }
+  }
+  return params;
+}
+
 export default function DayDetailPage() {
   const router = useRouter();
   const params = useParams();

@@ -54,7 +54,11 @@ export default function UnifiedMiroirReport({
   etymology
 }: UnifiedMiroirReportProps) {
   React.useEffect(() => {
-    window.scrollTo(0, 0);
+    // Force scroll to top on mount with a small delay to ensure rendering is complete
+    const timer = setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const [isOracleOpen, setIsOracleOpen] = React.useState(false);

@@ -1,5 +1,6 @@
 import { openai } from '@ai-sdk/openai';
 import { streamText } from 'ai';
+import { getPersonalizedLectures } from '@/lib/psy-mirror/lectures';
 
 export const maxDuration = 30;
 
@@ -10,6 +11,10 @@ export async function POST(req: Request) {
     if (!psyResult) {
       return new Response('Psy Result required', { status: 400 });
     }
+
+    // Generate the 7 targeted lectures
+    const lectures = getPersonalizedLectures(psyResult);
+    const lecturesSummary = lectures.map(l => `- ${l.title} : ${l.functionalReading}`).join('\n');
 
     // Build System Prompt for Psychological Coach
     const systemPrompt = `
@@ -34,7 +39,10 @@ TONALITÉ : Un mélange de sagesse numérologique/astrologique et de précision 
    - LEVIER PRIORITAIRE : ${psyResult.insights.lever}
    - ALIGNEMENT ACTUEL : ${psyResult.insights.cosmic_alignment?.score || 'Non spécifié'}%
 
-3. SCORES DIMENSIONS (BIOLOGIE/PSY) :
+3. LES 7 LECTURES DÉTAILLÉES DU MIROIR :
+${lecturesSummary}
+
+4. SCORES DIMENSIONS (BIOLOGIE/PSY) :
    - Décision (D1) : ${psyResult.behavior_profile.D1}/100
    - Incertitude (D2) : ${psyResult.behavior_profile.D2}/100
    - Contrôle (D3) : ${psyResult.behavior_profile.D3}/100
@@ -44,9 +52,10 @@ TONALITÉ : Un mélange de sagesse numérologique/astrologique et de précision 
 
 CONSIGNES DE RÉPONSE :
 1. FUSION DES DONNÉES : Explique toujours un comportement (Mode Réflexe) par une vibration du Code Source. Exemple : "Ton impatience (D1 élevé) vient de ton Chemin de Vie 1 qui veut tout créer tout de suite."
-2. RÉPONSES DÉVELOPPÉES : Riche et complète (5 à 8 phrases).
-3. PHRASES COURTES : Max 12-15 mots par phrase pour la lecture vocale.
-4. OBJECTIF : Aide l'utilisateur à réduire l'écart de ${100 - (psyResult.insights.cosmic_alignment?.score || 0)}% en utilisant son Levier Prioritaire.
+2. RÉFÉRENCE AUX LECTURES : Tu peux faire référence aux 7 lectures détaillées pour approfondir l'analyse si l'utilisateur pose des questions sur ses comportements spécifiques.
+3. RÉPONSES DÉVELOPPÉES : Riche et complète (5 à 8 phrases).
+4. PHRASES COURTES : Max 12-15 mots par phrase pour la lecture vocale.
+5. OBJECTIF : Aide l'utilisateur à réduire l'écart de ${100 - (psyResult.insights.cosmic_alignment?.score || 0)}% en utilisant son Levier Prioritaire.
 
 STRICTEMENT INTERDIT : Les diagnostics médicaux. Tu restes un guide d'évolution personnelle.
 `;

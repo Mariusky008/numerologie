@@ -90,6 +90,13 @@ export default function ResultPsyMirror() {
     processResult();
   }, [router]);
 
+  useEffect(() => {
+    // Force scroll to top when result data is loaded
+    if (data) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }, [data]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#FDFBF7] flex flex-col items-center justify-center p-6 text-center space-y-12">

@@ -21,7 +21,7 @@ import {
   Brain
 } from 'lucide-react';
 import { calculateLifePathNumber, getLifePathData, getSunSign, getMoonSign, getAscendant, getChartMaster } from '@/lib/psy-mirror/cosmic';
-import VoiceMirrorPreview from '@/components/experience/VoiceMirrorPreview';
+import PersonalizedAnalysisAvatar from '@/components/experience/PersonalizedAnalysisAvatar';
 
 export default function GratuitPage() {
   const router = useRouter();
@@ -383,8 +383,8 @@ export default function GratuitPage() {
                     </div>
                   </div>
                   
-                  {/* The Wahoo Animation Component */}
-                  <VoiceMirrorPreview />
+                  {/* The Personalized Analysis Avatar Component */}
+                  <PersonalizedAnalysisAvatar firstName={data.firstName} />
                 </div>
               </div>
 

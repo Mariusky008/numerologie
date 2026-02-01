@@ -1,11 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Environment variables are now used for security
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://ymmepfqrvutjihubijtv.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-if (!supabaseAnonKey && typeof window !== 'undefined') {
-  console.warn("Supabase Anon Key is missing. Check your .env.local file.");
+if (!supabaseUrl || !supabaseAnonKey) {
+  if (typeof window !== 'undefined') {
+    console.error("Supabase configuration missing! Check your environment variables.");
+  }
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co', 
+  supabaseAnonKey || 'placeholder-key'
+);

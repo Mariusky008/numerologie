@@ -17,27 +17,63 @@ import {
 } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '@/lib/supabase';
+import { ProgrammeService } from '@/lib/programme/service';
 
 export default function ProgrammeLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [session, setSession] = useState<any>(null);
 
-  // Load progress
+  // Auth check
   useEffect(() => {
-    const completed = JSON.parse(localStorage.getItem('completed_days') || '[]');
-    const totalDays = 84; // 3 months * 4 weeks * 7 days
-    setProgress(Math.round((completed.length / totalDays) * 100));
-  }, [pathname]); // Refresh on navigation
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      if (!session && pathname !== '/programme/login' && pathname !== '/programme/access') {
+        router.push('/programme/login');
+      }
+    });
 
-  // Mock authentication check
-  useEffect(() => {
-    const hasAccess = localStorage.getItem('programme_access');
-    if (!hasAccess && pathname !== '/programme/access') {
-      router.push('/programme/access?token=demo'); // For demo purposes, we auto-redirect with a token
-    }
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (!session && pathname !== '/programme/login' && pathname !== '/programme/access') {
+        router.push('/programme/login');
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, [pathname, router]);
+
+  // Load progress & Sync
+  useEffect(() => {
+    if (session) {
+      const syncData = async () => {
+        try {
+          // 1. Sync DB to Local (to get latest from other devices)
+          await ProgrammeService.syncDbToLocal(session.user.id);
+          
+          // 2. Sync Local to DB (to save what was done offline/anonymous)
+          await ProgrammeService.syncLocalToDb(session.user.id);
+
+          // 3. Update UI
+          const completed = JSON.parse(localStorage.getItem('completed_days') || '[]');
+          const totalDays = 84; 
+          setProgress(Math.round((completed.length / totalDays) * 100));
+        } catch (err) {
+          console.error("Sync Error:", err);
+        }
+      };
+      
+      syncData();
+    }
+  }, [pathname, session]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push('/programme/login');
+  };
 
   const menuItems = [
     { id: 'dashboard', label: 'Tableau de Bord', icon: LayoutDashboard, path: '/programme' },
@@ -138,11 +174,11 @@ export default function ProgrammeLayout({ children }: { children: React.ReactNod
           )}
           
           <button 
-            onClick={() => router.push('/')}
+            onClick={handleLogout}
             className={`w-full flex items-center gap-4 p-4 rounded-2xl text-white/40 hover:text-red-400 hover:bg-red-400/5 transition-all group`}
           >
             <LogOut className="w-6 h-6 shrink-0" />
-            {isSidebarOpen && <span className="font-bold text-sm uppercase tracking-widest text-inherit">Quitter</span>}
+            {isSidebarOpen && <span className="font-bold text-sm uppercase tracking-widest text-inherit">Se déconnecter</span>}
           </button>
         </div>
       </aside>

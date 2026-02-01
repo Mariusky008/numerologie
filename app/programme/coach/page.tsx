@@ -12,6 +12,7 @@ import {
   ChevronLeft
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 
 export default function CoachChatPage() {
   const router = useRouter();
@@ -20,7 +21,14 @@ export default function CoachChatPage() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) setUserId(session.user.id);
+    });
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -42,7 +50,8 @@ export default function CoachChatPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           messages: [...messages, { role: 'user', content: userMessage }],
-          context: { currentCycle: "Mois 1 - Observer ses automatismes" }
+          context: { currentCycle: "Mois 1 - Observer ses automatismes" },
+          userId: userId
         })
       });
 

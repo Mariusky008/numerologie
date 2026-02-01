@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { supabase } from '@/lib/supabase';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -7,7 +8,18 @@ const openai = new OpenAI({
 
 export async function POST(req: Request) {
   try {
-    const { messages, context } = await req.json();
+    const { messages, context, userId } = await req.json();
+
+    // Fetch user profile for context if userId is provided
+    let userDossier = null;
+    if (userId) {
+      const { data } = await supabase
+        .from('user_programme_profiles')
+        .select('dossier_data')
+        .eq('id', userId)
+        .single();
+      userDossier = data?.dossier_data;
+    }
 
     const systemPrompt = `
       Tu es l'assistant coach du programme "Votre Légende", un parcours de 3 mois basé sur l'observation de soi, la numérologie et l'astrologie décisionnelle.
@@ -28,6 +40,9 @@ export async function POST(req: Request) {
       POSTURE :
       "Ce que tu observes est une information. Il n'y a rien à corriger ici, seulement à noter."
       
+      DOSSIER PERSONNEL DE L'UTILISATEUR (À utiliser pour personnaliser tes explications sans être intrusif) :
+      ${userDossier ? JSON.stringify(userDossier) : "Non disponible pour le moment."}
+
       CONTEXTE ACTUEL DU PROGRAMME :
       ${JSON.stringify(context)}
     `;

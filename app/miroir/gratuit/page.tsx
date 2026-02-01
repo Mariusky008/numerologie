@@ -21,6 +21,7 @@ import {
   Brain
 } from 'lucide-react';
 import { calculateLifePathNumber, getLifePathData, getSunSign, getMoonSign, getAscendant, getChartMaster } from '@/lib/psy-mirror/cosmic';
+import VoiceMirrorPreview from '@/components/experience/VoiceMirrorPreview';
 
 export default function GratuitPage() {
   const router = useRouter();
@@ -343,42 +344,77 @@ export default function GratuitPage() {
           </div>
 
           {/* Section: Contenu du Miroir */}
-          <div className="space-y-12 relative z-10">
+          <div className="space-y-16 relative z-10">
             <div className="space-y-2">
-              <h3 className="text-2xl md:text-3xl font-serif font-bold">Ce que contient le Miroir Intégral</h3>
+              <h3 className="text-2xl md:text-4xl font-serif font-bold italic">Ce que contient le Miroir Intégral</h3>
             </div>
 
-            <div className="grid md:grid-cols-1 gap-6 text-left max-w-4xl mx-auto">
-              {[
-                {
-                  title: "🗣️ Conversation vocale privée avec l’IA ⭐",
-                  desc: "Pose toutes tes questions et explore ton fonctionnement en profondeur, à ton rythme, de manière interactive et personnalisée.",
-                  icon: MessageSquare,
-                  color: "bg-gradient-to-br from-[#C9A24D]/20 to-[#C9A24D]/5"
-                },
-                {
-                  title: "🧭 Plan d’Action “Réalignement” — 7 jours",
-                  desc: "Des exercices simples pour observer, ajuster et commencer à réduire l’écart entre potentiel et fonctionnement réel.",
-                  icon: ShieldCheck,
-                  color: "bg-white/5"
-                },
-                {
-                  title: "📘 Rapport Intégral personnalisé (≈ 40 pages — PDF)",
-                  desc: "Numérologie, astrologie et analyse comportementale fusionnées dans une lecture structurée et cohérente.",
-                  icon: BookOpen,
-                  color: "bg-white/5"
-                }
-              ].map((item, i) => (
-                <div key={i} className={`p-8 rounded-[40px] border border-white/10 ${item.color} flex flex-col md:flex-row gap-8 items-start hover:scale-[1.02] transition-transform group`}>
-                  <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-[#C9A24D] shrink-0 group-hover:scale-110 transition-transform">
-                    <item.icon className="w-7 h-7" />
+            <div className="space-y-12 max-w-4xl mx-auto">
+              {/* Voice Conversation Feature - HIGHLIGHTED */}
+              <div className="space-y-8">
+                <div className="p-8 md:p-12 rounded-[50px] border border-[#C9A24D]/30 bg-gradient-to-br from-[#C9A24D]/10 to-transparent text-left space-y-10">
+                  <div className="flex flex-col md:flex-row gap-8 items-start">
+                    <div className="w-20 h-20 rounded-3xl bg-[#C9A24D] flex items-center justify-center text-[#1A1C2E] shrink-0 shadow-[0_20px_40px_rgba(201,162,77,0.3)]">
+                      <MessageSquare className="w-10 h-10" />
+                    </div>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <h4 className="text-2xl md:text-3xl font-bold">🗣️ Ton miroir te parle <span className="text-[#C9A24D]">(voix privée & interactive)</span> ⭐</h4>
+                        <p className="text-white/80 text-lg leading-relaxed font-medium italic">
+                          Échange vocalement avec ton miroir personnel. Il te parle de tes écarts, de tes tensions, et t’aide à mettre des mots clairs sur ce que tu ressens sans toujours savoir l’expliquer.
+                        </p>
+                      </div>
+                      
+                      <div className="pt-6 border-t border-white/10 space-y-4">
+                        <p className="text-[#C9A24D] text-xs font-black uppercase tracking-widest">Tu peux lui poser des questions comme :</p>
+                        <div className="grid sm:grid-cols-1 gap-3">
+                          {[
+                            "Pourquoi je me sens souvent freiné alors que je sais ce que je veux ?",
+                            "Pourquoi je fatigue à force de m’adapter ?",
+                            "Qu’est-ce qui bloque vraiment chez moi aujourd’hui ?"
+                          ].map((q, i) => (
+                            <div key={i} className="flex items-center gap-3 text-white/60 text-sm italic">
+                              <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24D]" />
+                              {q}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="space-y-3">
-                    <h4 className="text-xl font-bold">{item.title}</h4>
-                    <p className="text-white/60 leading-relaxed">{item.desc}</p>
-                  </div>
+                  
+                  {/* The Wahoo Animation Component */}
+                  <VoiceMirrorPreview />
                 </div>
-              ))}
+              </div>
+
+              {/* Other features */}
+              <div className="grid md:grid-cols-2 gap-6 text-left">
+                {[
+                  {
+                    title: "🧭 Plan d’Action “Réalignement” — 7 jours",
+                    desc: "Des exercices simples pour observer, ajuster et commencer à réduire l’écart entre potentiel et fonctionnement réel.",
+                    icon: ShieldCheck,
+                    color: "bg-white/5"
+                  },
+                  {
+                    title: "📘 Rapport Intégral personnalisé (≈ 40 pages — PDF)",
+                    desc: "Numérologie, astrologie et analyse comportementale fusionnées dans une lecture structurée et cohérente.",
+                    icon: BookOpen,
+                    color: "bg-white/5"
+                  }
+                ].map((item, i) => (
+                  <div key={i} className={`p-8 rounded-[40px] border border-white/10 ${item.color} flex flex-col gap-6 items-start hover:scale-[1.02] transition-transform group`}>
+                    <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-[#C9A24D] shrink-0 group-hover:scale-110 transition-transform">
+                      <item.icon className="w-7 h-7" />
+                    </div>
+                    <div className="space-y-3">
+                      <h4 className="text-xl font-bold">{item.title}</h4>
+                      <p className="text-white/60 leading-relaxed text-sm">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 

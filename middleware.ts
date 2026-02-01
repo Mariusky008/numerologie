@@ -20,7 +20,8 @@ export function middleware(req: NextRequest) {
     if (basicAuth) {
       try {
         const authValue = basicAuth.split(' ')[1];
-        const decoded = Buffer.from(authValue, 'base64').toString();
+        // atob est plus compatible avec l'Edge Runtime de Vercel que Buffer
+        const decoded = atob(authValue);
         const [user, pwd] = decoded.split(':');
 
         const validUser = process.env.ADMIN_USER || 'admin';

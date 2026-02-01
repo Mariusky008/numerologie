@@ -3,17 +3,16 @@ import { supabase } from '@/lib/supabase';
 
 export async function GET() {
   try {
-    console.log("Stats GET request received");
     const { data, error } = await supabase
       .from('site_stats')
       .select('*');
 
     if (error) {
+        // En cas d'erreur de table manquante ou de droits, on renvoie un objet vide
+        // au lieu d'une erreur 500 pour ne pas bloquer l'UI
         console.error("Supabase site_stats GET Error:", error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({});
     }
-
-    console.log("Raw stats from DB:", data);
 
     // Convert array to object
     const stats = data ? data.reduce((acc: any, curr: any) => {
@@ -24,7 +23,7 @@ export async function GET() {
     return NextResponse.json(stats);
   } catch (error) {
     console.error('Critical error in stats GET:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({});
   }
 }
 

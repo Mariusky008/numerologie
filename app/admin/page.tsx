@@ -99,9 +99,10 @@ export default function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch(`/api/stats?password=${password}`);
+      const res = await fetch(`/api/stats?password=${password}&t=${Date.now()}`);
       if (res.ok) {
         const data = await res.json();
+        console.log("Stats received in Admin:", data);
         setStats(data);
       }
     } catch (error) {
@@ -234,21 +235,32 @@ export default function AdminDashboard() {
                 <span className="text-[10px] font-black uppercase tracking-widest text-stone-400">Acquisition</span>
                 <Eye className="w-4 h-4 text-stone-300" />
               </div>
-              <div className="space-y-1">
-                <p className="text-3xl font-bold text-[#78350f]">{stats.home_view || 0}</p>
-                <p className="text-xs text-stone-500">Vues page d'accueil</p>
-              </div>
-              <div className="pt-4 border-t border-stone-100">
-                <div className="flex justify-between items-end">
+              <div className="space-y-3">
+                <div className="flex justify-between items-end pb-2 border-b border-stone-50">
                   <div>
-                    <p className="text-xl font-bold text-stone-700">{stats.cta_click || 0}</p>
-                    <p className="text-[10px] uppercase font-bold text-stone-400">Clics CTA</p>
+                    <p className="text-2xl font-bold text-[#78350f]">{stats.home_view || 0}</p>
+                    <p className="text-[10px] text-stone-500 uppercase">Vues Accueil</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-bold text-green-600">{calculateConversion(stats.cta_click || 0, stats.home_view || 0)}</p>
-                    <p className="text-[9px] uppercase font-bold text-stone-300">Taux d'engagement</p>
+                    <p className="text-lg font-bold text-stone-700">{stats.cta_click || 0}</p>
+                    <p className="text-[9px] uppercase font-bold text-stone-400">Clics CTA</p>
                   </div>
                 </div>
+                
+                <div className="flex justify-between items-end">
+                  <div>
+                    <p className="text-xl font-bold text-[#78350f]">{stats.experience_start || 0}</p>
+                    <p className="text-[10px] text-stone-500 uppercase">Début Exp.</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-lg font-bold text-stone-700">{stats.info_submitted || 0}</p>
+                    <p className="text-[9px] uppercase font-bold text-stone-400">Infos Saisies</p>
+                  </div>
+                </div>
+              </div>
+              <div className="pt-4 border-t border-stone-100 flex justify-between items-center">
+                <span className="text-[10px] uppercase font-bold text-stone-400">Taux d'engagement</span>
+                <span className="text-sm font-bold text-green-600">{calculateConversion(stats.cta_click || 0, stats.home_view || 0)}</span>
               </div>
             </div>
 

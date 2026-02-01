@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const { data, error } = await supabase
@@ -40,19 +42,19 @@ export async function POST(request: Request) {
     const { error: rpcError } = await supabase.rpc('increment_stat', { event_name_input: event });
 
     if (rpcError) {
-      console.error("RPC 'increment_stat' failed:", rpcError);
+      console.error(`RPC 'increment_stat' failed for ${event}:`, rpcError);
       
       // Fallback: If RPC doesn't exist, try simple Upsert
-      console.log("Attempting manual upsert fallback for:", event);
+      console.log(`Attempting manual upsert fallback for ${event}...`);
       
       const { data: current, error: fetchError } = await supabase
         .from('site_stats')
         .select('count')
         .eq('event_name', event)
-        .maybeSingle(); // Use maybeSingle to avoid 406 error if not found
+        .maybeSingle();
       
       if (fetchError) {
-        console.error("Fallback Fetch Error:", fetchError);
+        console.error(`Fallback Fetch Error for ${event}:`, fetchError);
       }
 
       const newCount = (current?.count || 0) + 1;
@@ -62,12 +64,12 @@ export async function POST(request: Request) {
         .upsert({ event_name: event, count: newCount }, { onConflict: 'event_name' });
 
       if (upsertError) {
-        console.error("Fallback Upsert Error:", upsertError);
+        console.error(`Fallback Upsert Error for ${event}:`, upsertError);
         return NextResponse.json({ error: 'Upsert failed', details: upsertError }, { status: 500 });
       }
-      console.log("Manual upsert success for:", event, "New count:", newCount);
+      console.log(`Manual upsert success for ${event}. New count: ${newCount}`);
     } else {
-      console.log("RPC success for:", event);
+      console.log(`RPC success for ${event}`);
     }
 
     return NextResponse.json({ success: true });

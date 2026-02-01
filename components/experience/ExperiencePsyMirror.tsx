@@ -236,6 +236,12 @@ export default function ExperiencePsyMirror() {
   ];
 
   useEffect(() => {
+    // Preload next steps data while intro is showing
+    const preloadData = async () => {
+      // Just a small warm-up for data/logic if needed
+    };
+    preloadData();
+
     // Check if we have data from the Astro landing page
     const savedCosmicData = localStorage.getItem('cosmic_user_data');
     if (savedCosmicData) {

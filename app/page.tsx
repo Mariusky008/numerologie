@@ -29,7 +29,6 @@ import {
   Target
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import CrashTestAnimation from '@/components/experience/CrashTestAnimation';
 
 export default function Home() {
   const router = useRouter();
@@ -38,21 +37,24 @@ export default function Home() {
   const { scrollYProgress } = useScroll();
   
   // Parallax and opacity effects for the background
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
-  const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.15, 0.08, 0.15]);
-  const particleY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
+  const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.4, 0.2, 0.4]);
+  const particleY = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
   useEffect(() => {
+    // Force prefetch of the experience page
+    router.prefetch('/miroir/experience');
+    
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const fadeIn = {
-    initial: { opacity: 0, y: 30 },
+    initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-100px" },
-    transition: { duration: 0.8 }
+    viewport: { once: true, margin: "-50px" },
+    transition: { duration: 0.5, ease: "easeOut" }
   } as any;
 
   const staggerContainer = {
@@ -64,25 +66,29 @@ export default function Home() {
     <div className="min-h-screen bg-[#FDFBF7] text-[#1A1C2E] font-sans selection:bg-[#C9A24D]/20 overflow-x-hidden">
       
       {/* GLOBAL FIXED BACKGROUND ANIMATION */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         {/* Red/Orange Pulsing Animation (Following Scroll) */}
         <motion.div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1400px] h-[1400px] rounded-full blur-[140px] mix-blend-multiply"
-          style={{ y: backgroundY, opacity: backgroundOpacity }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full blur-[120px]"
+          style={{ 
+            y: backgroundY, 
+            opacity: backgroundOpacity,
+            willChange: "transform, opacity"
+          }}
           animate={{
-            scale: [0.9, 1.1, 0.9],
-            backgroundColor: ["#EF4444", "#F97316", "#EF4444"]
+            scale: [0.95, 1.05, 0.95],
+            backgroundColor: ["#FCA5A5", "#FDBA74", "#FCA5A5"] // Lighter red/orange for better visibility
           }}
           transition={{
-            duration: 8,
+            duration: 10,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
 
-        {/* Floating Particles (Following Scroll) */}
-        <motion.div style={{ y: particleY }} className="absolute inset-0">
-          {Array.from({ length: 20 }).map((_, i) => (
+        {/* Floating Particles (Following Scroll) - Reduced count for performance */}
+        <motion.div style={{ y: particleY, willChange: "transform" }} className="absolute inset-0">
+          {Array.from({ length: 12 }).map((_, i) => (
             <motion.div
               key={i}
               className="absolute text-[#C9A24D] font-serif font-bold opacity-20"

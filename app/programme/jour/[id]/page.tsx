@@ -45,6 +45,7 @@ export default function DayDetailPage() {
   const [isValidated, setIsValidated] = useState(false);
   const [monthInfo, setMonthInfo] = useState({ number: 0, week: 0 });
   const [copOrientation, setCopOrientation] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     // Find day in PROGRAM_DATA
@@ -84,6 +85,13 @@ export default function DayDetailPage() {
   };
 
   if (!day) return null;
+
+  const getVimeoId = (url: string) => {
+    const match = url.match(/vimeo\.com\/(\d+)/);
+    return match ? match[1] : null;
+  };
+
+  const vimeoId = getVimeoId(day.videoUrl);
 
   return (
     <div className="max-w-5xl mx-auto space-y-12 pb-32">
@@ -132,13 +140,27 @@ export default function DayDetailPage() {
           {/* Vidéo */}
           <div className="bg-white rounded-[60px] shadow-2xl border border-[#1A1C2E]/5 p-8 md:p-12 space-y-8">
             <div className="aspect-video bg-[#1A1C2E] rounded-[40px] flex items-center justify-center relative group overflow-hidden shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <button className="w-20 h-20 rounded-full bg-[#C9A24D] text-[#1A1C2E] flex items-center justify-center hover:scale-110 transition-transform shadow-2xl relative z-10">
-                <Play className="w-8 h-8 fill-current" />
-              </button>
-              <div className="absolute bottom-8 left-8 text-white z-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                <p className="text-sm font-bold uppercase tracking-widest">{day.videoDuration} MIN</p>
-              </div>
+              {isPlaying && vimeoId ? (
+                <iframe
+                  src={`https://player.vimeo.com/video/${vimeoId}?autoplay=1`}
+                  className="absolute inset-0 w-full h-full"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : (
+                <>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <button 
+                    onClick={() => setIsPlaying(true)}
+                    className="w-20 h-20 rounded-full bg-[#C9A24D] text-[#1A1C2E] flex items-center justify-center hover:scale-110 transition-transform shadow-2xl relative z-10"
+                  >
+                    <Play className="w-8 h-8 fill-current" />
+                  </button>
+                  <div className="absolute bottom-8 left-8 text-white z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p className="text-sm font-bold uppercase tracking-widest">{day.videoDuration} MIN</p>
+                  </div>
+                </>
+              )}
             </div>
             <div className="space-y-4">
               {day.frictionNote && (

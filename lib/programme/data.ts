@@ -44,7 +44,7 @@ export const PROGRAM_DATA: MonthContent[] = [
             dayNumber: 1,
             title: 'Le Poids de l\'Habitude',
             theme: 'Comprendre',
-            videoUrl: 'https://vimeo.com/example1',
+            videoUrl: 'https://vimeo.com/1160835833?share=copy&fl=sv&fe=ci',
             videoDuration: '08:45',
             actionTitle: 'Noter la première pensée',
             actionDescription: 'Dès le réveil, sans juger, note la toute première pensée ou préoccupation qui traverse ton esprit.',

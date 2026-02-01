@@ -93,17 +93,45 @@ export default function ProgrammeLayout({ children }: { children: React.ReactNod
         {/* Bottom Section */}
         <div className="p-4 border-t border-white/5 space-y-4">
           {isSidebarOpen && (
-            <div className="p-6 bg-white/5 rounded-3xl space-y-4">
-              <div className="flex justify-between items-end">
-                <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Progression</span>
-                <span className="text-sm font-serif font-bold text-[#C9A24D]">{progress}%</span>
+            <div className="p-6 bg-white/5 rounded-[40px] border border-white/5 space-y-6">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <Activity className="w-3 h-3 text-[#C9A24D]" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-white/40">Activité Biométrique</span>
+                </div>
+                <span className="text-[10px] font-bold text-[#C9A24D]">{progress}%</span>
               </div>
-              <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                <motion.div 
-                  initial={{ width: 0 }}
-                  animate={{ width: `${progress}%` }}
-                  className="h-full bg-[#C9A24D]"
-                />
+              
+              <div className="h-12 flex items-end gap-1 px-1">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+                  <motion.div
+                    key={i}
+                    animate={{ 
+                      height: [
+                        `${20 + Math.random() * 60}%`, 
+                        `${20 + Math.random() * 60}%`, 
+                        `${20 + Math.random() * 60}%`
+                      ] 
+                    }}
+                    transition={{ 
+                      repeat: Infinity, 
+                      duration: 1.5 + Math.random(), 
+                      ease: "easeInOut" 
+                    }}
+                    className="flex-1 bg-[#C9A24D]/20 rounded-full"
+                  />
+                ))}
+              </div>
+
+              <div className="space-y-2">
+                <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    animate={{ width: `${progress}%` }}
+                    className="h-full bg-[#C9A24D]"
+                  />
+                </div>
+                <p className="text-[8px] font-medium text-center text-white/20 uppercase tracking-[0.2em]">Sincronicité du parcours</p>
               </div>
             </div>
           )}

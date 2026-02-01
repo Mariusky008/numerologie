@@ -11,7 +11,8 @@ import {
   Info,
   Save,
   MessageCircle,
-  Sparkles
+  Sparkles,
+  AlertTriangle
 } from 'lucide-react';
 import { useRouter, useParams } from 'next/navigation';
 import { PROGRAM_DATA, DayContent } from '@/lib/programme/data';
@@ -68,7 +69,6 @@ export default function DayDetailPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-12 pb-32">
       
-      {/* Navigation & Header */}
       <div className="flex items-center justify-between">
         <button 
           onClick={() => router.back()}
@@ -77,8 +77,21 @@ export default function DayDetailPage() {
           <ChevronLeft className="w-4 h-4" />
           Retour au planning
         </button>
-        <div className="flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#C9A24D]/10 text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.3em]">
-          Jour {day.dayNumber} — {day.theme}
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/20">Tension :</span>
+            <div className="flex gap-1">
+              {[1, 2, 3, 4, 5].map((l) => (
+                <div 
+                  key={l} 
+                  className={`w-3 h-1 rounded-full ${l <= (day?.tensionLevel || 0) ? (day?.tensionLevel || 0) >= 4 ? 'bg-red-400' : 'bg-[#C9A24D]' : 'bg-[#1A1C2E]/5'}`} 
+                />
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#C9A24D]/10 text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.3em]">
+            Jour {day.dayNumber} — {day.theme}
+          </div>
         </div>
       </div>
 
@@ -154,6 +167,23 @@ export default function DayDetailPage() {
                   L'expérience concrète
                 </div>
                 <h2 className="text-4xl font-serif font-bold italic">{day.actionTitle}</h2>
+                
+                {day.frictionNote && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-6 bg-red-400/5 border border-red-400/20 rounded-3xl flex items-start gap-4"
+                  >
+                    <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-1" />
+                    <div className="space-y-1">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-red-400">Point de Friction Détecté</p>
+                      <p className="text-sm text-[#1A1C2E]/60 italic leading-relaxed">
+                        {day.frictionNote}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+
                 <div className="p-10 bg-[#FDFBF7] border border-[#C9A24D]/20 rounded-[40px] shadow-sm">
                   <p className="text-2xl text-[#1A1C2E]/80 leading-relaxed font-light">
                     {day.actionDescription}

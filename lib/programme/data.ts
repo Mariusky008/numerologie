@@ -8,6 +8,8 @@ export interface DayContent {
   actionTitle: string;
   actionDescription: string;
   journalQuestion: string;
+  tensionLevel: number; // 1 to 5 (1: Low, 5: High)
+  frictionNote?: string;
 }
 
 export interface WeekContent {
@@ -46,7 +48,9 @@ export const PROGRAM_DATA: MonthContent[] = [
             videoDuration: '08:45',
             actionTitle: 'Noter la première pensée',
             actionDescription: 'Dès le réveil, sans juger, note la toute première pensée ou préoccupation qui traverse ton esprit.',
-            journalQuestion: 'Quelle est la tonalité dominante de tes premières pensées ce matin (inquiétude, excitation, neutralité) ?'
+            journalQuestion: 'Quelle est la tonalité dominante de tes premières pensées ce matin (inquiétude, excitation, neutralité) ?',
+            tensionLevel: 2,
+            frictionNote: 'Ta tendance à l\'analyse immédiate pourrait bloquer l\'observation brute.'
           },
           {
             id: 'm1-w1-d2',
@@ -57,7 +61,8 @@ export const PROGRAM_DATA: MonthContent[] = [
             videoDuration: '06:12',
             actionTitle: 'Observer les rituels',
             actionDescription: 'Observe tes gestes entre le lever et le départ de chez toi. Lesquels fais-tu de manière totalement automatique ?',
-            journalQuestion: 'Combien de tes actions matinales sont réellement choisies et non subies par l\'habitude ?'
+            journalQuestion: 'Combien de tes actions matinales sont réellement choisies et non subies par l\'habitude ?',
+            tensionLevel: 3
           },
           {
             id: 'm1-w1-d3',
@@ -68,7 +73,9 @@ export const PROGRAM_DATA: MonthContent[] = [
             videoDuration: '10:20',
             actionTitle: 'Identifier une tension',
             actionDescription: 'À 14h, fais un scan rapide de ton corps. Où se loge la tension principale ?',
-            journalQuestion: 'À quel événement de la matinée peux-tu relier cette tension physique ?'
+            journalQuestion: 'À quel événement de la matinée peux-tu relier cette tension physique ?',
+            tensionLevel: 4,
+            frictionNote: 'Le passage du mental au corps est ton point de résistance majeur.'
           },
           {
             id: 'm1-w1-d4',
@@ -79,7 +86,9 @@ export const PROGRAM_DATA: MonthContent[] = [
             videoDuration: '07:30',
             actionTitle: 'Inverser un geste',
             actionDescription: 'Change un petit détail dans ta routine (ex: brossage de dents de la main opposée, changer de chemin).',
-            journalQuestion: 'Qu\'as-tu ressenti au moment où l\'automatisme a été rompu ?'
+            journalQuestion: 'Qu\'as-tu ressenti au moment où l\'automatisme a été rompu ?',
+            tensionLevel: 5,
+            frictionNote: 'Inconfort maximal prévu : ton système va chercher à revenir au connu.'
           },
           {
             id: 'm1-w1-d5',
@@ -90,7 +99,8 @@ export const PROGRAM_DATA: MonthContent[] = [
             videoDuration: '12:00',
             actionTitle: 'Relire ses notes',
             actionDescription: 'Relis tes observations des 4 derniers jours et entoure les mots qui reviennent le plus.',
-            journalQuestion: 'Quel est le "fil rouge" de tes automatismes cette semaine ?'
+            journalQuestion: 'Quel est le "fil rouge" de tes automatismes cette semaine ?',
+            tensionLevel: 2
           },
           {
             id: 'm1-w1-d6',
@@ -101,7 +111,8 @@ export const PROGRAM_DATA: MonthContent[] = [
             videoDuration: '05:00',
             actionTitle: 'Compléter le journal',
             actionDescription: 'Prends le temps de terminer une action que tu n\'as pas pu faire cette semaine.',
-            journalQuestion: 'Quelle a été la journée la plus révélatrice pour toi ?'
+            journalQuestion: 'Quelle a été la journée la plus révélatrice pour toi ?',
+            tensionLevel: 1
           },
           {
             id: 'm1-w1-d7',
@@ -112,7 +123,8 @@ export const PROGRAM_DATA: MonthContent[] = [
             videoDuration: '00:00',
             actionTitle: 'Silence',
             actionDescription: 'Pas d\'exercice aujourd\'hui. Laisse simplement les informations décanter.',
-            journalQuestion: 'Comment te sens-tu à l\'idée d\'entamer la deuxième semaine ?'
+            journalQuestion: 'Comment te sens-tu à l\'idée d\'entamer la deuxième semaine ?',
+            tensionLevel: 1
           }
         ]
       },

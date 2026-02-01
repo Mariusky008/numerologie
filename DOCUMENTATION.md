@@ -207,6 +207,7 @@ Mise en place de templates d'emails pour une séquence post-achat automatisée :
 1.  **J+0 (Immédiat)** : Livraison du Miroir Intégral (Rapport + Oracle).
 2.  **J+3 (Le Parcours)** : Email `EmailParcoursOffer` invitant à rejoindre le programme d'accompagnement sur 12 mois pour maintenir l'alignement.
 3.  **J+7 (Le Roman)** : Email `EmailRomanOffer` proposant de transformer l'analyse en une biographie romancée unique pour donner du sens à son parcours.
+4.  **J+21 (Engagement)** : Email `EmailEngagementQuestion` — Question ouverte sans offre commerciale pour réactiver la relation et l'introspection ("Qu'est-ce qui a le plus changé dans ta façon de te voir ?").
 
 ---
 *Document mis à jour le 1er Février 2026 - Version 3.1*

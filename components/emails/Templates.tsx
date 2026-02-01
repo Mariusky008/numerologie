@@ -593,6 +593,49 @@ export const EmailParcoursOffer = ({
   </Html>
 );
 
+interface EmailEngagementQuestionProps {
+  firstName: string;
+}
+
+export const EmailEngagementQuestion = ({
+  firstName,
+}: EmailEngagementQuestionProps) => (
+  <Html>
+    <Head />
+    <Preview>Une petite question pour vous, {firstName}... 🤔</Preview>
+    <Body style={main}>
+      <Container style={container}>
+        <Heading style={h1}>Prendre du recul ✨</Heading>
+        <Text style={text}>Bonjour {firstName},</Text>
+        <Text style={text}>
+          Cela fait maintenant trois semaines que vous avez exploré votre <strong>Miroir Intégral</strong>.
+        </Text>
+        <Text style={text}>
+          Je vous envoie ce message simplement pour prendre de vos nouvelles, sans rien avoir à vous vendre.
+        </Text>
+        
+        <Section style={box}>
+          <Text style={{ ...text, fontSize: '18px', fontWeight: 'bold', color: '#1A1C2E', textAlign: 'center', margin: '30px 0' }}>
+            "Avec le recul, qu’est-ce qui a le plus changé dans ta façon de te voir depuis le Miroir ?"
+          </Text>
+        </Section>
+
+        <Text style={text}>
+          Si le cœur vous en dit, n'hésitez pas à répondre à cet email. Je lis chaque message avec attention.
+        </Text>
+
+        <Text style={text}>
+          L'idée n'est pas de "faire" quelque chose, mais simplement d'observer l'évolution de votre regard sur vous-même.
+        </Text>
+
+        <Text style={footer}>
+          L'équipe Votre Légende.
+        </Text>
+      </Container>
+    </Body>
+  </Html>
+);
+
 const main = {
   backgroundColor: '#FAF9F7',
   fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',

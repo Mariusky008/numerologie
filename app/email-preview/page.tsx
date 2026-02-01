@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { render } from '@react-email/render';
-import { EmailReport, EmailDeliverables, EmailConfirmation, EmailUpsellBook, EmailExpertFollowUp, EmailMiroirIntegral, EmailRomanOffer, EmailParcoursOffer } from '@/components/emails/Templates';
+import { EmailReport, EmailDeliverables, EmailConfirmation, EmailUpsellBook, EmailExpertFollowUp, EmailMiroirIntegral, EmailRomanOffer, EmailParcoursOffer, EmailEngagementQuestion } from '@/components/emails/Templates';
 
 export default function EmailPreviewPage() {
-  const [activeTab, setActiveTab] = useState<'miroir_integral' | 'roman_offer' | 'parcours_offer' | 'confirmation' | 'deliverables' | 'upsell' | 'expert_followup'>('miroir_integral');
+  const [activeTab, setActiveTab] = useState<'miroir_integral' | 'roman_offer' | 'parcours_offer' | 'engagement_question' | 'confirmation' | 'deliverables' | 'upsell' | 'expert_followup'>('miroir_integral');
   const [isPaper, setIsPaper] = useState(false);
   const [htmlContent, setHtmlContent] = useState('');
 
@@ -33,6 +33,13 @@ export default function EmailPreviewPage() {
       case 'parcours_offer':
         component = (
           <EmailParcoursOffer 
+            firstName="Jean-Philippe"
+          />
+        );
+        break;
+      case 'engagement_question':
+        component = (
+          <EmailEngagementQuestion 
             firstName="Jean-Philippe"
           />
         );
@@ -110,6 +117,12 @@ export default function EmailPreviewPage() {
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'roman_offer' ? 'bg-[#C9A24D] text-white shadow' : 'text-gray-500 hover:text-gray-700'}`}
               >
                 J+7 : Offre Roman
+              </button>
+              <button 
+                onClick={() => setActiveTab('engagement_question')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'engagement_question' ? 'bg-teal-600 text-white shadow' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                J+21 : Engagement (Relance)
               </button>
             </div>
           </div>

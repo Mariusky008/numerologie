@@ -12,7 +12,8 @@ import {
   Menu,
   X,
   Brain,
-  Lock
+  Lock,
+  Activity
 } from 'lucide-react';
 import { useRouter, usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';

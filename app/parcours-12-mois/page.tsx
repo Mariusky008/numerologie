@@ -225,11 +225,20 @@ export default function ParcoursPage() {
             <h2 className="text-4xl md:text-7xl font-serif font-bold italic">Une structure claire.</h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-2 gap-4">
             {[
               "Observer ses automatismes",
               "Comprendre ses rythmes personnels",
-              "Rapport à la décision"
+              "Rapport à la décision",
+              "Gestion de l’énergie et de la fatigue",
+              "Relation aux autres",
+              "Sens et motivation",
+              "Résistance et friction",
+              "Ajustement des priorités",
+              "Fin de cycle et lâcher-prise",
+              "Vision à moyen terme",
+              "Stabilisation",
+              "Synthèse et recul global"
             ].map((theme, i) => (
               <div key={i} className="flex items-center gap-6 p-6 bg-white rounded-3xl border border-[#1A1C2E]/5 shadow-sm hover:translate-x-2 transition-transform">
                 <div className="w-10 h-10 rounded-xl bg-[#1A1C2E] text-white flex items-center justify-center text-xs font-black">

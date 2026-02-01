@@ -30,6 +30,7 @@ import { PsyMirrorResult } from '@/lib/psy-mirror/types';
 import { UserData, NumerologyResult } from '@/lib/types';
 import { NameData } from '@/lib/numerology/db_etymology';
 import PsyCoachChat from '@/components/chat/PsyCoachChat';
+import { TARGETED_LECTURES } from '@/lib/psy-mirror/lectures';
 import PersonalityRadar from './PersonalityRadar';
 import KeyNumbersSection from './design-system/KeyNumbersSection';
 import PartAstroV2 from './parts/PartAstroV2';
@@ -411,6 +412,103 @@ export default function UnifiedMiroirReport({
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* NEW SECTION: LECTURES CIBLÉES */}
+      <section className="py-32 px-6 bg-white border-b border-[#1A1C2E]/5">
+        <div className="max-w-6xl mx-auto space-y-24">
+          <div className="text-center space-y-6">
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#5B4B8A]/10 border border-[#5B4B8A]/20 text-[#5B4B8A] text-[10px] font-bold uppercase tracking-[0.4em]">
+              <Brain className="w-4 h-4" />
+              Dimension III : Lectures Ciblées
+            </div>
+            <h2 className="text-4xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Analyses Approfondies</h2>
+            <p className="text-[#1A1C2E]/60 text-xl max-w-2xl mx-auto leading-relaxed">
+              Sept lectures ciblées pour explorer l'écart entre ton potentiel et tes modes d'adaptation réels.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-16">
+            {TARGETED_LECTURES.map((lecture, index) => (
+              <motion.div 
+                key={lecture.id}
+                {...fadeIn}
+                className="p-10 md:p-16 rounded-[60px] bg-[#FAF9F7] border border-[#1A1C2E]/5 hover:shadow-2xl transition-all relative overflow-hidden group"
+              >
+                <div className="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
+                  <lecture.icon className="w-48 h-48" />
+                </div>
+
+                <div className="relative z-10 space-y-12">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-[#1A1C2E] text-white flex items-center justify-center">
+                        <lecture.icon className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h3 className="text-3xl md:text-5xl font-serif font-bold text-[#1A1C2E]">{lecture.title}</h3>
+                        <p className="text-[#C9A24D] font-medium italic">{lecture.subtitle}</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      {lecture.questions.map(q => (
+                        <span key={q} className="text-[9px] font-bold px-2 py-1 rounded-md bg-[#1A1C2E]/5 text-[#1A1C2E]/40 uppercase">
+                          {q}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-12">
+                    <div className="space-y-8">
+                      <div className="space-y-4">
+                        <h4 className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40">🧠 Lecture fonctionnelle</h4>
+                        <p className="text-xl text-[#1A1C2E] leading-relaxed font-light italic">
+                          "{lecture.functionalReading}"
+                        </p>
+                      </div>
+                      <div className="space-y-4">
+                        <h4 className="text-xs font-black uppercase tracking-widest text-[#C9A24D]">🔭 Mise en perspective potentiel ↔ adaptation</h4>
+                        <p className="text-lg text-[#1A1C2E]/70 leading-relaxed">
+                          {lecture.perspective}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="bg-white p-10 rounded-[40px] border border-[#1A1C2E]/10 shadow-sm space-y-6">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <Compass className="w-5 h-5 text-[#5B4B8A]" />
+                          <h4 className="text-xs font-black uppercase tracking-widest text-[#5B4B8A]">Expérimentation Proposée</h4>
+                        </div>
+                        <div className="text-[10px] font-bold text-[#C9A24D] uppercase px-3 py-1 bg-[#C9A24D]/10 rounded-full">
+                          {lecture.exercise.duration}
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        <p className="text-2xl font-serif font-bold italic text-[#1A1C2E]">{lecture.exercise.title}</p>
+                        <ul className="space-y-3">
+                          {lecture.exercise.steps.map((step, i) => (
+                            <li key={i} className="flex items-start gap-3 text-[#1A1C2E]/70">
+                              <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24D] mt-2 shrink-0" />
+                              <span>{step}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="pt-6 border-t border-[#1A1C2E]/5">
+                        <p className="text-sm font-medium text-[#1A1C2E]/40 uppercase tracking-widest mb-1">Objectif</p>
+                        <p className="text-[#5B4B8A] font-medium">{lecture.exercise.objective}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

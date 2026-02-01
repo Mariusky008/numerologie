@@ -66,7 +66,9 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
     }
   }, [audioEnabled, isStressed]);
 
-  const generateChallenge = useCallback((force: boolean = false) => {
+  const isProcessing = useRef(false);
+
+  const generateChallenge = useCallback(() => {
     const wordIdx = Math.floor(Math.random() * COLORS.length);
     let colorIdx = Math.floor(Math.random() * COLORS.length);
     
@@ -79,10 +81,12 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
     const challenge = {
       word: COLORS[wordIdx].name,
       color: COLORS[colorIdx].value,
+      id: Date.now() // Unique ID for each challenge
     };
     
     setCurrentChallenge(challenge);
     setStartTime(Date.now());
+    isProcessing.current = false;
     
     if (isStressed) {
       speakColor(COLORS[colorIdx].name);
@@ -130,24 +134,33 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          finishTest();
           return 0;
-        }
-        if (prev <= 23 && !isStressed) {
-          setIsStressed(true);
         }
         return prev - 1;
       });
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []); // Remove generateChallenge and isStressed dependencies to avoid double trigger
+  }, []); // Initial generate
+
+  // Watch timeLeft for stress trigger
+  useEffect(() => {
+    if (timeLeft === 23 && !isStressed) {
+      setIsStressed(true);
+    }
+    if (timeLeft === 0) {
+      finishTest();
+    }
+  }, [timeLeft, isStressed]);
 
   const handleAnswer = (colorValue: string) => {
+    if (isProcessing.current || timeLeft === 0) return;
+    
+    isProcessing.current = true;
     const reactionTime = Date.now() - startTime;
     
-    // Robust comparison
-    const isCorrect = colorValue.toLowerCase() === currentChallenge.color.toLowerCase();
+    // Explicitly compare current color value
+    const isCorrect = colorValue.toLowerCase().trim() === currentChallenge.color.toLowerCase().trim();
     
     setReactionTimes((prev) => [...prev, reactionTime]);
     setTotalAttempts((prev) => prev + 1);

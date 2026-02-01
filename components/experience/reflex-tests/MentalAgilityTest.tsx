@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Repeat, Zap, AlertCircle, Brain, Layers } from 'lucide-react';
 
@@ -21,15 +21,20 @@ export default function MentalAgilityTest({ onComplete }: MentalAgilityTestProps
   const [timeLeft, setTimeLeft] = useState(40);
   const [totalAttempts, setTotalAttempts] = useState(0);
 
+  const isProcessing = useRef(false);
+
   const generateChallenge = useCallback(() => {
     const newNumber = Math.floor(Math.random() * 9) + 1; // 1-9
     const newRule = Math.random() > 0.5 ? 'parity' : 'magnitude';
     
-    setLastRule(rule);
+    setRule(prev => {
+      setLastRule(prev);
+      return newRule;
+    });
     setNumber(newNumber);
-    setRule(newRule);
     setStartTime(Date.now());
-  }, [rule]);
+    isProcessing.current = false;
+  }, []); // Stable dependencies
 
   useEffect(() => {
     generateChallenge();
@@ -37,7 +42,6 @@ export default function MentalAgilityTest({ onComplete }: MentalAgilityTestProps
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          finishTest();
           return 0;
         }
         return prev - 1;
@@ -46,7 +50,16 @@ export default function MentalAgilityTest({ onComplete }: MentalAgilityTestProps
     return () => clearInterval(timer);
   }, [generateChallenge]);
 
+  useEffect(() => {
+    if (timeLeft === 0) {
+      finishTest();
+    }
+  }, [timeLeft]);
+
   const handleAnswer = (answer: 'left' | 'right') => {
+    if (isProcessing.current || timeLeft === 0) return;
+    
+    isProcessing.current = true;
     const reactionTime = Date.now() - startTime;
     let isCorrect = false;
 

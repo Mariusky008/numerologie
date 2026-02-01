@@ -109,7 +109,7 @@ export default function EmailPreviewPage() {
                 onClick={() => setActiveTab('roman_offer')}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'roman_offer' ? 'bg-[#C9A24D] text-white shadow' : 'text-gray-500 hover:text-gray-700'}`}
               >
-                J+5 : Offre Roman
+                J+7 : Offre Roman
               </button>
             </div>
           </div>

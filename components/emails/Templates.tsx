@@ -495,28 +495,41 @@ export const EmailRomanOffer = ({
         <Heading style={h1}>Le Roman de Votre Vie 📖</Heading>
         <Text style={text}>Bonjour {firstName},</Text>
         <Text style={text}>
-          Cela fait 3 jours que vous avez découvert votre Miroir Intégral. J'espère que cette lecture vous a apporté les premières clés de compréhension que vous cherchiez.
+          Il y a quelques jours, le <strong>Miroir Intégral</strong> vous a permis de mieux comprendre votre fonctionnement, vos tensions, et les grandes lignes de votre trajectoire.
         </Text>
         <Text style={text}>
-          Aujourd'hui, j'ai une proposition unique pour vous.
+          Mais une chose reste souvent difficile après une analyse : <strong>donner du sens à ce que l’on a vécu.</strong>
+        </Text>
+        <Text style={text}>
+          Comprendre, c’est une étape. Intégrer son parcours en est une autre.
         </Text>
         
         <Section style={box}>
-          <Heading as="h3" style={h3}>Imaginez-vous comme le héros d'une quête épique...</Heading>
+          <Heading as="h3" style={h3}>C’est pour cela que nous avons créé Le Roman de Votre Vie.</Heading>
           <Text style={text}>
-            Nous pouvons transformer vos données numérologiques et vos expériences de vie en un véritable <strong>Roman de Vie personnalisé</strong>.
+            Un récit personnalisé, écrit à partir de vos données numérologiques et de vos grandes expériences de vie, dans lequel <strong>vous êtes le personnage principal</strong>.
+          </Text>
+          <Text style={text}>
+            Un livre d’environ 100 pages qui :
           </Text>
           <ul style={{ paddingLeft: '20px', margin: '10px 0', color: '#57534e' }}>
-            <li>Un récit de 100 pages dont vous êtes le personnage principal.</li>
-            <li>Vos défis transformés en étapes initiatiques.</li>
-            <li>Une lecture captivante pour porter un nouveau regard sur votre parcours.</li>
+            <li>Transforme vos défis en étapes de compréhension.</li>
+            <li>Relie vos choix passés à une trajectoire plus lisible.</li>
+            <li>Vous permet de porter un regard apaisé et cohérent sur votre parcours.</li>
           </ul>
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <Text style={text}>
+            Ce n’est pas une prédiction. C’est une <strong>mise en récit</strong> de ce que vous avez traversé, pour mieux comprendre qui vous êtes devenu.
+          </Text>
+          <div style={{ textAlign: 'center', marginTop: '30px' }}>
             <Button style={button} href={romanLink}>
               Découvrir mon Roman de Vie
             </Button>
           </div>
         </Section>
+
+        <Text style={text}>
+          Prenez le temps de voir si cette expérience résonne pour vous.
+        </Text>
 
         <Text style={footer}>
           L'équipe Votre Légende.

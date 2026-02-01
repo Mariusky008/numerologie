@@ -206,7 +206,7 @@ Le processus de livraison a été optimisé pour gérer le délai de génératio
 Mise en place de templates d'emails pour une séquence post-achat automatisée :
 1.  **J+0 (Immédiat)** : Livraison du Miroir Intégral (Rapport + Oracle).
 2.  **J+3 (Le Parcours)** : Email `EmailParcoursOffer` invitant à rejoindre le programme d'accompagnement sur 12 mois pour maintenir l'alignement.
-3.  **J+5 (Le Roman)** : Email `EmailRomanOffer` proposant de transformer l'analyse en une biographie romancée unique.
+3.  **J+7 (Le Roman)** : Email `EmailRomanOffer` proposant de transformer l'analyse en une biographie romancée unique pour donner du sens à son parcours.
 
 ---
 *Document mis à jour le 1er Février 2026 - Version 3.1*

@@ -1,13 +1,13 @@
-export const trackEvent = async (event: string) => {
+export const trackEvent = async (event: string, properties?: Record<string, any>) => {
   if (typeof window === 'undefined') return; // Client-side only
 
   try {
-    console.log(`[Analytics] Tracking event: ${event}`);
+    console.log(`[Analytics] Tracking event: ${event}`, properties);
     // Fire and forget - don't await to avoid blocking UI
     fetch('/api/stats', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ event }),
+      body: JSON.stringify({ event, properties }),
       keepalive: true // Crucial for events that happen just before navigation/tab close
     }).catch(err => console.error("Tracking error:", err));
   } catch (e) {

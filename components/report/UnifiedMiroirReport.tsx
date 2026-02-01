@@ -863,7 +863,7 @@ export default function UnifiedMiroirReport({
               Certaines personnes choisissent ensuite de mettre cette lecture en pratique dans leur quotidien.
             </p>
             <p>
-              Pour cela, il existe un parcours de 12 mois, composé d’exercices concrets, de temps de réflexion guidés et de points de lecture réguliers, pensés pour expérimenter, ajuster et observer son évolution au fil des cycles personnels.
+              Pour cela, il existe un parcours de 3 mois, composé d’exercices concrets, de temps de réflexion guidés et de points de lecture réguliers, pensés pour expérimenter, ajuster et observer son évolution au fil des cycles personnels.
             </p>
             <p className="font-medium">
               Ce parcours est une démarche volontaire de progression personnelle, basée sur l’observation et l’expérimentation.
@@ -875,7 +875,7 @@ export default function UnifiedMiroirReport({
               onClick={() => window.location.href = '/parcours-12-mois'}
               className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#C9A24D] text-white rounded-full font-bold text-2xl shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95"
             >
-              <span>Découvrir le parcours de 12 mois</span>
+              <span>Découvrir le parcours de 3 mois</span>
               <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
             </button>
           </div>

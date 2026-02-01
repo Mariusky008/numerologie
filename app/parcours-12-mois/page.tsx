@@ -118,8 +118,8 @@ export default function ParcoursPage() {
                     <Calendar className="w-12 h-12 text-[#C9A24D]" />
                   </div>
                   <div className="space-y-4">
-                    <p className="text-5xl font-serif font-bold text-[#C9A24D]">12 Mois</p>
-                    <p className="text-xl text-[#1A1C2E]/40 uppercase tracking-[0.3em] font-bold">12 Cycles Mensuels</p>
+                    <p className="text-5xl font-serif font-bold text-[#C9A24D]">3 Mois</p>
+                    <p className="text-xl text-[#1A1C2E]/40 uppercase tracking-[0.3em] font-bold">3 Cycles Mensuels</p>
                   </div>
                   <div className="h-px w-20 bg-[#C9A24D]/20 mx-auto"></div>
                   <div className="grid grid-cols-3 gap-4">
@@ -225,20 +225,11 @@ export default function ParcoursPage() {
             <h2 className="text-4xl md:text-7xl font-serif font-bold italic">Une structure claire.</h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
             {[
               "Observer ses automatismes",
               "Comprendre ses rythmes personnels",
-              "Rapport à la décision",
-              "Gestion de l’énergie et de la fatigue",
-              "Relation aux autres",
-              "Sens et motivation",
-              "Résistance et friction",
-              "Ajustement des priorités",
-              "Fin de cycle et lâcher-prise",
-              "Vision à moyen terme",
-              "Stabilisation",
-              "Synthèse et recul global"
+              "Rapport à la décision"
             ].map((theme, i) => (
               <div key={i} className="flex items-center gap-6 p-6 bg-white rounded-3xl border border-[#1A1C2E]/5 shadow-sm hover:translate-x-2 transition-transform">
                 <div className="w-10 h-10 rounded-xl bg-[#1A1C2E] text-white flex items-center justify-center text-xs font-black">
@@ -292,9 +283,9 @@ export default function ParcoursPage() {
 
               <ul className="space-y-4 flex-1">
                 {[
-                  "Accès aux 12 cycles",
+                  "Accès aux 3 cycles",
                   "Tous les contenus et exercices",
-                  "Accès pendant 12 mois",
+                  "Accès pendant 3 mois",
                   "Sans rendez-vous individuel"
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-lg">
@@ -305,8 +296,11 @@ export default function ParcoursPage() {
               </ul>
 
               <div className="space-y-6 pt-10 border-t border-white/20">
-                <div className="text-4xl font-serif font-bold text-white">499 €/an</div>
-                <button className="w-full py-5 bg-white text-[#C9A24D] rounded-full font-bold text-lg hover:scale-105 transition-all">
+                <div className="text-4xl font-serif font-bold text-white">499 €/3 mois</div>
+                <button 
+                  onClick={() => router.push('/miroir/checkout?plan=parcours_autonome')}
+                  className="w-full py-5 bg-white text-[#C9A24D] rounded-full font-bold text-lg hover:scale-105 transition-all"
+                >
                   Choisir ce format
                 </button>
               </div>
@@ -340,8 +334,11 @@ export default function ParcoursPage() {
               </ul>
 
               <div className="space-y-6 pt-10 border-t border-white/10">
-                <div className="text-4xl font-serif font-bold text-white">1 599 €/an</div>
-                <button className="w-full py-5 bg-white text-[#1A1C2E] rounded-full font-bold text-lg hover:bg-[#C9A24D] hover:text-white transition-all">
+                <div className="text-4xl font-serif font-bold text-white">1 599 €/3 mois</div>
+                <button 
+                  onClick={() => router.push('/miroir/checkout?plan=parcours_mensuel')}
+                  className="w-full py-5 bg-white text-[#1A1C2E] rounded-full font-bold text-lg hover:bg-[#C9A24D] hover:text-white transition-all"
+                >
                   Choisir ce format
                 </button>
               </div>
@@ -373,8 +370,11 @@ export default function ParcoursPage() {
               </ul>
 
               <div className="space-y-6 pt-10 border-t border-white/10">
-                <div className="text-4xl font-serif font-bold text-red-400">2 999 €/an</div>
-                <button className="w-full py-5 bg-white text-[#1A1C2E] rounded-full font-bold text-lg hover:bg-red-400 hover:text-white transition-all">
+                <div className="text-4xl font-serif font-bold text-red-400">2 999 €/3 mois</div>
+                <button 
+                  onClick={() => router.push('/miroir/checkout?plan=parcours_hebdo')}
+                  className="w-full py-5 bg-white text-[#1A1C2E] rounded-full font-bold text-lg hover:bg-red-400 hover:text-white transition-all"
+                >
                   Choisir ce format
                 </button>
               </div>

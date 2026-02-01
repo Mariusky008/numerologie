@@ -540,50 +540,41 @@ export default function Home() {
 
           {/* Durations / Paths */}
           <div className="space-y-12 pt-10">
-            <motion.h3 {...fadeIn} className="text-2xl font-serif font-bold text-center text-[#1A1C2E]/40 uppercase tracking-[0.2em]">Parcours disponibles (en option)</motion.h3>
+            <motion.h3 {...fadeIn} className="text-2xl font-serif font-bold text-center text-[#1A1C2E]/40 uppercase tracking-[0.2em]">Parcours d'intégration</motion.h3>
             
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                { 
-                  duration: "3 mois", 
-                  points: ["Reprendre conscience de ses schémas dominants", "Ajuster ses réactions clés"],
-                  icon: Calendar,
-                  color: "border-[#1A1C2E]/5"
-                },
-                { 
-                  duration: "6 mois", 
-                  points: ["Stabiliser de nouveaux repères", "Sortir des répétitions automatiques"],
-                  icon: Target,
-                  color: "border-[#C9A24D]/30 bg-[#C9A24D]/[0.02]"
-                },
-                { 
-                  duration: "12 mois", 
-                  points: ["Intégrer durablement un fonctionnement plus aligné", "Retrouver clarté, fluidité et dynamisme"],
-                  icon: Heart,
-                  color: "border-[#1A1C2E]/5"
-                }
-              ].map((path, i) => (
-                <motion.div 
-                  key={i}
-                  {...fadeIn}
-                  className={`p-10 rounded-[50px] border ${path.color} space-y-6 hover:shadow-xl transition-all duration-500`}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-sm text-[#C9A24D]">
-                      <path.icon className="w-6 h-6" />
-                    </div>
-                    <span className="text-2xl font-black text-[#1A1C2E]">{path.duration}</span>
+            <div className="max-w-xl mx-auto">
+              <motion.div 
+                {...fadeIn}
+                className="p-10 rounded-[50px] border border-[#C9A24D]/30 bg-[#C9A24D]/[0.02] space-y-6 hover:shadow-xl transition-all duration-500"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-sm text-[#C9A24D]">
+                    <Calendar className="w-6 h-6" />
                   </div>
-                  <ul className="space-y-4">
-                    {path.points.map((p, j) => (
-                      <li key={j} className="flex items-start gap-3 text-[#1A1C2E]/60 text-sm leading-relaxed">
-                        <ArrowRight className="w-4 h-4 text-[#C9A24D] shrink-0 mt-1" />
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
+                  <span className="text-2xl font-black text-[#1A1C2E]">Le Parcours de 3 mois</span>
+                </div>
+                <ul className="space-y-4">
+                  {[
+                    "Observer ses automatismes dominants",
+                    "Comprendre ses rythmes personnels",
+                    "Ajuster son rapport à la décision",
+                    "Stabiliser de nouveaux repères d'action"
+                  ].map((p, j) => (
+                    <li key={j} className="flex items-start gap-3 text-[#1A1C2E]/60 text-sm leading-relaxed">
+                      <ArrowRight className="w-4 h-4 text-[#C9A24D] shrink-0 mt-1" />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+                <div className="pt-4">
+                  <button 
+                    onClick={() => router.push('/parcours-12-mois')}
+                    className="w-full py-4 bg-[#1A1C2E] text-white rounded-full font-bold text-sm hover:bg-[#C9A24D] transition-colors"
+                  >
+                    Découvrir le parcours
+                  </button>
+                </div>
+              </motion.div>
             </div>
           </div>
 

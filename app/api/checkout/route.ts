@@ -24,21 +24,47 @@ export async function POST(request: Request) {
     // NOUVELLE LOGIQUE UNIQUE : PACK RÉVÉLATION
     const line_items = [];
 
-    // 1. LE PACK DE BASE (Toujours présent)
+    // Définition des plans et prix
+    const plans: Record<string, { name: string, description: string, amount: number }> = {
+      bundle: {
+        name: "Le Pack Révélation (Complet)",
+        description: "Vidéo Avatar (5 min) + Dossier PDF (40 pages) + Coach IA (30 min)",
+        amount: 4900
+      },
+      parcours_autonome: {
+        name: "Parcours 3 Mois - Autonome",
+        description: "Accès complet aux 3 cycles mensuels d'exploration pendant 3 mois.",
+        amount: 49900
+      },
+      parcours_mensuel: {
+        name: "Parcours 3 Mois + Coach Mensuel",
+        description: "Parcours complet + 1 session individuelle de 1 heure par mois.",
+        amount: 159900
+      },
+      parcours_hebdo: {
+        name: "Parcours 3 Mois + Coach Hebdo",
+        description: "Parcours complet + 1 session individuelle de 1 heure par semaine.",
+        amount: 299900
+      }
+    };
+
+    const selectedPlan = plans[orderInfo.plan] || plans.bundle;
+
+    // 1. LE PACK SÉLECTIONNÉ
     line_items.push({
       price_data: {
         currency: 'eur',
         product_data: {
-          name: "Le Pack Révélation (Complet)",
-          description: "Vidéo Avatar (5 min) + Dossier PDF (40 pages) + Coach IA (30 min)",
+          name: selectedPlan.name,
+          description: selectedPlan.description,
         },
-        unit_amount: 4900, // 49.00€
+        unit_amount: selectedPlan.amount,
       },
       quantity: 1,
     });
 
-    // 2. OPTION LIVRE (Si cochée)
-    if (orderInfo.includeBook) {
+    // 2. OPTION LIVRE (Si cochée - Uniquement pour le pack bundle)
+    if (orderInfo.plan === 'bundle' && orderInfo.includeBook) {
       line_items.push({
         price_data: {
           currency: 'eur',

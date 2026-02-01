@@ -2,32 +2,100 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
 import { 
   Lock, 
   CreditCard, 
-  ShieldCheck, 
   ArrowRight, 
-  Check,
-  Star,
-  Zap,
-  ChevronLeft,
-  Search,
-  Brain,
-  Layers,
-  BookOpen,
-  Compass
+  Star, 
+  Zap, 
+  ChevronLeft, 
+  Search, 
+  Brain, 
+  Layers, 
+  BookOpen, 
+  Compass, 
+  MessageCircle, 
+  TrendingUp
 } from 'lucide-react';
+
+const PLANS = {
+  bundle: {
+    id: 'bundle',
+    name: "Le Crash-Test de ton Destin",
+    price: 49,
+    description: "L’analyse complète pour comprendre l’écart entre ton potentiel de naissance et la façon dont tu fonctionnes aujourd’hui.",
+    features: [
+      { icon: Search, text: "Analyse numérologique & astrologique de ton potentiel de naissance" },
+      { icon: Brain, text: "Analyse de tes choix et réactions réelles face aux situations" },
+      { icon: Layers, text: "Comparaison claire entre potentiel, comportements et image perçue" },
+      { icon: BookOpen, text: "Dossier personnalisé (PDF) pour approfondir à ton rythme" },
+      { icon: Compass, text: "Exercices simples pour amorcer un réalignement progressif" }
+    ],
+    cta: "Payer 49 € et débloquer mon analyse",
+    label: "Accès complet au Crash-Test de ton Destin",
+    type: "paiement unique"
+  },
+  parcours_autonome: {
+    id: 'parcours_autonome',
+    name: "Parcours 3 Mois - Autonome",
+    price: 499,
+    description: "Un parcours structuré sur 3 mois pour mettre en pratique ta lecture de vie à travers 3 cycles thématiques.",
+    features: [
+      { icon: Layers, text: "Accès aux 3 cycles mensuels d'exploration" },
+      { icon: BookOpen, text: "Tous les contenus, exercices et synthèses" },
+      { icon: Compass, text: "Accès illimité à la plateforme pendant 3 mois" },
+      { icon: Lock, text: "Parcours en autonomie totale (sans rendez-vous)" }
+    ],
+    cta: "Payer 499 € et commencer mon parcours",
+    label: "Parcours 3 Mois - Option 1",
+    type: "pour 3 mois"
+  },
+  parcours_mensuel: {
+    id: 'parcours_mensuel',
+    name: "Parcours 3 Mois + Coach Mensuel",
+    price: 1599,
+    description: "Le parcours complet avec un accompagnement individuel chaque mois pour clarifier tes avancées.",
+    features: [
+      { icon: MessageCircle, text: "1 session individuelle (1 heure/mois) avec un coach" },
+      { icon: Layers, text: "Accès complet aux 3 cycles mensuels" },
+      { icon: Brain, text: "Échange personnalisé autour de tes exercices" },
+      { icon: Compass, text: "Aide à la prise de recul et à la mise en pratique" }
+    ],
+    cta: "Payer 1 599 € et commencer mon parcours",
+    label: "Parcours 3 Mois - Option 2",
+    type: "pour 3 mois"
+  },
+  parcours_hebdo: {
+    id: 'parcours_hebdo',
+    name: "Parcours 3 Mois + Coach Hebdo",
+    price: 2999,
+    description: "L'engagement maximum avec un suivi hebdomadaire pour un réalignement profond et soutenu.",
+    features: [
+      { icon: TrendingUp, text: "1 session individuelle (1 heure/semaine) avec un coach" },
+      { icon: Layers, text: "Accès complet aux 3 cycles mensuels" },
+      { icon: Zap, text: "Cadre soutenu et ajustement constant des expérimentations" },
+      { icon: Star, text: "Engagement maximum pour des résultats durables" }
+    ],
+    cta: "Payer 2 999 € et commencer mon parcours",
+    label: "Parcours 3 Mois - Option 3",
+    type: "pour 3 mois"
+  }
+};
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const planKey = searchParams.get('plan') || 'bundle';
+  const selectedPlan = PLANS[planKey as keyof typeof PLANS] || PLANS.bundle;
+
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState<any>(null);
   const [email, setEmail] = useState('');
 
   useEffect(() => {
-    trackEvent('checkout_view');
+    trackEvent('checkout_view', { plan: planKey });
     const finalData = localStorage.getItem('psy_mirror_final_data');
     if (finalData) {
       try {
@@ -39,11 +107,11 @@ export default function CheckoutPage() {
         console.error(e);
       }
     }
-  }, []);
+  }, [planKey]);
 
   const handlePayment = async () => {
-    if (!userData) {
-      alert("Erreur : Données utilisateur introuvables. Veuillez recommencer l'expérience.");
+    if (!userData && !email) {
+      alert("Veuillez saisir votre adresse email pour continuer.");
       return;
     }
 
@@ -53,10 +121,10 @@ export default function CheckoutPage() {
       const orderId = `PM-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
       
       const orderInfo = {
-        plan: 'bundle',
-        totalPrice: 49,
+        plan: selectedPlan.id,
+        totalPrice: selectedPlan.price,
         delivery: {
-          email: email || userData.email || 'client@votrelegende.fr'
+          email: email || userData?.email || 'client@votrelegende.fr'
         }
       };
 
@@ -66,10 +134,7 @@ export default function CheckoutPage() {
       if (sessionDataRaw) {
         try {
           const sessionData = JSON.parse(sessionDataRaw);
-          // We can't easily generate the full result here without the engine, 
-          // but we can pass the raw session data and let the API handle it if needed,
-          // or just pass the profile scores if they are already calculated.
-          psyResult = sessionData.profile; // This might be enough for admin
+          psyResult = sessionData.profile;
         } catch (e) {
           console.error("Error parsing session data", e);
         }
@@ -80,10 +145,10 @@ export default function CheckoutPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userData: { ...userData, email: email || userData.email },
+          userData: userData ? { ...userData, email: email || userData.email } : { email },
           orderInfo,
           orderId,
-          psyResult // Pass the psy result here
+          psyResult
         })
       });
 
@@ -92,14 +157,14 @@ export default function CheckoutPage() {
       }
 
       // 2. Enregistrer la stat de clic de paiement
-      trackEvent('payment_click');
+      trackEvent('payment_click', { plan: selectedPlan.id });
 
       // 3. Créer la session Stripe et rediriger
       const stripeResponse = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userData: { ...userData, email: email || userData.email },
+          userData: userData ? { ...userData, email: email || userData.email } : { email },
           orderInfo,
           orderId
         })
@@ -141,22 +206,16 @@ export default function CheckoutPage() {
         {/* LEFT: ORDER SUMMARY */}
         <div className="space-y-12">
           <div className="space-y-6">
-            <h1 className="text-4xl md:text-6xl font-serif font-bold italic">Le Crash-Test de ton Destin</h1>
+            <h1 className="text-4xl md:text-6xl font-serif font-bold italic">{selectedPlan.name}</h1>
             <p className="text-xl text-[#1A1C2E]/60 leading-relaxed font-light">
-              L’analyse complète pour comprendre l’écart entre ton potentiel de naissance et la façon dont tu fonctionnes aujourd’hui.
+              {selectedPlan.description}
             </p>
           </div>
 
           <div className="space-y-6">
-            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A24D]">Ce que tu reçois immédiatement :</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A24D]">Ce que tu reçois :</p>
             <div className="space-y-5">
-              {[
-                { icon: Search, text: "Analyse numérologique & astrologique de ton potentiel de naissance" },
-                { icon: Brain, text: "Analyse de tes choix et réactions réelles face aux situations" },
-                { icon: Layers, text: "Comparaison claire entre potentiel, comportements et image perçue" },
-                { icon: BookOpen, text: "Dossier personnalisé (PDF) pour approfondir à ton rythme" },
-                { icon: Compass, text: "Exercices simples pour amorcer un réalignement progressif" }
-              ].map((item, i) => (
+              {selectedPlan.features.map((item, i) => (
                 <div key={i} className="flex items-start gap-5 group">
                   <div className="w-10 h-10 rounded-xl bg-white shadow-sm border border-[#1A1C2E]/5 flex items-center justify-center text-[#C9A24D] shrink-0 group-hover:scale-110 transition-transform">
                     <item.icon className="w-5 h-5" />
@@ -171,10 +230,10 @@ export default function CheckoutPage() {
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A24D]/20 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
             <div className="relative z-10 space-y-6">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A24D] mb-3">Accès complet au Crash-Test de ton Destin</p>
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A24D] mb-3">{selectedPlan.label}</p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-5xl md:text-6xl font-serif font-bold">49 €</p>
-                  <p className="text-lg font-light opacity-40 italic">TTC — paiement unique</p>
+                  <p className="text-5xl md:text-6xl font-serif font-bold">{selectedPlan.price} €</p>
+                  <p className="text-lg font-light opacity-40 italic">TTC — {selectedPlan.type}</p>
                 </div>
               </div>
               <div className="pt-6 border-t border-white/10 flex items-center gap-3 text-white/60">
@@ -267,7 +326,7 @@ export default function CheckoutPage() {
                 />
               ) : (
                 <>
-                  <span>Payer 49 € et débloquer mon analyse</span>
+                  <span>{selectedPlan.cta}</span>
                   <ArrowRight className="w-8 h-8 group-hover:translate-x-2 transition-transform" />
                 </>
               )}

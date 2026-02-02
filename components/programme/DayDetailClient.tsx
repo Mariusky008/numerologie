@@ -12,7 +12,8 @@ import {
   MessageCircle, 
   AlertTriangle, 
   ArrowRight,
-  Sparkles
+  Sparkles,
+  X
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { DayContent } from '@/lib/programme/data';
@@ -38,6 +39,7 @@ export default function DayDetailClient({ day, monthNumber, weekNumber }: DayDet
   const [isPlaying, setIsPlaying] = useState(false);
   const [coachFeedback, setCoachFeedback] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isCoachOpen, setIsCoachOpen] = useState(false);
 
   useEffect(() => {
     // Load saved journal and validation state
@@ -56,6 +58,7 @@ export default function DayDetailClient({ day, monthNumber, weekNumber }: DayDet
     
     setIsSaving(true);
     setIsAnalyzing(true);
+    setIsCoachOpen(true);
     
     try {
       // 1. Save locally
@@ -242,53 +245,6 @@ export default function DayDetailClient({ day, monthNumber, weekNumber }: DayDet
                   )}
                 </button>
               </div>
-
-              {/* Coach Intervention UI */}
-              <AnimatePresence>
-                {(isAnalyzing || coachFeedback) && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    className="p-8 rounded-[40px] bg-[#1A1C2E] text-white space-y-6 relative overflow-hidden shadow-2xl"
-                  >
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A24D]/10 blur-3xl rounded-full"></div>
-                    
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-[#C9A24D] flex items-center justify-center text-[#1A1C2E]">
-                        <MessageCircle className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Intervention du Coach</p>
-                        <h4 className="text-lg font-serif font-bold italic text-[#C9A24D]">Analyse de ton observation</h4>
-                      </div>
-                    </div>
-
-                    <div className="relative min-h-[60px]">
-                      {isAnalyzing ? (
-                        <div className="flex flex-col gap-4">
-                          <div className="h-4 bg-white/5 rounded-full w-3/4 animate-pulse" />
-                          <div className="h-4 bg-white/5 rounded-full w-1/2 animate-pulse" />
-                          <div className="h-4 bg-white/5 rounded-full w-2/3 animate-pulse" />
-                        </div>
-                      ) : (
-                        <p className="text-lg leading-relaxed font-light italic text-white/80">
-                          {coachFeedback}
-                        </p>
-                      )}
-                    </div>
-
-                    {!isAnalyzing && (
-                      <div className="pt-4 border-t border-white/5 flex items-center gap-3">
-                        <Sparkles className="w-4 h-4 text-[#C9A24D]" />
-                        <p className="text-[10px] font-black uppercase tracking-widest text-white/20">
-                          Continue vers le module COP pour orienter ton action.
-                        </p>
-                      </div>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           </div>
         </div>
@@ -356,23 +312,88 @@ export default function DayDetailClient({ day, monthNumber, weekNumber }: DayDet
         </div>
       </section>
 
-      {/* Coach Quick Access */}
-      <div className="p-10 rounded-[50px] bg-[#1A1C2E] text-white flex flex-col md:flex-row items-center justify-between gap-8">
-        <div className="flex items-center gap-6">
-          <div className="w-16 h-16 rounded-3xl bg-[#C9A24D] flex items-center justify-center text-[#1A1C2E] shadow-2xl">
-            <MessageCircle className="w-8 h-8" />
-          </div>
-          <div>
-            <h3 className="text-xl font-serif font-bold">Besoin d'une précision ?</h3>
-            <p className="text-white/40 text-sm italic">Pose ta question au coach sur l'exercice d'aujourd'hui.</p>
-          </div>
-        </div>
-        <button 
-          onClick={() => router.push('/programme/coach')}
-          className="px-10 py-5 border border-white/20 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-white/5 transition-all"
+      {/* FLOATING COACH BUTTON & DIALOG */}
+      <div className="fixed bottom-12 right-12 z-[100] flex flex-col items-end gap-6">
+        <AnimatePresence>
+          {isCoachOpen && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="w-[400px] bg-[#1A1C2E] text-white rounded-[40px] shadow-2xl border border-white/10 overflow-hidden"
+            >
+              <div className="p-8 space-y-6 relative">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A24D]/10 blur-3xl rounded-full"></div>
+                
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-[#C9A24D] flex items-center justify-center text-[#1A1C2E]">
+                      <MessageCircle className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Intervention du Coach</p>
+                      <h4 className="text-lg font-serif font-bold italic text-[#C9A24D]">Analyse de ton observation</h4>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => setIsCoachOpen(false)}
+                    className="p-2 hover:bg-white/5 rounded-full transition-colors"
+                  >
+                    <X className="w-5 h-5 text-white/40" />
+                  </button>
+                </div>
+
+                <div className="relative min-h-[60px]">
+                  {isAnalyzing ? (
+                    <div className="flex flex-col gap-4">
+                      <div className="h-4 bg-white/5 rounded-full w-3/4 animate-pulse" />
+                      <div className="h-4 bg-white/5 rounded-full w-1/2 animate-pulse" />
+                      <div className="h-4 bg-white/5 rounded-full w-2/3 animate-pulse" />
+                    </div>
+                  ) : (
+                    <p className="text-lg leading-relaxed font-light italic text-white/80">
+                      {coachFeedback || "Pose ton ancrage pour recevoir mon analyse."}
+                    </p>
+                  )}
+                </div>
+
+                {!isAnalyzing && coachFeedback && (
+                  <div className="pt-4 border-t border-white/5 flex items-center gap-3">
+                    <Sparkles className="w-4 h-4 text-[#C9A24D]" />
+                    <p className="text-[10px] font-black uppercase tracking-widest text-white/20">
+                      Continue vers le module COP pour orienter ton action.
+                    </p>
+                  </div>
+                )}
+                
+                <button 
+                  onClick={() => router.push('/programme/coach')}
+                  className="w-full py-4 mt-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-[#C9A24D] hover:text-[#1A1C2E] transition-all"
+                >
+                  Ouvrir le chat complet
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setIsCoachOpen(!isCoachOpen)}
+          className={`w-20 h-20 rounded-full flex items-center justify-center shadow-2xl transition-all ${isCoachOpen ? 'bg-white text-[#1A1C2E]' : 'bg-[#C9A24D] text-[#1A1C2E]'}`}
         >
-          Ouvrir le chat
-        </button>
+          {isCoachOpen ? (
+            <X className="w-8 h-8" />
+          ) : (
+            <div className="relative">
+              <MessageCircle className="w-8 h-8" />
+              {(isAnalyzing || (coachFeedback && !isCoachOpen)) && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full animate-ping" />
+              )}
+            </div>
+          )}
+        </motion.button>
       </div>
 
     </div>

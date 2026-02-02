@@ -130,8 +130,8 @@ export default function Home() {
       <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-6 py-4 ${scrolled ? 'translate-y-0' : '-translate-y-full'}`}>
         <div className="max-w-xl mx-auto bg-white/80 backdrop-blur-xl border border-[#1A1C2E]/5 rounded-full py-3 px-6 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.05)] flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Zap className="w-5 h-5 text-[#C9A24D]" />
-            <span className="text-[10px] font-black uppercase tracking-widest">Crash-Test</span>
+            <Target className="w-5 h-5 text-[#C9A24D]" />
+            <span className="text-[10px] font-black uppercase tracking-widest">Le Crash-Test du Destin</span>
           </div>
           <Link 
             href="/miroir/experience"
@@ -158,8 +158,8 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white border border-[#1A1C2E]/5 shadow-sm text-[#1A1C2E] text-[11px] font-black uppercase tracking-[0.4em]"
           >
-            <Cpu className="w-4 h-4 text-[#C9A24D]" />
-            Protocole Mi-Bio Mi-Astro
+            <Activity className="w-4 h-4 text-[#C9A24D]" />
+            Quand ton potentiel de naissance rencontre la psychologie
           </motion.div>
           
           <motion.div
@@ -192,10 +192,10 @@ export default function Home() {
               Vis-tu vraiment ce pour quoi tu es né ?
             </p>
             <div className="p-8 bg-white/50 backdrop-blur-md border border-[#1A1C2E]/5 rounded-[40px] shadow-2xl shadow-black/5 space-y-4">
-              <p className="text-lg">
-                Nous comparons ce que ta date de naissance révèle de ton potentiel <br />
-                <span className="text-[#1A1C2E] font-bold uppercase tracking-widest text-xs">(astrologie & numérologie)</span> <br />
-                avec la façon dont tu prends réellement tes décisions aujourd’hui.
+              <p className="text-lg font-medium leading-relaxed">
+                Fais le Crash-Test de ton Destin. <br />
+                Compare ton potentiel de naissance <br />
+                aux décisions et aux choix que tu fais.
               </p>
               <div className="h-px w-12 bg-[#C9A24D]/30 mx-auto"></div>
               <p className="text-[#C9A24D] font-bold text-2xl">
@@ -459,7 +459,7 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               { title: "Dossier Personnalisé", desc: "40 pages d'analyse croisée : astro, numérologie et psychologie décisionnelle.", icon: BookOpen, tag: "PDF 40 pages" },
-              { title: "Vidéo de l'Avatar", desc: "Une vidéo immersive de 5 à 7 minutes où ton avatar te parle directement.", icon: Video, tag: "Vidéo Personnalisée" },
+              { title: "Analyse Vidéo Oracle", desc: "Une vidéo immersive de 5 à 7 minutes où l'Oracle analyse ton potentiel en temps réel.", icon: Video, tag: "Vidéo Personnalisée" },
               { title: "Coach Vocal IA", desc: "Une conversation vocale de 30 minutes avec l'IA pour approfondir tes résultats.", icon: Mic, tag: "Échange Interactif" }
             ].map((item, i) => (
               <motion.div 
@@ -706,14 +706,14 @@ export default function Home() {
       {/* FOOTER */}
       <footer className="py-20 px-6 bg-[#FDFBF7] border-t border-[#1A1C2E]/5 text-center space-y-8">
         <div className="flex items-center justify-center gap-4 text-[#C9A24D]">
-          <Zap className="w-6 h-6" />
+          <Target className="w-6 h-6" />
           <div className="h-4 w-px bg-[#1A1C2E]/10"></div>
           <Fingerprint className="w-6 h-6" />
           <div className="h-4 w-px bg-[#1A1C2E]/10"></div>
           <Activity className="w-6 h-6" />
         </div>
         <div className="text-[11px] font-black uppercase tracking-[0.5em] text-[#1A1C2E]/20">
-          © {new Date().getFullYear()} MIROIR PSYCHOLOGIQUE · LE CRASH-TEST DU DESTIN
+          © {new Date().getFullYear()} LE CRASH-TEST DU DESTIN · QUAND TON POTENTIEL RENCONTRE LA PSYCHOLOGIE
         </div>
       </footer>
 

@@ -108,7 +108,7 @@ export const EmailConfirmation = ({ firstName }: EmailConfirmationProps) => (
           <Text style={text}>
             Vous recevrez un email complet d'ici quelques heures (maximum 24h) contenant :
             <ul>
-              <li>Votre Vidéo Avatar</li>
+              <li>Votre Analyse Vidéo Oracle</li>
               <li>Votre Dossier PDF</li>
               <li>Votre accès au Coach Vocal</li>
             </ul>
@@ -152,7 +152,7 @@ export const EmailDeliverables = ({
         <Section style={highlightBox}>
           <Heading as="h3" style={h3}>1. Votre Vidéo Personnelle</Heading>
           <Text style={text}>
-            Regardez d'abord ceci. Votre avatar vous explique tout.
+            Regardez d'abord ceci. Votre Oracle vous explique tout.
           </Text>
           <Button style={button} href={videoLink}>
             ▶️ Regarder ma Vidéo (5 min)

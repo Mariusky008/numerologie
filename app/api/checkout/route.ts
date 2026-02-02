@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     const plans: Record<string, { name: string, description: string, amount: number }> = {
       bundle: {
         name: "Le Pack Révélation (Complet)",
-        description: "Vidéo Avatar (5 min) + Dossier PDF (40 pages) + Coach IA (30 min)",
+        description: "Analyse Vidéo Oracle (5 min) + Dossier PDF (40 pages) + Coach IA (30 min)",
         amount: 4900
       },
       parcours_autonome: {

@@ -13,7 +13,7 @@ import { Mic, MicOff, MessageSquare, X, Loader2 } from 'lucide-react';
 const AVATAR_ID = 'Angela_in_Black_Skirt_Standing_20220926'; // Same as video
 const VOICE_ID = '13500366a7074360aa62939d3752670a'; // Same as video (Denise)
 
-export default function InteractiveAvatar() {
+export default function InteractiveOracle() {
   const [isLoading, setIsLoading] = useState(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [debug, setDebug] = useState<string>('Prêt à démarrer');
@@ -87,8 +87,8 @@ export default function InteractiveAvatar() {
       avatar.current.on(StreamingEvents.USER_START, () => setIsUserTalking(true));
       avatar.current.on(StreamingEvents.USER_STOP, () => setIsUserTalking(false));
 
-      // 4. Start Avatar Session
-      setDebug('Démarrage de l\'avatar...');
+      // 4. Start Oracle Session
+      setDebug('Démarrage de l\'Oracle...');
       await avatar.current.createStartAvatar({
         quality: AvatarQuality.Medium,
         avatarName: AVATAR_ID,

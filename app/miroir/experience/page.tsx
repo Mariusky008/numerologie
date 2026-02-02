@@ -3,8 +3,8 @@ import ExperiencePsyMirror from '@/components/experience/ExperiencePsyMirror';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Expérience | Miroir Psychologique',
-  description: 'Commencez votre analyse comportementale et découvrez votre reflet psychologique.',
+  title: 'Le Crash-Test | Miroir Psychologique',
+  description: 'Commence ton Crash-Test et compare ton potentiel à tes choix réels.',
 };
 
 export default function ExperiencePage() {

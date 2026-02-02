@@ -4,9 +4,9 @@ if (!HEYGEN_API_KEY) {
   console.warn("HEYGEN_API_KEY is missing from environment variables.");
 }
 
-// Configuration par défaut (Avatar et Voix)
+// Configuration par défaut (Oracle et Voix)
 // Ces IDs doivent être récupérés depuis votre compte HeyGen ou via l'API List Avatars
-// ID Avatar par défaut (Femme élégante, ex: "Angela_in_Black_Skirt_Standing_20220926")
+// ID Oracle par défaut (Femme élégante, ex: "Angela_in_Black_Skirt_Standing_20220926")
 const DEFAULT_AVATAR_ID = "Angela_in_Black_Skirt_Standing_20220926"; 
 // ID Voix par défaut (Femme, ex: "fr-FR-DeniseNeural")
 const DEFAULT_VOICE_ID = "13500366a7074360aa62939d3752670a"; 

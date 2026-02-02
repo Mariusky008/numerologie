@@ -69,7 +69,7 @@ Une nouvelle page de démo (`/demo-reveal`) a été créée pour maximiser la co
 ### Concept "Gamifié"
 Au lieu d'un simple tableau de résultats, le client vit une expérience progressive :
 1.  **L'Archétype :** Une carte "Révélée" qui flatte son ego (ex: "Le Sage", "Le Pionnier") avec une description valorisante.
-2.  **Le Paywall Vidéo :** Une vidéo d'introduction de l'Avatar se lance automatiquement (chargement instantané) mais se coupe au bout de 8 secondes avec un message de suspense ("J'ai découvert un blocage...").
+2.  **Le Paywall Vidéo :** Une vidéo d'introduction de l'Oracle se lance automatiquement (chargement instantané) mais se coupe au bout de 8 secondes avec un message de suspense ("J'ai découvert un blocage...").
 3.  **Les Cartes Verrouillées :** Deux autres cartes ("Ton Blocage Inconscient", "Ta Destinée 2026") sont floutées pour créer le désir.
 4.  **Diagnostic Vital :** Une liste de 3 points de douleur ("Tu te sens incompris ?") générés dynamiquement pour que le client se sente "vu".
 

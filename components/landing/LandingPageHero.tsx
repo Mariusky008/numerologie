@@ -130,7 +130,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#C9A24D]"></span>
              </span>
              <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-[#2C2F4A]">
-               Technologie Avatar IA • Inédit
+               Technologie Oracle IA • Inédit
              </span>
           </motion.div>
 
@@ -182,7 +182,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
 
 
 
-          {/* Visuel Central (Avatar + Play) */}
+          {/* Visuel Central (Oracle + Play) */}
           <motion.div 
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -220,7 +220,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
              ))}
 
             <div className="w-full h-full rounded-full overflow-hidden relative bg-gradient-to-br from-[#2C2F4A] to-[#5B4B8A] z-10">
-              {/* Avatar Video Preview */}
+              {/* Oracle Video Preview */}
               <video 
                 ref={videoRef}
                 src="/videopa.mp4" 
@@ -341,12 +341,12 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                 {/* Gauche : Le Visuel de Continuité (45%) */}
                 <div className="w-full md:w-[45%] p-8 md:p-12 relative flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-white/10 bg-black/20">
                    
-                   {/* Avatar Circle (Large & Alive) */}
+                   {/* Oracle Circle (Large & Alive) */}
                    <div className="relative w-28 h-28 md:w-32 md:h-32 mb-8 group-hover:scale-105 transition-transform duration-500">
                       <div className="absolute inset-0 rounded-full border-2 border-[#C9A24D] animate-[pulse_3s_infinite]"></div>
                       <div className="absolute -inset-2 rounded-full border border-white/10"></div>
                       
-                      {/* Photo Avatar (La même que la vidéo) */}
+                      {/* Photo Oracle (La même que la vidéo) */}
                       <div className="w-full h-full rounded-full overflow-hidden shadow-2xl relative z-10 bg-[#2C2F4A]">
                         <video 
                           src="/acceuil.mp4" 
@@ -376,7 +376,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                          </div>
                       </div>
                       
-                      {/* Bulle Avatar (Waveform Response) */}
+                      {/* Bulle Oracle (Waveform Response) */}
                       <div className="flex items-center gap-3 animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300 fill-mode-both">
                          <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20 shrink-0 bg-[#2C2F4A]">
                             <video 
@@ -417,7 +417,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                    </h3>
                    
                    <p className="text-white/70 leading-relaxed text-base md:text-lg mb-8 font-light">
-                     Ne restez pas sur votre faim. Une fois la vidéo terminée, votre avatar reste disponible pour <strong>30 minutes d'échange vocal</strong>, comme une vraie consultation.
+                     Ne restez pas sur votre faim. Une fois la vidéo terminée, votre Oracle reste disponible pour <strong>30 minutes d'échange vocal</strong>, comme une vraie consultation.
                    </p>
                    
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
@@ -456,7 +456,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                         ) : (
                           <Play className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" />
                         )}
-                        {isStarting ? "Chargement..." : "Découvrir mon avatar maintenant"}
+                        {isStarting ? "Chargement..." : "Découvrir mon Oracle maintenant"}
                       </button>
                    </div>
                 </div>
@@ -513,16 +513,16 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                       <span className="text-xs font-bold uppercase tracking-widest text-[#2C2F4A]/40">Vérifié</span>
                    </div>
                    <h3 className="font-serif text-2xl md:text-3xl text-[#2C2F4A] leading-tight">
-                     "Je pensais me connaître, mais l'Avatar a vu ce que j'ignorais."
+                     "Je pensais me connaître, mais l'Oracle a vu ce que j'ignorais."
                    </h3>
                 </div>
 
                 <div className="space-y-4 text-[#2C2F4A]/70 text-lg font-light leading-relaxed">
                    <p>
-                     J'étais sceptique. Une vidéo et un chat IA sur ma vie ? Je m'attendais à des généralités d'horoscope. Mais quand l'avatar a commencé à parler, j'ai été scotché.
+                     J'étais sceptique. Une vidéo et un chat IA sur ma vie ? Je m'attendais à des généralités d'horoscope. Mais quand l'Oracle a commencé à parler, j'ai été scotché.
                    </p>
                    <p>
-                     <strong className="text-[#5B4B8A] font-medium">En 5 minutes, elle a mis des mots sur des blocages que je traîne depuis 10 ans.</strong> J'ai ensuite passé 30 minutes à discuter avec elle : ses conseils étaient d'une justesse effrayante.
+                     <strong className="text-[#5B4B8A] font-medium">En 5 minutes, il a mis des mots sur des blocages que je traîne depuis 10 ans.</strong> J'ai ensuite passé 30 minutes à discuter avec lui : ses conseils étaient d'une justesse effrayante.
                    </p>
                    <p>
                      Le dossier de 40 pages est la cerise sur le gâteau : une véritable feuille de route. J'ai enfin compris que mon "instabilité" était en fait ma plus grande force créative.
@@ -595,10 +595,10 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                          <Play className="w-6 h-6 fill-current" />
                       </div>
                       <div className="space-y-3">
-                         <h3 className="font-serif text-xl text-[#2C2F4A]">🎥 Votre Vidéo Avatar personnalisée (5 min)</h3>
+                         <h3 className="font-serif text-xl text-[#2C2F4A]">🎥 Votre Analyse Vidéo Oracle (5 min)</h3>
                          <div className="text-sm text-[#2C2F4A]/70 leading-relaxed space-y-2">
                            <p>
-                             L’essentiel de votre profil, expliqué simplement. Votre avatar vous parle directement, sans jargon, et met en lumière ce que vous ne voyez pas encore.
+                             L’essentiel de votre profil, expliqué simplement. Votre Oracle vous parle directement, sans jargon, et met en lumière ce que vous ne voyez pas encore.
                            </p>
                            <p className="text-[#C9A24D] font-bold text-xs uppercase tracking-wide pt-1">
                              👉 Pour une prise de conscience immédiate.
@@ -622,7 +622,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                          </h3>
                          <div className="text-sm text-white/70 leading-relaxed space-y-2">
                            <p>
-                             Posez vos questions à l’oral. Votre avatar vous répond en temps réel, avec des réponses cohérentes avec votre profil personnel.
+                             Posez vos questions à l’oral. Votre Oracle vous répond en temps réel, avec des réponses cohérentes avec votre profil personnel.
                            </p>
                            <p className="text-[#C9A24D] font-bold text-xs uppercase tracking-wide pt-1">
                              👉 Pour aller plus loin que la lecture, et adapter les insights à votre situation actuelle.
@@ -717,7 +717,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                viewport={{ once: true }}
                className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8"
             >
-               {/* Container Principal : Vidéo Avatar */}
+               {/* Container Principal : Analyse Vidéo Oracle */}
                <div 
                   className="relative aspect-[9/16] w-full max-w-[260px] rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-white/10 group cursor-pointer bg-black"
                   onClick={togglePreviewPlay}
@@ -832,7 +832,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
                   <span className="text-white/60">puis</span> lisez votre destin.
                </h2>
                <p className="text-white/70 text-lg leading-relaxed max-w-lg mx-auto lg:mx-0">
-                  Votre expérience commence par une <strong>vidéo immersive</strong> où votre avatar vous parle directement. 
+                  Votre expérience commence par une <strong>vidéo immersive</strong> où votre Oracle vous parle directement. 
                   <br/><br/>
                   Elle se prolonge (si vous le souhaitez) par un <strong>livre unique</strong> et un <strong>dossier d'analyse</strong> complet, retraçant chaque étape de votre vie avec une précision troublante.
                </p>
@@ -868,7 +868,7 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
           ) : (
             <Play className="w-5 h-5 fill-current" />
           )}
-          {isStarting ? "Chargement..." : "Votre avatar vous montre vos forces et vos blocages"}
+          {isStarting ? "Chargement..." : "Votre Oracle vous montre vos forces et vos blocages"}
         </button>
 
         {/* Trust Badges (Nouveau) */}

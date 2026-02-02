@@ -82,7 +82,7 @@ export default function VoiceMirrorPreview() {
             ))}
           </div>
 
-          {/* Avatar Overlay */}
+          {/* Oracle Overlay */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <motion.div 
               animate={isPlaying ? { scale: [1, 1.05, 1], opacity: [0.05, 0.1, 0.05] } : {}}

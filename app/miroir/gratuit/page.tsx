@@ -21,7 +21,7 @@ import {
   Brain
 } from 'lucide-react';
 import { calculateLifePathNumber, getLifePathData, getSunSign, getMoonSign, getAscendant, getChartMaster } from '@/lib/psy-mirror/cosmic';
-import PersonalizedAnalysisAvatar from '@/components/experience/PersonalizedAnalysisAvatar';
+import PersonalizedAnalysisOracle from '@/components/experience/PersonalizedAnalysisOracle';
 
 export default function GratuitPage() {
   const router = useRouter();
@@ -383,8 +383,8 @@ export default function GratuitPage() {
                     </div>
                   </div>
                   
-                  {/* The Personalized Analysis Avatar Component */}
-                  <PersonalizedAnalysisAvatar firstName={data.firstName} />
+                  {/* The Personalized Analysis Oracle Component */}
+                  <PersonalizedAnalysisOracle firstName={data.firstName} />
                 </div>
               </div>
 

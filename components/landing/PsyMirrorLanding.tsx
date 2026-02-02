@@ -356,7 +356,7 @@ export default function PsyMirrorLanding() {
               "Écart Psychologique Central (Score exact)",
               "Diagnostic de l'Angle Mort Invisible",
               "Analyse des 6 Dimensions Comportementales",
-              "Script de Coaching Narratif (6 min)",
+              "Analyse Vidéo Oracle (5 min)",
               "Plan d'Ajustement Prioritaire sur 7 Jours",
               "Accès illimité à l'Oracle du Miroir (IA)"
             ].map((item, i) => (

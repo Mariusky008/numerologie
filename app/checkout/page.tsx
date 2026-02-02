@@ -158,7 +158,7 @@ function CheckoutContent() {
                   <h3 className="text-2xl font-serif font-bold text-[#2C2F4A]">Email Manquant</h3>
                   
                   <p className="text-[#2C2F4A]/70 leading-relaxed">
-                    Pour vous envoyer votre <strong>Dossier Numérologique</strong> et votre accès à la <strong>Vidéo Avatar</strong>, nous avons besoin d'une adresse email valide.
+                    Pour vous envoyer votre <strong>Dossier Numérologique</strong> et votre accès à la <strong>Analyse Vidéo Oracle</strong>, nous avons besoin d'une adresse email valide.
                   </p>
                   
                   <button 
@@ -237,8 +237,8 @@ function CheckoutContent() {
                      <div className="w-12 h-12 bg-[#2C2F4A] rounded-full flex items-center justify-center mb-4">
                         <Play className="w-6 h-6 text-[#C9A24D]" />
                      </div>
-                     <h3 className="font-bold text-[#2C2F4A] mb-2">Vidéo Avatar</h3>
-                     <p className="text-sm text-[#2C2F4A]/70">5 minutes d'analyse personnalisée par votre guide virtuel.</p>
+                     <h3 className="font-bold text-[#2C2F4A] mb-2">Analyse Vidéo Oracle</h3>
+                     <p className="text-sm text-[#2C2F4A]/70">5 minutes d'analyse personnalisée par votre Oracle virtuel.</p>
                   </div>
 
                   {/* Item 2: Report */}
@@ -264,7 +264,7 @@ function CheckoutContent() {
                <div className="bg-[#2C2F4A]/5 p-6 rounded-xl">
                   <h4 className="font-serif font-bold text-[#2C2F4A] mb-4">Inclus dans votre commande :</h4>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <FeatureItem label="Vidéo HD Personnalisée (5 min)" highlight />
+                    <FeatureItem label="Analyse Vidéo Oracle HD (5 min)" highlight />
                     <FeatureItem label="Rapport Numérologique Complet (40 pages)" highlight />
                     <FeatureItem label="Chatbot Coach (30 min) - OFFERT" highlight />
                     <FeatureItem label="Accès Immédiat par Email" />

@@ -17,11 +17,11 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "Numérologie & Avatar : Votre Lecture de Vie en 5 Minutes",
-  description: "Découvrez votre avatar personnel et votre lecture de vie en 5 minutes. Une analyse numérologique unique basée sur votre date de naissance. 100% personnalisé.",
+  title: "Le Crash-Test de ton Destin. Quand ton potentiel de naissance rencontre la psychologie",
+  description: "Fais le Crash-Test de ton Destin. Compare ton potentiel de naissance aux décisions et aux choix que tu fais.",
   openGraph: {
-    title: "Numérologie & Avatar : Votre Lecture de Vie en 5 Minutes",
-    description: "Découvrez votre avatar personnel et votre lecture de vie en 5 minutes. Une analyse numérologique unique basée sur votre date de naissance.",
+    title: "Le Crash-Test de ton Destin. Quand ton potentiel de naissance rencontre la psychologie",
+    description: "Fais le Crash-Test de ton Destin. Compare ton potentiel de naissance aux décisions et aux choix que tu fais.",
     siteName: "Roman de Vie",
     locale: "fr_FR",
     type: "website",
@@ -30,14 +30,14 @@ export const metadata: Metadata = {
         url: "/og-image.jpg", // Image à ajouter dans le dossier public
         width: 1200,
         height: 630,
-        alt: "Aperçu de l'expérience Avatar Numérologique",
+        alt: "Le Crash-Test de ton Destin",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Numérologie & Avatar : Votre Lecture de Vie en 5 Minutes",
-    description: "Découvrez votre avatar personnel et votre lecture de vie en 5 minutes.",
+    title: "Le Crash-Test de ton Destin. Quand ton potentiel de naissance rencontre la psychologie",
+    description: "Fais le Crash-Test de ton Destin. Compare ton potentiel de naissance aux décisions et aux choix que tu fais.",
     images: ["/og-image.jpg"],
   },
 };

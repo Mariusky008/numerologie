@@ -4,12 +4,12 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Square, Volume2, ShieldCheck, Zap } from 'lucide-react';
 
-interface PersonalizedAnalysisAvatarProps {
+interface PersonalizedAnalysisOracleProps {
   firstName: string;
   results?: any;
 }
 
-export default function PersonalizedAnalysisAvatar({ firstName, results }: PersonalizedAnalysisAvatarProps) {
+export default function PersonalizedAnalysisOracle({ firstName, results }: PersonalizedAnalysisOracleProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [phase, setPhase] = useState(0); // 0: Idle, 1: Hook, 2: Revelation, 3: Cut/CTA
   const [isFinished, setIsFinished] = useState(false);
@@ -115,9 +115,9 @@ export default function PersonalizedAnalysisAvatar({ firstName, results }: Perso
           </div>
         </div>
 
-        {/* Central Avatar & Visualization */}
+        {/* Central Oracle & Visualization */}
         <div className="relative h-64 flex flex-col items-center justify-center">
-          {/* SOBER AVATAR */}
+          {/* SOBER ORACLE */}
           <div className="relative w-32 h-32 mb-8">
             {/* Outer Glow */}
             <motion.div 
@@ -132,7 +132,7 @@ export default function PersonalizedAnalysisAvatar({ firstName, results }: Perso
             {/* The Silhouette */}
             <svg viewBox="0 0 100 100" className="w-full h-full relative z-10 opacity-80">
               <defs>
-                <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <linearGradient id="oracleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
                   <stop offset="0%" stopColor="#C9A24D" />
                   <stop offset="100%" stopColor="#8B6E31" />
                 </linearGradient>
@@ -215,7 +215,7 @@ export default function PersonalizedAnalysisAvatar({ firstName, results }: Perso
                 className="space-y-6"
               >
                 <p className="text-white/60 text-xl font-light italic">
-                  Écoutez la synthèse de votre diagnostic personnel
+                  Écoutez la synthèse de votre diagnostic personnel par l'Oracle
                 </p>
                 <div className="flex items-center justify-center gap-3">
                   <div className="h-[1px] w-8 bg-white/10" />

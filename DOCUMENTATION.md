@@ -127,7 +127,7 @@ Simplification radicale de l'offre commerciale pour maximiser la conversion.
 *   **Produit Unique** : "Le Pack Révélation".
 *   **Prix** : **49,00 €** (au lieu de 49€ + options).
 *   **Contenu du Pack** :
-    1.  **Vidéo Avatar** (5 min) : Analyse émotionnelle générée par HeyGen.
+    1.  **Analyse Vidéo Oracle** (5 min) : Analyse émotionnelle générée par HeyGen.
     2.  **Dossier PDF** (40 pages) : Rapport technique complet généré par l'algorithme.
     3.  **Coach IA** (30 min) : Accès offert au chatbot expert pour poser des questions.
 *   **Modifications Checkout** :
@@ -155,7 +155,7 @@ Le processus de livraison a été optimisé pour gérer le délai de génératio
     *   *Déclencheur* : Action manuelle Admin via API `/api/send-video`.
     *   *Action* : Envoi de l'email `EmailDeliverables`.
     *   *Contenu Unique* : Un seul email regroupant les 3 piliers de l'offre :
-        *   ▶️ Lien vers la **Vidéo Avatar**.
+        *   ▶️ Lien vers l'**Analyse Vidéo Oracle**.
         *   📄 Lien de téléchargement du **Rapport PDF**.
         *   🎙️ Accès direct à **L'Oracle Vocal** (Chatbot).
 

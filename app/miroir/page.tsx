@@ -3,8 +3,8 @@ import PsyMirrorLanding from '@/components/landing/PsyMirrorLanding';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Miroir Psychologique | Compréhension Comportementale',
-  description: 'Découvrez l’écart entre ce que vous pensez être et ce que votre comportement révèle vraiment.',
+  title: 'Le Crash-Test de ton Destin | Miroir Psychologique',
+  description: 'Compare ton potentiel de naissance aux décisions et aux choix que tu fais réellement.',
 };
 
 export default function MiroirPage() {

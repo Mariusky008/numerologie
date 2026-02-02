@@ -133,7 +133,7 @@ export default function Home() {
         <div className="max-w-xl mx-auto bg-white/80 backdrop-blur-xl border border-[#1A1C2E]/5 rounded-full py-3 px-6 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.05)] flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Target className="w-5 h-5 text-[#C9A24D]" />
-            <span className="text-[10px] font-black uppercase tracking-widest">Le Crash-Test du Destin</span>
+            <span className="text-[10px] font-black uppercase tracking-widest">Le Crash-Test de tes Décisions</span>
           </div>
           <Link 
             href="/miroir/experience"
@@ -173,7 +173,7 @@ export default function Home() {
             <h1 className="text-6xl md:text-9xl font-serif font-bold tracking-tight leading-[0.95] text-[#1A1C2E]">
               Le Crash-Test <br />
               <span className="text-[#C9A24D] italic relative">
-                de ton Destin
+                de tes Décisions
                 <motion.span 
                   initial={{ width: 0 }}
                   animate={{ width: '100%' }}
@@ -215,7 +215,7 @@ export default function Home() {
             </p>
             <div className="p-8 bg-white/50 backdrop-blur-md border border-[#1A1C2E]/5 rounded-[40px] shadow-2xl shadow-black/5 space-y-4">
               <p className="text-lg font-medium leading-relaxed">
-                Découvre le Crash-Test de ton Destin. <br />
+                Découvre le Crash-Test de tes Décisions. <br />
                 Compare ton potentiel de naissance <br />
                 aux décisions et aux choix que tu fais.
               </p>
@@ -230,6 +230,28 @@ export default function Home() {
                 </p>
               </div>
             </div>
+
+            {/* Bloc de reconnaissance */}
+            <motion.div 
+              {...fadeIn}
+              className="max-w-xl mx-auto p-8 bg-[#C9A24D]/5 border border-[#C9A24D]/20 rounded-[40px] space-y-6 text-left shadow-sm"
+            >
+              <h3 className="text-xl md:text-2xl font-serif font-bold text-[#1A1C2E]">Ce test est pour toi si…</h3>
+              <ul className="space-y-3">
+                {[
+                  "tu hésites souvent trop longtemps avant de décider",
+                  "tu décides vite sous pression… puis tu regrettes",
+                  "tu as l’impression de répéter les mêmes erreurs",
+                  "tu te sens fatigué mentalement sans raison claire",
+                  "tu sais ce que tu “devrais” faire, mais tu n’y arrives pas"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-base md:text-lg text-[#1A1C2E]/80 leading-snug">
+                    <span className="text-[#C9A24D] shrink-0">👉</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -261,6 +283,9 @@ export default function Home() {
                 {isNavigating ? 'Démarrage...' : 'Commencer le Crash-Test (1 min)'}
                 <Zap className="w-4 h-4" />
               </Link>
+              <p className="text-[#C9A24D] font-bold text-xs uppercase tracking-[0.2em] animate-pulse">
+                Tu obtiens un premier aperçu dès la 1ʳᵉ minute.
+              </p>
             </div>
           </motion.div>
         </div>
@@ -855,7 +880,7 @@ export default function Home() {
           <Activity className="w-6 h-6" />
         </div>
         <div className="text-[11px] font-black uppercase tracking-[0.5em] text-[#1A1C2E]/20">
-          © {new Date().getFullYear()} LE CRASH-TEST DU DESTIN · QUAND TON POTENTIEL RENCONTRE LA PSYCHOLOGIE
+          © {new Date().getFullYear()} LE CRASH-TEST DE TES DÉCISIONS · QUAND TON POTENTIEL RENCONTRE LA PSYCHOLOGIE
         </div>
       </footer>
 

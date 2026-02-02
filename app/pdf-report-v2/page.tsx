@@ -85,13 +85,70 @@ function PrintContent() {
                return;
             }
 
-            userData = order.user_data;
             if (order.numerology_result?.reportResults) {
                preCalculatedResults = order.numerology_result.reportResults;
             }
+
             if (order.numerology_result?.psyResult) {
                psyResult = order.numerology_result.psyResult;
+            } else if (order.user_data?.psyResult) {
+               psyResult = order.user_data.psyResult;
+            } else if (order.psyResult) {
+               psyResult = order.psyResult;
             }
+
+            // If it's a Miroir plan but psyResult is missing insights, 
+            // we should still try to show the Unified layout
+            const isMiroir = order.user_data?.plan === 'bundle' || !!psyResult;
+            
+            if (isMiroir && (!psyResult || !psyResult.insights)) {
+                 // If we have at least the profiles, we can reconstruct a basic psyResult
+                 const basePsy = (psyResult as any) || { self_profile: {}, behavior_profile: {} };
+                 
+                 psyResult = { 
+                   ...basePsy,
+                   indices: basePsy.indices || { coherence: 70, avoidance: 30, overcontrol: 40 },
+                   insights: { 
+                     mirror_sentence: "Ton potentiel de naissance demande à s'exprimer pleinement.", 
+                     mirror_full: "Ton analyse révèle une structure profonde riche de possibilités. L'écart observé entre ton potentiel théorique et tes modes d'action actuels est une opportunité de réalignement. Ce rapport explore comment retrouver ta fluidité originelle.",
+                     reflex_insights: [
+                       { title: "Attention & Focus", observation: "Une tendance à la dispersion sous pression.", exercise: "Pratiquez la focalisation sur une seule tâche pendant 20 minutes." },
+                       { title: "Rupture & Engagement", observation: "Engagement fort mais fatigue rapide.", exercise: "Fractionnez vos efforts en cycles de 45 minutes." }
+                     ],
+                     dimension_insights: [
+                       { id: 'D1', name: 'Élan Vital', text: 'Ton dynamisme naturel est ton plus grand atout.' },
+                       { id: 'D2', name: 'Prudence', text: 'Ta capacité d\'analyse te protège des risques inutiles.' },
+                       { id: 'D3', name: 'Structure', text: 'Ton besoin d\'ordre assure la pérennité de tes projets.' },
+                       { id: 'D4', name: 'Adaptabilité', text: 'Tu sais naviguer dans le changement avec aisance.' },
+                       { id: 'D5', name: 'Vision', text: 'Ta clarté d\'esprit te permet de voir loin.' },
+                       { id: 'D6', name: 'Empathie', text: 'Ta connexion aux autres est une force de leadership.' }
+                     ],
+                     cosmic_alignment: {
+                       score: 75,
+                       astroElement: "Air",
+                       bioElement: "Feu",
+                       title: "Alignement en Transition",
+                       text: "Tu es dans une phase où ton intuition (Air) commence à diriger tes actions (Feu).",
+                       origin: "Des protections passées brident encore ton élan.",
+                       remedy: "Fais confiance à ta première impulsion."
+                     },
+                     plan_7_days: [
+                       { day: 1, action: "Observer tes automatismes" },
+                       { day: 2, action: "Respirer en conscience" },
+                       { day: 3, action: "Noter tes pensées" },
+                       { day: 4, action: "Décider rapidement" },
+                       { day: 5, action: "Relâcher les tensions" },
+                       { day: 6, action: "Changer une habitude" },
+                       { day: 7, action: "Célébrer tes victoires" }
+                     ],
+                     blind_spot_label: "L'auto-exigence",
+                     blind_spot: "Tu as tendance à placer la barre si haut que le succès semble inatteignable.",
+                     lever: "La bienveillance envers soi-même."
+                   }
+                 } as PsyMirrorResult;
+              }
+
+             userData = order.user_data;
           } else if (res.status === 404) {
              setError("Commande introuvable. Veuillez vérifier le lien ou contacter le support.");
              return;

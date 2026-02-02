@@ -33,6 +33,15 @@ export const ROTATING_FEEDBACKS = [
   "Ce choix apportera un contraste utile pour l’analyse"
 ];
 
+export const MODULE_B_FEEDBACKS = [
+  "Scénario terminé : ton style de décision sous pression commence à se dessiner.",
+  "Indice de réaction enregistré : nous voyons comment tu gères l'imprévu.",
+  "Analyse en cours : ce scénario révèle un automatisme clé dans ton fonctionnement.",
+  "Donnée précieuse : la cohérence entre ton intention et ton action est en cours de calcul.",
+  "Point de contraste noté : ce choix sera mis en miroir avec ton potentiel de naissance.",
+  "Lecture comportementale : ton mode de survie opérationnel s'affine."
+];
+
 export const SYNTHESIS = {
   MODULE_A: {
     title: "Lecture intermédiaire",

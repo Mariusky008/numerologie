@@ -19,7 +19,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
 import { AUTO_PERCEPTION_ITEMS, BEHAVIOR_SCENARIOS } from '@/lib/psy-mirror/data';
-import { ROTATING_FEEDBACKS, SYNTHESIS } from '@/lib/psy-mirror/feedbacks';
+import { ROTATING_FEEDBACKS, MODULE_B_FEEDBACKS, SYNTHESIS } from '@/lib/psy-mirror/feedbacks';
 import type { Option } from '@/lib/psy-mirror/types';
 
 const AttentionTest = dynamic(() => import('./reflex-tests/AttentionTest'), { ssr: false });
@@ -62,7 +62,8 @@ export default function ExperiencePsyMirror() {
     }
     if (step === 'moduleB') {
       const currentStepCount = currentModuleIndex * 4 + currentScenarioStep;
-      const rem = (12 - currentStepCount) * 25 + 8 * 60;
+      const totalModuleBSteps = BEHAVIOR_SCENARIOS.length * 4;
+      const rem = (totalModuleBSteps - currentStepCount) * 25 + 8 * 60;
       return Math.ceil(rem / 60);
     }
     if (step === 'moduleC') {
@@ -99,9 +100,10 @@ export default function ExperiencePsyMirror() {
     } else if (type === 'moduleB') {
       // 1 feedback par scénario (toutes les 4 étapes)
       if (count % 4 === 0 && count < BEHAVIOR_SCENARIOS.length * 4) {
+        const feedbackIndex = (count / 4 - 1) % MODULE_B_FEEDBACKS.length;
         setIntermediateFeedback({
           title: "Scénario terminé",
-          message: "Les choix effectués ici apportent des informations clés sur ta manière de réagir sous pression.",
+          message: MODULE_B_FEEDBACKS[feedbackIndex],
           type: 'insight',
           autoClose: true
         });
@@ -743,12 +745,12 @@ export default function ExperiencePsyMirror() {
                   <span className="text-[#1A1C2E]/40">Partie 1: Auto-perception</span>
                   <span className="text-[#C9A24D]">Encore ~{getRemainingTime()} minutes</span>
                 </div>
-                <span className="text-[#1A1C2E]/40">{currentModuleIndex + 1} / {AUTO_PERCEPTION_ITEMS.length}</span>
+                <span className="text-[#1A1C2E]/40">{moduleAAnswers.length + 1} / {AUTO_PERCEPTION_ITEMS.length}</span>
               </div>
               <div className="h-1.5 w-full bg-[#1A1C2E]/5 rounded-full overflow-hidden">
                 <motion.div 
                   initial={{ width: 0 }}
-                  animate={{ width: `${((currentModuleIndex + 1) / AUTO_PERCEPTION_ITEMS.length) * 100}%` }}
+                  animate={{ width: `${((moduleAAnswers.length + 1) / AUTO_PERCEPTION_ITEMS.length) * 100}%` }}
                   className="h-full bg-[#1A1C2E]"
                 />
               </div>
@@ -791,12 +793,12 @@ export default function ExperiencePsyMirror() {
                   <span className="text-[#1A1C2E]/40">Partie 2: Scénarios Réels</span>
                   <span className="text-[#C9A24D]">Encore ~{getRemainingTime()} minutes</span>
                 </div>
-                <span className="text-[#1A1C2E]/40">Scénario {currentModuleIndex + 1} / {BEHAVIOR_SCENARIOS.length}</span>
+                <span className="text-[#1A1C2E]/40">Scénario {Math.min(currentModuleIndex + 1, BEHAVIOR_SCENARIOS.length)} / {BEHAVIOR_SCENARIOS.length}</span>
               </div>
               <div className="h-1.5 w-full bg-[#1A1C2E]/5 rounded-full overflow-hidden">
                 <motion.div 
                   initial={{ width: 0 }}
-                  animate={{ width: `${((currentModuleIndex * 4 + currentScenarioStep + 1) / (BEHAVIOR_SCENARIOS.length * 4)) * 100}%` }}
+                  animate={{ width: `${((moduleBAnswers.length + 1) / (BEHAVIOR_SCENARIOS.length * 4)) * 100}%` }}
                   className="h-full bg-[#1A1C2E]"
                 />
               </div>

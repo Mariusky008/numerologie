@@ -143,6 +143,26 @@ export default function LandingPageHero({ onStart }: LandingPageProps) {
             Comprends enfin pourquoi tu répètes les mêmes choix — et comment en sortir.
           </motion.h1>
 
+          {/* Bloc Ultra Concret */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8 w-full max-w-4xl"
+          >
+            {[
+              { icon: "⏱️", text: "15 minutes" },
+              { icon: "🧠", text: "Questions + tests de réactions" },
+              { icon: "📄", text: "Analyse personnalisée" },
+              { icon: "🔒", text: "Sans inscription obligatoire" }
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-2 px-3 py-1.5 bg-white/50 backdrop-blur-sm border border-[#C9A24D]/20 rounded-xl shadow-sm">
+                <span className="text-base md:text-lg">{item.icon}</span>
+                <span className="text-[10px] md:text-xs font-bold text-[#2C2F4A]/70 uppercase tracking-tight">{item.text}</span>
+              </div>
+            ))}
+          </motion.div>
+
           {/* Sous-titre / Description */}
           <motion.div 
              initial={{ opacity: 0 }}

@@ -215,15 +215,20 @@ export default function Home() {
             </p>
             <div className="p-8 bg-white/50 backdrop-blur-md border border-[#1A1C2E]/5 rounded-[40px] shadow-2xl shadow-black/5 space-y-4">
               <p className="text-lg font-medium leading-relaxed">
-                Fais le Crash-Test de ton Destin. <br />
+                Découvre le Crash-Test de ton Destin. <br />
                 Compare ton potentiel de naissance <br />
                 aux décisions et aux choix que tu fais.
               </p>
               <div className="h-px w-12 bg-[#C9A24D]/30 mx-auto"></div>
-              <p className="text-[#C9A24D] font-bold text-2xl">
-                👉 Identifie enfin les schémas invisibles <br />
-                qui bloquent tes décisions et ton parcours.
-              </p>
+              <div className="space-y-2">
+                <p className="text-[#C9A24D] font-bold text-2xl">
+                  👉 Identifie enfin les schémas invisibles <br />
+                  qui bloquent tes décisions et ton parcours.
+                </p>
+                <p className="text-[10px] md:text-xs font-bold text-[#1A1C2E]/40 uppercase tracking-widest italic">
+                  (ex. hésiter trop longtemps, décider sous pression, répéter les mêmes erreurs)
+                </p>
+              </div>
             </div>
           </motion.div>
 
@@ -234,14 +239,19 @@ export default function Home() {
             className="pt-6 flex flex-col items-center gap-6"
           >
             <div className="flex flex-col items-center gap-4">
-              <button 
-                onClick={scrollToExplanation}
-                className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold text-xl hover:bg-[#C9A24D] transition-all shadow-[0_40px_80px_-20px_rgba(26,28,46,0.3)] hover:shadow-[#C9A24D]/40 active:scale-95 overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                <span className="relative z-10">👉 Découvrir comment fonctionne le Crash-Test</span>
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
-              </button>
+              <div className="flex flex-col items-center gap-2">
+                <button 
+                  onClick={scrollToExplanation}
+                  className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold text-xl hover:bg-[#C9A24D] transition-all shadow-[0_40px_80px_-20px_rgba(26,28,46,0.3)] hover:shadow-[#C9A24D]/40 active:scale-95 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  <span className="relative z-10">👉 Découvrir comment fonctionne le Crash-Test</span>
+                  <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
+                </button>
+                <p className="text-[10px] font-bold text-[#1A1C2E]/40 uppercase tracking-widest">
+                  Lecture : 30 secondes
+                </p>
+              </div>
 
               <Link 
                 href="/miroir/experience"

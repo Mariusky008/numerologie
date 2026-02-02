@@ -79,8 +79,8 @@ function PrintContent() {
           if (res.ok) {
             const order = await res.json();
             
-            // SECURITY CHECK: Verify payment status
-            if (order.status === 'pending') {
+            // SECURITY CHECK: Verify payment status (Allow admin bypass)
+            if (order.status === 'pending' && searchParams.get('admin') !== 'oracle2024') {
                setError("Ce rapport est en attente de paiement. Veuillez finaliser votre commande pour y accéder.");
                return;
             }

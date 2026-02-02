@@ -527,24 +527,24 @@ export default function AdminDashboard() {
                            <div className="flex items-center justify-end gap-2 text-[10px]">
                              <span className="text-stone-400 font-medium">PDF:</span>
                              <button 
-                               onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/pdf-report-v2?order_id=${req.id}`)}
+                               onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/pdf-report-v2?order_id=${req.id}&admin=oracle2024`)}
                                className="text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-2 py-1 rounded flex items-center gap-1 transition-colors"
                                title="Copier le lien PDF pour email"
                              >
                                <Copy className="w-3 h-3" /> Copier
                              </button>
-                             <a href={`/pdf-report-v2?order_id=${req.id}`} target="_blank" className="text-stone-300 hover:text-stone-500"><ExternalLink className="w-3 h-3" /></a>
+                             <a href={`/pdf-report-v2?order_id=${req.id}&admin=oracle2024`} target="_blank" className="text-stone-300 hover:text-stone-500"><ExternalLink className="w-3 h-3" /></a>
                            </div>
                            <div className="flex items-center justify-end gap-2 text-[10px]">
                              <span className="text-stone-400 font-medium">Coach:</span>
                              <button 
-                               onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/coach?id=${req.id}&name=${encodeURIComponent(req.userData.firstName)}`)}
+                               onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/coach?id=${req.id}&name=${encodeURIComponent(req.userData.firstName)}&admin=oracle2024`)}
                                className="text-purple-600 hover:text-purple-800 bg-purple-50 hover:bg-purple-100 px-2 py-1 rounded flex items-center gap-1 transition-colors"
                                title="Copier le lien Coach pour email"
                              >
                                <Copy className="w-3 h-3" /> Copier
                              </button>
-                             <a href={`/coach?id=${req.id}&name=${encodeURIComponent(req.userData.firstName)}`} target="_blank" className="text-stone-300 hover:text-stone-500"><ExternalLink className="w-3 h-3" /></a>
+                             <a href={`/coach?id=${req.id}&name=${encodeURIComponent(req.userData.firstName)}&admin=oracle2024`} target="_blank" className="text-stone-300 hover:text-stone-500"><ExternalLink className="w-3 h-3" /></a>
                            </div>
                          </div>
                        </div>
@@ -729,14 +729,14 @@ export default function AdminDashboard() {
                   
                   <div className="flex gap-3">
                     <button
-                      onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/pdf-report-v2?order_id=${req.id}`)}
+                      onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/pdf-report-v2?order_id=${req.id}&admin=oracle2024`)}
                       className="flex items-center gap-2 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors font-medium text-sm"
                     >
                       <Copy className="w-4 h-4" />
                       Lien PDF
                     </button>
                     <button
-                      onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/coach?id=${req.id}&name=${encodeURIComponent(req.userData.firstName)}`)}
+                      onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/coach?id=${req.id}&name=${encodeURIComponent(req.userData.firstName)}&admin=oracle2024`)}
                       className="flex items-center gap-2 px-4 py-3 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors font-medium text-sm"
                     >
                       <Copy className="w-4 h-4" />

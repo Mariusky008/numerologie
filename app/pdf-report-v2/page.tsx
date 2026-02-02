@@ -3,8 +3,10 @@
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState, Suspense } from 'react';
 import FullReportV3 from '@/components/report/FullReportV3';
+import UnifiedMiroirReport from '@/components/report/UnifiedMiroirReport';
 import BookCreationModal from '@/components/report/BookCreationModal';
 import { UserData, NumerologyResult } from '@/lib/types';
+import { PsyMirrorResult } from '@/lib/psy-mirror/types';
 import { 
   calculateLifePath, 
   calculateNameNumbers, 
@@ -35,7 +37,12 @@ export const dynamic = 'force-dynamic';
 
 function PrintContent() {
   const searchParams = useSearchParams();
-  const [data, setData] = useState<{userData: UserData, results: NumerologyResult, etymology?: NameData | null} | null>(null);
+  const [data, setData] = useState<{
+    userData: UserData, 
+    results: NumerologyResult, 
+    etymology?: NameData | null,
+    psyResult?: PsyMirrorResult | null
+  } | null>(null);
   const [showBookModal, setShowBookModal] = useState(false);
 
   useEffect(() => {
@@ -60,6 +67,7 @@ function PrintContent() {
     const initData = async () => {
       let userData: UserData | null = null;
       let preCalculatedResults: NumerologyResult | null = null;
+      let psyResult: PsyMirrorResult | null = null;
       
       const orderId = searchParams.get('order_id');
       const dataParam = searchParams.get('data');
@@ -72,6 +80,9 @@ function PrintContent() {
             userData = order.user_data;
             if (order.numerology_result?.reportResults) {
                preCalculatedResults = order.numerology_result.reportResults;
+            }
+            if (order.numerology_result?.psyResult) {
+               psyResult = order.numerology_result.psyResult;
             }
           }
         } catch (e) {
@@ -202,7 +213,8 @@ function PrintContent() {
           setData({
             userData,
             results,
-            etymology
+            etymology,
+            psyResult
           });
         } catch (e) {
           console.error("Invalid data", e);
@@ -223,7 +235,20 @@ function PrintContent() {
 
   return (
     <>
-      <FullReportV3 userData={data.userData} results={data.results} etymology={data.etymology} />
+      {data.psyResult ? (
+        <UnifiedMiroirReport 
+          psyResult={data.psyResult}
+          userData={data.userData}
+          numerologyResult={data.results}
+          etymology={data.etymology}
+        />
+      ) : (
+        <FullReportV3 
+          userData={data.userData} 
+          results={data.results} 
+          etymology={data.etymology} 
+        />
+      )}
       <BookCreationModal 
         isOpen={showBookModal} 
         onClose={() => setShowBookModal(false)} 

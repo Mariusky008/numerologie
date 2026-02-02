@@ -21,9 +21,27 @@ export default function COPModule({ tensionLevel, dayTheme, onOrientationChange 
     }
   }, [step, filterResponses]);
   const getPosture = () => {
-    if (tensionLevel >= 4) return { label: 'Posture d\'observation', color: 'text-blue-400', bg: 'bg-blue-400/10', icon: '🔵' };
-    if (tensionLevel >= 2) return { label: 'Posture d\'ajustement', color: 'text-yellow-400', bg: 'bg-yellow-400/10', icon: '🟡' };
-    return { label: 'Posture d\'action', color: 'text-green-400', bg: 'bg-green-400/10', icon: '🟢' };
+    if (tensionLevel >= 4) return { 
+      label: 'Posture d\'observation', 
+      color: 'text-blue-400', 
+      bg: 'bg-blue-400/10', 
+      icon: '🔵',
+      desc: 'La tension est trop forte pour décider sereinement. Ta priorité est de noter ce qui se passe sans agir. Recule d\'un pas.'
+    };
+    if (tensionLevel >= 2) return { 
+      label: 'Posture d\'ajustement', 
+      color: 'text-yellow-400', 
+      bg: 'bg-yellow-400/10', 
+      icon: '🟡',
+      desc: 'Le flux est là mais il y a des frottements. Tu peux décider, mais avec une grande vigilance sur tes automatismes habituels.'
+    };
+    return { 
+      label: 'Posture d\'action', 
+      color: 'text-green-400', 
+      bg: 'bg-green-400/10', 
+      icon: '🟢',
+      desc: 'Tout est fluide. C\'est le moment idéal pour poser des actes clairs et structurants en accord avec ton intention.'
+    };
   };
 
   const posture = getPosture();
@@ -115,14 +133,19 @@ export default function COPModule({ tensionLevel, dayTheme, onOrientationChange 
               className="space-y-6"
             >
               <p className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40">Étape 2 — Posture recommandée</p>
-              <div className={`p-8 rounded-[40px] ${posture.bg} border border-[#1A1C2E]/5 space-y-4`}>
+              <div className={`p-8 rounded-[40px] ${posture.bg} border border-[#1A1C2E]/5 space-y-6`}>
                 <div className="flex items-center gap-4">
                   <span className="text-2xl">{posture.icon}</span>
                   <h4 className={`text-2xl font-serif font-bold italic ${posture.color}`}>{posture.label}</h4>
                 </div>
-                <p className="text-sm text-[#1A1C2E]/60 leading-relaxed">
-                  Dans ton cycle actuel (Mois 1 - {dayTheme}), il est préférable d'adopter une <span className="font-bold">{posture.label}</span>.
-                </p>
+                <div className="space-y-4">
+                  <p className="text-lg text-[#1A1C2E]/60 leading-relaxed font-light italic">
+                    {posture.desc}
+                  </p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30">
+                    Contexte : {dayTheme}
+                  </p>
+                </div>
               </div>
               <button 
                 onClick={() => setStep(3)}

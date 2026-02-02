@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Hammer, Zap, Clock, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Hammer, Zap, Clock, ShieldCheck, CheckCircle2, Target, Info, ArrowRight } from 'lucide-react';
 
 interface CAAProps {
   tensionLevel: number;
@@ -11,6 +11,7 @@ interface CAAProps {
 export default function CAAModule({ tensionLevel }: CAAProps) {
   const [step, setStep] = useState(1);
   const [actionType, setActionType] = useState<string | null>(null);
+  const [userAction, setUserAction] = useState('');
   const [isCompleted, setIsCompleted] = useState(false);
 
   // Logic: Calculate mode and constraint
@@ -20,6 +21,8 @@ export default function CAAModule({ tensionLevel }: CAAProps) {
         mode: 'Action Test',
         constraint: 'Durée maximale : 20 min',
         objective: 'Observer la résistance, pas réussir.',
+        description: 'La tension est élevée. L\'objectif n\'est pas d\'aboutir, mais de voir où ça bloque dans ton système. Si ça devient trop lourd, arrête-toi avant les 20 min.',
+        howTo: 'Choisis une micro-tâche. Lance un chrono. Observe tes pensées ("Je n\'y arriverai pas", "C\'est nul") sans t\'y arrêter.',
         color: 'text-red-400',
         bg: 'bg-red-400/5'
       };
@@ -29,6 +32,8 @@ export default function CAAModule({ tensionLevel }: CAAProps) {
         mode: 'Action Progressive',
         constraint: 'Une seule tentative',
         objective: 'Ajuster le geste en temps réel.',
+        description: 'Le flux est présent mais demande de la vigilance. Fais l\'action d\'un trait, sans revenir en arrière pour corriger.',
+        howTo: 'Fais l\'action (un mail, un rangement, un appel) en restant attentif à ta respiration. Une fois fini, c\'est fini.',
         color: 'text-[#C9A24D]',
         bg: 'bg-[#C9A24D]/5'
       };
@@ -37,6 +42,8 @@ export default function CAAModule({ tensionLevel }: CAAProps) {
       mode: 'Action Préparée',
       constraint: 'Sans enjeu externe',
       objective: 'Stabiliser la nouvelle habitude.',
+      description: 'Tout est fluide. C\'est le moment idéal pour ancrer un nouveau comportement sans pression.',
+      howTo: 'Prends le temps de bien faire les choses, avec plaisir et précision. Savoure la fluidité du geste.',
       color: 'text-green-400',
       bg: 'bg-green-400/5'
     };
@@ -106,60 +113,97 @@ export default function CAAModule({ tensionLevel }: CAAProps) {
               animate={{ opacity: 1, scale: 1 }}
               className="space-y-10"
             >
-              <div className={`p-10 rounded-[50px] border border-[#1A1C2E]/5 space-y-10 ${details.bg}`}>
-                <div className="grid md:grid-cols-2 gap-10">
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30">Mode d'action recommandé</p>
-                      <div className="flex items-center gap-3">
-                        <Zap className={`w-6 h-6 ${details.color}`} />
-                        <h4 className={`text-2xl font-serif font-bold italic ${details.color}`}>{details.mode}</h4>
-                      </div>
-                      <p className="text-xs text-[#1A1C2E]/40">Ce mode est le plus cohérent avec ta structure actuelle.</p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30">Contrainte saine</p>
-                      <div className="flex items-center gap-3 text-[#1A1C2E]">
-                        <Clock className="w-5 h-5 opacity-40" />
-                        <p className="font-bold text-lg">{details.constraint}</p>
-                      </div>
+              <div className={`p-8 md:p-12 rounded-[50px] border border-[#1A1C2E]/5 space-y-12 ${details.bg}`}>
+                
+                {/* 1. Header & Context */}
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30">Mode d'action recommandé</p>
+                    <div className="flex items-center gap-3">
+                      <Zap className={`w-6 h-6 ${details.color}`} />
+                      <h4 className={`text-3xl font-serif font-bold italic ${details.color}`}>{details.mode}</h4>
                     </div>
                   </div>
+                  <p className="text-lg text-[#1A1C2E]/60 leading-relaxed font-light italic">
+                    {details.description}
+                  </p>
+                </div>
 
-                  <div className="space-y-6">
-                    <div className="p-8 bg-white/50 rounded-3xl border border-[#1A1C2E]/5 space-y-2">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30">Objectif</p>
-                      <p className="text-sm font-medium italic">« {details.objective} »</p>
-                      <p className="text-[9px] font-black uppercase tracking-widest text-[#1A1C2E]/20 mt-2">SANS OBLIGATION DE RÉSULTAT</p>
+                {/* 2. Constraints & Objective Cards */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="p-8 bg-white/60 rounded-[40px] border border-[#1A1C2E]/5 space-y-4 shadow-sm">
+                    <div className="flex items-center gap-3">
+                      <ShieldCheck className="w-5 h-5 text-[#C9A24D]" />
+                      <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40">Contrainte saine</p>
                     </div>
+                    <p className="font-bold text-xl text-[#1A1C2E]">{details.constraint}</p>
+                    <p className="text-xs text-[#1A1C2E]/40 leading-relaxed">
+                      La contrainte n'est pas une punition, mais un cadre pour éviter la dispersion.
+                    </p>
+                  </div>
+
+                  <div className="p-8 bg-white/60 rounded-[40px] border border-[#1A1C2E]/5 space-y-4 shadow-sm">
+                    <div className="flex items-center gap-3">
+                      <Target className="w-5 h-5 text-[#C9A24D]" />
+                      <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40">Objectif de posture</p>
+                    </div>
+                    <p className="font-bold text-xl text-[#1A1C2E]">« {details.objective} »</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-red-400/60 mt-2">SANS OBLIGATION DE RÉSULTAT</p>
                   </div>
                 </div>
 
-                <div className="pt-10 border-t border-[#1A1C2E]/5">
+                {/* 3. How to execute */}
+                <div className="p-8 bg-[#1A1C2E] text-white rounded-[40px] space-y-4 shadow-2xl">
+                  <div className="flex items-center gap-3">
+                    <Info className="w-5 h-5 text-[#C9A24D]" />
+                    <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Comment faire concrètement ?</p>
+                  </div>
+                  <p className="text-lg leading-relaxed font-light italic text-white/80">
+                    {details.howTo}
+                  </p>
+                </div>
+
+                {/* 4. User Input */}
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/40">Quelle action vas-tu poser maintenant ?</label>
+                    <input 
+                      type="text"
+                      value={userAction}
+                      onChange={(e) => setUserAction(e.target.value)}
+                      placeholder="Ex: Répondre à ce mail en une fois..."
+                      className="w-full p-6 bg-white border border-[#1A1C2E]/10 rounded-2xl text-lg focus:outline-none focus:border-[#C9A24D] transition-colors shadow-inner"
+                    />
+                  </div>
+
                   <button 
                     onClick={() => setIsCompleted(true)}
-                    disabled={isCompleted}
-                    className={`w-full py-8 rounded-full font-bold text-lg uppercase tracking-widest shadow-2xl transition-all flex items-center justify-center gap-4 ${isCompleted ? 'bg-green-400 text-white' : 'bg-[#1A1C2E] text-white hover:bg-[#C9A24D]'}`}
+                    disabled={isCompleted || !userAction.trim()}
+                    className={`w-full py-8 rounded-full font-bold text-xl uppercase tracking-widest shadow-2xl transition-all flex items-center justify-center gap-4 ${isCompleted ? 'bg-green-500 text-white' : userAction.trim() ? 'bg-[#1A1C2E] text-white hover:bg-[#C9A24D] active:scale-95' : 'bg-[#F8F9FA] text-[#1A1C2E]/20 cursor-not-allowed'}`}
                   >
                     {isCompleted ? (
                       <>
-                        <CheckCircle2 className="w-6 h-6" />
-                        <span>Action réalisée</span>
+                        <CheckCircle2 className="w-8 h-8" />
+                        <span>Action réalisée et validée</span>
                       </>
                     ) : (
-                      <span>Valider l'Action Ajustée</span>
+                      <>
+                        <span>Valider mon intention</span>
+                        <ArrowRight className="w-6 h-6" />
+                      </>
                     )}
                   </button>
                 </div>
               </div>
 
-              <button 
-                onClick={() => { setStep(1); setIsCompleted(false); }}
-                className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30 hover:text-[#C9A24D] transition-colors"
-              >
-                Réinitialiser l'outil CAA
-              </button>
+              <div className="flex justify-center">
+                <button 
+                  onClick={() => { setStep(1); setIsCompleted(false); setUserAction(''); }}
+                  className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30 hover:text-[#C9A24D] transition-colors border-b border-transparent hover:border-[#C9A24D]"
+                >
+                  Réinitialiser l'outil CAA
+                </button>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

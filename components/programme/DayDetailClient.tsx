@@ -91,9 +91,21 @@ export default function DayDetailClient({ day, monthNumber, weekNumber }: DayDet
         setCoachFeedback(data.message);
         localStorage.setItem(`coach_feedback_${dayId}`, data.message);
         
-        // 4. Update Supabase with both text and feedback
+        // 4. Update Chat History (Local & DB)
+        const chatMessageUser = { role: 'user' as const, content: `Ancrage du jour (${day.journalQuestion}) : "${journalText}"`, timestamp: new Date().toISOString() };
+        const chatMessageAssistant = { role: 'assistant' as const, content: data.message, timestamp: new Date().toISOString() };
+        
+        const localHistory = JSON.parse(localStorage.getItem('coach_chat_history') || '[]');
+        const updatedHistory = [...localHistory, chatMessageUser, chatMessageAssistant];
+        localStorage.setItem('coach_chat_history', JSON.stringify(updatedHistory));
+
+        // 5. Update Supabase with both text and feedback
         if (session) {
           await ProgrammeService.saveJournalEntry(session.user.id, dayId, journalText, data.message);
+          await ProgrammeService.upsertProgress({
+            user_id: session.user.id,
+            chat_history: updatedHistory
+          });
         }
       } else if (session) {
         // Just save text if no feedback (fallback)

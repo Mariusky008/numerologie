@@ -20,10 +20,18 @@ export interface JournalEntry {
   updated_at: string;
 }
 
+export interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: string;
+  context?: any;
+}
+
 export interface ProgrammeProgress {
   user_id: string;
   completed_days: string[]; // Array of day IDs
   journal_entries: Record<string, JournalEntry>; // dayId -> entry
+  chat_history?: ChatMessage[];
   last_updated: string;
 }
 
@@ -95,6 +103,18 @@ export const ProgrammeService = {
     });
   },
 
+  async saveChatMessage(userId: string, message: ChatMessage) {
+    const progress = await this.getProgress(userId);
+    const chatHistory = progress?.chat_history || [];
+    
+    chatHistory.push(message);
+    
+    return this.upsertProgress({
+      user_id: userId,
+      chat_history: chatHistory
+    });
+  },
+
   // --- SYNC LOCAL TO DB ---
   async syncLocalToDb(userId: string) {
     const completedDays = JSON.parse(localStorage.getItem('completed_days') || '[]');
@@ -102,6 +122,7 @@ export const ProgrammeService = {
     // 1. Get current progress from DB to merge
     const progress = await this.getProgress(userId);
     const journalEntries: Record<string, JournalEntry> = progress?.journal_entries || {};
+    const chatHistory: ChatMessage[] = progress?.chat_history || [];
     
     // 2. Scan localStorage for local journal entries
     for (let i = 0; i < localStorage.length; i++) {
@@ -122,11 +143,19 @@ export const ProgrammeService = {
       }
     }
 
-    if (completedDays.length > 0 || Object.keys(journalEntries).length > 0) {
+    // 3. Sync local chat history
+    const localChat = JSON.parse(localStorage.getItem('coach_chat_history') || '[]');
+    if (localChat.length > chatHistory.length) {
+      // Basic merge: prefer the longer one for now (or could be smarter)
+      // In a real app, we'd use timestamps or IDs
+    }
+
+    if (completedDays.length > 0 || Object.keys(journalEntries).length > 0 || localChat.length > 0) {
       await this.upsertProgress({
         user_id: userId,
         completed_days: completedDays,
-        journal_entries: journalEntries
+        journal_entries: journalEntries,
+        chat_history: localChat.length > chatHistory.length ? localChat : chatHistory
       });
     }
   },
@@ -136,12 +165,17 @@ export const ProgrammeService = {
     const progress = await this.getProgress(userId);
     if (progress) {
       localStorage.setItem('completed_days', JSON.stringify(progress.completed_days));
+      
       Object.entries(progress.journal_entries).forEach(([dayId, entry]) => {
         localStorage.setItem(`journal_${dayId}`, entry.text);
         if (entry.coach_feedback) {
           localStorage.setItem(`coach_feedback_${dayId}`, entry.coach_feedback);
         }
       });
+
+      if (progress.chat_history) {
+        localStorage.setItem('coach_chat_history', JSON.stringify(progress.chat_history));
+      }
     }
   }
 };

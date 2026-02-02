@@ -11,7 +11,10 @@ import {
   PlayCircle,
   BookOpen,
   Activity,
-  AlertTriangle
+  AlertTriangle,
+  Search,
+  Zap,
+  RotateCcw
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { PROGRAM_DATA } from '@/lib/programme/data';
@@ -103,7 +106,67 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* 2. QUICK STATS */}
+      {/* 2. ROADMAP SUMMARY */}
+      <section className="space-y-8">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-serif font-bold italic">Ta Trajectoire d'Alignement</h2>
+          <span className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30">84 jours pour changer de posture</span>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            { 
+              month: 1, 
+              title: 'Observer', 
+              desc: 'Repérer les automatismes et les tensions sans chercher à les corriger.', 
+              icon: Search,
+              color: 'text-blue-400',
+              bg: 'bg-blue-400/5'
+            },
+            { 
+              month: 2, 
+              title: 'Comprendre & ajuster', 
+              desc: 'Analyser les schémas récurrents et introduire les premiers micro-ajustements.', 
+              icon: Zap,
+              color: 'text-[#C9A24D]',
+              bg: 'bg-[#C9A24D]/5'
+            },
+            { 
+              month: 3, 
+              title: 'Décider autrement', 
+              desc: 'Poser des actes clairs basés sur ta structure réelle, pas sur l\'habitude.', 
+              icon: RotateCcw,
+              color: 'text-green-400',
+              bg: 'bg-green-400/5'
+            }
+          ].map((item, i) => (
+            <div 
+              key={i} 
+              className={`p-10 rounded-[50px] border border-[#1A1C2E]/5 shadow-sm space-y-6 relative overflow-hidden group transition-all hover:shadow-xl ${currentMonthIndex + 1 === item.month ? 'ring-2 ring-[#C9A24D] ring-offset-4' : 'opacity-60 grayscale-[0.5]'}`}
+            >
+              {currentMonthIndex + 1 === item.month && (
+                <div className="absolute top-6 right-6 px-3 py-1 bg-[#C9A24D] text-[#1A1C2E] text-[8px] font-black uppercase tracking-widest rounded-full">
+                  Cycle Actuel
+                </div>
+              )}
+              
+              <div className={`w-14 h-14 rounded-2xl ${item.bg} flex items-center justify-center ${item.color}`}>
+                <item.icon className="w-7 h-7" />
+              </div>
+              
+              <div className="space-y-2">
+                <p className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/30">Mois {item.month}</p>
+                <h3 className="text-2xl font-serif font-bold italic">{item.title}</h3>
+                <p className="text-sm text-[#1A1C2E]/60 leading-relaxed font-light italic">
+                  {item.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 3. QUICK STATS */}
       <div className="grid md:grid-cols-3 gap-6">
         {stats.map((stat, i) => (
           <div key={i} className="p-8 rounded-[40px] bg-white border border-[#1A1C2E]/5 shadow-sm space-y-4 hover:shadow-xl transition-all group">

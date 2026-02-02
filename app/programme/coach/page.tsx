@@ -13,12 +13,11 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { ProgrammeService, ChatMessage } from '@/lib/programme/service';
 
 export default function CoachChatPage() {
   const router = useRouter();
-  const [messages, setMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([
-    { role: 'assistant', content: "Bonjour, je suis ton assistant de parcours. Je suis là pour t'aider à clarifier les exercices, reformuler les consignes ou t'encourager dans tes observations quotidiennes. Comment puis-je t'aider aujourd'hui ?" }
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
@@ -26,9 +25,32 @@ export default function CoachChatPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) setUserId(session.user.id);
+      if (session) {
+        setUserId(session.user.id);
+        loadHistory(session.user.id);
+      } else {
+        // Load local if not logged in
+        const local = JSON.parse(localStorage.getItem('coach_chat_history') || '[]');
+        if (local.length > 0) setMessages(local);
+        else setMessages([{ role: 'assistant', content: "Bonjour, je suis ton assistant de parcours. Comment puis-je t'aider aujourd'hui ?", timestamp: new Date().toISOString() }]);
+      }
     });
   }, []);
+
+  const loadHistory = async (uid: string) => {
+    try {
+      const progress = await ProgrammeService.getProgress(uid);
+      if (progress?.chat_history && progress.chat_history.length > 0) {
+        setMessages(progress.chat_history);
+      } else {
+        const local = JSON.parse(localStorage.getItem('coach_chat_history') || '[]');
+        if (local.length > 0) setMessages(local);
+        else setMessages([{ role: 'assistant', content: "Bonjour, je suis ton assistant de parcours. Comment puis-je t'aider aujourd'hui ?", timestamp: new Date().toISOString() }]);
+      }
+    } catch (err) {
+      console.error("Load History Error:", err);
+    }
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -39,9 +61,12 @@ export default function CoachChatPage() {
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
-    const userMessage = input.trim();
+    const userMessageContent = input.trim();
+    const userMessage: ChatMessage = { role: 'user', content: userMessageContent, timestamp: new Date().toISOString() };
+    
     setInput('');
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
     setIsLoading(true);
 
     try {
@@ -49,7 +74,7 @@ export default function CoachChatPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          messages: [...messages, { role: 'user', content: userMessage }],
+          messages: updatedMessages.map(m => ({ role: m.role, content: m.content })),
           context: { currentCycle: "Mois 1 - Observer ses automatismes" },
           userId: userId
         })
@@ -57,11 +82,22 @@ export default function CoachChatPage() {
 
       const data = await response.json();
       if (data.message) {
-        setMessages(prev => [...prev, { role: 'assistant', content: data.message }]);
+        const assistantMessage: ChatMessage = { role: 'assistant', content: data.message, timestamp: new Date().toISOString() };
+        const finalMessages = [...updatedMessages, assistantMessage];
+        setMessages(finalMessages);
+        
+        // Save to Local & DB
+        localStorage.setItem('coach_chat_history', JSON.stringify(finalMessages));
+        if (userId) {
+          await ProgrammeService.upsertProgress({
+            user_id: userId,
+            chat_history: finalMessages
+          });
+        }
       }
     } catch (error) {
       console.error(error);
-      setMessages(prev => [...prev, { role: 'assistant', content: "Désolé, j'ai rencontré une petite difficulté technique. Peux-tu reformuler ?" }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: "Désolé, j'ai rencontré une petite difficulté technique. Peux-tu reformuler ?", timestamp: new Date().toISOString() }]);
     } finally {
       setIsLoading(false);
     }

@@ -7,7 +7,7 @@ import { UserData, NumerologyResult } from '@/lib/types';
 export interface BookRequest {
   id: string;
   date: string;
-  status: 'pending' | 'generating' | 'completed';
+  status: 'pending' | 'paid' | 'generating' | 'completed';
   userData: UserData & {
     plan?: 'report' | 'bundle';
     totalPrice?: number;
@@ -50,6 +50,7 @@ export default function AdminDashboard() {
   const [requests, setRequests] = useState<BookRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<any>({});
+  const [showUnpaid, setShowUnpaid] = useState(false);
   
   // Auth state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -437,19 +438,35 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <h1 className="text-3xl font-serif text-[#78350f] mb-8">Détail des Commandes</h1>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+          <h1 className="text-3xl font-serif text-[#78350f]">Détail des Commandes</h1>
+          
+          <div className="flex items-center gap-4 bg-white px-4 py-2 rounded-xl shadow-sm border border-stone-200">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input 
+                type="checkbox" 
+                checked={showUnpaid} 
+                onChange={(e) => setShowUnpaid(e.target.checked)}
+                className="w-4 h-4 rounded border-stone-300 text-[#78350f] focus:ring-[#78350f]"
+              />
+              <span className="text-sm font-medium text-stone-600">Afficher les paniers abandonnés (Non payés)</span>
+            </label>
+          </div>
+        </div>
 
         {loading ? (
           <div className="flex justify-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#78350f]"></div>
           </div>
-        ) : requests.length === 0 ? (
+        ) : requests.filter(req => showUnpaid || req.status !== 'pending').length === 0 ? (
           <div className="bg-white p-12 rounded-xl shadow-sm text-center">
-            <p className="text-lg text-stone-500">Aucune demande de livre pour le moment.</p>
+            <p className="text-lg text-stone-500">Aucune commande validée pour le moment.</p>
           </div>
         ) : (
           <div className="grid gap-6">
-            {requests.map((req) => (
+            {requests
+              .filter(req => showUnpaid || req.status !== 'pending')
+              .map((req) => (
               <div key={req.id} className="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
                 {/* Request Header */}
                 <div className="bg-stone-50 p-4 border-b border-stone-100 flex flex-wrap justify-between items-center gap-4">
@@ -537,10 +554,15 @@ export default function AdminDashboard() {
                         <CheckCircle className="w-4 h-4" />
                         Généré
                       </span>
+                    ) : req.status === 'paid' ? (
+                      <span className="flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                        <CreditCard className="w-4 h-4" />
+                        Payé
+                      </span>
                     ) : (
                       <span className="flex items-center gap-2 px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-sm font-medium">
                         <Clock className="w-4 h-4" />
-                        En attente
+                        En attente (Non payé)
                       </span>
                     )}
                   </div>

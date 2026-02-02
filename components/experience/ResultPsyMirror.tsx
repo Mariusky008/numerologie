@@ -76,9 +76,6 @@ export default function ResultPsyMirror() {
         const combinedData = { psyResult, numResult, userData, etymology };
         localStorage.setItem('unified_miroir_result', JSON.stringify(combinedData));
         setData(combinedData);
-        
-        // Track purchase only when it's first generated (from checkout)
-        trackEvent('report_purchase');
       } catch (err: any) {
         console.error(err);
         setError(err.message || "Une erreur est survenue lors de la génération de votre rapport.");

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { Resend } from 'resend';
 import { EmailReport, EmailConfirmation, EmailMiroirIntegral } from '@/components/emails/Templates';
+import { createClient } from '@supabase/supabase-js';
 
 // Configuration Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -10,6 +11,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 // Configuration Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Configuration Supabase Admin
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 // Secret de signature Webhook (à récupérer dans le dashboard Stripe)
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -42,33 +47,32 @@ export async function POST(request: Request) {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
     
     try {
+      // 1. MISE À JOUR DU STATUT DANS SUPABASE (Indispensable pour l'admin)
+      if (supabaseUrl && supabaseKey && orderId) {
+        const supabaseAdmin = createClient(supabaseUrl, supabaseKey);
+        
+        // On met le statut à 'paid' pour indiquer que le paiement est validé
+        const { error: updateError } = await supabaseAdmin
+          .from('book_requests')
+          .update({ status: 'paid' })
+          .eq('id', orderId);
+          
+        if (updateError) console.error('Erreur update status Supabase:', updateError);
+        else {
+          console.log(`Commande ${orderId} marquée comme payée.`);
+          
+          // 2. INC RÉMENTATION DES STATISTIQUES DE VENTE
+          try {
+            await supabaseAdmin.rpc('increment_stat', { event_name_input: 'report_purchase' });
+          } catch (statError) {
+            console.error('Erreur incrémentation stat:', statError);
+          }
+        }
+      }
+
       // CAS 1: UPGRADE ROMAN (Achat du livre seul après coup)
       if (type === 'book_upgrade') {
         // 1. Mettre à jour la base de données pour dire "Livre inclus"
-        // Note: Ici on suppose que vous avez accès à supabase pour update.
-        // Comme supabase n'est pas importé ici (dans ce snippet), on va supposer que l'admin verra la commande Stripe.
-        // MAIS pour bien faire, il faudrait update la ligne 'book_requests'.
-        
-        // Import dynamique pour éviter les soucis si supabase n'est pas utilisé ailleurs ?
-        // Non, on va l'importer en haut.
-        
-        // 2. Envoyer mail de confirmation spécifique
-         await resend.emails.send({
-          from: 'Votre Légende <contact@votrelegende.fr>',
-          to: [customerEmail!],
-          subject: 'Votre Roman est commandé ! 📖',
-          react: EmailConfirmation({
-            firstName,
-            // On pourrait ajouter un message spécifique "Upgrade" dans le template si besoin
-          }),
-        });
-
-        // 3. (Optionnel) Update Supabase ici si on avait le client
-        // Voir import supabase en haut
-        const { createClient } = require('@supabase/supabase-js');
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // Utiliser la clé service pour écrire
-        
         if (supabaseUrl && supabaseKey) {
            const supabaseAdmin = createClient(supabaseUrl, supabaseKey);
            
@@ -92,6 +96,17 @@ export async function POST(request: Request) {
                .eq('id', orderId);
            }
         }
+
+        // 2. Envoyer mail de confirmation spécifique
+        await resend.emails.send({
+          from: 'Votre Légende <contact@votrelegende.fr>',
+          to: [customerEmail!],
+          subject: 'Votre Roman est commandé ! 📖',
+          react: EmailConfirmation({
+            firstName,
+            // On pourrait ajouter un message spécifique "Upgrade" dans le template si besoin
+          }),
+        });
 
         console.log(`Upgrade Roman traité pour la commande ${orderId}`);
         return NextResponse.json({ received: true });

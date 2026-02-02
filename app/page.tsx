@@ -180,6 +180,26 @@ export default function Home() {
                 ></motion.span>
               </span>
             </h1>
+
+            {/* Bloc Ultra Concret */}
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-wrap justify-center gap-3 md:gap-4 mt-8"
+            >
+              {[
+                { icon: "⏱️", text: "15 minutes" },
+                { icon: "🧠", text: "Questions + tests de réactions" },
+                { icon: "📄", text: "Analyse personnalisée" },
+                { icon: "🔒", text: "Sans inscription obligatoire" }
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-2 px-3 py-1.5 bg-white/50 backdrop-blur-sm border border-[#C9A24D]/20 rounded-xl shadow-sm">
+                  <span className="text-base md:text-lg">{item.icon}</span>
+                  <span className="text-[10px] md:text-xs font-bold text-[#1A1C2E]/70 uppercase tracking-tight">{item.text}</span>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
 
           <motion.div 
@@ -209,8 +229,11 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6 }}
-            className="pt-6"
+            className="pt-6 flex flex-col items-center gap-4"
           >
+            <p className="text-sm md:text-base text-[#1A1C2E]/60 italic font-medium">
+              “La première étape prend moins d’une minute.”
+            </p>
             <Link 
               href="/miroir/experience"
               onClick={handleCtaClick}

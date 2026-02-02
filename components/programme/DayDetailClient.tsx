@@ -8,15 +8,18 @@ import {
   CheckCircle2, 
   ChevronLeft,
   Info,
-  Save,
-  MessageCircle,
-  AlertTriangle,
-  ArrowRight
+  Save, 
+  MessageCircle, 
+  AlertTriangle, 
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { DayContent } from '@/lib/programme/data';
 import COPModule from '@/components/programme/COPModule';
 import CAAModule from '@/components/programme/CAAModule';
+import { ProgrammeService } from '@/lib/programme/service';
+import { supabase } from '@/lib/supabase';
 
 interface DayDetailClientProps {
   day: DayContent;
@@ -33,20 +36,72 @@ export default function DayDetailClient({ day, monthNumber, weekNumber }: DayDet
   const [isValidated, setIsValidated] = useState(false);
   const [copOrientation, setCopOrientation] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [coachFeedback, setCoachFeedback] = useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   useEffect(() => {
     // Load saved journal and validation state
     const savedJournal = localStorage.getItem(`journal_${dayId}`);
     if (savedJournal) setJournalText(savedJournal);
     
+    const savedCoachFeedback = localStorage.getItem(`coach_feedback_${dayId}`);
+    if (savedCoachFeedback) setCoachFeedback(savedCoachFeedback);
+    
     const completed = JSON.parse(localStorage.getItem('completed_days') || '[]');
     if (completed.includes(dayId)) setIsValidated(true);
   }, [dayId]);
 
-  const handleSaveJournal = () => {
+  const handleSaveJournal = async () => {
+    if (!journalText.trim()) return;
+    
     setIsSaving(true);
-    localStorage.setItem(`journal_${dayId}`, journalText);
-    setTimeout(() => setIsSaving(false), 1000);
+    setIsAnalyzing(true);
+    
+    try {
+      // 1. Save locally
+      localStorage.setItem(`journal_${dayId}`, journalText);
+
+      // 2. Save to Supabase (if logged in)
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      // 3. Get Coach Feedback
+      const response = await fetch('/api/programme/coach', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [
+            { role: 'user', content: `Voici ma réponse à l'exercice du jour (${day.journalQuestion}) : "${journalText}"` }
+          ],
+          context: {
+            dayId,
+            dayTitle: day.title,
+            dayTheme: day.theme,
+            weekNumber,
+            monthNumber
+          },
+          userId: session?.user.id
+        })
+      });
+
+      const data = await response.json();
+      if (data.message) {
+        setCoachFeedback(data.message);
+        localStorage.setItem(`coach_feedback_${dayId}`, data.message);
+        
+        // 4. Update Supabase with both text and feedback
+        if (session) {
+          await ProgrammeService.saveJournalEntry(session.user.id, dayId, journalText, data.message);
+        }
+      } else if (session) {
+        // Just save text if no feedback (fallback)
+        await ProgrammeService.saveJournalEntry(session.user.id, dayId, journalText);
+      }
+    } catch (err) {
+      console.error("Journal Save/Analysis Error:", err);
+    } finally {
+      setIsSaving(false);
+      setIsAnalyzing(false);
+    }
   };
 
   const handleValidate = () => {
@@ -187,6 +242,53 @@ export default function DayDetailClient({ day, monthNumber, weekNumber }: DayDet
                   )}
                 </button>
               </div>
+
+              {/* Coach Intervention UI */}
+              <AnimatePresence>
+                {(isAnalyzing || coachFeedback) && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    className="p-8 rounded-[40px] bg-[#1A1C2E] text-white space-y-6 relative overflow-hidden shadow-2xl"
+                  >
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A24D]/10 blur-3xl rounded-full"></div>
+                    
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-[#C9A24D] flex items-center justify-center text-[#1A1C2E]">
+                        <MessageCircle className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Intervention du Coach</p>
+                        <h4 className="text-lg font-serif font-bold italic text-[#C9A24D]">Analyse de ton observation</h4>
+                      </div>
+                    </div>
+
+                    <div className="relative min-h-[60px]">
+                      {isAnalyzing ? (
+                        <div className="flex flex-col gap-4">
+                          <div className="h-4 bg-white/5 rounded-full w-3/4 animate-pulse" />
+                          <div className="h-4 bg-white/5 rounded-full w-1/2 animate-pulse" />
+                          <div className="h-4 bg-white/5 rounded-full w-2/3 animate-pulse" />
+                        </div>
+                      ) : (
+                        <p className="text-lg leading-relaxed font-light italic text-white/80">
+                          {coachFeedback}
+                        </p>
+                      )}
+                    </div>
+
+                    {!isAnalyzing && (
+                      <div className="pt-4 border-t border-white/5 flex items-center gap-3">
+                        <Sparkles className="w-4 h-4 text-[#C9A24D]" />
+                        <p className="text-[10px] font-black uppercase tracking-widest text-white/20">
+                          Continue vers le module COP pour orienter ton action.
+                        </p>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>

@@ -14,10 +14,16 @@ export interface UserProfile {
   dossier_data?: any; // Full results from the Mirror analysis
 }
 
+export interface JournalEntry {
+  text: string;
+  coach_feedback?: string;
+  updated_at: string;
+}
+
 export interface ProgrammeProgress {
   user_id: string;
   completed_days: string[]; // Array of day IDs
-  journal_entries: Record<string, string>; // dayId -> text
+  journal_entries: Record<string, JournalEntry>; // dayId -> entry
   last_updated: string;
 }
 
@@ -71,17 +77,48 @@ export const ProgrammeService = {
     return data as ProgrammeProgress;
   },
 
+  async saveJournalEntry(userId: string, dayId: string, text: string, coachFeedback?: string) {
+    // 1. Get current progress to preserve other entries
+    const progress = await this.getProgress(userId);
+    const journalEntries = progress?.journal_entries || {};
+    
+    // 2. Update with new entry
+    journalEntries[dayId] = {
+      text,
+      coach_feedback: coachFeedback || journalEntries[dayId]?.coach_feedback,
+      updated_at: new Date().toISOString()
+    };
+    
+    return this.upsertProgress({
+      user_id: userId,
+      journal_entries: journalEntries
+    });
+  },
+
   // --- SYNC LOCAL TO DB ---
   async syncLocalToDb(userId: string) {
     const completedDays = JSON.parse(localStorage.getItem('completed_days') || '[]');
-    const journalEntries: Record<string, string> = {};
     
-    // Scan localStorage for journal entries
+    // 1. Get current progress from DB to merge
+    const progress = await this.getProgress(userId);
+    const journalEntries: Record<string, JournalEntry> = progress?.journal_entries || {};
+    
+    // 2. Scan localStorage for local journal entries
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key?.startsWith('journal_')) {
         const dayId = key.replace('journal_', '');
-        journalEntries[dayId] = localStorage.getItem(key) || '';
+        const localText = localStorage.getItem(key) || '';
+        const coachFeedback = localStorage.getItem(`coach_feedback_${dayId}`);
+        
+        // Only update if text is different or not present
+        if (!journalEntries[dayId] || journalEntries[dayId].text !== localText) {
+          journalEntries[dayId] = {
+            text: localText,
+            coach_feedback: coachFeedback || journalEntries[dayId]?.coach_feedback,
+            updated_at: new Date().toISOString()
+          };
+        }
       }
     }
 
@@ -99,8 +136,11 @@ export const ProgrammeService = {
     const progress = await this.getProgress(userId);
     if (progress) {
       localStorage.setItem('completed_days', JSON.stringify(progress.completed_days));
-      Object.entries(progress.journal_entries).forEach(([dayId, text]) => {
-        localStorage.setItem(`journal_${dayId}`, text);
+      Object.entries(progress.journal_entries).forEach(([dayId, entry]) => {
+        localStorage.setItem(`journal_${dayId}`, entry.text);
+        if (entry.coach_feedback) {
+          localStorage.setItem(`coach_feedback_${dayId}`, entry.coach_feedback);
+        }
       });
     }
   }

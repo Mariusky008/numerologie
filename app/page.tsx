@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { 
   Zap, 
   Star, 
@@ -13,9 +13,6 @@ import {
   ShieldCheck, 
   BookOpen, 
   Video, 
-  Compass,
-  AlertCircle,
-  Cpu,
   Fingerprint,
   Layers,
   Sparkles,
@@ -25,7 +22,6 @@ import {
   Users,
   Mic,
   Calendar,
-  Heart,
   Target
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -36,6 +32,7 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
   const { scrollYProgress } = useScroll();
+  const explanationRef = useRef<HTMLElement>(null);
   
   // Parallax and opacity effects for the background
   const backgroundY = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
@@ -57,6 +54,11 @@ export default function Home() {
   const handleCtaClick = () => {
     trackEvent('cta_click');
     setIsNavigating(true);
+  };
+
+  const scrollToExplanation = (e: React.MouseEvent) => {
+    e.preventDefault();
+    explanationRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const fadeIn = {
@@ -229,22 +231,27 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6 }}
-            className="pt-6 flex flex-col items-center gap-4"
+            className="pt-6 flex flex-col items-center gap-6"
           >
-            <p className="text-sm md:text-base text-[#1A1C2E]/60 italic font-medium">
-              “La première étape prend moins d’une minute.”
-            </p>
-            <Link 
-              href="/miroir/experience"
-              onClick={handleCtaClick}
-              className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold text-xl hover:bg-[#C9A24D] transition-all shadow-[0_40px_80px_-20px_rgba(26,28,46,0.3)] hover:shadow-[#C9A24D]/40 active:scale-95 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              <span className="relative z-10">
-                {isNavigating ? 'Préparation du Test...' : '👉 Faire mon Crash-Test'}
-              </span>
-              <ArrowRight className={`w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10 ${isNavigating ? 'animate-pulse' : ''}`} />
-            </Link>
+            <div className="flex flex-col items-center gap-4">
+              <button 
+                onClick={scrollToExplanation}
+                className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold text-xl hover:bg-[#C9A24D] transition-all shadow-[0_40px_80px_-20px_rgba(26,28,46,0.3)] hover:shadow-[#C9A24D]/40 active:scale-95 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <span className="relative z-10">👉 Découvrir comment fonctionne le Crash-Test</span>
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
+              </button>
+
+              <Link 
+                href="/miroir/experience"
+                onClick={handleCtaClick}
+                className="text-[#1A1C2E]/60 hover:text-[#C9A24D] font-bold text-sm uppercase tracking-widest transition-colors flex items-center gap-2"
+              >
+                {isNavigating ? 'Démarrage...' : 'Commencer le Crash-Test (1 min)'}
+                <Zap className="w-4 h-4" />
+              </Link>
+            </div>
           </motion.div>
         </div>
 
@@ -255,6 +262,108 @@ export default function Home() {
         >
           <ArrowDown className="w-10 h-10" />
         </motion.div>
+      </section>
+
+      {/* EXPLICATION EXPRESS SECTION */}
+      <section 
+        ref={explanationRef}
+        className="py-32 px-6 relative bg-white border-b border-[#1A1C2E]/5 overflow-hidden"
+      >
+        <div className="max-w-4xl mx-auto relative z-10 space-y-24">
+          <motion.div {...fadeIn} className="text-center space-y-6">
+            <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#1A1C2E]">
+              Comment fonctionne le Crash-Test ?
+            </h2>
+            <p className="text-xl md:text-2xl text-[#1A1C2E]/50 font-medium">
+              Une expérience simple, structurée, sans engagement.
+            </p>
+          </motion.div>
+
+          <div className="grid gap-12">
+            {[
+              {
+                step: "01",
+                title: "Ton potentiel de départ",
+                desc: "Nous analysons ce que ta date de naissance révèle de ton potentiel (numérologie & astrologie).",
+                icon: Fingerprint
+              },
+              {
+                step: "02",
+                title: "Tes décisions réelles",
+                desc: "Tu réponds à des situations concrètes et passes des tests de réactions pour observer comment tu fonctionnes sous pression.",
+                icon: Activity
+              },
+              {
+                step: "03",
+                title: "Le miroir",
+                desc: "Nous comparons les deux pour identifier les écarts invisibles qui influencent tes choix et tes blocages actuels.",
+                icon: Layers
+              }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                {...fadeIn}
+                transition={{ delay: i * 0.1 }}
+                className="flex flex-col md:flex-row items-start gap-8 p-8 rounded-[40px] bg-[#FDFBF7] border border-[#1A1C2E]/5"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-sm text-[#C9A24D] shrink-0 font-black text-2xl">
+                  {item.step}
+                </div>
+                <div className="space-y-4">
+                  <h3 className="text-2xl md:text-3xl font-serif font-bold flex items-center gap-3">
+                    <item.icon className="w-6 h-6 text-[#C9A24D]" />
+                    {item.title}
+                  </h3>
+                  <p className="text-lg md:text-xl text-[#1A1C2E]/60 leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div 
+            {...fadeIn}
+            className="p-10 rounded-[60px] bg-[#1A1C2E] text-white space-y-10 shadow-2xl shadow-[#1A1C2E]/20"
+          >
+            <div className="text-center">
+              <h3 className="text-2xl font-bold uppercase tracking-widest text-[#C9A24D] mb-8">Infos clés</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="space-y-2">
+                  <div className="text-2xl">⏱</div>
+                  <div className="text-[10px] font-black uppercase tracking-widest opacity-60">15 minutes</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-2xl">🔒</div>
+                  <div className="text-[10px] font-black uppercase tracking-widest opacity-60">Sans inscription</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-2xl">❌</div>
+                  <div className="text-[10px] font-black uppercase tracking-widest opacity-60">Aucune prédiction</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-2xl">✅</div>
+                  <div className="text-[10px] font-black uppercase tracking-widest opacity-60">Compréhension perso</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center gap-6 pt-6 border-t border-white/10">
+              <Link 
+                href="/miroir/experience"
+                onClick={handleCtaClick}
+                className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#C9A24D] text-[#1A1C2E] rounded-full font-bold text-xl hover:bg-white transition-all shadow-[0_20px_60px_-10px_rgba(201,162,77,0.3)] hover:scale-105 active:scale-95 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-white/30 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <span className="relative z-10">👉 Commencer le Crash-Test (1 min)</span>
+                <ArrowRight className={`w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10 ${isNavigating ? 'animate-pulse' : ''}`} />
+              </Link>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-40">
+                À ce stade, le cerveau est prêt.
+              </p>
+            </div>
+          </motion.div>
+        </div>
       </section>
 
       {/* 2. SECTION — LE PRINCIPE (MODERN CARDS) */}

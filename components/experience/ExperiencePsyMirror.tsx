@@ -318,6 +318,9 @@ export default function ExperiencePsyMirror() {
     const newAnswers = [...moduleAAnswers, option];
     setModuleAAnswers(newAnswers);
     
+    // Reset scroll to top for next question
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     // Track every 3 questions or so to see where they drop
     if (newAnswers.length % 3 === 0) {
       trackEvent(`moduleA_progress_${newAnswers.length}`);
@@ -351,6 +354,9 @@ export default function ExperiencePsyMirror() {
 
     const newAnswers = [...moduleBAnswers, option];
     setModuleBAnswers(newAnswers);
+    
+    // Reset scroll to top for next question
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     
     // Track every scenario (4 steps)
     if (newAnswers.length % 4 === 0) {
@@ -725,7 +731,7 @@ export default function ExperiencePsyMirror() {
         {/* MODULE A: AUTO-PERCEPTION */}
         {step === 'moduleA' && (
           <motion.div 
-            key="moduleA"
+            key={`moduleA-${currentModuleIndex}`}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
@@ -755,7 +761,7 @@ export default function ExperiencePsyMirror() {
               <div className="grid gap-4">
                 {AUTO_PERCEPTION_ITEMS[currentModuleIndex].options.map((option, idx) => (
                   <button
-                    key={idx}
+                    key={`${currentModuleIndex}-${idx}`}
                     onClick={() => handleModuleASelect(option)}
                     className="group flex items-center justify-between p-6 bg-white border border-[#1A1C2E]/5 rounded-3xl text-left hover:border-[#1A1C2E] hover:shadow-xl transition-all duration-300"
                   >
@@ -773,7 +779,7 @@ export default function ExperiencePsyMirror() {
         {/* MODULE B: BEHAVIOR SCENARIOS */}
         {step === 'moduleB' && (
           <motion.div 
-            key="moduleB"
+            key={`moduleB-${currentModuleIndex}-${currentScenarioStep}`}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
@@ -811,7 +817,7 @@ export default function ExperiencePsyMirror() {
               <div className="grid gap-3 pt-4">
                 {BEHAVIOR_SCENARIOS[currentModuleIndex].steps[currentScenarioStep].options.map((option, idx) => (
                   <button
-                    key={idx}
+                    key={`${currentModuleIndex}-${currentScenarioStep}-${idx}`}
                     onClick={() => handleModuleBSelect(option)}
                     className="group flex items-center justify-between p-5 bg-[#F8F9FA] border border-[#1A1C2E]/5 rounded-2xl text-left hover:bg-[#1A1C2E] hover:text-white transition-all duration-300"
                   >

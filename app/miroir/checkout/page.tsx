@@ -128,19 +128,31 @@ export default function CheckoutPage() {
         }
       };
 
-      // Get psy result from localStorage if available
+      // 1. Get the most complete psy result available
+      const unifiedResultRaw = localStorage.getItem('unified_miroir_result');
       const sessionDataRaw = localStorage.getItem('psy_mirror_session_data');
+      
       let psyResult = null;
-      if (sessionDataRaw) {
+      
+      if (unifiedResultRaw) {
+        try {
+          const unifiedData = JSON.parse(unifiedResultRaw);
+          psyResult = unifiedData.psyResult; // Full result with insights
+        } catch (e) {
+          console.error("Error parsing unified result", e);
+        }
+      }
+      
+      if (!psyResult && sessionDataRaw) {
         try {
           const sessionData = JSON.parse(sessionDataRaw);
-          psyResult = sessionData.profile;
+          psyResult = sessionData.profile; // Fallback to raw scores
         } catch (e) {
           console.error("Error parsing session data", e);
         }
       }
 
-      // 1. Enregistrer la commande dans la base de données (Supabase)
+      // 2. Enregistrer la commande dans la base de données (Supabase)
       const dbResponse = await fetch('/api/book-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -175,16 +187,13 @@ export default function CheckoutPage() {
       if (stripeData.url) {
         window.location.href = stripeData.url;
       } else {
-        // Fallback simulation if Stripe key is missing or error
-        console.warn("Stripe URL missing, simulating success...");
-        setTimeout(() => {
-          setLoading(false);
-          router.push('/miroir/resultat');
-        }, 2000);
+        // ERROR: Stripe URL missing - DO NOT REDIRECT TO SUCCESS
+        console.error("Stripe URL missing. Payment could not be initialized.");
+        throw new Error("Impossible d'initialiser le paiement. Veuillez contacter le support.");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Erreur de paiement:", error);
-      alert("Une erreur est survenue lors de l'initialisation du paiement. Veuillez réessayer.");
+      alert(error.message || "Une erreur est survenue lors de l'initialisation du paiement. Veuillez réessayer.");
       setLoading(false);
     }
   };

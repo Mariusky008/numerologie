@@ -29,13 +29,18 @@ export async function POST(req: Request) {
       // 1. Fetch User's Numerology Profile
       const { data: requestData, error } = await supabase
         .from('book_requests')
-        .select('user_data, numerology_result')
+        .select('user_data, numerology_result, status')
         .eq('id', userId)
         .single();
 
       if (error || !requestData) {
         console.error('Profile fetch error:', error);
         return new Response('Profile not found', { status: 404 });
+      }
+
+      // SECURITY CHECK: Verify payment status
+      if (requestData.status === 'pending') {
+        return new Response('Payment required', { status: 402 });
       }
 
       // Fix: Access user_data (lowercase from DB)

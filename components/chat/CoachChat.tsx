@@ -112,6 +112,7 @@ function useCustomChat({ api, body, initialMessages, onFinish, isMuted }: any) {
       });
 
       if (!response.ok) {
+        if (response.status === 402) throw new Error("Accès restreint : Le paiement pour ce profil n'a pas été confirmé.");
         if (response.status === 404) throw new Error("Profil introuvable (Mauvais ID)");
         if (response.status === 500) throw new Error("Erreur serveur (Vérifier logs)");
         throw new Error(`Erreur API: ${response.statusText}`);

@@ -43,6 +43,7 @@ function PrintContent() {
     etymology?: NameData | null,
     psyResult?: PsyMirrorResult | null
   } | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [showBookModal, setShowBookModal] = useState(false);
 
   useEffect(() => {
@@ -77,6 +78,13 @@ function PrintContent() {
           const res = await fetch(`/api/book-request?id=${orderId}`);
           if (res.ok) {
             const order = await res.json();
+            
+            // SECURITY CHECK: Verify payment status
+            if (order.status === 'pending') {
+               setError("Ce rapport est en attente de paiement. Veuillez finaliser votre commande pour y accéder.");
+               return;
+            }
+
             userData = order.user_data;
             if (order.numerology_result?.reportResults) {
                preCalculatedResults = order.numerology_result.reportResults;
@@ -84,9 +92,14 @@ function PrintContent() {
             if (order.numerology_result?.psyResult) {
                psyResult = order.numerology_result.psyResult;
             }
+          } else if (res.status === 404) {
+             setError("Commande introuvable. Veuillez vérifier le lien ou contacter le support.");
+             return;
           }
         } catch (e) {
           console.error("Error fetching order", e);
+          setError("Une erreur est survenue lors de la récupération du rapport.");
+          return;
         }
       } else if (dataParam) {
         try {
@@ -230,6 +243,33 @@ function PrintContent() {
       window.scrollTo(0, 0);
     }
   }, [data]);
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[#FAF9F7] flex flex-col items-center justify-center p-8 text-center">
+        <div className="bg-white p-12 rounded-[40px] shadow-xl border border-stone-200 max-w-lg space-y-6">
+          <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-serif font-bold text-stone-800">{error}</h2>
+          <p className="text-stone-500 leading-relaxed">
+            Si vous avez déjà payé, il est possible que la synchronisation prenne quelques secondes. 
+            Essayez de rafraîchir la page dans un instant.
+          </p>
+          <div className="pt-6">
+            <button 
+              onClick={() => window.location.reload()}
+              className="px-8 py-3 bg-[#1A1C2E] text-white rounded-full font-bold hover:bg-[#C9A24D] transition-colors"
+            >
+              Rafraîchir la page
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!data) return <div className="p-12 text-center text-stone-500">Chargement de l'étude...</div>;
 

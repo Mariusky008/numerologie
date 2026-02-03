@@ -72,6 +72,14 @@ function PrintContent() {
       
       const orderId = searchParams.get('order_id');
       const dataParam = searchParams.get('data');
+      const adminToken = searchParams.get('admin');
+
+      // Persist admin token if present
+      if (adminToken === 'oracle2024') {
+        localStorage.setItem('admin_bypass', 'oracle2024');
+      }
+      
+      const hasAdminBypass = adminToken === 'oracle2024' || localStorage.getItem('admin_bypass') === 'oracle2024';
 
       if (orderId) {
         try {
@@ -80,8 +88,16 @@ function PrintContent() {
             const order = await res.json();
             
             // SECURITY CHECK: Verify payment status (Allow admin bypass)
-            if (order.status === 'pending' && searchParams.get('admin') !== 'oracle2024') {
+            if (order.status === 'pending' && !hasAdminBypass) {
                setError("Ce rapport est en attente de paiement. Veuillez finaliser votre commande pour y accéder.");
+               if (searchParams.get('debug') === 'true') {
+                 console.log("Order status pending and no admin bypass found", { 
+                   status: order.status, 
+                   hasAdminBypass, 
+                   adminToken, 
+                   localStorage: localStorage.getItem('admin_bypass') 
+                 });
+               }
                return;
             }
 

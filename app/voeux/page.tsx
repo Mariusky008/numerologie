@@ -315,48 +315,17 @@ export default function VoeuxPage() {
           </motion.div>
 
           <div className="space-y-10">
-            {/* 0. Carla Greeting */}
-            <motion.div 
-              initial={{ opacity: 0, x: 20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
-            >
-              <span className="text-[10px] text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Salut 👋....
-                </p>
-              </div>
-            </motion.div>
-
-            {/* 0. Oracle Greeting */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-col items-start gap-2 max-w-[85%]"
-            >
-              <span className="text-[10px] text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed italic font-serif">
-                  Bonjour ...
-                </p>
-              </div>
-            </motion.div>
-
             {/* 1. Carla */}
             <motion.div 
               initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 0.6 }}
               className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
             >
               <span className="text-[10px] text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  Salut 👋.... <br /><br />
                   Ça fait pas mal de temps que j&apos;essaye de <span className="text-[#C9A24D] font-bold italic">« {selectedVoeu || "mon projet"} »</span>. <br />
                   mais on ne peut pas dire qu&apos;il y ait beaucoup de changement 😔
                 </p>
@@ -368,12 +337,13 @@ export default function VoeuxPage() {
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 0.9 }}
+              transition={{ delay: 0.3 }}
               className="flex flex-col items-start gap-2 max-w-[85%]"
             >
               <span className="text-[10px] text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
               <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed italic font-serif">
+                  Bonjour ... <br /><br />
                   Ce n’est pas ton vœu le problème. <br /><br />
                   C’est le décalage entre qui tu es aujourd’hui et ce que ce vœu demande de toi.
                 </p>
@@ -385,7 +355,7 @@ export default function VoeuxPage() {
               initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.2 }}
+              transition={{ delay: 0.6 }}
               className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
             >
               <span className="text-[10px] text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
@@ -401,7 +371,7 @@ export default function VoeuxPage() {
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.5 }}
+              transition={{ delay: 0.9 }}
               className="flex flex-col items-start gap-2 max-w-[85%]"
             >
               <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
@@ -417,7 +387,7 @@ export default function VoeuxPage() {
               initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.8 }}
+              transition={{ delay: 1.2 }}
               className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
             >
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
@@ -432,7 +402,7 @@ export default function VoeuxPage() {
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 2.1 }}
+              transition={{ delay: 1.5 }}
               className="flex flex-col items-start gap-2 max-w-[85%]"
             >
               <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
@@ -449,7 +419,7 @@ export default function VoeuxPage() {
               initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 2.4 }}
+              transition={{ delay: 1.8 }}
               className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
             >
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
@@ -464,7 +434,7 @@ export default function VoeuxPage() {
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 2.7 }}
+              transition={{ delay: 2.1 }}
               className="flex flex-col items-start gap-2 max-w-[85%]"
             >
               <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
@@ -621,7 +591,7 @@ export default function VoeuxPage() {
 
       <footer className="py-12 px-6 border-t border-white/5 text-center opacity-20">
         <p className="text-[9px] font-black uppercase tracking-[0.5em]">
-          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v3.2
+          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v3.3
         </p>
       </footer>
     </div>

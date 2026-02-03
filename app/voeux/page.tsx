@@ -1,29 +1,20 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Zap, 
   ArrowRight, 
   Activity, 
   Sparkles, 
-  Brain,
   ShieldCheck,
   Target,
-  ChevronDown,
-  Eye,
   Lock,
-  Layers,
-  Fingerprint,
   Heart,
   Users,
   Compass,
-  Star,
-  Check,
-  X
+  Star
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
 
 const ARCHETYPES = [
@@ -170,7 +161,6 @@ const SectionCTA = ({
 );
 
 export default function VoeuxPage() {
-  const router = useRouter();
   const [selectedArchetype, setSelectedArchetype] = useState<string | null>(null);
   const [selectedVoeu, setSelectedVoeu] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
@@ -606,7 +596,7 @@ export default function VoeuxPage() {
 
       <footer className="py-12 px-6 border-t border-white/5 text-center opacity-20">
         <p className="text-[9px] font-black uppercase tracking-[0.5em]">
-          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v2.7
+          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v2.8
         </p>
       </footer>
     </div>

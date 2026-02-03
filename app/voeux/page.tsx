@@ -325,9 +325,9 @@ export default function VoeuxPage() {
               <span className="text-[10px] text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Salut 👋.... <br /><br />
+                  Salut 👋 <br /><br />
                   Ça fait pas mal de temps que j&apos;essaye de <span className="text-[#C9A24D] font-bold italic">« {selectedVoeu || "mon projet"} »</span>. <br />
-                  mais on ne peut pas dire qu&apos;il y ait beaucoup de changement 😔
+                  Mais on ne peut pas dire qu&apos;il y ait beaucoup de changement 😔
                 </p>
               </div>
             </motion.div>
@@ -591,7 +591,7 @@ export default function VoeuxPage() {
 
       <footer className="py-12 px-6 border-t border-white/5 text-center opacity-20">
         <p className="text-[9px] font-black uppercase tracking-[0.5em]">
-          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v3.3
+          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v3.4
         </p>
       </footer>
     </div>

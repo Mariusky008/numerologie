@@ -124,6 +124,14 @@ export default function VoeuxPage() {
     setSelectedArchetype(id);
     setSelectedVoeu(null);
     trackEvent('archetype_selected', { id });
+    
+    // Smooth scroll to the refinement section
+    setTimeout(() => {
+      const refinementSection = document.getElementById('refinement-section');
+      if (refinementSection) {
+        refinementSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
   };
 
   const handleVoeuSelect = (voeu: string) => {
@@ -201,7 +209,11 @@ export default function VoeuxPage() {
               </motion.button>
             ))}
             <button 
-              onClick={() => handleVoeuSelect("Aucun ne me parle pour l’instant")}
+              onClick={() => {
+                handleVoeuSelect("Aucun ne me parle pour l’instant");
+                const nextSection = document.getElementById('fracture');
+                if (nextSection) nextSection.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="p-4 md:p-6 rounded-2xl border border-white/5 bg-white/2 shadow-inner text-[10px] md:text-xs font-bold text-white/30 hover:text-white/50 transition-colors"
             >
               Aucun ne me parle pour l’instant
@@ -213,6 +225,7 @@ export default function VoeuxPage() {
             {selectedArchetype && (
               <motion.div 
                 key={selectedArchetype}
+                id="refinement-section"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}

@@ -12,22 +12,9 @@ import { useRouter } from 'next/navigation';
 
 export default function SecretPage() {
   const router = useRouter();
-  const [step, setStep] = useState(0);
-
-  useEffect(() => {
-    // Sequence timing for a total of ~5 seconds
-    const timers = [
-      setTimeout(() => setStep(1), 600),   // Phrase 1
-      setTimeout(() => setStep(2), 1200),  // Phrase 2
-      setTimeout(() => setStep(3), 1800),  // Phrase 3
-      setTimeout(() => setStep(4), 2400),  // Phrase 4
-      setTimeout(() => setStep(5), 3000),  // Phrase 5
-      setTimeout(() => setStep(6), 3600),  // Phrase 6
-      setTimeout(() => setStep(7), 4200),  // CTA
-    ];
-
-    return () => timers.forEach(t => clearTimeout(t));
-  }, []);
+  const [visibleSteps, setVisibleSteps] = useState<number[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const [showCta, setShowCta] = useState(false);
 
   const phrases = [
     "Chaque matin, tu te regardes dans le miroir en pensant te voir tel que tu es.",
@@ -37,6 +24,36 @@ export default function SecretPage() {
     "On a créé un crash test basé sur ta date, ton lieu de naissance et quelques questions pour mettre en lumière ces décalages invisibles.",
     "Afin que tu saches quoi faire pour revenir à ce que tu étais."
   ];
+
+  useEffect(() => {
+    let currentStep = 0;
+
+    const runSequence = async () => {
+      while (currentStep < phrases.length) {
+        // 1. Start typing
+        setIsTyping(true);
+        // Delay based on phrase length (min 800ms, max 2000ms)
+        const typingTime = Math.min(Math.max(phrases[currentStep].length * 20, 800), 2000);
+        await new Promise(r => setTimeout(r, typingTime));
+
+        // 2. Show message
+        setIsTyping(false);
+        setVisibleSteps(prev => [...prev, currentStep]);
+        currentStep++;
+
+        // 3. Natural pause before next message
+        if (currentStep < phrases.length) {
+          await new Promise(r => setTimeout(r, 600));
+        }
+      }
+
+      // 4. Show CTA after last message
+      await new Promise(r => setTimeout(r, 800));
+      setShowCta(true);
+    };
+
+    runSequence();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#08090F] text-white font-sans selection:bg-[#C9A24D]/30 overflow-hidden relative">
@@ -61,26 +78,39 @@ export default function SecretPage() {
           <motion.div layout className="w-full space-y-4 flex flex-col items-center">
             
             <AnimatePresence mode="popLayout">
-              {phrases.map((phrase, index) => (
-                step > index && (
-                  <motion.div 
-                    key={index}
-                    layout
-                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl text-left w-full max-w-sm"
-                  >
-                    <p className="text-sm md:text-base font-medium leading-relaxed">
-                      {phrase}
-                    </p>
-                  </motion.div>
-                )
+              {visibleSteps.map((index) => (
+                <motion.div 
+                  key={index}
+                  layout
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl text-left w-full max-w-sm"
+                >
+                  <p className="text-sm md:text-base font-medium leading-relaxed">
+                    {phrases[index]}
+                  </p>
+                </motion.div>
               ))}
+
+              {/* Typing Indicator */}
+              {isTyping && (
+                <motion.div
+                  key="typing"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl flex items-center gap-1.5 w-fit self-start ml-0 md:ml-16"
+                >
+                  <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0 }} className="w-1.5 h-1.5 bg-white/40 rounded-full" />
+                  <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-1.5 h-1.5 bg-white/40 rounded-full" />
+                  <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-1.5 h-1.5 bg-white/40 rounded-full" />
+                </motion.div>
+              )}
             </AnimatePresence>
 
             {/* Final CTA */}
             <AnimatePresence mode="popLayout">
-              {step >= 7 && (
+              {showCta && (
                 <motion.div 
                   layout
                   initial={{ opacity: 0, y: 30 }}

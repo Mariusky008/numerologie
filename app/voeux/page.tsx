@@ -661,7 +661,7 @@ export default function VoeuxPage() {
 
       <footer className="py-12 px-6 border-t border-white/5 text-center opacity-20">
         <p className="text-[9px] font-black uppercase tracking-[0.5em]">
-          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v2.1
+          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v2.2
         </p>
       </footer>
     </div>

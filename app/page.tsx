@@ -2,53 +2,97 @@
 
 import Link from 'next/link';
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { 
   Zap, 
-  Star, 
+  ArrowRight, 
   Activity, 
   Check, 
   X, 
-  ArrowRight, 
-  ShieldCheck, 
-  BookOpen, 
-  Video, 
-  Fingerprint,
-  Layers,
-  Sparkles,
+  Sparkles, 
+  Brain,
+  MessageSquare,
+  ShieldCheck,
+  Target,
+  ChevronDown,
+  Eye,
   Lock,
-  ArrowDown,
-  Quote,
-  Users,
-  Mic,
   Calendar,
-  Target
+  Layers,
+  Fingerprint
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
 
+// --- COMPONENTS ---
+
+const FloatingOracle = () => (
+  <motion.div 
+    initial={{ opacity: 0, scale: 0.8 }}
+    animate={{ opacity: 1, scale: 1 }}
+    className="fixed bottom-8 right-8 z-[100] flex flex-col items-end gap-4 pointer-events-none"
+  >
+    <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-4 py-2 rounded-2xl text-[10px] font-bold text-[#C9A24D] uppercase tracking-widest shadow-2xl mb-2">
+      L'Oracle t'accompagne
+    </div>
+    <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#1A1C2E] via-[#5B4B8A] to-[#C9A24D] p-0.5 shadow-[0_0_30px_rgba(201,162,77,0.3)] animate-pulse">
+      <div className="w-full h-full rounded-full bg-[#08090F] flex items-center justify-center overflow-hidden">
+        <Brain className="w-8 h-8 text-[#C9A24D]" />
+      </div>
+    </div>
+  </motion.div>
+);
+
+const ProgressBar = ({ progress }: { progress: number }) => (
+  <div className="fixed top-0 left-0 right-0 z-[110] h-1.5 bg-white/5">
+    <motion.div 
+      initial={{ width: 0 }}
+      animate={{ width: `${progress}%` }}
+      className="h-full bg-gradient-to-r from-[#C9A24D] via-[#5B4B8A] to-[#C9A24D]"
+    />
+  </div>
+);
+
+const Tag = ({ text, color = "gold" }: { text: string, color?: "gold" | "purple" | "white" }) => {
+  const colors = {
+    gold: "bg-[#C9A24D]/10 text-[#C9A24D] border-[#C9A24D]/20",
+    purple: "bg-[#5B4B8A]/10 text-[#5B4B8A] border-[#5B4B8A]/20",
+    white: "bg-white/5 text-white/60 border-white/10"
+  };
+  return (
+    <span className={`px-4 py-2 rounded-full border text-[10px] md:text-xs font-black uppercase tracking-widest ${colors[color]}`}>
+      {text}
+    </span>
+  );
+};
+
 export default function Home() {
   const router = useRouter();
-  const [scrolled, setScrolled] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [chatStep, setChatStep] = useState(0);
   const { scrollYProgress } = useScroll();
-  const explanationRef = useRef<HTMLElement>(null);
-  
-  // Parallax and opacity effects for the background
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
-  const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.4, 0.2, 0.4]);
-  const particleY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const progress = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const [currentProgress, setCurrentProgress] = useState(0);
 
   useEffect(() => {
-    // Track home view
     trackEvent('home_view');
-    
-    // Force prefetch of the experience page
     router.prefetch('/miroir/experience');
     
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Animate chat steps
+    const timers = [
+      setTimeout(() => setChatStep(1), 800),
+      setTimeout(() => setChatStep(2), 1800),
+      setTimeout(() => setChatStep(3), 2800),
+    ];
+    
+    const unsubscribe = progress.on("change", (latest) => {
+      setCurrentProgress(Math.max(currentProgress, Math.round(latest)));
+    });
+
+    return () => {
+      timers.forEach(t => clearTimeout(t));
+      unsubscribe();
+    };
   }, []);
 
   const handleCtaClick = () => {
@@ -56,832 +100,308 @@ export default function Home() {
     setIsNavigating(true);
   };
 
-  const scrollToExplanation = (e: React.MouseEvent) => {
-    e.preventDefault();
-    explanationRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, margin: "-50px" },
-    transition: { duration: 0.5, ease: "easeOut" }
-  } as any;
-
-  const staggerContainer = {
-    initial: {},
-    whileInView: { transition: { staggerChildren: 0.1 } }
+    transition: { duration: 0.6, ease: "easeOut" }
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#1A1C2E] font-sans selection:bg-[#C9A24D]/20 overflow-x-hidden">
+    <div className="min-h-screen bg-[#08090F] text-white font-sans selection:bg-[#C9A24D]/30 overflow-x-hidden">
       
-      {/* GLOBAL FIXED BACKGROUND ANIMATION */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Red/Orange Pulsing Animation (Following Scroll) */}
-        <motion.div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full blur-[120px]"
-          style={{ 
-            y: backgroundY, 
-            opacity: backgroundOpacity,
-            willChange: "transform, opacity"
-          }}
-          animate={{
-            scale: [0.95, 1.05, 0.95],
-            backgroundColor: ["#FCA5A5", "#FDBA74", "#FCA5A5"] // Lighter red/orange for better visibility
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+      <ProgressBar progress={currentProgress} />
+      <FloatingOracle />
 
-        {/* Floating Particles (Following Scroll) - Reduced count for performance */}
-        <motion.div style={{ y: particleY, willChange: "transform" }} className="absolute inset-0">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-[#C9A24D] font-serif font-bold opacity-20"
-              initial={{ 
-                x: Math.random() * 100 + '%', 
-                y: Math.random() * 100 + '%',
-                scale: Math.random() * 0.5 + 0.5
-              }}
-              animate={{ 
-                y: [null, (Math.random() - 0.5) * 200],
-                opacity: [0.1, 0.3, 0.1]
-              }}
-              transition={{ 
-                duration: 5 + Math.random() * 5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              style={{
-                fontSize: Math.random() > 0.5 ? '24px' : '14px',
-                filter: 'blur(1px)'
-              }}
-            >
-              {['1', '7', '4', 'A', 'Ω', '✨', '☾', '9', '3', '∞', '⚡', '8'][i % 12]}
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* 0. FLOATING NAV */}
-      <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-6 py-4 ${scrolled ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className="max-w-xl mx-auto bg-white/80 backdrop-blur-xl border border-[#1A1C2E]/5 rounded-full py-3 px-6 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.05)] flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Target className="w-5 h-5 text-[#C9A24D]" />
-            <span className="text-[10px] font-black uppercase tracking-widest">Le Crash-Test de tes Décisions</span>
-          </div>
-          <Link 
-            href="/miroir/experience"
-            onClick={handleCtaClick}
-            className="bg-[#1A1C2E] text-white text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full hover:bg-[#C9A24D] transition-colors"
+      {/* 1. HERO — STYLE APP / CHAT */}
+      <section className="min-h-screen flex flex-col items-center justify-center px-6 relative">
+        {/* Mystic Background */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[120px] rounded-full" />
+          <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-[#5B4B8A]/10 blur-[100px] rounded-full" />
+          <video 
+            autoPlay 
+            muted 
+            loop 
+            playsInline 
+            className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay pointer-events-none"
           >
-            {isNavigating ? 'Chargement...' : 'Commencer'}
-          </Link>
-        </div>
-      </nav>
-
-      {/* 1. HERO — ÉCRAN 1 */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden bg-[#FDFBF7]">
-        {/* Modern Animated Background */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_20%,_rgba(201,162,77,0.08),_transparent_40%)]"></div>
-          <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_80%,_rgba(91,75,138,0.08),_transparent_40%)]"></div>
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#1A1C2E 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
+            <source src="/acceuil.mp4" type="video/mp4" />
+          </video>
         </div>
 
-        <div className="max-w-4xl w-full z-10 text-center space-y-12">
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white border border-[#1A1C2E]/5 shadow-sm text-[#1A1C2E] text-[11px] font-black uppercase tracking-[0.4em]"
-          >
-            <Activity className="w-4 h-4 text-[#C9A24D]" />
-            Quand ton potentiel de naissance rencontre la psychologie
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="space-y-6"
-          >
-            <h1 className="text-6xl md:text-9xl font-serif font-bold tracking-tight leading-[0.95] text-[#1A1C2E]">
-              Le Crash-Test <br />
-              <span className="text-[#C9A24D] italic relative">
-                de tes Décisions
-                <motion.span 
-                  initial={{ width: 0 }}
-                  animate={{ width: '100%' }}
-                  transition={{ delay: 1, duration: 1 }}
-                  className="absolute bottom-4 left-0 h-1 bg-[#C9A24D]/20 -z-10"
-                ></motion.span>
-              </span>
-            </h1>
-
-            {/* Bloc Ultra Concret */}
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-wrap justify-center gap-3 md:gap-4 mt-8"
-            >
-              {[
-                { icon: "⏱️", text: "15 minutes" },
-                { icon: "🧠", text: "Questions + tests de réactions" },
-                { icon: "📄", text: "Analyse personnalisée" },
-                { icon: "🔒", text: "Sans inscription obligatoire" }
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-2 px-3 py-1.5 bg-white/50 backdrop-blur-sm border border-[#C9A24D]/20 rounded-xl shadow-sm">
-                  <span className="text-base md:text-lg">{item.icon}</span>
-                  <span className="text-[10px] md:text-xs font-bold text-[#1A1C2E]/70 uppercase tracking-tight">{item.text}</span>
-                </div>
-              ))}
-            </motion.div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="space-y-8 text-xl md:text-2xl text-[#1A1C2E]/60 font-normal leading-relaxed max-w-2xl mx-auto"
-          >
-            <p>
-              Vis-tu vraiment ce pour quoi tu es né ?
-            </p>
-            <div className="p-8 bg-white/50 backdrop-blur-md border border-[#1A1C2E]/5 rounded-[40px] shadow-2xl shadow-black/5 space-y-4">
-              <p className="text-lg font-medium leading-relaxed">
-                Découvre le Crash-Test de tes Décisions. <br />
-                Compare ton potentiel de naissance <br />
-                aux décisions et aux choix que tu fais.
-              </p>
-              <div className="h-px w-12 bg-[#C9A24D]/30 mx-auto"></div>
-              <div className="space-y-2">
-                <p className="text-[#C9A24D] font-bold text-2xl">
-                  👉 Identifie enfin les schémas invisibles <br />
-                  qui bloquent tes décisions et ton parcours.
-                </p>
-                <p className="text-[10px] md:text-xs font-bold text-[#1A1C2E]/40 uppercase tracking-widest italic">
-                  (ex. hésiter trop longtemps, décider sous pression, répéter les mêmes erreurs)
-                </p>
-              </div>
-            </div>
-
-            {/* Bloc de reconnaissance */}
-            <motion.div 
-              {...fadeIn}
-              className="max-w-xl mx-auto p-8 bg-[#C9A24D]/5 border border-[#C9A24D]/20 rounded-[40px] space-y-6 text-left shadow-sm"
-            >
-              <h3 className="text-xl md:text-2xl font-serif font-bold text-[#1A1C2E]">Ce test est pour toi si…</h3>
-              <ul className="space-y-3">
-                {[
-                  "tu hésites souvent trop longtemps avant de décider",
-                  "tu décides vite sous pression… puis tu regrettes",
-                  "tu as l’impression de répéter les mêmes erreurs",
-                  "tu te sens fatigué mentalement sans raison claire",
-                  "tu sais ce que tu “devrais” faire, mais tu n’y arrives pas"
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-base md:text-lg text-[#1A1C2E]/80 leading-snug">
-                    <span className="text-[#C9A24D] shrink-0">👉</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6 }}
-            className="pt-6 flex flex-col items-center gap-6"
-          >
-            <div className="flex flex-col items-center gap-4">
-              <div className="flex flex-col items-center gap-2">
-                <button 
-                  onClick={scrollToExplanation}
-                  className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold text-xl hover:bg-[#C9A24D] transition-all shadow-[0_40px_80px_-20px_rgba(26,28,46,0.3)] hover:shadow-[#C9A24D]/40 active:scale-95 overflow-hidden"
+        <div className="max-w-xl w-full z-10 space-y-8">
+          {/* Chat Interface */}
+          <div className="space-y-4">
+            <AnimatePresence>
+              {chatStep >= 1 && (
+                <motion.div 
+                  initial={{ opacity: 0, x: -20, scale: 0.9 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none max-w-[85%]"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                  <span className="relative z-10">👉 Découvrir comment fonctionne le Crash-Test</span>
-                  <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
-                </button>
-                <p className="text-[10px] font-bold text-[#1A1C2E]/40 uppercase tracking-widest">
-                  Lecture : 30 secondes
-                </p>
-              </div>
+                  <p className="text-lg md:text-xl font-medium leading-tight">
+                    Salut ! Prêt à voir ce qui bloque tes décisions ? 🧠
+                  </p>
+                </motion.div>
+              )}
 
-              <Link 
-                href="/miroir/experience"
-                onClick={handleCtaClick}
-                className="text-[#1A1C2E]/60 hover:text-[#C9A24D] font-bold text-sm uppercase tracking-widest transition-colors flex items-center gap-2"
-              >
-                {isNavigating ? 'Démarrage...' : 'Commencer le Crash-Test (1 min)'}
-                <Zap className="w-4 h-4" />
-              </Link>
-              <p className="text-[#C9A24D] font-bold text-xs uppercase tracking-[0.2em] animate-pulse">
-                Tu obtiens un premier aperçu dès la 1ʳᵉ minute.
-              </p>
-            </div>
-          </motion.div>
+              {chatStep >= 2 && (
+                <motion.div 
+                  initial={{ opacity: 0, x: -20, scale: 0.9 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none max-w-[80%]"
+                >
+                  <p className="text-lg md:text-xl font-medium leading-tight">
+                    Le Crash-Test prend seulement 1 min.
+                  </p>
+                </motion.div>
+              )}
+
+              {chatStep >= 3 && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="pt-4 space-y-6"
+                >
+                  <h1 className="text-4xl md:text-6xl font-serif font-bold tracking-tight leading-[1.1]">
+                    Le Crash-Test <br />
+                    <span className="text-[#C9A24D] italic">de tes Décisions</span>
+                  </h1>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    <Tag text="Hésitation" />
+                    <Tag text="Stress" />
+                    <Tag text="Blocage" />
+                    <Tag text="Répétition" />
+                  </div>
+
+                  <Link 
+                    href="/miroir/experience"
+                    onClick={handleCtaClick}
+                    className="group w-full relative inline-flex items-center justify-center gap-4 px-8 py-6 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black text-xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_20px_50px_-10px_rgba(201,162,77,0.4)]"
+                  >
+                    {isNavigating ? 'Démarrage...' : "C'EST PARTI 🚀"}
+                    <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  
+                  <p className="text-center text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">
+                    Tu obtiens un premier aperçu dès la 1ʳᵉ minute.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         <motion.div 
-          animate={{ y: [0, 15, 0] }}
+          animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[#1A1C2E]/10"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/20"
         >
-          <ArrowDown className="w-10 h-10" />
+          <ChevronDown className="w-8 h-8" />
         </motion.div>
       </section>
 
-      {/* EXPLICATION EXPRESS SECTION */}
-      <section 
-        ref={explanationRef}
-        className="py-32 px-6 relative bg-white border-b border-[#1A1C2E]/5 overflow-hidden"
-      >
-        <div className="max-w-4xl mx-auto relative z-10 space-y-24">
-          <motion.div {...fadeIn} className="text-center space-y-6">
-            <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#1A1C2E]">
-              Comment fonctionne le Crash-Test ?
-            </h2>
-            <p className="text-xl md:text-2xl text-[#1A1C2E]/50 font-medium">
-              Une expérience simple, structurée, sans engagement.
-            </p>
-          </motion.div>
-
-          <div className="grid gap-12">
-            {[
-              {
-                step: "01",
-                title: "Ton potentiel de départ",
-                desc: "Nous analysons ce que ta date de naissance révèle de ton potentiel (numérologie & astrologie).",
-                icon: Fingerprint
-              },
-              {
-                step: "02",
-                title: "Tes décisions réelles",
-                desc: "Tu réponds à des situations concrètes et passes des tests de réactions pour observer comment tu fonctionnes sous pression.",
-                icon: Activity
-              },
-              {
-                step: "03",
-                title: "Le miroir",
-                desc: "Nous comparons les deux pour identifier les écarts invisibles qui influencent tes choix et tes blocages actuels.",
-                icon: Layers
-              }
-            ].map((item, i) => (
-              <motion.div 
-                key={i}
-                {...fadeIn}
-                transition={{ delay: i * 0.1 }}
-                className="flex flex-col md:flex-row items-start gap-8 p-8 rounded-[40px] bg-[#FDFBF7] border border-[#1A1C2E]/5"
-              >
-                <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center shadow-sm text-[#C9A24D] shrink-0 font-black text-2xl">
-                  {item.step}
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-2xl md:text-3xl font-serif font-bold flex items-center gap-3">
-                    <item.icon className="w-6 h-6 text-[#C9A24D]" />
-                    {item.title}
-                  </h3>
-                  <p className="text-lg md:text-xl text-[#1A1C2E]/60 leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div 
-            {...fadeIn}
-            className="p-10 rounded-[60px] bg-[#1A1C2E] text-white space-y-10 shadow-2xl shadow-[#1A1C2E]/20"
-          >
-            <div className="text-center">
-              <h3 className="text-2xl font-bold uppercase tracking-widest text-[#C9A24D] mb-8">Infos clés</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div className="space-y-2">
-                  <div className="text-2xl">⏱</div>
-                  <div className="text-[10px] font-black uppercase tracking-widest opacity-60">15 minutes</div>
-                </div>
-                <div className="space-y-2">
-                  <div className="text-2xl">🔒</div>
-                  <div className="text-[10px] font-black uppercase tracking-widest opacity-60">Sans inscription</div>
-                </div>
-                <div className="space-y-2">
-                  <div className="text-2xl">❌</div>
-                  <div className="text-[10px] font-black uppercase tracking-widest opacity-60">Aucune prédiction</div>
-                </div>
-                <div className="space-y-2">
-                  <div className="text-2xl">✅</div>
-                  <div className="text-[10px] font-black uppercase tracking-widest opacity-60">Compréhension perso</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center gap-6 pt-6 border-t border-white/10">
-              <Link 
-                href="/miroir/experience"
-                onClick={handleCtaClick}
-                className="group relative inline-flex items-center gap-4 px-12 py-8 bg-[#C9A24D] text-[#1A1C2E] rounded-full font-bold text-xl hover:bg-white transition-all shadow-[0_20px_60px_-10px_rgba(201,162,77,0.3)] hover:scale-105 active:scale-95 overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-white/30 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                <span className="relative z-10">👉 Commencer le Crash-Test (1 min)</span>
-                <ArrowRight className={`w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10 ${isNavigating ? 'animate-pulse' : ''}`} />
-              </Link>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] opacity-40">
-                À ce stade, le cerveau est prêt.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 2. SECTION — LE PRINCIPE (MODERN CARDS) */}
-      <section className="py-40 px-6 relative bg-white">
-        <div className="max-w-6xl mx-auto space-y-32">
-          <motion.div {...fadeIn} className="text-center space-y-6">
-            <div className="text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.5em] mb-4">La Méthodologie</div>
-            <h2 className="text-5xl md:text-8xl font-serif font-bold text-[#1A1C2E]">Deux lectures. <br /><span className="text-[#C9A24D] italic">Une confrontation.</span></h2>
-          </motion.div>
-
-          <motion.div 
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="whileInView"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-12"
-          >
-            {[
-              { 
-                num: "01", 
-                title: "Ton Empreinte", 
-                desc: "Une lecture symbolique basée sur ta date de naissance. Ce qu’on dit souvent de ton potentiel.",
-                icon: Fingerprint,
-                color: "text-[#C9A24D]"
-              },
-              { 
-                num: "02", 
-                title: "Tes Réflexes", 
-                desc: "Des mini-tests interactifs de décision, où tu fais des choix concrets, sans “bonne réponse”.",
-                icon: Activity,
-                color: "text-[#5B4B8A]"
-              },
-              { 
-                num: "03", 
-                title: "Le Choc", 
-                desc: "Là où ce que tu crois être ne correspond pas toujours à ce que tu fais.",
-                icon: Zap,
-                color: "text-[#1A1C2E]"
-              }
-            ].map((item, i) => (
-              <motion.div 
-                key={i}
-                variants={fadeIn}
-                className="group relative p-12 rounded-[60px] bg-[#FDFBF7] border border-[#1A1C2E]/5 hover:border-[#C9A24D]/20 transition-all duration-500 hover:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.05)]"
-              >
-                <div className="absolute top-10 right-10 text-6xl font-black text-[#1A1C2E]/[0.03] group-hover:text-[#C9A24D]/10 transition-colors">
-                  {item.num}
-                </div>
-                <div className={`w-16 h-16 rounded-[24px] bg-white flex items-center justify-center mb-10 shadow-sm ${item.color}`}>
-                  <item.icon className="w-8 h-8" />
-                </div>
-                <h3 className="text-3xl font-serif font-bold mb-6">{item.title}</h3>
-                <p className="text-[#1A1C2E]/60 text-xl leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          <motion.div {...fadeIn} className="relative py-20 text-center">
-            <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C9A24D]/20 to-transparent"></div>
-            <span className="relative z-10 bg-white px-10 text-3xl md:text-5xl font-serif italic text-[#C9A24D]">
-              C’est là que la prise de conscience commence.
-            </span>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 3. SECTION — POURQUOI C’EST DIFFÉRENT (HIGH CONTRAST) */}
-      <section className="py-40 px-6 bg-[#1A1C2E] text-white rounded-[100px] mx-4 md:mx-12 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[#C9A24D]/10 blur-[120px] rounded-full"></div>
-        
-        <div className="max-w-5xl mx-auto space-y-24 relative z-10">
-          <motion.div {...fadeIn} className="text-center space-y-6">
-            <h2 className="text-5xl md:text-8xl font-serif font-bold leading-tight">
-              Ce n’est pas un <br />
-              <span className="text-[#C9A24D] italic underline underline-offset-8 decoration-white/10">horoscope de plus.</span>
-            </h2>
-          </motion.div>
-
-          <div className="grid gap-6">
-            {[
-              { text: "Ce n’est pas une prédiction", positive: false },
-              { text: "Ce n’est pas un test de personnalité figé", positive: false },
-              { text: "Ce n’est pas du développement personnel flou", positive: false },
-              { text: "C’est une comparaison directe entre une lecture symbolique et tes comportements réels sous contrainte.", positive: true }
-            ].map((item, i) => (
-              <motion.div 
-                key={i}
-                {...fadeIn}
-                className={`group flex items-center gap-8 p-10 rounded-[40px] border transition-all duration-500 ${item.positive ? 'bg-[#C9A24D] border-[#C9A24D] shadow-[0_30px_60px_-15px_rgba(201,162,77,0.3)]' : 'bg-white/5 border-white/10 hover:bg-white/10'}`}
-              >
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${item.positive ? 'bg-white text-[#C9A24D]' : 'bg-white/10 text-white/30 group-hover:text-white/60 transition-colors'}`}>
-                  {item.positive ? <Check className="w-6 h-6 font-bold" /> : <X className="w-6 h-6" />}
-                </div>
-                <span className={`text-2xl md:text-4xl ${item.positive ? 'font-bold text-[#1A1C2E]' : 'text-white/40 group-hover:text-white/80 transition-colors'}`}>
-                  {item.text}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 3.5 SECTION — LA PREUVE SOCIALE (NOUVEAU) */}
-      <section className="py-40 px-6 bg-white relative overflow-hidden">
-        <div className="max-w-6xl mx-auto space-y-24 relative z-10">
-          {/* Counter Header */}
-          <motion.div {...fadeIn} className="text-center space-y-6">
-            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-[#FDFBF7] border border-[#1A1C2E]/5 text-[#C9A24D] text-xs font-black uppercase tracking-[0.3em]">
-              <Users className="w-4 h-4" />
-              Déjà + de 1 200 légendes révélées
-            </div>
-            <h2 className="text-4xl md:text-6xl font-serif font-bold text-[#1A1C2E]">Ils ont fait l’expérience</h2>
-          </motion.div>
-
-          {/* Thomas Testimonial */}
-          <motion.div 
-            {...fadeIn}
-            className="group relative max-w-4xl mx-auto p-12 md:p-20 rounded-[80px] bg-[#FDFBF7] border border-[#1A1C2E]/5 shadow-2xl shadow-black/[0.02] overflow-hidden"
-          >
-            <Quote className="absolute top-12 right-12 w-24 h-24 text-[#C9A24D]/5 rotate-180" />
-            
-            <div className="flex flex-col md:flex-row gap-12 items-center relative z-10">
-              {/* Photo Placeholder */}
-              <div className="w-32 h-32 md:w-48 md:h-48 rounded-[40px] bg-[#1A1C2E]/5 border-2 border-white shadow-xl overflow-hidden shrink-0 grayscale hover:grayscale-0 transition-all duration-700">
-                <img 
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400" 
-                  alt="Thomas"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <div className="space-y-8 text-center md:text-left">
-                <div className="flex justify-center md:justify-start gap-1 text-[#C9A24D]">
-                  {[1, 2, 3, 4, 5].map((s) => <Star key={s} className="w-5 h-5 fill-current" />)}
-                </div>
-                
-                <p className="text-2xl md:text-4xl font-serif italic leading-relaxed text-[#1A1C2E]">
-                  « J’étais très sceptique au départ. Le crash-test m’a surtout montré un décalage que je n’avais jamais vu chez moi. Une prise de conscience brutale mais nécessaire. »
-                </p>
-
-                <div className="pt-4">
-                  <p className="text-lg font-black uppercase tracking-[0.2em] text-[#1A1C2E]">Thomas, 34 ans</p>
-                  <p className="text-xs font-bold uppercase tracking-widest text-[#1A1C2E]/30">Entrepreneur • Chemin de Vie 5</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Subtle floating decoration */}
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#C9A24D]/5 blur-3xl rounded-full"></div>
-          </motion.div>
-
-          {/* Social Proof Stats */}
-          <motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12">
-            {[
-              { label: "Vérifié", value: "4.6/5", icon: Star, sub: "Basé sur 1,200+ avis" },
-              { label: "Utilisateurs", value: "1,200+", icon: Users, sub: "Légendes révélées" },
-              { label: "Recommandé", value: "94%", icon: Sparkles, sub: "Taux de satisfaction" }
-            ].map((stat, i) => (
-              <div key={i} className="relative group p-8 rounded-[40px] bg-white border border-[#1A1C2E]/5 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden text-center">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#C9A24D]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="flex justify-center mb-4">
-                  <div className="w-12 h-12 rounded-2xl bg-[#FDFBF7] flex items-center justify-center text-[#C9A24D] group-hover:scale-110 transition-transform">
-                    <stat.icon className="w-6 h-6 fill-current" />
-                  </div>
-                </div>
-                <div className="text-4xl font-serif font-bold text-[#1A1C2E] mb-1">{stat.value}</div>
-                <div className="text-[11px] font-black uppercase tracking-[0.2em] text-[#C9A24D] mb-2">{stat.label}</div>
-                <div className="text-[10px] font-medium text-[#1A1C2E]/30 uppercase tracking-widest">{stat.sub}</div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 4. SECTION — CE QUE TU DÉCOUVRES (ELEGANT LIST) */}
-      <section className="py-40 px-6 bg-white">
-        <div className="max-w-4xl mx-auto space-y-24">
-          <motion.div {...fadeIn} className="text-center space-y-6">
-            <div className="text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.5em]">L'Output</div>
-            <h2 className="text-5xl md:text-7xl font-serif font-bold text-[#1A1C2E]">Ce que révèle ton Crash-Test</h2>
-          </motion.div>
-
+      {/* 2. RECONNAISSANCE — CE TEST EST POUR TOI SI... */}
+      <section className="py-24 px-6 relative">
+        <motion.div 
+          {...fadeIn}
+          className="max-w-xl mx-auto bg-white/5 border border-white/10 rounded-[40px] p-8 md:p-12 space-y-8 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A24D]/10 blur-3xl rounded-full" />
+          
+          <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#C9A24D]">Ce test est pour toi si…</h2>
+          
           <div className="space-y-4">
             {[
-              { text: "Comprendre pourquoi certaines situations reviennent toujours dans ta vie", icon: Activity },
-              { text: "Identifier les schémas que tu reproduis sans t’en rendre compte", icon: Lock },
-              { text: "Arrêter de reproduire les mêmes erreurs relationnelles ou professionnelles", icon: X },
-              { text: "Voir où ton adaptation a pris le dessus sur ton potentiel profond", icon: Zap },
-              { text: "Découvrir une clé concrète pour te réaligner et apaiser tes tensions", icon: Sparkles }
+              "tu hésites souvent trop longtemps avant de décider",
+              "tu décides vite sous pression… puis tu regrettes",
+              "tu as l’impression de répéter les mêmes erreurs",
+              "tu te sens fatigué mentalement sans raison claire",
+              "tu sais ce que tu “devrais” faire, mais tu n’y arrives pas"
             ].map((item, i) => (
-              <motion.div 
-                key={i}
-                {...fadeIn}
-                transition={{ delay: i * 0.1 }}
-                className="group flex items-center gap-8 p-10 rounded-[40px] bg-[#FDFBF7] border border-[#1A1C2E]/5 hover:bg-white hover:shadow-xl transition-all duration-500"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-sm group-hover:bg-[#C9A24D] group-hover:text-white transition-all">
-                  <item.icon className="w-6 h-6" />
+              <div key={i} className="flex items-start gap-4 group">
+                <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center shrink-0 mt-1">
+                  <Check className="w-3.5 h-3.5 text-[#C9A24D]" />
                 </div>
-                <span className="text-2xl text-[#1A1C2E]/80 font-medium">{item.text}</span>
-              </motion.div>
+                <p className="text-lg md:text-xl text-white/80 leading-tight group-hover:text-white transition-colors">
+                  {item}
+                </p>
+              </div>
             ))}
           </div>
-
-          <motion.div {...fadeIn} className="text-center space-y-4 pt-10">
-            <div className="inline-block p-10 rounded-[60px] bg-[#FDFBF7] border border-[#1A1C2E]/5">
-              <p className="text-3xl font-serif font-bold mb-2">Pas de jugement. Pas d’étiquette.</p>
-              <p className="text-2xl text-[#C9A24D] italic font-medium">Juste une lecture claire et exploitable.</p>
-            </div>
-          </motion.div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* 5. SECTION — UNE EXPÉRIENCE COMPLÈTE (PREMIUM DELIVERABLES) */}
-      <section className="py-40 px-6 relative overflow-hidden bg-[#FDFBF7]">
-        <div className="max-w-6xl mx-auto space-y-24 relative z-10">
-          <motion.div {...fadeIn} className="text-center space-y-6">
-            <div className="text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.5em]">Le Pack Révélation</div>
-            <h2 className="text-5xl md:text-8xl font-serif font-bold">Une expérience complète</h2>
-            <p className="text-xl md:text-2xl text-[#1A1C2E]/50 max-w-2xl mx-auto">
-              Ce n'est pas juste un PDF. C'est une immersion interactive avec une IA pour comprendre tes mécanismes.
+      {/* 3. EXEMPLE DE LECTURE — LE PONT ÉMOTIONNEL */}
+      <section className="py-24 px-6 relative">
+        <div className="max-w-2xl mx-auto space-y-16">
+          <motion.div {...fadeIn} className="text-center space-y-4">
+            <h2 className="text-3xl md:text-5xl font-serif font-bold">Exemple de lecture</h2>
+            <p className="text-white/40 text-sm uppercase tracking-widest italic">
+              (chaque analyse est personnelle)
             </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { title: "Dossier Personnalisé", desc: "40 pages d'analyse croisée : astro, numérologie et psychologie décisionnelle.", icon: BookOpen, tag: "PDF 40 pages" },
-              { title: "Analyse Vidéo Oracle", desc: "Une vidéo immersive de 5 à 7 minutes où l'Oracle analyse ton potentiel en temps réel.", icon: Video, tag: "Vidéo Personnalisée" },
-              { title: "Coach Vocal IA", desc: "Une conversation vocale de 30 minutes avec l'IA pour approfondir tes résultats.", icon: Mic, tag: "Échange Interactif" }
-            ].map((item, i) => (
-              <motion.div 
-                key={i}
-                {...fadeIn}
-                className="p-12 rounded-[60px] bg-white border border-[#1A1C2E]/5 shadow-sm hover:shadow-2xl transition-all duration-700 space-y-8 group"
-              >
-                <div className="w-20 h-20 bg-[#FDFBF7] rounded-[28px] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#C9A24D] group-hover:text-white transition-all duration-500">
-                  <item.icon className="w-10 h-10" />
-                </div>
-                <div className="space-y-4">
-                  <div className="text-[10px] font-black text-[#C9A24D] uppercase tracking-widest">{item.tag}</div>
-                  <h3 className="text-3xl font-serif font-bold">{item.title}</h3>
-                  <p className="text-[#1A1C2E]/50 text-xl leading-relaxed">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div {...fadeIn} className="text-center max-w-3xl mx-auto pt-20 space-y-12">
-            <p className="text-4xl md:text-5xl font-serif italic text-[#1A1C2E] leading-tight">
-              Tu ne lis pas ton destin. <br />
-              <span className="text-[#C9A24D] not-italic font-bold tracking-tight">Tu observes comment tu fonctionnes vraiment.</span>
-            </p>
-
-            <div className="pt-4">
-              <Link 
-                href="/miroir/experience"
-                onClick={handleCtaClick}
-                className="group relative inline-flex flex-col items-center gap-2 px-12 py-8 bg-[#1A1C2E] text-white rounded-full font-bold shadow-2xl hover:shadow-[#C9A24D]/40 transition-all hover:scale-105 active:scale-95 overflow-hidden"
-              >
-                <span className="text-2xl md:text-3xl">
-                  {isNavigating ? 'Chargement...' : 'Je fais le Crash-Test — 49 €'}
-                </span>
-                <span className="text-[10px] uppercase tracking-[0.2em] opacity-60">Accès immédiat • Dossier + Vidéo + Coaching</span>
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 5.5 SECTION — ALLER PLUS LOIN (NOUVEAU) */}
-      <section className="py-40 px-6 bg-white relative">
-        <div className="max-w-5xl mx-auto space-y-24">
-          <motion.div {...fadeIn} className="text-center space-y-8">
-            <div className="text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.5em]">L'Après Crash-Test</div>
-            <h2 className="text-5xl md:text-8xl font-serif font-bold">Et après le Crash-Test ?</h2>
-            
-            <div className="space-y-6 max-w-3xl mx-auto">
-              <p className="text-2xl text-[#1A1C2E]/80 leading-relaxed">
-                Le Crash-Test met en lumière l’écart entre ton potentiel naturel et ton fonctionnement actuel.
-              </p>
-              <p className="text-xl text-[#1A1C2E]/50 leading-relaxed italic">
-                Pour celles et ceux qui le souhaitent, il est possible d’aller plus loin avec des exercices guidés conçus pour favoriser un rééquilibrage progressif.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Benefits Grid */}
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { text: "Des exercices simples, intégrés au quotidien", icon: Sparkles },
-              { text: "Basés sur l’observation, les choix et les habitudes", icon: Activity },
-              { text: "Sans diagnostic, sans thérapie, sans contrainte", icon: ShieldCheck }
-            ].map((item, i) => (
-              <motion.div 
-                key={i}
-                {...fadeIn}
-                className="flex items-center gap-6 p-8 rounded-[40px] bg-[#FDFBF7] border border-[#1A1C2E]/5"
-              >
-                <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-sm text-[#C9A24D]">
-                  <item.icon className="w-6 h-6" />
-                </div>
-                <span className="text-lg font-medium text-[#1A1C2E]/70 leading-tight">{item.text}</span>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Durations / Paths */}
-          <div className="space-y-12 pt-10">
-            <motion.h3 {...fadeIn} className="text-2xl font-serif font-bold text-center text-[#1A1C2E]/40 uppercase tracking-[0.2em]">Parcours d'intégration</motion.h3>
-            
-            <div className="max-w-xl mx-auto">
-              <motion.div 
-                {...fadeIn}
-                className="p-10 rounded-[50px] border border-[#C9A24D]/30 bg-[#C9A24D]/[0.02] space-y-6 hover:shadow-xl transition-all duration-500"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-sm text-[#C9A24D]">
-                    <Calendar className="w-6 h-6" />
-                  </div>
-                  <span className="text-2xl font-black text-[#1A1C2E]">Le Parcours de 3 mois</span>
-                </div>
-                <ul className="space-y-4">
-                  {[
-                    "Observer ses automatismes dominants",
-                    "Comprendre ses rythmes personnels",
-                    "Ajuster son rapport à la décision",
-                    "Stabiliser de nouveaux repères d'action"
-                  ].map((p, j) => (
-                    <li key={j} className="flex items-start gap-3 text-[#1A1C2E]/60 text-sm leading-relaxed">
-                      <ArrowRight className="w-4 h-4 text-[#C9A24D] shrink-0 mt-1" />
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-                <div className="pt-4">
-                  <button 
-                    onClick={() => router.push('/parcours-12-mois')}
-                    className="w-full py-4 bg-[#1A1C2E] text-white rounded-full font-bold text-sm hover:bg-[#C9A24D] transition-colors"
-                  >
-                    Découvrir le parcours
-                  </button>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-
-          <motion.div {...fadeIn} className="max-w-2xl mx-auto p-10 rounded-[40px] bg-[#1A1C2E]/[0.02] border border-[#1A1C2E]/5 text-center space-y-6">
-            <p className="text-2xl font-serif italic text-[#C9A24D]">
-              « Le but n’est pas de changer qui tu es, mais de réduire ce qui te désaligne. »
-            </p>
-            <p className="text-xs font-bold text-[#1A1C2E]/30 uppercase tracking-widest leading-relaxed">
-              Il s’agit d’un accompagnement de compréhension et d’ajustement personnel, <br />
-              pas d’un suivi médical ou thérapeutique.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 6. SECTION — POUR QUI / POUR QUI PAS (MINIMALIST) */}
-      <section className="py-40 px-6 bg-white border-y border-[#1A1C2E]/5">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-32">
-          <motion.div {...fadeIn} className="space-y-12">
-            <div className="space-y-4">
-              <h3 className="text-4xl font-serif font-bold text-[#C9A24D]">C’est pour toi si :</h3>
-              <div className="h-1 w-12 bg-[#C9A24D]/20"></div>
-            </div>
-            <div className="space-y-8">
-              {[
-                "Tu es curieux(se) de te comprendre autrement",
-                "Tu aimes confronter les idées à la reality",
-                "Tu veux arrêter de tourner en rond"
-              ].map((text, i) => (
-                <div key={i} className="flex items-start gap-6 group">
-                  <div className="w-8 h-8 rounded-full bg-[#C9A24D]/10 flex items-center justify-center shrink-0 mt-1 group-hover:bg-[#C9A24D] group-hover:text-white transition-all">
-                    <Check className="w-5 h-5" />
-                  </div>
-                  <span className="text-2xl text-[#1A1C2E] font-medium leading-tight">{text}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div {...fadeIn} className="space-y-12">
-            <div className="space-y-4">
-              <h3 className="text-4xl font-serif font-bold text-[#1A1C2E]/30">Ce n’est pas pour toi si :</h3>
-              <div className="h-1 w-12 bg-[#1A1C2E]/10"></div>
-            </div>
-            <div className="space-y-8">
-              {[
-                "Tu cherches une prédiction magique",
-                "Tu veux qu’on te dise qui tu es",
-                "Tu veux une réponse toute faite"
-              ].map((text, i) => (
-                <div key={i} className="flex items-start gap-6 text-[#1A1C2E]/30">
-                  <div className="w-8 h-8 rounded-full bg-[#1A1C2E]/5 flex items-center justify-center shrink-0 mt-1">
-                    <X className="w-5 h-5" />
-                  </div>
-                  <span className="text-2xl font-medium leading-tight">{text}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 7. SECTION — CADRE & TRANSPARENCE (TRUST) */}
-      <section className="py-32 px-6 bg-[#FDFBF7]">
-        <div className="max-w-3xl mx-auto bg-white p-16 md:p-24 rounded-[80px] border border-[#1A1C2E]/5 shadow-2xl shadow-black/[0.02] space-y-16">
-          <motion.div {...fadeIn} className="flex items-center gap-4 justify-center text-[#1A1C2E]/30">
-            <ShieldCheck className="w-8 h-8" />
-            <h3 className="text-sm font-black uppercase tracking-[0.4em]">Cadre & Transparence</h3>
           </motion.div>
 
           <div className="grid gap-8">
-            {[
-              "Lecture symbolique + interactive",
-              "Aucun diagnostic médical",
-              "Aucun traitement, aucune prédiction",
-              "Résultats influencés par le contexte et l’attention"
-            ].map((text, i) => (
-              <motion.div 
-                key={i}
-                {...fadeIn}
-                className="flex items-center gap-6 text-xl text-[#1A1C2E]/50 font-medium"
-              >
-                <div className="w-2 h-2 rounded-full bg-[#C9A24D]/30"></div>
-                <span>{text}</span>
-              </motion.div>
-            ))}
-          </div>
+            {/* Potentiel */}
+            <motion.div 
+              {...fadeIn}
+              className="p-8 rounded-[40px] bg-white/5 border border-white/10 space-y-6 relative"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#C9A24D]/10 text-[#C9A24D] text-[10px] font-black uppercase tracking-widest border border-[#C9A24D]/20">
+                <Sparkles className="w-3 h-3" /> Potentiel de Naissance
+              </div>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3 text-white/70">
+                  <div className="w-1 h-1 bg-[#C9A24D] rounded-full" />
+                  capacité naturelle de projection
+                </li>
+                <li className="flex items-center gap-3 text-white/70">
+                  <div className="w-1 h-1 bg-[#C9A24D] rounded-full" />
+                  tendance à la stabilité intérieure
+                </li>
+                <li className="flex items-center gap-3 text-white/70">
+                  <div className="w-1 h-1 bg-[#C9A24D] rounded-full" />
+                  rapport au temps posé et structuré
+                </li>
+              </ul>
+              <p className="text-[#C9A24D] font-bold italic border-t border-white/5 pt-4">
+                👉 Sur le papier, ce profil est fait pour décider avec clarté.
+              </p>
+            </motion.div>
 
-          <motion.div {...fadeIn} className="space-y-6 pt-10 text-center border-t border-[#1A1C2E]/5">
-            <p className="text-2xl font-bold text-[#1A1C2E]">👉 Outil de compréhension personnelle, rien de plus.</p>
-            <p className="text-xl text-[#C9A24D] font-black uppercase tracking-widest">Et c’est déjà beaucoup.</p>
-          </motion.div>
+            <div className="flex justify-center">
+              <Zap className="w-8 h-8 text-white/10" />
+            </div>
+
+            {/* Réalité */}
+            <motion.div 
+              {...fadeIn}
+              className="p-8 rounded-[40px] bg-[#5B4B8A]/5 border border-[#5B4B8A]/20 space-y-6"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#5B4B8A]/10 text-[#5B4B8A] text-[10px] font-black uppercase tracking-widest border border-[#5B4B8A]/20">
+                <Activity className="w-3 h-3" /> Fonctionnement Réel
+              </div>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3 text-white/70">
+                  <div className="w-1 h-1 bg-[#5B4B8A] rounded-full" />
+                  décisions prises dans l’urgence
+                </li>
+                <li className="flex items-center gap-3 text-white/70">
+                  <div className="w-1 h-1 bg-[#5B4B8A] rounded-full" />
+                  surcharge mentale récurrente
+                </li>
+                <li className="flex items-center gap-3 text-white/70">
+                  <div className="w-1 h-1 bg-[#5B4B8A] rounded-full" />
+                  difficulté à maintenir une direction
+                </li>
+              </ul>
+              <p className="text-[#5B4B8A] font-bold italic border-t border-white/5 pt-4">
+                👉 Dans la réalité, ce fonctionnement crée fatigue et stagnation.
+              </p>
+            </motion.div>
+
+            {/* L'écart */}
+            <motion.div 
+              {...fadeIn}
+              className="p-10 rounded-[50px] bg-gradient-to-tr from-[#1A1C2E] to-[#08090F] border border-white/10 text-center space-y-6 shadow-2xl"
+            >
+              <h3 className="text-2xl font-serif font-bold text-[#C9A24D]">Ce que révèle l’écart</h3>
+              <p className="text-lg text-white/70 leading-relaxed italic">
+                "Ce type d’écart n'est pas un problème, mais une perte de fluidité. Le Crash-Test identifie où cet écart se situe pour toi."
+              </p>
+              <button 
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="text-[#C9A24D] text-xs font-black uppercase tracking-[0.2em] border-b border-[#C9A24D]/30 pb-1"
+              >
+                👉 Voir mon propre écart (1 min)
+              </button>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* CTA FINAL (HIGH IMPACT) */}
-      <section className="py-60 px-6 text-center relative overflow-hidden bg-white">
+      {/* 4. COMMENT ÇA MARCHE — LOGIQUE */}
+      <section className="py-24 px-6 bg-white/5">
+        <div className="max-w-xl mx-auto space-y-16">
+          <motion.h2 {...fadeIn} className="text-3xl md:text-5xl font-serif font-bold text-center">Comment ça marche ?</motion.h2>
+          
+          <div className="space-y-4">
+            {[
+              { id: "01", title: "Ton potentiel", icon: Fingerprint, desc: "Analyse symbolique de ta naissance." },
+              { id: "02", title: "Tes décisions", icon: Activity, desc: "Tests de réactions sous pression." },
+              { id: "03", title: "Le Miroir", icon: Layers, desc: "Comparaison directe et analyse de l'écart." }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                {...fadeIn}
+                className="flex items-center gap-6 p-6 rounded-3xl bg-[#08090F] border border-white/5 shadow-sm"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-[#C9A24D] shrink-0">
+                  <item.icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold">{item.title}</h3>
+                  <p className="text-white/40 text-sm">{item.desc}</p>
+                </div>
+                <div className="ml-auto text-3xl font-black text-white/5">{item.id}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. CTA FINAL — ULTRA VISIBLE */}
+      <section className="py-32 px-6 text-center relative overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(201,162,77,0.15),_transparent_70%)]"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(201,162,77,0.1),_transparent_70%)]" />
         </div>
 
-        <motion.div {...fadeIn} className="max-w-5xl mx-auto space-y-16 relative z-10">
-          <h2 className="text-6xl md:text-9xl font-serif font-bold text-[#1A1C2E] leading-[0.9]">
-            Prêt à confronter ton potentiel <br />
-            <span className="text-[#C9A24D] italic underline decoration-[#C9A24D]/20 underline-offset-[16px]">à la réalité ?</span>
+        <motion.div {...fadeIn} className="max-w-xl mx-auto space-y-12 relative z-10">
+          <h2 className="text-4xl md:text-6xl font-serif font-bold leading-tight">
+            Prêt à voir <br />
+            <span className="text-[#C9A24D] italic">ton reflet réel ?</span>
           </h2>
 
-          <div className="space-y-10 pt-10">
+          <div className="space-y-6">
             <Link 
               href="/miroir/experience"
               onClick={handleCtaClick}
-              className="group relative inline-flex flex-col items-center gap-4 px-16 py-10 bg-[#1A1C2E] text-white rounded-[40px] shadow-[0_50px_100px_-20px_rgba(26,28,46,0.4)] hover:shadow-[#C9A24D]/40 transition-all duration-700 hover:scale-105 active:scale-95 overflow-hidden"
+              className="group w-full relative inline-flex flex-col items-center gap-2 px-8 py-10 bg-[#C9A24D] text-[#08090F] rounded-[40px] shadow-[0_30px_60px_-10px_rgba(201,162,77,0.5)] hover:scale-105 active:scale-95 transition-all"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              <span className="text-3xl md:text-5xl font-bold relative z-10">
-                {isNavigating ? 'Démarrage...' : '👉 Je fais le Crash-Test'}
+              <span className="text-2xl md:text-3xl font-black">
+                {isNavigating ? 'Démarrage...' : "LANCER LE TEST (1 min)"}
               </span>
-              <div className="flex items-center gap-4 relative z-10">
-                <span className="text-4xl md:text-6xl font-serif italic text-[#C9A24D]">49 €</span>
-                <div className="h-8 w-px bg-white/20"></div>
-                <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] opacity-60 text-left">Paiement sécurisé <br /> Accès immédiat</span>
-              </div>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60">Gratuit • Résultat immédiat</span>
             </Link>
-            <p className="text-[#1A1C2E]/40 text-sm font-bold uppercase tracking-[0.4em]">Expérience Unique · Révélation Immédiate</p>
+            
+            <div className="flex items-center justify-center gap-6 opacity-30">
+              <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest">
+                <ShieldCheck className="w-3 h-3" /> Anonyme
+              </div>
+              <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest">
+                <Lock className="w-3 h-3" /> Sécurisé
+              </div>
+              <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest">
+                <Eye className="w-3 h-3" /> Pas de diagnostic
+              </div>
+            </div>
           </div>
         </motion.div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-20 px-6 bg-[#FDFBF7] border-t border-[#1A1C2E]/5 text-center space-y-8">
+      {/* FOOTER MINIMAL */}
+      <footer className="py-12 px-6 border-t border-white/5 text-center space-y-6 opacity-20">
         <div className="flex items-center justify-center gap-4 text-[#C9A24D]">
-          <Target className="w-6 h-6" />
-          <div className="h-4 w-px bg-[#1A1C2E]/10"></div>
-          <Fingerprint className="w-6 h-6" />
-          <div className="h-4 w-px bg-[#1A1C2E]/10"></div>
-          <Activity className="w-6 h-6" />
+          <Target className="w-4 h-4" />
+          <Fingerprint className="w-4 h-4" />
+          <Activity className="w-4 h-4" />
         </div>
-        <div className="text-[11px] font-black uppercase tracking-[0.5em] text-[#1A1C2E]/20">
-          © {new Date().getFullYear()} LE CRASH-TEST DE TES DÉCISIONS · QUAND TON POTENTIEL RENCONTRE LA PSYCHOLOGIE
-        </div>
+        <p className="text-[9px] font-black uppercase tracking-[0.5em]">
+          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION
+        </p>
       </footer>
 
     </div>

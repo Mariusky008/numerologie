@@ -293,8 +293,8 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* 3. CARTE 2 — EXEMPLE DE LECTURE (MIROIR) */}
-      <section className="py-24 px-6 relative">
+      {/* 3. CARTE 2 — EXEMPLE DE LECTURE (CHAT STYLE) */}
+      <section className="py-24 px-6 relative overflow-hidden">
         <div className="max-w-2xl mx-auto space-y-12">
           <motion.div {...fadeIn} className="text-center space-y-4">
             <h2 className="text-3xl md:text-5xl font-serif font-bold">Ce que nous montrons vraiment</h2>
@@ -303,98 +303,130 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <motion.div 
-            {...fadeIn}
-            className="p-8 md:p-12 rounded-[50px] bg-gradient-to-tr from-[#1A1C2E] to-[#08090F] border border-white/10 shadow-2xl space-y-12 relative overflow-hidden"
-          >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-[#C9A24D]/30 to-transparent" />
-            
-            {/* Mirror Metaphor */}
-            <div className="space-y-6 text-center max-w-lg mx-auto">
-              <p className="text-lg md:text-xl text-white/90 leading-relaxed italic">
-                "Chaque matin, tu te regardes dans le miroir en pensant te voir tel que tu es. En réalité, tu vois souvent la personne que tu étais il y a des années."
-              </p>
-              <p className="text-sm text-white/50 leading-relaxed">
-                La vie t’a façonné autrement : stress, contraintes, choix imposés. Ce décalage crée fatigue et confusion.
-              </p>
-            </div>
-
-            <div className="grid gap-8 relative">
-              {/* Sequential Animation Container */}
-              <div className="space-y-8">
-                {/* Bloc 1: Potentiel */}
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                  className="p-6 rounded-3xl bg-white/5 border border-white/10 space-y-4"
-                >
-                  <div className="flex items-center gap-3 text-[#C9A24D]">
-                    <Sparkles className="w-5 h-5" />
-                    <span className="text-[10px] font-black uppercase tracking-widest">Potentiel de départ</span>
-                  </div>
-                  <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-bold text-white/70">
-                    <li className="flex items-center gap-2">Vision & projection</li>
-                    <li className="flex items-center gap-2">Stabilité intérieure</li>
-                    <li className="flex items-center gap-2">Décisions long terme</li>
-                  </ul>
-                  <p className="text-[11px] text-[#C9A24D] font-bold italic border-t border-white/5 pt-3">
-                    👉 Sur le papier, ce profil est fait pour décider avec clarté.
-                  </p>
-                </motion.div>
-
-                <div className="flex justify-center -my-4 relative z-10">
-                  <div className="w-10 h-10 rounded-full bg-[#08090F] border border-white/10 flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-white/20" />
-                  </div>
-                </div>
-
-                {/* Bloc 2: Fonctionnement Réel */}
-                <motion.div 
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
-                  className="p-6 rounded-3xl bg-[#5B4B8A]/5 border border-[#5B4B8A]/20 space-y-4"
-                >
-                  <div className="flex items-center gap-3 text-[#A78BFA]">
-                    <Activity className="w-5 h-5" />
-                    <span className="text-[10px] font-black uppercase tracking-widest">Fonctionnement observé aujourd'hui</span>
-                  </div>
-                  <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-bold text-white/70">
-                    <li className="flex items-center gap-2">Décisions dans l'urgence</li>
-                    <li className="flex items-center gap-2">Surcharge mentale</li>
-                    <li className="flex items-center gap-2">Perte de direction</li>
-                  </ul>
-                  <p className="text-[11px] text-[#A78BFA] font-bold italic border-t border-white/5 pt-3">
-                    👉 Dans la réalité, cela crée fatigue et hésitation.
-                  </p>
-                </motion.div>
+          <div className="space-y-6">
+            {/* Bubble 1: Metaphor */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="flex flex-col items-start gap-2 max-w-[85%]"
+            >
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed italic">
+                  "Chaque matin, tu te regardes dans le miroir en pensant te voir tel que tu es. En réalité, tu vois souvent la personne que tu étais il y a des années."
+                </p>
               </div>
-            </div>
+              <span className="text-[10px] text-white/20 font-bold ml-4 uppercase tracking-widest">L'Oracle • À l'instant</span>
+            </motion.div>
 
-            {/* Mirror Bridge */}
+            {/* Bubble 2: Explanation */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 0.4 }}
+              className="flex flex-col items-start gap-2 max-w-[85%]"
+            >
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+                <p className="text-sm md:text-base text-white/70 leading-relaxed">
+                  La vie t’a façonné autrement : stress, contraintes, choix imposés. Ce décalage crée fatigue et confusion.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Rich Card 1: Potentiel */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 0.8 }}
+              className="flex flex-col items-center py-8"
+            >
+              <div className="w-full bg-gradient-to-tr from-[#C9A24D]/20 to-transparent border border-[#C9A24D]/30 p-6 rounded-[40px] shadow-2xl space-y-4">
+                <div className="flex items-center gap-3 text-[#C9A24D]">
+                  <Sparkles className="w-5 h-5" />
+                  <span className="text-[10px] font-black uppercase tracking-widest">Potentiel de départ</span>
+                </div>
+                <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-bold text-white/80">
+                  <li className="flex items-center gap-2">Vision & projection</li>
+                  <li className="flex items-center gap-2">Stabilité intérieure</li>
+                  <li className="flex items-center gap-2">Décisions long terme</li>
+                </ul>
+                <p className="text-[11px] text-[#C9A24D] font-bold italic border-t border-white/10 pt-3">
+                  👉 Sur le papier, ce profil est fait pour décider avec clarté.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Transition Zap */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1 }}
+              className="flex justify-center -my-4 relative z-10"
+            >
+              <div className="w-10 h-10 rounded-full bg-[#08090F] border border-white/10 flex items-center justify-center">
+                <Zap className="w-5 h-5 text-[#C9A24D] animate-pulse" />
+              </div>
+            </motion.div>
+
+            {/* Rich Card 2: Réalité */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 1.2 }}
+              className="flex flex-col items-center py-8"
+            >
+              <div className="w-full bg-gradient-to-tr from-[#5B4B8A]/20 to-transparent border border-[#5B4B8A]/30 p-6 rounded-[40px] shadow-2xl space-y-4">
+                <div className="flex items-center gap-3 text-[#A78BFA]">
+                  <Activity className="w-5 h-5" />
+                  <span className="text-[10px] font-black uppercase tracking-widest">Fonctionnement observé aujourd'hui</span>
+                </div>
+                <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-bold text-white/80">
+                  <li className="flex items-center gap-2">Décisions dans l'urgence</li>
+                  <li className="flex items-center gap-2">Surcharge mentale</li>
+                  <li className="flex items-center gap-2">Perte de direction</li>
+                </ul>
+                <p className="text-[11px] text-[#A78BFA] font-bold italic border-t border-white/10 pt-3">
+                  👉 Dans la réalité, cela crée fatigue et hésitation.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Bubble 3: Bridge */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 1.6 }}
+              className="flex flex-col items-start gap-2 max-w-[85%] pt-4"
+            >
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+                <p className="text-base md:text-lg font-serif italic text-white/90">
+                  "Ce type d’écart est fréquent. Il ne se ressent pas comme un problème, mais comme une perte de fluidité."
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Final Section CTA */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.6 }}
-              className="text-center space-y-6 pt-4"
+              transition={{ delay: 2 }}
+              className="flex justify-center pt-8"
             >
-              <div className="h-px w-24 bg-[#C9A24D]/30 mx-auto" />
-              <p className="text-base md:text-lg font-serif italic text-white/80">
-                Ce type d’écart est fréquent. Il ne se ressent pas comme un problème, mais comme une perte de fluidité.
-              </p>
               <Link 
                 href="/miroir/experience"
-                className="inline-flex items-center gap-3 px-6 py-4 bg-white/5 border border-[#C9A24D]/30 rounded-2xl text-[#C9A24D] text-xs font-black uppercase tracking-widest hover:bg-[#C9A24D]/10 transition-all"
+                className="inline-flex items-center gap-3 px-8 py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl text-sm font-black uppercase tracking-widest hover:scale-105 transition-all shadow-[0_15px_30px_-10px_rgba(201,162,77,0.4)]"
               >
                 Voir ce type d'écart chez moi (1 min)
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-5 h-5" />
               </Link>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
 

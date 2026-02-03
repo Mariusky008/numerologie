@@ -130,88 +130,18 @@ export default function Home() {
         </div>
 
         <div className="max-w-xl w-full z-10 space-y-10 text-center">
-          {/* Main Hook */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="space-y-6 relative"
-          >
-            {/* Visual Signature — The Mirror Sphere */}
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-20 h-20 pointer-events-none opacity-50">
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#C9A24D] to-transparent rounded-full blur-xl animate-pulse" />
-              <div className="absolute inset-2 bg-[#08090F] rounded-full border border-white/10 flex items-center justify-center">
-                <Sparkles className="w-8 h-8 text-[#C9A24D]" />
-              </div>
-            </div>
-
-            <h1 className="text-3xl md:text-5xl font-serif font-bold tracking-tight leading-tight pt-8">
-              Prêt à découvrir ce qui influence <br />
-              <span className="text-[#C9A24D] italic">vraiment tes décisions ?</span>
-            </h1>
-
-            {/* XXL CTA — VISIBLE SANS SCROLL */}
-            <div className="space-y-4 pt-4 relative group">
-              {/* Progress Indicator Above CTA */}
-              <div className="flex flex-col items-center gap-1 mb-4">
-                <div className="flex justify-between w-48 text-[9px] font-black uppercase tracking-[0.2em] text-[#C9A24D]/60">
-                  <span>Étape 1 / 3</span>
-                  <span>0%</span>
-                </div>
-                <div className="w-48 h-1 bg-white/5 rounded-full overflow-hidden">
-                  <motion.div 
-                    initial={{ width: "2%" }}
-                    animate={{ width: "5%" }}
-                    className="h-full bg-[#C9A24D]"
-                  />
-                </div>
-              </div>
-
-              <div className="text-[#C9A24D] text-xs font-black uppercase tracking-widest mb-2 animate-bounce">
-                Ta première révélation dès maintenant
-              </div>
-
-              <Link 
-                href="/miroir/experience"
-                onClick={handleCtaClick}
-                className="group w-full relative inline-flex flex-col items-center justify-center gap-1 px-8 py-10 bg-[#C9A24D] text-[#08090F] rounded-[32px] font-black hover:scale-[1.02] active:scale-95 transition-all shadow-[0_25px_60px_-15px_rgba(201,162,77,0.6)] border-4 border-white/20 overflow-hidden"
-              >
-                {/* Glow Effect inside button */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                
-                <div className="flex items-center gap-4 text-2xl md:text-3xl relative z-10">
-                  {isNavigating ? 'Ouverture...' : "LANCER LE CRASH-TEST (1 MIN)"}
-                  <motion.div
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                  >
-                    <ArrowRight className="w-8 h-8" />
-                  </motion.div>
-                </div>
-                <span className="text-[11px] uppercase tracking-[0.2em] opacity-80 relative z-10">
-                  Voir ton premier insight en &lt; 1 minute
-                </span>
-              </Link>
-              <div className="flex items-center justify-center gap-4 text-[10px] font-bold text-white/40 uppercase tracking-widest">
-                <span>Rapide</span>
-                <span className="w-1 h-1 rounded-full bg-white/20" />
-                <span>Gratuit</span>
-                <span className="w-1 h-1 rounded-full bg-white/20" />
-                <span>Sans inscription</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Chat Interface — Refined */}
-          <div className="space-y-3 pt-10 text-left max-w-sm mx-auto">
+          {/* 1. Chat Interface — NOW FIRST */}
+          <div className="space-y-3 text-left max-w-sm mx-auto">
             <AnimatePresence>
               {chatStep >= 1 && (
                 <motion.div 
                   initial={{ opacity: 0, x: -20, scale: 0.9 }}
                   animate={{ opacity: 1, x: 0, scale: 1 }}
-                  className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none"
+                  className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl"
                 >
                   <p className="text-sm md:text-base font-medium leading-relaxed">
-                    Salut, tu te sens bloqué, fatigué mentalement ou tu répètes les mêmes erreurs ? 🧠
+                    Salut 👋 <br />
+                    Tu te sens bloqué, fatigué mentalement ou tu répètes les mêmes erreurs ? 🧠
                   </p>
                 </motion.div>
               )}
@@ -220,27 +150,91 @@ export default function Home() {
                 <motion.div 
                   initial={{ opacity: 0, x: -20, scale: 0.9 }}
                   animate={{ opacity: 1, x: 0, scale: 1 }}
-                  className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none"
+                  className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl"
                 >
                   <p className="text-sm md:text-base font-medium leading-relaxed">
-                    Et si ce n’était pas un problème… mais un décalage avec qui tu es vraiment ?
-                  </p>
-                </motion.div>
-              )}
-
-              {chatStep >= 3 && (
-                <motion.div 
-                  initial={{ opacity: 0, x: -20, scale: 0.9 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-4 rounded-2xl rounded-tl-none"
-                >
-                  <p className="text-sm md:text-base font-bold text-[#C9A24D] leading-relaxed">
-                    Le Crash-Test prend seulement 1 minute. 🧩
+                    Et si ce n’était pas un problème… <br />
+                    mais un décalage avec qui tu es vraiment ?
                   </p>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
+
+          {/* 2. Main Hook — NOW SECOND */}
+          <AnimatePresence>
+            {chatStep >= 3 && (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="space-y-8 relative"
+              >
+                {/* Visual Signature — The Mirror Sphere */}
+                <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-20 h-20 pointer-events-none opacity-50">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#C9A24D] to-transparent rounded-full blur-xl animate-pulse" />
+                  <div className="absolute inset-2 bg-[#08090F] rounded-full border border-white/10 flex items-center justify-center">
+                    <Sparkles className="w-8 h-8 text-[#C9A24D]" />
+                  </div>
+                </div>
+
+                <h1 className="text-3xl md:text-5xl font-serif font-bold tracking-tight leading-tight pt-8">
+                  Prêt maintenant à découvrir ce qui influence <br />
+                  <span className="text-[#C9A24D] italic">vraiment tes décisions ?</span>
+                </h1>
+
+                {/* 3. XXL CTA — MASSIVE & EVIDENT */}
+                <div className="space-y-4 pt-4 relative group">
+                  {/* Progress Indicator Above CTA */}
+                  <div className="flex flex-col items-center gap-1 mb-4">
+                    <div className="flex justify-between w-48 text-[9px] font-black uppercase tracking-[0.2em] text-[#C9A24D]/60">
+                      <span>Étape 1 / 3</span>
+                      <span>0%</span>
+                    </div>
+                    <div className="w-48 h-1 bg-white/5 rounded-full overflow-hidden">
+                      <motion.div 
+                        initial={{ width: "2%" }}
+                        animate={{ width: "5%" }}
+                        className="h-full bg-[#C9A24D]"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="text-[#C9A24D] text-xs font-black uppercase tracking-widest mb-2 animate-bounce">
+                    Voir ton premier insight maintenant
+                  </div>
+
+                  <Link 
+                    href="/miroir/experience"
+                    onClick={handleCtaClick}
+                    className="group w-full relative inline-flex flex-col items-center justify-center gap-1 px-8 py-10 bg-[#C9A24D] text-[#08090F] rounded-[32px] font-black hover:scale-[1.02] active:scale-95 transition-all shadow-[0_25px_60px_-15px_rgba(201,162,77,0.6)] border-4 border-white/20 overflow-hidden"
+                  >
+                    {/* Glow Effect inside button */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                    
+                    <div className="flex items-center gap-4 text-2xl md:text-3xl relative z-10">
+                      {isNavigating ? 'Ouverture...' : "LANCER LE CRASH-TEST (1 MIN)"}
+                      <motion.div
+                        animate={{ x: [0, 5, 0] }}
+                        transition={{ repeat: Infinity, duration: 1.5 }}
+                      >
+                        <ArrowRight className="w-8 h-8" />
+                      </motion.div>
+                    </div>
+                    <span className="text-[11px] uppercase tracking-[0.2em] opacity-80 relative z-10">
+                      Ton premier insight en &lt; 1 minute
+                    </span>
+                  </Link>
+                  <div className="flex items-center justify-center gap-4 text-[10px] font-bold text-white/40 uppercase tracking-widest">
+                    <span>Rapide</span>
+                    <span className="w-1 h-1 rounded-full bg-white/20" />
+                    <span>Gratuit</span>
+                    <span className="w-1 h-1 rounded-full bg-white/20" />
+                    <span>Sans inscription</span>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <motion.div 

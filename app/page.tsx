@@ -120,7 +120,7 @@ export default function Home() {
       {/* 1. HERO — ACTION AVANT TEXTE */}
       <section className="min-h-screen flex flex-col items-center justify-center px-6 relative pt-12 bg-[#08090F]">
         {/* Mystic Background */}
-        <div className="absolute inset-0 z-0 overflow-hidden bg-[#08090F]">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[120px] rounded-full" />
           <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-[#5B4B8A]/10 blur-[100px] rounded-full" />
           <video 
@@ -128,9 +128,8 @@ export default function Home() {
             muted 
             loop 
             playsInline 
-            preload="metadata"
-            poster="/avatar-poster.jpg"
-            className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay pointer-events-none transition-opacity duration-1000"
+            preload="auto"
+            className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none transition-opacity duration-1000"
           >
             <source src="/acceuil.mp4" type="video/mp4" />
           </video>

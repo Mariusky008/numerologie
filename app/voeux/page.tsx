@@ -129,6 +129,46 @@ const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | n
   </AnimatePresence>
 );
 
+const SectionCTA = ({ 
+  text, 
+  href = "/miroir/experience", 
+  isActive = false, 
+  onClick 
+}: { 
+  text: string, 
+  href?: string, 
+  isActive?: boolean,
+  onClick?: () => void 
+}) => (
+  <AnimatePresence>
+    {isActive && (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        className="py-8 flex justify-center"
+      >
+        <Link 
+          href={href}
+          onClick={onClick}
+          className="group relative inline-flex flex-col items-center gap-2 px-8 py-6 rounded-[30px] bg-[#C9A24D] text-[#08090F] shadow-[0_20px_40px_-10px_rgba(201,162,77,0.4)] hover:scale-105 active:scale-95 transition-all overflow-hidden"
+        >
+          {/* Shine effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite]" />
+          
+          <span className="text-lg md:text-xl font-black tracking-tight">
+            {text}
+          </span>
+          <div className="flex items-center gap-2 opacity-60">
+            <span className="text-[8px] font-bold uppercase tracking-[0.2em]">Accéder au Crash Test</span>
+            <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </Link>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
 export default function VoeuxPage() {
   // Metadata for cache busting: 2026-02-03-v2
   const router = useRouter();
@@ -179,6 +219,14 @@ export default function VoeuxPage() {
   return (
     <div className="min-h-screen bg-[#08090F] text-white font-sans selection:bg-[#C9A24D]/30 overflow-x-hidden">
       
+      <style jsx global>{`
+        @keyframes shimmer {
+          100% {
+            transform: translateX(100%);
+          }
+        }
+      `}</style>
+
       <FloatingVoeuBadge selectedVoeu={selectedVoeu} onClear={() => {
         setSelectedVoeu(null);
         setSelectedArchetype(null);
@@ -271,6 +319,13 @@ export default function VoeuxPage() {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* HERO CTA */}
+          <SectionCTA 
+            text="DÉCOUVRIR POURQUOI ÇA BLOQUE" 
+            isActive={!!selectedVoeu}
+            onClick={handleCtaClick}
+          />
         </div>
       </section>
 
@@ -427,6 +482,13 @@ export default function VoeuxPage() {
               </div>
             </motion.div>
 
+            {/* CONTRASTE CTA */}
+            <SectionCTA 
+              text="RETROUVER MA CLARTÉ NATURELLE" 
+              isActive={!!selectedVoeu}
+              onClick={handleCtaClick}
+            />
+
             {/* Message 8: Frequency */}
             <motion.div 
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
@@ -459,6 +521,13 @@ export default function VoeuxPage() {
                 </p>
               </div>
             </motion.div>
+
+            {/* FRACTURE CTA */}
+            <SectionCTA 
+              text="IDENTIFIER MON DÉCALAGE" 
+              isActive={!!selectedVoeu}
+              onClick={handleCtaClick}
+            />
 
           </div>
         </div>
@@ -500,6 +569,13 @@ export default function VoeuxPage() {
                 Comprendre pourquoi tu n’agis plus comme toi.
               </p>
             </div>
+
+            {/* CRASH TEST CTA */}
+            <SectionCTA 
+              text="LANCER MON DIAGNOSTIC" 
+              isActive={!!selectedVoeu}
+              onClick={handleCtaClick}
+            />
           </motion.div>
         </div>
       </section>
@@ -529,6 +605,13 @@ export default function VoeuxPage() {
               </p>
             </motion.div>
           </div>
+
+          {/* CHOIX FINAL CTA */}
+          <SectionCTA 
+            text="HONORER MON VŒU MAINTENANT" 
+            isActive={!!selectedVoeu}
+            onClick={handleCtaClick}
+          />
         </div>
       </section>
 

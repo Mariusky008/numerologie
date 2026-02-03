@@ -20,6 +20,7 @@ export default function MentalAgilityTest({ onComplete }: MentalAgilityTestProps
   const [results, setResults] = useState<{ speed: number; isSwitch: boolean; correct: boolean }[]>([]);
   const [timeLeft, setTimeLeft] = useState(40);
   const [totalAttempts, setTotalAttempts] = useState(0);
+  const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
 
   const isProcessing = useRef(false);
 
@@ -27,14 +28,13 @@ export default function MentalAgilityTest({ onComplete }: MentalAgilityTestProps
     const newNumber = Math.floor(Math.random() * 9) + 1; // 1-9
     const newRule = Math.random() > 0.5 ? 'parity' : 'magnitude';
     
-    setRule(prev => {
-      setLastRule(prev);
-      return newRule;
-    });
+    // Crucial: Update everything together to avoid sync issues
+    setLastRule(rule);
+    setRule(newRule);
     setNumber(newNumber);
     setStartTime(Date.now());
     isProcessing.current = false;
-  }, []); // Stable dependencies
+  }, [rule]); // rule dependency added to correctly update lastRule
 
   useEffect(() => {
     generateChallenge();
@@ -70,6 +70,9 @@ export default function MentalAgilityTest({ onComplete }: MentalAgilityTestProps
       // Magnitude: Left = >5, Right = <=5
       isCorrect = (number > 5 && answer === 'left') || (number <= 5 && answer === 'right');
     }
+
+    setFeedback(isCorrect ? 'correct' : 'wrong');
+    setTimeout(() => setFeedback(null), 400);
 
     setResults(prev => [...prev, {
       speed: reactionTime,
@@ -168,12 +171,28 @@ export default function MentalAgilityTest({ onComplete }: MentalAgilityTestProps
             <motion.div
               key={number + rule}
               initial={{ scale: 0, rotate: -180, filter: 'blur(20px)' }}
-              animate={{ scale: 1, rotate: 0, filter: 'blur(0px)' }}
+              animate={{ 
+                scale: 1, 
+                rotate: 0, 
+                filter: 'blur(0px)',
+                backgroundColor: feedback === 'correct' ? '#dcfce7' : feedback === 'wrong' ? '#fee2e2' : '#ffffff'
+              }}
               exit={{ scale: 1.5, opacity: 0, filter: 'blur(40px)' }}
-              className={`w-40 h-40 bg-white rounded-[40px] shadow-[0_30px_60px_rgba(0,0,0,0.1)] flex items-center justify-center text-7xl font-black border-8 transition-colors duration-500 ${rule === 'parity' ? 'text-[#5B4B8A] border-[#5B4B8A]/10' : 'text-[#C9A24D] border-[#C9A24D]/10'}`}
+              className={`w-40 h-40 rounded-[40px] shadow-[0_30px_60px_rgba(0,0,0,0.1)] flex items-center justify-center text-7xl font-black border-8 transition-colors duration-200 ${rule === 'parity' ? 'text-[#5B4B8A] border-[#5B4B8A]/10' : 'text-[#C9A24D] border-[#C9A24D]/10'}`}
             >
               {number}
               
+              {/* FEEDBACK INDICATOR */}
+              {feedback && (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className={`absolute -top-4 -right-4 w-12 h-12 rounded-full flex items-center justify-center shadow-lg ${feedback === 'correct' ? 'bg-green-500' : 'bg-red-500'}`}
+                >
+                  {feedback === 'correct' ? <Zap className="w-6 h-6 text-white fill-current" /> : <AlertCircle className="w-6 h-6 text-white" />}
+                </motion.div>
+              )}
+
               {/* SCANLINE EFFECT */}
               <motion.div 
                 animate={{ y: [-80, 80] }}

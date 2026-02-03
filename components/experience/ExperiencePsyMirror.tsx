@@ -14,7 +14,8 @@ import {
   Sparkles,
   Star,
   User,
-  MapPin
+  MapPin,
+  Calendar
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
@@ -30,7 +31,8 @@ import { calculateLifePathNumber, getLifePathData, getMoonSign, getSunSign, getA
 
 export default function ExperiencePsyMirror() {
   const router = useRouter();
-  const [step, setStep] = useState<'intro' | 'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'loading'>('intro');
+  const [step, setStep] = useState<'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'loading'>('collectInfo');
+  const [infoSubStep, setInfoSubStep] = useState(1); // 1: Name, 2: Date/Time, 3: City
   const [personalInfo, setPersonalInfo] = useState({
     firstName: '',
     lastName: '',
@@ -210,19 +212,13 @@ export default function ExperiencePsyMirror() {
   ];
 
   useEffect(() => {
-    // Preload next steps data while intro is showing
-    const preloadData = async () => {
-      // Just a small warm-up for data/logic if needed
-    };
-    preloadData();
-
     // Check if we have data from the Astro landing page
     const savedCosmicData = localStorage.getItem('cosmic_user_data');
     if (savedCosmicData) {
       try {
         const parsed = JSON.parse(savedCosmicData);
         setUserData(parsed);
-        if (parsed.birthDate) {
+        if (parsed.birthDate && parsed.firstName) {
           setPersonalInfo({
             firstName: parsed.firstName || '',
             lastName: parsed.lastName || '',
@@ -254,6 +250,11 @@ export default function ExperiencePsyMirror() {
             firstName: parsed.firstName,
             lastName: parsed.lastName
           });
+          
+          // Skip directly to cosmic reveal if we have all info
+          if (parsed.birthDate && parsed.firstName && parsed.birthTime && parsed.birthCity) {
+            setStep('cosmicReveal');
+          }
         }
       } catch (e) {
         console.error("Error parsing cosmic data", e);
@@ -460,7 +461,7 @@ export default function ExperiencePsyMirror() {
       }, 3000);
     } catch (error) {
       console.error("Erreur lors de la finalisation:", error);
-      setStep('intro');
+      setStep('collectInfo');
     }
   };
 
@@ -468,43 +469,6 @@ export default function ExperiencePsyMirror() {
     <div className="min-h-screen bg-[#F8F9FA] text-[#1A1C2E] font-sans flex flex-col items-center justify-center p-6">
       
       <AnimatePresence mode="wait">
-        {/* INTRO STEP */}
-        {step === 'intro' && (
-          <motion.div 
-            key="intro"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="max-w-xl w-full bg-white p-8 md:p-12 rounded-[40px] shadow-2xl border border-[#1A1C2E]/5 text-center space-y-8"
-          >
-            <div className="w-20 h-20 bg-[#1A1C2E] rounded-3xl flex items-center justify-center text-white mx-auto shadow-xl">
-              <Brain className="w-10 h-10" />
-            </div>
-            <div className="space-y-4">
-              <h1 className="text-3xl font-bold tracking-tight">Prêt à voir votre reflet ?</h1>
-              <p className="text-[#1A1C2E]/60 leading-relaxed">
-                Cette expérience dure environ 15 à 20 minutes. Elle se compose de deux parties : ce que tu penses de toi, puis la façon dont tu réagis réellement.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 p-4 rounded-2xl bg-[#F8F9FA] border border-[#1A1C2E]/5 text-left">
-                <Clock className="w-5 h-5 text-[#1A1C2E]/40" />
-                <span className="text-sm font-medium">Temps estimé : 15 min</span>
-              </div>
-              <div className="flex items-center gap-4 p-4 rounded-2xl bg-[#F8F9FA] border border-[#1A1C2E]/5 text-left">
-                <ShieldCheck className="w-5 h-5 text-[#1A1C2E]/40" />
-                <span className="text-sm font-medium">Analyse privée & non médicale</span>
-              </div>
-            </div>
-            <button 
-              onClick={handleIntroStart}
-              className="w-full py-5 bg-[#1A1C2E] text-white rounded-full font-bold text-lg hover:bg-[#2C2F4A] transition-all shadow-xl hover:scale-105"
-            >
-              Commencer l'expérience
-            </button>
-          </motion.div>
-        )}
-
         {/* STEP: COLLECT INFO */}
         {step === 'collectInfo' && (
           <motion.div 
@@ -514,88 +478,152 @@ export default function ExperiencePsyMirror() {
             exit={{ opacity: 0, y: -20 }}
             className="w-full max-w-2xl bg-white p-8 md:p-12 rounded-[50px] shadow-2xl border border-[#1A1C2E]/5 space-y-10"
           >
-            <div className="text-center space-y-4">
-              <div className="w-20 h-20 bg-[#C9A24D]/10 rounded-full flex items-center justify-center mx-auto border border-[#C9A24D]/20">
-                <User className="w-10 h-10 text-[#C9A24D]" />
-              </div>
-              <h2 className="text-3xl md:text-5xl font-serif font-bold">Le Sceau de Naissance</h2>
-              <p className="text-[#1A1C2E]/60 text-lg">
-                Pour calculer ton empreinte cosmique, nous avons besoin de tes coordonnées de naissance exactes.
-              </p>
+            {/* Form Progress Bar */}
+            <div className="w-full h-1.5 bg-[#1A1C2E]/5 rounded-full overflow-hidden mb-8">
+              <motion.div 
+                animate={{ width: `${(infoSubStep / 3) * 100}%` }}
+                className="h-full bg-[#C9A24D]"
+              />
             </div>
 
-            <form onSubmit={handleInfoSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Prénom</label>
-                  <input 
-                    type="text" 
-                    required
-                    placeholder="Ton prénom"
-                    value={personalInfo.firstName}
-                    onChange={(e) => setPersonalInfo({...personalInfo, firstName: e.target.value})}
-                    className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Nom</label>
-                  <input 
-                    type="text" 
-                    required
-                    placeholder="Ton nom"
-                    value={personalInfo.lastName}
-                    onChange={(e) => setPersonalInfo({...personalInfo, lastName: e.target.value})}
-                    className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
-                  />
-                </div>
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-[#C9A24D]/10 rounded-full flex items-center justify-center mx-auto border border-[#C9A24D]/20">
+                {infoSubStep === 1 ? <User className="w-8 h-8 text-[#C9A24D]" /> : 
+                 infoSubStep === 2 ? <Calendar className="w-8 h-8 text-[#C9A24D]" /> : 
+                 <MapPin className="w-8 h-8 text-[#C9A24D]" />}
               </div>
+              <h2 className="text-2xl md:text-4xl font-serif font-bold">
+                {infoSubStep === 1 ? "Comment t'appelles-tu ?" : 
+                 infoSubStep === 2 ? "Ta naissance ?" : 
+                 "Où es-tu né ?"}
+              </h2>
+            </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Date de Naissance</label>
-                <input 
-                  type="date" 
-                  required
-                  value={personalInfo.birthDate}
-                  onChange={(e) => setPersonalInfo({...personalInfo, birthDate: e.target.value})}
-                  className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
-                />
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Heure de Naissance</label>
-                  <input 
-                    type="time" 
-                    required
-                    value={personalInfo.birthTime}
-                    onChange={(e) => setPersonalInfo({...personalInfo, birthTime: e.target.value})}
-                    className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Ville de Naissance</label>
-                  <div className="relative">
-                    <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-[#1A1C2E]/20" />
+            <div className="space-y-6">
+              {infoSubStep === 1 && (
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="grid md:grid-cols-2 gap-6"
+                >
+                  <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Prénom</label>
                     <input 
                       type="text" 
                       required
-                      placeholder="Ta ville"
-                      value={personalInfo.birthCity}
-                      onChange={(e) => setPersonalInfo({...personalInfo, birthCity: e.target.value})}
-                      className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl pl-14 pr-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                      placeholder="Ton prénom"
+                      value={personalInfo.firstName}
+                      onChange={(e) => setPersonalInfo({...personalInfo, firstName: e.target.value})}
+                      onKeyDown={(e) => e.key === 'Enter' && personalInfo.firstName && setInfoSubStep(2)}
+                      className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                      autoFocus
                     />
                   </div>
-                </div>
-              </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Nom</label>
+                    <input 
+                      type="text" 
+                      placeholder="Ton nom (optionnel)"
+                      value={personalInfo.lastName}
+                      onChange={(e) => setPersonalInfo({...personalInfo, lastName: e.target.value})}
+                      onKeyDown={(e) => e.key === 'Enter' && setInfoSubStep(2)}
+                      className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                    />
+                  </div>
+                  <button 
+                    onClick={() => personalInfo.firstName && setInfoSubStep(2)}
+                    disabled={!personalInfo.firstName}
+                    className="md:col-span-2 w-full py-5 bg-[#1A1C2E] text-white rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
+                  >
+                    Continuer <ArrowRight className="w-5 h-5" />
+                  </button>
+                </motion.div>
+              )}
 
-              <button 
-                type="submit"
-                className="w-full py-6 bg-[#1A1C2E] text-white rounded-2xl font-bold text-xl hover:scale-[1.02] active:scale-95 transition-all shadow-xl flex items-center justify-center gap-4 mt-4"
-              >
-                Calculer mon Empreinte
-                <ArrowRight className="w-6 h-6" />
-              </button>
-            </form>
+              {infoSubStep === 2 && (
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="space-y-6"
+                >
+                  <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Date de Naissance</label>
+                    <input 
+                      type="date" 
+                      required
+                      value={personalInfo.birthDate}
+                      onChange={(e) => setPersonalInfo({...personalInfo, birthDate: e.target.value})}
+                      className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                      autoFocus
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Heure (si connue)</label>
+                    <input 
+                      type="time" 
+                      value={personalInfo.birthTime}
+                      onChange={(e) => setPersonalInfo({...personalInfo, birthTime: e.target.value})}
+                      className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <button 
+                      onClick={() => setInfoSubStep(1)}
+                      className="py-5 bg-[#F8F9FA] text-[#1A1C2E]/60 rounded-2xl font-bold"
+                    >
+                      Retour
+                    </button>
+                    <button 
+                      onClick={() => personalInfo.birthDate && setInfoSubStep(3)}
+                      disabled={!personalInfo.birthDate}
+                      className="py-5 bg-[#1A1C2E] text-white rounded-2xl font-bold shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
+                    >
+                      Continuer <ArrowRight className="w-5 h-5" />
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+
+              {infoSubStep === 3 && (
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="space-y-6"
+                >
+                  <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Ville de Naissance</label>
+                    <div className="relative">
+                      <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-[#1A1C2E]/20" />
+                      <input 
+                        type="text" 
+                        required
+                        placeholder="Ta ville"
+                        value={personalInfo.birthCity}
+                        onChange={(e) => setPersonalInfo({...personalInfo, birthCity: e.target.value})}
+                        className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl pl-14 pr-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                        autoFocus
+                        onKeyDown={(e) => e.key === 'Enter' && personalInfo.birthCity && handleInfoSubmit(e as any)}
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <button 
+                      onClick={() => setInfoSubStep(2)}
+                      className="py-5 bg-[#F8F9FA] text-[#1A1C2E]/60 rounded-2xl font-bold"
+                    >
+                      Retour
+                    </button>
+                    <button 
+                      onClick={(e) => handleInfoSubmit(e as any)}
+                      disabled={!personalInfo.birthCity}
+                      className="py-5 bg-[#1A1C2E] text-white rounded-2xl font-bold shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
+                    >
+                      Voir mon profil <ArrowRight className="w-5 h-5" />
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </div>
           </motion.div>
         )}
 

@@ -266,8 +266,8 @@ export default function VoeuxPage() {
             </p>
           </motion.div>
 
-          <div className="space-y-8">
-            {/* Bubble 1: Hook */}
+          <div className="space-y-6">
+            {/* Message 1: Hook */}
             <motion.div 
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -277,13 +277,12 @@ export default function VoeuxPage() {
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
                   Salut 👋 <br />
-                  Tu te sens bloqué, fatigué mentalement ou tu répètes les mêmes erreurs ? 🧠
+                  Tu te sens bloqué, mentalement fatigué, ou tu as l’impression de refaire toujours les mêmes erreurs ? 🧠
                 </p>
               </div>
-              <span className="text-[10px] text-white/20 font-bold ml-4 uppercase tracking-widest">L'Oracle • À l'instant</span>
             </motion.div>
 
-            {/* Bubble 2: Twist */}
+            {/* Message 2: Oracle Intro */}
             <motion.div 
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -291,6 +290,7 @@ export default function VoeuxPage() {
               transition={{ delay: 0.3 }}
               className="flex flex-col items-start gap-2 max-w-[85%]"
             >
+              <span className="text-[10px] text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle — à l’instant</span>
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed italic">
                   Et si ce n’était pas un problème… mais un décalage avec qui tu es vraiment ?
@@ -298,7 +298,7 @@ export default function VoeuxPage() {
               </div>
             </motion.div>
 
-            {/* Bubble 3: Mirror Metaphor */}
+            {/* Message 3: Mirror */}
             <motion.div 
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -306,14 +306,15 @@ export default function VoeuxPage() {
               transition={{ delay: 0.6 }}
               className="flex flex-col items-start gap-2 max-w-[85%]"
             >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif italic">
-                  "Chaque matin, tu te regardes dans le miroir en pensant te voir tel que tu es. En réalité, tu vois souvent la personne que tu étais il y a des années."
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  Chaque matin, tu te regardes dans le miroir. Tu penses te voir tel que tu es aujourd’hui. <br /><br />
+                  En réalité, tu vois souvent la personne que tu étais il y a plusieurs années.
                 </p>
               </div>
             </motion.div>
 
-            {/* Bubble 4: Explanation */}
+            {/* Message 4: Change */}
             <motion.div 
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -322,111 +323,119 @@ export default function VoeuxPage() {
               className="flex flex-col items-start gap-2 max-w-[85%]"
             >
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-sm md:text-base text-white/70 leading-relaxed">
-                  La vie t’a façonné autrement : stress, contraintes, choix imposés. <br />
-                  Ce décalage se ressent comme :
-                </p>
-                <ul className="mt-4 space-y-2">
-                  {[
-                    "Une fatigue constante 😫",
-                    "Une perte de fluidité 🌊",
-                    "Des décisions moins justes ⚖️",
-                    "Une sensation de décalage avec soi-même 🧩"
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-3 text-sm font-bold text-white/90">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24D]" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-
-            {/* Section Header: Le Contraste */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 1.2 }}
-              className="text-center pt-12 pb-8"
-            >
-              <h3 className="text-2xl md:text-4xl font-serif font-bold text-[#C9A24D]">Le Contraste</h3>
-              <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold mt-2">Analyse de l'écart identitaire</p>
-            </motion.div>
-
-            {/* Rich Card 1: Potentiel */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.4 }}
-              className="flex flex-col items-center py-4"
-            >
-              <div className="w-full bg-gradient-to-tr from-[#C9A24D]/20 to-transparent border border-[#C9A24D]/30 p-6 rounded-[40px] shadow-2xl space-y-4">
-                <div className="flex items-center gap-3 text-[#C9A24D]">
-                  <Sparkles className="w-5 h-5" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">Potentiel de départ</span>
-                </div>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-bold text-white/80">
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#C9A24D]" /> Vision & projection</li>
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#C9A24D]" /> Stabilité intérieure</li>
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#C9A24D]" /> Décisions long terme</li>
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-[#C9A24D]" /> Clarté naturelle</li>
-                </ul>
-                <p className="text-[11px] text-[#C9A24D] font-bold italic border-t border-white/10 pt-3 text-center">
-                  👉 Sur le papier, ce profil est fait pour décider avec justesse.
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  La vie t’a changé. <br />
+                  Stress. Contraintes. Choix imposés. <br /><br />
+                  Pas brutalement. <span className="italic">Progressivement.</span>
                 </p>
               </div>
             </motion.div>
 
-            {/* Transition Zap */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="flex justify-center -my-6 relative z-10"
-            >
-              <div className="w-10 h-10 rounded-full bg-[#08090F] border border-white/10 flex items-center justify-center">
-                <Zap className="w-5 h-5 text-[#C9A24D] animate-pulse" />
-              </div>
-            </motion.div>
-
-            {/* Rich Card 2: Réalité */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.6 }}
-              className="flex flex-col items-center py-4"
-            >
-              <div className="w-full bg-gradient-to-tr from-[#5B4B8A]/20 to-transparent border border-[#5B4B8A]/30 p-6 rounded-[40px] shadow-2xl space-y-4">
-                <div className="flex items-center gap-3 text-[#A78BFA]">
-                  <Activity className="w-5 h-5" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">Fonctionnement observé aujourd'hui</span>
-                </div>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-bold text-white/80">
-                  <li className="flex items-center gap-2"><X className="w-4 h-4 text-[#A78BFA]" /> Décisions dans l’urgence</li>
-                  <li className="flex items-center gap-2"><X className="w-4 h-4 text-[#A78BFA]" /> Surcharge mentale</li>
-                  <li className="flex items-center gap-2"><X className="w-4 h-4 text-[#A78BFA]" /> Réactions émotionnelles</li>
-                  <li className="flex items-center gap-2"><X className="w-4 h-4 text-[#A78BFA]" /> Perte de direction</li>
-                </ul>
-                <p className="text-[11px] text-[#A78BFA] font-bold italic border-t border-white/10 pt-3 text-center">
-                  👉 Dans la réalité, cela crée fatigue et hésitation.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Bubble 5: Final Note */}
+            {/* Message 5: Symptoms */}
             <motion.div 
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 2 }}
-              className="flex flex-col items-start gap-2 max-w-[85%] pt-6"
+              transition={{ delay: 1.2 }}
+              className="flex flex-col items-start gap-2 max-w-[85%]"
             >
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-base md:text-lg font-serif italic text-white/90 leading-relaxed">
-                  “Ce type d’écart est fréquent. Il ne se ressent pas comme un problème, mais comme une perte de fluidité.”
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  Ce décalage ne fait pas mal. Il ne crie pas. <br /><br />
+                  Il se ressent plutôt comme ça : <br />
+                  – fatigue mentale 😫 <br />
+                  – perte de fluidité 🌊 <br />
+                  – décisions moins justes ⚖️ <br />
+                  – impression d’être “à côté de soi” 🧩
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Message 6: Contrast Intro & Potential */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 1.5 }}
+              className="flex flex-col items-start gap-2 w-full pt-8"
+            >
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl w-full max-w-lg">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed mb-6">Regarde l’écart.</p>
+                <div className="bg-gradient-to-tr from-[#C9A24D]/20 to-transparent border border-[#C9A24D]/30 p-6 rounded-3xl space-y-4">
+                  <div className="flex items-center gap-3 text-[#C9A24D]">
+                    <span className="text-xl">🟢</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">À la base</span>
+                  </div>
+                  <p className="text-xs font-bold text-white/80">Tu es fait pour :</p>
+                  <ul className="space-y-2 text-xs font-bold text-white/70">
+                    <li className="flex items-center gap-2"><Check className="w-3 h-3 text-[#C9A24D]" /> voir loin</li>
+                    <li className="flex items-center gap-2"><Check className="w-3 h-3 text-[#C9A24D]" /> décider avec clarté</li>
+                    <li className="flex items-center gap-2"><Check className="w-3 h-3 text-[#C9A24D]" /> construire sur le long terme</li>
+                  </ul>
+                  <p className="text-[11px] text-[#C9A24D] font-bold italic border-t border-white/10 pt-3">
+                    👉 Sur le papier, tout est là.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Message 7: Reality */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 1.8 }}
+              className="flex flex-col items-start gap-2 w-full pt-4"
+            >
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl w-full max-w-lg">
+                <div className="bg-gradient-to-tr from-[#5B4B8A]/20 to-transparent border border-[#5B4B8A]/30 p-6 rounded-3xl space-y-4">
+                  <div className="flex items-center gap-3 text-[#A78BFA]">
+                    <span className="text-xl">🔴</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">Aujourd’hui</span>
+                  </div>
+                  <p className="text-xs font-bold text-white/80">Tu fonctionnes plutôt avec :</p>
+                  <ul className="space-y-2 text-xs font-bold text-white/70">
+                    <li className="flex items-center gap-2"><X className="w-3 h-3 text-[#A78BFA]" /> l’urgence</li>
+                    <li className="flex items-center gap-2"><X className="w-3 h-3 text-[#A78BFA]" /> la surcharge mentale</li>
+                    <li className="flex items-center gap-2"><X className="w-3 h-3 text-[#A78BFA]" /> des réactions émotionnelles</li>
+                    <li className="flex items-center gap-2"><X className="w-3 h-3 text-[#A78BFA]" /> une perte de direction</li>
+                  </ul>
+                  <p className="text-[11px] text-[#A78BFA] font-bold italic border-t border-white/10 pt-3">
+                    👉 Et ça t’épuise.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Message 8: Frequency */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 2.1 }}
+              className="flex flex-col items-start gap-2 max-w-[85%] pt-4"
+            >
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  Ce type d’écart est très fréquent. Mais il est trompeur. <br /><br />
+                  Il ne se vit pas comme un “problème”. Il se vit comme une perte de fluidité.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Message 9: Transition */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 2.4 }}
+              className="flex flex-col items-start gap-2 max-w-[85%] pt-4"
+            >
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif italic">
+                  C’est exactement cet écart que le Crash Test va te montrer clairement. <br /><br />
+                  Pas pour te juger. Pas pour te changer. <br /><br />
+                  Mais pour comprendre où ça a décroché.
                 </p>
               </div>
             </motion.div>

@@ -353,6 +353,11 @@ export default function VoeuxPage() {
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
                   Salut ! Je me sens bloquée, j’ai l’impression de refaire toujours les mêmes erreurs. 😔
+                  {selectedVoeu && selectedVoeu !== "Aucun ne me parle pour l’instant" && (
+                    <span className="block mt-2 pt-2 border-t border-white/10 italic text-[#C9A24D]">
+                      « {selectedVoeu} »
+                    </span>
+                  )}
                 </p>
               </div>
             </motion.div>
@@ -526,8 +531,39 @@ export default function VoeuxPage() {
               <div className="bg-[#C9A24D]/20 border border-[#C9A24D]/30 p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif italic">
                   Ce type d’écart est fréquent. <br /><br />
-                  C’est exactement ce que le Crash Test te montre. Pas pour te juger, pas pour te changer. <br /><br />
-                  Juste pour comprendre où ça a décroché.
+                  C’est exactement ce que le Crash Test te montre. Il va identifier précisément ce qui bloque aujourd&apos;hui pour ton vœu : 
+                  <span className="text-[#C9A24D] font-bold"> « {selectedVoeu || "ton projet"} »</span>.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 11. Carla */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 3.0 }}
+              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
+            >
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  Et après ?
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 12. Oracle */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 3.3 }}
+              className="flex flex-col items-start gap-2 max-w-[85%] pt-4"
+            >
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif">
+                  Une fois le blocage identifié, il suffira de travailler dessus — avec nous ou en autonomie — pour qu&apos;enfin ton vœu se réalise. <br /><br />
+                  C&apos;est la première étape vers ton alignement. ✨
                 </p>
               </div>
             </motion.div>
@@ -676,7 +712,7 @@ export default function VoeuxPage() {
 
       <footer className="py-12 px-6 border-t border-white/5 text-center opacity-20">
         <p className="text-[9px] font-black uppercase tracking-[0.5em]">
-          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v2.5
+          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v2.6
         </p>
       </footer>
     </div>

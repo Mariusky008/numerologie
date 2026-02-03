@@ -341,23 +341,23 @@ export default function VoeuxPage() {
             </p>
           </motion.div>
 
-          <div className="space-y-6">
-            {/* Message 1: Hook */}
+          <div className="space-y-10">
+            {/* 1. Carla */}
             <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="flex flex-col items-start gap-2 max-w-[85%]"
+              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
             >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+              <span className="text-[10px] text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Salut 👋 <br />
-                  Tu te sens bloqué, mentalement fatigué, ou tu as l’impression de refaire toujours les mêmes erreurs ? 🧠
+                  Salut ! Je me sens bloquée, j’ai l’impression de refaire toujours les mêmes erreurs. 😔
                 </p>
               </div>
             </motion.div>
 
-            {/* Message 2: Oracle Intro */}
+            {/* 2. Oracle */}
             <motion.div 
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -365,31 +365,31 @@ export default function VoeuxPage() {
               transition={{ delay: 0.3 }}
               className="flex flex-col items-start gap-2 max-w-[85%]"
             >
-              <span className="text-[10px] text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle — à l’instant</span>
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif italic">
+              <span className="text-[10px] text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed italic font-serif">
                   Et si ce n’était pas un problème… mais un décalage avec qui tu es vraiment ?
                 </p>
               </div>
             </motion.div>
 
-            {/* Message 3: Mirror */}
+            {/* 3. Carla */}
             <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 0.6 }}
-              className="flex flex-col items-start gap-2 max-w-[85%]"
+              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
             >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+              <span className="text-[10px] text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Chaque matin, tu te regardes dans le miroir. Tu penses te voir tel que tu es aujourd&apos;hui. <br /><br />
-                  En réalité, tu vois souvent la personne que tu étais il y a plusieurs années.
+                  Quand je me regarde dans le miroir… je me vois vraiment tel que je suis ? 🪞
                 </p>
               </div>
             </motion.div>
 
-            {/* Message 4: Change */}
+            {/* 4. Oracle */}
             <motion.div 
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
@@ -397,27 +397,40 @@ export default function VoeuxPage() {
               transition={{ delay: 0.9 }}
               className="flex flex-col items-start gap-2 max-w-[85%]"
             >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  La vie t’a changé. <br />
-                  Stress. Contraintes. Choix imposés. <br /><br />
-                  Pas brutalement. <span className="italic">Progressivement.</span>
+                  En réalité, tu vois souvent la personne que tu étais il y a plusieurs années. <br /><br />
+                  La vie t’a changé : stress, contraintes, choix imposés. Pas brutalement, mais progressivement.
                 </p>
               </div>
             </motion.div>
 
-            {/* Message 5: Symptoms */}
+            {/* 5. Carla */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 1.2 }}
+              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
+            >
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  Oui, je commence à voir. 💡
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 6. Oracle */}
             <motion.div 
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.2 }}
+              transition={{ delay: 1.5 }}
               className="flex flex-col items-start gap-2 max-w-[85%]"
             >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Ce décalage ne fait pas mal. Il ne crie pas. <br /><br />
-                  Il se ressent plutôt comme ça : <br />
+                  Ce décalage ne fait pas mal. Tu le ressens plutôt comme : <br /><br />
                   – fatigue mentale 😫 <br />
                   – perte de fluidité 🌊 <br />
                   – décisions moins justes ⚖️ <br />
@@ -426,98 +439,80 @@ export default function VoeuxPage() {
               </div>
             </motion.div>
 
-            {/* Message 6: Contrast Intro & Potential */}
+            {/* 7. Carla */}
             <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.5 }}
-              className="flex flex-col items-start gap-2 w-full pt-8"
-            >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl w-full max-w-lg">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed mb-6">Regarde l’écart.</p>
-                <div className="bg-gradient-to-tr from-[#C9A24D]/20 to-transparent border border-[#C9A24D]/30 p-6 rounded-3xl space-y-4">
-                  <div className="flex items-center gap-3 text-[#C9A24D]">
-                    <span className="text-xl">🟢</span>
-                    <span className="text-[10px] font-black uppercase tracking-widest">À la base</span>
-                  </div>
-                  <p className="text-xs font-bold text-white/80">Tu es fait pour :</p>
-                  <ul className="space-y-2 text-xs font-bold text-white/70">
-                    <li className="flex items-center gap-2"><Check className="w-3 h-3 text-[#C9A24D]" /> voir loin</li>
-                    <li className="flex items-center gap-2"><Check className="w-3 h-3 text-[#C9A24D]" /> décider avec clarté</li>
-                    <li className="flex items-center gap-2"><Check className="w-3 h-3 text-[#C9A24D]" /> construire sur le long terme</li>
-                  </ul>
-                  <p className="text-[11px] text-[#C9A24D] font-bold italic border-t border-white/10 pt-3">
-                    👉 Sur le papier, tout est là.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Message 7: Reality */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 1.8 }}
-              className="flex flex-col items-start gap-2 w-full pt-4"
+              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
             >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl w-full max-w-lg">
-                <div className="bg-gradient-to-tr from-[#5B4B8A]/20 to-transparent border border-[#5B4B8A]/30 p-6 rounded-3xl space-y-4">
-                  <div className="flex items-center gap-3 text-[#A78BFA]">
-                    <span className="text-xl">🔴</span>
-                    <span className="text-[10px] font-black uppercase tracking-widest">Aujourd’hui</span>
-                  </div>
-                  <p className="text-xs font-bold text-white/80">Tu fonctionnes plutôt avec :</p>
-                  <ul className="space-y-2 text-xs font-bold text-white/70">
-                    <li className="flex items-center gap-2"><X className="w-3 h-3 text-[#A78BFA]" /> l’urgence</li>
-                    <li className="flex items-center gap-2"><X className="w-3 h-3 text-[#A78BFA]" /> la surcharge mentale</li>
-                    <li className="flex items-center gap-2"><X className="w-3 h-3 text-[#A78BFA]" /> des réactions émotionnelles</li>
-                    <li className="flex items-center gap-2"><X className="w-3 h-3 text-[#A78BFA]" /> une perte de direction</li>
-                  </ul>
-                  <p className="text-[11px] text-[#A78BFA] font-bold italic border-t border-white/10 pt-3">
-                    👉 Et ça t’épuise.
-                  </p>
-                </div>
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  Exactement… et je rencontre souvent les mauvaises personnes. 💔
+                </p>
               </div>
             </motion.div>
 
-            {/* CONTRASTE CTA */}
-            <SectionCTA 
-              text="RETROUVER MA CLARTÉ NATURELLE" 
-              isActive={!!selectedVoeu}
-              onClick={handleCtaClick}
-            />
-
-            {/* Message 8: Frequency */}
+            {/* 8. Oracle */}
             <motion.div 
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 2.1 }}
-              className="flex flex-col items-start gap-2 max-w-[85%] pt-4"
+              className="flex flex-col items-start gap-2 w-full pt-4"
+            >
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-6 rounded-3xl rounded-tl-none shadow-2xl w-full max-w-lg space-y-6">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  Ça en fait partie aussi !
+                </p>
+                
+                <div className="space-y-4">
+                  <div className="bg-white/5 border border-white/10 p-4 rounded-2xl">
+                    <p className="text-xs font-bold text-[#C9A24D] uppercase tracking-widest mb-2">🟢 À la base</p>
+                    <p className="text-sm text-white/80 leading-relaxed">
+                      Tu es fait pour voir loin, décider avec clarté, construire sur le long terme.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-white/5 border border-white/10 p-4 rounded-2xl">
+                    <p className="text-xs font-bold text-red-400 uppercase tracking-widest mb-2">🔴 Aujourd’hui</p>
+                    <p className="text-sm text-white/80 leading-relaxed">
+                      Urgence, surcharge mentale, réactions émotionnelles, perte de direction. Et ça t’épuise.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* 9. Carla */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 2.4 }}
+              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
             >
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Ce type d’écart est très fréquent. Mais il est trompeur. <br /><br />
-                  Il ne se vit pas comme un “problème”. Il se vit comme une perte de fluidité.
+                  Carrément oui ! 🔥
                 </p>
               </div>
             </motion.div>
 
-            {/* Message 9: Transition */}
+            {/* 10. Oracle */}
             <motion.div 
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 2.4 }}
+              transition={{ delay: 2.7 }}
               className="flex flex-col items-start gap-2 max-w-[85%] pt-4"
             >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+              <div className="bg-[#C9A24D]/20 border border-[#C9A24D]/30 p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif italic">
-                  C’est exactement cet écart que le Crash Test va te montrer clairement. <br /><br />
-                  Pas pour te juger. Pas pour te changer. <br /><br />
-                  Mais pour comprendre où ça a décroché.
+                  Ce type d’écart est fréquent. <br /><br />
+                  C’est exactement ce que le Crash Test te montre. Pas pour te juger, pas pour te changer. <br /><br />
+                  Juste pour comprendre où ça a décroché.
                 </p>
               </div>
             </motion.div>

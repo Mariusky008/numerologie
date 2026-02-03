@@ -105,7 +105,7 @@ export default function Home() {
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, margin: "-50px" },
     transition: { duration: 0.6, ease: "easeOut" }
-  };
+  } as const;
 
   return (
     <div className="min-h-screen bg-[#08090F] text-white font-sans selection:bg-[#C9A24D]/30 overflow-x-hidden">

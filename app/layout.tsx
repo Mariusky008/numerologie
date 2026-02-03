@@ -17,28 +17,33 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: "Le Crash-Test de ton Destin. Quand ton potentiel de naissance rencontre la psychologie",
-  description: "Fais le Crash-Test de ton Destin. Compare ton potentiel de naissance aux décisions et aux choix que tu fais.",
+  metadataBase: new URL('https://www.votrelegende.fr'),
+  title: "Le Crash-Test de tes Décisions. Quand ton potentiel de naissance rencontre la psychologie",
+  description: "Fais le Crash-Test de tes Décisions. Compare ton potentiel de naissance aux décisions et aux choix que tu fais.",
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
   openGraph: {
-    title: "Le Crash-Test de ton Destin. Quand ton potentiel de naissance rencontre la psychologie",
-    description: "Fais le Crash-Test de ton Destin. Compare ton potentiel de naissance aux décisions et aux choix que tu fais.",
-    siteName: "Roman de Vie",
+    title: "Le Crash-Test de tes Décisions. Quand ton potentiel de naissance rencontre la psychologie",
+    description: "Fais le Crash-Test de tes Décisions. Compare ton potentiel de naissance aux décisions et aux choix que tu fais.",
+    siteName: "Votre Légende",
     locale: "fr_FR",
     type: "website",
     images: [
       {
-        url: "/og-image.jpg", // Image à ajouter dans le dossier public
+        url: "/avatar-poster.jpg",
         width: 1200,
         height: 630,
-        alt: "Le Crash-Test de ton Destin",
+        alt: "Le Crash-Test de tes Décisions",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Le Crash-Test de ton Destin. Quand ton potentiel de naissance rencontre la psychologie",
-    description: "Fais le Crash-Test de ton Destin. Compare ton potentiel de naissance aux décisions et aux choix que tu fais.",
-    images: ["/og-image.jpg"],
+    title: "Le Crash-Test de tes Décisions. Quand ton potentiel de naissance rencontre la psychologie",
+    description: "Fais le Crash-Test de tes Décisions. Compare ton potentiel de naissance aux décisions et aux choix que tu fais.",
+    images: ["/avatar-poster.jpg"],
   },
 };
 

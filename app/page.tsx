@@ -119,7 +119,7 @@ export default function Home() {
       <FloatingOracle />
 
       {/* 1. HERO — ACTION AVANT TEXTE */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-6 relative pt-12 bg-[#08090F]">
+      <section className="min-h-screen flex flex-col items-center justify-center px-6 relative bg-[#08090F] pb-20">
         {/* Mystic Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[120px] rounded-full" />
@@ -136,10 +136,10 @@ export default function Home() {
           </video>
         </div>
 
-        <div className="max-w-xl w-full z-10 text-center flex flex-col items-center justify-center">
+        <div className="max-w-xl w-full z-10 text-center flex flex-col items-center justify-center -mt-16 md:-mt-24">
           <motion.div 
             layout 
-            className="w-full space-y-8 flex flex-col items-center"
+            className="w-full space-y-6 md:space-y-8 flex flex-col items-center"
           >
             {/* 1. Chat Interface — Message 1 & 2 */}
             <div className="space-y-3 text-left w-full max-w-sm mx-auto">

@@ -19,33 +19,76 @@ import {
   Heart,
   Users,
   Compass,
-  Star
+  Star,
+  Check,
+  X
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
 
-const VOEUX = [
-  "Retrouver une relation saine et stable",
-  "Sortir d’un schéma amoureux destructeur",
-  "Reprendre le contrôle de mes décisions",
-  "Me respecter enfin dans mes choix",
-  "Réparer un lien familial important",
-  "Ne plus saboter ce qui pourrait fonctionner",
-  "Construire une vie qui me ressemble",
-  "Sortir d’une solitude que je n’ai pas choisie",
-  "Retrouver confiance en moi et en mes ressentis",
-  "Mettre fin à une impasse relationnelle",
-  "Arrêter de vivre dans la peur de perdre",
-  "Me libérer d’un poids émotionnel ancien",
-  "Clarifier ce que je veux vraiment",
-  "Assumer qui je suis sans me trahir",
-  "Créer un équilibre durable dans ma vie",
-  "Aucun de ces vœux ne me parle aujourd’hui"
+const ARCHETYPES = [
+  {
+    id: "amour",
+    label: "Amour / relation",
+    icon: Heart,
+    subVoeux: [
+      "Retrouver une relation saine et stable",
+      "Sortir d’un schéma amoureux destructeur",
+      "Mettre fin à une impasse relationnelle"
+    ]
+  },
+  {
+    id: "famille",
+    label: "Famille / lien",
+    icon: Users,
+    subVoeux: [
+      "Réparer un lien familial important",
+      "Me libérer d’un poids émotionnel ancien"
+    ]
+  },
+  {
+    id: "decisions",
+    label: "Décisions & direction",
+    icon: Compass,
+    subVoeux: [
+      "Reprendre le contrôle de mes décisions",
+      "Clarifier ce que je veux vraiment",
+      "Créer un équilibre durable dans ma vie"
+    ]
+  },
+  {
+    id: "confiance",
+    label: "Confiance & respect de soi",
+    icon: Star,
+    subVoeux: [
+      "Me respecter enfin dans mes choix",
+      "Retrouver confiance en moi et en mes ressentis",
+      "Assumer qui je suis sans me trahir"
+    ]
+  },
+  {
+    id: "solitude",
+    label: "Solitude / attachement",
+    icon: Target,
+    subVoeux: [
+      "Sortir d’une solitude que je n’ai pas choisie",
+      "Arrêter de vivre dans la peur de perdre"
+    ]
+  },
+  {
+    id: "vie",
+    label: "Vie qui ne me ressemble pas",
+    icon: Activity,
+    subVoeux: [
+      "Construire une vie qui me ressemble",
+      "Ne plus saboter ce qui pourrait fonctionner"
+    ]
+  }
 ];
 
 const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | null, onClear: () => void }) => (
   <AnimatePresence>
-    {selectedVoeu && selectedVoeu !== "Aucun de ces vœux ne me parle aujourd’hui" && (
+    {selectedVoeu && selectedVoeu !== "Aucun ne me parle pour l’instant" && (
       <motion.div 
         initial={{ opacity: 0, x: 100, scale: 0.8 }}
         animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -61,11 +104,6 @@ const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | n
               « {selectedVoeu} »
             </p>
           </div>
-          <div className="absolute -top-1 -right-1 opacity-0 group-hover:opacity-100 transition-opacity">
-            <div className="bg-white/10 p-1 rounded-full">
-              <Star className="w-2 h-2 text-[#C9A24D]" />
-            </div>
-          </div>
         </div>
       </motion.div>
     )}
@@ -74,6 +112,7 @@ const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | n
 
 export default function VoeuxPage() {
   const router = useRouter();
+  const [selectedArchetype, setSelectedArchetype] = useState<string | null>(null);
   const [selectedVoeu, setSelectedVoeu] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
 
@@ -81,11 +120,20 @@ export default function VoeuxPage() {
     trackEvent('voeux_page_view');
   }, []);
 
+  const handleArchetypeSelect = (id: string) => {
+    setSelectedArchetype(id);
+    setSelectedVoeu(null);
+    trackEvent('archetype_selected', { id });
+  };
+
   const handleVoeuSelect = (voeu: string) => {
     setSelectedVoeu(voeu);
     trackEvent('voeu_selected', { voeu });
-    // Scroll slightly to show persistence
-    window.scrollTo({ top: window.innerHeight * 0.4, behavior: 'smooth' });
+    // Scroll slightly to show next section
+    const nextSection = document.getElementById('fracture');
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const handleCtaClick = () => {
@@ -103,31 +151,22 @@ export default function VoeuxPage() {
   return (
     <div className="min-h-screen bg-[#08090F] text-white font-sans selection:bg-[#C9A24D]/30 overflow-x-hidden">
       
-      <FloatingVoeuBadge selectedVoeu={selectedVoeu} onClear={() => setSelectedVoeu(null)} />
+      <FloatingVoeuBadge selectedVoeu={selectedVoeu} onClear={() => {
+        setSelectedVoeu(null);
+        setSelectedArchetype(null);
+      }} />
 
-      {/* 1. HERO — CHOIX DU VOEU */}
+      {/* 1. HERO — CHOIX DU VOEU (LEVEL 1 & 2) */}
       <section className="min-h-screen flex flex-col items-center justify-start px-6 relative pt-20 pb-20">
-        {/* Mystic Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[120px] rounded-full" />
-          <video 
-            autoPlay 
-            muted 
-            loop 
-            playsInline 
-            preload="auto"
-            className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none"
-          >
+          <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none">
             <source src="/acceuil.mp4" type="video/mp4" />
           </video>
         </div>
 
         <div className="max-w-4xl w-full z-10 text-center space-y-12">
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-6"
-          >
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
             <div className="flex justify-center mb-4">
               <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center animate-pulse">
                 <Sparkles className="w-8 h-8 text-[#C9A24D]" />
@@ -139,154 +178,239 @@ export default function VoeuxPage() {
             </h1>
             <p className="max-w-xl mx-auto text-sm md:text-base text-white/60 leading-relaxed">
               Choisis ce qui compte vraiment pour toi aujourd’hui. <br />
-              Ensuite, découvre pourquoi ça bloque — et décide si tu veux avancer seul ou accompagné.
+              Ensuite, découvre pourquoi ça bloque.
             </p>
           </motion.div>
 
-          {/* VOEUX GRID */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {VOEUX.map((voeu, i) => (
+          {/* LEVEL 1: ARCHETYPES */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {ARCHETYPES.map((arch) => (
               <motion.button
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.05 }}
-                onClick={() => handleVoeuSelect(voeu)}
-                className={`group relative p-5 rounded-2xl border text-xs md:text-sm font-bold transition-all text-left flex items-center gap-4 ${
-                  selectedVoeu === voeu 
-                  ? "bg-[#C9A24D] text-[#08090F] border-[#C9A24D] shadow-[0_10px_30px_rgba(201,162,77,0.3)] scale-105" 
-                  : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:border-white/20"
+                key={arch.id}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => handleArchetypeSelect(arch.id)}
+                className={`p-4 md:p-6 rounded-2xl border transition-all flex flex-col items-center gap-3 ${
+                  selectedArchetype === arch.id 
+                  ? "bg-[#C9A24D] text-[#08090F] border-[#C9A24D] shadow-lg" 
+                  : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10"
                 }`}
               >
-                <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                  selectedVoeu === voeu ? "bg-white/20" : "bg-white/5 group-hover:bg-white/10"
-                }`}>
-                  {voeu.includes("relation") || voeu.includes("amoureux") ? <Heart className="w-4 h-4" /> :
-                   voeu.includes("contrôle") || voeu.includes("choix") ? <Compass className="w-4 h-4" /> :
-                   voeu.includes("vie") || voeu.includes("équilibre") ? <Star className="w-4 h-4" /> :
-                   <Target className="w-4 h-4" />}
-                </div>
-                {voeu}
-                {selectedVoeu === voeu && (
-                  <motion.div layoutId="check" className="absolute right-4">
-                    <Zap className="w-4 h-4 fill-current" />
-                  </motion.div>
-                )}
+                <arch.icon className={`w-6 h-6 ${selectedArchetype === arch.id ? "text-[#08090F]" : "text-[#C9A24D]"}`} />
+                <span className="text-[10px] md:text-xs font-black uppercase tracking-widest">{arch.label}</span>
               </motion.button>
             ))}
+            <button 
+              onClick={() => handleVoeuSelect("Aucun ne me parle pour l’instant")}
+              className="p-4 md:p-6 rounded-2xl border border-white/5 bg-white/2 shadow-inner text-[10px] md:text-xs font-bold text-white/30 hover:text-white/50 transition-colors"
+            >
+              Aucun ne me parle pour l’instant
+            </button>
           </div>
-        </div>
 
-        <motion.div 
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/20"
-        >
-          <ChevronDown className="w-6 h-6" />
-        </motion.div>
+          {/* LEVEL 2: SUB-VOEUX (AFFINAGE) */}
+          <AnimatePresence mode="wait">
+            {selectedArchetype && (
+              <motion.div 
+                key={selectedArchetype}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-6 pt-8 border-t border-white/5"
+              >
+                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A24D]/60">Affinage de ton vœu</p>
+                <div className="flex flex-wrap justify-center gap-3">
+                  {ARCHETYPES.find(a => a.id === selectedArchetype)?.subVoeux.map((sub, i) => (
+                    <motion.button
+                      key={i}
+                      whileHover={{ scale: 1.05 }}
+                      onClick={() => handleVoeuSelect(sub)}
+                      className={`px-6 py-4 rounded-xl border text-xs md:text-sm font-bold transition-all ${
+                        selectedVoeu === sub
+                        ? "bg-white text-[#08090F] border-white shadow-xl"
+                        : "bg-white/5 border-white/10 text-white/80 hover:bg-white/10"
+                      }`}
+                    >
+                      {sub}
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </section>
 
-      {/* 2. LE CRASH TEST (RECONTEXTUALISÉ) */}
+      {/* 2. LA FRACTURE (DÉSÉQUILIBRE IDENTITAIRE) */}
+      <section id="fracture" className="py-32 px-6 relative bg-[#0C0D15]">
+        <div className="max-w-2xl mx-auto space-y-16">
+          <motion.div {...fadeIn} className="space-y-8 text-center md:text-left">
+            <div className="inline-block px-4 py-1 rounded-full bg-[#C9A24D]/10 border border-[#C9A24D]/20 text-[10px] font-black text-[#C9A24D] uppercase tracking-widest mb-4">
+              La Fracture
+            </div>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold leading-tight">
+              Chaque matin, tu te regardes dans le miroir <br />
+              <span className="text-[#C9A24D] italic">en pensant te voir tel que tu es.</span>
+            </h2>
+            <div className="space-y-6 text-lg md:text-xl text-white/80 font-medium leading-relaxed italic">
+              <p>En réalité, tu vois souvent la personne que tu étais il y a des années.</p>
+              <p className="text-sm md:text-base text-white/40 not-italic">
+                La vie t’a façonné autrement : stress, contraintes, choix imposés.
+              </p>
+            </div>
+          </motion.div>
+
+          <motion.div {...fadeIn} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              "Une fatigue constante",
+              "Une perte de fluidité",
+              "Des décisions moins justes",
+              "Une sensation de décalage avec soi-même"
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+                <div className="w-2 h-2 rounded-full bg-[#C9A24D]" />
+                <span className="text-sm font-bold text-white/70">{item}</span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 3. LE CONTRASTE (POTENTIEL VS RÉALITÉ) */}
       <section className="py-32 px-6 relative">
+        <div className="max-w-4xl mx-auto space-y-12">
+          <motion.div {...fadeIn} className="text-center space-y-4">
+            <h2 className="text-3xl md:text-5xl font-serif font-bold">Le Contraste</h2>
+            <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold">Analyse de l'écart identitaire</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+            {/* Potentiel */}
+            <motion.div 
+              {...fadeIn}
+              className="p-8 md:p-10 rounded-[40px] bg-gradient-to-tr from-[#C9A24D]/10 to-transparent border border-[#C9A24D]/30 space-y-6"
+            >
+              <div className="flex items-center gap-3 text-[#C9A24D]">
+                <Sparkles className="w-6 h-6" />
+                <h3 className="text-xl font-black uppercase tracking-widest">Potentiel de départ</h3>
+              </div>
+              <ul className="space-y-4">
+                {["Vision & projection", "Stabilité intérieure", "Décisions long terme", "Clarté naturelle"].map((txt, i) => (
+                  <li key={i} className="flex items-center gap-3 text-sm font-bold text-white/80">
+                    <Check className="w-4 h-4 text-[#C9A24D]" /> {txt}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs text-[#C9A24D] font-bold italic pt-4 border-t border-white/5">
+                👉 Sur le papier, ce profil est fait pour décider avec justesse.
+              </p>
+            </motion.div>
+
+            {/* Fonctionnement */}
+            <motion.div 
+              {...fadeIn}
+              className="p-8 md:p-10 rounded-[40px] bg-gradient-to-tr from-[#5B4B8A]/10 to-transparent border border-[#5B4B8A]/30 space-y-6"
+            >
+              <div className="flex items-center gap-3 text-[#A78BFA]">
+                <Activity className="w-6 h-6" />
+                <h3 className="text-xl font-black uppercase tracking-widest">Fonctionnement observé</h3>
+              </div>
+              <ul className="space-y-4">
+                {["Décisions dans l’urgence", "Surcharge mentale", "Réactions émotionnelles", "Perte de direction"].map((txt, i) => (
+                  <li key={i} className="flex items-center gap-3 text-sm font-bold text-white/80">
+                    <X className="w-4 h-4 text-[#A78BFA]" /> {txt}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs text-[#A78BFA] font-bold italic pt-4 border-t border-white/5">
+                👉 Dans la réalité, cela crée fatigue et hésitation.
+              </p>
+            </motion.div>
+
+            <div className="md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 flex justify-center py-4 md:py-0">
+              <div className="w-12 h-12 rounded-full bg-[#08090F] border border-white/10 flex items-center justify-center shadow-2xl">
+                <Zap className="w-6 h-6 text-[#C9A24D]" />
+              </div>
+            </div>
+          </div>
+
+          <motion.div {...fadeIn} className="text-center pt-8">
+            <p className="text-lg md:text-xl font-serif italic text-white/70 max-w-xl mx-auto">
+              “Ce type d’écart est fréquent. Il ne se ressent pas comme un problème, mais comme une perte de fluidité.”
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 4. LE CRASH TEST (OUTIL DE LUCIDITÉ) */}
+      <section className="py-32 px-6 relative bg-[#0C0D15]">
         <div className="max-w-2xl mx-auto">
           <motion.div 
             {...fadeIn}
-            className="p-10 md:p-14 rounded-[50px] bg-white/5 border border-white/10 space-y-10 relative text-center"
+            className="p-10 md:p-14 rounded-[50px] bg-white/5 border border-white/10 space-y-10 relative"
           >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-[#C9A24D] to-transparent" />
-            
-            <div className="space-y-4">
+            <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#C9A24D]">Le Crash Test</h2>
-              <p className="text-sm md:text-base text-white/70 leading-relaxed">
-                Le Crash Test analyse l’écart entre ton potentiel réel et les décisions que tu prends aujourd’hui — 
-                <span className="text-white font-bold italic"> celles qui t’éloignent de ton vœu.</span>
+              <p className="text-sm md:text-base text-white/70 leading-relaxed max-w-md mx-auto">
+                Le Crash Test sert à identifier précisément <span className="text-[#C9A24D] font-bold">où l’écart s’est créé</span> entre ton potentiel réel et ton fonctionnement actuel.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-8 border-y border-white/5">
+            <div className="space-y-6">
               {[
-                { icon: Brain, text: "Analyse Symbolique" },
-                { icon: Activity, text: "Tests de Réactions" },
-                { icon: Layers, text: "Mise en Miroir" },
-                { icon: Target, text: "Diagnostic Précis" }
+                "Analyse symbolique",
+                "Tests de réactions",
+                "Mise en miroir comportementale",
+                "Diagnostic de décision"
               ].map((item, i) => (
-                <div key={i} className="flex flex-col items-center gap-2">
-                  <item.icon className="w-5 h-5 text-[#C9A24D]/60" />
-                  <span className="text-[9px] font-black uppercase tracking-widest text-white/40">{item.text}</span>
+                <div key={i} className="flex items-center gap-4">
+                  <div className="w-6 h-6 rounded-lg bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D] text-[10px] font-black">
+                    {i + 1}
+                  </div>
+                  <span className="text-sm font-bold text-white/80 uppercase tracking-widest">{item}</span>
                 </div>
               ))}
             </div>
 
-            <div className="space-y-4">
-              <p className="text-xs font-bold text-white/30 uppercase tracking-[0.2em]">
-                Un outil au service de ta réalisation
+            <div className="pt-8 border-t border-white/5 text-center">
+              <p className="text-xs font-bold text-white/30 uppercase tracking-[0.2em] leading-relaxed">
+                👉 Un outil de lucidité, pas de jugement. <br />
+                Comprendre pourquoi tu n’agis plus comme toi.
               </p>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* 3. LE CHOIX (RESPONSABILISATION) */}
-      <section className="py-32 px-6 relative bg-[#0C0D15]">
+      {/* 5. LE CHOIX FINAL */}
+      <section className="py-32 px-6 relative">
         <div className="max-w-4xl mx-auto space-y-16">
-          <motion.div {...fadeIn} className="text-center space-y-4">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold">Après le Crash Test, deux chemins</h2>
-            <div className="h-1 w-24 bg-[#C9A24D]/30 mx-auto rounded-full" />
+          <motion.div {...fadeIn} className="text-center space-y-6">
+            <h2 className="text-3xl md:text-5xl font-serif font-bold">Deux chemins s'ouvrent</h2>
+            <p className="text-white/50 text-sm md:text-base max-w-xl mx-auto">
+              Une fois le Crash Test terminé, après la lecture de ton rapport et l’échange avec ton coach IA...
+            </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Option 1 */}
-            <motion.div 
-              {...fadeIn}
-              className="p-8 md:p-10 rounded-[40px] bg-white/5 border border-white/10 space-y-6 flex flex-col justify-between"
-            >
-              <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center text-white/40">
-                  <Eye className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold italic">Option 1 : Seul</h3>
-                <p className="text-sm text-white/50 leading-relaxed">
-                  Tu fais le travail seul, avec ton rapport détaillé. Tu as les clés, à toi d'ouvrir les portes.
-                </p>
-              </div>
-              <div className="pt-6">
-                <span className="text-[10px] font-black uppercase tracking-widest text-[#C9A24D]/40 italic">Liberté totale</span>
-              </div>
+            <motion.div {...fadeIn} className="p-8 md:p-10 rounded-[40px] bg-white/5 border border-white/10 space-y-4">
+              <h3 className="text-xl font-bold italic">Tu fais le travail seul</h3>
+              <p className="text-sm text-white/40 leading-relaxed">
+                Avec ton rapport comme boussole, tu avances à ton rythme, en toute autonomie.
+              </p>
             </motion.div>
 
-            {/* Option 2 */}
-            <motion.div 
-              {...fadeIn}
-              className="p-8 md:p-10 rounded-[40px] bg-[#C9A24D]/5 border border-[#C9A24D]/20 space-y-6 flex flex-col justify-between relative overflow-hidden"
-            >
-              <div className="absolute top-0 right-0 p-4">
-                <Sparkles className="w-6 h-6 text-[#C9A24D]/20" />
-              </div>
-              <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D]">
-                  <Users className="w-6 h-6" />
-                </div>
-                <h3 className="text-xl font-bold italic">Option 2 : Accompagné</h3>
-                <p className="text-sm text-white/80 leading-relaxed">
-                  Tu choisis de ne plus être seul. Nous nous engageons à tes côtés.
-                </p>
-                <p className="text-[13px] text-white/60 leading-relaxed font-medium">
-                  Si tu t’engages dans le parcours complet et que tu vas au bout, notre équipe s’engage à donner autant que toi pour mettre en place toutes les actions concrètes possibles afin de te rapprocher réellement de ton vœu.
-                </p>
-              </div>
-              <div className="pt-6">
-                <span className="text-[10px] font-black uppercase tracking-widest text-[#C9A24D] italic">Engagement mutuel</span>
-              </div>
+            <motion.div {...fadeIn} className="p-8 md:p-10 rounded-[40px] bg-[#C9A24D]/5 border border-[#C9A24D]/20 space-y-4">
+              <h3 className="text-xl font-bold italic">Tu décides de ne plus être seul</h3>
+              <p className="text-sm text-white/70 leading-relaxed font-medium">
+                Notre équipe s’engage à donner autant que toi pour mettre en place toutes les actions concrètes possibles afin de te rapprocher réellement de ton vœu.
+              </p>
             </motion.div>
           </div>
-
-          <motion.p {...fadeIn} className="text-center text-[10px] text-white/20 uppercase tracking-widest">
-            ⚠️ Aucune promesse de résultat garanti. Seul ton engagement définit ta réussite.
-          </motion.p>
         </div>
       </section>
 
-      {/* 4. CTA FINAL — ALIGNÉ AVEC LE VOEU */}
+      {/* 6. CTA FINAL — ALIGNÉ AVEC LE VOEU */}
       <section className="py-40 px-6 text-center relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(201,162,77,0.1),_transparent_70%)]" />
@@ -299,23 +423,9 @@ export default function VoeuxPage() {
               <span className="text-[#C9A24D] italic">ton vœu ?</span>
             </h2>
             <AnimatePresence mode="wait">
-              {selectedVoeu ? (
-                <motion.p 
-                  key="selected"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-white/80 text-lg font-serif italic"
-                >
+              {selectedVoeu && selectedVoeu !== "Aucun ne me parle pour l’instant" && (
+                <motion.p key="selected" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-white/80 text-lg font-serif italic">
                   « {selectedVoeu} »
-                </motion.p>
-              ) : (
-                <motion.p 
-                  key="none"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-white/40 text-sm font-bold uppercase tracking-[0.3em]"
-                >
-                  Fais le premier pas vers ton changement
                 </motion.p>
               )}
             </AnimatePresence>
@@ -326,14 +436,14 @@ export default function VoeuxPage() {
               href="/miroir/experience"
               onClick={handleCtaClick}
               className={`group w-full relative inline-flex flex-col items-center gap-2 px-8 py-10 rounded-[40px] shadow-[0_30px_60px_-10px_rgba(201,162,77,0.5)] hover:scale-105 active:scale-95 transition-all ${
-                selectedVoeu ? "bg-[#C9A24D] text-[#08090F]" : "bg-white/10 text-white/40 cursor-not-allowed"
+                selectedVoeu ? "bg-[#C9A24D] text-[#08090F]" : "bg-white/10 text-white/40 cursor-not-allowed pointer-events-none"
               }`}
             >
               <span className="text-2xl md:text-3xl font-black">
-                {isNavigating ? 'Lancement...' : "COMMENCER LE CRASH TEST"}
+                {isNavigating ? 'Lancement...' : "LANCER LE CRASH TEST"}
               </span>
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60">
-                {selectedVoeu ? "Pour ce vœu spécifique" : "Sélectionne un vœu pour commencer"}
+                {selectedVoeu ? `Pour ton vœu : ${selectedVoeu}` : "Sélectionne ton vœu pour commencer"}
               </span>
             </Link>
             
@@ -344,21 +454,18 @@ export default function VoeuxPage() {
               <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest">
                 <Lock className="w-3 h-3" /> Diagnostic personnel
               </div>
-              <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest">
-                <Eye className="w-3 h-3" /> 100% Privé
-              </div>
             </div>
           </div>
         </motion.div>
       </section>
 
       {/* FOOTER MINIMAL */}
-      <footer className="py-12 px-6 border-t border-white/5 text-center space-y-6 opacity-20">
+      <footer className="py-12 px-6 border-t border-white/5 text-center opacity-20">
         <p className="text-[9px] font-black uppercase tracking-[0.5em]">
           © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION
         </p>
       </footer>
-
     </div>
   );
 }
+

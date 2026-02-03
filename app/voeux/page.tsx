@@ -96,14 +96,33 @@ const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | n
         className="fixed top-20 right-4 md:right-8 z-[100] group cursor-pointer"
         onClick={onClear}
       >
-        <div className="bg-[#C9A24D]/10 backdrop-blur-xl border border-[#C9A24D]/30 p-4 rounded-3xl shadow-[0_10px_40px_rgba(201,162,77,0.2)] max-w-[200px] relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#C9A24D]/5 to-transparent" />
-          <div className="relative space-y-1">
-            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-[#C9A24D]">Mon vœu actuel</span>
-            <p className="text-[10px] md:text-xs font-bold leading-tight text-white/90 italic">
-              « {selectedVoeu} »
-            </p>
+        {/* Glow Background */}
+        <div className="absolute inset-0 bg-[#C9A24D] blur-[20px] opacity-20 group-hover:opacity-40 transition-opacity animate-pulse" />
+        
+        <div className="bg-[#C9A24D] border-2 border-white/30 p-4 rounded-[2rem] shadow-[0_15px_40px_-10px_rgba(201,162,77,0.6)] max-w-[220px] relative overflow-hidden transform group-hover:scale-105 transition-transform">
+          {/* Inner Light Effect */}
+          <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/20 to-transparent" />
+          
+          <div className="relative flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 shadow-inner">
+              <Star className="w-4 h-4 text-[#08090F]" />
+            </div>
+            <div className="space-y-0.5">
+              <span className="text-[7px] font-black uppercase tracking-[0.2em] text-[#08090F]/60">Mon vœu actuel</span>
+              <p className="text-[10px] md:text-xs font-black leading-tight text-[#08090F] italic">
+                « {selectedVoeu} »
+              </p>
+            </div>
           </div>
+
+          {/* Floating particle */}
+          <motion.div 
+            animate={{ y: [-2, 2, -2], x: [-1, 1, -1] }}
+            transition={{ duration: 3, repeat: Infinity }}
+            className="absolute -bottom-1 -right-1"
+          >
+            <Sparkles className="w-4 h-4 text-white/40" />
+          </motion.div>
         </div>
       </motion.div>
     )}
@@ -238,10 +257,10 @@ export default function VoeuxPage() {
                       key={i}
                       whileHover={{ scale: 1.05 }}
                       onClick={() => handleVoeuSelect(sub)}
-                      className={`px-6 py-4 rounded-xl border text-xs md:text-sm font-bold transition-all ${
+                      className={`px-6 py-4 rounded-2xl border-2 text-xs md:text-sm font-black transition-all backdrop-blur-xl ${
                         selectedVoeu === sub
-                        ? "bg-white text-[#08090F] border-white shadow-xl"
-                        : "bg-white/5 border-white/10 text-white/80 hover:bg-white/10"
+                        ? "bg-white text-[#08090F] border-white shadow-[0_15px_30px_-10px_rgba(255,255,255,0.4)]"
+                        : "bg-[#08090F]/80 border-white/20 text-white hover:border-[#C9A24D] hover:bg-[#08090F]/90"
                       }`}
                     >
                       {sub}

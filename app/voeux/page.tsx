@@ -130,6 +130,7 @@ const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | n
 );
 
 export default function VoeuxPage() {
+  // Metadata for cache busting: 2026-02-03-v2
   const router = useRouter();
   const [selectedArchetype, setSelectedArchetype] = useState<string | null>(null);
   const [selectedVoeu, setSelectedVoeu] = useState<string | null>(null);

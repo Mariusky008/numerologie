@@ -170,7 +170,6 @@ const SectionCTA = ({
 );
 
 export default function VoeuxPage() {
-  // Metadata for cache busting: 2026-02-03-v2
   const router = useRouter();
   const [selectedArchetype, setSelectedArchetype] = useState<string | null>(null);
   const [selectedVoeu, setSelectedVoeu] = useState<string | null>(null);
@@ -185,7 +184,6 @@ export default function VoeuxPage() {
     setSelectedVoeu(null);
     trackEvent('archetype_selected', { id });
     
-    // Smooth scroll to the refinement section
     setTimeout(() => {
       const refinementSection = document.getElementById('refinement-section');
       if (refinementSection) {
@@ -197,7 +195,6 @@ export default function VoeuxPage() {
   const handleVoeuSelect = (voeu: string) => {
     setSelectedVoeu(voeu);
     trackEvent('voeu_selected', { voeu });
-    // Scroll slightly to show next section
     const nextSection = document.getElementById('fracture');
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: 'smooth' });
@@ -258,7 +255,6 @@ export default function VoeuxPage() {
             </p>
           </motion.div>
 
-          {/* LEVEL 1: ARCHETYPES */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {ARCHETYPES.map((arch) => (
               <motion.button
@@ -279,8 +275,6 @@ export default function VoeuxPage() {
             <button 
               onClick={() => {
                 handleVoeuSelect("Aucun ne me parle pour l’instant");
-                const nextSection = document.getElementById('fracture');
-                if (nextSection) nextSection.scrollIntoView({ behavior: 'smooth' });
               }}
               className="p-4 md:p-6 rounded-2xl border border-white/5 bg-white/2 shadow-inner text-[10px] md:text-xs font-bold text-white/30 hover:text-white/50 transition-colors"
             >
@@ -288,7 +282,6 @@ export default function VoeuxPage() {
             </button>
           </div>
 
-          {/* LEVEL 2: SUB-VOEUX (AFFINAGE) */}
           <AnimatePresence mode="wait">
             {selectedArchetype && (
               <motion.div 
@@ -320,7 +313,6 @@ export default function VoeuxPage() {
             )}
           </AnimatePresence>
 
-          {/* HERO CTA */}
           <SectionCTA 
             text="DÉCOUVRIR POURQUOI ÇA BLOQUE" 
             isActive={!!selectedVoeu}
@@ -333,7 +325,6 @@ export default function VoeuxPage() {
       <section id="fracture" className="py-24 px-6 relative bg-[#08090F]">
         <div className="max-w-2xl mx-auto space-y-12">
           
-          {/* Section Header */}
           <motion.div {...fadeIn} className="text-center space-y-4 mb-16">
             <h2 className="text-3xl md:text-5xl font-serif font-bold">La Fracture</h2>
             <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold italic">
@@ -352,12 +343,8 @@ export default function VoeuxPage() {
               <span className="text-[10px] text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Salut ! Je me sens bloquée, j’ai l’impression de refaire toujours les mêmes erreurs. 😔
-                  {selectedVoeu && selectedVoeu !== "Aucun ne me parle pour l’instant" && (
-                    <span className="block mt-2 pt-2 border-t border-white/10 italic text-[#C9A24D]">
-                      « {selectedVoeu} »
-                    </span>
-                  )}
+                  J’ai choisi comme vœu : <span className="text-[#C9A24D] font-bold italic">« {selectedVoeu || "mon projet"} »</span>. <br />
+                  Mais j’ai l’impression que ça n’avance jamais. 😔
                 </p>
               </div>
             </motion.div>
@@ -373,197 +360,105 @@ export default function VoeuxPage() {
               <span className="text-[10px] text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
               <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed italic font-serif">
-                  Et si ce n’était pas un problème… mais un décalage avec qui tu es vraiment ?
+                  Ce n’est pas ton vœu le problème. <br /><br />
+                  C’est le décalage entre qui tu es aujourd’hui et ce que ce vœu demande de toi.
                 </p>
               </div>
             </motion.div>
 
-            {/* 3. Oracle */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 0.6 }}
-              className="flex flex-col items-start gap-2 max-w-[85%]"
-            >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif">
-                  Quand tu te regardes dans le miroir… te vois-tu tel que tu es ? 🪞
-                </p>
-              </div>
-            </motion.div>
-
-            {/* 4. Carla */}
+            {/* 3. Carla */}
             <motion.div 
               initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 0.9 }}
+              transition={{ delay: 0.6 }}
               className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
             >
               <span className="text-[10px] text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Oui je pense.
+                  Pourtant je fais ce que je peux…
                 </p>
               </div>
             </motion.div>
 
-            {/* 5. Oracle */}
+            {/* 4. Oracle */}
             <motion.div 
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.2 }}
+              transition={{ delay: 0.9 }}
               className="flex flex-col items-start gap-2 max-w-[85%]"
-            >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  En réalité, tu vois souvent la personne que tu étais il y a plusieurs années. <br /><br />
-                  Progressivement la vie t’a changé : stress, contraintes, choix imposés.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* 6. Carla */}
-            <motion.div 
-              initial={{ opacity: 0, x: 20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.5 }}
-              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
-            >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  ok je vois. 💡
-                </p>
-              </div>
-            </motion.div>
-
-            {/* 7. Oracle */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.8 }}
-              className="flex flex-col items-start gap-2 max-w-[85%]"
-            >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Ce décalage créé de la : <br /><br />
-                  – fatigue mentale 😫 <br />
-                  – perte de fluidité 🌊 <br />
-                  – décisions moins justes ⚖️ <br />
-                  – impression d’être “à côté de soi” 🧩
-                </p>
-              </div>
-            </motion.div>
-
-            {/* 8. Carla */}
-            <motion.div 
-              initial={{ opacity: 0, x: 20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 2.1 }}
-              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
-            >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Exactement… et je rencontre souvent les mauvaises personnes. 💔
-                </p>
-              </div>
-            </motion.div>
-
-            {/* 9. Oracle */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 2.4 }}
-              className="flex flex-col items-start gap-2 w-full pt-4"
-            >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-6 rounded-3xl rounded-tl-none shadow-2xl w-full max-w-lg space-y-6">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Ça en fait partie aussi !
-                </p>
-                
-                <div className="space-y-4">
-                  <div className="bg-white/5 border border-white/10 p-4 rounded-2xl">
-                    <p className="text-xs font-bold text-[#C9A24D] uppercase tracking-widest mb-2">🟢 À la base</p>
-                    <p className="text-sm text-white/80 leading-relaxed">
-                      Tu es fait pour voir loin, décider avec clarté, construire sur le long terme.
-                    </p>
-                  </div>
-                  
-                  <div className="bg-white/5 border border-white/10 p-4 rounded-2xl">
-                    <p className="text-xs font-bold text-red-400 uppercase tracking-widest mb-2">🔴 Aujourd’hui</p>
-                    <p className="text-sm text-white/80 leading-relaxed">
-                      Urgence, surcharge mentale, réactions émotionnelles, perte de direction. Et ça t’épuise.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* 9. Carla */}
-            <motion.div 
-              initial={{ opacity: 0, x: 20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 2.4 }}
-              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
-            >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Carrément oui ! 🔥
-                </p>
-              </div>
-            </motion.div>
-
-            {/* 10. Oracle */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 2.7 }}
-              className="flex flex-col items-start gap-2 max-w-[85%] pt-4"
-            >
-              <div className="bg-[#C9A24D]/20 border border-[#C9A24D]/30 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif italic">
-                  Ce type d’écart est fréquent. <br /><br />
-                  C’est exactement ce que le Crash Test te montre. Il va identifier précisément ce qui bloque aujourd&apos;hui pour ton vœu : 
-                  <span className="text-[#C9A24D] font-bold"> « {selectedVoeu || "ton projet"} »</span>.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* 11. Carla */}
-            <motion.div 
-              initial={{ opacity: 0, x: 20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 3.0 }}
-              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
-            >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Et après ?
-                </p>
-              </div>
-            </motion.div>
-
-            {/* 12. Oracle */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 3.3 }}
-              className="flex flex-col items-start gap-2 max-w-[85%] pt-4"
             >
               <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif">
-                  Une fois le blocage identifié, il suffira de travailler dessus — avec nous ou en autonomie — pour qu&apos;enfin ton vœu se réalise. <br /><br />
-                  C&apos;est la première étape vers ton alignement. ✨
+                  Justement. <br /><br />
+                  Quand tu veux <span className="text-[#C9A24D] font-bold">« {selectedVoeu || "ton projet"} »</span>, mais que tu décides depuis un fonctionnement en surcharge, en urgence ou par peur, tu attires des situations qui vont à l’opposé.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 5. Carla */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 1.2 }}
+              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
+            >
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  C’est exactement ça… 😔
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 6. Oracle */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 1.5 }}
+              className="flex flex-col items-start gap-2 max-w-[85%]"
+            >
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed italic font-serif">
+                  Ce décalage ne se ressent pas comme un échec. <br /><br />
+                  Il se ressent comme une perte de fluidité. Et c’est pour ça que ton vœu reste bloqué.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 7. Carla */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 1.8 }}
+              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
+            >
+              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
+                  Et je fais quoi alors ? 🤔
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 8. Oracle */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 2.1 }}
+              className="flex flex-col items-start gap-2 max-w-[85%]"
+            >
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif">
+                  Le Crash Test va identifier précisément où ça décroche. <br /><br />
+                  Ensuite, tu auras deux choix : <br />
+                  – travailler dessus seul <br />
+                  – ou avancer avec nous <br /><br />
+                  Dans les deux cas, tu sauras enfin quoi ajuster pour que <span className="text-[#C9A24D] font-bold italic">« {selectedVoeu || "ton projet"} »</span> devienne possible. ✨
                 </p>
               </div>
             </motion.div>
@@ -574,7 +469,6 @@ export default function VoeuxPage() {
               isActive={!!selectedVoeu}
               onClick={handleCtaClick}
             />
-
           </div>
         </div>
       </section>
@@ -712,10 +606,9 @@ export default function VoeuxPage() {
 
       <footer className="py-12 px-6 border-t border-white/5 text-center opacity-20">
         <p className="text-[9px] font-black uppercase tracking-[0.5em]">
-          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v2.6
+          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v2.7
         </p>
       </footer>
     </div>
   );
 }
-

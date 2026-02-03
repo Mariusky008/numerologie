@@ -79,13 +79,14 @@ export default function Home() {
     // Delay prefetch to save bandwidth on initial load
     const prefetchTimer = setTimeout(() => {
       router.prefetch('/miroir/experience');
-    }, 2000);
+    }, 4000);
     
-    // Animate chat steps
+    // Animate chat steps sequentially
     const timers = [
-      setTimeout(() => setChatStep(1), 500),
-      setTimeout(() => setChatStep(2), 1500),
-      setTimeout(() => setChatStep(3), 2500),
+      setTimeout(() => setChatStep(1), 800),  // Message 1
+      setTimeout(() => setChatStep(2), 2200), // Message 2
+      setTimeout(() => setChatStep(3), 3600), // Hook
+      setTimeout(() => setChatStep(4), 4800), // CTA
     ];
     
     const unsubscribe = progress.on("change", (latest) => {
@@ -135,61 +136,78 @@ export default function Home() {
           </video>
         </div>
 
-        <div className="max-w-xl w-full z-10 space-y-10 text-center">
-          {/* 1. Chat Interface — NOW FIRST */}
-          <div className="space-y-3 text-left max-w-sm mx-auto">
-            <AnimatePresence>
-              {chatStep >= 1 && (
-                <motion.div 
-                  initial={{ opacity: 0, x: -20, scale: 0.9 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl"
-                >
-                  <p className="text-sm md:text-base font-medium leading-relaxed">
-                    Salut 👋 <br />
-                    Tu te sens bloqué, fatigué mentalement ou tu répètes les mêmes erreurs ? 🧠
-                  </p>
-                </motion.div>
-              )}
+        <div className="max-w-xl w-full z-10 text-center flex flex-col items-center justify-center">
+          <motion.div 
+            layout 
+            className="w-full space-y-8 flex flex-col items-center"
+          >
+            {/* 1. Chat Interface — Message 1 & 2 */}
+            <div className="space-y-3 text-left w-full max-w-sm mx-auto">
+              <AnimatePresence mode="popLayout">
+                {chatStep >= 1 && (
+                  <motion.div 
+                    layout
+                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl"
+                  >
+                    <p className="text-sm md:text-base font-medium leading-relaxed">
+                      Salut 👋 <br />
+                      Tu te sens bloqué, fatigué mentalement ou tu répètes les mêmes erreurs ? 🧠
+                    </p>
+                  </motion.div>
+                )}
 
-              {chatStep >= 2 && (
+                {chatStep >= 2 && (
+                  <motion.div 
+                    layout
+                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl"
+                  >
+                    <p className="text-sm md:text-base font-medium leading-relaxed">
+                      Et si ce n’était pas un problème… <br />
+                      mais un décalage avec qui tu es vraiment ?
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* 2. Main Hook — Step 3 */}
+            <AnimatePresence mode="popLayout">
+              {chatStep >= 3 && (
                 <motion.div 
-                  initial={{ opacity: 0, x: -20, scale: 0.9 }}
-                  animate={{ opacity: 1, x: 0, scale: 1 }}
-                  className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl"
+                  layout
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="space-y-8 relative w-full pt-4"
                 >
-                  <p className="text-sm md:text-base font-medium leading-relaxed">
-                    Et si ce n’était pas un problème… <br />
-                    mais un décalage avec qui tu es vraiment ?
-                  </p>
+                  {/* Visual Signature — The Mirror Sphere */}
+                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 pointer-events-none opacity-50">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-[#C9A24D] to-transparent rounded-full blur-xl animate-pulse" />
+                    <div className="absolute inset-2 bg-[#08090F] rounded-full border border-white/10 flex items-center justify-center">
+                      <Sparkles className="w-6 h-6 text-[#C9A24D]" />
+                    </div>
+                  </div>
+
+                  <h1 className="text-3xl md:text-5xl font-serif font-bold tracking-tight leading-tight pt-8">
+                    Prêt maintenant à découvrir ce qui influence <br />
+                    <span className="text-[#C9A24D] italic">vraiment tes décisions ?</span>
+                  </h1>
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
 
-          {/* 2. Main Hook — NOW SECOND */}
-          <AnimatePresence>
-            {chatStep >= 3 && (
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="space-y-8 relative"
-              >
-                {/* Visual Signature — The Mirror Sphere */}
-                <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-20 h-20 pointer-events-none opacity-50">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#C9A24D] to-transparent rounded-full blur-xl animate-pulse" />
-                  <div className="absolute inset-2 bg-[#08090F] rounded-full border border-white/10 flex items-center justify-center">
-                    <Sparkles className="w-8 h-8 text-[#C9A24D]" />
-                  </div>
-                </div>
-
-                <h1 className="text-3xl md:text-5xl font-serif font-bold tracking-tight leading-tight pt-8">
-                  Prêt maintenant à découvrir ce qui influence <br />
-                  <span className="text-[#C9A24D] italic">vraiment tes décisions ?</span>
-                </h1>
-
-                {/* 3. XXL CTA — MASSIVE & EVIDENT */}
-                <div className="space-y-4 pt-4 relative group">
+            {/* 3. XXL CTA — Step 4 */}
+            <AnimatePresence mode="popLayout">
+              {chatStep >= 4 && (
+                <motion.div 
+                  layout
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="space-y-4 pt-4 relative group w-full"
+                >
                   {/* Progress Indicator Above CTA */}
                   <div className="flex flex-col items-center gap-1 mb-4">
                     <div className="flex justify-between w-48 text-[9px] font-black uppercase tracking-[0.2em] text-[#C9A24D]/60">
@@ -237,10 +255,10 @@ export default function Home() {
                     <span className="w-1 h-1 rounded-full bg-white/20" />
                     <span>Sans inscription</span>
                   </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         </div>
 
         <motion.div 

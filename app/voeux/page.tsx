@@ -205,7 +205,7 @@ export default function VoeuxPage() {
               <span className="text-[#C9A24D] italic">par un vœu.</span>
             </h1>
             <p className="max-w-xl mx-auto text-sm md:text-base text-white/60 leading-relaxed">
-              Choisis ce qui compte vraiment pour toi aujourd’hui. <br />
+              Choisis ce qui compte vraiment pour toi aujourd&apos;hui. <br />
               Ensuite, découvre pourquoi ça bloque.
             </p>
           </motion.div>
@@ -282,7 +282,7 @@ export default function VoeuxPage() {
           <motion.div {...fadeIn} className="text-center space-y-4 mb-16">
             <h2 className="text-3xl md:text-5xl font-serif font-bold">La Fracture</h2>
             <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold italic">
-              Analyse de l'écart identitaire
+              Analyse de l&apos;écart identitaire
             </p>
           </motion.div>
 
@@ -312,7 +312,7 @@ export default function VoeuxPage() {
             >
               <span className="text-[10px] text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle — à l’instant</span>
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed italic">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif italic">
                   Et si ce n’était pas un problème… mais un décalage avec qui tu es vraiment ?
                 </p>
               </div>
@@ -328,7 +328,7 @@ export default function VoeuxPage() {
             >
               <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
-                  Chaque matin, tu te regardes dans le miroir. Tu penses te voir tel que tu es aujourd’hui. <br /><br />
+                  Chaque matin, tu te regardes dans le miroir. Tu penses te voir tel que tu es aujourd&apos;hui. <br /><br />
                   En réalité, tu vois souvent la personne que tu étais il y a plusieurs années.
                 </p>
               </div>
@@ -508,7 +508,7 @@ export default function VoeuxPage() {
       <section className="py-32 px-6 relative">
         <div className="max-w-4xl mx-auto space-y-16">
           <motion.div {...fadeIn} className="text-center space-y-6">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold">Deux chemins s'ouvrent</h2>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold">Deux chemins s&apos;ouvrent</h2>
             <p className="text-white/50 text-sm md:text-base max-w-xl mx-auto">
               Une fois le Crash Test terminé, après la lecture de ton rapport et l’échange avec ton coach IA...
             </p>

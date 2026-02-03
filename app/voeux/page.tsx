@@ -405,8 +405,9 @@ export default function VoeuxPage() {
             >
               <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed italic font-serif">
-                  Ce décalage ne se ressent pas comme un échec. <br /><br />
-                  Il se ressent comme une perte de fluidité. Et c’est pour ça que ton vœu reste bloqué.
+                  Ce décalage est difficile à repérer. <br /><br />
+                  Tu avances, mais jamais dans le bon sens. <br />
+                  Et c’est pour ça que ton vœu reste bloqué.
                 </p>
               </div>
             </motion.div>
@@ -588,7 +589,7 @@ export default function VoeuxPage() {
 
       <footer className="py-12 px-6 border-t border-white/5 text-center opacity-20">
         <p className="text-[9px] font-black uppercase tracking-[0.5em]">
-          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v2.9
+          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v3.0
         </p>
       </footer>
     </div>

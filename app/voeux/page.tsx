@@ -425,7 +425,7 @@ export default function Home() {
                   — Question de vérité —
                 </p>
                 <p className="text-2xl md:text-4xl font-serif font-bold text-white leading-tight mb-10">
-                  Quand ce vœu échoue... <br />
+                  Quand tu échoues... <br />
                   <span className="text-[#C9A24D] italic relative inline-block mt-2">
                     comment réagis-tu ?
                   </span>

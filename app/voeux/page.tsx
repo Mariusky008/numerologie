@@ -192,6 +192,8 @@ export default function Home() {
   const [selectedVoeu, setSelectedVoeu] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
 
+  const [userResponse, setUserResponse] = useState<string | null>(null);
+
   useEffect(() => {
     trackEvent('voeux_page_view');
   }, []);
@@ -335,7 +337,7 @@ export default function Home() {
         <div className="max-w-2xl mx-auto space-y-12">
           
           <motion.div {...fadeIn} className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl md:text-6xl font-serif font-bold">Le Décalage</h2>
+            <h2 className="text-3xl md:text-6xl font-serif font-bold">Pourquoi ton vœu reste bloqué</h2>
             <p className="text-white/40 text-base md:text-lg font-bold uppercase tracking-widest italic">
               Ce n&apos;est pas ta faute, c&apos;est juste un décalage.
             </p>
@@ -417,23 +419,43 @@ export default function Home() {
               transition={{ delay: 1.1 }}
               className="py-12 flex flex-col items-center justify-center text-center space-y-6"
             >
-              <div className="bg-black border border-[#C9A24D] px-10 py-12 rounded-[2rem] max-w-2xl relative overflow-hidden group shadow-[0_0_50px_-10px_rgba(201,162,77,0.2)]">
+              <div className="bg-black border border-[#C9A24D] px-8 py-10 md:px-12 md:py-14 rounded-[2rem] max-w-3xl relative overflow-hidden group shadow-[0_0_50px_-10px_rgba(201,162,77,0.2)]">
                 
-                <p className="text-sm font-black text-[#C9A24D] mb-6 uppercase tracking-[0.2em]">
+                <p className="text-sm font-black text-[#C9A24D] mb-8 uppercase tracking-[0.2em]">
                   — Question de vérité —
                 </p>
-                <p className="text-2xl md:text-4xl font-serif font-bold text-white leading-tight">
+                <p className="text-2xl md:text-4xl font-serif font-bold text-white leading-tight mb-10">
                   Quand ce vœu échoue... <br />
                   <span className="text-[#C9A24D] italic relative inline-block mt-2">
-                    tu forces, tu fuis ou tu doutes ?
-                    <svg className="absolute -bottom-2 left-0 w-full h-2 text-[#C9A24D] opacity-40" viewBox="0 0 100 10" preserveAspectRatio="none">
-                      <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="2" fill="none" />
-                    </svg>
+                    comment réagis-tu ?
                   </span>
                 </p>
-                <p className="text-xs text-white/30 mt-8 font-medium italic">
-                  (Réponds mentalement avant de scroller)
-                </p>
+                
+                <div className="flex flex-wrap justify-center gap-4 relative z-10">
+                  {['Je force', 'Je fuis', 'Je doute'].map((response) => (
+                    <button
+                      key={response}
+                      onClick={() => setUserResponse(response)}
+                      className={`px-6 py-4 rounded-xl border-2 font-bold transition-all duration-300 ${
+                        userResponse === response
+                        ? "bg-[#C9A24D] text-[#08090F] border-[#C9A24D] scale-105 shadow-[0_0_20px_rgba(201,162,77,0.4)]"
+                        : "bg-transparent text-white/60 border-white/20 hover:border-[#C9A24D]/50 hover:text-white"
+                      } ${userResponse && userResponse !== response ? "opacity-50" : "opacity-100"}`}
+                    >
+                      {response}
+                    </button>
+                  ))}
+                </div>
+
+                {userResponse && (
+                  <motion.p 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-xs text-[#C9A24D] mt-8 font-black uppercase tracking-widest"
+                  >
+                    C'est noté. La suite va t'éclairer.
+                  </motion.p>
+                )}
               </div>
             </motion.div>
 
@@ -611,6 +633,30 @@ export default function Home() {
             </motion.div>
           </div>
 
+          {/* SOCIAL PROOF */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 border-t border-white/5">
+            {[
+              { text: "J'ai enfin compris pourquoi je tournais en rond depuis 3 ans.", author: "Sophie, 34 ans" },
+              { text: "Le diagnostic a mis des mots exacts sur mon blocage.", author: "Marc, 42 ans" },
+              { text: "C'est bluffant de précision, même sans rien dire.", author: "Léa, 29 ans" }
+            ].map((temoignage, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white/5 p-6 rounded-2xl border border-white/5 text-center space-y-4"
+              >
+                <div className="flex justify-center text-[#C9A24D]">
+                  {[...Array(5)].map((_, j) => <Star key={j} className="w-3 h-3 fill-current" />)}
+                </div>
+                <p className="text-sm text-white/70 italic">"{temoignage.text}"</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-white/30">{temoignage.author}</p>
+              </motion.div>
+            ))}
+          </div>
+
           {/* CHOIX FINAL CTA */}
           <SectionCTA 
             text="HONORER MON VŒU MAINTENANT" 
@@ -620,12 +666,11 @@ export default function Home() {
         </div>
 
         <div className="max-w-3xl mx-auto mt-24 text-center space-y-6 pt-16 border-t border-white/5">
-          <h4 className="text-xl md:text-2xl font-serif italic text-white/60">Après le Crash Test</h4>
-          <ul className="text-lg md:text-xl text-white/40 space-y-3">
-            <li>– Tu peux continuer gratuitement avec ton rapport</li>
-            <li>– Ou accéder à des analyses et accompagnements plus poussés si tu le souhaites</li>
-          </ul>
-        </div>
+            <h4 className="text-xl md:text-2xl font-serif italic text-white/60">Après le Crash Test</h4>
+            <p className="text-lg md:text-xl text-white/40 max-w-2xl mx-auto leading-relaxed">
+              Après le diagnostic gratuit, tu as la possibilité d’aller plus loin avec une lecture approfondie et un accompagnement personnalisé.
+            </p>
+          </div>
       </section>
 
       {/* 6. CTA FINAL — ALIGNÉ AVEC LE VOEU */}

@@ -251,7 +251,12 @@ export default function Home() {
 
         <div className="w-full max-w-[1600px] z-10 text-center space-y-12 md:space-y-20">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
-            <div className="flex justify-center mb-6">
+            <div className="flex flex-col items-center gap-8 mb-6">
+              <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-[#C9A24D] text-[#08090F] shadow-[0_0_30px_-5px_rgba(201,162,77,0.4)]">
+                <Star className="w-4 h-4 fill-[#08090F]" />
+                <span className="text-xs font-black uppercase tracking-widest">Déjà + de 1200 crash-tests réalisés</span>
+              </div>
+
               <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center animate-pulse">
                 <Sparkles className="w-10 h-10 text-[#C9A24D]" />
               </div>

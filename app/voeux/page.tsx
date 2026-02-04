@@ -619,12 +619,26 @@ export default function Home() {
             />
 
             {/* Transparency Section */}
-            <div className="mt-12 bg-[#C9A24D]/10 border border-[#C9A24D]/20 rounded-3xl p-8 md:p-10 space-y-6 text-center">
+            <div className="mt-12 bg-[#C9A24D]/10 border border-[#C9A24D]/20 rounded-3xl p-8 md:p-10 space-y-8 text-center">
               <div className="flex justify-center">
                 <div className="w-12 h-12 rounded-full bg-[#C9A24D]/20 flex items-center justify-center">
                   <ShieldCheck className="w-6 h-6 text-[#C9A24D]" />
                 </div>
               </div>
+
+              {/* Method Reassurance */}
+              <div className="max-w-3xl mx-auto space-y-4">
+                <p className="text-base md:text-lg text-white/80 leading-relaxed font-medium">
+                  Le Crash Test combine des questionnaires validés et des analyses comportementales pour mesurer votre potentiel et vos leviers d’action.
+                </p>
+                <p className="text-sm md:text-base text-white/50 leading-relaxed">
+                  Votre date et lieu de naissance servent de cadre contextuel, permettant de mieux comprendre vos tendances naturelles et d’obtenir un diagnostic précis et exploitable.
+                </p>
+              </div>
+
+              {/* Free/Transparency Divider */}
+              <div className="w-full h-px bg-[#C9A24D]/10" />
+
               <div className="space-y-4">
                 <p className="text-lg text-white/80 leading-relaxed">
                   ✅ <span className="font-bold text-white">Le Crash Test est gratuit.</span> <br />

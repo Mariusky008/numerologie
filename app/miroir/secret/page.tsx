@@ -18,7 +18,7 @@ export default function SecretPage() {
 
   const phrases = [
     "Chaque matin, tu te regardes dans le miroir en pensant te voir tel que tu es.",
-    "En réalité, tu vois souvent la personne que tu étais il y a des années.",
+    "En réalité, tu te vois aujourd'hui comme tu étais il y a des années.",
     "Ce type d’écart est fréquent, il fabrique une perte de fluidité dans nos vies.",
     "Beaucoup de blocages viennent de l’écart entre qui tu es au fond et la personne que tu es devenue avec le temps.",
     "On a créé un crash test basé sur ta date, ton lieu de naissance et quelques questions pour mettre en lumière ces décalages invisibles.",
@@ -84,9 +84,9 @@ export default function SecretPage() {
                   layout
                   initial={{ opacity: 0, y: 20, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl text-left w-full max-w-sm"
+                  className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-3xl rounded-tl-none shadow-xl text-left w-full max-w-2xl"
                 >
-                  <p className="text-sm md:text-base font-medium leading-relaxed">
+                  <p className="text-lg md:text-2xl font-medium leading-relaxed">
                     {phrases[index]}
                   </p>
                 </motion.div>
@@ -99,11 +99,11 @@ export default function SecretPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl flex items-center gap-1.5 w-fit self-start ml-0 md:ml-16"
+                  className="bg-white/5 border border-white/10 p-6 rounded-3xl rounded-tl-none shadow-xl flex items-center gap-2 w-fit self-start ml-0 md:ml-16"
                 >
-                  <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0 }} className="w-1.5 h-1.5 bg-white/40 rounded-full" />
-                  <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-1.5 h-1.5 bg-white/40 rounded-full" />
-                  <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-1.5 h-1.5 bg-white/40 rounded-full" />
+                  <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0 }} className="w-2 h-2 bg-white/40 rounded-full" />
+                  <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-2 h-2 bg-white/40 rounded-full" />
+                  <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-2 h-2 bg-white/40 rounded-full" />
                 </motion.div>
               )}
             </AnimatePresence>

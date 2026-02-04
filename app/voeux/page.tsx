@@ -419,14 +419,23 @@ export default function VoeuxPage() {
               transition={{ delay: 1.1 }}
               className="py-12 flex flex-col items-center justify-center text-center space-y-6"
             >
-              <span className="text-xs font-black uppercase tracking-[0.3em] text-white/20">— PAUSE —</span>
-              <div className="bg-white/5 border border-white/10 px-8 py-6 rounded-2xl max-w-xl">
-                <p className="text-sm md:text-base text-white/60 font-medium mb-4 uppercase tracking-widest">
-                  Avant de continuer, réponds mentalement :
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/30 px-10 py-12 rounded-[2rem] max-w-2xl backdrop-blur-sm relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#C9A24D]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <p className="text-sm font-black text-[#C9A24D] mb-6 uppercase tracking-[0.2em]">
+                  — Question de vérité —
                 </p>
-                <p className="text-xl md:text-3xl font-serif font-bold text-white/90">
+                <p className="text-2xl md:text-4xl font-serif font-bold text-white leading-tight">
                   Quand ce vœu échoue... <br />
-                  <span className="text-[#C9A24D]">tu forces, tu fuis ou tu doutes ?</span>
+                  <span className="text-[#C9A24D] italic relative inline-block mt-2">
+                    tu forces, tu fuis ou tu doutes ?
+                    <svg className="absolute -bottom-2 left-0 w-full h-2 text-[#C9A24D] opacity-40" viewBox="0 0 100 10" preserveAspectRatio="none">
+                      <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="2" fill="none" />
+                    </svg>
+                  </span>
+                </p>
+                <p className="text-xs text-white/30 mt-8 font-medium italic">
+                  (Réponds mentalement avant de scroller)
                 </p>
               </div>
             </motion.div>

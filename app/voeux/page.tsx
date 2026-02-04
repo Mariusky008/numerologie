@@ -95,48 +95,123 @@ const VOEU_INSIGHTS: Record<string, { demand: string; current: string }> = {
   "Ne plus saboter ce qui pourrait fonctionner": { demand: "Acceptation du bonheur", current: "Culpabilité et sentiment d'imposture" },
 };
 
-const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | null, onClear: () => void }) => (
-  <AnimatePresence>
-    {selectedVoeu && selectedVoeu !== "Aucun ne me parle pour l’instant" && (
-      <motion.div 
-        initial={{ opacity: 0, x: 100, scale: 0.8 }}
-        animate={{ opacity: 1, x: 0, scale: 1 }}
-        exit={{ opacity: 0, x: 100, scale: 0.8 }}
-        className="fixed top-20 right-4 md:right-8 z-[100] group cursor-pointer"
-        onClick={onClear}
-      >
-        {/* Glow Background */}
-        <div className="absolute inset-0 bg-[#C9A24D] blur-[20px] opacity-20 group-hover:opacity-40 transition-opacity animate-pulse" />
-        
-        <div className="bg-[#C9A24D] border-2 border-white/30 p-4 rounded-[2rem] shadow-[0_15px_40px_-10px_rgba(201,162,77,0.6)] max-w-[220px] relative overflow-hidden transform group-hover:scale-105 transition-transform">
-          {/* Inner Light Effect */}
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/20 to-transparent" />
-          
-          <div className="relative flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 shadow-inner">
-              <Star className="w-4 h-4 text-[#08090F]" />
-            </div>
-            <div className="space-y-0.5">
-              <span className="text-[7px] font-black uppercase tracking-[0.2em] text-[#08090F]/60">Mon vœu actuel</span>
-              <p className="text-[10px] md:text-xs font-black leading-tight text-[#08090F] italic">
-                « {selectedVoeu} »
-              </p>
-            </div>
-          </div>
+const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | null, onClear: () => void }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-          {/* Floating particle */}
+  useEffect(() => {
+    if (!selectedVoeu) setIsOpen(false);
+  }, [selectedVoeu]);
+
+  return (
+    <AnimatePresence>
+      {selectedVoeu && selectedVoeu !== "Aucun ne me parle pour l’instant" && (
+        <>
+          {/* Badge Flottant */}
           <motion.div 
-            animate={{ y: [-2, 2, -2], x: [-1, 1, -1] }}
-            transition={{ duration: 3, repeat: Infinity }}
-            className="absolute -bottom-1 -right-1"
+            initial={{ opacity: 0, x: 100, scale: 0.8 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 100, scale: 0.8 }}
+            className="fixed top-24 right-4 md:right-10 z-[90] group cursor-pointer"
+            onClick={() => setIsOpen(true)}
           >
-            <Sparkles className="w-4 h-4 text-white/40" />
+            {/* Glow Background */}
+            <div className="absolute inset-0 bg-[#C9A24D] blur-[30px] opacity-30 group-hover:opacity-60 transition-opacity duration-500 animate-pulse" />
+            
+            <div className="bg-[#C9A24D] border-2 border-white/40 p-5 md:p-6 rounded-[2.5rem] shadow-[0_20px_60px_-10px_rgba(201,162,77,0.7)] max-w-[260px] md:max-w-[320px] relative overflow-hidden transform group-hover:scale-105 transition-transform duration-300">
+              {/* Inner Light Effect */}
+              <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/30 to-transparent" />
+              
+              <div className="relative flex items-center gap-4">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 shadow-inner backdrop-blur-sm border border-white/20">
+                  <Star className="w-5 h-5 md:w-6 md:h-6 text-[#08090F]" />
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] text-[#08090F]/70 block">Mon vœu actuel</span>
+                  <p className="text-xs md:text-sm font-black leading-tight text-[#08090F] italic line-clamp-2">
+                    « {selectedVoeu} »
+                  </p>
+                </div>
+              </div>
+
+              {/* Floating particle */}
+              <motion.div 
+                animate={{ y: [-3, 3, -3], x: [-2, 2, -2], rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-2 right-3"
+              >
+                <Sparkles className="w-5 h-5 text-white/60" />
+              </motion.div>
+            </div>
           </motion.div>
-        </div>
-      </motion.div>
-    )}
-  </AnimatePresence>
-);
+
+          {/* Modal Overlay */}
+          <AnimatePresence>
+            {isOpen && (
+              <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 bg-[#08090F]/90 backdrop-blur-md"
+                  onClick={() => setIsOpen(false)}
+                />
+                
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                  className="relative w-full max-w-2xl bg-[#12121A] border border-[#C9A24D]/30 rounded-[3rem] p-8 md:p-12 overflow-hidden shadow-[0_0_100px_-20px_rgba(201,162,77,0.3)]"
+                >
+                  {/* Decorative Elements */}
+                  <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#C9A24D]/10 rounded-full blur-[60px]" />
+                  <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-[#C9A24D]/10 rounded-full blur-[60px]" />
+
+                  <div className="relative z-10 flex flex-col items-center text-center space-y-8">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#C9A24D]/10 border border-[#C9A24D]/20 text-[#C9A24D] mb-4">
+                      <Star className="w-4 h-4 fill-current" />
+                      <span className="text-xs font-black uppercase tracking-widest">Ton choix</span>
+                    </div>
+
+                    <h3 className="text-2xl md:text-4xl font-serif font-bold text-white leading-tight">
+                      « {selectedVoeu} »
+                    </h3>
+
+                    <div className="space-y-6 max-w-lg">
+                      <p className="text-lg md:text-xl text-white/80 font-medium leading-relaxed italic">
+                        Est-ce vraiment ce que tu désires le plus profondément aujourd'hui ?
+                      </p>
+                      <p className="text-sm text-white/40 leading-relaxed">
+                        Prends un instant pour ressentir si ce vœu vient de ton cœur (envie) ou de ta tête (peur).
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4 pt-6 w-full sm:w-auto">
+                      <button
+                        onClick={() => setIsOpen(false)}
+                        className="px-8 py-4 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-[0_10px_30px_-5px_rgba(201,162,77,0.4)]"
+                      >
+                        Oui, je le garde
+                      </button>
+                      <button
+                        onClick={() => {
+                          onClear();
+                          setIsOpen(false);
+                        }}
+                        className="px-8 py-4 bg-white/5 text-white/60 border border-white/10 rounded-2xl font-bold text-sm uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all"
+                      >
+                        Changer de vœu
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
 
 const SectionCTA = ({ 
   text, 

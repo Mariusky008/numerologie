@@ -138,7 +138,7 @@ const SectionCTA = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
-        className="py-8 flex justify-center"
+        className="py-8 flex flex-col items-center gap-4"
       >
         <Link 
           href={href}
@@ -156,6 +156,15 @@ const SectionCTA = ({
             <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
           </div>
         </Link>
+        
+        <div className="text-center space-y-1">
+          <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">
+            Crash Test gratuit → Diagnostic clair
+          </p>
+          <p className="text-[9px] text-white/30">
+            Modules d’analyse avancés accessibles ensuite.
+          </p>
+        </div>
       </motion.div>
     )}
   </AnimatePresence>
@@ -416,124 +425,41 @@ export default function VoeuxPage() {
               </div>
             </motion.div>
 
-            {/* 7. Carla Choice Section */}
+            {/* 7. Carla */}
             <motion.div 
               initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 2.4 }}
+              transition={{ delay: 1.8 }}
               className="flex flex-col items-end gap-2 ml-auto w-full md:max-w-[85%]"
             >
               <span className="text-xs text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
-              <div className="bg-white/5 border border-white/10 p-4 md:p-5 rounded-3xl rounded-tr-none shadow-2xl w-full">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed mb-6">
+              <div className="bg-white/5 border border-white/10 p-4 md:p-5 rounded-3xl rounded-tr-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed">
                   Et je fais quoi alors ? 🤔
                 </p>
-                
-                <div className="flex flex-col gap-3 items-end w-full">
-                  <button 
-                    onClick={() => setUserChoice('comprendre')}
-                    className={`w-full md:w-auto group relative flex items-center justify-center md:justify-start gap-3 px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all duration-300 border-2 overflow-hidden ${
-                      userChoice === 'comprendre' 
-                      ? 'bg-[#C9A24D] text-[#08090F] border-[#C9A24D] shadow-[0_10px_30px_-10px_rgba(201,162,77,0.5)]' 
-                      : 'bg-white/5 text-white/60 border-white/10 hover:border-[#C9A24D]/50 hover:bg-white/10'
-                    }`}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
-                    <span className="relative flex items-center gap-2">
-                      {userChoice === 'comprendre' ? '🔘' : '○'} Je veux comprendre
-                    </span>
-                  </button>
-
-                  <button 
-                    onClick={() => setUserChoice('avancer')}
-                    className={`w-full md:w-auto group relative flex items-center justify-center md:justify-start gap-3 px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all duration-300 border-2 overflow-hidden ${
-                      userChoice === 'avancer' 
-                      ? 'bg-[#C9A24D] text-[#08090F] border-[#C9A24D] shadow-[0_10px_30px_-10px_rgba(201,162,77,0.5)]' 
-                      : 'bg-white/5 text-white/60 border-white/10 hover:border-[#C9A24D]/50 hover:bg-white/10'
-                    }`}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
-                    <span className="relative flex items-center gap-2">
-                      {userChoice === 'avancer' ? '🔘' : '○'} Je veux avancer
-                    </span>
-                  </button>
-                </div>
               </div>
             </motion.div>
 
-            <AnimatePresence>
-              {userChoice && (
-                <div className="space-y-10">
-                  {/* 7.5 Secret Note - Revelation Moment */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    className="p-6 md:p-8 rounded-[32px] bg-[#C9A24D]/5 border border-[#C9A24D]/20 border-dashed relative overflow-hidden group shadow-2xl"
-                  >
-                    <div className="absolute top-0 right-0 p-4 opacity-5">
-                      <Eye className="w-16 h-16 text-[#C9A24D]" />
-                    </div>
-                    
-                    <div className="relative space-y-6">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-[#C9A24D]/20 flex items-center justify-center">
-                          <Sparkles className="w-4 h-4 text-[#C9A24D]" />
-                        </div>
-                        <p className="text-[#C9A24D] text-xs font-black uppercase tracking-[0.3em]">Révélation visuelle</p>
-                      </div>
-
-                      <h4 className="text-xl md:text-2xl font-serif font-bold text-white/90">
-                        🔍 Ce que le Crash Test va mettre en lumière
-                      </h4>
-                      
-                      <ul className="grid gap-4">
-                        {[
-                          "Ce que tu crois vouloir",
-                          "Ce qui pilote réellement tes décisions",
-                          "Où ton fonctionnement bloque ton vœu"
-                        ].map((point, i) => (
-                          <motion.li 
-                            key={i}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.1 }}
-                            className="flex items-center gap-4 text-sm md:text-base text-white/70"
-                          >
-                            <div className="w-1.5 h-1.5 rounded-full bg-[#C9A24D]" />
-                            {point}
-                          </motion.li>
-                        ))}
-                      </ul>
-
-                      <div className="pt-4 border-t border-white/5">
-                        <p className="text-xs font-bold text-white/30 uppercase tracking-widest italic">
-                          *Note secrète : ces données sont extraites de ton profil identitaire
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  {/* 8. Oracle Final Response */}
-                  <motion.div 
-                    initial={{ opacity: 0, x: -20, scale: 0.95 }}
-                    animate={{ opacity: 1, x: 0, scale: 1 }}
-                    className="flex flex-col items-start gap-2 w-full md:max-w-[85%]"
-                  >
-                    <span className="text-xs text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
-                    <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-4 md:p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                      <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif">
-                        Le Crash Test va identifier précisément où ça décroche. <br /><br />
-                        Ensuite, tu auras deux choix : <br />
-                        – travailler dessus seul <br />
-                        – ou avancer avec nous <br /><br />
-                        Dans les deux cas, tu sauras enfin quoi ajuster pour que <span className="text-[#C9A24D] font-bold italic">« {selectedVoeu || "ton projet"} »</span> devienne possible. ✨
-                      </p>
-                    </div>
-                  </motion.div>
-                </div>
-              )}
-            </AnimatePresence>
+            {/* 8. Oracle */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 2.1 }}
+              className="flex flex-col items-start gap-2 w-full md:max-w-[85%]"
+            >
+              <span className="text-xs text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-4 md:p-5 rounded-3xl rounded-tl-none shadow-2xl">
+                <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif">
+                  Fais le Crash Test, il va identifier précisément où ça décroche. <br /><br />
+                  Ensuite, tu auras deux choix : <br />
+                  – travailler dessus seul <br />
+                  – ou avancer avec nous <br /><br />
+                  Dans les deux cas, tu sauras enfin quoi ajuster pour que <span className="text-[#C9A24D] font-bold italic">« {selectedVoeu || "ton projet"} »</span> devienne possible. ✨
+                </p>
+              </div>
+            </motion.div>
 
             {/* FRACTURE CTA */}
             <SectionCTA 
@@ -625,6 +551,14 @@ export default function VoeuxPage() {
             onClick={handleCtaClick}
           />
         </div>
+
+        <div className="max-w-2xl mx-auto mt-20 text-center space-y-4 pt-12 border-t border-white/5">
+          <h4 className="text-lg font-serif italic text-white/60">Après le Crash Test</h4>
+          <ul className="text-sm text-white/40 space-y-2">
+            <li>– Tu peux continuer gratuitement avec ton rapport</li>
+            <li>– Ou accéder à des analyses et accompagnements plus poussés si tu le souhaites</li>
+          </ul>
+        </div>
       </section>
 
       {/* 6. CTA FINAL — ALIGNÉ AVEC LE VOEU */}
@@ -649,6 +583,15 @@ export default function VoeuxPage() {
           </div>
 
           <div className="space-y-6">
+            <div className="text-center space-y-2 opacity-80">
+              <p className="text-sm font-bold text-white/90">
+                Crash Test gratuit → Diagnostic clair
+              </p>
+              <p className="text-xs text-white/50">
+                Modules d’analyse avancés accessibles ensuite.
+              </p>
+            </div>
+
             <Link 
               href="/miroir/experience"
               onClick={handleCtaClick}
@@ -678,7 +621,7 @@ export default function VoeuxPage() {
 
       <footer className="py-12 px-6 border-t border-white/5 text-center opacity-20">
         <p className="text-[9px] font-black uppercase tracking-[0.5em]">
-          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v3.6
+          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v3.7
         </p>
       </footer>
     </div>

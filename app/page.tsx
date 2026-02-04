@@ -196,6 +196,7 @@ const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | n
                         onClick={() => {
                           onClear();
                           setIsOpen(false);
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
                         }}
                         className="px-8 py-4 bg-white/5 text-white/60 border border-white/10 rounded-2xl font-bold text-sm uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all"
                       >

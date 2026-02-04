@@ -271,7 +271,7 @@ export default function Home() {
   const [userResponse, setUserResponse] = useState<string | null>(null);
 
   useEffect(() => {
-    trackEvent('voeux_page_view');
+    trackEvent('home_view');
   }, []);
 
   const handleArchetypeSelect = (id: string) => {

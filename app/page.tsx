@@ -1,107 +1,225 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Zap, 
   ArrowRight, 
   Activity, 
-  Check, 
-  X,
   Sparkles, 
-  Brain,
   ShieldCheck,
   Target,
-  ChevronDown,
-  Eye,
   Lock,
-  Layers,
-  Fingerprint,
-  Calendar
+  Heart,
+  Users,
+  Compass,
+  Star
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
 
-// --- COMPONENTS ---
+const ARCHETYPES = [
+  {
+    id: "amour",
+    label: "Amour / relation",
+    icon: Heart,
+    subVoeux: [
+      "Retrouver une relation saine et stable",
+      "Sortir d’un schéma amoureux destructeur",
+      "Mettre fin à une impasse relationnelle"
+    ]
+  },
+  {
+    id: "famille",
+    label: "Famille / lien",
+    icon: Users,
+    subVoeux: [
+      "Réparer un lien familial important",
+      "Me libérer d’un poids émotionnel ancien"
+    ]
+  },
+  {
+    id: "decisions",
+    label: "Décisions & direction",
+    icon: Compass,
+    subVoeux: [
+      "Reprendre le contrôle de mes décisions",
+      "Clarifier ce que je veux vraiment",
+      "Créer un équilibre durable dans ma vie"
+    ]
+  },
+  {
+    id: "confiance",
+    label: "Confiance & respect de soi",
+    icon: Star,
+    subVoeux: [
+      "Me respecter enfin dans mes choix",
+      "Retrouver confiance en moi et en mes ressentis",
+      "Assumer qui je suis sans me trahir"
+    ]
+  },
+  {
+    id: "solitude",
+    label: "Solitude / attachement",
+    icon: Target,
+    subVoeux: [
+      "Sortir d’une solitude que je n’ai pas choisie",
+      "Arrêter de vivre dans la peur de perdre"
+    ]
+  },
+  {
+    id: "vie",
+    label: "Vie qui ne me ressemble pas",
+    icon: Activity,
+    subVoeux: [
+      "Construire une vie qui me ressemble",
+      "Ne plus saboter ce qui pourrait fonctionner"
+    ]
+  }
+];
 
-const FloatingOracle = () => (
-  <motion.div 
-    initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ opacity: 1, scale: 1 }}
-    className="fixed bottom-8 right-8 z-[100] flex flex-col items-end gap-4 pointer-events-none hidden md:flex"
-  >
-    <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-4 py-2 rounded-2xl text-[10px] font-bold text-[#C9A24D] uppercase tracking-widest shadow-2xl mb-2">
-      L'Oracle t'accompagne
-    </div>
-    <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#1A1C2E] via-[#5B4B8A] to-[#C9A24D] p-0.5 shadow-[0_0_30px_rgba(201,162,77,0.3)] animate-pulse">
-      <div className="w-full h-full rounded-full bg-[#08090F] flex items-center justify-center overflow-hidden">
-        <Brain className="w-8 h-8 text-[#C9A24D]" />
-      </div>
-    </div>
-  </motion.div>
-);
-
-const ProgressBar = ({ progress }: { progress: number }) => (
-  <div className="fixed top-0 left-0 right-0 z-[110] h-2 bg-white/5 backdrop-blur-md">
-    <motion.div 
-      initial={{ width: "1%" }}
-      animate={{ width: `${Math.max(1, progress)}%` }}
-      className="h-full bg-gradient-to-r from-[#C9A24D] via-[#5B4B8A] to-[#C9A24D] shadow-[0_0_15px_rgba(201,162,77,0.5)]"
-    />
-  </div>
-);
-
-const Tag = ({ text, color = "gold" }: { text: string, color?: "gold" | "purple" | "white" }) => {
-  const colors = {
-    gold: "bg-[#C9A24D]/10 text-[#C9A24D] border-[#C9A24D]/20",
-    purple: "bg-[#5B4B8A]/10 text-[#5B4B8A] border-[#5B4B8A]/20",
-    white: "bg-white/5 text-white/60 border-white/10"
-  };
-  return (
-    <span className={`px-4 py-2 rounded-full border text-[10px] md:text-xs font-black uppercase tracking-widest ${colors[color]}`}>
-      {text}
-    </span>
-  );
+const VOEU_INSIGHTS: Record<string, { demand: string; current: string }> = {
+  "Retrouver une relation saine et stable": { demand: "Vulnérabilité et limites claires", current: "Sur-adaptation et peur du rejet" },
+  "Sortir d’un schéma amoureux destructeur": { demand: "Estime de soi radicale", current: "Besoin de sauver ou d'être sauvé" },
+  "Mettre fin à une impasse relationnelle": { demand: "Courage de trancher", current: "Espoir que l'autre change" },
+  "Réparer un lien familial important": { demand: "Acceptation de l'autre tel qu'il est", current: "Attente de reconnaissance" },
+  "Me libérer d’un poids émotionnel ancien": { demand: "Lâcher-prise et pardon", current: "Identification à la blessure" },
+  "Reprendre le contrôle de mes décisions": { demand: "Responsabilité totale", current: "Attente de validation extérieure" },
+  "Clarifier ce que je veux vraiment": { demand: "Écoute du corps et de l'intuition", current: "Analyse mentale et doute permanent" },
+  "Créer un équilibre durable dans ma vie": { demand: "Renoncement et priorisation", current: "Vouloir tout faire par peur de manquer" },
+  "Me respecter enfin dans mes choix": { demand: "Savoir dire non sans culpabilité", current: "Compromis excessifs pour plaire" },
+  "Retrouver confiance en moi et en mes ressentis": { demand: "Action malgré la peur", current: "Attente de certitude avant d'agir" },
+  "Assumer qui je suis sans me trahir": { demand: "Authenticité brute", current: "Port du masque social" },
+  "Sortir d’une solitude que je n’ai pas choisie": { demand: "Ouverture et risque émotionnel", current: "Protection et retrait préventif" },
+  "Arrêter de vivre dans la peur de perdre": { demand: "Confiance en la vie", current: "Contrôle et hypervigilance" },
+  "Construire une vie qui me ressemble": { demand: "Créativité et audace", current: "Conformisme et sécurité illusoire" },
+  "Ne plus saboter ce qui pourrait fonctionner": { demand: "Acceptation du bonheur", current: "Culpabilité et sentiment d'imposture" },
 };
 
+const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | null, onClear: () => void }) => (
+  <AnimatePresence>
+    {selectedVoeu && selectedVoeu !== "Aucun ne me parle pour l’instant" && (
+      <motion.div 
+        initial={{ opacity: 0, x: 100, scale: 0.8 }}
+        animate={{ opacity: 1, x: 0, scale: 1 }}
+        exit={{ opacity: 0, x: 100, scale: 0.8 }}
+        className="fixed top-20 right-4 md:right-8 z-[100] group cursor-pointer"
+        onClick={onClear}
+      >
+        {/* Glow Background */}
+        <div className="absolute inset-0 bg-[#C9A24D] blur-[20px] opacity-20 group-hover:opacity-40 transition-opacity animate-pulse" />
+        
+        <div className="bg-[#C9A24D] border-2 border-white/30 p-4 rounded-[2rem] shadow-[0_15px_40px_-10px_rgba(201,162,77,0.6)] max-w-[220px] relative overflow-hidden transform group-hover:scale-105 transition-transform">
+          {/* Inner Light Effect */}
+          <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/20 to-transparent" />
+          
+          <div className="relative flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 shadow-inner">
+              <Star className="w-4 h-4 text-[#08090F]" />
+            </div>
+            <div className="space-y-0.5">
+              <span className="text-[7px] font-black uppercase tracking-[0.2em] text-[#08090F]/60">Mon vœu actuel</span>
+              <p className="text-[10px] md:text-xs font-black leading-tight text-[#08090F] italic">
+                « {selectedVoeu} »
+              </p>
+            </div>
+          </div>
+
+          {/* Floating particle */}
+          <motion.div 
+            animate={{ y: [-2, 2, -2], x: [-1, 1, -1] }}
+            transition={{ duration: 3, repeat: Infinity }}
+            className="absolute -bottom-1 -right-1"
+          >
+            <Sparkles className="w-4 h-4 text-white/40" />
+          </motion.div>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
+const SectionCTA = ({ 
+  text, 
+  href = "/miroir/experience", 
+  isActive = false, 
+  onClick 
+}: { 
+  text: string, 
+  href?: string, 
+  isActive?: boolean,
+  onClick?: () => void 
+}) => (
+  <AnimatePresence>
+    {isActive && (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        className="py-8 flex flex-col items-center gap-4"
+      >
+        <Link 
+          href={href}
+          onClick={onClick}
+          className="group relative inline-flex flex-col items-center gap-2 px-8 py-6 rounded-[30px] bg-[#C9A24D] text-[#08090F] shadow-[0_20px_40px_-10px_rgba(201,162,77,0.4)] hover:scale-105 active:scale-95 transition-all overflow-hidden"
+        >
+          {/* Shine effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
+          
+          <span className="text-lg md:text-xl font-black tracking-tight">
+            {text}
+          </span>
+          <div className="flex items-center gap-2 opacity-60">
+            <span className="text-[8px] font-bold uppercase tracking-[0.2em]">Accéder au Crash Test</span>
+            <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </Link>
+        
+        <div className="text-center space-y-1">
+          <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">
+            Crash Test gratuit → Diagnostic clair
+          </p>
+          <p className="text-[9px] text-white/30">
+            Modules d’analyse avancés accessibles ensuite.
+          </p>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
 export default function Home() {
-  const router = useRouter();
+  const [selectedArchetype, setSelectedArchetype] = useState<string | null>(null);
+  const [selectedVoeu, setSelectedVoeu] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
-  const [chatStep, setChatStep] = useState(0);
-  const { scrollYProgress } = useScroll();
-  const progress = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const [currentProgress, setCurrentProgress] = useState(0);
 
   useEffect(() => {
-    trackEvent('home_view');
-    
-    // Delay prefetch to save bandwidth on initial load
-    const prefetchTimer = setTimeout(() => {
-      router.prefetch('/miroir/experience');
-    }, 4000);
-    
-    // Animate chat steps sequentially
-    const timers = [
-      setTimeout(() => setChatStep(1), 800),  // Message 1
-      setTimeout(() => setChatStep(2), 2200), // Message 2
-      setTimeout(() => setChatStep(3), 3600), // Hook
-      setTimeout(() => setChatStep(4), 4800), // CTA
-    ];
-    
-    const unsubscribe = progress.on("change", (latest) => {
-      setCurrentProgress(Math.max(currentProgress, Math.round(latest)));
-    });
-
-    return () => {
-      clearTimeout(prefetchTimer);
-      timers.forEach(t => clearTimeout(t));
-      unsubscribe();
-    };
+    trackEvent('voeux_page_view');
   }, []);
 
+  const handleArchetypeSelect = (id: string) => {
+    setSelectedArchetype(id);
+    setSelectedVoeu(null);
+    trackEvent('archetype_selected', { id });
+    
+    setTimeout(() => {
+      const refinementSection = document.getElementById('refinement-section');
+      if (refinementSection) {
+        refinementSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
+  };
+
+  const handleVoeuSelect = (voeu: string) => {
+    setSelectedVoeu(voeu);
+    trackEvent('voeu_selected', { voeu });
+    const nextSection = document.getElementById('decalage');
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const handleCtaClick = () => {
-    trackEvent('cta_click');
+    trackEvent('voeux_cta_click', { voeu: selectedVoeu });
     setIsNavigating(true);
   };
 
@@ -115,435 +233,403 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#08090F] text-white font-sans selection:bg-[#C9A24D]/30 overflow-x-hidden">
       
-      <ProgressBar progress={currentProgress} />
-      <FloatingOracle />
+      <FloatingVoeuBadge selectedVoeu={selectedVoeu} onClear={() => {
+        setSelectedVoeu(null);
+        setSelectedArchetype(null);
+      }} />
 
-      {/* 1. HERO — ACTION AVANT TEXTE */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-6 relative bg-[#08090F] pb-20">
-        {/* Mystic Background */}
+      {/* 1. HERO — CHOIX DU VOEU (LEVEL 1 & 2) */}
+      <section className="min-h-screen flex flex-col items-center justify-center px-4 md:px-8 relative pt-20 pb-20">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[120px] rounded-full" />
-          <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-[#5B4B8A]/10 blur-[100px] rounded-full" />
-          <video 
-            autoPlay 
-            muted 
-            loop 
-            playsInline 
-            preload="auto"
-            className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none transition-opacity duration-1000"
-          >
+          <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none">
             <source src="/acceuil.mp4" type="video/mp4" />
           </video>
         </div>
 
-        <div className="max-w-xl w-full z-10 text-center flex flex-col items-center justify-center -mt-16 md:-mt-24">
-          <motion.div 
-            layout 
-            className="w-full space-y-6 md:space-y-8 flex flex-col items-center"
-          >
-            {/* 1. Chat Interface — Message 1 & 2 */}
-            <div className="space-y-3 text-left w-full max-w-sm mx-auto">
-              <AnimatePresence mode="popLayout">
-                {chatStep >= 1 && (
-                  <motion.div 
-                    layout
-                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl"
-                  >
-                    <p className="text-sm md:text-base font-medium leading-relaxed">
-                      Salut 👋 <br />
-                      Tu te sens bloqué, fatigué mentalement ou tu répètes les mêmes erreurs ? 🧠
-                    </p>
-                  </motion.div>
-                )}
-
-                {chatStep >= 2 && (
-                  <motion.div 
-                    layout
-                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none shadow-xl"
-                  >
-                    <p className="text-sm md:text-base font-medium leading-relaxed">
-                      Et si ce n’était pas un problème… <br />
-                      mais un décalage avec qui tu es vraiment ?
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+        <div className="w-full max-w-[1600px] z-10 text-center space-y-12 md:space-y-20">
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+            <div className="flex justify-center mb-6">
+              <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center animate-pulse">
+                <Sparkles className="w-10 h-10 text-[#C9A24D]" />
+              </div>
             </div>
-
-            {/* 2. Main Hook — Step 3 */}
-            <AnimatePresence mode="popLayout">
-              {chatStep >= 3 && (
-                <motion.div 
-                  layout
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="space-y-8 relative w-full pt-4"
-                >
-                  {/* Visual Signature — The Mirror Sphere */}
-                  <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 pointer-events-none opacity-50">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-[#C9A24D] to-transparent rounded-full blur-xl animate-pulse" />
-                    <div className="absolute inset-2 bg-[#08090F] rounded-full border border-white/10 flex items-center justify-center">
-                      <Sparkles className="w-6 h-6 text-[#C9A24D]" />
-                    </div>
-                  </div>
-
-                  <h1 className="text-3xl md:text-5xl font-serif font-bold tracking-tight leading-tight pt-8">
-                    Prêt maintenant à découvrir ce qui influence <br />
-                    <span className="text-[#C9A24D] italic">vraiment tes décisions ?</span>
-                  </h1>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* 3. XXL CTA — Step 4 */}
-            <AnimatePresence mode="popLayout">
-              {chatStep >= 4 && (
-                <motion.div 
-                  layout
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="space-y-4 pt-4 relative group w-full"
-                >
-                  {/* Progress Indicator Above CTA */}
-                  <div className="flex flex-col items-center gap-1 mb-4">
-                    <div className="flex justify-between w-48 text-[9px] font-black uppercase tracking-[0.2em] text-[#C9A24D]/60">
-                      <span>Étape 1 / 3</span>
-                      <span>0%</span>
-                    </div>
-                    <div className="w-48 h-1 bg-white/5 rounded-full overflow-hidden">
-                      <motion.div 
-                        initial={{ width: "2%" }}
-                        animate={{ width: "5%" }}
-                        className="h-full bg-[#C9A24D]"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="text-[#C9A24D] text-xs font-black uppercase tracking-widest mb-2 animate-bounce">
-                    Voir ton premier insight maintenant
-                  </div>
-
-                  <Link 
-                    href="/miroir/experience"
-                    onClick={handleCtaClick}
-                    className="group w-full relative inline-flex flex-col items-center justify-center gap-1 px-8 py-10 bg-[#C9A24D] text-[#08090F] rounded-[32px] font-black hover:scale-[1.02] active:scale-95 transition-all shadow-[0_25px_60px_-15px_rgba(201,162,77,0.6)] border-4 border-white/20 overflow-hidden"
-                  >
-                    {/* Glow Effect inside button */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                    
-                    <div className="flex items-center gap-4 text-2xl md:text-3xl relative z-10">
-                      {isNavigating ? 'Ouverture...' : "LANCER LE CRASH-TEST (1 MIN)"}
-                      <motion.div
-                        animate={{ x: [0, 5, 0] }}
-                        transition={{ repeat: Infinity, duration: 1.5 }}
-                      >
-                        <ArrowRight className="w-8 h-8" />
-                      </motion.div>
-                    </div>
-                    <span className="text-[11px] uppercase tracking-[0.2em] opacity-80 relative z-10">
-                      Ton premier insight en &lt; 1 minute
-                    </span>
-                  </Link>
-                  <div className="flex items-center justify-center gap-4 text-[10px] font-bold text-white/40 uppercase tracking-widest">
-                    <span>Rapide</span>
-                    <span className="w-1 h-1 rounded-full bg-white/20" />
-                    <span>Gratuit</span>
-                    <span className="w-1 h-1 rounded-full bg-white/20" />
-                    <span>Sans inscription</span>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-
-        <motion.div 
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/20"
-        >
-          <ChevronDown className="w-6 h-6" />
-        </motion.div>
-      </section>
-
-      {/* 2. RECONNAISSANCE — TAGS CLICQUABLES */}
-      <section className="py-24 px-6 relative">
-        <motion.div 
-          {...fadeIn}
-          className="max-w-xl mx-auto bg-white/5 border border-white/10 rounded-[40px] p-8 md:p-12 space-y-10 relative overflow-hidden text-center"
-        >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A24D]/10 blur-3xl rounded-full" />
-          
-          <div className="space-y-4">
-            <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#C9A24D]">Ce test est pour toi si…</h2>
-            <p className="text-white/40 text-xs uppercase tracking-widest font-bold">Scanne tes points de blocage</p>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-3">
-            {[
-              "Hésitation chronique",
-              "Stress sous pression",
-              "Répétition d'erreurs",
-              "Fatigue mentale",
-              "Décalage intérieur",
-              "Perte de direction",
-              "Choix impossibles"
-            ].map((tag, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.05 }}
-                className="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 text-sm font-bold text-white/80"
-              >
-                {tag}
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="pt-4">
-            <Link href="/miroir/experience" className="text-[#C9A24D] text-xs font-black uppercase tracking-[0.2em] border-b border-[#C9A24D]/30 pb-1">
-              Commencer le diagnostic (1 min)
-            </Link>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* 3. CARTE 2 — EXEMPLE DE LECTURE (CHAT STYLE) */}
-      <section className="py-24 px-6 relative overflow-hidden">
-        <div className="max-w-2xl mx-auto space-y-12">
-          <motion.div {...fadeIn} className="text-center space-y-4">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold">Ce que nous montrons vraiment</h2>
-            <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold italic">
-              (extrait simplifié — chaque analyse est personnelle)
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold tracking-tight leading-tight">
+              Tout commence <br />
+              <span className="text-[#C9A24D] italic">par un vœu.</span>
+            </h1>
+            <p className="max-w-2xl mx-auto text-lg md:text-2xl text-white/60 leading-relaxed font-medium">
+              Choisis ce qui compte vraiment pour toi aujourd&apos;hui. <br />
+              Ensuite, découvre pourquoi ça bloque.
             </p>
           </motion.div>
 
-          <div className="space-y-6">
-            {/* Bubble 1: Metaphor */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="flex flex-col items-start gap-2 max-w-[85%]"
-            >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-base md:text-lg text-white/90 leading-relaxed italic">
-                  "Chaque matin, tu te regardes dans le miroir en pensant te voir tel que tu es. En réalité, tu vois souvent la personne que tu étais il y a des années."
-                </p>
-              </div>
-              <span className="text-[10px] text-white/20 font-bold ml-4 uppercase tracking-widest">L'Oracle • À l'instant</span>
-            </motion.div>
-
-            {/* Bubble 2: Explanation */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 0.4 }}
-              className="flex flex-col items-start gap-2 max-w-[85%]"
-            >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-sm md:text-base text-white/70 leading-relaxed">
-                  La vie t’a façonné autrement : stress, contraintes, choix imposés. Ce décalage crée fatigue et confusion.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Rich Card 1: Potentiel */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 0.8 }}
-              className="flex flex-col items-center py-8"
-            >
-              <div className="w-full bg-gradient-to-tr from-[#C9A24D]/20 to-transparent border border-[#C9A24D]/30 p-6 rounded-[40px] shadow-2xl space-y-4">
-                <div className="flex items-center gap-3 text-[#C9A24D]">
-                  <Sparkles className="w-5 h-5" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">Potentiel de départ</span>
-                </div>
-                <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-bold text-white/80">
-                  <li className="flex items-center gap-2">Vision & projection</li>
-                  <li className="flex items-center gap-2">Stabilité intérieure</li>
-                  <li className="flex items-center gap-2">Décisions long terme</li>
-                </ul>
-                <p className="text-[11px] text-[#C9A24D] font-bold italic border-t border-white/10 pt-3">
-                  👉 Sur le papier, ce profil est fait pour décider avec clarté.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Transition Zap */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 1 }}
-              className="flex justify-center -my-4 relative z-10"
-            >
-              <div className="w-10 h-10 rounded-full bg-[#08090F] border border-white/10 flex items-center justify-center">
-                <Zap className="w-5 h-5 text-[#C9A24D] animate-pulse" />
-              </div>
-            </motion.div>
-
-            {/* Rich Card 2: Réalité */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.2 }}
-              className="flex flex-col items-center py-8"
-            >
-              <div className="w-full bg-gradient-to-tr from-[#5B4B8A]/20 to-transparent border border-[#5B4B8A]/30 p-6 rounded-[40px] shadow-2xl space-y-4">
-                <div className="flex items-center gap-3 text-[#A78BFA]">
-                  <Activity className="w-5 h-5" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">Fonctionnement observé aujourd'hui</span>
-                </div>
-                <ul className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-bold text-white/80">
-                  <li className="flex items-center gap-2">Décisions dans l'urgence</li>
-                  <li className="flex items-center gap-2">Surcharge mentale</li>
-                  <li className="flex items-center gap-2">Perte de direction</li>
-                </ul>
-                <p className="text-[11px] text-[#A78BFA] font-bold italic border-t border-white/10 pt-3">
-                  👉 Dans la réalité, cela crée fatigue et hésitation.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Bubble 3: Bridge */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20, scale: 0.95 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.6 }}
-              className="flex flex-col items-start gap-2 max-w-[85%] pt-4"
-            >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
-                <p className="text-base md:text-lg font-serif italic text-white/90">
-                  "Ce type d’écart est fréquent. Il ne se ressent pas comme un problème, mais comme une perte de fluidité."
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Final Section CTA */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 2 }}
-              className="flex justify-center pt-8"
-            >
-              <Link 
-                href="/miroir/experience"
-                className="inline-flex items-center gap-3 px-8 py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl text-sm font-black uppercase tracking-widest hover:scale-105 transition-all shadow-[0_15px_30px_-10px_rgba(201,162,77,0.4)]"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 px-4 md:px-0">
+            {ARCHETYPES.map((arch) => (
+              <motion.button
+                key={arch.id}
+                whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.08)" }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => handleArchetypeSelect(arch.id)}
+                className={`p-4 md:p-12 lg:p-16 rounded-[2.5rem] border transition-all flex flex-col items-center justify-center gap-6 md:gap-8 group ${
+                  selectedArchetype === arch.id 
+                  ? "bg-[#C9A24D] text-[#08090F] border-[#C9A24D] shadow-[0_20px_40px_-10px_rgba(201,162,77,0.3)]" 
+                  : "bg-white/5 border-white/10 text-white/70 hover:border-white/20"
+                }`}
               >
-                Voir ce type d'écart chez moi (1 min)
-                <ArrowRight className="w-5 h-5" />
-              </Link>
+                <arch.icon className={`w-12 h-12 md:w-16 md:h-16 transition-transform group-hover:scale-110 ${selectedArchetype === arch.id ? "text-[#08090F]" : "text-[#C9A24D]"}`} />
+                <span className="text-sm md:text-2xl font-black uppercase tracking-widest leading-relaxed">{arch.label}</span>
+              </motion.button>
+            ))}
+            <button 
+              onClick={() => {
+                handleVoeuSelect("Aucun ne me parle pour l’instant");
+              }}
+              className="p-4 md:p-12 lg:p-16 rounded-[2.5rem] border border-white/5 bg-white/2 shadow-inner text-sm md:text-xl font-bold text-white/30 hover:text-white/50 hover:bg-white/5 transition-all flex flex-col items-center justify-center text-center"
+            >
+              Aucun ne me parle pour l’instant
+            </button>
+          </div>
+
+          <AnimatePresence mode="wait">
+            {selectedArchetype && (
+              <motion.div 
+                key={selectedArchetype}
+                id="refinement-section"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-6 pt-8 border-t border-white/5"
+              >
+                <p className="text-sm font-black uppercase tracking-[0.3em] text-[#C9A24D]/60">Affinage de ton vœu</p>
+                <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3">
+                  {ARCHETYPES.find(a => a.id === selectedArchetype)?.subVoeux.map((sub, i) => (
+                    <motion.button
+                      key={i}
+                      whileHover={{ scale: 1.05 }}
+                      onClick={() => handleVoeuSelect(sub)}
+                      className={`w-full sm:w-auto px-6 py-5 md:px-10 md:py-8 rounded-2xl border-2 text-base md:text-2xl font-black transition-all backdrop-blur-xl ${
+                        selectedVoeu === sub
+                        ? "bg-white text-[#08090F] border-white shadow-[0_15px_30px_-10px_rgba(255,255,255,0.4)]"
+                        : "bg-[#08090F]/80 border-white/20 text-white hover:border-[#C9A24D] hover:bg-[#08090F]/90"
+                      }`}
+                    >
+                      {sub}
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <SectionCTA 
+            text="DÉCOUVRIR POURQUOI ÇA BLOQUE" 
+            isActive={!!selectedVoeu}
+            onClick={handleCtaClick}
+          />
+        </div>
+      </section>
+
+      {/* 2. LE DÉCALAGE (CHAT FLOW) */}
+      <section id="decalage" className="py-24 px-4 md:px-6 relative bg-[#08090F]">
+        <div className="max-w-2xl mx-auto space-y-12">
+          
+          <motion.div {...fadeIn} className="text-center space-y-4 mb-16">
+            <h2 className="text-3xl md:text-6xl font-serif font-bold">Le Décalage</h2>
+            <p className="text-white/40 text-base md:text-lg font-bold uppercase tracking-widest italic">
+              Ce n&apos;est pas ta faute, c&apos;est juste un décalage.
+            </p>
+          </motion.div>
+
+          <div className="space-y-12">
+            {/* 1. Carla */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="flex flex-col items-end gap-3 ml-auto w-[95%] md:w-full"
+            >
+              <span className="text-sm md:text-base text-white/40 font-black mr-6 uppercase tracking-widest">Carla</span>
+              <div className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-[2rem] rounded-tr-none shadow-2xl">
+                <p className="text-lg md:text-2xl text-white/90 leading-relaxed">
+                  Salut 👋 <br /><br />
+                  Ça fait pas mal de temps que j&apos;essaye de <span className="text-[#C9A24D] font-bold italic">« {selectedVoeu || "mon projet"} »</span>. <br />
+                  Mais on ne peut pas dire qu&apos;il y ait beaucoup de changement 😔
+                </p>
+              </div>
             </motion.div>
+
+            {/* 2. Oracle */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-col items-start gap-3 w-[95%] md:w-full"
+            >
+              <span className="text-sm md:text-base text-[#C9A24D] font-black ml-6 uppercase tracking-widest">L’Oracle</span>
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-6 md:p-8 rounded-[2rem] rounded-tl-none shadow-2xl">
+                <p className="text-lg md:text-2xl text-white/90 leading-relaxed italic font-serif">
+                  Bonjour <br /><br />
+                  Ce n’est pas ton vœu le problème. <br /><br />
+                  C’est le décalage entre qui tu es aujourd’hui et ce que ce vœu demande de toi.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 3. Carla */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 0.6 }}
+              className="flex flex-col items-end gap-3 ml-auto w-[95%] md:w-full"
+            >
+              <span className="text-sm md:text-base text-white/40 font-black mr-6 uppercase tracking-widest">Carla</span>
+              <div className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-[2rem] rounded-tr-none shadow-2xl">
+                <p className="text-lg md:text-2xl text-white/90 leading-relaxed">
+                  Pourtant je fais ce que je peux…
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 4. Oracle */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 0.9 }}
+              className="flex flex-col items-start gap-3 w-[95%] md:w-full"
+            >
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-6 md:p-8 rounded-[2rem] rounded-tl-none shadow-2xl">
+                <p className="text-lg md:text-2xl text-white/90 leading-relaxed font-serif">
+                  Justement. <br /><br />
+                  Quand tu veux <span className="text-[#C9A24D] font-bold">« {selectedVoeu || "ton projet"} »</span>, mais que tu décides depuis un fonctionnement en surcharge, en urgence ou par peur, tu attires des situations qui vont à l’opposé.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* BREAK - THE CUTTING QUESTION */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: 1.1 }}
+              className="py-12 flex flex-col items-center justify-center text-center space-y-6"
+            >
+              <div className="bg-black border border-[#C9A24D] px-10 py-12 rounded-[2rem] max-w-2xl relative overflow-hidden group shadow-[0_0_50px_-10px_rgba(201,162,77,0.2)]">
+                
+                <p className="text-sm font-black text-[#C9A24D] mb-6 uppercase tracking-[0.2em]">
+                  — Question de vérité —
+                </p>
+                <p className="text-2xl md:text-4xl font-serif font-bold text-white leading-tight">
+                  Quand ce vœu échoue... <br />
+                  <span className="text-[#C9A24D] italic relative inline-block mt-2">
+                    tu forces, tu fuis ou tu doutes ?
+                    <svg className="absolute -bottom-2 left-0 w-full h-2 text-[#C9A24D] opacity-40" viewBox="0 0 100 10" preserveAspectRatio="none">
+                      <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="2" fill="none" />
+                    </svg>
+                  </span>
+                </p>
+                <p className="text-xs text-white/30 mt-8 font-medium italic">
+                  (Réponds mentalement avant de scroller)
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 5. Carla */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 1.4 }}
+              className="flex flex-col items-end gap-3 ml-auto w-[95%] md:w-full"
+            >
+              <div className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-[2rem] rounded-tr-none shadow-2xl">
+                <p className="text-lg md:text-2xl text-white/90 leading-relaxed">
+                  C’est exactement ça… 😔
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 6. Oracle */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 1.7 }}
+              className="flex flex-col items-start gap-3 w-[95%] md:w-full"
+            >
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-6 md:p-8 rounded-[2rem] rounded-tl-none shadow-2xl space-y-8">
+                <p className="text-lg md:text-2xl text-white/90 leading-relaxed italic font-serif">
+                  Ce décalage est difficile à repérer. <br />
+                  Tu avances, mais jamais dans le bon sens.
+                </p>
+                
+                {/* REAL-TIME MIRROR */}
+                {selectedVoeu && VOEU_INSIGHTS[selectedVoeu] && (
+                  <div className="mt-6 bg-[#08090F]/40 rounded-2xl p-6 border border-[#C9A24D]/10">
+                    <p className="text-base text-white/80 mb-6 font-medium">
+                      Ce que ton vœu demande de toi, ce n’est pas plus d’efforts. <br />
+                      C’est un fonctionnement différent :
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <span className="text-xs font-black text-[#C9A24D] uppercase tracking-widest">Ce que ton vœu demande</span>
+                        <p className="text-xl font-serif font-bold text-white">{VOEU_INSIGHTS[selectedVoeu].demand}</p>
+                      </div>
+                      <div className="space-y-2 md:border-l md:border-white/10 md:pl-6">
+                        <span className="text-xs font-black text-white/40 uppercase tracking-widest">Ton fonctionnement actuel</span>
+                        <p className="text-xl font-serif font-bold text-white/60">{VOEU_INSIGHTS[selectedVoeu].current}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <p className="text-lg md:text-2xl text-white/90 leading-relaxed italic font-serif">
+                  Et c’est pour ça que ton vœu reste bloqué.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 7. Carla */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 2.0 }}
+              className="flex flex-col items-end gap-3 ml-auto w-[95%] md:w-full"
+            >
+              <span className="text-sm md:text-base text-white/40 font-black mr-6 uppercase tracking-widest">Carla</span>
+              <div className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-[2rem] rounded-tr-none shadow-2xl">
+                <p className="text-lg md:text-2xl text-white/90 leading-relaxed">
+                  Et je fais quoi alors ? 🤔
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 8. Oracle */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20, scale: 0.95 }}
+              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ delay: 2.1 }}
+              className="flex flex-col items-start gap-3 w-[95%] md:w-full"
+            >
+              <span className="text-sm md:text-base text-[#C9A24D] font-black ml-6 uppercase tracking-widest">L’Oracle</span>
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-6 md:p-8 rounded-[2rem] rounded-tl-none shadow-2xl">
+                <p className="text-lg md:text-2xl text-white/90 leading-relaxed font-serif">
+                  Fais le Crash Test, il va identifier précisément où ça décroche. <br /><br />
+                  Ensuite, tu auras deux choix : <br />
+                  – travailler dessus seul <br />
+                  – ou avancer avec nous <br /><br />
+                  Dans les deux cas, tu sauras enfin quoi ajuster pour que <span className="text-[#C9A24D] font-bold italic">« {selectedVoeu || "ton projet"} »</span> devienne possible. ✨
+                </p>
+              </div>
+            </motion.div>
+
+            {/* FRACTURE CTA */}
+            <SectionCTA 
+              text="IDENTIFIER MON DÉCALAGE" 
+              isActive={!!selectedVoeu}
+              onClick={handleCtaClick}
+            />
           </div>
         </div>
       </section>
 
-      {/* 4. CARTE 3 — COMMENT ÇA MARCHE ? */}
-      <section className="py-24 px-6 relative">
-        <div className="max-w-xl mx-auto">
+      {/* 4. LE CRASH TEST (OUTIL DE LUCIDITÉ) */}
+      <section className="py-32 px-4 md:px-6 relative bg-[#0C0D15]">
+        <div className="max-w-4xl mx-auto">
           <motion.div 
             {...fadeIn}
-            className="p-10 md:p-14 rounded-[50px] bg-white/5 border border-white/10 space-y-12 relative"
+            className="p-8 md:p-16 rounded-[3rem] bg-white/5 border border-white/10 space-y-12 relative"
           >
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl md:text-4xl font-serif font-bold">Comment fonctionne le Crash-Test ?</h2>
-              <p className="text-[#C9A24D] text-xs font-black uppercase tracking-widest">Simple. Rapide. Sans engagement.</p>
+            <div className="text-center space-y-6">
+              <h2 className="text-3xl md:text-5xl font-serif font-bold text-[#C9A24D]">Le Crash Test</h2>
+              <p className="text-lg md:text-2xl text-white/70 leading-relaxed max-w-2xl mx-auto">
+                Le Crash Test sert à identifier précisément <span className="text-[#C9A24D] font-bold">où l’écart s’est créé</span> entre ton potentiel réel et ton fonctionnement actuel.
+              </p>
             </div>
 
-            <div className="space-y-10">
+            <div className="space-y-8">
               {[
-                { 
-                  id: "01", 
-                  title: "ANALYSE SYMBOLIQUE", 
-                  icon: Fingerprint, 
-                  desc: "Analyse de ton potentiel de départ (date et contexte de naissance).",
-                  note: "Numérologie & astrologie — sans prédiction"
-                },
-                { 
-                  id: "02", 
-                  title: "TESTS DE RÉACTIONS", 
-                  icon: Zap, 
-                  desc: "Situations concrètes & réactions réelles (choix sous pression, automatismes)." 
-                },
-                { 
-                  id: "03", 
-                  title: "COMPARAISON (LE MIROIR)", 
-                  icon: Layers, 
-                  desc: "Comparaison entre potentiel et fonctionnement (là où l'écart influence tes décisions)." 
-                }
-              ].map((step, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.2 }}
-                  className="flex gap-6 items-start group"
-                >
-                  <div className="text-2xl font-black text-white/10 group-hover:text-[#C9A24D]/30 transition-colors pt-1">
-                    {step.id}
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center text-[#C9A24D]">
-                        <step.icon className="w-4 h-4" />
-                      </div>
-                      <h3 className="text-sm font-black uppercase tracking-widest">{step.title}</h3>
-                    </div>
-                    <p className="text-sm text-white/60 leading-relaxed">{step.desc}</p>
-                    {step.note && <p className="text-[10px] text-[#C9A24D]/50 font-bold italic">{step.note}</p>}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Reassurance Block */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-8 border-y border-white/5">
-              {[
-                { icon: Clock, text: "15 minutes" },
-                { icon: Lock, text: "Sans inscription" },
-                { icon: X, text: "Aucune prédiction" },
-                { icon: ShieldCheck, text: "Privé & Sécurisé" }
+                "Analyse symbolique",
+                "Tests de réactions",
+                "Mise en miroir comportementale",
+                "Diagnostic de décision"
               ].map((item, i) => (
-                <div key={i} className="flex flex-col items-center gap-2 text-center">
-                  <item.icon className="w-4 h-4 text-white/20" />
-                  <span className="text-[9px] font-black uppercase tracking-widest text-white/40">{item.text}</span>
+                <div key={i} className="flex items-center gap-6">
+                  <div className="w-10 h-10 rounded-xl bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D] text-lg font-black">
+                    {i + 1}
+                  </div>
+                  <span className="text-lg md:text-xl font-bold text-white/80 uppercase tracking-widest">{item}</span>
                 </div>
               ))}
             </div>
 
-            {/* Main CTA for this card */}
-            <div className="text-center space-y-4">
-              <Link 
-                href="/miroir/experience"
-                onClick={handleCtaClick}
-                className="group w-full relative inline-flex flex-col items-center gap-1 px-8 py-8 bg-white text-[#08090F] rounded-[32px] font-black hover:scale-[1.02] active:scale-95 transition-all shadow-2xl"
-              >
-                <div className="flex items-center gap-3 text-lg md:text-xl">
-                  {isNavigating ? 'Démarrage...' : "COMMENCER LE TEST (1 MIN)"}
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </div>
-                <span className="text-[9px] uppercase tracking-[0.2em] opacity-60">
-                  Résultat partiel immédiat
-                </span>
-              </Link>
+            <div className="pt-10 border-t border-white/5 text-center">
+              <p className="text-base md:text-lg font-bold text-white/30 uppercase tracking-[0.2em] leading-relaxed">
+                👉 Un outil de lucidité, pas de jugement. <br />
+                Comprendre pourquoi tu n’agis plus comme toi.
+              </p>
             </div>
+
+            {/* CRASH TEST CTA */}
+            <SectionCTA 
+              text="LANCER MON DIAGNOSTIC" 
+              isActive={!!selectedVoeu}
+              onClick={handleCtaClick}
+            />
           </motion.div>
         </div>
       </section>
 
-      {/* 5. CTA FINAL — IMPACT MAXIMAL */}
-      <section className="py-32 px-6 text-center relative overflow-hidden">
+      {/* 5. LE CHOIX FINAL */}
+      <section className="py-32 px-4 md:px-6 relative">
+        <div className="max-w-6xl mx-auto space-y-20">
+          <motion.div {...fadeIn} className="text-center space-y-8">
+            <h2 className="text-4xl md:text-6xl font-serif font-bold">Deux chemins s&apos;ouvrent</h2>
+            <p className="text-white/50 text-lg md:text-2xl max-w-3xl mx-auto">
+              Une fois le Crash Test terminé, après la lecture de ton rapport et l’échange avec ton coach IA...
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            <motion.div {...fadeIn} className="p-10 md:p-14 rounded-[3rem] bg-white/5 border border-white/10 space-y-6">
+              <h3 className="text-2xl md:text-3xl font-bold italic">Tu fais le travail seul</h3>
+              <p className="text-lg md:text-xl text-white/40 leading-relaxed">
+                Avec ton rapport comme boussole, tu avances à ton rythme, en toute autonomie.
+              </p>
+            </motion.div>
+
+            <motion.div {...fadeIn} className="p-10 md:p-14 rounded-[3rem] bg-[#C9A24D]/5 border border-[#C9A24D]/20 space-y-6">
+              <h3 className="text-2xl md:text-3xl font-bold italic">Tu décides de ne plus être seul</h3>
+              <p className="text-lg md:text-xl text-white/70 leading-relaxed font-medium">
+                Notre équipe s’engage à donner autant que toi pour mettre en place toutes les actions concrètes possibles afin de te rapprocher réellement de ton vœu.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* CHOIX FINAL CTA */}
+          <SectionCTA 
+            text="HONORER MON VŒU MAINTENANT" 
+            isActive={!!selectedVoeu}
+            onClick={handleCtaClick}
+          />
+        </div>
+
+        <div className="max-w-3xl mx-auto mt-24 text-center space-y-6 pt-16 border-t border-white/5">
+          <h4 className="text-xl md:text-2xl font-serif italic text-white/60">Après le Crash Test</h4>
+          <ul className="text-lg md:text-xl text-white/40 space-y-3">
+            <li>– Tu peux continuer gratuitement avec ton rapport</li>
+            <li>– Ou accéder à des analyses et accompagnements plus poussés si tu le souhaites</li>
+          </ul>
+        </div>
+      </section>
+
+      {/* 6. CTA FINAL — ALIGNÉ AVEC LE VOEU */}
+      <section className="py-40 px-4 md:px-6 text-center relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(201,162,77,0.1),_transparent_70%)]" />
         </div>
@@ -551,54 +637,60 @@ export default function Home() {
         <motion.div {...fadeIn} className="max-w-xl mx-auto space-y-12 relative z-10">
           <div className="space-y-4">
             <h2 className="text-4xl md:text-6xl font-serif font-bold leading-tight">
-              Prêt à voir <br />
-              <span className="text-[#C9A24D] italic">ton reflet réel ?</span>
+              Prêt à honorer <br />
+              <span className="text-[#C9A24D] italic">ton vœu ?</span>
             </h2>
-            <p className="text-white/40 text-sm font-bold uppercase tracking-[0.3em]">Pas d'inscription, pas de jugement.</p>
+            <AnimatePresence mode="wait">
+              {selectedVoeu && selectedVoeu !== "Aucun ne me parle pour l’instant" && (
+                <motion.p key="selected" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-white/80 text-lg font-serif italic">
+                  « {selectedVoeu} »
+                </motion.p>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="space-y-6">
+            <div className="text-center space-y-2 opacity-80">
+              <p className="text-base font-bold text-white/90">
+                Crash Test gratuit → Diagnostic clair
+              </p>
+              <p className="text-sm text-white/50">
+                Modules d’analyse avancés accessibles ensuite.
+              </p>
+            </div>
+
             <Link 
               href="/miroir/experience"
               onClick={handleCtaClick}
-              className="group w-full relative inline-flex flex-col items-center gap-2 px-8 py-10 bg-[#C9A24D] text-[#08090F] rounded-[40px] shadow-[0_30px_60px_-10px_rgba(201,162,77,0.5)] hover:scale-105 active:scale-95 transition-all"
+              className={`group w-full relative inline-flex flex-col items-center gap-2 px-8 py-10 rounded-[40px] shadow-[0_30px_60px_-10px_rgba(201,162,77,0.5)] hover:scale-105 active:scale-95 transition-all ${
+                selectedVoeu ? "bg-[#C9A24D] text-[#08090F]" : "bg-white/10 text-white/40 cursor-not-allowed pointer-events-none"
+              }`}
             >
               <span className="text-2xl md:text-3xl font-black">
-                {isNavigating ? 'Lancement...' : "LANCER LE TEST (GRATUIT)"}
+                {isNavigating ? 'Lancement...' : "LANCER LE CRASH TEST"}
               </span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60">Prendre la décision de se connaître</span>
+              <span className="text-xs font-bold uppercase tracking-[0.2em] opacity-60">
+                {selectedVoeu ? `Pour ton vœu : ${selectedVoeu}` : "Sélectionne ton vœu pour commencer"}
+              </span>
             </Link>
             
             <div className="flex items-center justify-center gap-6 opacity-30">
-              <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest">
-                <ShieldCheck className="w-3 h-3" /> Anonyme
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest">
+                <ShieldCheck className="w-3 h-3" /> Sans engagement
               </div>
-              <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest">
-                <Lock className="w-3 h-3" /> Sécurisé
-              </div>
-              <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest">
-                <Eye className="w-3 h-3" /> Sans diagnostic
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest">
+                <Lock className="w-3 h-3" /> Diagnostic personnel
               </div>
             </div>
           </div>
         </motion.div>
       </section>
 
-      {/* FOOTER MINIMAL */}
-      <footer className="py-12 px-6 border-t border-white/5 text-center space-y-6 opacity-20">
-        <div className="flex items-center justify-center gap-4 text-[#C9A24D]">
-          <Target className="w-4 h-4" />
-          <Fingerprint className="w-4 h-4" />
-          <Activity className="w-4 h-4" />
-        </div>
-        <p className="text-[9px] font-black uppercase tracking-[0.5em]">
-          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION
+      <footer className="py-12 px-6 border-t border-white/5 text-center opacity-20">
+        <p className="text-[10px] font-black uppercase tracking-[0.5em]">
+          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v3.8
         </p>
       </footer>
-
     </div>
   );
 }
-
-// Support components (reused icons from lucide)
-const Clock = ({ className }: { className?: string }) => <Activity className={className} />; // Fallback icon for simplicity in this example

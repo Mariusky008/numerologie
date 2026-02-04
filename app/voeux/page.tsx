@@ -10,7 +10,6 @@ import {
   ShieldCheck,
   Target,
   Lock,
-  Eye,
   Heart,
   Users,
   Compass,
@@ -188,10 +187,9 @@ const SectionCTA = ({
   </AnimatePresence>
 );
 
-export default function VoeuxPage() {
+export default function Home() {
   const [selectedArchetype, setSelectedArchetype] = useState<string | null>(null);
   const [selectedVoeu, setSelectedVoeu] = useState<string | null>(null);
-  const [userChoice, setUserChoice] = useState<'comprendre' | 'avancer' | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
@@ -214,7 +212,7 @@ export default function VoeuxPage() {
   const handleVoeuSelect = (voeu: string) => {
     setSelectedVoeu(voeu);
     trackEvent('voeu_selected', { voeu });
-    const nextSection = document.getElementById('fracture');
+    const nextSection = document.getElementById('decalage');
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: 'smooth' });
     }
@@ -273,21 +271,21 @@ export default function VoeuxPage() {
                 whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.08)" }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleArchetypeSelect(arch.id)}
-                className={`p-8 md:p-12 lg:p-16 rounded-[2.5rem] border transition-all flex flex-col items-center justify-center gap-6 md:gap-8 group ${
+                className={`p-4 md:p-12 lg:p-16 rounded-[2.5rem] border transition-all flex flex-col items-center justify-center gap-6 md:gap-8 group ${
                   selectedArchetype === arch.id 
                   ? "bg-[#C9A24D] text-[#08090F] border-[#C9A24D] shadow-[0_20px_40px_-10px_rgba(201,162,77,0.3)]" 
                   : "bg-white/5 border-white/10 text-white/70 hover:border-white/20"
                 }`}
               >
                 <arch.icon className={`w-12 h-12 md:w-16 md:h-16 transition-transform group-hover:scale-110 ${selectedArchetype === arch.id ? "text-[#08090F]" : "text-[#C9A24D]"}`} />
-                <span className="text-lg md:text-2xl font-black uppercase tracking-widest leading-relaxed">{arch.label}</span>
+                <span className="text-sm md:text-2xl font-black uppercase tracking-widest leading-relaxed">{arch.label}</span>
               </motion.button>
             ))}
             <button 
               onClick={() => {
                 handleVoeuSelect("Aucun ne me parle pour l’instant");
               }}
-              className="p-8 md:p-12 lg:p-16 rounded-[2.5rem] border border-white/5 bg-white/2 shadow-inner text-lg md:text-xl font-bold text-white/30 hover:text-white/50 hover:bg-white/5 transition-all flex flex-col items-center justify-center text-center"
+              className="p-4 md:p-12 lg:p-16 rounded-[2.5rem] border border-white/5 bg-white/2 shadow-inner text-sm md:text-xl font-bold text-white/30 hover:text-white/50 hover:bg-white/5 transition-all flex flex-col items-center justify-center text-center"
             >
               Aucun ne me parle pour l’instant
             </button>
@@ -310,7 +308,7 @@ export default function VoeuxPage() {
                       key={i}
                       whileHover={{ scale: 1.05 }}
                       onClick={() => handleVoeuSelect(sub)}
-                      className={`w-full sm:w-auto px-6 py-5 rounded-2xl border-2 text-base font-black transition-all backdrop-blur-xl ${
+                      className={`w-full sm:w-auto px-6 py-5 md:px-10 md:py-8 rounded-2xl border-2 text-base md:text-2xl font-black transition-all backdrop-blur-xl ${
                         selectedVoeu === sub
                         ? "bg-white text-[#08090F] border-white shadow-[0_15px_30px_-10px_rgba(255,255,255,0.4)]"
                         : "bg-[#08090F]/80 border-white/20 text-white hover:border-[#C9A24D] hover:bg-[#08090F]/90"
@@ -332,14 +330,14 @@ export default function VoeuxPage() {
         </div>
       </section>
 
-      {/* 2. LA FRACTURE & LE CONTRASTE (CHAT FLOW) */}
-      <section id="fracture" className="py-24 px-4 md:px-6 relative bg-[#08090F]">
+      {/* 2. LE DÉCALAGE (CHAT FLOW) */}
+      <section id="decalage" className="py-24 px-4 md:px-6 relative bg-[#08090F]">
         <div className="max-w-2xl mx-auto space-y-12">
           
           <motion.div {...fadeIn} className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl md:text-6xl font-serif font-bold">La Fracture</h2>
+            <h2 className="text-3xl md:text-6xl font-serif font-bold">Le Décalage</h2>
             <p className="text-white/40 text-base md:text-lg font-bold uppercase tracking-widest italic">
-              Analyse de l&apos;écart identitaire
+              Ce n&apos;est pas ta faute, c&apos;est juste un décalage.
             </p>
           </motion.div>
 
@@ -419,8 +417,7 @@ export default function VoeuxPage() {
               transition={{ delay: 1.1 }}
               className="py-12 flex flex-col items-center justify-center text-center space-y-6"
             >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/30 px-10 py-12 rounded-[2rem] max-w-2xl backdrop-blur-sm relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#C9A24D]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="bg-black border border-[#C9A24D] px-10 py-12 rounded-[2rem] max-w-2xl relative overflow-hidden group shadow-[0_0_50px_-10px_rgba(201,162,77,0.2)]">
                 
                 <p className="text-sm font-black text-[#C9A24D] mb-6 uppercase tracking-[0.2em]">
                   — Question de vérité —

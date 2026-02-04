@@ -262,14 +262,14 @@ export default function VoeuxPage() {
                 }`}
               >
                 <arch.icon className={`w-6 h-6 ${selectedArchetype === arch.id ? "text-[#08090F]" : "text-[#C9A24D]"}`} />
-                <span className="text-xs font-black uppercase tracking-widest">{arch.label}</span>
+                <span className="text-sm font-black uppercase tracking-widest">{arch.label}</span>
               </motion.button>
             ))}
             <button 
               onClick={() => {
                 handleVoeuSelect("Aucun ne me parle pour l’instant");
               }}
-              className="p-4 md:p-6 rounded-2xl border border-white/5 bg-white/2 shadow-inner text-xs font-bold text-white/30 hover:text-white/50 transition-colors"
+              className="p-4 md:p-6 rounded-2xl border border-white/5 bg-white/2 shadow-inner text-sm font-bold text-white/30 hover:text-white/50 transition-colors"
             >
               Aucun ne me parle pour l’instant
             </button>
@@ -285,14 +285,14 @@ export default function VoeuxPage() {
                 exit={{ opacity: 0, y: -10 }}
                 className="space-y-6 pt-8 border-t border-white/5"
               >
-                <p className="text-xs font-black uppercase tracking-[0.3em] text-[#C9A24D]/60">Affinage de ton vœu</p>
+                <p className="text-sm font-black uppercase tracking-[0.3em] text-[#C9A24D]/60">Affinage de ton vœu</p>
                 <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3">
                   {ARCHETYPES.find(a => a.id === selectedArchetype)?.subVoeux.map((sub, i) => (
                     <motion.button
                       key={i}
                       whileHover={{ scale: 1.05 }}
                       onClick={() => handleVoeuSelect(sub)}
-                      className={`w-full sm:w-auto px-6 py-4 rounded-2xl border-2 text-sm font-black transition-all backdrop-blur-xl ${
+                      className={`w-full sm:w-auto px-6 py-5 rounded-2xl border-2 text-base font-black transition-all backdrop-blur-xl ${
                         selectedVoeu === sub
                         ? "bg-white text-[#08090F] border-white shadow-[0_15px_30px_-10px_rgba(255,255,255,0.4)]"
                         : "bg-[#08090F]/80 border-white/20 text-white hover:border-[#C9A24D] hover:bg-[#08090F]/90"
@@ -320,7 +320,7 @@ export default function VoeuxPage() {
           
           <motion.div {...fadeIn} className="text-center space-y-4 mb-16">
             <h2 className="text-3xl md:text-5xl font-serif font-bold">La Fracture</h2>
-            <p className="text-white/40 text-xs font-bold uppercase tracking-widest italic">
+            <p className="text-white/40 text-sm font-bold uppercase tracking-widest italic">
               Analyse de l&apos;écart identitaire
             </p>
           </motion.div>
@@ -331,10 +331,10 @@ export default function VoeuxPage() {
               initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="flex flex-col items-end gap-2 ml-auto w-full md:max-w-[85%]"
+              className="flex flex-col items-end gap-2 ml-auto w-[95%] md:max-w-[85%]"
             >
-              <span className="text-xs text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
-              <div className="bg-white/5 border border-white/10 p-4 md:p-5 rounded-3xl rounded-tr-none shadow-2xl">
+              <span className="text-sm text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
+              <div className="bg-white/5 border border-white/10 p-5 md:p-6 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
                   Salut 👋 <br /><br />
                   Ça fait pas mal de temps que j&apos;essaye de <span className="text-[#C9A24D] font-bold italic">« {selectedVoeu || "mon projet"} »</span>. <br />
@@ -349,10 +349,10 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 0.3 }}
-              className="flex flex-col items-start gap-2 w-full md:max-w-[85%]"
+              className="flex flex-col items-start gap-2 w-[95%] md:max-w-[85%]"
             >
-              <span className="text-xs text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-4 md:p-5 rounded-3xl rounded-tl-none shadow-2xl">
+              <span className="text-sm text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 md:p-6 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed italic font-serif">
                   Bonjour <br /><br />
                   Ce n’est pas ton vœu le problème. <br /><br />
@@ -367,10 +367,10 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 0.6 }}
-              className="flex flex-col items-end gap-2 ml-auto w-full md:max-w-[85%]"
+              className="flex flex-col items-end gap-2 ml-auto w-[95%] md:max-w-[85%]"
             >
-              <span className="text-xs text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
-              <div className="bg-white/5 border border-white/10 p-4 md:p-5 rounded-3xl rounded-tr-none shadow-2xl">
+              <span className="text-sm text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
+              <div className="bg-white/5 border border-white/10 p-5 md:p-6 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
                   Pourtant je fais ce que je peux…
                 </p>
@@ -383,9 +383,9 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 0.9 }}
-              className="flex flex-col items-start gap-2 w-full md:max-w-[85%]"
+              className="flex flex-col items-start gap-2 w-[95%] md:max-w-[85%]"
             >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-4 md:p-5 rounded-3xl rounded-tl-none shadow-2xl">
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 md:p-6 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif">
                   Justement. <br /><br />
                   Quand tu veux <span className="text-[#C9A24D] font-bold">« {selectedVoeu || "ton projet"} »</span>, mais que tu décides depuis un fonctionnement en surcharge, en urgence ou par peur, tu attires des situations qui vont à l’opposé.
@@ -399,9 +399,9 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 1.2 }}
-              className="flex flex-col items-end gap-2 ml-auto w-full md:max-w-[85%]"
+              className="flex flex-col items-end gap-2 ml-auto w-[95%] md:max-w-[85%]"
             >
-              <div className="bg-white/5 border border-white/10 p-4 md:p-5 rounded-3xl rounded-tr-none shadow-2xl">
+              <div className="bg-white/5 border border-white/10 p-5 md:p-6 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
                   C’est exactement ça… 😔
                 </p>
@@ -414,9 +414,9 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 1.5 }}
-              className="flex flex-col items-start gap-2 w-full md:max-w-[85%]"
+              className="flex flex-col items-start gap-2 w-[95%] md:max-w-[85%]"
             >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-4 md:p-5 rounded-3xl rounded-tl-none shadow-2xl">
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 md:p-6 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed italic font-serif">
                   Ce décalage est difficile à repérer. <br /><br />
                   Tu avances, mais jamais dans le bon sens. <br />
@@ -431,10 +431,10 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 1.8 }}
-              className="flex flex-col items-end gap-2 ml-auto w-full md:max-w-[85%]"
+              className="flex flex-col items-end gap-2 ml-auto w-[95%] md:max-w-[85%]"
             >
-              <span className="text-xs text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
-              <div className="bg-white/5 border border-white/10 p-4 md:p-5 rounded-3xl rounded-tr-none shadow-2xl">
+              <span className="text-sm text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
+              <div className="bg-white/5 border border-white/10 p-5 md:p-6 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
                   Et je fais quoi alors ? 🤔
                 </p>
@@ -447,10 +447,10 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 2.1 }}
-              className="flex flex-col items-start gap-2 w-full md:max-w-[85%]"
+              className="flex flex-col items-start gap-2 w-[95%] md:max-w-[85%]"
             >
-              <span className="text-xs text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-4 md:p-5 rounded-3xl rounded-tl-none shadow-2xl">
+              <span className="text-sm text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 md:p-6 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif">
                   Fais le Crash Test, il va identifier précisément où ça décroche. <br /><br />
                   Ensuite, tu auras deux choix : <br />
@@ -480,7 +480,7 @@ export default function VoeuxPage() {
           >
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#C9A24D]">Le Crash Test</h2>
-              <p className="text-sm md:text-base text-white/70 leading-relaxed max-w-md mx-auto">
+              <p className="text-base md:text-lg text-white/70 leading-relaxed max-w-md mx-auto">
                 Le Crash Test sert à identifier précisément <span className="text-[#C9A24D] font-bold">où l’écart s’est créé</span> entre ton potentiel réel et ton fonctionnement actuel.
               </p>
             </div>
@@ -493,16 +493,16 @@ export default function VoeuxPage() {
                 "Diagnostic de décision"
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4">
-                  <div className="w-6 h-6 rounded-lg bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D] text-xs font-black">
+                  <div className="w-6 h-6 rounded-lg bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D] text-sm font-black">
                     {i + 1}
                   </div>
-                  <span className="text-sm font-bold text-white/80 uppercase tracking-widest">{item}</span>
+                  <span className="text-base font-bold text-white/80 uppercase tracking-widest">{item}</span>
                 </div>
               ))}
             </div>
 
             <div className="pt-8 border-t border-white/5 text-center">
-              <p className="text-xs font-bold text-white/30 uppercase tracking-[0.2em] leading-relaxed">
+              <p className="text-sm font-bold text-white/30 uppercase tracking-[0.2em] leading-relaxed">
                 👉 Un outil de lucidité, pas de jugement. <br />
                 Comprendre pourquoi tu n’agis plus comme toi.
               </p>
@@ -523,22 +523,22 @@ export default function VoeuxPage() {
         <div className="max-w-4xl mx-auto space-y-16">
           <motion.div {...fadeIn} className="text-center space-y-6">
             <h2 className="text-3xl md:text-5xl font-serif font-bold">Deux chemins s&apos;ouvrent</h2>
-            <p className="text-white/50 text-sm md:text-base max-w-xl mx-auto">
+            <p className="text-white/50 text-base md:text-lg max-w-xl mx-auto">
               Une fois le Crash Test terminé, après la lecture de ton rapport et l’échange avec ton coach IA...
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <motion.div {...fadeIn} className="p-6 md:p-10 rounded-[40px] bg-white/5 border border-white/10 space-y-4">
+            <motion.div {...fadeIn} className="p-8 md:p-10 rounded-[40px] bg-white/5 border border-white/10 space-y-4">
               <h3 className="text-xl font-bold italic">Tu fais le travail seul</h3>
-              <p className="text-sm text-white/40 leading-relaxed">
+              <p className="text-base text-white/40 leading-relaxed">
                 Avec ton rapport comme boussole, tu avances à ton rythme, en toute autonomie.
               </p>
             </motion.div>
 
-            <motion.div {...fadeIn} className="p-6 md:p-10 rounded-[40px] bg-[#C9A24D]/5 border border-[#C9A24D]/20 space-y-4">
+            <motion.div {...fadeIn} className="p-8 md:p-10 rounded-[40px] bg-[#C9A24D]/5 border border-[#C9A24D]/20 space-y-4">
               <h3 className="text-xl font-bold italic">Tu décides de ne plus être seul</h3>
-              <p className="text-sm text-white/70 leading-relaxed font-medium">
+              <p className="text-base text-white/70 leading-relaxed font-medium">
                 Notre équipe s’engage à donner autant que toi pour mettre en place toutes les actions concrètes possibles afin de te rapprocher réellement de ton vœu.
               </p>
             </motion.div>
@@ -554,7 +554,7 @@ export default function VoeuxPage() {
 
         <div className="max-w-2xl mx-auto mt-20 text-center space-y-4 pt-12 border-t border-white/5">
           <h4 className="text-lg font-serif italic text-white/60">Après le Crash Test</h4>
-          <ul className="text-sm text-white/40 space-y-2">
+          <ul className="text-base text-white/40 space-y-2">
             <li>– Tu peux continuer gratuitement avec ton rapport</li>
             <li>– Ou accéder à des analyses et accompagnements plus poussés si tu le souhaites</li>
           </ul>
@@ -584,10 +584,10 @@ export default function VoeuxPage() {
 
           <div className="space-y-6">
             <div className="text-center space-y-2 opacity-80">
-              <p className="text-sm font-bold text-white/90">
+              <p className="text-base font-bold text-white/90">
                 Crash Test gratuit → Diagnostic clair
               </p>
-              <p className="text-xs text-white/50">
+              <p className="text-sm text-white/50">
                 Modules d’analyse avancés accessibles ensuite.
               </p>
             </div>
@@ -602,16 +602,16 @@ export default function VoeuxPage() {
               <span className="text-2xl md:text-3xl font-black">
                 {isNavigating ? 'Lancement...' : "LANCER LE CRASH TEST"}
               </span>
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] opacity-60">
                 {selectedVoeu ? `Pour ton vœu : ${selectedVoeu}` : "Sélectionne ton vœu pour commencer"}
               </span>
             </Link>
             
             <div className="flex items-center justify-center gap-6 opacity-30">
-              <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest">
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest">
                 <ShieldCheck className="w-3 h-3" /> Sans engagement
               </div>
-              <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-widest">
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest">
                 <Lock className="w-3 h-3" /> Diagnostic personnel
               </div>
             </div>
@@ -620,8 +620,8 @@ export default function VoeuxPage() {
       </section>
 
       <footer className="py-12 px-6 border-t border-white/5 text-center opacity-20">
-        <p className="text-[9px] font-black uppercase tracking-[0.5em]">
-          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v3.7
+        <p className="text-[10px] font-black uppercase tracking-[0.5em]">
+          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v3.8
         </p>
       </footer>
     </div>

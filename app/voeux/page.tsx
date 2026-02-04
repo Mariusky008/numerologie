@@ -214,7 +214,7 @@ export default function VoeuxPage() {
       }} />
 
       {/* 1. HERO — CHOIX DU VOEU (LEVEL 1 & 2) */}
-      <section className="min-h-screen flex flex-col items-center justify-start px-6 relative pt-20 pb-20">
+      <section className="min-h-screen flex flex-col items-center justify-start px-4 md:px-6 relative pt-20 pb-20">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[120px] rounded-full" />
           <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none">
@@ -222,7 +222,7 @@ export default function VoeuxPage() {
           </video>
         </div>
 
-        <div className="max-w-4xl w-full z-10 text-center space-y-12">
+        <div className="max-w-4xl w-full z-10 text-center space-y-8 md:space-y-12">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
             <div className="flex justify-center mb-4">
               <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center animate-pulse">
@@ -233,13 +233,13 @@ export default function VoeuxPage() {
               Tout commence <br />
               <span className="text-[#C9A24D] italic">par un vœu.</span>
             </h1>
-            <p className="max-w-xl mx-auto text-sm md:text-base text-white/60 leading-relaxed">
+            <p className="max-w-xl mx-auto text-base text-white/60 leading-relaxed">
               Choisis ce qui compte vraiment pour toi aujourd&apos;hui. <br />
               Ensuite, découvre pourquoi ça bloque.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {ARCHETYPES.map((arch) => (
               <motion.button
                 key={arch.id}
@@ -253,14 +253,14 @@ export default function VoeuxPage() {
                 }`}
               >
                 <arch.icon className={`w-6 h-6 ${selectedArchetype === arch.id ? "text-[#08090F]" : "text-[#C9A24D]"}`} />
-                <span className="text-[10px] md:text-xs font-black uppercase tracking-widest">{arch.label}</span>
+                <span className="text-xs font-black uppercase tracking-widest">{arch.label}</span>
               </motion.button>
             ))}
             <button 
               onClick={() => {
                 handleVoeuSelect("Aucun ne me parle pour l’instant");
               }}
-              className="p-4 md:p-6 rounded-2xl border border-white/5 bg-white/2 shadow-inner text-[10px] md:text-xs font-bold text-white/30 hover:text-white/50 transition-colors"
+              className="p-4 md:p-6 rounded-2xl border border-white/5 bg-white/2 shadow-inner text-xs font-bold text-white/30 hover:text-white/50 transition-colors"
             >
               Aucun ne me parle pour l’instant
             </button>
@@ -276,14 +276,14 @@ export default function VoeuxPage() {
                 exit={{ opacity: 0, y: -10 }}
                 className="space-y-6 pt-8 border-t border-white/5"
               >
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A24D]/60">Affinage de ton vœu</p>
-                <div className="flex flex-wrap justify-center gap-3">
+                <p className="text-xs font-black uppercase tracking-[0.3em] text-[#C9A24D]/60">Affinage de ton vœu</p>
+                <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3">
                   {ARCHETYPES.find(a => a.id === selectedArchetype)?.subVoeux.map((sub, i) => (
                     <motion.button
                       key={i}
                       whileHover={{ scale: 1.05 }}
                       onClick={() => handleVoeuSelect(sub)}
-                      className={`px-6 py-4 rounded-2xl border-2 text-xs md:text-sm font-black transition-all backdrop-blur-xl ${
+                      className={`w-full sm:w-auto px-6 py-4 rounded-2xl border-2 text-sm font-black transition-all backdrop-blur-xl ${
                         selectedVoeu === sub
                         ? "bg-white text-[#08090F] border-white shadow-[0_15px_30px_-10px_rgba(255,255,255,0.4)]"
                         : "bg-[#08090F]/80 border-white/20 text-white hover:border-[#C9A24D] hover:bg-[#08090F]/90"
@@ -306,12 +306,12 @@ export default function VoeuxPage() {
       </section>
 
       {/* 2. LA FRACTURE & LE CONTRASTE (CHAT FLOW) */}
-      <section id="fracture" className="py-24 px-6 relative bg-[#08090F]">
+      <section id="fracture" className="py-24 px-4 md:px-6 relative bg-[#08090F]">
         <div className="max-w-2xl mx-auto space-y-12">
           
           <motion.div {...fadeIn} className="text-center space-y-4 mb-16">
             <h2 className="text-3xl md:text-5xl font-serif font-bold">La Fracture</h2>
-            <p className="text-white/40 text-[10px] uppercase tracking-widest font-bold italic">
+            <p className="text-white/40 text-xs font-bold uppercase tracking-widest italic">
               Analyse de l&apos;écart identitaire
             </p>
           </motion.div>
@@ -322,10 +322,10 @@ export default function VoeuxPage() {
               initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
+              className="flex flex-col items-end gap-2 ml-auto w-full md:max-w-[85%]"
             >
-              <span className="text-[10px] text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
+              <span className="text-xs text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
+              <div className="bg-white/5 border border-white/10 p-4 md:p-5 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
                   Salut 👋 <br /><br />
                   Ça fait pas mal de temps que j&apos;essaye de <span className="text-[#C9A24D] font-bold italic">« {selectedVoeu || "mon projet"} »</span>. <br />
@@ -340,12 +340,12 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 0.3 }}
-              className="flex flex-col items-start gap-2 max-w-[85%]"
+              className="flex flex-col items-start gap-2 w-full md:max-w-[85%]"
             >
-              <span className="text-[10px] text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+              <span className="text-xs text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-4 md:p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed italic font-serif">
-                  Bonjour ... <br /><br />
+                  Bonjour <br /><br />
                   Ce n’est pas ton vœu le problème. <br /><br />
                   C’est le décalage entre qui tu es aujourd’hui et ce que ce vœu demande de toi.
                 </p>
@@ -358,10 +358,10 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 0.6 }}
-              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
+              className="flex flex-col items-end gap-2 ml-auto w-full md:max-w-[85%]"
             >
-              <span className="text-[10px] text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
+              <span className="text-xs text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
+              <div className="bg-white/5 border border-white/10 p-4 md:p-5 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
                   Pourtant je fais ce que je peux…
                 </p>
@@ -374,9 +374,9 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 0.9 }}
-              className="flex flex-col items-start gap-2 max-w-[85%]"
+              className="flex flex-col items-start gap-2 w-full md:max-w-[85%]"
             >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-4 md:p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif">
                   Justement. <br /><br />
                   Quand tu veux <span className="text-[#C9A24D] font-bold">« {selectedVoeu || "ton projet"} »</span>, mais que tu décides depuis un fonctionnement en surcharge, en urgence ou par peur, tu attires des situations qui vont à l’opposé.
@@ -390,9 +390,9 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 1.2 }}
-              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
+              className="flex flex-col items-end gap-2 ml-auto w-full md:max-w-[85%]"
             >
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl">
+              <div className="bg-white/5 border border-white/10 p-4 md:p-5 rounded-3xl rounded-tr-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed">
                   C’est exactement ça… 😔
                 </p>
@@ -405,9 +405,9 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 1.5 }}
-              className="flex flex-col items-start gap-2 max-w-[85%]"
+              className="flex flex-col items-start gap-2 w-full md:max-w-[85%]"
             >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-4 md:p-5 rounded-3xl rounded-tl-none shadow-2xl">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed italic font-serif">
                   Ce décalage est difficile à repérer. <br /><br />
                   Tu avances, mais jamais dans le bon sens. <br />
@@ -422,18 +422,18 @@ export default function VoeuxPage() {
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: 2.4 }}
-              className="flex flex-col items-end gap-2 ml-auto max-w-[85%]"
+              className="flex flex-col items-end gap-2 ml-auto w-full md:max-w-[85%]"
             >
-              <span className="text-[10px] text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
-              <div className="bg-white/5 border border-white/10 p-5 rounded-3xl rounded-tr-none shadow-2xl w-full">
+              <span className="text-xs text-white/40 font-black mr-4 uppercase tracking-widest">Carla</span>
+              <div className="bg-white/5 border border-white/10 p-4 md:p-5 rounded-3xl rounded-tr-none shadow-2xl w-full">
                 <p className="text-base md:text-lg text-white/90 leading-relaxed mb-6">
                   Et je fais quoi alors ? 🤔
                 </p>
                 
-                <div className="flex flex-col gap-3 items-end">
+                <div className="flex flex-col gap-3 items-end w-full">
                   <button 
                     onClick={() => setUserChoice('comprendre')}
-                    className={`group relative flex items-center gap-3 px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all duration-300 border-2 overflow-hidden ${
+                    className={`w-full md:w-auto group relative flex items-center justify-center md:justify-start gap-3 px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all duration-300 border-2 overflow-hidden ${
                       userChoice === 'comprendre' 
                       ? 'bg-[#C9A24D] text-[#08090F] border-[#C9A24D] shadow-[0_10px_30px_-10px_rgba(201,162,77,0.5)]' 
                       : 'bg-white/5 text-white/60 border-white/10 hover:border-[#C9A24D]/50 hover:bg-white/10'
@@ -447,7 +447,7 @@ export default function VoeuxPage() {
 
                   <button 
                     onClick={() => setUserChoice('avancer')}
-                    className={`group relative flex items-center gap-3 px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all duration-300 border-2 overflow-hidden ${
+                    className={`w-full md:w-auto group relative flex items-center justify-center md:justify-start gap-3 px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all duration-300 border-2 overflow-hidden ${
                       userChoice === 'avancer' 
                       ? 'bg-[#C9A24D] text-[#08090F] border-[#C9A24D] shadow-[0_10px_30px_-10px_rgba(201,162,77,0.5)]' 
                       : 'bg-white/5 text-white/60 border-white/10 hover:border-[#C9A24D]/50 hover:bg-white/10'
@@ -480,7 +480,7 @@ export default function VoeuxPage() {
                         <div className="w-8 h-8 rounded-full bg-[#C9A24D]/20 flex items-center justify-center">
                           <Sparkles className="w-4 h-4 text-[#C9A24D]" />
                         </div>
-                        <p className="text-[#C9A24D] text-[10px] font-black uppercase tracking-[0.3em]">Révélation visuelle</p>
+                        <p className="text-[#C9A24D] text-xs font-black uppercase tracking-[0.3em]">Révélation visuelle</p>
                       </div>
 
                       <h4 className="text-xl md:text-2xl font-serif font-bold text-white/90">
@@ -507,7 +507,7 @@ export default function VoeuxPage() {
                       </ul>
 
                       <div className="pt-4 border-t border-white/5">
-                        <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest italic">
+                        <p className="text-xs font-bold text-white/30 uppercase tracking-widest italic">
                           *Note secrète : ces données sont extraites de ton profil identitaire
                         </p>
                       </div>
@@ -518,10 +518,10 @@ export default function VoeuxPage() {
                   <motion.div 
                     initial={{ opacity: 0, x: -20, scale: 0.95 }}
                     animate={{ opacity: 1, x: 0, scale: 1 }}
-                    className="flex flex-col items-start gap-2 max-w-[85%]"
+                    className="flex flex-col items-start gap-2 w-full md:max-w-[85%]"
                   >
-                    <span className="text-[10px] text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
-                    <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-5 rounded-3xl rounded-tl-none shadow-2xl">
+                    <span className="text-xs text-[#C9A24D] font-black ml-4 uppercase tracking-widest">L’Oracle</span>
+                    <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-4 md:p-5 rounded-3xl rounded-tl-none shadow-2xl">
                       <p className="text-base md:text-lg text-white/90 leading-relaxed font-serif">
                         Le Crash Test va identifier précisément où ça décroche. <br /><br />
                         Ensuite, tu auras deux choix : <br />
@@ -546,11 +546,11 @@ export default function VoeuxPage() {
       </section>
 
       {/* 4. LE CRASH TEST (OUTIL DE LUCIDITÉ) */}
-      <section className="py-32 px-6 relative bg-[#0C0D15]">
+      <section className="py-32 px-4 md:px-6 relative bg-[#0C0D15]">
         <div className="max-w-2xl mx-auto">
           <motion.div 
             {...fadeIn}
-            className="p-10 md:p-14 rounded-[50px] bg-white/5 border border-white/10 space-y-10 relative"
+            className="p-6 md:p-14 rounded-[50px] bg-white/5 border border-white/10 space-y-10 relative"
           >
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#C9A24D]">Le Crash Test</h2>
@@ -567,7 +567,7 @@ export default function VoeuxPage() {
                 "Diagnostic de décision"
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4">
-                  <div className="w-6 h-6 rounded-lg bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D] text-[10px] font-black">
+                  <div className="w-6 h-6 rounded-lg bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D] text-xs font-black">
                     {i + 1}
                   </div>
                   <span className="text-sm font-bold text-white/80 uppercase tracking-widest">{item}</span>
@@ -593,7 +593,7 @@ export default function VoeuxPage() {
       </section>
 
       {/* 5. LE CHOIX FINAL */}
-      <section className="py-32 px-6 relative">
+      <section className="py-32 px-4 md:px-6 relative">
         <div className="max-w-4xl mx-auto space-y-16">
           <motion.div {...fadeIn} className="text-center space-y-6">
             <h2 className="text-3xl md:text-5xl font-serif font-bold">Deux chemins s&apos;ouvrent</h2>
@@ -603,14 +603,14 @@ export default function VoeuxPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <motion.div {...fadeIn} className="p-8 md:p-10 rounded-[40px] bg-white/5 border border-white/10 space-y-4">
+            <motion.div {...fadeIn} className="p-6 md:p-10 rounded-[40px] bg-white/5 border border-white/10 space-y-4">
               <h3 className="text-xl font-bold italic">Tu fais le travail seul</h3>
               <p className="text-sm text-white/40 leading-relaxed">
                 Avec ton rapport comme boussole, tu avances à ton rythme, en toute autonomie.
               </p>
             </motion.div>
 
-            <motion.div {...fadeIn} className="p-8 md:p-10 rounded-[40px] bg-[#C9A24D]/5 border border-[#C9A24D]/20 space-y-4">
+            <motion.div {...fadeIn} className="p-6 md:p-10 rounded-[40px] bg-[#C9A24D]/5 border border-[#C9A24D]/20 space-y-4">
               <h3 className="text-xl font-bold italic">Tu décides de ne plus être seul</h3>
               <p className="text-sm text-white/70 leading-relaxed font-medium">
                 Notre équipe s’engage à donner autant que toi pour mettre en place toutes les actions concrètes possibles afin de te rapprocher réellement de ton vœu.
@@ -628,7 +628,7 @@ export default function VoeuxPage() {
       </section>
 
       {/* 6. CTA FINAL — ALIGNÉ AVEC LE VOEU */}
-      <section className="py-40 px-6 text-center relative overflow-hidden">
+      <section className="py-40 px-4 md:px-6 text-center relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(201,162,77,0.1),_transparent_70%)]" />
         </div>
@@ -678,7 +678,7 @@ export default function VoeuxPage() {
 
       <footer className="py-12 px-6 border-t border-white/5 text-center opacity-20">
         <p className="text-[9px] font-black uppercase tracking-[0.5em]">
-          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v3.5
+          © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION · v3.6
         </p>
       </footer>
     </div>

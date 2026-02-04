@@ -590,8 +590,22 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="pt-10 border-t border-white/5 text-center">
-              <p className="text-base md:text-lg font-bold text-white/30 uppercase tracking-[0.2em] leading-relaxed">
+            <div className="pt-10 border-t border-white/5 space-y-8">
+              <div className="text-center space-y-4">
+                <p className="text-sm font-black text-[#C9A24D] uppercase tracking-widest">Concrètement, tu obtiens :</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                  {[
+                    "Un diagnostic lisible",
+                    "Des points de blocage précis",
+                    "Une compréhension claire"
+                  ].map((benefit, i) => (
+                    <div key={i} className="bg-white/5 rounded-xl p-4 border border-white/5">
+                      <p className="text-sm font-bold text-white/80">{benefit}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <p className="text-base md:text-lg font-bold text-white/30 uppercase tracking-[0.2em] leading-relaxed text-center">
                 👉 Un outil de lucidité, pas de jugement. <br />
                 Comprendre pourquoi tu n’agis plus comme toi.
               </p>
@@ -634,27 +648,36 @@ export default function Home() {
           </div>
 
           {/* SOCIAL PROOF */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 border-t border-white/5">
-            {[
-              { text: "J'ai enfin compris pourquoi je tournais en rond depuis 3 ans.", author: "Sophie, 34 ans" },
-              { text: "Le diagnostic a mis des mots exacts sur mon blocage.", author: "Marc, 42 ans" },
-              { text: "C'est bluffant de précision, même sans rien dire.", author: "Léa, 29 ans" }
-            ].map((temoignage, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white/5 p-6 rounded-2xl border border-white/5 text-center space-y-4"
-              >
-                <div className="flex justify-center text-[#C9A24D]">
-                  {[...Array(5)].map((_, j) => <Star key={j} className="w-3 h-3 fill-current" />)}
-                </div>
-                <p className="text-sm text-white/70 italic">"{temoignage.text}"</p>
-                <p className="text-[10px] font-black uppercase tracking-widest text-white/30">{temoignage.author}</p>
-              </motion.div>
-            ))}
+          <div className="space-y-12 pt-16 border-t border-white/5">
+            <div className="text-center space-y-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#C9A24D]/10 border border-[#C9A24D]/20">
+                <Star className="w-4 h-4 text-[#C9A24D] fill-[#C9A24D]" />
+                <span className="text-sm font-bold text-[#C9A24D] uppercase tracking-widest">Déjà + de 1200 crash-tests réalisés</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { text: "J'ai enfin compris pourquoi je tournais en rond depuis 3 ans.", author: "Sophie, 34 ans" },
+                { text: "Le diagnostic a mis des mots exacts sur mon blocage.", author: "Marc, 42 ans" },
+                { text: "C'est bluffant de précision, même sans rien dire.", author: "Léa, 29 ans" }
+              ].map((temoignage, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="bg-white/5 p-8 rounded-3xl border border-white/10 text-center space-y-6 hover:bg-white/10 transition-colors"
+                >
+                  <div className="flex justify-center gap-1">
+                    {[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 text-[#C9A24D] fill-[#C9A24D]" />)}
+                  </div>
+                  <p className="text-base md:text-lg text-white/80 italic leading-relaxed">"{temoignage.text}"</p>
+                  <p className="text-xs font-black uppercase tracking-widest text-white/40">{temoignage.author}</p>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           {/* CHOIX FINAL CTA */}
@@ -665,11 +688,25 @@ export default function Home() {
           />
         </div>
 
-        <div className="max-w-3xl mx-auto mt-24 text-center space-y-6 pt-16 border-t border-white/5">
-            <h4 className="text-xl md:text-2xl font-serif italic text-white/60">Après le Crash Test</h4>
-            <p className="text-lg md:text-xl text-white/40 max-w-2xl mx-auto leading-relaxed">
-              Après le diagnostic gratuit, tu as la possibilité d’aller plus loin avec une lecture approfondie et un accompagnement personnalisé.
-            </p>
+        <div className="max-w-3xl mx-auto mt-24 space-y-8 pt-16 border-t border-white/5">
+            <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 rounded-3xl p-8 md:p-10 space-y-6 text-center">
+              <div className="flex justify-center">
+                <div className="w-12 h-12 rounded-full bg-[#C9A24D]/20 flex items-center justify-center">
+                  <ShieldCheck className="w-6 h-6 text-[#C9A24D]" />
+                </div>
+              </div>
+              <div className="space-y-4">
+                <h4 className="text-xl md:text-2xl font-serif font-bold text-white">Transparence totale</h4>
+                <p className="text-lg text-white/80 leading-relaxed">
+                  ✅ <span className="font-bold text-white">Le Crash Test est gratuit.</span> <br />
+                  Il te donne déjà des informations utiles et exploitables.
+                </p>
+                <p className="text-sm md:text-base text-white/50 leading-relaxed max-w-xl mx-auto">
+                  👉 Certaines analyses avancées et l’accompagnement sont proposés ensuite, <br className="hidden md:block" />
+                  uniquement si tu choisis d’aller plus loin.
+                </p>
+              </div>
+            </div>
           </div>
       </section>
 

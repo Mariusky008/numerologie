@@ -617,6 +617,26 @@ export default function Home() {
               isActive={!!selectedVoeu}
               onClick={handleCtaClick}
             />
+
+            {/* Transparency Section */}
+            <div className="mt-12 bg-[#C9A24D]/10 border border-[#C9A24D]/20 rounded-3xl p-8 md:p-10 space-y-6 text-center">
+              <div className="flex justify-center">
+                <div className="w-12 h-12 rounded-full bg-[#C9A24D]/20 flex items-center justify-center">
+                  <ShieldCheck className="w-6 h-6 text-[#C9A24D]" />
+                </div>
+              </div>
+              <div className="space-y-4">
+                <p className="text-lg text-white/80 leading-relaxed">
+                  ✅ <span className="font-bold text-white">Le Crash Test est gratuit.</span> <br />
+                  Il te donne déjà des informations utiles et exploitables.
+                </p>
+                <p className="text-sm md:text-base text-white/50 leading-relaxed max-w-xl mx-auto">
+                  👉 Certaines analyses avancées et l’accompagnement sont proposés ensuite, <br className="hidden md:block" />
+                  uniquement si tu choisis d’aller plus loin.
+                </p>
+              </div>
+            </div>
+
           </motion.div>
         </div>
       </section>
@@ -688,25 +708,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="max-w-3xl mx-auto mt-24 space-y-8 pt-16 border-t border-white/5">
-            <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 rounded-3xl p-8 md:p-10 space-y-6 text-center">
-              <div className="flex justify-center">
-                <div className="w-12 h-12 rounded-full bg-[#C9A24D]/20 flex items-center justify-center">
-                  <ShieldCheck className="w-6 h-6 text-[#C9A24D]" />
-                </div>
-              </div>
-              <div className="space-y-4">
-                <p className="text-lg text-white/80 leading-relaxed">
-                  ✅ <span className="font-bold text-white">Le Crash Test est gratuit.</span> <br />
-                  Il te donne déjà des informations utiles et exploitables.
-                </p>
-                <p className="text-sm md:text-base text-white/50 leading-relaxed max-w-xl mx-auto">
-                  👉 Certaines analyses avancées et l’accompagnement sont proposés ensuite, <br className="hidden md:block" />
-                  uniquement si tu choisis d’aller plus loin.
-                </p>
-              </div>
-            </div>
-          </div>
+        {/* Transparency Section Moved */}
       </section>
 
       {/* 6. CTA FINAL — ALIGNÉ AVEC LE VOEU */}

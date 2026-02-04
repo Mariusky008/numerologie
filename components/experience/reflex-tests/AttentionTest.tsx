@@ -86,12 +86,16 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
     
     setCurrentChallenge(challenge);
     setStartTime(Date.now());
-    isProcessing.current = false;
     
     if (isStressed) {
       speakColor(COLORS[colorIdx].name);
     }
   }, [isStressed, speakColor]);
+
+  // Unlock processing when challenge updates to prevent double-clicks/race conditions
+  useEffect(() => {
+    isProcessing.current = false;
+  }, [currentChallenge]);
 
   // Audio effect management
   useEffect(() => {
@@ -311,7 +315,7 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
       </div>
 
       <p className="text-[#1A1C2E]/40 text-sm font-medium animate-pulse">
-        Cliquez sur la COULEUR du mot, pas sur le texte.
+        Cliquez sur la COULEUR DES LETTRES, pas sur le mot écrit.
       </p>
     </div>
   );

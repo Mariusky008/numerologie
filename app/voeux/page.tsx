@@ -696,7 +696,6 @@ export default function Home() {
                 </div>
               </div>
               <div className="space-y-4">
-                <h4 className="text-xl md:text-2xl font-serif font-bold text-white">Transparence totale</h4>
                 <p className="text-lg text-white/80 leading-relaxed">
                   ✅ <span className="font-bold text-white">Le Crash Test est gratuit.</span> <br />
                   Il te donne déjà des informations utiles et exploitables.

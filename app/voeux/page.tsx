@@ -78,6 +78,24 @@ const ARCHETYPES = [
   }
 ];
 
+const VOEU_INSIGHTS: Record<string, { demand: string; current: string }> = {
+  "Retrouver une relation saine et stable": { demand: "Vulnérabilité et limites claires", current: "Sur-adaptation et peur du rejet" },
+  "Sortir d’un schéma amoureux destructeur": { demand: "Estime de soi radicale", current: "Besoin de sauver ou d'être sauvé" },
+  "Mettre fin à une impasse relationnelle": { demand: "Courage de trancher", current: "Espoir que l'autre change" },
+  "Réparer un lien familial important": { demand: "Acceptation de l'autre tel qu'il est", current: "Attente de reconnaissance" },
+  "Me libérer d’un poids émotionnel ancien": { demand: "Lâcher-prise et pardon", current: "Identification à la blessure" },
+  "Reprendre le contrôle de mes décisions": { demand: "Responsabilité totale", current: "Attente de validation extérieure" },
+  "Clarifier ce que je veux vraiment": { demand: "Écoute du corps et de l'intuition", current: "Analyse mentale et doute permanent" },
+  "Créer un équilibre durable dans ma vie": { demand: "Renoncement et priorisation", current: "Vouloir tout faire par peur de manquer" },
+  "Me respecter enfin dans mes choix": { demand: "Savoir dire non sans culpabilité", current: "Compromis excessifs pour plaire" },
+  "Retrouver confiance en moi et en mes ressentis": { demand: "Action malgré la peur", current: "Attente de certitude avant d'agir" },
+  "Assumer qui je suis sans me trahir": { demand: "Authenticité brute", current: "Port du masque social" },
+  "Sortir d’une solitude que je n’ai pas choisie": { demand: "Ouverture et risque émotionnel", current: "Protection et retrait préventif" },
+  "Arrêter de vivre dans la peur de perdre": { demand: "Confiance en la vie", current: "Contrôle et hypervigilance" },
+  "Construire une vie qui me ressemble": { demand: "Créativité et audace", current: "Conformisme et sécurité illusoire" },
+  "Ne plus saboter ce qui pourrait fonctionner": { demand: "Acceptation du bonheur", current: "Culpabilité et sentiment d'imposture" },
+};
+
 const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | null, onClear: () => void }) => (
   <AnimatePresence>
     {selectedVoeu && selectedVoeu !== "Aucun ne me parle pour l’instant" && (
@@ -393,12 +411,32 @@ export default function VoeuxPage() {
               </div>
             </motion.div>
 
+            {/* BREAK - THE CUTTING QUESTION */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: 1.1 }}
+              className="py-12 flex flex-col items-center justify-center text-center space-y-6"
+            >
+              <span className="text-xs font-black uppercase tracking-[0.3em] text-white/20">— PAUSE —</span>
+              <div className="bg-white/5 border border-white/10 px-8 py-6 rounded-2xl max-w-xl">
+                <p className="text-sm md:text-base text-white/60 font-medium mb-4 uppercase tracking-widest">
+                  Avant de continuer, réponds mentalement :
+                </p>
+                <p className="text-xl md:text-3xl font-serif font-bold text-white/90">
+                  Quand ce vœu échoue... <br />
+                  <span className="text-[#C9A24D]">tu forces, tu fuis ou tu doutes ?</span>
+                </p>
+              </div>
+            </motion.div>
+
             {/* 5. Carla */}
             <motion.div 
               initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.2 }}
+              transition={{ delay: 1.4 }}
               className="flex flex-col items-end gap-3 ml-auto w-[95%] md:w-full"
             >
               <div className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-[2rem] rounded-tr-none shadow-2xl">
@@ -413,13 +451,36 @@ export default function VoeuxPage() {
               initial={{ opacity: 0, x: -20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.5 }}
+              transition={{ delay: 1.7 }}
               className="flex flex-col items-start gap-3 w-[95%] md:w-full"
             >
-              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-6 md:p-8 rounded-[2rem] rounded-tl-none shadow-2xl">
+              <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-6 md:p-8 rounded-[2rem] rounded-tl-none shadow-2xl space-y-8">
                 <p className="text-lg md:text-2xl text-white/90 leading-relaxed italic font-serif">
-                  Ce décalage est difficile à repérer. <br /><br />
-                  Tu avances, mais jamais dans le bon sens. <br />
+                  Ce décalage est difficile à repérer. <br />
+                  Tu avances, mais jamais dans le bon sens.
+                </p>
+                
+                {/* REAL-TIME MIRROR */}
+                {selectedVoeu && VOEU_INSIGHTS[selectedVoeu] && (
+                  <div className="mt-6 bg-[#08090F]/40 rounded-2xl p-6 border border-[#C9A24D]/10">
+                    <p className="text-base text-white/80 mb-6 font-medium">
+                      Ce que ton vœu demande de toi, ce n’est pas plus d’efforts. <br />
+                      C’est un fonctionnement différent :
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <span className="text-xs font-black text-[#C9A24D] uppercase tracking-widest">Ce que ton vœu demande</span>
+                        <p className="text-xl font-serif font-bold text-white">{VOEU_INSIGHTS[selectedVoeu].demand}</p>
+                      </div>
+                      <div className="space-y-2 md:border-l md:border-white/10 md:pl-6">
+                        <span className="text-xs font-black text-white/40 uppercase tracking-widest">Ton fonctionnement actuel</span>
+                        <p className="text-xl font-serif font-bold text-white/60">{VOEU_INSIGHTS[selectedVoeu].current}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <p className="text-lg md:text-2xl text-white/90 leading-relaxed italic font-serif">
                   Et c’est pour ça que ton vœu reste bloqué.
                 </p>
               </div>
@@ -430,7 +491,7 @@ export default function VoeuxPage() {
               initial={{ opacity: 0, x: 20, scale: 0.95 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: 1.8 }}
+              transition={{ delay: 2.0 }}
               className="flex flex-col items-end gap-3 ml-auto w-[95%] md:w-full"
             >
               <span className="text-sm md:text-base text-white/40 font-black mr-6 uppercase tracking-widest">Carla</span>

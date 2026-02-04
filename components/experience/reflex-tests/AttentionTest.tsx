@@ -32,19 +32,17 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
   const [audioEnabled, setAudioEnabled] = useState(true);
   const [combo, setCombo] = useState(0);
   const [maxCombo, setMaxCombo] = useState(0);
-  const [feedback, setFeedback] = useState<{ id: number; text: string; x: number; y: number }[]>([]);
+  const [feedbackStatus, setFeedbackStatus] = useState<'success' | 'error' | null>(null);
 
   // Audio refs
   const ambientRef = useRef<HTMLAudioElement | null>(null);
   const stressRef = useRef<HTMLAudioElement | null>(null);
-  const feedbackIdCounter = useRef(0);
 
-  const addFeedback = (text: string, isError: boolean = false) => {
-    const id = feedbackIdCounter.current++;
-    setFeedback(prev => [...prev, { id, text, x: Math.random() * 40 - 20, y: Math.random() * 20 - 10 }]);
+  const triggerFeedback = (status: 'success' | 'error') => {
+    setFeedbackStatus(status);
     setTimeout(() => {
-      setFeedback(prev => prev.filter(f => f.id !== id));
-    }, 1000);
+      setFeedbackStatus(null);
+    }, 300);
   };
 
   const speakColor = useCallback((colorName: string) => {
@@ -174,12 +172,12 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
       const newCombo = combo + 1;
       setCombo(newCombo);
       setMaxCombo(prev => Math.max(prev, newCombo));
-      addFeedback(reactionTime < 400 ? 'PARFAIT !' : 'BIEN !');
+      triggerFeedback('success');
     } else {
       if (isStressed) setStressErrors((prev) => prev + 1);
       else setNormalErrors((prev) => prev + 1);
       setCombo(0);
-      addFeedback('ERREUR', true);
+      triggerFeedback('error');
     }
 
     generateChallenge();
@@ -213,23 +211,19 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
         )}
       </AnimatePresence>
 
-      {/* FLOATING FEEDBACK - PERFECTLY CENTERED */}
-      <div className="absolute inset-0 pointer-events-none z-30 overflow-hidden">
-        <AnimatePresence>
-          {feedback.map(f => (
-            <motion.div
-              key={f.id}
-              initial={{ opacity: 0, scale: 0.5, y: 0, x: "-50%" }}
-              animate={{ opacity: 1, scale: 1.5, y: -150, x: "-50%" }}
-              exit={{ opacity: 0 }}
-              className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-black text-4xl tracking-tighter drop-shadow-2xl ${f.text === 'ERREUR' ? 'text-red-500' : 'text-[#C9A24D]'}`}
-              style={{ marginLeft: f.x, marginTop: f.y }}
-            >
-              {f.text}
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
+      {/* LIGHT INDICATOR - FLASH EFFECT */}
+      <AnimatePresence>
+        {feedbackStatus && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.8 }}
+            exit={{ opacity: 0 }}
+            className={`absolute inset-[-50px] pointer-events-none z-0 rounded-[60px] blur-3xl transition-colors duration-200 ${
+              feedbackStatus === 'success' ? 'bg-green-500/30' : 'bg-red-500/40'
+            }`}
+          />
+        )}
+      </AnimatePresence>
 
       {/* SOUND TOGGLE */}
       <button 

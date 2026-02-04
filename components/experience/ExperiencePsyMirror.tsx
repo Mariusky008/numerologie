@@ -514,7 +514,12 @@ export default function ExperiencePsyMirror() {
                       placeholder="Ton prénom"
                       value={personalInfo.firstName}
                       onChange={(e) => setPersonalInfo({...personalInfo, firstName: e.target.value})}
-                      onKeyDown={(e) => e.key === 'Enter' && personalInfo.firstName && setInfoSubStep(2)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && personalInfo.firstName) {
+                          trackEvent('experience_start');
+                          setInfoSubStep(2);
+                        }
+                      }}
                       className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
                       autoFocus
                     />
@@ -531,7 +536,12 @@ export default function ExperiencePsyMirror() {
                     />
                   </div>
                   <button 
-                    onClick={() => personalInfo.firstName && setInfoSubStep(2)}
+                    onClick={() => {
+                      if (personalInfo.firstName) {
+                        trackEvent('experience_start');
+                        setInfoSubStep(2);
+                      }
+                    }}
                     disabled={!personalInfo.firstName}
                     className="md:col-span-2 w-full py-5 bg-[#1A1C2E] text-white rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
                   >

@@ -297,7 +297,7 @@ export default function Home() {
   };
 
   const handleCtaClick = () => {
-    trackEvent('voeux_cta_click', { voeu: selectedVoeu });
+    trackEvent('cta_click', { voeu: selectedVoeu });
     setIsNavigating(true);
   };
 

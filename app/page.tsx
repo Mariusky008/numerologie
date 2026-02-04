@@ -271,21 +271,21 @@ export default function Home() {
                 whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.08)" }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleArchetypeSelect(arch.id)}
-                className={`p-4 md:p-12 lg:p-16 rounded-[2.5rem] border transition-all flex flex-col items-center justify-center gap-6 md:gap-8 group ${
+                className={`p-3 md:p-12 lg:p-16 rounded-[2.5rem] border transition-all flex flex-col items-center justify-center gap-3 md:gap-8 group ${
                   selectedArchetype === arch.id 
                   ? "bg-[#C9A24D] text-[#08090F] border-[#C9A24D] shadow-[0_20px_40px_-10px_rgba(201,162,77,0.3)]" 
                   : "bg-white/5 border-white/10 text-white/70 hover:border-white/20"
                 }`}
               >
-                <arch.icon className={`w-12 h-12 md:w-16 md:h-16 transition-transform group-hover:scale-110 ${selectedArchetype === arch.id ? "text-[#08090F]" : "text-[#C9A24D]"}`} />
-                <span className="text-sm md:text-2xl font-black uppercase tracking-widest leading-relaxed">{arch.label}</span>
+                <arch.icon className={`w-8 h-8 md:w-16 md:h-16 transition-transform group-hover:scale-110 ${selectedArchetype === arch.id ? "text-[#08090F]" : "text-[#C9A24D]"}`} />
+                <span className="text-xs md:text-2xl font-black uppercase tracking-widest leading-relaxed">{arch.label}</span>
               </motion.button>
             ))}
             <button 
               onClick={() => {
                 handleVoeuSelect("Aucun ne me parle pour l’instant");
               }}
-              className="p-4 md:p-12 lg:p-16 rounded-[2.5rem] border border-white/5 bg-white/2 shadow-inner text-sm md:text-xl font-bold text-white/30 hover:text-white/50 hover:bg-white/5 transition-all flex flex-col items-center justify-center text-center"
+              className="p-3 md:p-12 lg:p-16 rounded-[2.5rem] border border-white/5 bg-white/2 shadow-inner text-xs md:text-xl font-bold text-white/30 hover:text-white/50 hover:bg-white/5 transition-all flex flex-col items-center justify-center text-center"
             >
               Aucun ne me parle pour l’instant
             </button>

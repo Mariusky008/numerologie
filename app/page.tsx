@@ -243,7 +243,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[120px] rounded-full" />
           <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none">
-            <source src="/acceuil.mp4" type="video/mp4" />
+            <source src="/nuage.mp4" type="video/mp4" />
           </video>
         </div>
 

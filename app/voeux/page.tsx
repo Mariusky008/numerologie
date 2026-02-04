@@ -241,7 +241,7 @@ export default function VoeuxPage() {
       }} />
 
       {/* 1. HERO — CHOIX DU VOEU (LEVEL 1 & 2) */}
-      <section className="min-h-screen flex flex-col items-center justify-start px-4 md:px-6 relative pt-20 pb-20">
+      <section className="min-h-screen flex flex-col items-center justify-center px-4 md:px-8 relative pt-20 pb-20">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[120px] rounded-full" />
           <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none">
@@ -249,45 +249,45 @@ export default function VoeuxPage() {
           </video>
         </div>
 
-        <div className="max-w-4xl w-full z-10 text-center space-y-8 md:space-y-12">
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center animate-pulse">
-                <Sparkles className="w-8 h-8 text-[#C9A24D]" />
+        <div className="w-full max-w-[1600px] z-10 text-center space-y-12 md:space-y-20">
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+            <div className="flex justify-center mb-6">
+              <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center animate-pulse">
+                <Sparkles className="w-10 h-10 text-[#C9A24D]" />
               </div>
             </div>
-            <h1 className="text-4xl md:text-6xl font-serif font-bold tracking-tight leading-tight">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold tracking-tight leading-tight">
               Tout commence <br />
               <span className="text-[#C9A24D] italic">par un vœu.</span>
             </h1>
-            <p className="max-w-xl mx-auto text-base text-white/60 leading-relaxed">
+            <p className="max-w-2xl mx-auto text-lg md:text-2xl text-white/60 leading-relaxed font-medium">
               Choisis ce qui compte vraiment pour toi aujourd&apos;hui. <br />
               Ensuite, découvre pourquoi ça bloque.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 px-4 md:px-0">
             {ARCHETYPES.map((arch) => (
               <motion.button
                 key={arch.id}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.08)" }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleArchetypeSelect(arch.id)}
-                className={`p-4 md:p-8 rounded-2xl border transition-all flex flex-col items-center gap-4 ${
+                className={`p-8 md:p-12 lg:p-16 rounded-[2.5rem] border transition-all flex flex-col items-center justify-center gap-6 md:gap-8 group ${
                   selectedArchetype === arch.id 
-                  ? "bg-[#C9A24D] text-[#08090F] border-[#C9A24D] shadow-lg" 
-                  : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10"
+                  ? "bg-[#C9A24D] text-[#08090F] border-[#C9A24D] shadow-[0_20px_40px_-10px_rgba(201,162,77,0.3)]" 
+                  : "bg-white/5 border-white/10 text-white/70 hover:border-white/20"
                 }`}
               >
-                <arch.icon className={`w-8 h-8 ${selectedArchetype === arch.id ? "text-[#08090F]" : "text-[#C9A24D]"}`} />
-                <span className="text-base font-black uppercase tracking-widest">{arch.label}</span>
+                <arch.icon className={`w-12 h-12 md:w-16 md:h-16 transition-transform group-hover:scale-110 ${selectedArchetype === arch.id ? "text-[#08090F]" : "text-[#C9A24D]"}`} />
+                <span className="text-lg md:text-2xl font-black uppercase tracking-widest leading-relaxed">{arch.label}</span>
               </motion.button>
             ))}
             <button 
               onClick={() => {
                 handleVoeuSelect("Aucun ne me parle pour l’instant");
               }}
-              className="p-4 md:p-8 rounded-2xl border border-white/5 bg-white/2 shadow-inner text-base font-bold text-white/30 hover:text-white/50 transition-colors"
+              className="p-8 md:p-12 lg:p-16 rounded-[2.5rem] border border-white/5 bg-white/2 shadow-inner text-lg md:text-xl font-bold text-white/30 hover:text-white/50 hover:bg-white/5 transition-all flex flex-col items-center justify-center text-center"
             >
               Aucun ne me parle pour l’instant
             </button>

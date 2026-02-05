@@ -102,13 +102,29 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     trackEvent('checkout_view', { plan: planKey });
+    
+    // 1. Try final data (complete profile)
     const finalData = localStorage.getItem('psy_mirror_final_data');
     if (finalData) {
       try {
         const parsed = JSON.parse(finalData);
-        setUserData(parsed.user_info);
-        // Pre-fill email if available
-        if (parsed.user_info?.email) setEmail(parsed.user_info.email);
+        if (parsed.user_info) {
+          setUserData(parsed.user_info);
+          if (parsed.user_info.email) setEmail(parsed.user_info.email);
+          return;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    // 2. Fallback: Try cosmic user data (basic info from onboarding/home)
+    const cosmicData = localStorage.getItem('cosmic_user_data');
+    if (cosmicData) {
+      try {
+        const parsed = JSON.parse(cosmicData);
+        setUserData(parsed); // It has firstName, lastName, birthDate etc.
+        if (parsed.email) setEmail(parsed.email);
       } catch (e) {
         console.error(e);
       }
@@ -117,10 +133,11 @@ export default function CheckoutPage() {
 
   // Sauvegarder le panier abandonné dès que l'email est valide
   const handleEmailBlur = async () => {
-    if (!email || !email.includes('@') || hasSavedDraft.current) return;
+    // Basic validation
+    if (!email || !email.includes('@')) return;
     
-    // Si l'email est déjà pré-rempli au chargement, on ne veut peut-être pas spammer,
-    // mais ici c'est onBlur, donc l'utilisateur a interagi.
+    // Prevent double-save only if successful
+    if (hasSavedDraft.current) return;
     
     try {
       hasSavedDraft.current = true;
@@ -151,7 +168,7 @@ export default function CheckoutPage() {
         } catch (e) {}
       }
 
-      await fetch('/api/book-request', {
+      const res = await fetch('/api/book-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -161,6 +178,13 @@ export default function CheckoutPage() {
           psyResult
         })
       });
+
+      if (!res.ok) {
+        console.error("Failed to save draft", await res.text());
+        hasSavedDraft.current = false; // Allow retry
+      } else {
+        console.log("Draft saved successfully");
+      }
     } catch (e) {
       console.error("Erreur sauvegarde draft", e);
       hasSavedDraft.current = false; // Retry later if failed
@@ -211,6 +235,7 @@ export default function CheckoutPage() {
       }
 
       // 2. Enregistrer la commande dans la base de données (Supabase)
+      console.log("Saving pending order to DB...", orderId);
       const dbResponse = await fetch('/api/book-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -221,6 +246,7 @@ export default function CheckoutPage() {
           psyResult
         })
       });
+      console.log("DB Save Response:", dbResponse.status);
 
       // NOTE: We don't throw error here immediately if it fails, to allow payment to proceed if possible,
       // but ideally we want the record. For now, let's log and alert if critical.

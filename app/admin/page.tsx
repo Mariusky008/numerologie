@@ -50,7 +50,7 @@ export default function AdminDashboard() {
   const [requests, setRequests] = useState<BookRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<any>({});
-  const [showUnpaid, setShowUnpaid] = useState(false);
+  const [showUnpaid, setShowUnpaid] = useState(true);
   
   // Auth state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -472,11 +472,11 @@ export default function AdminDashboard() {
                 <div className="bg-stone-50 p-4 border-b border-stone-100 flex flex-wrap justify-between items-center gap-4">
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full bg-[#d97706]/10 text-[#d97706] flex items-center justify-center font-bold font-serif">
-                      {req.userData.firstName[0]}
+                      {req.userData?.firstName?.[0] || '?'}
                     </div>
                     <div>
                       <h3 className="font-bold text-[#78350f] text-lg">
-                        {req.userData.firstName} {req.userData.lastName}
+                        {req.userData?.firstName || 'Anonyme'} {req.userData?.lastName || ''}
                       </h3>
                       <div className="flex items-center gap-2 text-xs text-stone-500">
                         <Clock className="w-3 h-3" />
@@ -538,13 +538,13 @@ export default function AdminDashboard() {
                            <div className="flex items-center justify-end gap-2 text-[10px]">
                              <span className="text-stone-400 font-medium">Coach:</span>
                              <button 
-                               onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/coach?id=${req.id}&name=${encodeURIComponent(req.userData.firstName)}&admin=oracle2024`)}
-                               className="text-purple-600 hover:text-purple-800 bg-purple-50 hover:bg-purple-100 px-2 py-1 rounded flex items-center gap-1 transition-colors"
-                               title="Copier le lien Coach pour email"
-                             >
-                               <Copy className="w-3 h-3" /> Copier
-                             </button>
-                             <a href={`/coach?id=${req.id}&name=${encodeURIComponent(req.userData.firstName)}&admin=oracle2024`} target="_blank" className="text-stone-300 hover:text-stone-500"><ExternalLink className="w-3 h-3" /></a>
+                              onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/coach?id=${req.id}&name=${encodeURIComponent(req.userData?.firstName || 'Anonyme')}&admin=oracle2024`)}
+                              className="text-purple-600 hover:text-purple-800 bg-purple-50 hover:bg-purple-100 px-2 py-1 rounded flex items-center gap-1 transition-colors"
+                              title="Copier le lien Coach pour email"
+                            >
+                              <Copy className="w-3 h-3" /> Copier
+                            </button>
+                            <a href={`/coach?id=${req.id}&name=${encodeURIComponent(req.userData?.firstName || 'Anonyme')}&admin=oracle2024`} target="_blank" className="text-stone-300 hover:text-stone-500"><ExternalLink className="w-3 h-3" /></a>
                            </div>
                          </div>
                        </div>
@@ -736,7 +736,7 @@ export default function AdminDashboard() {
                       Lien PDF
                     </button>
                     <button
-                      onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/coach?id=${req.id}&name=${encodeURIComponent(req.userData.firstName)}&admin=oracle2024`)}
+                      onClick={() => navigator.clipboard.writeText(`https://www.votrelegende.fr/coach?id=${req.id}&name=${encodeURIComponent(req.userData?.firstName || 'Anonyme')}&admin=oracle2024`)}
                       className="flex items-center gap-2 px-4 py-3 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors font-medium text-sm"
                     >
                       <Copy className="w-4 h-4" />

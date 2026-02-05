@@ -33,6 +33,7 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
   const [combo, setCombo] = useState(0);
   const [maxCombo, setMaxCombo] = useState(0);
   const [feedbackStatus, setFeedbackStatus] = useState<'success' | 'error' | null>(null);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
   // Audio refs
   const ambientRef = useRef<HTMLAudioElement | null>(null);
@@ -40,9 +41,11 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
 
   const triggerFeedback = (status: 'success' | 'error') => {
     setFeedbackStatus(status);
+    setFeedbackMessage(status === 'success' ? 'BIEN JOUE !' : 'ERREUR !');
     setTimeout(() => {
       setFeedbackStatus(null);
-    }, 300);
+      setFeedbackMessage(null);
+    }, 500);
   };
 
   const speakColor = useCallback((colorName: string) => {
@@ -270,17 +273,33 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
             className={`h-full ${isStressed ? 'bg-[#C9A24D]' : 'bg-[#1A1C2E]'}`}
           />
         </div>
+        <p className="text-center text-[#1A1C2E]/80 text-sm font-black animate-pulse pt-4">
+          CLIQUEZ SUR LA <span className="text-[#C9A24D] underline decoration-2 underline-offset-4">COULEUR DE L'ENCRE</span><br/>PAS SUR LE MOT ÉCRIT
+        </p>
       </div>
 
       <motion.div 
         key={currentChallenge.word + currentChallenge.color}
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="text-6xl md:text-8xl font-black uppercase tracking-tighter py-20 relative z-10 drop-shadow-sm"
+        className="text-6xl md:text-8xl font-black uppercase tracking-tighter py-20 relative z-10 drop-shadow-sm flex flex-col items-center"
         style={{ color: currentChallenge.color }}
       >
         {currentChallenge.word}
         
+        <AnimatePresence>
+            {feedbackMessage && (
+                <motion.div
+                    initial={{ y: 10, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -10, opacity: 0 }}
+                    className={`absolute -bottom-4 left-0 right-0 text-center text-lg font-black tracking-widest bg-white/80 backdrop-blur-sm py-1 rounded-full shadow-sm ${feedbackStatus === 'success' ? 'text-green-600' : 'text-red-600'}`}
+                >
+                    {feedbackMessage}
+                </motion.div>
+            )}
+        </AnimatePresence>
+
         {isStressed && (
           <motion.div 
             animate={{ scale: [1, 1.05, 1], opacity: [0.1, 0.2, 0.1] }}
@@ -307,10 +326,6 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
           </button>
         ))}
       </div>
-
-      <p className="text-[#1A1C2E]/40 text-sm font-medium animate-pulse">
-        Cliquez sur la COULEUR DES LETTRES, pas sur le mot écrit.
-      </p>
     </div>
   );
 }

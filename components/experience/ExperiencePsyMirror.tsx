@@ -31,7 +31,7 @@ import { calculateLifePathNumber, getLifePathData, getMoonSign, getSunSign, getA
 
 export default function ExperiencePsyMirror() {
   const router = useRouter();
-  const [step, setStep] = useState<'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'loading'>('collectInfo');
+  const [step, setStep] = useState<'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'emailCapture' | 'loading'>('collectInfo');
   const [infoSubStep, setInfoSubStep] = useState(1); // 1: Name, 2: Date/Time, 3: City
   const [personalInfo, setPersonalInfo] = useState({
     firstName: '',
@@ -40,6 +40,7 @@ export default function ExperiencePsyMirror() {
     birthTime: '',
     birthCity: ''
   });
+  const [email, setEmail] = useState(''); // New email state
   const [cosmicData, setCosmicData] = useState<any>(null);
   const [currentModuleIndex, setCurrentModuleIndex] = useState(0);
   const [currentScenarioStep, setCurrentScenarioStep] = useState(0);
@@ -437,27 +438,63 @@ export default function ExperiencePsyMirror() {
       setCurrentReflexStep(currentReflexStep + 1);
       setShowInstructions(true);
     } else {
-      trackEvent('experience_finished');
-      finishExperience(newReflexResults);
+      trackEvent('experience_finished_pre_email');
+      // Store final results and move to email capture
+      setStep('emailCapture');
     }
+  };
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes('@')) return;
+
+    setIsProcessing(true);
+    trackEvent('email_captured');
+
+    try {
+      // 1. Prepare data payload
+      const payload = {
+        userData: {
+          ...personalInfo,
+          email, // Save email at root
+          delivery: { email } // Save email in delivery for Admin compatibility
+        },
+        // We trigger calculation in backend by sending userData without reportResults
+      };
+
+      // 2. Send to API to create "Lead" (Pending Order)
+      await fetch('/api/book-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+    } catch (err) {
+      console.error("Error saving lead:", err);
+      // Continue anyway to show results
+    }
+
+    // 3. Finalize experience
+    finishExperience(reflexResults);
   };
 
   const finishExperience = async (finalReflexResults: any) => {
     setStep('loading');
 
     try {
-      // Stockage des données de session pour la page d'onboarding
+      // Stockage des données de session pour la page d'onboarding/checkout
       const sessionData = {
         moduleA_answers: moduleAAnswers,
         moduleB_answers: moduleBAnswers,
         moduleC_results: finalReflexResults,
         cosmic_data: cosmicData,
+        user_info: { ...personalInfo, email } // Add email here too
       };
       localStorage.setItem('psy_mirror_session_data', JSON.stringify(sessionData));
       
       // Simulation de calcul pour l'effet "Wow"
       setTimeout(() => {
-        router.push('/miroir/onboarding');
+        router.push('/miroir/resultats'); // Redirect to results, NOT onboarding
       }, 3000);
     } catch (error) {
       console.error("Erreur lors de la finalisation:", error);
@@ -929,6 +966,65 @@ export default function ExperiencePsyMirror() {
                 </motion.div>
               )}
             </AnimatePresence>
+          </motion.div>
+        )}
+
+        {/* STEP: EMAIL CAPTURE */}
+        {step === 'emailCapture' && (
+          <motion.div
+            key="emailCapture"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-xl bg-white p-8 md:p-12 rounded-[50px] shadow-2xl border border-[#1A1C2E]/5 text-center space-y-10"
+          >
+             <div className="w-20 h-20 bg-[#1A1C2E]/10 rounded-3xl flex items-center justify-center text-[#1A1C2E] mx-auto border border-[#1A1C2E]/20">
+                <ShieldCheck className="w-10 h-10" />
+             </div>
+
+             <div className="space-y-4">
+                <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#1A1C2E]">
+                   Sécurisez vos résultats
+                </h2>
+                <p className="text-lg text-[#1A1C2E]/60 leading-relaxed">
+                   Vos résultats d'analyse comportementale sont prêts. Indiquez votre email pour recevoir votre synthèse gratuite et accéder à l'interprétation.
+                </p>
+             </div>
+
+             <form onSubmit={handleEmailSubmit} className="space-y-6">
+                <div className="text-left space-y-2">
+                   <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Votre Email Personnel</label>
+                   <input
+                      type="email"
+                      required
+                      placeholder="exemple@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-5 font-bold text-lg focus:border-[#C9A24D] outline-none transition-all"
+                      autoFocus
+                   />
+                </div>
+                
+                <button
+                   type="submit"
+                   disabled={!email || isProcessing}
+                   className="w-full py-6 bg-[#1A1C2E] text-white rounded-2xl font-bold text-xl hover:scale-105 active:scale-95 transition-all shadow-xl flex items-center justify-center gap-3 disabled:opacity-50 disabled:scale-100"
+                >
+                   {isProcessing ? (
+                     <>
+                       <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                       Sauvegarde...
+                     </>
+                   ) : (
+                     <>
+                       Voir mes résultats <ArrowRight className="w-6 h-6" />
+                     </>
+                   )}
+                </button>
+                
+                <p className="text-xs text-[#1A1C2E]/30 flex items-center justify-center gap-2">
+                   <ShieldCheck className="w-3 h-3" /> Vos données restent 100% confidentielles
+                </p>
+             </form>
           </motion.div>
         )}
 

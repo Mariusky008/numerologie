@@ -150,10 +150,10 @@ export default function AdminDashboard() {
           date: item.created_at,
           status: item.status,
           generated_script: item.generated_script || item.user_data?.generated_script, // Load script
-          userData: item.user_data,
-          reportResults: item.numerology_result.reportResults,
-          lifeDetails: item.numerology_result.lifeDetails,
-          psyResult: item.numerology_result.psyResult
+          userData: item.user_data || {},
+          reportResults: item.numerology_result?.reportResults || {},
+          lifeDetails: item.numerology_result?.lifeDetails || {},
+          psyResult: item.numerology_result?.psyResult || {}
         }));
         setRequests(mappedData);
       }
@@ -576,20 +576,20 @@ export default function AdminDashboard() {
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="bg-stone-50 p-3 rounded-lg">
                         <span className="block text-stone-400 text-xs uppercase tracking-wider">Chemin de Vie</span>
-                        <span className="text-xl font-bold text-[#d97706]">{req.reportResults.lifePath}</span>
+                        <span className="text-xl font-bold text-[#d97706]">{req.reportResults?.lifePath || '-'}</span>
                       </div>
                       <div className="bg-stone-50 p-3 rounded-lg">
                         <span className="block text-stone-400 text-xs uppercase tracking-wider">Expression</span>
-                        <span className="text-xl font-bold text-[#d97706]">{req.reportResults.expression}</span>
+                        <span className="text-xl font-bold text-[#d97706]">{req.reportResults?.expression || '-'}</span>
                       </div>
                       <div className="bg-stone-50 p-3 rounded-lg">
                         <span className="block text-stone-400 text-xs uppercase tracking-wider">Année Perso</span>
-                        <span className="text-xl font-bold text-[#d97706]">{req.reportResults.personalYear}</span>
+                        <span className="text-xl font-bold text-[#d97706]">{req.reportResults?.personalYear || '-'}</span>
                       </div>
                       <div className="bg-stone-50 p-3 rounded-lg">
                         <span className="block text-stone-400 text-xs uppercase tracking-wider">Dettes K.</span>
                         <span className="text-sm font-bold text-red-500">
-                          {req.reportResults.missingNumbers?.join(', ') || 'Aucune'}
+                          {req.reportResults?.missingNumbers?.join(', ') || 'Aucune'}
                         </span>
                       </div>
                     </div>
@@ -601,8 +601,8 @@ export default function AdminDashboard() {
                           <TrendingUp className="w-3 h-3" /> Cycles
                         </span>
                         <div className="text-xs space-y-1 text-stone-600">
-                          <p>C1: {req.reportResults.cycles.cycle1} | C2: {req.reportResults.cycles.cycle2}</p>
-                          <p>C3: {req.reportResults.cycles.cycle3} | C4: {req.reportResults.cycles.cycle4}</p>
+                          <p>C1: {req.reportResults?.cycles?.cycle1 || '-'} | C2: {req.reportResults?.cycles?.cycle2 || '-'}</p>
+                          <p>C3: {req.reportResults?.cycles?.cycle3 || '-'} | C4: {req.reportResults?.cycles?.cycle4 || '-'}</p>
                         </div>
                       </div>
                       <div>
@@ -610,8 +610,8 @@ export default function AdminDashboard() {
                           <AlertTriangle className="w-3 h-3" /> Défis
                         </span>
                         <div className="text-xs space-y-1 text-stone-600">
-                          <p>Min1: {req.reportResults.challenges.minor1} | Min2: {req.reportResults.challenges.minor2}</p>
-                          <p>Maj: {req.reportResults.challenges.major} | Ult: {req.reportResults.challenges.major2}</p>
+                          <p>Min1: {req.reportResults?.challenges?.minor1 || '-'} | Min2: {req.reportResults?.challenges?.minor2 || '-'}</p>
+                          <p>Maj: {req.reportResults?.challenges?.major || '-'} | Ult: {req.reportResults?.challenges?.major2 || '-'}</p>
                         </div>
                       </div>
                     </div>
@@ -638,7 +638,7 @@ export default function AdminDashboard() {
                   <div className="space-y-4">
                     <h4 className="font-serif font-bold text-[#78350f] border-b border-[#d97706]/20 pb-2">Éléments Biographiques</h4>
                     <div className="space-y-3 text-sm">
-                      {req.lifeDetails.bookTheme && (
+                      {req.lifeDetails?.bookTheme && (
                         <div className="bg-[#d97706]/10 p-2 rounded border border-[#d97706]/20">
                            <span className="flex items-center gap-2 font-bold text-[#78350f] mb-1">
                              <BookOpen className="w-3 h-3" /> Thème
@@ -647,7 +647,7 @@ export default function AdminDashboard() {
                         </div>
                       )}
                       
-                      {req.lifeDetails.worstOrdeal && (
+                      {req.lifeDetails?.worstOrdeal && (
                         <div>
                           <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                              <AlertTriangle className="w-3 h-3 text-red-500" /> Pire Galère
@@ -656,7 +656,7 @@ export default function AdminDashboard() {
                         </div>
                       )}
 
-                      {req.lifeDetails.bonusAnecdote && (
+                      {req.lifeDetails?.bonusAnecdote && (
                         <div>
                           <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                              <Sparkles className="w-3 h-3 text-amber-500" /> Anecdote Bonus
@@ -669,40 +669,40 @@ export default function AdminDashboard() {
                         <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                           <MapPin className="w-3 h-3" /> Lieux
                         </span>
-                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.placesLived}</p>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails?.placesLived || '-'}</p>
                       </div>
                       <div>
                         <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                           <Heart className="w-3 h-3" /> Cœur
                         </span>
-                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.relationships}</p>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails?.relationships || '-'}</p>
                       </div>
                       <div>
                         <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                           <Sparkles className="w-3 h-3" /> Majeur
                         </span>
-                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.majorEvents || "-"}</p>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails?.majorEvents || "-"}</p>
                       </div>
                       <div>
                         <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                           <Star className="w-3 h-3" /> Enfance
                         </span>
-                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.childhoodMemories || "-"}</p>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails?.childhoodMemories || "-"}</p>
                       </div>
                       <div>
                         <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                           <Music className="w-3 h-3" /> Passions
                         </span>
-                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.passions || "-"}</p>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails?.passions || "-"}</p>
                       </div>
                       <div>
                         <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                           <Compass className="w-3 h-3" /> Rêves
                         </span>
-                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails.dreams || "-"}</p>
+                        <p className="bg-stone-50 p-2 rounded text-stone-600">{req.lifeDetails?.dreams || "-"}</p>
                       </div>
                       
-                      {req.lifeDetails.otherNotes && (
+                      {req.lifeDetails?.otherNotes && (
                         <div className="col-span-full border-t border-stone-100 pt-3 mt-2">
                           <span className="flex items-center gap-2 font-bold text-stone-600 mb-1">
                             <FileJson className="w-3 h-3" /> Notes Personnelles

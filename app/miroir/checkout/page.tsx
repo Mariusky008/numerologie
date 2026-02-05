@@ -102,10 +102,15 @@ export default function CheckoutPage() {
 
   // Fonction de sauvegarde extraite pour être réutilisée
   const saveDraftOrder = async (data: any, userEmail: string | null) => {
-    if (hasSavedDraft.current) return;
+    // Si déjà sauvegardé AVEC un vrai email, on arrête
+    // Si c'était sauvegardé sans email (prospect), on continue pour mettre à jour
+    if (hasSavedDraft.current && userEmail && userEmail.includes('@')) return;
     
     try {
-      hasSavedDraft.current = true;
+      if (userEmail && userEmail.includes('@')) {
+         hasSavedDraft.current = true;
+      }
+      
       console.log("Auto-saving draft order...", data);
       
       const orderInfo = {
@@ -198,12 +203,12 @@ export default function CheckoutPage() {
     // Basic validation
     if (!email || !email.includes('@')) return;
     
-    // Prevent double-save only if successful
-    if (hasSavedDraft.current) return;
+    // On force la sauvegarde même si hasSavedDraft est true, 
+    // car on vient d'ajouter un email
     
     try {
       hasSavedDraft.current = true;
-      console.log("Sauvegarde du panier abandonné...");
+      console.log("Sauvegarde du panier abandonné avec email...");
       
       const orderInfo = {
         plan: selectedPlan.id,

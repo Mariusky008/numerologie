@@ -165,6 +165,8 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
     const reactionTime = Date.now() - startTime;
     
     // Explicitly compare current color value
+    // LOGIC: The user clicks on a button (colorValue is the hex code of the button background).
+    // The challenge is to match the INK COLOR of the word (currentChallenge.color).
     const isCorrect = colorValue.toLowerCase().trim() === currentChallenge.color.toLowerCase().trim();
     
     setReactionTimes((prev) => [...prev, reactionTime]);
@@ -218,6 +220,7 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
       <AnimatePresence>
         {feedbackStatus && (
           <motion.div
+            key={totalAttempts + 'flash'} // Force remount on each attempt
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.8 }}
             exit={{ opacity: 0 }}

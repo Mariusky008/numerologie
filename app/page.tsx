@@ -228,25 +228,26 @@ const SectionCTA = ({
   <AnimatePresence>
     {isActive && (
       <motion.div
+        id="hero-cta" // Add ID for scroll targeting
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
-        className="py-8 flex flex-col items-center gap-4"
+        className="py-12 flex flex-col items-center gap-4 w-full"
       >
         <Link 
           href={href}
           onClick={onClick}
-          className="group relative inline-flex flex-col items-center gap-2 px-8 py-6 rounded-[30px] bg-[#C9A24D] text-[#08090F] shadow-[0_20px_40px_-10px_rgba(201,162,77,0.4)] hover:scale-105 active:scale-95 transition-all overflow-hidden"
+          className="group relative inline-flex flex-col items-center gap-2 px-10 py-8 rounded-[40px] bg-[#C9A24D] text-[#08090F] shadow-[0_20px_60px_-10px_rgba(201,162,77,0.5)] hover:scale-105 active:scale-95 transition-all overflow-hidden mx-auto"
         >
           {/* Shine effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
           
-          <span className="text-lg md:text-xl font-black tracking-tight">
+          <span className="text-xl md:text-2xl font-black tracking-tight uppercase">
             {text}
           </span>
           <div className="flex items-center gap-2 opacity-60">
-            <span className="text-[8px] font-bold uppercase tracking-[0.2em]">Accéder au Crash Test</span>
-            <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Accéder au Crash Test</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </div>
         </Link>
         
@@ -290,10 +291,16 @@ export default function Home() {
   const handleVoeuSelect = (voeu: string) => {
     setSelectedVoeu(voeu);
     trackEvent('voeu_selected', { voeu });
-    const nextSection = document.getElementById('decalage');
-    if (nextSection) {
-      nextSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    
+    // Attendre un peu pour laisser l'UI se mettre à jour
+    setTimeout(() => {
+      // Au lieu de scroller vers #decalage, on scrolle vers le bouton CTA dans la même section
+      // On cherche l'élément CTA par son texte ou une classe spécifique
+      const ctaButton = document.getElementById('hero-cta');
+      if (ctaButton) {
+        ctaButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
   };
 
   const handleCtaClick = () => {

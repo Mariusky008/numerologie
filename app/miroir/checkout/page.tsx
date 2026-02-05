@@ -100,6 +100,62 @@ export default function CheckoutPage() {
   // Ref pour tracker si le brouillon a déjà été sauvegardé
   const hasSavedDraft = React.useRef(false);
 
+  // Fonction de sauvegarde extraite pour être réutilisée
+  const saveDraftOrder = async (data: any, userEmail: string | null) => {
+    if (hasSavedDraft.current) return;
+    
+    try {
+      hasSavedDraft.current = true;
+      console.log("Auto-saving draft order...", data);
+      
+      const orderInfo = {
+        plan: selectedPlan.id,
+        totalPrice: selectedPlan.price,
+        delivery: {
+          email: userEmail || data?.email || 'client-prospect@votrelegende.fr'
+        }
+      };
+
+      // Get psy result... (same logic as handlePayment)
+      const unifiedResultRaw = localStorage.getItem('unified_miroir_result');
+      const sessionDataRaw = localStorage.getItem('psy_mirror_session_data');
+      let psyResult = null;
+      if (unifiedResultRaw) {
+        try {
+          const unifiedData = JSON.parse(unifiedResultRaw);
+          psyResult = unifiedData.psyResult;
+        } catch (e) {}
+      }
+      if (!psyResult && sessionDataRaw) {
+        try {
+          const sessionData = JSON.parse(sessionDataRaw);
+          psyResult = sessionData.profile;
+        } catch (e) {}
+      }
+
+      const res = await fetch('/api/book-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userData: data ? { ...data, email: userEmail || data.email } : { email: userEmail },
+          orderInfo,
+          orderId, // Use the persistent ID
+          psyResult
+        })
+      });
+
+      if (!res.ok) {
+        console.error("Failed to auto-save draft", await res.text());
+        hasSavedDraft.current = false; // Allow retry
+      } else {
+        console.log("Draft auto-saved successfully");
+      }
+    } catch (e) {
+      console.error("Erreur auto-sauvegarde draft", e);
+      hasSavedDraft.current = false; // Retry later if failed
+    }
+  };
+
   useEffect(() => {
     trackEvent('checkout_view', { plan: planKey });
     
@@ -111,6 +167,9 @@ export default function CheckoutPage() {
         if (parsed.user_info) {
           setUserData(parsed.user_info);
           if (parsed.user_info.email) setEmail(parsed.user_info.email);
+          
+          // AUTO-SAVE ON LOAD if we have data!
+          saveDraftOrder(parsed.user_info, parsed.user_info.email || null);
           return;
         }
       } catch (e) {
@@ -125,6 +184,9 @@ export default function CheckoutPage() {
         const parsed = JSON.parse(cosmicData);
         setUserData(parsed); // It has firstName, lastName, birthDate etc.
         if (parsed.email) setEmail(parsed.email);
+        
+        // AUTO-SAVE ON LOAD if we have data!
+        saveDraftOrder(parsed, parsed.email || null);
       } catch (e) {
         console.error(e);
       }

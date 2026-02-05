@@ -242,7 +242,7 @@ export default function CheckoutPage() {
                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A24D] mb-3">{selectedPlan.label}</p>
                 <div className="flex items-baseline gap-2">
                   <p className="text-5xl md:text-6xl font-serif font-bold">{selectedPlan.price} €</p>
-                  <p className="text-lg font-light opacity-40 italic">TTC — {selectedPlan.type}</p>
+                  <p className="text-xl font-medium text-white/80">TTC — {selectedPlan.type}</p>
                 </div>
               </div>
               <div className="pt-6 border-t border-white/10 flex items-center gap-3 text-white/60">

@@ -18,6 +18,14 @@ function SuccessContent() {
   const isBundle = plan === 'bundle';
   const isPaper = paper;
 
+  // Save paid status to localStorage when success page is viewed
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('has_paid_report', 'true');
+    if (searchParams.get('order_id')) {
+      localStorage.setItem('last_paid_order_id', searchParams.get('order_id')!);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#FAF9F7] text-[#2C2F4A] font-sans flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl border border-[#EFEDE9] overflow-hidden relative">

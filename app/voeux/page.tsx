@@ -297,13 +297,29 @@ export default function Home() {
   };
 
   const handleCtaClick = () => {
-    // Clear previous session data to ensure a fresh start
+    // Check if user has a paid report in this session
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('cosmic_user_data');
-      localStorage.removeItem('psy_mirror_session_data');
+      const hasPaid = localStorage.getItem('has_paid_report');
+      
+      if (hasPaid) {
+        // If paid, ask for confirmation before clearing
+        if (confirm("Vous avez déjà un rapport payé sur cet appareil. Voulez-vous vraiment lancer un nouveau test ? (Cela effacera votre session actuelle)")) {
+          localStorage.removeItem('cosmic_user_data');
+          localStorage.removeItem('psy_mirror_session_data');
+          localStorage.removeItem('has_paid_report'); // Clear paid flag for new test
+          trackEvent('cta_click', { voeu: selectedVoeu, type: 'restart_paid' });
+          setIsNavigating(true);
+        } else {
+          return;
+        }
+      } else {
+        // If NOT paid (free user), clear automatically
+        localStorage.removeItem('cosmic_user_data');
+        localStorage.removeItem('psy_mirror_session_data');
+        trackEvent('cta_click', { voeu: selectedVoeu, type: 'restart_free' });
+        setIsNavigating(true);
+      }
     }
-    trackEvent('cta_click', { voeu: selectedVoeu });
-    setIsNavigating(true);
   };
 
   const fadeIn = {

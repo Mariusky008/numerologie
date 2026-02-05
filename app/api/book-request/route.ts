@@ -1,10 +1,15 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
+const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+if (!serviceRoleKey) {
+  console.error("ERREUR CRITIQUE : SUPABASE_SERVICE_ROLE_KEY manquante ! Impossible de sauvegarder les commandes.");
+}
+
 // Initialize Supabase with Service Role Key to bypass RLS for inserts
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  serviceRoleKey || '' // Fallback to empty string to avoid immediate crash, but auth will fail
 );
 
 export const dynamic = 'force-dynamic';

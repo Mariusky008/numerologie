@@ -156,9 +156,14 @@ export default function AdminDashboard() {
           psyResult: item.numerology_result?.psyResult || {}
         }));
         setRequests(mappedData);
+      } else {
+        const errorText = await res.text();
+        console.error("Erreur API Admin:", res.status, errorText);
+        alert(`Erreur lors du chargement des commandes (${res.status}): ${errorText}`);
       }
     } catch (error) {
       console.error('Failed to fetch requests', error);
+      alert("Erreur réseau : Impossible de contacter le serveur.");
     } finally {
       setLoading(false);
     }

@@ -159,11 +159,13 @@ export async function GET(request: Request) {
     id = searchParams.get('id');
     const password = searchParams.get('password');
 
+    // 🔍 DEBUG LOG: Check auth params
+    console.log(`[API] Fetching requests. ID: ${id}, Password provided: ${!!password}`);
+
     // If fetching all, require admin password
     if (!id) {
        if (password !== process.env.ADMIN_PASSWORD && password !== 'oracle2024') {
-         // Return empty instead of error to not break the UI flow, but log it
-         console.warn("Unauthorized access attempt to all book requests");
+         console.warn("[API] Unauthorized access attempt - Invalid password");
          return NextResponse.json([]);
        }
     }
@@ -175,26 +177,37 @@ export async function GET(request: Request) {
         .eq('id', id)
         .single();
 
-      if (error) {
-        throw error;
-      }
-
+      if (error) throw error;
       return NextResponse.json(data);
     }
 
-    const { data, error } = await supabase
+    // 🔍 DEBUG LOG: Before Supabase Query
+    console.log("[API] Querying Supabase for all book_requests...");
+    
+    // Add count: 'exact' to debug the total rows in DB
+    const { data, error, count } = await supabase
       .from('book_requests')
-      .select('*')
+      .select('*', { count: 'exact' })
       .order('created_at', { ascending: false });
 
     if (error) {
+      // 🚨 CRITICAL LOG: This will show if the Key is invalid or Table is missing
+      console.error("[API] SUPABASE ERROR:", error); 
       throw error;
     }
 
+    // 🔍 DEBUG LOG: Success
+    console.log(`[API] Success! Found ${data?.length} rows. Total count in DB: ${count}`);
+
     return NextResponse.json(data);
+
   } catch (error) {
-     console.error('Error fetching requests:', error);
-     return NextResponse.json(id ? { error: 'Not found' } : [], { status: id ? 404 : 200 });
+     console.error('[API] CRITICAL ERROR fetching requests:', error);
+     // Return 500 so the frontend knows something went wrong instead of thinking it's empty
+     return NextResponse.json(
+       { error: 'Internal Server Error', details: error instanceof Error ? error.message : String(error) }, 
+       { status: 500 }
+     );
   }
 }
 

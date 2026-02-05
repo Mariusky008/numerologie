@@ -297,6 +297,11 @@ export default function Home() {
   };
 
   const handleCtaClick = () => {
+    // Clear previous session data to ensure a fresh start
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('cosmic_user_data');
+      localStorage.removeItem('psy_mirror_session_data');
+    }
     trackEvent('cta_click', { voeu: selectedVoeu });
     setIsNavigating(true);
   };

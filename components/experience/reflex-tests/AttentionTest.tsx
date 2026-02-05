@@ -216,21 +216,6 @@ export default function AttentionTest({ onComplete }: AttentionTestProps) {
         )}
       </AnimatePresence>
 
-      {/* LIGHT INDICATOR - FLASH EFFECT */}
-      <AnimatePresence>
-        {feedbackStatus && (
-          <motion.div
-            key={totalAttempts + 'flash'} // Force remount on each attempt
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.8 }}
-            exit={{ opacity: 0 }}
-            className={`absolute inset-[-50px] pointer-events-none z-0 rounded-[60px] blur-3xl transition-colors duration-200 ${
-              feedbackStatus === 'success' ? 'bg-green-500/30' : 'bg-red-500/40'
-            }`}
-          />
-        )}
-      </AnimatePresence>
-
       {/* SOUND TOGGLE */}
       <button 
         onClick={() => setAudioEnabled(!audioEnabled)}

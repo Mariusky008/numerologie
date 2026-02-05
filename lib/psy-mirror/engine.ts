@@ -21,8 +21,8 @@ export function calculateProfile(options: Option[]): ProfileScores {
   options.forEach(option => {
     Object.entries(option.weights).forEach(([dimId, weight]) => {
       if (scores[dimId] !== undefined) {
-        // Boost factor: multiply weights by 2.5 to increase variance and impact
-        scores[dimId] += weight * 2.5;
+        // Boost factor: multiply weights by 4 to significantly increase variance and impact
+        scores[dimId] += weight * 4;
       }
     });
   });

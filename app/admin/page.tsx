@@ -141,7 +141,7 @@ export default function AdminDashboard() {
 
   const fetchRequests = async () => {
     try {
-      const res = await fetch(`/api/book-request?password=${password}`);
+      const res = await fetch(`/api/book-request?password=${password}&t=${Date.now()}`);
       if (res.ok) {
         const data = await res.json();
         // Map Supabase data to BookRequest

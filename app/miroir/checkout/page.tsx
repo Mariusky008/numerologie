@@ -94,6 +94,12 @@ export default function CheckoutPage() {
   const [userData, setUserData] = useState<any>(null);
   const [email, setEmail] = useState('');
 
+  // 1. Initialiser l'ID de commande une seule fois au chargement
+  const [orderId] = useState(`PM-${Math.random().toString(36).substr(2, 9).toUpperCase()}`);
+  
+  // Ref pour tracker si le brouillon a déjà été sauvegardé
+  const hasSavedDraft = React.useRef(false);
+
   useEffect(() => {
     trackEvent('checkout_view', { plan: planKey });
     const finalData = localStorage.getItem('psy_mirror_final_data');
@@ -109,6 +115,58 @@ export default function CheckoutPage() {
     }
   }, [planKey]);
 
+  // Sauvegarder le panier abandonné dès que l'email est valide
+  const handleEmailBlur = async () => {
+    if (!email || !email.includes('@') || hasSavedDraft.current) return;
+    
+    // Si l'email est déjà pré-rempli au chargement, on ne veut peut-être pas spammer,
+    // mais ici c'est onBlur, donc l'utilisateur a interagi.
+    
+    try {
+      hasSavedDraft.current = true;
+      console.log("Sauvegarde du panier abandonné...");
+      
+      const orderInfo = {
+        plan: selectedPlan.id,
+        totalPrice: selectedPlan.price,
+        delivery: {
+          email: email || userData?.email || 'client@votrelegende.fr'
+        }
+      };
+
+      // Get psy result... (same logic as handlePayment)
+      const unifiedResultRaw = localStorage.getItem('unified_miroir_result');
+      const sessionDataRaw = localStorage.getItem('psy_mirror_session_data');
+      let psyResult = null;
+      if (unifiedResultRaw) {
+        try {
+          const unifiedData = JSON.parse(unifiedResultRaw);
+          psyResult = unifiedData.psyResult;
+        } catch (e) {}
+      }
+      if (!psyResult && sessionDataRaw) {
+        try {
+          const sessionData = JSON.parse(sessionDataRaw);
+          psyResult = sessionData.profile;
+        } catch (e) {}
+      }
+
+      await fetch('/api/book-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userData: userData ? { ...userData, email } : { email },
+          orderInfo,
+          orderId, // Use the persistent ID
+          psyResult
+        })
+      });
+    } catch (e) {
+      console.error("Erreur sauvegarde draft", e);
+      hasSavedDraft.current = false; // Retry later if failed
+    }
+  };
+
   const handlePayment = async () => {
     if (!userData && !email) {
       alert("Veuillez saisir votre adresse email pour continuer.");
@@ -118,7 +176,7 @@ export default function CheckoutPage() {
     setLoading(true);
     
     try {
-      const orderId = `PM-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+      // Pas de nouvel ID ici, on utilise celui du state
       
       const orderInfo = {
         plan: selectedPlan.id,
@@ -292,6 +350,7 @@ export default function CheckoutPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onBlur={handleEmailBlur}
                   placeholder="ton@email.com"
                   className="bg-transparent border-none outline-none w-full text-[#1A1C2E] placeholder:opacity-20"
                 />

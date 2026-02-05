@@ -164,8 +164,15 @@ export default function CheckoutPage() {
         })
       });
 
+      // NOTE: We don't throw error here immediately if it fails, to allow payment to proceed if possible,
+      // but ideally we want the record. For now, let's log and alert if critical.
       if (!dbResponse.ok) {
-        throw new Error("Erreur lors de l'enregistrement de la commande");
+        console.error("Erreur lors de l'enregistrement de la commande pending", await dbResponse.text());
+        // On continue quand même vers Stripe pour ne pas bloquer une vente, 
+        // le webhook s'occupera de créer/mettre à jour si besoin (si configuré ainsi)
+        // ou on aura un log d'erreur.
+      } else {
+        console.log("Commande pending créée avec succès", orderId);
       }
 
       // 2. Enregistrer la stat de clic de paiement

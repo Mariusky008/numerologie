@@ -104,7 +104,7 @@ const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | n
 
   return (
     <AnimatePresence>
-      {selectedVoeu && selectedVoeu !== "Aucun ne me parle pour l’instant" && (
+      {selectedVoeu && selectedVoeu !== "Aucune ne me parle pour l’instant" && (
         <>
           {/* Badge Flottant */}
           <motion.div 
@@ -126,7 +126,7 @@ const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | n
                   <Star className="w-5 h-5 md:w-6 md:h-6 text-[#08090F]" />
                 </div>
                 <div className="space-y-1">
-                  <span className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] text-[#08090F]/70 block">Mon vœu actuel</span>
+                  <span className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] text-[#08090F]/70 block">Mon ambition actuelle</span>
                   <p className="text-xs md:text-sm font-black leading-tight text-[#08090F] italic line-clamp-2">
                     « {selectedVoeu} »
                   </p>
@@ -181,7 +181,7 @@ const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | n
                         Est-ce vraiment ce que tu désires le plus profondément aujourd'hui ?
                       </p>
                       <p className="text-sm text-white/40 leading-relaxed">
-                        Prends un instant pour ressentir si ce vœu vient de ton cœur (envie) ou de ta tête (peur).
+                        Prends un instant pour ressentir si cette ambition vient de ton cœur (envie) ou de ta tête (peur).
                       </p>
                     </div>
 
@@ -190,7 +190,7 @@ const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | n
                         onClick={() => setIsOpen(false)}
                         className="px-8 py-4 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-[0_10px_30px_-5px_rgba(201,162,77,0.4)]"
                       >
-                        Oui, je le garde
+                        Oui, je la garde
                       </button>
                       <button
                         onClick={() => {
@@ -200,7 +200,7 @@ const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | n
                         }}
                         className="px-8 py-4 bg-white/5 text-white/60 border border-white/10 rounded-2xl font-bold text-sm uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all"
                       >
-                        Changer de vœu
+                        Changer d'ambition
                       </button>
                     </div>
                   </div>
@@ -344,7 +344,7 @@ export default function Home() {
             </div>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold tracking-tight leading-tight">
               Tout commence <br />
-              <span className="text-[#C9A24D] italic">par un vœu.</span>
+              <span className="text-[#C9A24D] italic">par une ambition.</span>
             </h1>
             <p className="max-w-2xl mx-auto text-lg md:text-2xl text-white/60 leading-relaxed font-medium">
               Choisis ce qui compte vraiment pour toi aujourd&apos;hui. <br />
@@ -371,11 +371,11 @@ export default function Home() {
             ))}
             <button 
               onClick={() => {
-                handleVoeuSelect("Aucun ne me parle pour l’instant");
+                handleVoeuSelect("Aucune ne me parle pour l’instant");
               }}
               className="p-3 md:p-12 lg:p-16 rounded-[2.5rem] border border-white/5 bg-white/2 shadow-inner text-xs md:text-xl font-bold text-white/30 hover:text-white/50 hover:bg-white/5 transition-all flex flex-col items-center justify-center text-center"
             >
-              Aucun ne me parle pour l’instant
+              Aucune ne me parle pour l’instant
             </button>
           </div>
 
@@ -389,7 +389,7 @@ export default function Home() {
                 exit={{ opacity: 0, y: -10 }}
                 className="space-y-6 pt-8 border-t border-white/5"
               >
-                <p className="text-sm font-black uppercase tracking-[0.3em] text-[#C9A24D]/60">Affinage de ton vœu</p>
+                <p className="text-sm font-black uppercase tracking-[0.3em] text-[#C9A24D]/60">Affinage de ton ambition</p>
                 <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3">
                   {ARCHETYPES.find(a => a.id === selectedArchetype)?.subVoeux.map((sub, i) => (
                     <motion.button
@@ -423,7 +423,7 @@ export default function Home() {
         <div className="max-w-2xl mx-auto space-y-12">
           
           <motion.div {...fadeIn} className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl md:text-6xl font-serif font-bold">Pourquoi ton vœu reste bloqué</h2>
+            <h2 className="text-3xl md:text-6xl font-serif font-bold">Pourquoi ton ambition reste bloquée</h2>
             <p className="text-white/40 text-base md:text-lg font-bold uppercase tracking-widest italic">
               Ce n&apos;est pas ta faute, c&apos;est juste un décalage.
             </p>
@@ -459,8 +459,8 @@ export default function Home() {
               <div className="bg-[#C9A24D]/10 border border-[#C9A24D]/20 p-6 md:p-8 rounded-[2rem] rounded-tl-none shadow-2xl">
                 <p className="text-lg md:text-2xl text-white/90 leading-relaxed italic font-serif">
                   Bonjour <br /><br />
-                  Ce n’est pas ton vœu le problème. <br /><br />
-                  C’est le décalage entre qui tu es aujourd’hui et ce que ce vœu demande de toi.
+                  Ce n’est pas ton ambition le problème. <br /><br />
+                  C’est le décalage entre qui tu es aujourd’hui et ce que cette ambition demande de toi.
                 </p>
               </div>
             </motion.div>
@@ -578,12 +578,12 @@ export default function Home() {
                 {selectedVoeu && VOEU_INSIGHTS[selectedVoeu] && (
                   <div className="mt-6 bg-[#08090F]/40 rounded-2xl p-6 border border-[#C9A24D]/10">
                     <p className="text-base text-white/80 mb-6 font-medium">
-                      Ce que ton vœu demande de toi, ce n’est pas plus d’efforts. <br />
+                      Ce que ton ambition demande de toi, ce n’est pas plus d’efforts. <br />
                       C’est un fonctionnement différent :
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <span className="text-xs font-black text-[#C9A24D] uppercase tracking-widest">Ce que ton vœu demande</span>
+                        <span className="text-xs font-black text-[#C9A24D] uppercase tracking-widest">Ce que ton ambition demande</span>
                         <p className="text-xl font-serif font-bold text-white">{VOEU_INSIGHTS[selectedVoeu].demand}</p>
                       </div>
                       <div className="space-y-2 md:border-l md:border-white/10 md:pl-6">
@@ -595,7 +595,7 @@ export default function Home() {
                 )}
 
                 <p className="text-lg md:text-2xl text-white/90 leading-relaxed italic font-serif">
-                  Et c’est pour ça que ton vœu reste bloqué.
+                  Et c’est pour ça que ton ambition reste bloquée.
                 </p>
               </div>
             </motion.div>
@@ -762,7 +762,7 @@ export default function Home() {
             <motion.div {...fadeIn} className="p-10 md:p-14 rounded-[3rem] bg-[#C9A24D]/5 border border-[#C9A24D]/20 space-y-6">
               <h3 className="text-2xl md:text-3xl font-bold italic">Tu décides de ne plus être seul</h3>
               <p className="text-lg md:text-xl text-white/70 leading-relaxed font-medium">
-                Notre équipe s’engage à donner autant que toi pour mettre en place toutes les actions concrètes possibles afin de te rapprocher réellement de ton vœu.
+                Notre équipe s’engage à donner autant que toi pour mettre en place toutes les actions concrètes possibles afin de te rapprocher réellement de ton ambition.
               </p>
             </motion.div>
           </div>
@@ -802,7 +802,7 @@ export default function Home() {
 
           {/* CHOIX FINAL CTA */}
           <SectionCTA 
-            text="HONORER MON VŒU MAINTENANT" 
+            text="HONORER MON AMBITION MAINTENANT" 
             isActive={!!selectedVoeu}
             onClick={handleCtaClick}
           />
@@ -853,7 +853,7 @@ export default function Home() {
                 {isNavigating ? 'Lancement...' : "LANCER LE CRASH TEST"}
               </span>
               <span className="text-xs font-bold uppercase tracking-[0.2em] opacity-60">
-                {selectedVoeu ? `Pour ton vœu : ${selectedVoeu}` : "Sélectionne ton vœu pour commencer"}
+                {selectedVoeu ? `Pour ton ambition : ${selectedVoeu}` : "Sélectionne ton ambition pour commencer"}
               </span>
             </Link>
             

@@ -52,10 +52,25 @@ export async function POST(request: Request) {
         const supabaseAdmin = createClient(supabaseUrl, supabaseKey);
         
         // On met le statut à 'paid' pour indiquer que le paiement est validé
-        const { error: updateError } = await supabaseAdmin
+        // NOTE: Puisque l'ID Stripe (metadata.orderId) est un custom ID (PM-...) stocké dans user_data->orderId,
+        // et non la clé primaire UUID, on doit chercher dans le JSONB.
+        
+        // 1. Essai update par ID (si UUID)
+        let { error: updateError, data } = await supabaseAdmin
           .from('book_requests')
           .update({ status: 'paid' })
-          .eq('id', orderId);
+          .eq('id', orderId)
+          .select();
+          
+        // 2. Si pas trouvé (car c'est un ID custom PM-...), chercher dans user_data
+        if (!data || data.length === 0) {
+           const { error: jsonError } = await supabaseAdmin
+            .from('book_requests')
+            .update({ status: 'paid' })
+            .eq('user_data->>orderId', orderId); // Syntaxe JSONB arrow
+            
+           if (jsonError) updateError = jsonError;
+        }
           
         if (updateError) console.error('Erreur update status Supabase:', updateError);
         else {

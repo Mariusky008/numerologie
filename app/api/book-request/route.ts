@@ -25,6 +25,15 @@ import {
 } from '@/lib/numerology/engine';
 import { calculerTransits as calculerTransitsAstro } from '@/lib/astro/engine';
 
+function formatError(error: unknown) {
+  if (error instanceof Error) return error.message;
+  try {
+    return JSON.stringify(error, null, 2);
+  } catch (e) {
+    return String(error);
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -146,7 +155,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Error processing book request:', error);
     return NextResponse.json(
-      { error: 'Internal Server Error', details: error instanceof Error ? error.message : String(error) },
+      { error: 'Internal Server Error', details: formatError(error) },
       { status: 500 }
     );
   }
@@ -168,6 +177,15 @@ export async function GET(request: Request) {
          console.warn("[API] Unauthorized access attempt - Invalid password");
          return NextResponse.json([]);
        }
+    }
+
+    // Check environment variable
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        console.error("[API] CRITICAL: SUPABASE_SERVICE_ROLE_KEY is missing.");
+        return NextResponse.json(
+          { error: 'Configuration Error', details: 'SUPABASE_SERVICE_ROLE_KEY is not defined in environment variables.' },
+          { status: 500 }
+        );
     }
 
     if (id) {
@@ -205,7 +223,7 @@ export async function GET(request: Request) {
      console.error('[API] CRITICAL ERROR fetching requests:', error);
      // Return 500 so the frontend knows something went wrong instead of thinking it's empty
      return NextResponse.json(
-       { error: 'Internal Server Error', details: error instanceof Error ? error.message : String(error) }, 
+       { error: 'Internal Server Error', details: formatError(error) }, 
        { status: 500 }
      );
   }
@@ -226,15 +244,13 @@ export async function PATCH(request: Request) {
       .eq('id', id)
       .select();
 
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
     console.error('Error updating request:', error);
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'Internal Server Error', details: formatError(error) },
       { status: 500 }
     );
   }
@@ -274,15 +290,13 @@ export async function DELETE(request: Request) {
       .delete()
       .eq('id', id);
 
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
 
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error deleting request:', error);
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'Internal Server Error', details: formatError(error) },
       { status: 500 }
     );
   }

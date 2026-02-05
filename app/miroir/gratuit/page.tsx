@@ -21,11 +21,13 @@ import {
   Brain
 } from 'lucide-react';
 import { calculateLifePathNumber, getLifePathData, getSunSign, getMoonSign, getAscendant, getChartMaster } from '@/lib/psy-mirror/cosmic';
+import { calculateProfile, calculateGaps } from '@/lib/psy-mirror/engine';
 import PersonalizedAnalysisOracle from '@/components/experience/PersonalizedAnalysisOracle';
 
 export default function GratuitPage() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
+  const [scores, setScores] = useState<{ alignment: number, tension: string, color: string }>({ alignment: 34, tension: "MODÉRÉE", color: "text-orange-500" });
 
   useEffect(() => {
     const finalData = localStorage.getItem('psy_mirror_final_data');
@@ -34,12 +36,43 @@ export default function GratuitPage() {
         const parsed = JSON.parse(finalData);
         const userInfo = parsed.user_info;
         
+        // Cosmic Calculations
         const pathNum = calculateLifePathNumber(userInfo.birthDate);
         const pathData = getLifePathData(pathNum);
         const sunSignData = getSunSign(userInfo.birthDate);
         const moonSignData = getMoonSign(userInfo.birthDate, userInfo.birthTime);
         const ascendantData = getAscendant(userInfo.birthDate, userInfo.birthTime);
         const masterData = getChartMaster(ascendantData.name);
+
+        // Score Calculations
+        let calculatedAlignment = 34; // fallback
+        if (parsed.moduleA_answers && parsed.moduleB_answers) {
+          const selfProfile = calculateProfile(parsed.moduleA_answers);
+          const behaviorProfile = calculateProfile(parsed.moduleB_answers);
+          const { gaps } = calculateGaps(selfProfile, behaviorProfile);
+          
+          // Calculate max gap (dissonance)
+          const maxGap = Math.max(...Object.values(gaps).map(g => Math.abs(g)));
+          // Alignment is inverse of gap (clamped)
+          calculatedAlignment = Math.max(0, Math.min(100, 100 - maxGap));
+        }
+
+        // Determine tension level based on alignment
+        let tensionLevel = "MODÉRÉE";
+        let tensionColor = "text-orange-500";
+        if (calculatedAlignment < 40) {
+          tensionLevel = "ÉLEVÉE";
+          tensionColor = "text-red-500";
+        } else if (calculatedAlignment > 70) {
+          tensionLevel = "FAIBLE";
+          tensionColor = "text-green-500";
+        }
+
+        setScores({
+          alignment: Math.round(calculatedAlignment),
+          tension: tensionLevel,
+          color: tensionColor
+        });
 
         setData({
           firstName: userInfo.firstName,
@@ -259,10 +292,10 @@ export default function GratuitPage() {
                   <h4 className="text-3xl font-serif font-bold italic">Convergence de la dissonance</h4>
                 </div>
                 <div className="flex items-center gap-4 bg-[#1A1C2E]/5 px-8 py-4 rounded-3xl border border-[#1A1C2E]/10">
-                  <Target className="w-8 h-8 text-red-500" />
+                  <Target className={`w-8 h-8 ${scores.color}`} />
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Tension décisionnelle</p>
-                    <p className="text-2xl font-bold text-red-500 italic">ÉLEVÉE</p>
+                    <p className={`text-2xl font-bold italic ${scores.color}`}>{scores.tension}</p>
                   </div>
                 </div>
               </div>
@@ -270,17 +303,23 @@ export default function GratuitPage() {
               <div className="space-y-4">
                 <div className="flex justify-between text-xs font-black uppercase tracking-[0.2em] opacity-60">
                   <span>Alignement actuel estimé</span>
-                  <span className="text-red-500 text-right">
-                    FAIBLE À MODÉRÉ (34%)<br />
-                    <span className="text-[10px] opacity-60">(écart significatif entre potentiel et fonctionnement actuel)</span>
+                  <span className={`text-right ${scores.color}`}>
+                    {scores.alignment < 40 ? "FAIBLE" : scores.alignment < 70 ? "MODÉRÉ" : "BON"} ({scores.alignment}%)<br />
+                    <span className="text-[10px] opacity-60">
+                      {scores.alignment < 40 ? "(écart significatif)" : scores.alignment < 70 ? "(écart moyen)" : "(bon alignement)"}
+                    </span>
                   </span>
                 </div>
                 <div className="h-4 w-full bg-[#1A1C2E]/5 rounded-full overflow-hidden p-1 border border-[#1A1C2E]/5">
                   <motion.div 
                     initial={{ width: 0 }}
-                    whileInView={{ width: "34%" }}
+                    whileInView={{ width: `${scores.alignment}%` }}
                     transition={{ duration: 2, ease: "easeOut" }}
-                    className="h-full bg-gradient-to-r from-red-500 to-orange-400 rounded-full"
+                    className={`h-full rounded-full bg-gradient-to-r ${
+                      scores.alignment < 40 ? "from-red-500 to-orange-400" : 
+                      scores.alignment < 70 ? "from-orange-400 to-yellow-400" : 
+                      "from-green-400 to-emerald-500"
+                    }`}
                   />
                 </div>
                 <p className="text-sm text-[#1A1C2E]/60 leading-relaxed max-w-4xl italic">

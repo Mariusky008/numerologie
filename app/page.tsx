@@ -692,10 +692,20 @@ export default function Home() {
 
       {/* FOOTER - FIXED BOTTOM - MOVED OUTSIDE MAIN CONTAINER */}
       <footer 
-        className="fixed bottom-0 left-0 right-0 py-6 px-6 border-t border-white/10 text-center text-[10px] font-black uppercase tracking-[0.2em] z-[2147483647] bg-[#08090F] text-[#C9A24D] shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.8)] w-full block !important"
+        className="fixed bottom-0 left-0 right-0 py-6 px-6 border-t border-white/10 text-center z-[2147483647] bg-[#08090F] text-[#C9A24D] shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.8)] w-full block !important"
         style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))', display: 'block' }}
       >
-        © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-[10px] font-black uppercase tracking-[0.2em]">
+          <span>© {new Date().getFullYear()} VOTRE LÉGENDE</span>
+          <span className="hidden md:inline text-white/20">•</span>
+          <span>MÉTHODE ALIGNEMENT DÉCISION</span>
+          <span className="hidden md:inline text-white/20">•</span>
+          <div className="flex gap-4 text-white/40">
+            <a href="#" className="hover:text-white transition-colors">Mentions Légales</a>
+            <a href="#" className="hover:text-white transition-colors">CGV</a>
+            <a href="#" className="hover:text-white transition-colors">Contact</a>
+          </div>
+        </div>
       </footer>
     </>
   );

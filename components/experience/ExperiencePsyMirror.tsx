@@ -829,8 +829,12 @@ export default function ExperiencePsyMirror() {
                     </button>
                     <button 
                       onClick={(e) => handleInfoSubmit(e as any)}
+                      onTouchEnd={(e) => {
+                        e.preventDefault();
+                        if (personalInfo.birthCity) handleInfoSubmit(e as any);
+                      }}
                       disabled={!personalInfo.birthCity}
-                      className="py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black uppercase tracking-widest shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
+                      className="py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black uppercase tracking-widest shadow-xl flex items-center justify-center gap-3 disabled:opacity-50 touch-manipulation active:scale-95 transition-transform"
                     >
                       Voir mon profil <ArrowRight className="w-5 h-5" />
                     </button>

@@ -100,18 +100,22 @@ function SuccessContent() {
           </div>
 
           <div className="flex flex-col md:flex-row gap-4 justify-center">
+            {/* Nouveau CTA : Commencer l'analyse complète */}
             <button 
-              onClick={() => router.push('/')}
-              className="px-6 py-3 rounded-full border border-[#EFEDE9] text-[#2C2F4A]/60 hover:bg-white hover:border-[#5B4B8A] hover:text-[#5B4B8A] transition-all font-medium text-sm"
+              onClick={() => router.push('/miroir/experience')}
+              className="px-8 py-4 rounded-full bg-[#C9A24D] text-[#08090F] hover:bg-[#1A1C2E] hover:text-white transition-all font-black text-lg uppercase tracking-widest flex items-center justify-center gap-3 shadow-xl hover:scale-105 active:scale-95"
             >
-              Retour à l'accueil
+              Lancer mon analyse complète <ArrowRight className="w-5 h-5" />
             </button>
+          </div>
+          
+          <div className="mt-8 flex justify-center">
             <button 
-              onClick={() => window.open('mailto:contact@votrelegende.fr')} // Remplacez par votre email
-              className="px-6 py-3 rounded-full bg-[#2C2F4A] text-white hover:bg-[#5B4B8A] transition-all font-medium text-sm flex items-center justify-center gap-2"
+              onClick={() => window.open('mailto:contact@votrelegende.fr')} 
+              className="text-sm text-[#2C2F4A]/40 hover:text-[#2C2F4A] flex items-center gap-2 transition-colors"
             >
-              <Mail className="w-4 h-4" />
-              Contacter le support
+              <Mail className="w-3 h-3" />
+              Un problème ? Contacter le support
             </button>
           </div>
 

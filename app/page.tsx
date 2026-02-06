@@ -470,6 +470,7 @@ export default function Home() {
     const cleanDate = teaserBirthDate.replace(/\D/g, '');
     if (cleanDate.length < 8) return; 
     
+    trackEvent('compatibility_check_start'); // Screen 2 Start
     setIsCalculating(true);
     
     // Simulate calculation time for effect
@@ -499,6 +500,7 @@ export default function Home() {
       setTeaserResult({ path: lp, description, punchline });
       setIsCalculating(false);
       trackEvent('teaser_calculated', { lifePath: lp });
+      trackEvent('teaser_result_viewed'); // Screen 4 View
     }, 1500);
   };
   

@@ -314,6 +314,24 @@ export default function ExperiencePsyMirror() {
     }
   }, [moduleAAnswers, step]);
 
+  // Track funnel steps on step change
+  useEffect(() => {
+    if (step === 'introQCM') {
+        trackEvent('intro_qcm_start'); // Screen 5 Start
+    } else if (step === 'preReveal') {
+        trackEvent('pre_reveal_viewed'); // Screen 9
+    } else if (step === 'paymentTrigger') {
+        trackEvent('payment_trigger_viewed'); // Screen 10
+    }
+  }, [step]);
+
+  // Track Intro QCM Question Views
+  useEffect(() => {
+    if (step === 'introQCM') {
+        trackEvent(`intro_qcm_q${currentModuleIndex + 1}_viewed`);
+    }
+  }, [step, currentModuleIndex]);
+
   const [gapScore, setGapScore] = useState(38); // Default state
 
   const [showNameReward, setShowNameReward] = useState(false); // NEW STATE FOR NAME REWARD

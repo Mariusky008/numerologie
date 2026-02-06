@@ -258,6 +258,62 @@ export default function AdminDashboard() {
 
       <main className="max-w-7xl mx-auto p-4 md:p-8">
         
+        {/* TIKTOK FUNNEL (Detailed Drop-off) */}
+        <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-stone-200 mb-8">
+          <h2 className="text-xl font-serif font-bold text-[#78350f] flex items-center gap-2 mb-6">
+            <Zap className="w-5 h-5" />
+            Entonnoir TikTok (Détail Drop-off)
+          </h2>
+          
+          <div className="space-y-1">
+            {/* Header */}
+            <div className="grid grid-cols-12 text-xs font-black uppercase tracking-widest text-stone-400 pb-2 border-b border-stone-100 mb-2">
+              <div className="col-span-6">Étape</div>
+              <div className="col-span-2 text-right">Vues</div>
+              <div className="col-span-2 text-right">Rétention</div>
+              <div className="col-span-2 text-right">Global</div>
+            </div>
+
+            {[
+              { label: "1. Page Accueil", key: "home_view", step: 1 },
+              { label: "2. Vérif. Compatibilité", key: "compatibility_check_start", step: 2 },
+              { label: "4. Blocage Identifié", key: "teaser_result_viewed", step: 4 },
+              { label: "5. Profilage Q1 (Start)", key: "intro_qcm_start", step: 5 },
+              { label: "   — Question 2", key: "intro_qcm_q2_viewed", step: 6, sub: true },
+              { label: "   — Question 3", key: "intro_qcm_q3_viewed", step: 7, sub: true },
+              { label: "   — Question 4", key: "intro_qcm_q4_viewed", step: 8, sub: true },
+              { label: "   — Question 5", key: "intro_qcm_q5_viewed", step: 8.5, sub: true },
+              { label: "9. Écart Détecté", key: "pre_reveal_viewed", step: 9 },
+              { label: "10. Sales Page (Rapport)", key: "payment_trigger_viewed", step: 10 },
+              { label: "11. Checkout", key: "checkout_view", step: 11 },
+            ].map((row, idx, arr) => {
+              const val = stats[row.key] || 0;
+              const prevVal = idx > 0 ? stats[arr[idx-1].key] || 0 : val;
+              const baseVal = stats.home_view || 1;
+              const retention = prevVal > 0 ? Math.round((val / prevVal) * 100) : 0;
+              const global = Math.round((val / baseVal) * 100);
+
+              return (
+                <div key={row.key} className={`grid grid-cols-12 items-center py-3 border-b border-stone-50 hover:bg-stone-50 transition-colors ${row.sub ? 'pl-8 opacity-80' : ''}`}>
+                  <div className="col-span-6 font-medium text-stone-700 flex items-center gap-2">
+                    {row.sub && <div className="w-1 h-1 rounded-full bg-stone-300" />}
+                    {row.label}
+                  </div>
+                  <div className="col-span-2 text-right font-bold text-[#78350f]">{val}</div>
+                  <div className="col-span-2 text-right text-xs">
+                    <span className={`px-2 py-1 rounded ${retention < 50 ? 'bg-red-100 text-red-600' : retention < 80 ? 'bg-amber-100 text-amber-600' : 'bg-green-100 text-green-600'}`}>
+                      {idx === 0 ? '-' : `${retention}%`}
+                    </span>
+                  </div>
+                  <div className="col-span-2 text-right text-xs font-bold text-stone-400">
+                    {global}%
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
         {/* FUNNEL STATS SECTION */}
         <div className="space-y-6 mb-12">
           <h2 className="text-xl font-serif font-bold text-[#78350f] flex items-center gap-2">

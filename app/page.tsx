@@ -568,7 +568,7 @@ export default function Home() {
       {/* TEASER MODAL */}
       <AnimatePresence>
         {showTeaserModal && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 overflow-y-auto">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -581,7 +581,7 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-lg bg-[#12121A] border border-[#C9A24D]/30 rounded-[3rem] p-8 md:p-12 overflow-hidden shadow-[0_0_100px_-20px_rgba(201,162,77,0.3)] text-center"
+              className="relative w-full max-w-2xl bg-[#12121A] border border-[#C9A24D]/30 rounded-[3rem] p-6 md:p-12 shadow-[0_0_100px_-20px_rgba(201,162,77,0.3)] text-center my-auto max-h-[90vh] overflow-y-auto custom-scrollbar"
             >
               <button 
                 onClick={() => setShowTeaserModal(false)}
@@ -678,10 +678,13 @@ export default function Home() {
                     </div>
 
                     {/* Séparateur Élégant */}
-                    <div className="flex items-center justify-center gap-6 opacity-40">
-                        <div className="h-px w-20 bg-gradient-to-r from-transparent to-[#C9A24D]"></div>
-                        <span className="text-3xl animate-pulse text-[#C9A24D]">✨</span>
-                        <div className="h-px w-20 bg-gradient-to-l from-transparent to-[#C9A24D]"></div>
+                    <div className="flex items-center justify-center gap-6 opacity-60 py-2">
+                        <div className="h-px w-16 md:w-32 bg-gradient-to-r from-transparent to-[#C9A24D]"></div>
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-[#C9A24D] blur-xl opacity-50 animate-pulse"></div>
+                          <Star className="w-8 h-8 md:w-10 md:h-10 text-[#C9A24D] fill-[#C9A24D] animate-[spin_4s_linear_infinite]" />
+                        </div>
+                        <div className="h-px w-16 md:w-32 bg-gradient-to-l from-transparent to-[#C9A24D]"></div>
                     </div>
 
                     {/* Punchline Matrix - Style Impactant "Quote" */}

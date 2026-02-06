@@ -33,7 +33,8 @@ const PLANS = {
       { icon: Brain, text: "Analyse de tes choix et réactions réelles face aux situations" },
       { icon: Layers, text: "Comparaison claire entre potentiel, comportements et image perçue" },
       { icon: BookOpen, text: "Dossier personnalisé (PDF) pour approfondir à ton rythme" },
-      { icon: Compass, text: "Exercices simples pour amorcer un réalignement progressif" }
+      { icon: Compass, text: "Exercices simples pour amorcer un réalignement progressif" },
+      { icon: MessageCircle, text: "Accès illimité au Coach IA pour poser toutes tes questions et approfondir ton analyse" }
     ],
     cta: "Payer 49 € et débloquer mon analyse",
     label: "Accès complet au Crash-Test de ton Destin",
@@ -434,7 +435,10 @@ export default function CheckoutPage() {
                 <Brain className="w-3 h-3" />
                 Coach IA Initialisé
               </div>
-              <h3 className="text-xl font-serif font-bold text-[#1A1C2E]">Prêt à analyser tes réponses</h3>
+              <h3 className="text-xl font-serif font-bold text-[#1A1C2E]">Ton Assistant Personnel est prêt</h3>
+              <p className="text-sm text-[#1A1C2E]/50 max-w-xs mx-auto">
+                Après le paiement, tu pourras échanger avec lui en illimité pour comprendre tes blocages.
+              </p>
             </div>
           </div>
 
@@ -453,7 +457,8 @@ export default function CheckoutPage() {
                 { icon: Brain, text: "Analyse de tes choix et réactions réelles face aux situations" },
                 { icon: Layers, text: "Comparaison claire entre potentiel, comportements et image perçue" },
                 { icon: BookOpen, text: "Dossier personnalisé (PDF) pour approfondir à ton rythme" },
-                { icon: Compass, text: "Exercices simples pour amorcer un réalignement progressif" }
+                { icon: Compass, text: "Exercices simples pour amorcer un réalignement progressif" },
+                { icon: MessageCircle, text: "Accès illimité au Coach IA pour poser toutes tes questions et approfondir ton analyse" }
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-5 group">
                   <div className="w-10 h-10 rounded-xl bg-[#F8F9FA] shadow-inner border border-[#1A1C2E]/5 flex items-center justify-center text-[#C9A24D] shrink-0 group-hover:scale-110 transition-transform">

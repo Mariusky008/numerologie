@@ -268,6 +268,8 @@ export default function ExperiencePsyMirror() {
     }
   }, []);
 
+  const [showNameReward, setShowNameReward] = useState(false); // NEW STATE FOR NAME REWARD
+  
   // --- Intro & Cosmic Identity ---
   const handleIntroStart = () => {
     trackEvent('experience_start');
@@ -276,6 +278,51 @@ export default function ExperiencePsyMirror() {
     } else {
       setStep('collectInfo');
     }
+  };
+  
+  // --- NEW: Handle Name Submission with Reward ---
+  const handleNameSubmit = () => {
+    if (!personalInfo.firstName) return;
+    trackEvent('name_submitted');
+    
+    // Calculate Name Number immediately
+    const calculateNameNumber = (name: string) => {
+      const mapping: {[key: string]: number} = {
+        a:1,b:2,c:3,d:4,e:5,f:6,g:7,h:8,i:9,
+        j:1,k:2,l:3,m:4,n:5,o:6,p:7,q:8,r:9,
+        s:1,t:2,u:3,v:4,w:5,x:6,y:7,z:8
+      };
+      const cleanName = (name + (personalInfo.lastName || '')).toLowerCase().replace(/[^a-z]/g, '');
+      let sum = 0;
+      for (const char of cleanName) {
+        sum += mapping[char] || 0;
+      }
+      while (sum > 9 && sum !== 11 && sum !== 22) {
+        sum = sum.toString().split('').reduce((acc, curr) => acc + parseInt(curr), 0);
+      }
+      return sum;
+    };
+    
+    const exprNum = calculateNameNumber(personalInfo.firstName);
+    
+    // Store temporarily in cosmicData
+    setCosmicData((prev: any) => ({
+      ...prev,
+      expressionNumber: exprNum
+    }));
+    
+    setShowNameReward(true);
+    
+    // Auto-advance after reward
+    setTimeout(() => {
+        setShowNameReward(false);
+        // Skip Date step if we already have it from Landing Page
+        if (personalInfo.birthDate) {
+            setInfoSubStep(3); // Go to City
+        } else {
+            setInfoSubStep(2); // Go to Date
+        }
+    }, 3500);
   };
 
   const handleInfoSubmit = (e: React.FormEvent) => {
@@ -560,6 +607,39 @@ export default function ExperiencePsyMirror() {
             exit={{ opacity: 0, y: -20 }}
             className="w-full max-w-2xl bg-white p-8 md:p-12 rounded-[50px] shadow-2xl border border-[#1A1C2E]/5 space-y-10"
           >
+            {/* Name Reward Modal */}
+            <AnimatePresence>
+              {showNameReward && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 z-50 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-[50px]"
+                >
+                  <motion.div
+                    initial={{ scale: 0.8, y: 20 }}
+                    animate={{ scale: 1, y: 0 }}
+                    exit={{ scale: 0.8, y: 20 }}
+                    className="text-center space-y-4"
+                  >
+                    <div className="w-20 h-20 bg-[#C9A24D] rounded-full flex items-center justify-center mx-auto shadow-xl">
+                      <Sparkles className="w-10 h-10 text-white" />
+                    </div>
+                    <div className="space-y-2">
+                        <p className="text-[#C9A24D] font-black uppercase tracking-widest text-sm">Identité Décodée</p>
+                        <h3 className="text-3xl font-serif font-bold text-[#1A1C2E]">
+                            Nombre d'Expression {cosmicData?.expressionNumber}
+                        </h3>
+                    </div>
+                    <p className="text-[#1A1C2E]/60 max-w-xs mx-auto">
+                        Votre prénom porte la vibration de votre mission. <br/>
+                        <span className="font-bold text-[#1A1C2E]">On continue l'exploration...</span>
+                    </p>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Form Progress Bar */}
             <div className="w-full h-1.5 bg-[#1A1C2E]/5 rounded-full overflow-hidden mb-8">
               <motion.div 
@@ -598,8 +678,7 @@ export default function ExperiencePsyMirror() {
                       onChange={(e) => setPersonalInfo({...personalInfo, firstName: e.target.value})}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' && personalInfo.firstName) {
-                          trackEvent('experience_start');
-                          setInfoSubStep(2);
+                          handleNameSubmit();
                         }
                       }}
                       className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
@@ -610,24 +689,23 @@ export default function ExperiencePsyMirror() {
                     <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Nom</label>
                     <input 
                       type="text" 
-                      placeholder="Ton nom (optionnel)"
+                      placeholder="Ton nom de famille"
                       value={personalInfo.lastName}
                       onChange={(e) => setPersonalInfo({...personalInfo, lastName: e.target.value})}
-                      onKeyDown={(e) => e.key === 'Enter' && setInfoSubStep(2)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleNameSubmit()}
                       className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
                     />
                   </div>
                   <button 
                     onClick={() => {
                       if (personalInfo.firstName) {
-                        trackEvent('experience_start');
-                        setInfoSubStep(2);
+                        handleNameSubmit();
                       }
                     }}
                     disabled={!personalInfo.firstName}
                     className="md:col-span-2 w-full py-5 bg-[#1A1C2E] text-white rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
                   >
-                    Continuer <ArrowRight className="w-5 h-5" />
+                    Découvrir mon Nombre d'Expression <ArrowRight className="w-5 h-5" />
                   </button>
                 </motion.div>
               )}

@@ -601,8 +601,8 @@ export default function Home() {
           </video>
       </div>
 
-      {/* FOOTER - FIXED BOTTOM */}
-      <footer className="fixed bottom-0 left-0 right-0 py-6 px-6 border-t border-white/5 text-center opacity-60 text-[10px] font-black uppercase tracking-[0.2em] z-50 bg-[#08090F]/90 backdrop-blur-md safe-area-bottom">
+      {/* FOOTER - FIXED BOTTOM - Z-INDEX MAXIMAL */}
+      <footer className="fixed bottom-0 left-0 right-0 py-4 px-6 border-t border-white/10 text-center opacity-80 text-[10px] font-black uppercase tracking-[0.2em] z-[100] bg-[#08090F] safe-area-bottom">
         © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION
       </footer>
     </div>

@@ -24,24 +24,98 @@ import {
 import { trackEvent } from '@/lib/analytics';
 import { calculateLifePath } from '@/lib/numerology/engine';
 
+// Matrix Data
+const MATRIX_INSIGHTS: Record<number, Record<string, string>> = {
+  1: {
+    amour: "Tu aimes quand ça avance.",
+    famille: "Tu montres naturellement la voie.",
+    decisions: "Tu es fait pour décider.",
+    confiance: "Ta force, c’est l’initiative.",
+    solitude: "Choisir te libère.",
+    vie: "Ta vie demande du leadership."
+  },
+  2: {
+    amour: "Tu recherches une vraie connexion.",
+    famille: "Tu crées l’harmonie.",
+    decisions: "Ton ressenti guide tes choix.",
+    confiance: "Ta sensibilité est une force.",
+    solitude: "Te faire confiance change tout.",
+    vie: "Ta vie suit ton rythme."
+  },
+  3: {
+    amour: "Tu dois rester toi-même.",
+    famille: "Tu apportes de la légèreté.",
+    decisions: "Ton élan montre la voie.",
+    confiance: "T’exprimer te renforce.",
+    solitude: "La joie te libère.",
+    vie: "Ta vie doit s’exprimer."
+  },
+  4: {
+    amour: "Tu recherches la solidité.",
+    famille: "Tu es un pilier.",
+    decisions: "Le concret te guide.",
+    confiance: "La constance te renforce.",
+    solitude: "La structure apaise.",
+    vie: "Ta vie manque de bases."
+  },
+  5: {
+    amour: "Tu as besoin d’air.",
+    famille: "Tu insuffles du mouvement.",
+    decisions: "L’espace clarifie tes choix.",
+    confiance: "La liberté te révèle.",
+    solitude: "Le mouvement t’équilibre.",
+    vie: "Ta vie te limite."
+  },
+  6: {
+    amour: "Tu aimes en protégeant.",
+    famille: "Tu prends soin naturellement.",
+    decisions: "Tes valeurs te guident.",
+    confiance: "Ton cœur est ta force.",
+    solitude: "Tu n’as pas à tout porter.",
+    vie: "Ta vie manque d’alignement."
+  },
+  7: {
+    amour: "Tu cherches du sens.",
+    famille: "Tu observes avant d’agir.",
+    decisions: "Comprendre t’éclaire.",
+    confiance: "Ta lucidité te renforce.",
+    solitude: "Ton intuition sait.",
+    vie: "Ta vie manque de profondeur."
+  },
+  8: {
+    amour: "Tu veux du solide.",
+    famille: "Tu sécurises ton entourage.",
+    decisions: "Tu es fait pour diriger.",
+    confiance: "L’action te renforce.",
+    solitude: "Reprendre le contrôle libère.",
+    vie: "Ta puissance est retenue."
+  },
+  9: {
+    amour: "Tu aimes profondément.",
+    famille: "Tu fédères naturellement.",
+    decisions: "Le sens guide tes choix.",
+    confiance: "Ton impact te porte.",
+    solitude: "Lâcher libère.",
+    vie: "Ta vie manque de sens."
+  }
+};
+
 // Micro-Insight Logic
 const getMicroInsight = (lifePath: number, archetypeId: string): string => {
-  // Simple mapping logic: LifePath vs Archetype
-  // This is a teaser, so it should be striking but generic enough
-  
-  const insights: Record<string, string> = {
-    "amour": `Ton Chemin de Vie ${lifePath} cherche l'indépendance, mais ton ambition amoureuse demande de la fusion. C'est ce tiraillement qui crée l'instabilité.`,
-    "famille": `Avec un Chemin de Vie ${lifePath}, tu as besoin de liberté, mais ton ambition familiale te ramène à des devoirs. Tu te sens piégé entre loyauté et évasion.`,
-    "decisions": `Ton Chemin de Vie ${lifePath} est intuitif, mais tu essaies de tout rationaliser. Ton indécision vient de là : tu n'écoutes pas ta première impression.`,
-    "confiance": `Ton énergie ${lifePath} est puissante mais brute. Ton manque de confiance vient du fait que tu essaies de rentrer dans un moule trop petit pour toi.`,
-    "solitude": `Le Chemin de Vie ${lifePath} a besoin de solitude pour se recharger, mais tu la confonds avec de l'isolement. Tu as peur du vide alors qu'il est ta force.`,
-    "vie": `Ton Chemin de Vie ${lifePath} demande du mouvement. Ta vie actuelle est trop statique, c'est pour ça que tu as l'impression d'étouffer.`
-  };
+  // Handle Master Numbers by reducing them for the matrix lookup
+  let lookupPath = lifePath;
+  if (lookupPath === 11) lookupPath = 2;
+  if (lookupPath === 22) lookupPath = 4;
+  if (lookupPath === 33) lookupPath = 6;
 
-  // Fallback specific per number if needed, but generic archetype mapping is safer for a teaser
-  // We can refine this later with a matrix Number x Archetype
-  
-  return insights[archetypeId] || `Ton Chemin de Vie ${lifePath} entre en friction avec ton ambition actuelle.`;
+  // Safe lookup
+  const pathInsights = MATRIX_INSIGHTS[lookupPath];
+  if (pathInsights && pathInsights[archetypeId]) {
+    return pathInsights[archetypeId];
+  }
+
+  // Fallback generic if not found
+  return `Ton Chemin de Vie ${lifePath} cherche sa voie.`;
 };
 
 const ARCHETYPES = [

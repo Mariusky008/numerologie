@@ -305,7 +305,7 @@ export default function ExperiencePsyMirror() {
       }
       // Reduce to single digit (except 11, 22)
       while (sum > 9 && sum !== 11 && sum !== 22) {
-        sum = sum.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+        sum = sum.toString().split('').reduce((acc, curr) => acc + parseInt(curr), 0);
       }
       return sum;
     };

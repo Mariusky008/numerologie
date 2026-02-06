@@ -699,35 +699,6 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* SOCIAL ACTIONS (Temporairement Masqués) */}
-                  {/* <div className="flex flex-col gap-3">
-                    <div className="flex gap-2">
-                      <button 
-                        onClick={handleWhatsappShare}
-                        className="flex-1 py-3 bg-[#25D366]/20 border border-[#25D366]/30 text-[#25D366] rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-[#25D366]/30 transition-colors flex items-center justify-center gap-2"
-                      >
-                        <Share2 className="w-4 h-4" /> WhatsApp
-                      </button>
-                      <button 
-                        onClick={handleShare}
-                        className="flex-1 py-3 bg-white/5 border border-white/10 text-white/70 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
-                      >
-                        <Share2 className="w-4 h-4" /> Ami(e)
-                      </button>
-                    </div>
-                    
-                    <a 
-                      href="https://www.tiktok.com/@votre_legende" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="w-full py-3 bg-gradient-to-r from-[#00f2ea]/20 to-[#ff0050]/20 border border-white/10 text-white rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-80 transition-opacity flex items-center justify-center gap-2"
-                      onClick={() => trackEvent('tiktok_follow_click')}
-                    >
-                      <Smartphone className="w-4 h-4" /> 
-                      <span>Abonne-toi pour + de diagnostics ⚡️</span>
-                    </a>
-                  </div> */}
-
                   <div className="space-y-6 pt-4">
                     <button
                       onClick={proceedToFullTest}
@@ -735,7 +706,37 @@ export default function Home() {
                     >
                       Comprendre ce qui me rend différent <ArrowRight className="w-6 h-6" />
                     </button>
-                    <p className="text-sm text-white/40 font-medium">
+                    
+                    <div className="space-y-3 pt-2">
+                      <button 
+                        onClick={() => {
+                          const text = `Je viens de découvrir mon blocage caché : "${teaserResult.punchline}".\n\nEst-ce que tu trouves que ça me correspond ?\n\nFais le test ici : https://votrelegende.fr`;
+                          // TikTok DM deep link often requires just opening the app or using share sheet
+                          // Standard share approach that works well on mobile
+                          if (navigator.share) {
+                            navigator.share({
+                              title: 'Mon Diagnostic',
+                              text: text,
+                              url: 'https://votrelegende.fr'
+                            }).catch(() => {});
+                          } else {
+                            // Fallback to clipboard
+                            navigator.clipboard.writeText(text);
+                            alert("Texte copié ! Tu peux le coller dans TikTok.");
+                          }
+                          trackEvent('share_tiktok_dm_teaser');
+                        }}
+                        className="w-full py-4 bg-[#08090F]/40 border border-white/10 rounded-[20px] font-bold text-sm uppercase tracking-widest hover:bg-white/5 transition-all flex items-center justify-center gap-2 text-white/70"
+                      >
+                        <Share2 className="w-4 h-4" />
+                        Envoyer en message privé TikTok
+                      </button>
+                      <p className="text-xs text-white/30 italic max-w-xs mx-auto">
+                        « Envoie ce résumé à quelqu’un qui te connaît bien. Il pourrait te voir différemment. »
+                      </p>
+                    </div>
+
+                    <p className="text-sm text-white/40 font-medium pt-2">
                       Nouvelle analyse gratuite avec votre prénom
                     </p>
                   </div>

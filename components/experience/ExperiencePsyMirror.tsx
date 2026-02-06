@@ -750,15 +750,38 @@ export default function ExperiencePsyMirror() {
              </div>
 
              <div className="space-y-4 pt-4">
-                <p className="text-xs text-white/40 uppercase tracking-widest">
-                   Pour débloquer l'analyse complète :
-                </p>
                 <button
                   onClick={() => setStep('paymentTrigger')}
                   className="w-full py-6 bg-[#C9A24D] text-[#08090F] rounded-[20px] font-black text-xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(201,162,77,0.5)] flex items-center justify-center gap-3"
                 >
                   Je veux comprendre <ArrowRight className="w-6 h-6" />
                 </button>
+
+                <div className="space-y-3 pt-2">
+                  <button 
+                    onClick={() => {
+                      const text = `Mon analyse montre un écart de ${gapScore}% : "Tu as l'énergie pour avancer, mais quelque chose dans ton environnement actuel te freine."\n\nEst-ce que tu trouves que ça me correspond ?\n\nFais le test ici : https://votrelegende.fr`;
+                      if (navigator.share) {
+                        navigator.share({
+                          title: 'Mon Écart Détecté',
+                          text: text,
+                          url: 'https://votrelegende.fr'
+                        }).catch(() => {});
+                      } else {
+                        navigator.clipboard.writeText(text);
+                        alert("Texte copié ! Tu peux le coller dans TikTok.");
+                      }
+                      trackEvent('share_tiktok_dm_pre_reveal');
+                    }}
+                    className="w-full py-4 bg-[#08090F]/40 border border-white/10 rounded-[20px] font-bold text-sm uppercase tracking-widest hover:bg-white/5 transition-all flex items-center justify-center gap-2 text-white/70"
+                  >
+                    <Share2 className="w-4 h-4" />
+                    Envoyer en message privé TikTok
+                  </button>
+                  <p className="text-xs text-white/30 italic max-w-xs mx-auto">
+                    « Envoie ce résumé à quelqu’un qui te connaît bien. Il pourrait te voir différemment. »
+                  </p>
+                </div>
              </div>
           </motion.div>
         )}

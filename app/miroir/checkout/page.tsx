@@ -18,13 +18,14 @@ import {
   Compass, 
   MessageCircle, 
   TrendingUp,
-  User
+  User,
+  Sparkles
 } from 'lucide-react';
 
 const PLANS = {
   bundle: {
     id: 'bundle',
-    name: "Le Crash-Test de ton Destin",
+    name: "Réalise Le Crash-Test complet",
     price: 49,
     description: "L’analyse complète pour comprendre l’écart entre ton potentiel de naissance et la façon dont tu fonctionnes aujourd’hui.",
     features: [
@@ -400,22 +401,65 @@ export default function CheckoutPage() {
         
         {/* LEFT: ORDER SUMMARY */}
         <div className="space-y-12">
-          <div className="space-y-6">
+          {/* AI Coach Animation */}
+          <div className="flex flex-col items-center justify-center space-y-6 text-center">
+            <div className="relative w-32 h-32 md:w-40 md:h-40">
+              {/* Outer Glow */}
+              <motion.div 
+                animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#C9A24D]/30 via-transparent to-[#5B4B8A]/30 blur-xl"
+              />
+              {/* Spinning Rings */}
+              <motion.div 
+                animate={{ rotate: -360 }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-2 rounded-full border-2 border-[#C9A24D]/20 border-dashed"
+              />
+              <motion.div 
+                animate={{ rotate: 360 }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-6 rounded-full border border-[#1A1C2E]/10"
+              />
+              {/* Central Core */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-20 h-20 bg-[#1A1C2E] rounded-full flex items-center justify-center shadow-2xl border border-white/10 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#C9A24D]/20 to-transparent opacity-50" />
+                  <Sparkles className="w-8 h-8 text-[#C9A24D] animate-pulse relative z-10" />
+                </div>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1A1C2E]/5 text-[#1A1C2E]/60 text-[10px] font-black uppercase tracking-widest">
+                <Brain className="w-3 h-3" />
+                Coach IA Initialisé
+              </div>
+              <h3 className="text-xl font-serif font-bold text-[#1A1C2E]">Prêt à analyser tes réponses</h3>
+            </div>
+          </div>
+
+          <div className="space-y-6 text-center md:text-left">
             <h1 className="text-4xl md:text-6xl font-serif font-bold italic">{selectedPlan.name}</h1>
             <p className="text-xl text-[#1A1C2E]/60 leading-relaxed font-light">
               {selectedPlan.description}
             </p>
           </div>
 
-          <div className="space-y-6">
-            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#C9A24D]">Ce que tu reçois :</p>
+          <div className="space-y-6 bg-white p-8 rounded-[40px] shadow-sm border border-[#1A1C2E]/5">
+            <p className="text-xs font-black uppercase tracking-[0.3em] text-[#C9A24D] text-center md:text-left">CE QUE TU REÇOIS :</p>
             <div className="space-y-5">
-              {selectedPlan.features.map((item, i) => (
+              {[
+                { icon: Search, text: "Analyse numérologique & astrologique de ton potentiel de naissance" },
+                { icon: Brain, text: "Analyse de tes choix et réactions réelles face aux situations" },
+                { icon: Layers, text: "Comparaison claire entre potentiel, comportements et image perçue" },
+                { icon: BookOpen, text: "Dossier personnalisé (PDF) pour approfondir à ton rythme" },
+                { icon: Compass, text: "Exercices simples pour amorcer un réalignement progressif" }
+              ].map((item, i) => (
                 <div key={i} className="flex items-start gap-5 group">
-                  <div className="w-10 h-10 rounded-xl bg-white shadow-sm border border-[#1A1C2E]/5 flex items-center justify-center text-[#C9A24D] shrink-0 group-hover:scale-110 transition-transform">
+                  <div className="w-10 h-10 rounded-xl bg-[#F8F9FA] shadow-inner border border-[#1A1C2E]/5 flex items-center justify-center text-[#C9A24D] shrink-0 group-hover:scale-110 transition-transform">
                     <item.icon className="w-5 h-5" />
                   </div>
-                  <span className="text-lg font-medium opacity-80 leading-snug pt-1">{item.text}</span>
+                  <span className="text-base md:text-lg font-medium opacity-80 leading-snug pt-1 text-left">{item.text}</span>
                 </div>
               ))}
             </div>

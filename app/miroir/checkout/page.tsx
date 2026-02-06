@@ -17,7 +17,8 @@ import {
   BookOpen, 
   Compass, 
   MessageCircle, 
-  TrendingUp
+  TrendingUp,
+  User
 } from 'lucide-react';
 
 const PLANS = {
@@ -93,6 +94,15 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState<any>(null);
   const [email, setEmail] = useState('');
+
+  // Manual Info State (for Cold Traffic who skipped onboarding)
+  const [manualInfo, setManualInfo] = useState({
+    firstName: '',
+    lastName: '',
+    birthDate: '',
+    birthTime: '',
+    birthCity: ''
+  });
 
   // 1. Initialiser l'ID de commande une seule fois au chargement
   const [orderId] = useState(`PM-${Math.random().toString(36).substr(2, 9).toUpperCase()}`);
@@ -190,6 +200,16 @@ export default function CheckoutPage() {
         setUserData(parsed); // It has firstName, lastName, birthDate etc.
         if (parsed.email) setEmail(parsed.email);
         
+        // Pre-fill manual info
+        setManualInfo(prev => ({
+            ...prev,
+            firstName: parsed.firstName || '',
+            lastName: parsed.lastName || '',
+            birthDate: parsed.birthDate || '',
+            birthTime: parsed.birthTime || '',
+            birthCity: parsed.birthCity || ''
+        }));
+        
         // AUTO-SAVE ON LOAD if we have data!
         saveDraftOrder(parsed, parsed.email || null);
       } catch (e) {
@@ -259,8 +279,16 @@ export default function CheckoutPage() {
   };
 
   const handlePayment = async () => {
-    if (!userData && !email) {
-      alert("Veuillez saisir votre adresse email pour continuer.");
+    // 1. Prepare Final User Data (Merge existing + Manual)
+    const finalUserData = {
+        ...userData,
+        ...manualInfo,
+        email: email || userData?.email
+    };
+
+    // 2. Validation
+    if (!finalUserData.firstName || !finalUserData.birthDate || !email) {
+      alert("Veuillez remplir les informations obligatoires (Prénom, Date de naissance, Email) pour générer votre analyse.");
       return;
     }
 
@@ -273,7 +301,7 @@ export default function CheckoutPage() {
         plan: selectedPlan.id,
         totalPrice: selectedPlan.price,
         delivery: {
-          email: email || userData?.email || 'client@votrelegende.fr'
+          email: finalUserData.email || 'client@votrelegende.fr'
         }
       };
 
@@ -307,7 +335,7 @@ export default function CheckoutPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userData: userData ? { ...userData, email: email || userData.email } : { email },
+          userData: finalUserData,
           orderInfo,
           orderId,
           psyResult
@@ -334,7 +362,7 @@ export default function CheckoutPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userData: userData ? { ...userData, email: email || userData.email } : { email },
+          userData: finalUserData,
           orderInfo,
           orderId
         })
@@ -423,6 +451,69 @@ export default function CheckoutPage() {
           animate={{ opacity: 1, x: 0 }}
           className="bg-white p-10 md:p-16 rounded-[60px] shadow-2xl border border-[#1A1C2E]/5 space-y-12"
         >
+          {/* PERSONAL INFO SECTION */}
+          <div className="space-y-8 border-b border-[#1A1C2E]/5 pb-8">
+             <div className="flex items-center gap-2 px-4 py-2 bg-[#F8F9FA] rounded-full border border-[#1A1C2E]/5 w-fit">
+              <User className="w-4 h-4 text-[#1A1C2E]/40" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-[#1A1C2E]/60 font-bold">Qui êtes-vous ?</span>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1C2E]/40 ml-4">Prénom</label>
+                    <input 
+                        type="text"
+                        value={manualInfo.firstName}
+                        onChange={(e) => setManualInfo({...manualInfo, firstName: e.target.value})}
+                        className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-[30px] py-5 px-8 text-xl text-[#1A1C2E] outline-none focus:border-[#C9A24D] transition-colors"
+                        placeholder="Prénom"
+                    />
+                </div>
+                <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1C2E]/40 ml-4">Nom</label>
+                    <input 
+                        type="text"
+                        value={manualInfo.lastName}
+                        onChange={(e) => setManualInfo({...manualInfo, lastName: e.target.value})}
+                        className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-[30px] py-5 px-8 text-xl text-[#1A1C2E] outline-none focus:border-[#C9A24D] transition-colors"
+                        placeholder="Nom"
+                    />
+                </div>
+            </div>
+
+            <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1C2E]/40 ml-4">Date de Naissance</label>
+                <input 
+                    type="date"
+                    value={manualInfo.birthDate}
+                    onChange={(e) => setManualInfo({...manualInfo, birthDate: e.target.value})}
+                    className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-[30px] py-5 px-8 text-xl text-[#1A1C2E] outline-none focus:border-[#C9A24D] transition-colors"
+                />
+            </div>
+            
+             <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1C2E]/40 ml-4">Ville (Optionnel)</label>
+                    <input 
+                        type="text"
+                        value={manualInfo.birthCity}
+                        onChange={(e) => setManualInfo({...manualInfo, birthCity: e.target.value})}
+                        className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-[30px] py-5 px-8 text-xl text-[#1A1C2E] outline-none focus:border-[#C9A24D] transition-colors"
+                        placeholder="Ville"
+                    />
+                </div>
+                <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1C2E]/40 ml-4">Heure (Optionnel)</label>
+                    <input 
+                        type="time"
+                        value={manualInfo.birthTime}
+                        onChange={(e) => setManualInfo({...manualInfo, birthTime: e.target.value})}
+                        className="w-full bg-[#F8F9FA] border border-[#1A1C2E]/10 rounded-[30px] py-5 px-8 text-xl text-[#1A1C2E] outline-none focus:border-[#C9A24D] transition-colors"
+                    />
+                </div>
+            </div>
+          </div>
+
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2 px-4 py-2 bg-[#F8F9FA] rounded-full border border-[#1A1C2E]/5">
               <CreditCard className="w-4 h-4 text-[#1A1C2E]/40" />

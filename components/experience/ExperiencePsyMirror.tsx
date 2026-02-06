@@ -812,10 +812,15 @@ export default function ExperiencePsyMirror() {
              <div className="space-y-4 pt-4">
                 <button
                   onClick={() => {
-                    // Simuler le paiement pour l'instant et aller à la collecte d'infos
-                    // TODO: Intégrer Stripe ici
-                    trackEvent('payment_initiated');
-                    setStep('collectInfo');
+                    // Save QCM answers before redirecting
+                    const sessionData = {
+                        moduleA_answers: moduleAAnswers,
+                        gapScore: gapScore
+                    };
+                    localStorage.setItem('psy_mirror_session_data', JSON.stringify(sessionData));
+                    
+                    trackEvent('payment_initiated_pre_checkout');
+                    router.push('/miroir/checkout?plan=bundle');
                   }}
                   className="w-full py-6 bg-[#C9A24D] text-[#08090F] rounded-[20px] font-black text-xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(201,162,77,0.5)] flex items-center justify-center gap-3"
                 >

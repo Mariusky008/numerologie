@@ -31,7 +31,7 @@ import { calculateLifePathNumber, getLifePathData, getMoonSign, getSunSign, getA
 
 export default function ExperiencePsyMirror() {
   const router = useRouter();
-  const [step, setStep] = useState<'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'emailCapture' | 'loading'>('collectInfo');
+  const [step, setStep] = useState<'introQCM' | 'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'emailCapture' | 'loading'>('introQCM');
   const [infoSubStep, setInfoSubStep] = useState(1); // 1: Name, 2: Date/Time, 3: City
   const [personalInfo, setPersonalInfo] = useState({
     firstName: '',
@@ -215,6 +215,22 @@ export default function ExperiencePsyMirror() {
   useEffect(() => {
     // Check if we have data from the Astro landing page
     const savedCosmicData = localStorage.getItem('cosmic_user_data');
+    const savedSessionData = localStorage.getItem('psy_mirror_session_data');
+
+    if (savedSessionData) {
+      try {
+        const session = JSON.parse(savedSessionData);
+        if (session.moduleA_answers) {
+          setModuleAAnswers(session.moduleA_answers);
+          // Sync index with answers
+          setCurrentModuleIndex(session.moduleA_answers.length);
+        }
+        // ... restore other session data if needed
+      } catch (e) {
+        console.error("Error parsing session data", e);
+      }
+    }
+
     if (savedCosmicData) {
       try {
         const parsed = JSON.parse(savedCosmicData);
@@ -233,7 +249,6 @@ export default function ExperiencePsyMirror() {
         if (parsed.birthDate && parsed.firstName) {
           // Calculate everything if we have both
           const pathNum = calculateLifePathNumber(parsed.birthDate);
-          // ... (rest of the logic)
           const pathData = getLifePathData(pathNum);
           const moonData = getMoonSign(parsed.birthDate, parsed.birthTime);
           const sunData = getSunSign(parsed.birthDate);
@@ -257,9 +272,17 @@ export default function ExperiencePsyMirror() {
             lastName: parsed.lastName
           });
           
-          // Skip directly to cosmic reveal if we have all info
+          // Determine step based on progress
+          // If we have full info, we might be past collectInfo
           if (parsed.birthDate && parsed.firstName && parsed.birthTime && parsed.birthCity) {
-            setStep('cosmicReveal');
+            // But check if we finished introQCM
+            // We'll rely on moduleAAnswers length in the render or separate effect
+            // For now, let's just say if we have data, we assume we might be in cosmicReveal
+            // BUT the new flow is IntroQCM -> CollectInfo.
+            // So we should check answers length first.
+            // This logic will be handled by the fact that step defaults to 'introQCM'.
+            // We only override it here if we are SURE.
+            setStep('cosmicReveal'); 
           }
         }
       } catch (e) {
@@ -267,6 +290,13 @@ export default function ExperiencePsyMirror() {
       }
     }
   }, []);
+
+  // Effect to manage transitions from IntroQCM
+  useEffect(() => {
+    if (step === 'introQCM' && moduleAAnswers.length >= 5) {
+      setStep('collectInfo');
+    }
+  }, [moduleAAnswers, step]);
 
   const [showNameReward, setShowNameReward] = useState(false); // NEW STATE FOR NAME REWARD
   const [showCityReward, setShowCityReward] = useState(false); // NEW STATE FOR CITY REWARD
@@ -426,6 +456,14 @@ export default function ExperiencePsyMirror() {
     // Track every 3 questions or so to see where they drop
     if (newAnswers.length % 3 === 0) {
       trackEvent(`moduleA_progress_${newAnswers.length}`);
+    }
+
+    // Skip feedback during Intro QCM (first 5 questions)
+    if (step === 'introQCM') {
+       if (currentModuleIndex < AUTO_PERCEPTION_ITEMS.length - 1) {
+         setCurrentModuleIndex(currentModuleIndex + 1);
+       }
+       return;
     }
 
     const hasFeedback = checkFeedback(newAnswers.length, 'moduleA');
@@ -609,6 +647,54 @@ export default function ExperiencePsyMirror() {
       </div>
 
       <AnimatePresence mode="wait">
+        {/* STEP: INTRO QCM (HOOK) */}
+        {step === 'introQCM' && (
+          <motion.div 
+            key={`introQCM-${currentModuleIndex}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="w-full max-w-2xl bg-[#12121A] p-8 md:p-12 rounded-[50px] shadow-[0_0_50px_-10px_rgba(201,162,77,0.1)] border border-white/10 space-y-10 relative z-10"
+          >
+             <div className="space-y-4">
+               <div className="flex justify-between items-end text-[10px] font-bold uppercase tracking-widest">
+                 <div className="flex flex-col gap-1">
+                   <span className="text-[#C9A24D]">Profilage Express</span>
+                   <span className="text-white/40">Question {currentModuleIndex + 1} / 5</span>
+                 </div>
+                 <span className="text-white/40"><Clock className="w-3 h-3 inline mr-1"/> ~45s</span>
+               </div>
+               <div className="h-1.5 w-full bg-[#1A1C2E]/50 rounded-full overflow-hidden">
+                 <motion.div 
+                   initial={{ width: `${(currentModuleIndex / 5) * 100}%` }}
+                   animate={{ width: `${((currentModuleIndex + 1) / 5) * 100}%` }}
+                   className="h-full bg-[#C9A24D]"
+                 />
+               </div>
+             </div>
+
+             <div className="space-y-8">
+               <h2 className="text-2xl md:text-3xl font-bold leading-tight text-white">
+                 {AUTO_PERCEPTION_ITEMS[currentModuleIndex]?.prompt}
+               </h2>
+               <div className="grid gap-4">
+                 {AUTO_PERCEPTION_ITEMS[currentModuleIndex]?.options.map((option, idx) => (
+                   <button
+                     key={`${currentModuleIndex}-${idx}`}
+                     onClick={() => handleModuleASelect(option)}
+                     className="group flex items-center justify-between p-6 bg-white/5 border border-white/10 rounded-3xl text-left hover:bg-[#C9A24D] hover:text-[#08090F] hover:border-[#C9A24D] transition-all duration-300"
+                   >
+                     <span className="font-medium text-lg pr-4">{option.text}</span>
+                     <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-[#08090F]/20 shrink-0">
+                       <ChevronRight className="w-5 h-5" />
+                     </div>
+                   </button>
+                 ))}
+               </div>
+             </div>
+          </motion.div>
+        )}
+
         {/* STEP: COLLECT INFO */}
         {step === 'collectInfo' && (
           <motion.div 

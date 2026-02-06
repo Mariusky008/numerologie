@@ -792,10 +792,10 @@ export default function ExperiencePsyMirror() {
                       }
                       trackEvent('share_tiktok_dm_pre_reveal');
                     }}
-                    className="w-full py-4 bg-[#08090F]/40 border border-white/10 rounded-[20px] font-bold text-sm uppercase tracking-widest hover:bg-white/5 transition-all flex items-center justify-center gap-2 text-white/70"
+                    className="w-full py-4 bg-gradient-to-r from-[#00f2ea]/20 to-[#ff0050]/20 border border-white/20 rounded-[20px] font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-all flex items-center justify-center gap-2 text-white shadow-lg"
                   >
                     <Share2 className="w-4 h-4" />
-                    Envoyer en message privé TikTok
+                    Envoyer en message privé
                   </button>
                   <p className="text-xs text-white/30 italic max-w-xs mx-auto">
                     « Envoie ce résumé à quelqu’un qui te connaît bien. Il pourrait te voir différemment. »

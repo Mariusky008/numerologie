@@ -1,5 +1,58 @@
 import { Scenario, QuizItem } from './types';
 
+export const INTRO_QCM_ITEMS: QuizItem[] = [
+  {
+    "item_id": "Q1",
+    "prompt": "Quand une décision importante arrive, tu as tendance à :",
+    "options": [
+      { "key": "A", "text": "Agir rapidement et avancer", "weights": { "D1": 5, "D2": 3 } },
+      { "key": "B", "text": "Attendre d’être sûr avant d’agir", "weights": { "D1": -3, "D2": -2 } },
+      { "key": "C", "text": "Demander conseil autour de toi", "weights": { "D1": -2, "D3": 3 } },
+      { "key": "D", "text": "Remettre à plus tard", "weights": { "D1": -5, "D2": -3 } }
+    ]
+  },
+  {
+    "item_id": "Q2",
+    "prompt": "Dans tes relations, tu te sens le plus souvent :",
+    "options": [
+      { "key": "A", "text": "Engagé mais freiné", "weights": { "D4": -2, "D5": 2 } },
+      { "key": "B", "text": "Présent mais en retrait", "weights": { "D4": -3, "D5": -1 } },
+      { "key": "C", "text": "Investi mais fatigué", "weights": { "D4": 3, "D5": 4 } },
+      { "key": "D", "text": "Libre mais instable", "weights": { "D4": 1, "D3": -3 } }
+    ]
+  },
+  {
+    "item_id": "Q3",
+    "prompt": "Quand tu penses à ta vie actuelle, tu te dis :",
+    "options": [
+      { "key": "A", "text": "Elle me ressemble vraiment", "weights": { "D6": 5 } },
+      { "key": "B", "text": "Elle me ressemble en partie", "weights": { "D6": 1 } },
+      { "key": "C", "text": "Je me suis éloigné de moi", "weights": { "D6": -3 } },
+      { "key": "D", "text": "Elle ne me ressemble plus", "weights": { "D6": -5 } }
+    ]
+  },
+  {
+    "item_id": "Q4",
+    "prompt": "Face à une contrainte imposée, tu réagis plutôt en :",
+    "options": [
+      { "key": "A", "text": "T’adaptant rapidement", "weights": { "D3": 3, "D2": 3 } },
+      { "key": "B", "text": "Résistant intérieurement", "weights": { "D3": -2, "D5": 2 } },
+      { "key": "C", "text": "Prenant sur toi sans rien dire", "weights": { "D3": 2, "D4": -3 } },
+      { "key": "D", "text": "Cherchant à t’en extraire", "weights": { "D3": -4, "D1": 3 } }
+    ]
+  },
+  {
+    "item_id": "Q5",
+    "prompt": "La plupart du temps, ton énergie intérieure est :",
+    "options": [
+      { "key": "A", "text": "Stable et maîtrisée", "weights": { "D5": 5, "D2": 4 } },
+      { "key": "B", "text": "Variable selon les situations", "weights": { "D5": 1 } },
+      { "key": "C", "text": "Forte mais dispersée", "weights": { "D5": 2, "D1": 3 } },
+      { "key": "D", "text": "En baisse ces derniers temps", "weights": { "D5": -4 } }
+    ]
+  }
+];
+
 export const AUTO_PERCEPTION_ITEMS: QuizItem[] = [
   { 
     "item_id": "A01", 

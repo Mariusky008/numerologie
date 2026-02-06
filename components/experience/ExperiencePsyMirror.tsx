@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
-import { AUTO_PERCEPTION_ITEMS, BEHAVIOR_SCENARIOS } from '@/lib/psy-mirror/data';
+import { AUTO_PERCEPTION_ITEMS, BEHAVIOR_SCENARIOS, INTRO_QCM_ITEMS } from '@/lib/psy-mirror/data';
 import { ROTATING_FEEDBACKS, MODULE_B_FEEDBACKS, SYNTHESIS } from '@/lib/psy-mirror/feedbacks';
 import type { Option } from '@/lib/psy-mirror/types';
 
@@ -31,7 +31,7 @@ import { calculateLifePathNumber, getLifePathData, getMoonSign, getSunSign, getA
 
 export default function ExperiencePsyMirror() {
   const router = useRouter();
-  const [step, setStep] = useState<'introQCM' | 'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'emailCapture' | 'loading'>('introQCM');
+  const [step, setStep] = useState<'introQCM' | 'preReveal' | 'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'emailCapture' | 'loading'>('introQCM');
   const [infoSubStep, setInfoSubStep] = useState(1); // 1: Name, 2: Date/Time, 3: City
   const [personalInfo, setPersonalInfo] = useState({
     firstName: '',
@@ -294,7 +294,9 @@ export default function ExperiencePsyMirror() {
   // Effect to manage transitions from IntroQCM
   useEffect(() => {
     if (step === 'introQCM' && moduleAAnswers.length >= 5) {
-      setStep('collectInfo');
+      // Calculate tension metrics for the Pre-Reveal
+      // (Simple mock logic for visual effect, real calculation happens later)
+      setStep('preReveal');
     }
   }, [moduleAAnswers, step]);
 
@@ -460,7 +462,7 @@ export default function ExperiencePsyMirror() {
 
     // Skip feedback during Intro QCM (first 5 questions)
     if (step === 'introQCM') {
-       if (currentModuleIndex < AUTO_PERCEPTION_ITEMS.length - 1) {
+       if (currentModuleIndex < INTRO_QCM_ITEMS.length - 1) {
          setCurrentModuleIndex(currentModuleIndex + 1);
        }
        return;
@@ -675,10 +677,10 @@ export default function ExperiencePsyMirror() {
 
              <div className="space-y-8">
                <h2 className="text-2xl md:text-3xl font-bold leading-tight text-white">
-                 {AUTO_PERCEPTION_ITEMS[currentModuleIndex]?.prompt}
+                 {INTRO_QCM_ITEMS[currentModuleIndex]?.prompt}
                </h2>
                <div className="grid gap-4">
-                 {AUTO_PERCEPTION_ITEMS[currentModuleIndex]?.options.map((option, idx) => (
+                 {INTRO_QCM_ITEMS[currentModuleIndex]?.options.map((option, idx) => (
                    <button
                      key={`${currentModuleIndex}-${idx}`}
                      onClick={() => handleModuleASelect(option)}
@@ -691,6 +693,57 @@ export default function ExperiencePsyMirror() {
                    </button>
                  ))}
                </div>
+             </div>
+          </motion.div>
+        )}
+
+        {/* STEP: PRE-REVEAL (TEASING RESULT) */}
+        {step === 'preReveal' && (
+          <motion.div 
+            key="preReveal"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            className="w-full max-w-lg bg-[#12121A] p-8 md:p-12 rounded-[50px] shadow-2xl border border-[#C9A24D]/20 text-center space-y-8 relative overflow-hidden"
+          >
+             {/* Background Effects */}
+             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#C9A24D] to-transparent opacity-50" />
+             <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#C9A24D]/10 blur-[50px] rounded-full" />
+
+             <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#C9A24D]/10 text-[#C9A24D] text-[10px] font-black uppercase tracking-widest mb-4">
+                  <Target className="w-3 h-3" />
+                  Analyse Partielle Terminée
+                </div>
+                <h2 className="text-4xl font-serif font-bold text-white">
+                   Écart détecté
+                </h2>
+                <div className="flex items-center justify-center gap-4 py-6">
+                   <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#C9A24D] to-[#8A6E2F]">
+                      38%
+                   </div>
+                </div>
+                <p className="text-lg text-white/80 leading-relaxed font-light">
+                   "Tu as l'énergie pour avancer, mais quelque chose dans ton environnement actuel te freine."
+                </p>
+             </div>
+
+             <div className="p-6 bg-white/5 rounded-3xl border border-white/5">
+                <p className="text-[#C9A24D] font-bold italic text-lg">
+                   ✨ "Ton potentiel demande plus d'espace."
+                </p>
+             </div>
+
+             <div className="space-y-4 pt-4">
+                <p className="text-xs text-white/40 uppercase tracking-widest">
+                   Pour débloquer l'analyse complète :
+                </p>
+                <button
+                  onClick={() => setStep('collectInfo')}
+                  className="w-full py-6 bg-[#C9A24D] text-[#08090F] rounded-[20px] font-black text-xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(201,162,77,0.5)] flex items-center justify-center gap-3"
+                >
+                  Je veux comprendre <ArrowRight className="w-6 h-6" />
+                </button>
              </div>
           </motion.div>
         )}

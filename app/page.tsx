@@ -100,22 +100,35 @@ const MATRIX_INSIGHTS: Record<number, Record<string, string>> = {
   }
 };
 
+// Full Descriptions Data (Restored)
+const ARCHETYPE_DESCRIPTIONS: Record<string, string> = {
+  "amour": "Ton Chemin de Vie {{LP}} cherche l'indépendance, mais ton ambition amoureuse demande de la fusion. C'est ce tiraillement qui crée l'instabilité.",
+  "famille": "Avec un Chemin de Vie {{LP}}, tu as besoin de liberté, mais ton ambition familiale te ramène à des devoirs. Tu te sens piégé entre loyauté et évasion.",
+  "decisions": "Ton Chemin de Vie {{LP}} est intuitif, mais tu essaies de tout rationaliser. Ton indécision vient de là : tu n'écoutes pas ta première impression.",
+  "confiance": "Ton énergie {{LP}} est puissante mais brute. Ton manque de confiance vient du fait que tu essaies de rentrer dans un moule trop petit pour toi.",
+  "solitude": "Le Chemin de Vie {{LP}} a besoin de solitude pour se recharger, mais tu la confonds avec de l'isolement. Tu as peur du vide alors qu'il est ta force.",
+  "vie": "Ton Chemin de Vie {{LP}} demande du mouvement. Ta vie actuelle est trop statique, c'est pour ça que tu as l'impression d'étouffer."
+};
+
 // Micro-Insight Logic
-const getMicroInsight = (lifePath: number, archetypeId: string): string => {
+const getMicroInsight = (lifePath: number, archetypeId: string): { description: string, punchline: string } => {
   // Handle Master Numbers by reducing them for the matrix lookup
   let lookupPath = lifePath;
   if (lookupPath === 11) lookupPath = 2;
   if (lookupPath === 22) lookupPath = 4;
   if (lookupPath === 33) lookupPath = 6;
 
-  // Safe lookup
-  const pathInsights = MATRIX_INSIGHTS[lookupPath];
-  if (pathInsights && pathInsights[archetypeId]) {
-    return pathInsights[archetypeId];
-  }
+  // 1. Get Description (interpolating Life Path)
+  const rawDesc = ARCHETYPE_DESCRIPTIONS[archetypeId] || "Ton Chemin de Vie {{LP}} entre en friction avec ton ambition actuelle.";
+  const description = rawDesc.replace("{{LP}}", lifePath.toString());
 
-  // Fallback generic if not found
-  return `Ton Chemin de Vie ${lifePath} cherche sa voie.`;
+  // 2. Get Punchline from Matrix
+  const pathInsights = MATRIX_INSIGHTS[lookupPath];
+  const punchline = (pathInsights && pathInsights[archetypeId]) 
+    ? pathInsights[archetypeId] 
+    : `Ton Chemin de Vie ${lifePath} cherche sa voie.`;
+
+  return { description, punchline };
 };
 
 const ARCHETYPES = [
@@ -372,7 +385,7 @@ export default function Home() {
   // Teaser Modal State
   const [showTeaserModal, setShowTeaserModal] = useState(false);
   const [teaserBirthDate, setTeaserBirthDate] = useState('');
-  const [teaserResult, setTeaserResult] = useState<{path: number, text: string} | null>(null);
+  const [teaserResult, setTeaserResult] = useState<{path: number, description: string, punchline: string} | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
   const [userResponse, setUserResponse] = useState<string | null>(null);
@@ -411,7 +424,7 @@ export default function Home() {
 
   const handleWhatsappShare = () => {
     if (!teaserResult) return;
-    const shareText = `Je viens de découvrir mon blocage caché : "${teaserResult.text}". Fais le test gratuitement ici : https://votrelegende.fr`;
+    const shareText = `Je viens de découvrir mon blocage caché : "${teaserResult.punchline}". Fais le test gratuitement ici : https://votrelegende.fr`;
     const url = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
     window.open(url, '_blank');
     trackEvent('share_whatsapp');
@@ -420,7 +433,7 @@ export default function Home() {
   const handleShare = async () => {
     if (!teaserResult) return;
     
-    const shareText = `Je viens de découvrir mon blocage caché : "${teaserResult.text}". Fais le test gratuitement ici : https://votrelegende.fr`;
+    const shareText = `Je viens de découvrir mon blocage caché : "${teaserResult.punchline}". Fais le test gratuitement ici : https://votrelegende.fr`;
     
     if (navigator.share) {
       try {
@@ -452,7 +465,7 @@ export default function Home() {
     // Mobile fix: ensure we have enough data even if format is slightly off
     const cleanDate = teaserBirthDate.replace(/\D/g, '');
     if (cleanDate.length < 8) return; 
-
+    
     setIsCalculating(true);
     
     // Simulate calculation time for effect
@@ -475,11 +488,11 @@ export default function Home() {
       const lp = calculateLifePath(isoDate);
       // Force selectedArchetype to be valid, default to 'vie' if null
       const currentArchetype = selectedArchetype || 'vie';
-      const text = getMicroInsight(lp, currentArchetype);
+      const { description, punchline } = getMicroInsight(lp, currentArchetype);
       
-      console.log('Teaser Calculation:', { lp, currentArchetype, text }); // Debug
+      console.log('Teaser Calculation:', { lp, currentArchetype, description, punchline }); // Debug
 
-      setTeaserResult({ path: lp, text });
+      setTeaserResult({ path: lp, description, punchline });
       setIsCalculating(false);
       trackEvent('teaser_calculated', { lifePath: lp });
     }, 1500);
@@ -653,10 +666,19 @@ export default function Home() {
 
                   <div className="bg-white/5 p-6 rounded-3xl border border-white/10 relative overflow-hidden group">
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#C9A24D] to-transparent opacity-50" />
-                    <p className="text-4xl mb-4 animate-bounce">✨</p>
-                    <p className="text-lg md:text-xl text-white/90 font-medium leading-relaxed font-serif">
-                      "{teaserResult.text}"
+                    
+                    {/* Description Complète */}
+                    <p className="text-white/70 text-sm leading-relaxed mb-6 font-light">
+                      {teaserResult.description}
                     </p>
+
+                    {/* Punchline Matrix */}
+                    <div className="space-y-2">
+                        <p className="text-4xl animate-bounce">✨</p>
+                        <p className="text-lg md:text-xl text-[#C9A24D] font-medium leading-relaxed font-serif italic">
+                        "{teaserResult.punchline}"
+                        </p>
+                    </div>
                   </div>
 
                   {/* SOCIAL ACTIONS */}

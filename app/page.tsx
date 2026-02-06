@@ -110,10 +110,13 @@ const ARCHETYPE_DESCRIPTIONS: Record<string, string> = {
   "vie": "Ton Chemin de Vie {{LP}} demande du mouvement. Ta vie actuelle est trop statique, c'est pour ça que tu as l'impression d'étouffer."
 };
 
-// Micro-Insight Logic
+  // Micro-Insight Logic
 const getMicroInsight = (lifePath: number, archetypeId: string): { description: string, punchline: string } => {
   // Handle Master Numbers by reducing them for the matrix lookup
   let lookupPath = lifePath;
+  // If Master Numbers are not in matrix, reduce them. 
+  // 10 is not a Life Path usually (1+0=1), but if calculator returns 10, treat as 1.
+  if (lookupPath === 10) lookupPath = 1;
   if (lookupPath === 11) lookupPath = 2;
   if (lookupPath === 22) lookupPath = 4;
   if (lookupPath === 33) lookupPath = 6;

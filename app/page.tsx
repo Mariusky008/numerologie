@@ -340,18 +340,40 @@ export default function Home() {
 
   const calculateTeaser = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!teaserBirthDate) return;
+    if (!teaserBirthDate || teaserBirthDate.length < 10) return;
 
     setIsCalculating(true);
     
     // Simulate calculation time for effect
     setTimeout(() => {
-      const lp = calculateLifePath(teaserBirthDate);
+      // Handle DD/MM/YYYY format manual entry or YYYY-MM-DD from picker
+      let isoDate = teaserBirthDate;
+      if (teaserBirthDate.includes('/')) {
+        const [d, m, y] = teaserBirthDate.split('/');
+        isoDate = `${y}-${m}-${d}`;
+      }
+
+      const lp = calculateLifePath(isoDate);
       const text = getMicroInsight(lp, selectedArchetype || 'vie');
       setTeaserResult({ path: lp, text });
       setIsCalculating(false);
       trackEvent('teaser_calculated', { lifePath: lp });
     }, 1500);
+  };
+  
+  // Format input value visually for DD/MM/YYYY
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let val = e.target.value.replace(/\D/g, ''); // Keep only numbers
+    if (val.length > 8) val = val.slice(0, 8); // Max 8 digits
+    
+    // Add slashes automatically
+    if (val.length > 4) {
+      val = `${val.slice(0, 2)}/${val.slice(2, 4)}/${val.slice(4)}`;
+    } else if (val.length > 2) {
+      val = `${val.slice(0, 2)}/${val.slice(2)}`;
+    }
+    
+    setTeaserBirthDate(val);
   };
 
   const proceedToFullTest = () => {
@@ -423,12 +445,15 @@ export default function Home() {
 
                   <form onSubmit={calculateTeaser} className="space-y-6">
                     <div className="space-y-2 text-left">
-                      <label className="text-xs font-black uppercase tracking-widest text-[#C9A24D] ml-4">Ta date de naissance</label>
+                      <label className="text-xs font-black uppercase tracking-widest text-[#C9A24D] ml-4">Ta date de naissance (JJ/MM/AAAA)</label>
                       <input 
-                        type="date" 
+                        type="text" 
+                        inputMode="numeric"
+                        placeholder="Ex: 12/05/1990"
+                        maxLength={10}
                         required
                         value={teaserBirthDate}
-                        onChange={(e) => setTeaserBirthDate(e.target.value)}
+                        onChange={handleDateChange}
                         className="w-full bg-[#08090F] border-2 border-white/10 rounded-2xl px-6 py-4 font-bold text-xl text-white focus:border-[#C9A24D] outline-none transition-all text-center placeholder-white/20"
                       />
                     </div>

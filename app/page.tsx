@@ -507,10 +507,10 @@ export default function Home() {
                       onClick={proceedToFullTest}
                       className="w-full py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black text-lg uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_30px_-5px_rgba(201,162,77,0.4)] flex items-center justify-center gap-3"
                     >
-                      Aller plus loin & Régler ça <ArrowRight className="w-5 h-5" />
+                      Comprendre ce qui me rend différent <ArrowRight className="w-5 h-5" />
                     </button>
                     <p className="text-xs text-white/40">
-                      Accéder au plan d'action complet (Gratuit)
+                      Nouvelle analyse gratuite avec votre prénom
                     </p>
                   </div>
                 </div>

@@ -219,16 +219,21 @@ export default function ExperiencePsyMirror() {
       try {
         const parsed = JSON.parse(savedCosmicData);
         setUserData(parsed);
+        
+        // Always pre-fill whatever data we have
+        setPersonalInfo(prev => ({
+          ...prev,
+          firstName: parsed.firstName || prev.firstName,
+          lastName: parsed.lastName || prev.lastName,
+          birthDate: parsed.birthDate || prev.birthDate,
+          birthTime: parsed.birthTime || prev.birthTime,
+          birthCity: parsed.birthCity || prev.birthCity
+        }));
+
         if (parsed.birthDate && parsed.firstName) {
-          setPersonalInfo({
-            firstName: parsed.firstName || '',
-            lastName: parsed.lastName || '',
-            birthDate: parsed.birthDate || '',
-            birthTime: parsed.birthTime || '',
-            birthCity: parsed.birthCity || ''
-          });
-          
+          // Calculate everything if we have both
           const pathNum = calculateLifePathNumber(parsed.birthDate);
+          // ... (rest of the logic)
           const pathData = getLifePathData(pathNum);
           const moonData = getMoonSign(parsed.birthDate, parsed.birthTime);
           const sunData = getSunSign(parsed.birthDate);
@@ -285,6 +290,43 @@ export default function ExperiencePsyMirror() {
     const ascendantData = personalInfo.birthTime ? getAscendant(personalInfo.birthDate, personalInfo.birthTime) : { name: 'Bélier', description: '' };
     const masterData = getChartMaster(ascendantData.name);
 
+    // --- NEW: Calculate Name Number (Expression) ---
+    // Simple Pythagorean system: 1-9
+    const calculateNameNumber = (name: string) => {
+      const mapping: {[key: string]: number} = {
+        a:1,b:2,c:3,d:4,e:5,f:6,g:7,h:8,i:9,
+        j:1,k:2,l:3,m:4,n:5,o:6,p:7,q:8,r:9,
+        s:1,t:2,u:3,v:4,w:5,x:6,y:7,z:8
+      };
+      const cleanName = name.toLowerCase().replace(/[^a-z]/g, '');
+      let sum = 0;
+      for (const char of cleanName) {
+        sum += mapping[char] || 0;
+      }
+      // Reduce to single digit (except 11, 22)
+      while (sum > 9 && sum !== 11 && sum !== 22) {
+        sum = sum.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+      }
+      return sum;
+    };
+
+    const expressionNumber = calculateNameNumber(personalInfo.firstName + personalInfo.lastName);
+    
+    // Quick insights for expression number
+    const expressionInsights: {[key: number]: string} = {
+      1: "Un leader né qui doit apprendre à diriger sans dominer.",
+      2: "Un diplomate sensible qui harmonise les contraires.",
+      3: "Un créatif communicant qui a besoin de s'exprimer pour exister.",
+      4: "Un bâtisseur méthodique, pilier de stabilité.",
+      5: "Un explorateur libre qui refuse les cages dorées.",
+      6: "Un protecteur responsable, le cœur sur la main.",
+      7: "Un penseur analytique en quête de vérité profonde.",
+      8: "Un visionnaire ambitieux, fait pour les grandes réalisations.",
+      9: "Un humaniste inspiré qui voit au-delà de soi.",
+      11: "Un inspirateur intuitif avec une forte tension nerveuse.",
+      22: "Un maître d'œuvre capable de matérialiser l'impossible."
+    };
+
     setCosmicData({ 
       pathNum, 
       ...pathData, 
@@ -299,7 +341,10 @@ export default function ExperiencePsyMirror() {
       masterHouse: masterData.house,
       master_desc: masterData.description,
       firstName: personalInfo.firstName,
-      lastName: personalInfo.lastName
+      lastName: personalInfo.lastName,
+      // Add Expression Data
+      expressionNumber,
+      expressionInsight: expressionInsights[expressionNumber] || "Une personnalité complexe aux multiples facettes."
     });
     
     // Update userData for persistence
@@ -706,6 +751,12 @@ export default function ExperiencePsyMirror() {
                       <p className="text-sm font-bold text-white/90">{cosmicData?.potential}</p>
                       <p className="text-xs text-white/50 italic">{cosmicData?.description}</p>
                     </div>
+                    {/* NEW: Expression Number Card */}
+                    <div className="p-4 rounded-2xl bg-[#C9A24D]/10 border border-[#C9A24D]/20 space-y-1">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-[#C9A24D]">Nombre d'Expression {cosmicData?.expressionNumber}</p>
+                      <p className="text-sm font-bold text-white/90">{cosmicData?.expressionInsight}</p>
+                      <p className="text-xs text-white/50 italic">Ce que votre nom révèle de votre mission.</p>
+                    </div>
                     <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
                       <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Soleil en {cosmicData?.sun} ({cosmicData?.sun_element})</p>
                       <p className="text-xs text-white/50 italic">{cosmicData?.sun_desc}</p>
@@ -714,12 +765,6 @@ export default function ExperiencePsyMirror() {
                       <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Ascendant {cosmicData?.ascendant}</p>
                       <p className="text-xs text-white/50 italic">{cosmicData?.ascendant_desc}</p>
                     </div>
-                    {cosmicData?.masterPlanet && (
-                      <div className="p-4 rounded-2xl bg-[#5B4B8A]/10 border border-[#5B4B8A]/20 space-y-1">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-[#A78BFA]">Maître : {cosmicData?.masterPlanet} (Maison {cosmicData?.masterHouse})</p>
-                        <p className="text-xs text-white/50 italic">{cosmicData?.master_desc}</p>
-                      </div>
-                    )}
                   </div>
                 </div>
 

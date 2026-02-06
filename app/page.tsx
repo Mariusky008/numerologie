@@ -665,32 +665,36 @@ export default function Home() {
                     </h3>
                   </div>
 
-                  <div className="bg-white/5 p-8 md:p-10 rounded-3xl border border-white/10 relative overflow-hidden group space-y-8">
+                  <div className="bg-white/5 p-8 md:p-12 rounded-[40px] border border-white/10 relative overflow-hidden group space-y-10 shadow-2xl">
+                    {/* Background Glow */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#C9A24D]/5 to-transparent opacity-50" />
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#C9A24D] to-transparent opacity-50" />
                     
                     {/* Description Complète - Style éditorial et aéré */}
-                    <p className="text-white/80 text-lg md:text-xl leading-relaxed font-light text-center max-w-2xl mx-auto">
-                      {teaserResult.description}
-                    </p>
+                    <div className="relative z-10">
+                        <p className="text-white/90 text-xl md:text-2xl leading-relaxed font-light text-center max-w-2xl mx-auto">
+                        {teaserResult.description}
+                        </p>
+                    </div>
 
                     {/* Séparateur Élégant */}
-                    <div className="flex items-center justify-center gap-4 opacity-30">
-                        <div className="h-px w-12 bg-white"></div>
-                        <span className="text-2xl animate-pulse">✨</span>
-                        <div className="h-px w-12 bg-white"></div>
+                    <div className="flex items-center justify-center gap-6 opacity-40">
+                        <div className="h-px w-20 bg-gradient-to-r from-transparent to-[#C9A24D]"></div>
+                        <span className="text-3xl animate-pulse text-[#C9A24D]">✨</span>
+                        <div className="h-px w-20 bg-gradient-to-l from-transparent to-[#C9A24D]"></div>
                     </div>
 
                     {/* Punchline Matrix - Style Impactant "Quote" */}
-                    <div className="text-center relative">
-                        <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-6xl text-[#C9A24D]/10 font-serif font-black">"</span>
-                        <p className="text-2xl md:text-3xl text-[#C9A24D] font-bold leading-tight font-serif italic tracking-wide relative z-10 px-4">
+                    <div className="text-center relative py-4">
+                        <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-8xl text-[#C9A24D]/5 font-serif font-black select-none">"</span>
+                        <p className="text-3xl md:text-5xl text-[#C9A24D] font-bold leading-tight font-serif italic tracking-wide relative z-10 px-4 drop-shadow-lg">
                           {teaserResult.punchline}
                         </p>
                     </div>
                   </div>
 
-                  {/* SOCIAL ACTIONS */}
-                  <div className="flex flex-col gap-3">
+                  {/* SOCIAL ACTIONS (Temporairement Masqués) */}
+                  {/* <div className="flex flex-col gap-3">
                     <div className="flex gap-2">
                       <button 
                         onClick={handleWhatsappShare}
@@ -716,16 +720,16 @@ export default function Home() {
                       <Smartphone className="w-4 h-4" /> 
                       <span>Abonne-toi pour + de diagnostics ⚡️</span>
                     </a>
-                  </div>
+                  </div> */}
 
-                  <div className="space-y-4">
+                  <div className="space-y-6 pt-4">
                     <button
                       onClick={proceedToFullTest}
-                      className="w-full py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black text-lg uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_30px_-5px_rgba(201,162,77,0.4)] flex items-center justify-center gap-3"
+                      className="w-full py-6 bg-[#C9A24D] text-[#08090F] rounded-[20px] font-black text-xl md:text-2xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(201,162,77,0.5)] flex items-center justify-center gap-4"
                     >
-                      Comprendre ce qui me rend différent <ArrowRight className="w-5 h-5" />
+                      Comprendre ce qui me rend différent <ArrowRight className="w-6 h-6" />
                     </button>
-                    <p className="text-xs text-white/40">
+                    <p className="text-sm text-white/40 font-medium">
                       Nouvelle analyse gratuite avec votre prénom
                     </p>
                   </div>

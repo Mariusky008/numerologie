@@ -568,12 +568,12 @@ export default function Home() {
       {/* TEASER MODAL */}
       <AnimatePresence>
         {showTeaserModal && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 overflow-y-auto">
+          <div className="fixed inset-0 z-[100] flex items-start justify-center pt-8 md:items-center p-4 md:p-8 overflow-y-auto">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-[#08090F]/90 backdrop-blur-md"
+              className="absolute inset-0 bg-[#08090F]/90 backdrop-blur-md fixed"
               onClick={() => setShowTeaserModal(false)}
             />
             
@@ -581,7 +581,7 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-2xl bg-[#12121A] border border-[#C9A24D]/30 rounded-[3rem] p-6 md:p-12 shadow-[0_0_100px_-20px_rgba(201,162,77,0.3)] text-center my-auto max-h-[90vh] overflow-y-auto custom-scrollbar"
+              className="relative w-full max-w-2xl bg-[#12121A] border border-[#C9A24D]/30 rounded-[3rem] p-6 md:p-12 shadow-[0_0_100px_-20px_rgba(201,162,77,0.3)] text-center mb-8"
             >
               <button 
                 onClick={() => setShowTeaserModal(false)}

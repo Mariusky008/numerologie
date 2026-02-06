@@ -15,7 +15,8 @@ import {
   Star,
   User,
   MapPin,
-  Calendar
+  Calendar,
+  Share2
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';

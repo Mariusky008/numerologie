@@ -340,7 +340,10 @@ export default function Home() {
 
   const calculateTeaser = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!teaserBirthDate || teaserBirthDate.length < 10) return;
+    
+    // Mobile fix: ensure we have enough data even if format is slightly off
+    const cleanDate = teaserBirthDate.replace(/\D/g, '');
+    if (cleanDate.length < 8) return; 
 
     setIsCalculating(true);
     
@@ -348,7 +351,15 @@ export default function Home() {
     setTimeout(() => {
       // Handle DD/MM/YYYY format manual entry or YYYY-MM-DD from picker
       let isoDate = teaserBirthDate;
-      if (teaserBirthDate.includes('/')) {
+      
+      // If we have clean 8 digits (DDMMYYYY), format it to ISO
+      if (!teaserBirthDate.includes('-') && cleanDate.length === 8) {
+        const d = cleanDate.slice(0, 2);
+        const m = cleanDate.slice(2, 4);
+        const y = cleanDate.slice(4);
+        isoDate = `${y}-${m}-${d}`;
+      }
+      else if (teaserBirthDate.includes('/')) {
         const [d, m, y] = teaserBirthDate.split('/');
         isoDate = `${y}-${m}-${d}`;
       }
@@ -363,7 +374,15 @@ export default function Home() {
   
   // Format input value visually for DD/MM/YYYY
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let val = e.target.value.replace(/\D/g, ''); // Keep only numbers
+    let val = e.target.value;
+    
+    // Allow user to delete slashes naturally
+    if (val.length < teaserBirthDate.length) {
+       setTeaserBirthDate(val);
+       return;
+    }
+
+    val = val.replace(/\D/g, ''); // Keep only numbers
     if (val.length > 8) val = val.slice(0, 8); // Max 8 digits
     
     // Add slashes automatically
@@ -460,8 +479,14 @@ export default function Home() {
                     
                     <button
                       type="submit"
-                      disabled={!teaserBirthDate || isCalculating}
-                      className="w-full py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black text-lg uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_30px_-5px_rgba(201,162,77,0.4)] flex items-center justify-center gap-3 disabled:opacity-50 disabled:scale-100"
+                      disabled={!teaserBirthDate || teaserBirthDate.replace(/\D/g, '').length < 8 || isCalculating}
+                      onTouchEnd={(e) => {
+                         // Fallback for mobile touch
+                         if (!isCalculating && teaserBirthDate.replace(/\D/g, '').length >= 8) {
+                           calculateTeaser(e);
+                         }
+                      }}
+                      className="w-full py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black text-lg uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_30px_-5px_rgba(201,162,77,0.4)] flex items-center justify-center gap-3 disabled:opacity-50 disabled:scale-100 touch-manipulation"
                     >
                       {isCalculating ? (
                         <>
@@ -568,7 +593,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BACKGROUND ELEMENTS MOVED OUTSIDE SECTION TO COVER FULL PAGE */}
+      {/* BACKGROUND ELEMENTS - FIXED FULLSCREEN */}
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[120px] rounded-full" />
           <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover opacity-20">
@@ -576,7 +601,8 @@ export default function Home() {
           </video>
       </div>
 
-      <footer className="py-8 px-6 border-t border-white/5 text-center opacity-30 text-[10px] font-black uppercase tracking-[0.2em] z-10 w-full bg-[#08090F]/80 backdrop-blur-sm">
+      {/* FOOTER - FIXED BOTTOM */}
+      <footer className="fixed bottom-0 left-0 right-0 py-6 px-6 border-t border-white/5 text-center opacity-60 text-[10px] font-black uppercase tracking-[0.2em] z-50 bg-[#08090F]/90 backdrop-blur-md safe-area-bottom">
         © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION
       </footer>
     </div>

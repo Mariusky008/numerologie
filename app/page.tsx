@@ -276,7 +276,7 @@ const SectionCTA = ({
         
         <div className="text-center space-y-1">
           <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">
-            Diagnostic Flash (30 secondes)
+            Diagnostic Flash (10 secondes)
           </p>
           <p className="text-[9px] text-white/30">
             Gratuit & Sans inscription
@@ -396,8 +396,24 @@ export default function Home() {
   };
 
   const proceedToFullTest = () => {
+    // Convert to YYYY-MM-DD for consistency with input type="date"
+    let isoDate = teaserBirthDate;
+    const cleanDate = teaserBirthDate.replace(/\D/g, '');
+    
+    // Attempt to format if it's DD/MM/YYYY
+    if (!teaserBirthDate.includes('-') && cleanDate.length === 8) {
+      const d = cleanDate.slice(0, 2);
+      const m = cleanDate.slice(2, 4);
+      const y = cleanDate.slice(4);
+      isoDate = `${y}-${m}-${d}`;
+    }
+    else if (teaserBirthDate.includes('/')) {
+      const [d, m, y] = teaserBirthDate.split('/');
+      isoDate = `${y}-${m}-${d}`;
+    }
+
     // Pre-save data to localStorage so it's ready in the full test
-    const cosmicData = { birthDate: teaserBirthDate };
+    const cosmicData = { birthDate: isoDate };
     localStorage.setItem('cosmic_user_data', JSON.stringify(cosmicData));
     
     trackEvent('teaser_convert_to_full');
@@ -546,13 +562,13 @@ export default function Home() {
       </AnimatePresence>
 
       {/* 1. HERO — SINGLE BLOCK FOCUS */}
-      <section className="flex-grow flex flex-col items-center justify-center px-4 md:px-8 relative pt-12 pb-12 w-full z-10">
+      <section className="flex-grow flex flex-col items-center justify-center px-4 md:px-8 relative pt-12 pb-32 w-full z-10">
         <div className="w-full max-w-[1600px] text-center space-y-12 md:space-y-16">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
             <div className="flex flex-col items-center gap-6 mb-4">
               <div className="inline-flex items-center gap-3 px-8 py-3 rounded-full bg-[#C9A24D] text-[#08090F] shadow-[0_0_40px_-5px_rgba(201,162,77,0.6)] animate-pulse">
                 <Zap className="w-5 h-5 fill-[#08090F]" />
-                <span className="text-sm md:text-base font-black uppercase tracking-widest">Diagnostic Flash en 30 secondes</span>
+                <span className="text-sm md:text-base font-black uppercase tracking-widest">Diagnostic Flash en 10 secondes</span>
               </div>
             </div>
             
@@ -602,7 +618,7 @@ export default function Home() {
       </div>
 
       {/* FOOTER - FIXED BOTTOM - Z-INDEX MAXIMAL */}
-      <footer className="fixed bottom-0 left-0 right-0 py-4 px-6 border-t border-white/10 text-center opacity-80 text-[10px] font-black uppercase tracking-[0.2em] z-[100] bg-[#08090F] safe-area-bottom">
+      <footer className="fixed bottom-0 left-0 right-0 py-6 px-6 border-t border-white/10 text-center text-[10px] font-black uppercase tracking-[0.2em] z-[9999] bg-[#08090F] text-white safe-area-bottom shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.8)]">
         © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION
       </footer>
     </div>

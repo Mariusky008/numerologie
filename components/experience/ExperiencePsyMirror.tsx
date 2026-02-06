@@ -269,6 +269,7 @@ export default function ExperiencePsyMirror() {
   }, []);
 
   const [showNameReward, setShowNameReward] = useState(false); // NEW STATE FOR NAME REWARD
+  const [showCityReward, setShowCityReward] = useState(false); // NEW STATE FOR CITY REWARD
   
   // --- Intro & Cosmic Identity ---
   const handleIntroStart = () => {
@@ -399,7 +400,12 @@ export default function ExperiencePsyMirror() {
     setUserData(updatedUserData);
     localStorage.setItem('cosmic_user_data', JSON.stringify(updatedUserData));
 
-    setStep('cosmicReveal');
+    // Show City Reward then proceed
+    setShowCityReward(true);
+    setTimeout(() => {
+        setShowCityReward(false);
+        setStep('cosmicReveal');
+    }, 3500);
   };
 
   const proceedFromCosmic = () => {
@@ -640,6 +646,39 @@ export default function ExperiencePsyMirror() {
               )}
             </AnimatePresence>
 
+            {/* City/Cosmic Reward Modal */}
+            <AnimatePresence>
+              {showCityReward && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 z-50 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-[50px]"
+                >
+                  <motion.div
+                    initial={{ scale: 0.8, y: 20 }}
+                    animate={{ scale: 1, y: 0 }}
+                    exit={{ scale: 0.8, y: 20 }}
+                    className="text-center space-y-4"
+                  >
+                    <div className="w-20 h-20 bg-[#5B4B8A] rounded-full flex items-center justify-center mx-auto shadow-xl">
+                      <Star className="w-10 h-10 text-white" />
+                    </div>
+                    <div className="space-y-2">
+                        <p className="text-[#5B4B8A] font-black uppercase tracking-widest text-sm">Carte du Ciel Générée</p>
+                        <h3 className="text-3xl font-serif font-bold text-[#1A1C2E]">
+                           Ascendant {cosmicData?.ascendant}
+                        </h3>
+                    </div>
+                    <p className="text-[#1A1C2E]/60 max-w-xs mx-auto">
+                        Votre lieu et heure de naissance révèlent votre masque social. <br/>
+                        <span className="font-bold text-[#1A1C2E]">Initialisation du Miroir Psychologique...</span>
+                    </p>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* Form Progress Bar */}
             <div className="w-full h-1.5 bg-[#1A1C2E]/5 rounded-full overflow-hidden mb-8">
               <motion.div 
@@ -728,7 +767,7 @@ export default function ExperiencePsyMirror() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Heure (si connue)</label>
+                    <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Heure de naissance</label>
                     <input 
                       type="time" 
                       value={personalInfo.birthTime}

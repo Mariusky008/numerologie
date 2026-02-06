@@ -618,7 +618,7 @@ export default function Home() {
       </div>
 
       {/* FOOTER - FIXED BOTTOM - Z-INDEX MAXIMAL */}
-      <footer className="fixed bottom-0 left-0 right-0 py-6 px-6 border-t border-white/10 text-center text-[10px] font-black uppercase tracking-[0.2em] z-[9999] bg-[#08090F] text-white safe-area-bottom shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.8)]">
+      <footer className="fixed bottom-0 left-0 right-0 py-6 px-6 border-t border-white/10 text-center text-[10px] font-black uppercase tracking-[0.2em] z-[9999] bg-[#08090F] text-[#C9A24D] safe-area-bottom shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.8)] w-full">
         © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION
       </footer>
     </div>

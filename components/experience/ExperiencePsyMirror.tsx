@@ -601,8 +601,13 @@ export default function ExperiencePsyMirror() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-[#1A1C2E] font-sans flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-[#08090F] text-white font-sans flex flex-col items-center justify-center p-6 relative overflow-hidden">
       
+      {/* Background Ambience */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#C9A24D]/5 blur-[100px] rounded-full" />
+      </div>
+
       <AnimatePresence mode="wait">
         {/* STEP: COLLECT INFO */}
         {step === 'collectInfo' && (
@@ -611,7 +616,7 @@ export default function ExperiencePsyMirror() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="w-full max-w-2xl bg-white p-8 md:p-12 rounded-[50px] shadow-2xl border border-[#1A1C2E]/5 space-y-10"
+            className="w-full max-w-2xl bg-[#12121A] p-8 md:p-12 rounded-[50px] shadow-[0_0_50px_-10px_rgba(201,162,77,0.1)] border border-white/10 space-y-10 relative z-10"
           >
             {/* Name Reward Modal */}
             <AnimatePresence>
@@ -620,26 +625,26 @@ export default function ExperiencePsyMirror() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 z-50 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-[50px]"
+                  className="absolute inset-0 z-50 flex items-center justify-center bg-[#08090F]/95 backdrop-blur-md rounded-[50px] border border-[#C9A24D]/20"
                 >
                   <motion.div
                     initial={{ scale: 0.8, y: 20 }}
                     animate={{ scale: 1, y: 0 }}
                     exit={{ scale: 0.8, y: 20 }}
-                    className="text-center space-y-4"
+                    className="text-center space-y-4 p-6"
                   >
-                    <div className="w-20 h-20 bg-[#C9A24D] rounded-full flex items-center justify-center mx-auto shadow-xl">
-                      <Sparkles className="w-10 h-10 text-white" />
+                    <div className="w-20 h-20 bg-[#C9A24D]/10 rounded-full flex items-center justify-center mx-auto shadow-xl border border-[#C9A24D]/20">
+                      <Sparkles className="w-10 h-10 text-[#C9A24D]" />
                     </div>
                     <div className="space-y-2">
                         <p className="text-[#C9A24D] font-black uppercase tracking-widest text-sm">Identité Décodée</p>
-                        <h3 className="text-3xl font-serif font-bold text-[#1A1C2E]">
+                        <h3 className="text-3xl font-serif font-bold text-white">
                             Nombre d'Expression {cosmicData?.expressionNumber}
                         </h3>
                     </div>
-                    <p className="text-[#1A1C2E]/60 max-w-xs mx-auto">
+                    <p className="text-white/60 max-w-xs mx-auto leading-relaxed">
                         Votre prénom porte la vibration de votre mission. <br/>
-                        <span className="font-bold text-[#1A1C2E]">On continue l'exploration...</span>
+                        <span className="font-bold text-white">On continue l'exploration...</span>
                     </p>
                   </motion.div>
                 </motion.div>
@@ -653,26 +658,26 @@ export default function ExperiencePsyMirror() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 z-50 flex items-center justify-center bg-white/90 backdrop-blur-sm rounded-[50px]"
+                  className="absolute inset-0 z-50 flex items-center justify-center bg-[#08090F]/95 backdrop-blur-md rounded-[50px] border border-[#C9A24D]/20"
                 >
                   <motion.div
                     initial={{ scale: 0.8, y: 20 }}
                     animate={{ scale: 1, y: 0 }}
                     exit={{ scale: 0.8, y: 20 }}
-                    className="text-center space-y-4"
+                    className="text-center space-y-4 p-6"
                   >
-                    <div className="w-20 h-20 bg-[#5B4B8A] rounded-full flex items-center justify-center mx-auto shadow-xl">
-                      <Star className="w-10 h-10 text-white" />
+                    <div className="w-20 h-20 bg-[#5B4B8A]/20 rounded-full flex items-center justify-center mx-auto shadow-xl border border-[#5B4B8A]/40">
+                      <Star className="w-10 h-10 text-[#9F8FEF]" />
                     </div>
                     <div className="space-y-2">
-                        <p className="text-[#5B4B8A] font-black uppercase tracking-widest text-sm">Carte du Ciel Générée</p>
-                        <h3 className="text-3xl font-serif font-bold text-[#1A1C2E]">
+                        <p className="text-[#9F8FEF] font-black uppercase tracking-widest text-sm">Carte du Ciel Générée</p>
+                        <h3 className="text-3xl font-serif font-bold text-white">
                            Ascendant {cosmicData?.ascendant}
                         </h3>
                     </div>
-                    <p className="text-[#1A1C2E]/60 max-w-xs mx-auto">
+                    <p className="text-white/60 max-w-xs mx-auto leading-relaxed">
                         Votre lieu et heure de naissance révèlent votre masque social. <br/>
-                        <span className="font-bold text-[#1A1C2E]">Initialisation du Miroir Psychologique...</span>
+                        <span className="font-bold text-white">Initialisation du Miroir Psychologique...</span>
                     </p>
                   </motion.div>
                 </motion.div>
@@ -680,7 +685,7 @@ export default function ExperiencePsyMirror() {
             </AnimatePresence>
 
             {/* Form Progress Bar */}
-            <div className="w-full h-1.5 bg-[#1A1C2E]/5 rounded-full overflow-hidden mb-8">
+            <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden mb-8">
               <motion.div 
                 animate={{ width: `${(infoSubStep / 3) * 100}%` }}
                 className="h-full bg-[#C9A24D]"
@@ -693,7 +698,7 @@ export default function ExperiencePsyMirror() {
                  infoSubStep === 2 ? <Calendar className="w-8 h-8 text-[#C9A24D]" /> : 
                  <MapPin className="w-8 h-8 text-[#C9A24D]" />}
               </div>
-              <h2 className="text-2xl md:text-4xl font-serif font-bold">
+              <h2 className="text-2xl md:text-4xl font-serif font-bold text-white">
                 {infoSubStep === 1 ? "Comment t'appelles-tu ?" : 
                  infoSubStep === 2 ? "Ta naissance ?" : 
                  "Où es-tu né ?"}
@@ -708,7 +713,7 @@ export default function ExperiencePsyMirror() {
                   className="grid md:grid-cols-2 gap-6"
                 >
                   <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Prénom</label>
+                    <label className="text-xs font-black uppercase tracking-widest text-[#C9A24D] ml-4">Prénom</label>
                     <input 
                       type="text" 
                       required
@@ -720,19 +725,19 @@ export default function ExperiencePsyMirror() {
                           handleNameSubmit();
                         }
                       }}
-                      className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                      className="w-full bg-white/5 border-2 border-white/10 rounded-2xl px-6 py-4 font-bold text-white focus:border-[#C9A24D] outline-none transition-all placeholder-white/20"
                       autoFocus
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Nom</label>
+                    <label className="text-xs font-black uppercase tracking-widest text-[#C9A24D] ml-4">Nom</label>
                     <input 
                       type="text" 
                       placeholder="Ton nom de famille"
                       value={personalInfo.lastName}
                       onChange={(e) => setPersonalInfo({...personalInfo, lastName: e.target.value})}
                       onKeyDown={(e) => e.key === 'Enter' && handleNameSubmit()}
-                      className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                      className="w-full bg-white/5 border-2 border-white/10 rounded-2xl px-6 py-4 font-bold text-white focus:border-[#C9A24D] outline-none transition-all placeholder-white/20"
                     />
                   </div>
                   <button 
@@ -742,7 +747,7 @@ export default function ExperiencePsyMirror() {
                       }
                     }}
                     disabled={!personalInfo.firstName}
-                    className="md:col-span-2 w-full py-5 bg-[#1A1C2E] text-white rounded-2xl font-bold text-lg shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
+                    className="md:col-span-2 w-full py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black text-lg uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_30px_-5px_rgba(201,162,77,0.4)] flex items-center justify-center gap-3 disabled:opacity-50"
                   >
                     Découvrir mon Nombre d'Expression <ArrowRight className="w-5 h-5" />
                   </button>
@@ -756,36 +761,36 @@ export default function ExperiencePsyMirror() {
                   className="space-y-6"
                 >
                   <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Date de Naissance</label>
+                    <label className="text-xs font-black uppercase tracking-widest text-[#C9A24D] ml-4">Date de Naissance</label>
                     <input 
                       type="date" 
                       required
                       value={personalInfo.birthDate}
                       onChange={(e) => setPersonalInfo({...personalInfo, birthDate: e.target.value})}
-                      className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                      className="w-full bg-white/5 border-2 border-white/10 rounded-2xl px-6 py-4 font-bold text-white focus:border-[#C9A24D] outline-none transition-all"
                       autoFocus
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Heure de naissance</label>
+                    <label className="text-xs font-black uppercase tracking-widest text-[#C9A24D] ml-4">Heure de naissance</label>
                     <input 
                       type="time" 
                       value={personalInfo.birthTime}
                       onChange={(e) => setPersonalInfo({...personalInfo, birthTime: e.target.value})}
-                      className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl px-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                      className="w-full bg-white/5 border-2 border-white/10 rounded-2xl px-6 py-4 font-bold text-white focus:border-[#C9A24D] outline-none transition-all"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <button 
                       onClick={() => setInfoSubStep(1)}
-                      className="py-5 bg-[#F8F9FA] text-[#1A1C2E]/60 rounded-2xl font-bold"
+                      className="py-5 bg-white/5 text-white/60 rounded-2xl font-bold hover:bg-white/10 transition-all"
                     >
                       Retour
                     </button>
                     <button 
                       onClick={() => personalInfo.birthDate && setInfoSubStep(3)}
                       disabled={!personalInfo.birthDate}
-                      className="py-5 bg-[#1A1C2E] text-white rounded-2xl font-bold shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
+                      className="py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black uppercase tracking-widest shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
                     >
                       Continuer <ArrowRight className="w-5 h-5" />
                     </button>
@@ -800,16 +805,16 @@ export default function ExperiencePsyMirror() {
                   className="space-y-6"
                 >
                   <div className="space-y-2">
-                    <label className="text-xs font-black uppercase tracking-widest text-[#1A1C2E]/40 ml-4">Ville de Naissance</label>
+                    <label className="text-xs font-black uppercase tracking-widest text-[#C9A24D] ml-4">Ville de Naissance</label>
                     <div className="relative">
-                      <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-[#1A1C2E]/20" />
+                      <MapPin className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20" />
                       <input 
                         type="text" 
                         required
                         placeholder="Ta ville"
                         value={personalInfo.birthCity}
                         onChange={(e) => setPersonalInfo({...personalInfo, birthCity: e.target.value})}
-                        className="w-full bg-[#F8F9FA] border-2 border-[#1A1C2E]/5 rounded-2xl pl-14 pr-6 py-4 font-bold focus:border-[#C9A24D] outline-none transition-all"
+                        className="w-full bg-white/5 border-2 border-white/10 rounded-2xl pl-14 pr-6 py-4 font-bold text-white focus:border-[#C9A24D] outline-none transition-all placeholder-white/20"
                         autoFocus
                         onKeyDown={(e) => e.key === 'Enter' && personalInfo.birthCity && handleInfoSubmit(e as any)}
                       />
@@ -818,14 +823,14 @@ export default function ExperiencePsyMirror() {
                   <div className="grid grid-cols-2 gap-4">
                     <button 
                       onClick={() => setInfoSubStep(2)}
-                      className="py-5 bg-[#F8F9FA] text-[#1A1C2E]/60 rounded-2xl font-bold"
+                      className="py-5 bg-white/5 text-white/60 rounded-2xl font-bold hover:bg-white/10 transition-all"
                     >
                       Retour
                     </button>
                     <button 
                       onClick={(e) => handleInfoSubmit(e as any)}
                       disabled={!personalInfo.birthCity}
-                      className="py-5 bg-[#1A1C2E] text-white rounded-2xl font-bold shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
+                      className="py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black uppercase tracking-widest shadow-xl flex items-center justify-center gap-3 disabled:opacity-50"
                     >
                       Voir mon profil <ArrowRight className="w-5 h-5" />
                     </button>

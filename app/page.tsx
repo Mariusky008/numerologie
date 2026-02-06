@@ -521,15 +521,8 @@ export default function Home() {
       </AnimatePresence>
 
       {/* 1. HERO — SINGLE BLOCK FOCUS */}
-      <section className="flex-grow flex flex-col items-center justify-center px-4 md:px-8 relative pt-12 pb-20">
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[120px] rounded-full" />
-          <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none">
-            <source src="/nuage.mp4" type="video/mp4" />
-          </video>
-        </div>
-
-        <div className="w-full max-w-[1600px] z-10 text-center space-y-12 md:space-y-16">
+      <section className="flex-grow flex flex-col items-center justify-center px-4 md:px-8 relative pt-12 pb-12 w-full z-10">
+        <div className="w-full max-w-[1600px] text-center space-y-12 md:space-y-16">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
             <div className="flex flex-col items-center gap-6 mb-4">
               <div className="inline-flex items-center gap-3 px-8 py-3 rounded-full bg-[#C9A24D] text-[#08090F] shadow-[0_0_40px_-5px_rgba(201,162,77,0.6)] animate-pulse">
@@ -556,9 +549,7 @@ export default function Home() {
                 whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.08)" }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => {
-                   // Directly trigger the teaser flow when archetype is clicked
                    setSelectedArchetype(arch.id);
-                   // Small delay to allow state to set before showing modal or scrolling
                    setTimeout(() => {
                      handleTeaserClick();
                    }, 100);
@@ -571,13 +562,21 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="pt-8 opacity-40 text-sm font-medium">
+          <div className="pt-4 opacity-40 text-sm font-medium">
             <p>Sans inscription • Résultat immédiat • 100% Gratuit</p>
           </div>
         </div>
       </section>
 
-      <footer className="py-8 px-6 border-t border-white/5 text-center opacity-20 text-[10px] font-black uppercase tracking-[0.2em] z-10">
+      {/* BACKGROUND ELEMENTS MOVED OUTSIDE SECTION TO COVER FULL PAGE */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[120px] rounded-full" />
+          <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover opacity-20">
+            <source src="/nuage.mp4" type="video/mp4" />
+          </video>
+      </div>
+
+      <footer className="py-8 px-6 border-t border-white/5 text-center opacity-30 text-[10px] font-black uppercase tracking-[0.2em] z-10 w-full bg-[#08090F]/80 backdrop-blur-sm">
         © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION
       </footer>
     </div>

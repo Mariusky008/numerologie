@@ -294,11 +294,26 @@ export default function ExperiencePsyMirror() {
   // Effect to manage transitions from IntroQCM
   useEffect(() => {
     if (step === 'introQCM' && moduleAAnswers.length >= 5) {
-      // Calculate tension metrics for the Pre-Reveal
-      // (Simple mock logic for visual effect, real calculation happens later)
+      // Calculate dynamic gap score based on answers
+      // We sum up the absolute values of the weights from the chosen answers
+      // This is a pseudo-calculation to make it feel real, but deterministic
+      let totalWeight = 0;
+      moduleAAnswers.forEach(ans => {
+        if (ans.weights) {
+            Object.values(ans.weights).forEach(w => totalWeight += Math.abs(w));
+        }
+      });
+      
+      // Map to a percentage between 25% and 85% to look realistic
+      // Base 25 + (totalWeight * 2) capped at 85
+      const calculatedGap = Math.min(85, Math.max(25, 25 + totalWeight));
+      
+      setGapScore(calculatedGap);
       setStep('preReveal');
     }
   }, [moduleAAnswers, step]);
+
+  const [gapScore, setGapScore] = useState(38); // Default state
 
   const [showNameReward, setShowNameReward] = useState(false); // NEW STATE FOR NAME REWARD
   const [showCityReward, setShowCityReward] = useState(false); // NEW STATE FOR CITY REWARD
@@ -716,16 +731,16 @@ export default function ExperiencePsyMirror() {
                   Analyse Partielle Terminée
                 </div>
                 <h2 className="text-4xl font-serif font-bold text-white">
-                   Écart détecté
-                </h2>
-                <div className="flex items-center justify-center gap-4 py-6">
-                   <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#C9A24D] to-[#8A6E2F]">
-                      38%
-                   </div>
-                </div>
-                <p className="text-lg text-white/80 leading-relaxed font-light">
-                   "Tu as l'énergie pour avancer, mais quelque chose dans ton environnement actuel te freine."
-                </p>
+                    Écart détecté
+                 </h2>
+                 <div className="flex items-center justify-center gap-4 py-6">
+                    <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#C9A24D] to-[#8A6E2F]">
+                       {gapScore}%
+                    </div>
+                 </div>
+                 <p className="text-lg text-white/80 leading-relaxed font-light">
+                    "Tu as l'énergie pour avancer, mais quelque chose dans ton environnement actuel te freine."
+                 </p>
              </div>
 
              <div className="p-6 bg-white/5 rounded-3xl border border-white/5">

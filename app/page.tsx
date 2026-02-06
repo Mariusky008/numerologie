@@ -17,7 +17,9 @@ import {
   Star,
   X,
   Zap,
-  CheckCircle2
+  CheckCircle2,
+  Share2,
+  Smartphone
 } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 import { calculateLifePath } from '@/lib/numerology/engine';
@@ -333,6 +335,38 @@ export default function Home() {
     }, 100);
   };
 
+  const handleWhatsappShare = () => {
+    if (!teaserResult) return;
+    const shareText = `Je viens de découvrir mon blocage caché : "${teaserResult.text}". Fais le test gratuitement ici : https://votrelegende.fr`;
+    const url = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+    window.open(url, '_blank');
+    trackEvent('share_whatsapp');
+  };
+
+  const handleShare = async () => {
+    if (!teaserResult) return;
+    
+    const shareText = `Je viens de découvrir mon blocage caché : "${teaserResult.text}". Fais le test gratuitement ici : https://votrelegende.fr`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Mon Diagnostic Flash',
+          text: shareText,
+          url: 'https://votrelegende.fr'
+        });
+        trackEvent('share_native');
+      } catch (err) {
+        console.log('Share cancelled');
+      }
+    } else {
+      // Fallback: Copy to clipboard
+      navigator.clipboard.writeText(shareText);
+      alert('Résultat copié dans le presse-papier !');
+      trackEvent('share_clipboard');
+    }
+  };
+
   const handleTeaserClick = () => {
     setShowTeaserModal(true);
     trackEvent('teaser_modal_open');
@@ -365,7 +399,12 @@ export default function Home() {
       }
 
       const lp = calculateLifePath(isoDate);
-      const text = getMicroInsight(lp, selectedArchetype || 'vie');
+      // Force selectedArchetype to be valid, default to 'vie' if null
+      const currentArchetype = selectedArchetype || 'vie';
+      const text = getMicroInsight(lp, currentArchetype);
+      
+      console.log('Teaser Calculation:', { lp, currentArchetype, text }); // Debug
+
       setTeaserResult({ path: lp, text });
       setIsCalculating(false);
       trackEvent('teaser_calculated', { lifePath: lp });
@@ -544,6 +583,35 @@ export default function Home() {
                     <p className="text-lg md:text-xl text-white/90 font-medium leading-relaxed font-serif">
                       "{teaserResult.text}"
                     </p>
+                  </div>
+
+                  {/* SOCIAL ACTIONS */}
+                  <div className="flex flex-col gap-3">
+                    <div className="flex gap-2">
+                      <button 
+                        onClick={handleWhatsappShare}
+                        className="flex-1 py-3 bg-[#25D366]/20 border border-[#25D366]/30 text-[#25D366] rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-[#25D366]/30 transition-colors flex items-center justify-center gap-2"
+                      >
+                        <Share2 className="w-4 h-4" /> WhatsApp
+                      </button>
+                      <button 
+                        onClick={handleShare}
+                        className="flex-1 py-3 bg-white/5 border border-white/10 text-white/70 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
+                      >
+                        <Share2 className="w-4 h-4" /> Ami(e)
+                      </button>
+                    </div>
+                    
+                    <a 
+                      href="https://www.tiktok.com/@votre_legende" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-full py-3 bg-gradient-to-r from-[#00f2ea]/20 to-[#ff0050]/20 border border-white/10 text-white rounded-xl font-bold text-xs uppercase tracking-wider hover:opacity-80 transition-opacity flex items-center justify-center gap-2"
+                      onClick={() => trackEvent('tiktok_follow_click')}
+                    >
+                      <Smartphone className="w-4 h-4" /> 
+                      <span>Abonne-toi pour + de diagnostics ⚡️</span>
+                    </a>
                   </div>
 
                   <div className="space-y-4">

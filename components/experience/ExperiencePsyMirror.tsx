@@ -31,7 +31,7 @@ import { calculateLifePathNumber, getLifePathData, getMoonSign, getSunSign, getA
 
 export default function ExperiencePsyMirror() {
   const router = useRouter();
-  const [step, setStep] = useState<'introQCM' | 'preReveal' | 'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'emailCapture' | 'loading'>('introQCM');
+  const [step, setStep] = useState<'introQCM' | 'preReveal' | 'paymentTrigger' | 'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'emailCapture' | 'loading'>('introQCM');
   const [infoSubStep, setInfoSubStep] = useState(1); // 1: Name, 2: Date/Time, 3: City
   const [personalInfo, setPersonalInfo] = useState({
     firstName: '',
@@ -739,11 +739,76 @@ export default function ExperiencePsyMirror() {
                    Pour débloquer l'analyse complète :
                 </p>
                 <button
-                  onClick={() => setStep('collectInfo')}
+                  onClick={() => setStep('paymentTrigger')}
                   className="w-full py-6 bg-[#C9A24D] text-[#08090F] rounded-[20px] font-black text-xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(201,162,77,0.5)] flex items-center justify-center gap-3"
                 >
                   Je veux comprendre <ArrowRight className="w-6 h-6" />
                 </button>
+             </div>
+          </motion.div>
+        )}
+
+        {/* STEP: PAYMENT TRIGGER (SALES PAGE) */}
+        {step === 'paymentTrigger' && (
+          <motion.div 
+            key="paymentTrigger"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="w-full max-w-2xl bg-[#12121A] p-8 md:p-12 rounded-[50px] shadow-2xl border border-white/10 space-y-10 relative z-10"
+          >
+             {/* Header */}
+             <div className="space-y-6 text-center">
+               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#C9A24D]/10 text-[#C9A24D] text-[10px] font-black uppercase tracking-widest">
+                  <Sparkles className="w-3 h-3" />
+                  Rapport Complet
+               </div>
+               <h2 className="text-3xl md:text-4xl font-serif font-bold text-white leading-tight">
+                 Le rapport complet t’explique précisément comment utiliser ce potentiel dans ta vie.
+               </h2>
+               <div className="bg-white/5 p-6 rounded-3xl border border-white/5">
+                 <p className="text-white/80 text-lg leading-relaxed font-light">
+                   Jusqu’ici, tu as identifié qui tu es et où se situe l’écart. <br/><br/>
+                   <span className="text-white font-medium">Le rapport complet te montre comment cette dynamique agit concrètement</span> dans tes décisions, tes relations et ton sentiment d’alignement — et surtout comment t’en servir consciemment.
+                 </p>
+               </div>
+             </div>
+
+             {/* Value Props List */}
+             <div className="space-y-4 max-w-md mx-auto">
+               <p className="text-xs font-black uppercase tracking-widest text-[#C9A24D] text-center mb-6">Dans le rapport complet :</p>
+               {[
+                 "Lecture de ton profil",
+                 "Relations & décisions",
+                 "Points de désalignement",
+                 "Axes d’alignement",
+                 "Synthèse personnalisée"
+               ].map((item, i) => (
+                 <div key={i} className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
+                   <div className="w-6 h-6 rounded-full bg-[#C9A24D]/20 flex items-center justify-center text-[#C9A24D]">
+                     <ShieldCheck className="w-3 h-3" />
+                   </div>
+                   <span className="text-white font-medium">{item}</span>
+                 </div>
+               ))}
+             </div>
+
+             {/* CTA Payment */}
+             <div className="space-y-4 pt-4">
+                <button
+                  onClick={() => {
+                    // Simuler le paiement pour l'instant et aller à la collecte d'infos
+                    // TODO: Intégrer Stripe ici
+                    trackEvent('payment_initiated');
+                    setStep('collectInfo');
+                  }}
+                  className="w-full py-6 bg-[#C9A24D] text-[#08090F] rounded-[20px] font-black text-xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(201,162,77,0.5)] flex items-center justify-center gap-3"
+                >
+                  Accéder à mon analyse complète <ArrowRight className="w-6 h-6" />
+                </button>
+                <div className="flex justify-center items-center gap-2 text-xs text-white/30 uppercase tracking-widest">
+                  <ShieldCheck className="w-3 h-3" /> Paiement Sécurisé
+                </div>
              </div>
           </motion.div>
         )}

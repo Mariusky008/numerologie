@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, 
@@ -13,9 +14,33 @@ import {
   Heart,
   Users,
   Compass,
-  Star
+  Star,
+  X,
+  Zap,
+  CheckCircle2
 } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
+import { calculateLifePath } from '@/lib/numerology/engine';
+
+// Micro-Insight Logic
+const getMicroInsight = (lifePath: number, archetypeId: string): string => {
+  // Simple mapping logic: LifePath vs Archetype
+  // This is a teaser, so it should be striking but generic enough
+  
+  const insights: Record<string, string> = {
+    "amour": `Ton Chemin de Vie ${lifePath} cherche l'indépendance, mais ton ambition amoureuse demande de la fusion. C'est ce tiraillement qui crée l'instabilité.`,
+    "famille": `Avec un Chemin de Vie ${lifePath}, tu as besoin de liberté, mais ton ambition familiale te ramène à des devoirs. Tu te sens piégé entre loyauté et évasion.`,
+    "decisions": `Ton Chemin de Vie ${lifePath} est intuitif, mais tu essaies de tout rationaliser. Ton indécision vient de là : tu n'écoutes pas ta première impression.`,
+    "confiance": `Ton énergie ${lifePath} est puissante mais brute. Ton manque de confiance vient du fait que tu essaies de rentrer dans un moule trop petit pour toi.`,
+    "solitude": `Le Chemin de Vie ${lifePath} a besoin de solitude pour se recharger, mais tu la confonds avec de l'isolement. Tu as peur du vide alors qu'il est ta force.`,
+    "vie": `Ton Chemin de Vie ${lifePath} demande du mouvement. Ta vie actuelle est trop statique, c'est pour ça que tu as l'impression d'étouffer.`
+  };
+
+  // Fallback specific per number if needed, but generic archetype mapping is safer for a teaser
+  // We can refine this later with a matrix Number x Archetype
+  
+  return insights[archetypeId] || `Ton Chemin de Vie ${lifePath} entre en friction avec ton ambition actuelle.`;
+};
 
 const ARCHETYPES = [
   {
@@ -216,7 +241,6 @@ const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | n
 
 const SectionCTA = ({ 
   text, 
-  href = "/miroir/experience", 
   isActive = false, 
   onClick 
 }: { 
@@ -234,8 +258,7 @@ const SectionCTA = ({
         exit={{ opacity: 0, y: 20 }}
         className="py-12 flex flex-col items-center gap-4 w-full"
       >
-        <Link 
-          href={href}
+        <button 
           onClick={onClick}
           className="group relative inline-flex flex-col items-center gap-2 px-10 py-8 rounded-[40px] bg-[#C9A24D] text-[#08090F] shadow-[0_20px_60px_-10px_rgba(201,162,77,0.5)] hover:scale-105 active:scale-95 transition-all overflow-hidden mx-auto"
         >
@@ -249,14 +272,14 @@ const SectionCTA = ({
             <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Accéder au Crash Test</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </div>
-        </Link>
+        </button>
         
         <div className="text-center space-y-1">
           <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">
-            Crash Test gratuit → Diagnostic clair
+            Diagnostic Flash (30 secondes)
           </p>
           <p className="text-[9px] text-white/30">
-            Modules d’analyse avancés accessibles ensuite.
+            Gratuit & Sans inscription
           </p>
         </div>
       </motion.div>
@@ -265,9 +288,16 @@ const SectionCTA = ({
 );
 
 export default function Home() {
+  const router = useRouter();
   const [selectedArchetype, setSelectedArchetype] = useState<string | null>(null);
   const [selectedVoeu, setSelectedVoeu] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
+  
+  // Teaser Modal State
+  const [showTeaserModal, setShowTeaserModal] = useState(false);
+  const [teaserBirthDate, setTeaserBirthDate] = useState('');
+  const [teaserResult, setTeaserResult] = useState<{path: number, text: string} | null>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
 
   const [userResponse, setUserResponse] = useState<string | null>(null);
 
@@ -303,31 +333,39 @@ export default function Home() {
     }, 100);
   };
 
+  const handleTeaserClick = () => {
+    setShowTeaserModal(true);
+    trackEvent('teaser_modal_open');
+  };
+
+  const calculateTeaser = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!teaserBirthDate) return;
+
+    setIsCalculating(true);
+    
+    // Simulate calculation time for effect
+    setTimeout(() => {
+      const lp = calculateLifePath(teaserBirthDate);
+      const text = getMicroInsight(lp, selectedArchetype || 'vie');
+      setTeaserResult({ path: lp, text });
+      setIsCalculating(false);
+      trackEvent('teaser_calculated', { lifePath: lp });
+    }, 1500);
+  };
+
+  const proceedToFullTest = () => {
+    // Pre-save data to localStorage so it's ready in the full test
+    const cosmicData = { birthDate: teaserBirthDate };
+    localStorage.setItem('cosmic_user_data', JSON.stringify(cosmicData));
+    
+    trackEvent('teaser_convert_to_full');
+    router.push('/miroir/experience');
+  };
+
   const handleCtaClick = () => {
-    // Check if user has a paid report in this session
-    if (typeof window !== 'undefined') {
-      const hasPaid = localStorage.getItem('has_paid_report');
-      
-      if (hasPaid) {
-        // If paid, ask for confirmation before clearing
-        if (confirm("Vous avez déjà un rapport payé sur cet appareil. Voulez-vous vraiment lancer un nouveau test ? (Cela effacera votre session actuelle)")) {
-          localStorage.removeItem('cosmic_user_data');
-          localStorage.removeItem('psy_mirror_session_data');
-          localStorage.removeItem('has_paid_report'); // Clear paid flag for new test
-          trackEvent('cta_click', { voeu: selectedVoeu, type: 'restart_paid' });
-          setIsNavigating(true);
-        } else {
-          // User cancelled, do not navigate/clear
-          return;
-        }
-      } else {
-        // If NOT paid (free user), clear automatically to ensure fresh start
-        localStorage.removeItem('cosmic_user_data');
-        localStorage.removeItem('psy_mirror_session_data');
-        trackEvent('cta_click', { voeu: selectedVoeu, type: 'restart_free' });
-        setIsNavigating(true);
-      }
-    }
+    // OLD Logic: handleTeaserClick instead of direct navigation
+    handleTeaserClick();
   };
 
   const fadeIn = {
@@ -344,6 +382,121 @@ export default function Home() {
         setSelectedVoeu(null);
         setSelectedArchetype(null);
       }} />
+
+      {/* TEASER MODAL */}
+      <AnimatePresence>
+        {showTeaserModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-[#08090F]/90 backdrop-blur-md"
+              onClick={() => setShowTeaserModal(false)}
+            />
+            
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-lg bg-[#12121A] border border-[#C9A24D]/30 rounded-[3rem] p-8 md:p-12 overflow-hidden shadow-[0_0_100px_-20px_rgba(201,162,77,0.3)] text-center"
+            >
+              <button 
+                onClick={() => setShowTeaserModal(false)}
+                className="absolute top-6 right-6 p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors"
+              >
+                <X className="w-5 h-5 text-white/60" />
+              </button>
+
+              {!teaserResult ? (
+                // STEP 1: INPUT
+                <div className="space-y-8">
+                  <div className="w-16 h-16 bg-[#C9A24D]/10 rounded-full flex items-center justify-center mx-auto border border-[#C9A24D]/20 animate-pulse">
+                    <Sparkles className="w-8 h-8 text-[#C9A24D]" />
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-white">
+                      Vérifions ta compatibilité
+                    </h3>
+                    <p className="text-white/60 leading-relaxed">
+                      Pour savoir si ton ambition est alignée avec ta nature profonde, nous avons juste besoin de ta date de naissance.
+                    </p>
+                  </div>
+
+                  <form onSubmit={calculateTeaser} className="space-y-6">
+                    <div className="space-y-2 text-left">
+                      <label className="text-xs font-black uppercase tracking-widest text-[#C9A24D] ml-4">Ta date de naissance</label>
+                      <input 
+                        type="date" 
+                        required
+                        value={teaserBirthDate}
+                        onChange={(e) => setTeaserBirthDate(e.target.value)}
+                        className="w-full bg-[#08090F] border-2 border-white/10 rounded-2xl px-6 py-4 font-bold text-xl text-white focus:border-[#C9A24D] outline-none transition-all text-center placeholder-white/20"
+                      />
+                    </div>
+                    
+                    <button
+                      type="submit"
+                      disabled={!teaserBirthDate || isCalculating}
+                      className="w-full py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black text-lg uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_30px_-5px_rgba(201,162,77,0.4)] flex items-center justify-center gap-3 disabled:opacity-50 disabled:scale-100"
+                    >
+                      {isCalculating ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#08090F]"></div>
+                          Calcul en cours...
+                        </>
+                      ) : (
+                        <>
+                          Révéler le blocage <Zap className="w-5 h-5" />
+                        </>
+                      )}
+                    </button>
+                  </form>
+                  
+                  <p className="text-[10px] text-white/30 flex items-center justify-center gap-2">
+                    <ShieldCheck className="w-3 h-3" /> 100% Confidentiel
+                  </p>
+                </div>
+              ) : (
+                // STEP 2: RESULT
+                <div className="space-y-8">
+                  <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto border border-red-500/20">
+                    <Activity className="w-8 h-8 text-red-500" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <p className="text-xs font-black uppercase tracking-widest text-[#C9A24D]">
+                      Chemin de Vie {teaserResult.path} détecté
+                    </p>
+                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-white">
+                      ⚠️ Alerte Décalage
+                    </h3>
+                  </div>
+
+                  <div className="bg-white/5 p-6 rounded-3xl border border-white/10">
+                    <p className="text-lg text-white/90 italic leading-relaxed">
+                      "{teaserResult.text}"
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <button
+                      onClick={proceedToFullTest}
+                      className="w-full py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black text-lg uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_30px_-5px_rgba(201,162,77,0.4)] flex items-center justify-center gap-3"
+                    >
+                      Comprendre & Régler ça <ArrowRight className="w-5 h-5" />
+                    </button>
+                    <p className="text-xs text-white/40">
+                      Lancer le Crash Test complet (Gratuit - 10 min)
+                    </p>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* 1. HERO — CHOIX DU VOEU (LEVEL 1 & 2) */}
       <section className="min-h-screen flex flex-col items-center justify-center px-4 md:px-8 relative pt-20 pb-20">

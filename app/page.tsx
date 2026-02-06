@@ -387,6 +387,7 @@ export default function Home() {
   const [teaserBirthDate, setTeaserBirthDate] = useState('');
   const [teaserResult, setTeaserResult] = useState<{path: number, description: string, punchline: string} | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   const [userResponse, setUserResponse] = useState<string | null>(null);
 
@@ -789,7 +790,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto space-y-12">
           
           {/* Navigation Links */}
-          <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 text-sm font-bold uppercase tracking-widest text-white/40">
+          <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 text-base md:text-lg font-bold uppercase tracking-widest text-white/40">
             <Link href="/mentions-legales" className="hover:text-[#C9A24D] transition-colors">Mentions Légales</Link>
             <Link href="/cgv" className="hover:text-[#C9A24D] transition-colors">CGV</Link>
             <Link href="/cgu" className="hover:text-[#C9A24D] transition-colors">CGU</Link>
@@ -806,16 +807,33 @@ export default function Home() {
             </p>
           </div>
           
-          {/* Legal Disclaimer */}
+          {/* Legal Disclaimer Toggle */}
           <div className="border-t border-white/5 pt-8 max-w-2xl mx-auto">
-            <div className="bg-white/5 p-6 rounded-2xl border border-white/5 text-left md:text-center">
-              <p className="text-white/30 text-xs leading-relaxed font-medium">
-                <span className="text-[#C9A24D]/60 uppercase font-bold text-[10px] tracking-widest block mb-2">Avertissement Légal</span>
-                Ce service est conçu à des fins de divertissement, d'introspection et de développement personnel uniquement. 
-                Les analyses numérologiques et les récits générés ne constituent en aucun cas un conseil psychologique, médical, financier ou juridique. 
-                L'option "Roman de Vie" est une œuvre de fiction personnalisée basée sur vos données.
-              </p>
-            </div>
+             <button 
+                onClick={() => setShowDisclaimer(!showDisclaimer)}
+                className="px-6 py-3 bg-white/5 hover:bg-white/10 text-white/40 text-xs font-bold uppercase tracking-widest rounded-full transition-all border border-white/5"
+             >
+                {showDisclaimer ? "Masquer l'avertissement" : "Lire l'avertissement légal"}
+             </button>
+
+             <AnimatePresence>
+               {showDisclaimer && (
+                 <motion.div 
+                    initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                    animate={{ opacity: 1, height: 'auto', marginTop: 24 }}
+                    exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                    className="overflow-hidden"
+                 >
+                    <div className="bg-white/5 p-6 rounded-2xl border border-white/5 text-left md:text-center">
+                      <p className="text-white/30 text-xs leading-relaxed font-medium">
+                        Ce service est conçu à des fins de divertissement, d'introspection et de développement personnel uniquement. 
+                        Les analyses numérologiques et les récits générés ne constituent en aucun cas un conseil psychologique, médical, financier ou juridique. 
+                        L'option "Roman de Vie" est une œuvre de fiction personnalisée basée sur vos données.
+                      </p>
+                    </div>
+                 </motion.div>
+               )}
+             </AnimatePresence>
           </div>
 
         </div>

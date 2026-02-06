@@ -430,9 +430,10 @@ export default function Home() {
   // User asked for "Single Block" at start.
   
   return (
-    <div className="min-h-screen bg-[#08090F] text-white font-sans selection:bg-[#C9A24D]/30 overflow-x-hidden flex flex-col">
-      
-      <FloatingVoeuBadge selectedVoeu={selectedVoeu} onClear={() => {
+    <>
+      <div className="min-h-screen bg-[#08090F] text-white font-sans selection:bg-[#C9A24D]/30 overflow-x-hidden flex flex-col pb-24">
+        
+        <FloatingVoeuBadge selectedVoeu={selectedVoeu} onClear={() => {
         setSelectedVoeu(null);
         setSelectedArchetype(null);
       }} />
@@ -537,8 +538,10 @@ export default function Home() {
                     </h3>
                   </div>
 
-                  <div className="bg-white/5 p-6 rounded-3xl border border-white/10">
-                    <p className="text-lg text-white/90 italic leading-relaxed">
+                  <div className="bg-white/5 p-6 rounded-3xl border border-white/10 relative overflow-hidden group">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#C9A24D] to-transparent opacity-50" />
+                    <p className="text-4xl mb-4 animate-bounce">✨</p>
+                    <p className="text-lg md:text-xl text-white/90 font-medium leading-relaxed font-serif">
                       "{teaserResult.text}"
                     </p>
                   </div>
@@ -617,10 +620,15 @@ export default function Home() {
           </video>
       </div>
 
-      {/* FOOTER - FIXED BOTTOM - Z-INDEX MAXIMAL */}
-      <footer className="fixed bottom-0 left-0 right-0 py-6 px-6 border-t border-white/10 text-center text-[10px] font-black uppercase tracking-[0.2em] z-[9999] bg-[#08090F] text-[#C9A24D] safe-area-bottom shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.8)] w-full">
+      </div>
+
+      {/* FOOTER - FIXED BOTTOM - MOVED OUTSIDE MAIN CONTAINER */}
+      <footer 
+        className="fixed bottom-0 left-0 right-0 py-6 px-6 border-t border-white/10 text-center text-[10px] font-black uppercase tracking-[0.2em] z-[9999] bg-[#08090F] text-[#C9A24D] shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.8)] w-full"
+        style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
+      >
         © {new Date().getFullYear()} VOTRE LÉGENDE · MÉTHODE ALIGNEMENT DÉCISION
       </footer>
-    </div>
+    </>
   );
 }

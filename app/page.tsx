@@ -511,8 +511,8 @@ export default function Home() {
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
             <div className="flex flex-col items-center gap-8 mb-6">
               <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-[#C9A24D] text-[#08090F] shadow-[0_0_30px_-5px_rgba(201,162,77,0.4)]">
-                <Star className="w-4 h-4 fill-[#08090F]" />
-                <span className="text-xs font-black uppercase tracking-widest">Déjà + de 1200 crash-tests réalisés</span>
+                <Zap className="w-4 h-4 fill-[#08090F]" />
+                <span className="text-xs font-black uppercase tracking-widest">Diagnostic Flash en 30 secondes</span>
               </div>
 
               <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center animate-pulse">
@@ -524,8 +524,8 @@ export default function Home() {
               <span className="text-[#C9A24D] italic">par une ambition.</span>
             </h1>
             <p className="max-w-2xl mx-auto text-lg md:text-2xl text-white/60 leading-relaxed font-medium">
-              Choisis ce qui compte vraiment pour toi aujourd&apos;hui. <br />
-              Ensuite, découvre pourquoi ça bloque.
+              Choisis ton domaine. Obtiens une <span className="text-[#C9A24D] font-bold">micro-analyse immédiate</span> sur ce qui coince. <br />
+              (Sans inscription. Résultat direct.)
             </p>
           </motion.div>
 

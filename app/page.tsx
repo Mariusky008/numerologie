@@ -762,25 +762,44 @@ export default function Home() {
           </video>
       </div>
 
-      </div>
-
-      {/* FOOTER - FIXED BOTTOM - MOVED OUTSIDE MAIN CONTAINER */}
-      <footer 
-        className="fixed bottom-0 left-0 right-0 py-6 px-6 border-t border-white/10 text-center z-[2147483647] bg-[#08090F] text-[#C9A24D] shadow-[0_-10px_40px_-10px_rgba(0,0,0,0.8)] w-full block !important"
-        style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))', display: 'block' }}
-      >
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-[10px] font-black uppercase tracking-[0.2em]">
-          <span>© {new Date().getFullYear()} VOTRE LÉGENDE</span>
-          <span className="hidden md:inline text-white/20">•</span>
-          <span>MÉTHODE ALIGNEMENT DÉCISION</span>
-          <span className="hidden md:inline text-white/20">•</span>
-          <div className="flex gap-4 text-white/40">
-            <a href="#" className="hover:text-white transition-colors">Mentions Légales</a>
-            <a href="#" className="hover:text-white transition-colors">CGV</a>
-            <a href="#" className="hover:text-white transition-colors">Contact</a>
+      {/* FOOTER - PRO & COMPLETE */}
+      <footer className="relative z-10 py-16 px-4 border-t border-white/5 bg-[#08090F] text-center">
+        <div className="max-w-4xl mx-auto space-y-12">
+          
+          {/* Navigation Links */}
+          <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 text-sm font-bold uppercase tracking-widest text-white/40">
+            <Link href="/mentions-legales" className="hover:text-[#C9A24D] transition-colors">Mentions Légales</Link>
+            <Link href="/cgv" className="hover:text-[#C9A24D] transition-colors">CGV</Link>
+            <Link href="/cgu" className="hover:text-[#C9A24D] transition-colors">CGU</Link>
+            <Link href="mailto:contact@votrelegende.com" className="hover:text-[#C9A24D] transition-colors">Contact</Link>
           </div>
+
+          {/* Copyright & Brand */}
+          <div className="space-y-2">
+            <p className="text-[#C9A24D] font-black text-xs uppercase tracking-[0.3em]">
+              VOTRE LÉGENDE
+            </p>
+            <p className="text-white/20 text-[10px] uppercase tracking-widest">
+              © {new Date().getFullYear()} · Méthode Alignement Décision
+            </p>
+          </div>
+          
+          {/* Legal Disclaimer */}
+          <div className="border-t border-white/5 pt-8 max-w-2xl mx-auto">
+            <div className="bg-white/5 p-6 rounded-2xl border border-white/5 text-left md:text-center">
+              <p className="text-white/30 text-xs leading-relaxed font-medium">
+                <span className="text-[#C9A24D]/60 uppercase font-bold text-[10px] tracking-widest block mb-2">Avertissement Légal</span>
+                Ce service est conçu à des fins de divertissement, d'introspection et de développement personnel uniquement. 
+                Les analyses numérologiques et les récits générés ne constituent en aucun cas un conseil psychologique, médical, financier ou juridique. 
+                L'option "Roman de Vie" est une œuvre de fiction personnalisée basée sur vos données.
+              </p>
+            </div>
+          </div>
+
         </div>
       </footer>
+
+      </div>
     </>
   );
 }

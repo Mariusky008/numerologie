@@ -665,19 +665,26 @@ export default function Home() {
                     </h3>
                   </div>
 
-                  <div className="bg-white/5 p-6 rounded-3xl border border-white/10 relative overflow-hidden group">
+                  <div className="bg-white/5 p-8 md:p-10 rounded-3xl border border-white/10 relative overflow-hidden group space-y-8">
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#C9A24D] to-transparent opacity-50" />
                     
-                    {/* Description Complète */}
-                    <p className="text-white/70 text-sm leading-relaxed mb-6 font-light">
+                    {/* Description Complète - Style éditorial et aéré */}
+                    <p className="text-white/80 text-lg md:text-xl leading-relaxed font-light text-center max-w-2xl mx-auto">
                       {teaserResult.description}
                     </p>
 
-                    {/* Punchline Matrix */}
-                    <div className="space-y-2">
-                        <p className="text-4xl animate-bounce">✨</p>
-                        <p className="text-lg md:text-xl text-[#C9A24D] font-medium leading-relaxed font-serif italic">
-                        "{teaserResult.punchline}"
+                    {/* Séparateur Élégant */}
+                    <div className="flex items-center justify-center gap-4 opacity-30">
+                        <div className="h-px w-12 bg-white"></div>
+                        <span className="text-2xl animate-pulse">✨</span>
+                        <div className="h-px w-12 bg-white"></div>
+                    </div>
+
+                    {/* Punchline Matrix - Style Impactant "Quote" */}
+                    <div className="text-center relative">
+                        <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-6xl text-[#C9A24D]/10 font-serif font-black">"</span>
+                        <p className="text-2xl md:text-3xl text-[#C9A24D] font-bold leading-tight font-serif italic tracking-wide relative z-10 px-4">
+                          {teaserResult.punchline}
                         </p>
                     </div>
                   </div>

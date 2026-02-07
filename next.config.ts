@@ -5,9 +5,6 @@ const nextConfig: any = {
   poweredByHeader: false,
   typescript: {
     ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   }
 };
 

@@ -426,15 +426,16 @@ export default function Home() {
               ) : (
                 // STEP 2: RESULT
                 <div className="space-y-8 text-center">
-                   <div className="w-16 h-16 bg-[var(--accent)]/10 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse shadow-sm border border-[var(--accent)]/20">
-                      <Sparkles className="w-8 h-8 text-[var(--accent)]" />
+                   <div className="w-20 h-20 bg-[#D9772B]/10 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse shadow-lg border-2 border-[#D9772B]/20">
+                      <Sparkles className="w-10 h-10 text-[#D9772B]" />
                    </div>
                    
-                   <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] text-xs font-bold uppercase tracking-widest mb-2">
+                   <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D9772B]/10 text-[#D9772B] text-xs font-black uppercase tracking-widest mb-2 border border-[#D9772B]/20">
+                      <Star className="w-3 h-3 fill-current" />
                       Chemin de Vie {teaserResult.path}
                    </div>
 
-                   <h3 className="text-3xl md:text-4xl font-serif font-bold text-[var(--foreground)] leading-tight">
+                   <h3 className="text-4xl md:text-5xl font-serif font-bold text-[var(--foreground)] leading-tight px-4">
                      "{teaserResult.punchline}"
                    </h3>
 

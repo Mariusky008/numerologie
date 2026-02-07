@@ -42,18 +42,18 @@ const PLANS = {
   },
   'coach-30d': {
     id: 'coach-30d',
-    name: "Coach IA - Accès 30 Jours",
-    price: 14,
-    description: "Un mois d'accompagnement illimité pour poser toutes tes questions et clarifier ta situation.",
+    name: "Coach IA - Abonnement Mensuel",
+    price: 29,
+    description: "Accès illimité pour poser toutes tes questions et clarifier ta situation au quotidien.",
     features: [
       { icon: MessageCircle, text: "Coach IA disponible 24/7 pour répondre à tes doutes" },
       { icon: Brain, text: "Réponses basées sur ton profil numérologique unique" },
       { icon: Layers, text: "Analyse objective pour sortir du brouillard mental" },
-      { icon: Lock, text: "Accès immédiat et sécurisé sans engagement" }
+      { icon: Lock, text: "Sans engagement - Annulable à tout moment" }
     ],
-    cta: "Démarrer mon essai (14€)",
-    label: "Offre Découverte - 30 Jours",
-    type: "pour 30 jours"
+    cta: "Démarrer mon essai (29€ / mois)",
+    label: "Offre Spéciale - Mensuel",
+    type: "par mois"
   },
   parcours_autonome: {
     id: 'parcours_autonome',

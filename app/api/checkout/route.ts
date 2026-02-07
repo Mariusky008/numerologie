@@ -32,9 +32,9 @@ export async function POST(request: Request) {
         amount: 4900
       },
       'coach-30d': {
-        name: "Coach IA - Accès 30 Jours",
-        description: "Accès illimité à l'Assistant Numérologique IA pendant 30 jours.",
-        amount: 1400
+        name: "Coach IA - Abonnement Mensuel",
+        description: "Accès illimité à l'Assistant Numérologique IA (Renouvellement mensuel).",
+        amount: 2900
       },
       parcours_autonome: {
         name: "Parcours 3 Mois - Autonome",

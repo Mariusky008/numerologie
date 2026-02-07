@@ -36,13 +36,13 @@ function SuccessContent() {
     const price = plan === 'parcours_autonome' ? 499 : 
                   plan === 'parcours_mensuel' ? 1599 : 
                   plan === 'parcours_hebdo' ? 2999 : 
-                  plan === 'coach-30d' ? 14 : 49;
+                  plan === 'coach-30d' ? 29 : 49;
 
     trackEvent('Purchase', {
         contents: [{
             content_id: plan || 'bundle',
             content_type: 'product',
-            content_name: plan === 'bundle' ? 'Analyse Complète' : plan === 'coach-30d' ? 'Coach IA 30 Jours' : 'Parcours'
+            content_name: plan === 'bundle' ? 'Analyse Complète' : plan === 'coach-30d' ? 'Coach IA Mensuel' : 'Parcours'
         }],
         value: price,
         currency: 'EUR'

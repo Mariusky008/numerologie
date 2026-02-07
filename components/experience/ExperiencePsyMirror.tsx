@@ -1111,47 +1111,46 @@ export default function ExperiencePsyMirror() {
              </div>
 
              {/* 7. Offer & Price */}
-             <div className="text-center space-y-2 pt-2">
-               <p className="text-sm font-bold text-[var(--text-secondary)] uppercase tracking-widest">Offre de Lancement</p>
-               <div className="flex items-baseline justify-center gap-2">
-                 <span className="text-5xl font-black text-[var(--foreground)]">14€</span>
-                 <span className="text-xl text-[var(--text-secondary)] line-through decoration-red-500 decoration-2">29€</span>
-               </div>
-               <p className="text-[var(--accent)] font-medium">Accès Illimité pendant 30 jours</p>
-             </div>
+            <div className="text-center space-y-2 pt-2">
+              <p className="text-sm font-bold text-[var(--text-secondary)] uppercase tracking-widest">Offre Spéciale</p>
+              <div className="flex items-baseline justify-center gap-2">
+                <span className="text-5xl font-black text-[var(--foreground)]">29€</span>
+                <span className="text-xl text-[var(--text-secondary)] line-through decoration-red-500 decoration-2">49€</span>
+              </div>
+              <p className="text-[var(--accent)] font-medium">par mois</p>
+            </div>
 
-             {/* 8. CTA */}
-             <div className="space-y-4">
-                <button
-                  onClick={() => {
-                    // Save QCM answers before redirecting
-                    const sessionData = {
-                        moduleA_answers: moduleAAnswers,
-                        gapScore: gapScore
-                    };
-                    localStorage.setItem('psy_mirror_session_data', JSON.stringify(sessionData));
-                    
-                    trackEvent('payment_initiated_coach_lp');
-                    
-                    // TikTok Standard Event
-                    trackEvent('InitiateCheckout', {
-                      contents: [{
-                        content_id: 'coach_ia_30days',
-                        content_type: 'product',
-                        content_name: 'Coach IA - 30 Jours'
-                      }],
-                      value: 14,
-                      currency: 'EUR'
-                    });
+            {/* 8. CTA */}
+            <div className="space-y-4">
+               <button
+                 onClick={() => {
+                   // Save QCM answers before redirecting
+                   const sessionData = {
+                       moduleA_answers: moduleAAnswers,
+                       gapScore: gapScore
+                   };
+                   localStorage.setItem('psy_mirror_session_data', JSON.stringify(sessionData));
+                   
+                   trackEvent('payment_initiated_coach_lp');
+                   
+                   // TikTok Standard Event
+                   trackEvent('InitiateCheckout', {
+                     contents: [{
+                       content_id: 'coach_ia_30days',
+                       content_type: 'product',
+                       content_name: 'Coach IA - 30 Jours'
+                     }],
+                     value: 29,
+                     currency: 'EUR'
+                   });
 
-                    // Update URL to reflect the specific 14€ offer if needed, 
-                    // for now keeping generic or assuming checkout handles it via query param
-                    router.push('/miroir/checkout?plan=coach-30d');
-                  }}
-                  className="w-full py-6 bg-[var(--accent)] text-white rounded-[20px] font-black text-xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(185,98,31,0.5)] flex items-center justify-center gap-3"
-                >
-                  Démarrer mon Accompagnement <ArrowRight className="w-6 h-6" />
-                </button>
+                   // Update URL to reflect the specific offer
+                   router.push('/miroir/checkout?plan=coach-30d');
+                 }}
+                 className="w-full py-6 bg-[var(--accent)] text-white rounded-[20px] font-black text-xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(185,98,31,0.5)] flex items-center justify-center gap-3"
+               >
+                 Démarrer mon Accompagnement <ArrowRight className="w-6 h-6" />
+               </button>
                 
                 {/* 9. Final Phrase */}
                 <div className="flex justify-center items-center gap-2 text-xs text-[var(--text-secondary)] uppercase tracking-widest opacity-60">

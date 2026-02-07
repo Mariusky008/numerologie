@@ -17,6 +17,7 @@ function SuccessContent() {
 
   // Déterminer le type de message à afficher selon les 8 hypothèses
   const isBundle = plan === 'bundle';
+  const isCoach30d = plan === 'coach-30d';
   const isPaper = paper;
 
   useEffect(() => {
@@ -34,13 +35,14 @@ function SuccessContent() {
 
     const price = plan === 'parcours_autonome' ? 499 : 
                   plan === 'parcours_mensuel' ? 1599 : 
-                  plan === 'parcours_hebdo' ? 2999 : 49;
+                  plan === 'parcours_hebdo' ? 2999 : 
+                  plan === 'coach-30d' ? 14 : 49;
 
     trackEvent('Purchase', {
         contents: [{
             content_id: plan || 'bundle',
             content_type: 'product',
-            content_name: plan === 'bundle' ? 'Analyse Complète' : 'Parcours'
+            content_name: plan === 'bundle' ? 'Analyse Complète' : plan === 'coach-30d' ? 'Coach IA 30 Jours' : 'Parcours'
         }],
         value: price,
         currency: 'EUR'
@@ -77,7 +79,7 @@ function SuccessContent() {
           <div className="bg-[#FAF9F7] p-6 rounded-xl border border-[#EFEDE9] text-left space-y-4 mb-8">
             
             {/* Cas 1 & 2 : Rapport seul (PDF ou Papier) */}
-            {!isBundle && (
+            {!isBundle && !isCoach30d && (
               <div className="flex items-start gap-4">
                 <div className="bg-[#5B4B8A]/10 p-2 rounded-lg">
                    <Download className="w-6 h-6 text-[#5B4B8A]" />
@@ -94,6 +96,27 @@ function SuccessContent() {
                       <span>Votre version imprimée est en cours de préparation et arrivera bientôt par la poste.</span>
                     </div>
                   )}
+                </div>
+              </div>
+            )}
+
+            {/* Cas Coach 30 Jours */}
+            {isCoach30d && (
+              <div className="flex items-start gap-4">
+                <div className="bg-[#C9A24D]/10 p-2 rounded-lg">
+                   <Sparkles className="w-6 h-6 text-[#C9A24D]" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-[#2C2F4A]">Votre Coach IA est activé !</h3>
+                  <p className="text-sm text-[#2C2F4A]/70 mt-1">
+                    Vous avez désormais un accès illimité pendant 30 jours. <br/>
+                    Un email contenant votre lien d'accès personnel a été envoyé à <strong>{email}</strong>.
+                  </p>
+                  
+                  <div className="mt-4 flex items-start gap-2 text-sm text-[#5B4B8A] bg-[#5B4B8A]/5 p-3 rounded-lg border border-[#5B4B8A]/10">
+                    <Mail className="w-4 h-4 shrink-0 mt-0.5" />
+                    <span><strong>Note :</strong> Le lien est unique et personnel. Gardez l'email précieusement.</span>
+                  </div>
                 </div>
               </div>
             )}

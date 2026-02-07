@@ -31,6 +31,11 @@ export async function POST(request: Request) {
         description: "Analyse Vidéo Oracle (5 min) + Dossier PDF (40 pages) + Coach IA (30 min)",
         amount: 4900
       },
+      'coach-30d': {
+        name: "Coach IA - Accès 30 Jours",
+        description: "Accès illimité à l'Assistant Numérologique IA pendant 30 jours.",
+        amount: 1400
+      },
       parcours_autonome: {
         name: "Parcours 3 Mois - Autonome",
         description: "Accès complet aux 3 cycles mensuels d'exploration pendant 3 mois.",

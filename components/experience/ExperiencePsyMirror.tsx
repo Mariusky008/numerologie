@@ -888,15 +888,15 @@ export default function ExperiencePsyMirror() {
              {/* 4. Report Explanation */}
              <div className="space-y-6 text-center">
                 <div className="space-y-2">
-                   <h3 className="text-lg font-bold text-[var(--foreground)]">Le rapport complet sert à une chose précise :</h3>
+                   <h3 className="text-lg font-bold text-[var(--foreground)]">C'est précisément là que l'accompagnement change tout :</h3>
                    <p className="text-[var(--text-secondary)] leading-relaxed max-w-lg mx-auto">
-                     Il met en lumière <span className="text-[var(--foreground)] font-medium">où cet écart agit réellement</span> dans ta vie, pourquoi il se déclenche à certains moments et comment le réduire sans te renier.
+                     Il ne s'agit pas juste de "savoir", mais d'avoir un <span className="text-[var(--foreground)] font-medium">miroir neutre et disponible</span> pour identifier tes angles morts au moment où ils surviennent.
                    </p>
                 </div>
                 
                 <div className="p-4 bg-[var(--accent)]/5 rounded-2xl border border-[var(--accent)]/10">
                    <p className="text-sm text-[var(--foreground)]/70 italic">
-                     Pas pour te changer. Mais pour réaligner ce qui est déjà là.
+                     Pas pour te changer. Mais pour t'aider à naviguer avec ta vraie nature.
                    </p>
                 </div>
              </div>
@@ -914,10 +914,10 @@ export default function ExperiencePsyMirror() {
                     onClick={() => setStep('paymentTrigger')}
                     className="w-full py-6 bg-[var(--accent)] text-white rounded-[20px] font-black text-xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(185,98,31,0.5)] flex items-center justify-center gap-3"
                   >
-                    Accéder à mon rapport complet <ArrowRight className="w-6 h-6" />
+                    Découvrir ma solution personnalisée <ArrowRight className="w-6 h-6" />
                   </button>
                   <p className="text-xs text-center text-[var(--text-secondary)]/50 uppercase tracking-widest">
-                    Rapport personnel • accès immédiat • sans engagement
+                    Analyse immédiate • accès direct • sans engagement
                   </p>
 
                   <button 

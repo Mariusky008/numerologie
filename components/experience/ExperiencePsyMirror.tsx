@@ -1070,20 +1070,56 @@ export default function ExperiencePsyMirror() {
                       <span className="font-normal opacity-80">Ce n'est pas un simple chatbot. Il vous interroge activement pour comprendre vos nuances et en déduire une <span className="text-white font-bold border-b border-[var(--accent)]">ANALYSE PSYCHOLOGIQUE DE HAUTE PRÉCISION.</span></span>
                     </p>
                   </div>
-
-                  <div className="space-y-2 pt-2">
-                    <FeatureRow icon={<Clock className="w-4 h-4" />} text="Disponible 24h/24 et 7j/7 pour répondre à vos doutes" />
-                    <FeatureRow icon={<Target className="w-4 h-4" />} text="Une analyse objective basée sur vos données cosmiques" />
-                    <FeatureRow icon={<MapPin className="w-4 h-4" />} text="Une feuille de route adaptée à votre rythme" />
-                  </div>
                 </div>
              </div>
-
-             {/* 5. How it works */}
+             
+             {/* 5. What you get List (New Section from prompt) */}
              <div className="space-y-4">
+               <h3 className="text-center text-sm font-black uppercase tracking-widest text-[var(--text-secondary)]">Ce que vous obtenez</h3>
+               <div className="grid gap-4">
+                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
+                   <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0"><CheckCircle className="w-5 h-5" /></div>
+                   <div>
+                     <h4 className="font-bold text-[var(--foreground)] text-sm">Profil psychologique affiné</h4>
+                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">L’IA vous pose des questions précises pour comprendre vos modes de pensée, vos réactions et vos schémas comportementaux.</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
+                   <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0"><CheckCircle className="w-5 h-5" /></div>
+                   <div>
+                     <h4 className="font-bold text-[var(--foreground)] text-sm">Identification de vos zones de friction</h4>
+                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">Découvrez où vous perdez de l’énergie et ce qui bloque votre progression.</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
+                   <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0"><CheckCircle className="w-5 h-5" /></div>
+                   <div>
+                     <h4 className="font-bold text-[var(--foreground)] text-sm">Questions-réponses personnalisées</h4>
+                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">L’IA répond à vos questionnements concrets et vous guide pas à pas.</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
+                   <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0"><CheckCircle className="w-5 h-5" /></div>
+                   <div>
+                     <h4 className="font-bold text-[var(--foreground)] text-sm">Rituels quotidiens simples et concrets</h4>
+                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">Actions ciblées à réaliser en 2 minutes pour réaligner votre trajectoire.</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
+                   <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0"><CheckCircle className="w-5 h-5" /></div>
+                   <div>
+                     <h4 className="font-bold text-[var(--foreground)] text-sm">Guidance IA 24/7</h4>
+                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">Votre assistant reste disponible en continu pour ajuster vos micro-actions et répondre à vos doutes.</p>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             {/* 6. How it works */}
+             <div className="space-y-4 pt-4 border-t border-[var(--foreground)]/5">
                <h3 className="text-center text-sm font-black uppercase tracking-widest text-[var(--text-secondary)]">Comment ça marche ?</h3>
                <div className="grid gap-4">
-                 <StepRow number="1" title="Analyse" desc="Il scanne votre profil complet et identifie vos forces dormantes." />
+                 <StepRow number="1" title="Analyse" desc="L’Assistant IA scanne votre profil complet et identifie vos forces dormantes." />
                  <StepRow number="2" title="Identification" desc="Il pointe précisément où vous perdez de l'énergie aujourd'hui." />
                  <StepRow number="3" title="Guidance" desc="Il vous donne des actions simples pour réaligner votre trajectoire." />
                </div>
@@ -1108,6 +1144,21 @@ export default function ExperiencePsyMirror() {
                    Ceux qui veulent de la clarté sans passer des années en thérapie.
                  </li>
                </ul>
+             </div>
+
+             {/* Micro-Social Proof */}
+             <div className="bg-white p-4 rounded-2xl border border-[var(--foreground)]/5 shadow-md text-center space-y-2">
+               <div className="flex justify-center gap-1 text-amber-400">
+                  <Sparkles className="w-4 h-4 fill-current" />
+                  <Sparkles className="w-4 h-4 fill-current" />
+                  <Sparkles className="w-4 h-4 fill-current" />
+                  <Sparkles className="w-4 h-4 fill-current" />
+                  <Sparkles className="w-4 h-4 fill-current" />
+               </div>
+               <p className="text-sm italic text-[var(--foreground)] font-medium">
+                 “Mon rituel quotidien m’aide à agir plus vite et à mieux gérer mes blocages. Je ne pensais pas qu’un outil IA pouvait être aussi précis.”
+               </p>
+               <p className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-widest">– Jean D.</p>
              </div>
 
              {/* NEW SECTION: DAILY RITUAL */}

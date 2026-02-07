@@ -423,6 +423,10 @@ export default function Home() {
               ) : (
                 // STEP 2: RESULT
                 <div className="space-y-8 text-center">
+                   <div className="w-12 h-12 bg-[var(--accent)]/10 rounded-full flex items-center justify-center mx-auto mb-2 animate-pulse">
+                      <Sparkles className="w-6 h-6 text-[var(--accent)]" />
+                   </div>
+                   
                    <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] text-xs font-bold uppercase tracking-widest mb-2">
                       Chemin de Vie {teaserResult.path}
                    </div>

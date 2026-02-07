@@ -101,12 +101,12 @@ const MATRIX_INSIGHTS: Record<number, Record<string, string>> = {
 };
 
 const ARCHETYPE_DESCRIPTIONS: Record<string, string> = {
-  "amour": "Ton Chemin de Vie {{LP}} cherche l'indépendance, mais ton ambition amoureuse demande de la fusion. C'est ce tiraillement qui crée l'instabilité.",
-  "famille": "Avec un Chemin de Vie {{LP}}, tu as besoin de liberté, mais ton ambition familiale te ramène à des devoirs. Tu te sens piégé entre loyauté et évasion.",
-  "decisions": "Ton Chemin de Vie {{LP}} est intuitif, mais tu essaies de tout rationaliser. Ton indécision vient de là : tu n'écoutes pas ta première impression.",
-  "confiance": "Ton énergie {{LP}} est puissante mais brute. Ton manque de confiance vient du fait que tu essaies de rentrer dans un moule trop petit pour toi.",
-  "solitude": "Le Chemin de Vie {{LP}} a besoin de solitude pour se recharger, mais tu la confonds avec de l'isolement. Tu as peur du vide alors qu'il est ta force.",
-  "vie": "Ton Chemin de Vie {{LP}} demande du mouvement. Ta vie actuelle est trop statique, c'est pour ça que tu as l'impression d'étouffer."
+  "amour": "Ton Chemin de Vie {{LP}} a une façon unique d'aimer. Mais tes attentes actuelles créent peut-être une friction avec la réalité de tes relations.",
+  "famille": "Ton Chemin de Vie {{LP}} joue un rôle clé dans ton équilibre familial. Mais parfois, les attentes des autres pèsent lourd sur tes propres aspirations.",
+  "decisions": "Ton Chemin de Vie {{LP}} a une boussole interne précise. Pourtant, le doute s'installe souvent quand tu essaies de trop rationaliser.",
+  "confiance": "Ton énergie {{LP}} est une force naturelle. Ton manque de confiance vient souvent du fait que tu te compares à des modèles qui ne te correspondent pas.",
+  "solitude": "Le Chemin de Vie {{LP}} a un rapport particulier au temps pour soi. Ce que tu prends pour de l'isolement est peut-être un appel à te reconnecter.",
+  "vie": "Ton Chemin de Vie {{LP}} est fait pour le mouvement et l'évolution. Si tu te sens bloqué, c'est que tu résistes à un changement nécessaire."
 };
 
 const getMicroInsight = (lifePath: number, archetypeId: string): { description: string, punchline: string } => {
@@ -123,7 +123,9 @@ const getMicroInsight = (lifePath: number, archetypeId: string): { description: 
   const pathInsights = MATRIX_INSIGHTS[lookupPath];
   const punchline = (pathInsights && pathInsights[archetypeId]) 
     ? pathInsights[archetypeId] 
-    : `Ton Chemin de Vie ${lifePath} cherche sa voie.`;
+    : `Ton Chemin de Vie ${lifePath} a un message pour toi.`;
+
+  console.log("Teaser Calculation:", { lifePath, lookupPath, archetypeId, punchline }); // Debug log
 
   return { description, punchline };
 };

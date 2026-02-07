@@ -862,6 +862,18 @@ export default function ExperiencePsyMirror() {
                     localStorage.setItem('psy_mirror_session_data', JSON.stringify(sessionData));
                     
                     trackEvent('payment_initiated_pre_checkout');
+                    
+                    // TikTok Standard Event
+                    trackEvent('InitiateCheckout', {
+                      contents: [{
+                        content_id: 'bundle_full_report',
+                        content_type: 'product',
+                        content_name: 'Analyse Complète + Coach IA'
+                      }],
+                      value: 49,
+                      currency: 'EUR'
+                    });
+
                     router.push('/miroir/checkout?plan=bundle');
                   }}
                   className="w-full py-6 bg-[#C9A24D] text-[#08090F] rounded-[20px] font-black text-xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(201,162,77,0.5)] flex items-center justify-center gap-3"

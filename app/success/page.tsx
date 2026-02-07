@@ -1,9 +1,10 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { CheckCircle, Mail, Package, ArrowRight, BookOpen, Download, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { trackEvent, identifyUser } from '@/lib/analytics';
 
 function SuccessContent() {
   const searchParams = useSearchParams();
@@ -18,13 +19,33 @@ function SuccessContent() {
   const isBundle = plan === 'bundle';
   const isPaper = paper;
 
-  // Save paid status to localStorage when success page is viewed
-  if (typeof window !== 'undefined') {
+  useEffect(() => {
+    // Save paid status
     localStorage.setItem('has_paid_report', 'true');
-    if (searchParams.get('order_id')) {
-      localStorage.setItem('last_paid_order_id', searchParams.get('order_id')!);
+    const orderId = searchParams.get('order_id');
+    if (orderId) {
+      localStorage.setItem('last_paid_order_id', orderId);
     }
-  }
+
+    // TikTok Tracking
+    if (email) {
+        identifyUser({ email });
+    }
+
+    const price = plan === 'parcours_autonome' ? 499 : 
+                  plan === 'parcours_mensuel' ? 1599 : 
+                  plan === 'parcours_hebdo' ? 2999 : 49;
+
+    trackEvent('Purchase', {
+        contents: [{
+            content_id: plan || 'bundle',
+            content_type: 'product',
+            content_name: plan === 'bundle' ? 'Analyse Complète' : 'Parcours'
+        }],
+        value: price,
+        currency: 'EUR'
+    });
+  }, [email, plan, searchParams]);
 
   return (
     <div className="min-h-screen bg-[#FAF9F7] text-[#2C2F4A] font-sans flex items-center justify-center p-4">

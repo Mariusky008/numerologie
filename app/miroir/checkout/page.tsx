@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { trackEvent } from '@/lib/analytics';
+import { trackEvent, identifyUser } from '@/lib/analytics';
 import { 
   Lock, 
   CreditCard, 
@@ -175,6 +175,15 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     trackEvent('checkout_view', { plan: planKey });
+    trackEvent('InitiateCheckout', {
+      contents: [{
+          content_id: selectedPlan.id,
+          content_type: 'product',
+          content_name: selectedPlan.name
+      }],
+      value: selectedPlan.price,
+      currency: 'EUR'
+    });
     
     // 1. Try final data (complete profile)
     const finalData = localStorage.getItem('psy_mirror_final_data');
@@ -224,6 +233,9 @@ export default function CheckoutPage() {
   const handleEmailBlur = async () => {
     // Basic validation
     if (!email || !email.includes('@')) return;
+    
+    // Identify for TikTok
+    identifyUser({ email });
     
     // On force la sauvegarde même si hasSavedDraft est true, 
     // car on vient d'ajouter un email
@@ -358,6 +370,15 @@ export default function CheckoutPage() {
 
       // 2. Enregistrer la stat de clic de paiement
       trackEvent('payment_click', { plan: selectedPlan.id });
+      trackEvent('AddPaymentInfo', {
+        contents: [{
+            content_id: selectedPlan.id,
+            content_type: 'product',
+            content_name: selectedPlan.name
+        }],
+        value: selectedPlan.price,
+        currency: 'EUR'
+      });
 
       // 3. Créer la session Stripe et rediriger
       const stripeResponse = await fetch('/api/checkout', {

@@ -193,7 +193,17 @@ export default function Home() {
       setTeaserResult({ path: lp, description, punchline });
       setIsCalculating(false);
       trackEvent('teaser_calculated', { lifePath: lp });
-      trackEvent('teaser_result_viewed');
+      
+      // TikTok Standard Event
+      trackEvent('ViewContent', {
+        contents: [{
+          content_id: 'teaser_lp_' + lp,
+          content_type: 'product',
+          content_name: `Teaser Chemin de Vie ${lp}`
+        }],
+        value: 0,
+        currency: 'EUR'
+      });
     }, 1500);
   };
   

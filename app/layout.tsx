@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Lato } from "next/font/google";
 import "./globals.css";
-// import TikTokPixel from "@/components/TikTokPixel";
+import TikTokPixel from "@/components/TikTokPixel";
 
 const playfair = Playfair_Display({
   variable: "--font-serif",
@@ -48,7 +48,7 @@ export default function RootLayout({
         className={`${playfair.variable} ${lato.variable} antialiased font-sans`}
         suppressHydrationWarning
       >
-        {/* <TikTokPixel /> */}
+        <TikTokPixel />
         {children}
       </body>
     </html>

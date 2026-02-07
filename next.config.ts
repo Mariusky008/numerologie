@@ -6,7 +6,7 @@ const nextConfig: any = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Force build ID change
+  // Force build ID change to clear Vercel cache - v2
   generateBuildId: async () => {
     return `build-${Date.now()}`
   }

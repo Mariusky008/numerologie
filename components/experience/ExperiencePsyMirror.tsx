@@ -34,7 +34,7 @@ import { calculateLifePathNumber, getLifePathData, getMoonSign, getSunSign, getA
 
 export default function ExperiencePsyMirror() {
   const router = useRouter();
-  const [step, setStep] = useState<'introQCM' | 'preReveal' | 'paymentTrigger' | 'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'emailCapture' | 'loading'>('introQCM');
+  const [step, setStep] = useState<'introQCM' | 'preReveal' | 'awareness' | 'paymentTrigger' | 'collectInfo' | 'cosmicReveal' | 'moduleA' | 'moduleB' | 'moduleC' | 'emailCapture' | 'loading'>('introQCM');
   const [infoSubStep, setInfoSubStep] = useState(1); // 1: Name, 2: Date/Time, 3: City
   const [personalInfo, setPersonalInfo] = useState({
     firstName: '',
@@ -322,6 +322,8 @@ export default function ExperiencePsyMirror() {
         trackEvent('intro_qcm_start'); // Screen 5 Start
     } else if (step === 'preReveal') {
         trackEvent('pre_reveal_viewed'); // Screen 9
+    } else if (step === 'awareness') {
+        trackEvent('awareness_viewed'); // New Screen
     } else if (step === 'paymentTrigger') {
         trackEvent('payment_trigger_viewed'); // Screen 10
     }
@@ -772,7 +774,7 @@ export default function ExperiencePsyMirror() {
 
              <div className="space-y-4 pt-4">
                 <button
-                  onClick={() => setStep('paymentTrigger')}
+                  onClick={() => setStep('awareness')}
                   className="w-full py-6 bg-[var(--accent)] text-white rounded-[20px] font-black text-xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(185,98,31,0.5)] flex items-center justify-center gap-3"
                 >
                   Je veux comprendre <ArrowRight className="w-6 h-6" />
@@ -802,6 +804,122 @@ export default function ExperiencePsyMirror() {
                   <p className="text-xs text-[var(--text-secondary)]/50 italic max-w-xs mx-auto">
                     « Envoie ce résumé à quelqu’un qui te connaît bien. Il pourrait te voir différemment. »
                   </p>
+                </div>
+             </div>
+          </motion.div>
+        )}
+
+        {/* STEP: AWARENESS (NEW STEP) */}
+        {step === 'awareness' && (
+          <motion.div 
+            key="awareness"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="w-full max-w-2xl bg-white p-8 md:p-12 rounded-[50px] shadow-2xl border border-[var(--foreground)]/5 space-y-10 relative z-10"
+          >
+             {/* 1. Header */}
+             <div className="space-y-4 text-center">
+               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] text-[10px] font-black uppercase tracking-widest">
+                  <Brain className="w-3 h-3" />
+                  Analyse approfondie en cours
+               </div>
+               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[var(--foreground)] leading-tight">
+                 Ce décalage n’est pas théorique.
+               </h2>
+               <p className="text-xl text-[var(--text-secondary)] italic">
+                 Il agit déjà dans ta vie quotidienne.
+               </p>
+             </div>
+
+             {/* 2. Central Block */}
+             <div className="bg-[var(--background)] p-8 rounded-[40px] border border-[var(--foreground)]/5 space-y-6">
+                <p className="text-[var(--foreground)] font-medium text-lg leading-relaxed text-center">
+                  Quand cet écart reste invisible, tu ne fais pas de “mauvais choix”. <br/>
+                  <span className="text-[var(--accent)] font-bold">Tu prends de bonnes décisions, mais au mauvais endroit.</span>
+                </p>
+                
+                <div className="space-y-3 pt-2">
+                  <p className="text-xs font-black uppercase tracking-widest text-[var(--text-secondary)] ml-2">Concrètement, cela se traduit par :</p>
+                  {[
+                    "Une fatigue mentale malgré tes efforts",
+                    "Des décisions que tu remets en question après coup",
+                    "L’impression d’avancer… puis de revenir au même point",
+                    "Des blocages qui reviennent même quand tu “comprends”",
+                    "Un décalage entre ce que tu ressens et ce que tu montres"
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-3 p-3 bg-white rounded-2xl border border-[var(--foreground)]/5">
+                      <div className="w-5 h-5 mt-0.5 rounded-full bg-[var(--accent)]/10 flex items-center justify-center text-[var(--accent)] shrink-0">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
+                      </div>
+                      <span className="text-[var(--foreground)]/80 text-sm leading-relaxed">{item}</span>
+                    </div>
+                  ))}
+                </div>
+             </div>
+
+             {/* 3. Reversal */}
+             <div className="text-center px-4">
+               <p className="text-xl md:text-2xl font-serif font-bold italic text-[var(--foreground)] leading-relaxed">
+                 "Le problème n’est pas ce que tu fais. C’est ce que tu ne vois pas encore."
+               </p>
+             </div>
+
+             {/* 4. Report Explanation */}
+             <div className="space-y-6 text-center">
+                <div className="space-y-2">
+                   <h3 className="text-lg font-bold text-[var(--foreground)]">Le rapport complet sert à une chose précise :</h3>
+                   <p className="text-[var(--text-secondary)] leading-relaxed max-w-lg mx-auto">
+                     Il met en lumière <span className="text-[var(--foreground)] font-medium">où cet écart agit réellement</span> dans ta vie, pourquoi il se déclenche à certains moments et comment le réduire sans te renier.
+                   </p>
+                </div>
+                
+                <div className="p-4 bg-[var(--accent)]/5 rounded-2xl border border-[var(--accent)]/10">
+                   <p className="text-sm text-[var(--foreground)]/70 italic">
+                     Pas pour te changer. Mais pour réaligner ce qui est déjà là.
+                   </p>
+                </div>
+             </div>
+
+             {/* 5. Proof / Reality (Optional based on prompt, merged above) */}
+             {/* 6. Transition & CTA */}
+             <div className="space-y-6 pt-4 border-t border-[var(--foreground)]/5">
+                <p className="text-center text-[var(--foreground)] font-medium">
+                  Tu peux continuer à avancer comme avant. <br/>
+                  <span className="text-[var(--text-secondary)]">Ou prendre 20 minutes pour comprendre précisément ce qui te freine aujourd’hui.</span>
+                </p>
+
+                <div className="space-y-4">
+                  <button
+                    onClick={() => setStep('paymentTrigger')}
+                    className="w-full py-6 bg-[var(--accent)] text-white rounded-[20px] font-black text-xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(185,98,31,0.5)] flex items-center justify-center gap-3"
+                  >
+                    Accéder à mon rapport complet <ArrowRight className="w-6 h-6" />
+                  </button>
+                  <p className="text-xs text-center text-[var(--text-secondary)]/50 uppercase tracking-widest">
+                    Rapport personnel • accès immédiat • sans engagement
+                  </p>
+
+                  <button 
+                    onClick={() => {
+                      const text = `Mon analyse montre un écart de ${gapScore}% : "Tu as l'énergie pour avancer, mais quelque chose dans ton environnement actuel te freine."\n\nEst-ce que tu trouves que ça me correspond ?\n\nFais le test ici : https://votrelegende.fr`;
+                      if (navigator.share) {
+                        navigator.share({
+                          title: 'Mon Écart Détecté',
+                          text: text,
+                          url: 'https://votrelegende.fr'
+                        }).catch(() => {});
+                      } else {
+                        navigator.clipboard.writeText(text);
+                        alert("Texte copié ! Tu peux le coller dans TikTok.");
+                      }
+                      trackEvent('share_tiktok_dm_awareness');
+                    }}
+                    className="w-full py-4 bg-transparent border-2 border-[var(--foreground)]/5 rounded-[20px] font-bold text-sm uppercase tracking-widest hover:bg-[var(--foreground)]/5 transition-all flex items-center justify-center gap-2 text-[var(--text-secondary)] opacity-60 hover:opacity-100"
+                  >
+                    <Share2 className="w-4 h-4" />
+                    Partager ce résumé à quelqu’un qui te connaît bien
+                  </button>
                 </div>
              </div>
           </motion.div>

@@ -945,8 +945,8 @@ export default function ExperiencePsyMirror() {
                </h2>
                <div className="bg-[var(--background)] p-6 rounded-3xl border border-[var(--foreground)]/5">
                  <p className="text-[var(--text-secondary)] text-lg leading-relaxed font-light">
-                   Jusqu’ici, tu as identifié qui tu es et où se situe l’écart. <br/><br/>
-                   <span className="text-[var(--foreground)] font-medium">Le rapport complet te montre comment cette dynamique agit concrètement</span> dans tes décisions, tes relations et ton sentiment d’alignement.
+                   <span className="block mb-2 font-bold text-[#D9772B] uppercase text-xs tracking-widest">⚠️ Opportunité Temporelle</span>
+                   Tu entres dans une phase charnière (Année Personnelle {cosmicData?.personalYear || 'de Transition'}). Comprendre ce blocage <strong>maintenant</strong> est crucial pour ne pas répéter ce schéma les 9 prochains mois.
                  </p>
                </div>
              </div>
@@ -955,26 +955,27 @@ export default function ExperiencePsyMirror() {
              <div className="bg-[var(--foreground)] rounded-[40px] p-8 text-white relative overflow-hidden text-center space-y-6 shadow-2xl">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent)]/20 blur-[80px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
                 
-                {/* Animation Coach IA */}
-                <div className="relative w-24 h-24 mx-auto">
-                  <motion.div 
-                    animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-0 rounded-full bg-gradient-to-tr from-[var(--accent)]/30 via-transparent to-white/10 blur-xl"
-                  />
-                  <motion.div 
-                    animate={{ rotate: -360 }}
-                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-1 rounded-full border border-[var(--accent)]/30 border-dashed"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 bg-[var(--foreground)] rounded-full flex items-center justify-center shadow-2xl border border-white/10 relative overflow-hidden">
-                      <Sparkles className="w-6 h-6 text-[var(--accent)] animate-pulse relative z-10" />
+                {/* Chat Simulation */}
+                <div className="relative z-10 bg-white/10 backdrop-blur-md rounded-2xl p-4 text-left space-y-3 border border-white/10 max-w-sm mx-auto transform -rotate-1 hover:rotate-0 transition-transform duration-500">
+                  <div className="flex gap-3 items-end">
+                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold">
+                      {personalInfo.firstName ? personalInfo.firstName[0] : 'M'}
+                    </div>
+                    <div className="bg-white/10 rounded-2xl rounded-bl-none p-3 text-sm text-white/90">
+                      Pourquoi je n'arrive pas à finir ce que je commence ?
+                    </div>
+                  </div>
+                  <div className="flex gap-3 items-end flex-row-reverse">
+                    <div className="w-8 h-8 rounded-full bg-[var(--accent)] flex items-center justify-center">
+                      <Sparkles className="w-4 h-4 text-white" />
+                    </div>
+                    <div className="bg-[var(--accent)] rounded-2xl rounded-br-none p-3 text-sm text-white">
+                      En tant que Chemin de Vie {cosmicData?.pathNum}, ton besoin de liberté te pousse à...
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-2 relative z-10">
+                <div className="space-y-2 relative z-10 pt-2">
                    <h3 className="text-xl font-bold text-white">Inclus : Ton Coach IA Personnel</h3>
                    <p className="text-white/70 text-sm max-w-sm mx-auto leading-relaxed">
                      Pose-lui toutes tes questions 24/7. Il connaît ton profil par cœur et t'aide à appliquer tes conseils au quotidien.
@@ -990,6 +991,34 @@ export default function ExperiencePsyMirror() {
              {/* Value Props List */}
              <div className="space-y-4 max-w-md mx-auto">
                <p className="text-xs font-black uppercase tracking-widest text-[var(--accent)] text-center mb-6">Ce que tu reçois immédiatement :</p>
+               
+               {/* Mockup Rapport Flouté */}
+               <div className="relative w-full aspect-[4/3] bg-white rounded-xl shadow-lg border border-stone-200 overflow-hidden group mb-6">
+                 {/* Header Mockup */}
+                 <div className="absolute top-0 w-full h-8 bg-[var(--foreground)] flex items-center px-4">
+                   <div className="w-2 h-2 rounded-full bg-red-400 mr-1.5"></div>
+                   <div className="w-2 h-2 rounded-full bg-amber-400 mr-1.5"></div>
+                   <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                 </div>
+                 {/* Content Mockup (Blurred) */}
+                 <div className="p-8 pt-12 space-y-4 filter blur-[2px] opacity-50 select-none pointer-events-none">
+                   <div className="h-6 w-3/4 bg-stone-200 rounded"></div>
+                   <div className="space-y-2">
+                     <div className="h-3 w-full bg-stone-100 rounded"></div>
+                     <div className="h-3 w-full bg-stone-100 rounded"></div>
+                     <div className="h-3 w-5/6 bg-stone-100 rounded"></div>
+                   </div>
+                   <div className="h-24 w-full bg-stone-50 rounded border border-stone-100"></div>
+                 </div>
+                 {/* Overlay Prénom */}
+                 <div className="absolute inset-0 flex items-center justify-center">
+                   <div className="bg-white/90 backdrop-blur-sm px-6 py-3 rounded-xl shadow-2xl border border-[var(--accent)]/20 transform rotate-[-2deg] group-hover:rotate-0 transition-transform duration-500">
+                     <p className="text-xs text-[var(--text-secondary)] uppercase tracking-widest font-bold mb-1">Rapport de</p>
+                     <p className="text-2xl font-serif font-bold text-[var(--foreground)]">{cosmicData?.firstName || 'Moi'}</p>
+                   </div>
+                 </div>
+               </div>
+
                {[
                  "Lecture de ton profil (PDF)",
                  "Coach IA Dédié (Accès Illimité)",

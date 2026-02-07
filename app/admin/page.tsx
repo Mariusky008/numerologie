@@ -284,6 +284,7 @@ export default function AdminDashboard() {
               { label: "   — Question 4", key: "intro_qcm_q4_viewed", step: 8, sub: true },
               { label: "   — Question 5", key: "intro_qcm_q5_viewed", step: 8.5, sub: true },
               { label: "9. Écart Détecté", key: "pre_reveal_viewed", step: 9 },
+              { label: "9.5. Prise de Conscience", key: "awareness_viewed", step: 9.5 },
               { label: "10. Sales Page (Rapport)", key: "payment_trigger_viewed", step: 10 },
               { label: "11. Checkout", key: "checkout_view", step: 11 },
             ].map((row, idx, arr) => {

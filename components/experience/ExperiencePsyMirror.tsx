@@ -13,6 +13,8 @@ import {
   Brain,
   Sparkles,
   Star,
+  MessageCircle,
+  CheckCircle,
   User,
   MapPin,
   Calendar,
@@ -818,7 +820,7 @@ export default function ExperiencePsyMirror() {
              <div className="space-y-6 text-center">
                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] text-[10px] font-black uppercase tracking-widest">
                   <Sparkles className="w-3 h-3" />
-                  Rapport Complet
+                  Rapport Complet + Coach IA
                </div>
                <h2 className="text-3xl md:text-4xl font-serif font-bold text-[var(--foreground)] leading-tight">
                  Le rapport complet t’explique précisément comment utiliser ce potentiel dans ta vie.
@@ -826,19 +828,55 @@ export default function ExperiencePsyMirror() {
                <div className="bg-[var(--background)] p-6 rounded-3xl border border-[var(--foreground)]/5">
                  <p className="text-[var(--text-secondary)] text-lg leading-relaxed font-light">
                    Jusqu’ici, tu as identifié qui tu es et où se situe l’écart. <br/><br/>
-                   <span className="text-[var(--foreground)] font-medium">Le rapport complet te montre comment cette dynamique agit concrètement</span> dans tes décisions, tes relations et ton sentiment d’alignement — et surtout comment t’en servir consciemment.
+                   <span className="text-[var(--foreground)] font-medium">Le rapport complet te montre comment cette dynamique agit concrètement</span> dans tes décisions, tes relations et ton sentiment d’alignement.
                  </p>
                </div>
              </div>
 
+             {/* AI Coach Teaser */}
+             <div className="bg-[var(--foreground)] rounded-[40px] p-8 text-white relative overflow-hidden text-center space-y-6 shadow-2xl">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent)]/20 blur-[80px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+                
+                {/* Animation Coach IA */}
+                <div className="relative w-24 h-24 mx-auto">
+                  <motion.div 
+                    animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 rounded-full bg-gradient-to-tr from-[var(--accent)]/30 via-transparent to-white/10 blur-xl"
+                  />
+                  <motion.div 
+                    animate={{ rotate: -360 }}
+                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-1 rounded-full border border-[var(--accent)]/30 border-dashed"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 bg-[var(--foreground)] rounded-full flex items-center justify-center shadow-2xl border border-white/10 relative overflow-hidden">
+                      <Sparkles className="w-6 h-6 text-[var(--accent)] animate-pulse relative z-10" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 relative z-10">
+                   <h3 className="text-xl font-bold text-white">Inclus : Ton Coach IA Personnel</h3>
+                   <p className="text-white/70 text-sm max-w-sm mx-auto leading-relaxed">
+                     Pose-lui toutes tes questions 24/7. Il connaît ton profil par cœur et t'aide à appliquer tes conseils au quotidien.
+                   </p>
+                </div>
+                
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/60 text-[10px] font-bold uppercase tracking-widest border border-white/5">
+                   <MessageCircle className="w-3 h-3" />
+                   Accès Illimité
+                </div>
+             </div>
+
              {/* Value Props List */}
              <div className="space-y-4 max-w-md mx-auto">
-               <p className="text-xs font-black uppercase tracking-widest text-[var(--accent)] text-center mb-6">Dans le rapport complet :</p>
+               <p className="text-xs font-black uppercase tracking-widest text-[var(--accent)] text-center mb-6">Ce que tu reçois immédiatement :</p>
                {[
-                 "Lecture de ton profil",
-                 "Relations & décisions",
-                 "Points de désalignement",
-                 "Axes d’alignement",
+                 "Lecture de ton profil (PDF)",
+                 "Coach IA Dédié (Accès Illimité)",
+                 "Relations & décisions décodées",
+                 "Points de blocage identifiés",
                  "Synthèse personnalisée"
                ].map((item, i) => (
                  <div key={i} className="flex items-center gap-4 p-4 bg-[var(--background)] rounded-2xl border border-[var(--foreground)]/5">

@@ -109,14 +109,15 @@ const ARCHETYPE_DESCRIPTIONS: Record<string, string> = {
 };
 
 const getMicroInsight = (lifePath: number, archetypeId: string): { description: string, punchline: string } => {
+  // Force reduction to single digit (1-9) for matrix lookup
   let lookupPath = lifePath;
-  if (lookupPath === 10) lookupPath = 1;
-  if (lookupPath === 11) lookupPath = 2;
-  if (lookupPath === 22) lookupPath = 4;
-  if (lookupPath === 33) lookupPath = 6;
+  
+  while (lookupPath > 9) {
+    lookupPath = String(lookupPath).split('').reduce((a, b) => Number(a) + Number(b), 0);
+  }
 
   const rawDesc = ARCHETYPE_DESCRIPTIONS[archetypeId] || "Ton Chemin de Vie {{LP}} entre en friction avec ton ambition actuelle.";
-  const description = rawDesc.replace("{{LP}}", lifePath.toString());
+  const description = rawDesc.replace("{{LP}}", lifePath.toString()); // Keep original LP for display text
 
   const pathInsights = MATRIX_INSIGHTS[lookupPath];
   const punchline = (pathInsights && pathInsights[archetypeId]) 

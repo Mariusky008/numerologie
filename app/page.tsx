@@ -6,25 +6,24 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, 
-  Activity, 
-  Sparkles, 
-  ShieldCheck,
-  Target,
-  Lock,
   Heart,
   Users,
   Compass,
   Star,
+  Target,
+  Activity,
   X,
   Zap,
   CheckCircle2,
   Share2,
-  Smartphone
+  Lock,
+  ShieldCheck
 } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 import { calculateLifePath } from '@/lib/numerology/engine';
 
-// Matrix Data
+// --- DATA ---
+
 const MATRIX_INSIGHTS: Record<number, Record<string, string>> = {
   1: {
     amour: "Tu aimes quand ça avance.",
@@ -100,7 +99,6 @@ const MATRIX_INSIGHTS: Record<number, Record<string, string>> = {
   }
 };
 
-// Full Descriptions Data (Restored)
 const ARCHETYPE_DESCRIPTIONS: Record<string, string> = {
   "amour": "Ton Chemin de Vie {{LP}} cherche l'indépendance, mais ton ambition amoureuse demande de la fusion. C'est ce tiraillement qui crée l'instabilité.",
   "famille": "Avec un Chemin de Vie {{LP}}, tu as besoin de liberté, mais ton ambition familiale te ramène à des devoirs. Tu te sens piégé entre loyauté et évasion.",
@@ -110,22 +108,16 @@ const ARCHETYPE_DESCRIPTIONS: Record<string, string> = {
   "vie": "Ton Chemin de Vie {{LP}} demande du mouvement. Ta vie actuelle est trop statique, c'est pour ça que tu as l'impression d'étouffer."
 };
 
-  // Micro-Insight Logic
 const getMicroInsight = (lifePath: number, archetypeId: string): { description: string, punchline: string } => {
-  // Handle Master Numbers by reducing them for the matrix lookup
   let lookupPath = lifePath;
-  // If Master Numbers are not in matrix, reduce them. 
-  // 10 is not a Life Path usually (1+0=1), but if calculator returns 10, treat as 1.
   if (lookupPath === 10) lookupPath = 1;
   if (lookupPath === 11) lookupPath = 2;
   if (lookupPath === 22) lookupPath = 4;
   if (lookupPath === 33) lookupPath = 6;
 
-  // 1. Get Description (interpolating Life Path)
   const rawDesc = ARCHETYPE_DESCRIPTIONS[archetypeId] || "Ton Chemin de Vie {{LP}} entre en friction avec ton ambition actuelle.";
   const description = rawDesc.replace("{{LP}}", lifePath.toString());
 
-  // 2. Get Punchline from Matrix
   const pathInsights = MATRIX_INSIGHTS[lookupPath];
   const punchline = (pathInsights && pathInsights[archetypeId]) 
     ? pathInsights[archetypeId] 
@@ -134,256 +126,20 @@ const getMicroInsight = (lifePath: number, archetypeId: string): { description: 
   return { description, punchline };
 };
 
-const ARCHETYPES = [
-  {
-    id: "amour",
-    label: "Amour / relation",
-    icon: Heart,
-    subVoeux: [
-      "Retrouver une relation saine et stable",
-      "Sortir d’un schéma amoureux destructeur",
-      "Mettre fin à une impasse relationnelle"
-    ]
-  },
-  {
-    id: "famille",
-    label: "Famille / lien",
-    icon: Users,
-    subVoeux: [
-      "Réparer un lien familial important",
-      "Me libérer d’un poids émotionnel ancien"
-    ]
-  },
-  {
-    id: "decisions",
-    label: "Décisions & direction",
-    icon: Compass,
-    subVoeux: [
-      "Reprendre le contrôle de mes décisions",
-      "Clarifier ce que je veux vraiment",
-      "Créer un équilibre durable dans ma vie"
-    ]
-  },
-  {
-    id: "confiance",
-    label: "Confiance & respect de soi",
-    icon: Star,
-    subVoeux: [
-      "Me respecter enfin dans mes choix",
-      "Retrouver confiance en moi et en mes ressentis",
-      "Assumer qui je suis sans me trahir"
-    ]
-  },
-  {
-    id: "solitude",
-    label: "Solitude / attachement",
-    icon: Target,
-    subVoeux: [
-      "Sortir d’une solitude que je n’ai pas choisie",
-      "Arrêter de vivre dans la peur de perdre"
-    ]
-  },
-  {
-    id: "vie",
-    label: "Vie qui ne me ressemble pas",
-    icon: Activity,
-    subVoeux: [
-      "Construire une vie qui me ressemble",
-      "Ne plus saboter ce qui pourrait fonctionner"
-    ]
-  }
+const DOMAINS = [
+  { id: "amour", label: "Amour & Relations", icon: Heart },
+  { id: "famille", label: "Famille & Liens", icon: Users },
+  { id: "decisions", label: "Décisions & Choix", icon: Compass },
+  { id: "confiance", label: "Confiance en soi", icon: Star },
+  { id: "solitude", label: "Solitude", icon: Target },
+  { id: "vie", label: "Sens de la vie", icon: Activity }
 ];
 
-const VOEU_INSIGHTS: Record<string, { demand: string; current: string }> = {
-  "Retrouver une relation saine et stable": { demand: "Vulnérabilité et limites claires", current: "Sur-adaptation et peur du rejet" },
-  "Sortir d’un schéma amoureux destructeur": { demand: "Estime de soi radicale", current: "Besoin de sauver ou d'être sauvé" },
-  "Mettre fin à une impasse relationnelle": { demand: "Courage de trancher", current: "Espoir que l'autre change" },
-  "Réparer un lien familial important": { demand: "Acceptation de l'autre tel qu'il est", current: "Attente de reconnaissance" },
-  "Me libérer d’un poids émotionnel ancien": { demand: "Lâcher-prise et pardon", current: "Identification à la blessure" },
-  "Reprendre le contrôle de mes décisions": { demand: "Responsabilité totale", current: "Attente de validation extérieure" },
-  "Clarifier ce que je veux vraiment": { demand: "Écoute du corps et de l'intuition", current: "Analyse mentale et doute permanent" },
-  "Créer un équilibre durable dans ma vie": { demand: "Renoncement et priorisation", current: "Vouloir tout faire par peur de manquer" },
-  "Me respecter enfin dans mes choix": { demand: "Savoir dire non sans culpabilité", current: "Compromis excessifs pour plaire" },
-  "Retrouver confiance en moi et en mes ressentis": { demand: "Action malgré la peur", current: "Attente de certitude avant d'agir" },
-  "Assumer qui je suis sans me trahir": { demand: "Authenticité brute", current: "Port du masque social" },
-  "Sortir d’une solitude que je n’ai pas choisie": { demand: "Ouverture et risque émotionnel", current: "Protection et retrait préventif" },
-  "Arrêter de vivre dans la peur de perdre": { demand: "Confiance en la vie", current: "Contrôle et hypervigilance" },
-  "Construire une vie qui me ressemble": { demand: "Créativité et audace", current: "Conformisme et sécurité illusoire" },
-  "Ne plus saboter ce qui pourrait fonctionner": { demand: "Acceptation du bonheur", current: "Culpabilité et sentiment d'imposture" },
-};
-
-const FloatingVoeuBadge = ({ selectedVoeu, onClear }: { selectedVoeu: string | null, onClear: () => void }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    if (!selectedVoeu) setIsOpen(false);
-  }, [selectedVoeu]);
-
-  return (
-    <AnimatePresence>
-      {selectedVoeu && selectedVoeu !== "Aucune ne me parle pour l’instant" && (
-        <>
-          {/* Badge Flottant */}
-          <motion.div 
-            initial={{ opacity: 0, x: 100, scale: 0.8 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            exit={{ opacity: 0, x: 100, scale: 0.8 }}
-            className="fixed top-24 right-4 md:right-10 z-[90] group cursor-pointer"
-            onClick={() => setIsOpen(true)}
-          >
-            {/* Glow Background */}
-            <div className="absolute inset-0 bg-[#C9A24D] blur-[30px] opacity-30 group-hover:opacity-60 transition-opacity duration-500 animate-pulse" />
-            
-            <div className="bg-[#C9A24D] border-2 border-white/40 p-5 md:p-6 rounded-[2.5rem] shadow-[0_20px_60px_-10px_rgba(201,162,77,0.7)] max-w-[260px] md:max-w-[320px] relative overflow-hidden transform group-hover:scale-105 transition-transform duration-300">
-              {/* Inner Light Effect */}
-              <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/30 to-transparent" />
-              
-              <div className="relative flex items-center gap-4">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 shadow-inner backdrop-blur-sm border border-white/20">
-                  <Star className="w-5 h-5 md:w-6 md:h-6 text-[#08090F]" />
-                </div>
-                <div className="space-y-1">
-                  <span className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] text-[#08090F]/70 block">Mon ambition actuelle</span>
-                  <p className="text-xs md:text-sm font-black leading-tight text-[#08090F] italic line-clamp-2">
-                    « {selectedVoeu} »
-                  </p>
-                </div>
-              </div>
-
-              {/* Floating particle */}
-              <motion.div 
-                animate={{ y: [-3, 3, -3], x: [-2, 2, -2], rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-2 right-3"
-              >
-                <Sparkles className="w-5 h-5 text-white/60" />
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Modal Overlay */}
-          <AnimatePresence>
-            {isOpen && (
-              <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-[#08090F]/90 backdrop-blur-md"
-                  onClick={() => setIsOpen(false)}
-                />
-                
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                  className="relative w-full max-w-2xl bg-[#12121A] border border-[#C9A24D]/30 rounded-[3rem] p-8 md:p-12 overflow-hidden shadow-[0_0_100px_-20px_rgba(201,162,77,0.3)]"
-                >
-                  {/* Decorative Elements */}
-                  <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#C9A24D]/10 rounded-full blur-[60px]" />
-                  <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-[#C9A24D]/10 rounded-full blur-[60px]" />
-
-                  <div className="relative z-10 flex flex-col items-center text-center space-y-8">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#C9A24D]/10 border border-[#C9A24D]/20 text-[#C9A24D] mb-4">
-                      <Star className="w-4 h-4 fill-current" />
-                      <span className="text-xs font-black uppercase tracking-widest">Ton choix</span>
-                    </div>
-
-                    <h3 className="text-2xl md:text-4xl font-serif font-bold text-white leading-tight">
-                      « {selectedVoeu} »
-                    </h3>
-
-                    <div className="space-y-6 max-w-lg">
-                      <p className="text-lg md:text-xl text-white/80 font-medium leading-relaxed italic">
-                        Est-ce vraiment ce que tu désires le plus profondément aujourd'hui ?
-                      </p>
-                      <p className="text-sm text-white/40 leading-relaxed">
-                        Prends un instant pour ressentir si cette ambition vient de ton cœur (envie) ou de ta tête (peur).
-                      </p>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row gap-4 pt-6 w-full sm:w-auto">
-                      <button
-                        onClick={() => setIsOpen(false)}
-                        className="px-8 py-4 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-[0_10px_30px_-5px_rgba(201,162,77,0.4)]"
-                      >
-                        Oui, je la garde
-                      </button>
-                      <button
-                        onClick={() => {
-                          onClear();
-                          setIsOpen(false);
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }}
-                        className="px-8 py-4 bg-white/5 text-white/60 border border-white/10 rounded-2xl font-bold text-sm uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all"
-                      >
-                        Changer d'ambition
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            )}
-          </AnimatePresence>
-        </>
-      )}
-    </AnimatePresence>
-  );
-};
-
-const SectionCTA = ({ 
-  text, 
-  isActive = false, 
-  onClick 
-}: { 
-  text: string, 
-  href?: string, 
-  isActive?: boolean,
-  onClick?: () => void 
-}) => (
-  <AnimatePresence>
-    {isActive && (
-      <motion.div
-        id="hero-cta" // Add ID for scroll targeting
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 20 }}
-        className="py-12 flex flex-col items-center gap-4 w-full"
-      >
-        <button 
-          onClick={onClick}
-          className="group relative inline-flex flex-col items-center gap-2 px-10 py-8 rounded-[40px] bg-[#C9A24D] text-[#08090F] shadow-[0_20px_60px_-10px_rgba(201,162,77,0.5)] hover:scale-105 active:scale-95 transition-all overflow-hidden mx-auto"
-        >
-          {/* Shine effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
-          
-          <span className="text-xl md:text-2xl font-black tracking-tight uppercase">
-            {text}
-          </span>
-          <div className="flex items-center gap-2 opacity-60">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Accéder au Crash Test</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </div>
-        </button>
-        
-        <div className="text-center space-y-1">
-          <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">
-            Diagnostic Flash (10 secondes)
-          </p>
-          <p className="text-[9px] text-white/30">
-            Gratuit & Sans inscription
-          </p>
-        </div>
-      </motion.div>
-    )}
-  </AnimatePresence>
-);
+// --- COMPONENTS ---
 
 export default function Home() {
   const router = useRouter();
-  const [selectedArchetype, setSelectedArchetype] = useState<string | null>(null);
-  const [selectedVoeu, setSelectedVoeu] = useState<string | null>(null);
-  const [isNavigating, setIsNavigating] = useState(false);
+  const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
   
   // Teaser Modal State
   const [showTeaserModal, setShowTeaserModal] = useState(false);
@@ -392,159 +148,84 @@ export default function Home() {
   const [isCalculating, setIsCalculating] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
 
-  const [userResponse, setUserResponse] = useState<string | null>(null);
-
   useEffect(() => {
     trackEvent('home_view');
   }, []);
 
-  const handleArchetypeSelect = (id: string) => {
-    setSelectedArchetype(id);
-    setSelectedVoeu(null);
-    trackEvent('archetype_selected', { id });
-    
-    setTimeout(() => {
-      const refinementSection = document.getElementById('refinement-section');
-      if (refinementSection) {
-        refinementSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }, 100);
-  };
-
-  const handleVoeuSelect = (voeu: string) => {
-    setSelectedVoeu(voeu);
-    trackEvent('voeu_selected', { voeu });
-    
-    // Attendre un peu pour laisser l'UI se mettre à jour
-    setTimeout(() => {
-      // Au lieu de scroller vers #decalage, on scrolle vers le bouton CTA dans la même section
-      // On cherche l'élément CTA par son texte ou une classe spécifique
-      const ctaButton = document.getElementById('hero-cta');
-      if (ctaButton) {
-        ctaButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }, 100);
-  };
-
-  const handleWhatsappShare = () => {
-    if (!teaserResult) return;
-    const shareText = `Je viens de découvrir mon blocage caché : "${teaserResult.punchline}". Fais le test gratuitement ici : https://votrelegende.fr`;
-    const url = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
-    window.open(url, '_blank');
-    trackEvent('share_whatsapp');
-  };
-
-  const handleShare = async () => {
-    if (!teaserResult) return;
-    
-    const shareText = `Je viens de découvrir mon blocage caché : "${teaserResult.punchline}". Fais le test gratuitement ici : https://votrelegende.fr`;
-    
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Mon Diagnostic Flash',
-          text: shareText,
-          url: 'https://votrelegende.fr'
-        });
-        trackEvent('share_native');
-      } catch (err) {
-        console.log('Share cancelled');
-      }
-    } else {
-      // Fallback: Copy to clipboard
-      navigator.clipboard.writeText(shareText);
-      alert('Résultat copié dans le presse-papier !');
-      trackEvent('share_clipboard');
+  const scrollToDomains = () => {
+    const section = document.getElementById('domaines');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+      trackEvent('cta_start_click');
     }
   };
 
-  const handleTeaserClick = () => {
+  const handleDomainSelect = (id: string) => {
+    setSelectedDomain(id);
     setShowTeaserModal(true);
-    trackEvent('teaser_modal_open');
+    trackEvent('domain_selected', { id });
   };
 
   const calculateTeaser = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Mobile fix: ensure we have enough data even if format is slightly off
     const cleanDate = teaserBirthDate.replace(/\D/g, '');
     if (cleanDate.length < 8) return; 
     
-    trackEvent('compatibility_check_start'); // Screen 2 Start
+    trackEvent('compatibility_check_start');
     setIsCalculating(true);
     
-    // Simulate calculation time for effect
     setTimeout(() => {
-      // Handle DD/MM/YYYY format manual entry or YYYY-MM-DD from picker
       let isoDate = teaserBirthDate;
-      
-      // If we have clean 8 digits (DDMMYYYY), format it to ISO
       if (!teaserBirthDate.includes('-') && cleanDate.length === 8) {
         const d = cleanDate.slice(0, 2);
         const m = cleanDate.slice(2, 4);
         const y = cleanDate.slice(4);
         isoDate = `${y}-${m}-${d}`;
-      }
-      else if (teaserBirthDate.includes('/')) {
+      } else if (teaserBirthDate.includes('/')) {
         const [d, m, y] = teaserBirthDate.split('/');
         isoDate = `${y}-${m}-${d}`;
       }
 
       const lp = calculateLifePath(isoDate);
-      // Force selectedArchetype to be valid, default to 'vie' if null
-      const currentArchetype = selectedArchetype || 'vie';
-      const { description, punchline } = getMicroInsight(lp, currentArchetype);
+      const currentDomain = selectedDomain || 'vie';
+      const { description, punchline } = getMicroInsight(lp, currentDomain);
       
-      console.log('Teaser Calculation:', { lp, currentArchetype, description, punchline }); // Debug
-
       setTeaserResult({ path: lp, description, punchline });
       setIsCalculating(false);
       trackEvent('teaser_calculated', { lifePath: lp });
-      trackEvent('teaser_result_viewed'); // Screen 4 View
+      trackEvent('teaser_result_viewed');
     }, 1500);
   };
   
-  // Format input value visually for DD/MM/YYYY
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value;
-    
-    // Allow user to delete slashes naturally
     if (val.length < teaserBirthDate.length) {
        setTeaserBirthDate(val);
        return;
     }
-
-    val = val.replace(/\D/g, ''); // Keep only numbers
-    if (val.length > 8) val = val.slice(0, 8); // Max 8 digits
-    
-    // Add slashes automatically
+    val = val.replace(/\D/g, '');
+    if (val.length > 8) val = val.slice(0, 8);
     if (val.length > 4) {
       val = `${val.slice(0, 2)}/${val.slice(2, 4)}/${val.slice(4)}`;
     } else if (val.length > 2) {
       val = `${val.slice(0, 2)}/${val.slice(2)}`;
     }
-    
     setTeaserBirthDate(val);
   };
 
   const proceedToFullTest = () => {
-    // Convert to YYYY-MM-DD for consistency with input type="date"
     let isoDate = teaserBirthDate;
     const cleanDate = teaserBirthDate.replace(/\D/g, '');
-    
-    // Attempt to format if it's DD/MM/YYYY
     if (!teaserBirthDate.includes('-') && cleanDate.length === 8) {
       const d = cleanDate.slice(0, 2);
       const m = cleanDate.slice(2, 4);
       const y = cleanDate.slice(4);
       isoDate = `${y}-${m}-${d}`;
-    }
-    else if (teaserBirthDate.includes('/')) {
+    } else if (teaserBirthDate.includes('/')) {
       const [d, m, y] = teaserBirthDate.split('/');
       isoDate = `${y}-${m}-${d}`;
     }
 
-    // Pre-save data to localStorage so it's ready in the full test
     const cosmicData = { birthDate: isoDate };
     localStorage.setItem('cosmic_user_data', JSON.stringify(cosmicData));
     
@@ -552,314 +233,230 @@ export default function Home() {
     router.push('/miroir/experience');
   };
 
-  const handleCtaClick = () => {
-    // OLD Logic: handleTeaserClick instead of direct navigation
-    handleTeaserClick();
-  };
-
-  // State to show full content only after initial engagement if desired, 
-  // but for now we simplify the view by hiding sections initially or just visual focus.
-  // User asked for "Single Block" at start.
-  
   return (
-    <>
-      <div className="min-h-screen bg-[#08090F] text-white font-sans selection:bg-[#C9A24D]/30 overflow-x-hidden flex flex-col pb-24">
-        
-        <FloatingVoeuBadge selectedVoeu={selectedVoeu} onClear={() => {
-        setSelectedVoeu(null);
-        setSelectedArchetype(null);
-      }} />
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] selection:bg-[var(--accent)]/20 font-sans">
+      
+      {/* --- HERO SECTION --- */}
+      <section className="relative min-h-[90vh] flex flex-col items-center justify-center px-6 text-center pt-10 pb-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-2xl mx-auto space-y-10"
+        >
+          {/* Main Headline */}
+          <h1 className="text-4xl md:text-6xl font-serif font-medium leading-tight text-[var(--foreground)]">
+            Un test simple pour comprendre tes blocages actuels.
+          </h1>
 
-      {/* TEASER MODAL */}
+          {/* Subtext */}
+          <div className="space-y-4">
+            <p className="text-lg md:text-xl text-[var(--text-secondary)] font-light leading-relaxed">
+              Choisis le domaine où tu te sens coincé(e). <br className="hidden md:block"/>
+              Obtiens la réponse immédiate sur l'origine du problème.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm font-medium text-[var(--text-secondary)]/60 uppercase tracking-widest">
+              <span>⏱ 2 minutes</span>
+              <span>•</span>
+              <span>Résultat immédiat</span>
+              <span>•</span>
+              <span>Gratuit</span>
+            </div>
+          </div>
+
+          {/* Single CTA */}
+          <div className="pt-4">
+            <button 
+              onClick={scrollToDomains}
+              className="px-10 py-5 bg-[var(--accent)] text-white rounded-full text-lg font-bold shadow-lg hover:bg-[#B9621F] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 w-full md:w-auto"
+            >
+              Commencer le test gratuit
+            </button>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* --- DOMAINS GRID (Hidden initially, revealed on scroll) --- */}
+      <section id="domaines" className="py-24 px-6 bg-white/50 border-t border-[var(--foreground)]/5">
+        <div className="max-w-5xl mx-auto space-y-16 text-center">
+          
+          <div className="space-y-4">
+            <h2 className="text-3xl md:text-4xl font-serif text-[var(--foreground)]">
+              Où ressens-tu un blocage ?
+            </h2>
+            <p className="text-[var(--text-secondary)]">
+              Sélectionne un thème pour lancer l'analyse.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {DOMAINS.map((domain) => (
+              <motion.button
+                key={domain.id}
+                whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(0,0,0,0.1)" }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => handleDomainSelect(domain.id)}
+                className="group p-8 bg-white rounded-3xl border border-[var(--foreground)]/5 shadow-sm hover:border-[var(--accent)]/30 transition-all text-left flex flex-col gap-6"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-[var(--background)] flex items-center justify-center text-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-white transition-colors">
+                  <domain.icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-serif font-bold text-[var(--foreground)] mb-1">
+                    {domain.label}
+                  </h3>
+                  <p className="text-sm text-[var(--text-secondary)]">
+                    Comprendre mon blocage ici
+                  </p>
+                </div>
+                <div className="mt-auto pt-4 flex items-center text-sm font-bold text-[var(--accent)] opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0">
+                  Analyser <ArrowRight className="w-4 h-4 ml-2" />
+                </div>
+              </motion.button>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* --- FOOTER --- */}
+      <footer className="py-12 text-center text-[var(--text-secondary)]/40 text-sm bg-[var(--background)] border-t border-[var(--foreground)]/5">
+        <div className="max-w-4xl mx-auto px-6 space-y-6">
+          <div className="flex justify-center gap-6 uppercase tracking-widest text-xs font-bold">
+            <Link href="/mentions-legales" className="hover:text-[var(--accent)]">Mentions</Link>
+            <Link href="/cgv" className="hover:text-[var(--accent)]">CGV</Link>
+            <Link href="mailto:contact@votrelegende.com" className="hover:text-[var(--accent)]">Contact</Link>
+          </div>
+          <p>© {new Date().getFullYear()} Votre Légende. Tous droits réservés.</p>
+          <button 
+             onClick={() => setShowDisclaimer(!showDisclaimer)}
+             className="text-xs hover:text-[var(--foreground)] underline decoration-dotted underline-offset-4"
+          >
+             Avertissement Légal
+          </button>
+          {showDisclaimer && (
+             <div className="max-w-2xl mx-auto pt-4 text-xs leading-relaxed opacity-70">
+                Ce service est conçu à des fins de divertissement et d'introspection. 
+                Il ne remplace en aucun cas un avis médical ou psychologique professionnel.
+             </div>
+          )}
+        </div>
+      </footer>
+
+      {/* --- MODAL --- */}
       <AnimatePresence>
         {showTeaserModal && (
-          <div className="fixed inset-0 z-[100] flex items-start justify-center pt-8 md:items-center p-4 md:p-8 overflow-y-auto">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-[#08090F]/90 backdrop-blur-md fixed"
+              className="absolute inset-0 bg-[#3A2E26]/40 backdrop-blur-sm"
               onClick={() => setShowTeaserModal(false)}
             />
             
             <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-2xl bg-[#12121A] border border-[#C9A24D]/30 rounded-[3rem] p-6 md:p-12 shadow-[0_0_100px_-20px_rgba(201,162,77,0.3)] text-center mb-8"
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-lg bg-[#FAF8F4] rounded-[2rem] p-8 md:p-12 shadow-2xl overflow-hidden"
             >
               <button 
                 onClick={() => setShowTeaserModal(false)}
-                className="absolute top-6 right-6 p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors"
+                className="absolute top-6 right-6 p-2 hover:bg-black/5 rounded-full transition-colors"
               >
-                <X className="w-5 h-5 text-white/60" />
+                <X className="w-5 h-5 text-[var(--text-secondary)]" />
               </button>
 
               {!teaserResult ? (
                 // STEP 1: INPUT
-                <div className="space-y-8">
-                  <div className="w-16 h-16 bg-[#C9A24D]/10 rounded-full flex items-center justify-center mx-auto border border-[#C9A24D]/20 animate-pulse">
-                    <Sparkles className="w-8 h-8 text-[#C9A24D]" />
+                <div className="space-y-8 text-center">
+                  <div className="w-16 h-16 bg-[var(--accent)]/10 rounded-full flex items-center justify-center mx-auto text-[var(--accent)]">
+                    <Lock className="w-8 h-8" />
                   </div>
                   
-                  <div className="space-y-4">
-                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-white">
-                      Vérifions ta compatibilité
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-serif font-bold text-[var(--foreground)]">
+                      Date de naissance
                     </h3>
-                    <p className="text-white/60 leading-relaxed">
-                      Pour identifier ton blocage précis, nous avons juste besoin de ta date de naissance.
+                    <p className="text-[var(--text-secondary)]">
+                      Nécessaire pour calculer ton cycle de décision.
                     </p>
                   </div>
 
                   <form onSubmit={calculateTeaser} className="space-y-6">
-                    <div className="space-y-2 text-left">
-                      <label className="text-xs font-black uppercase tracking-widest text-[#C9A24D] ml-4">Ta date de naissance (JJ/MM/AAAA)</label>
-                      <input 
-                        type="text" 
-                        inputMode="numeric"
-                        placeholder="Ex: 12/05/1990"
-                        maxLength={10}
-                        required
-                        value={teaserBirthDate}
-                        onChange={handleDateChange}
-                        className="w-full bg-[#08090F] border-2 border-white/10 rounded-2xl px-6 py-4 font-bold text-xl text-white focus:border-[#C9A24D] outline-none transition-all text-center placeholder-white/20"
-                      />
-                    </div>
+                    <input 
+                      type="text" 
+                      inputMode="numeric"
+                      placeholder="JJ/MM/AAAA"
+                      maxLength={10}
+                      required
+                      value={teaserBirthDate}
+                      onChange={handleDateChange}
+                      className="w-full bg-white border border-[var(--foreground)]/10 rounded-xl px-6 py-4 font-bold text-2xl text-[var(--foreground)] text-center focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] outline-none transition-all placeholder:text-[var(--foreground)]/20"
+                    />
                     
                     <button
                       type="submit"
                       disabled={!teaserBirthDate || teaserBirthDate.replace(/\D/g, '').length < 8 || isCalculating}
-                      onTouchEnd={(e) => {
-                         // Fallback for mobile touch
-                         if (!isCalculating && teaserBirthDate.replace(/\D/g, '').length >= 8) {
-                           calculateTeaser(e);
-                         }
-                      }}
-                      className="w-full py-5 bg-[#C9A24D] text-[#08090F] rounded-2xl font-black text-lg uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_30px_-5px_rgba(201,162,77,0.4)] flex items-center justify-center gap-3 disabled:opacity-50 disabled:scale-100 touch-manipulation"
+                      className="w-full py-4 bg-[var(--accent)] text-white rounded-xl font-bold text-lg hover:bg-[#B9621F] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                     >
-                      {isCalculating ? (
-                        <>
-                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[#08090F]"></div>
-                          Analyse en cours...
-                        </>
-                      ) : (
-                        <>
-                          Révéler mon blocage <Zap className="w-5 h-5" />
-                        </>
-                      )}
+                      {isCalculating ? 'Calcul en cours...' : 'Révéler mon blocage'}
                     </button>
                   </form>
                   
-                  <p className="text-[10px] text-white/30 flex items-center justify-center gap-2">
-                    <ShieldCheck className="w-3 h-3" /> 100% Confidentiel
+                  <p className="text-xs text-[var(--text-secondary)]/50 flex items-center justify-center gap-1">
+                    <ShieldCheck className="w-3 h-3" /> Donnée confidentielle, non stockée.
                   </p>
                 </div>
               ) : (
                 // STEP 2: RESULT
-                <div className="space-y-8">
-                  <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto border border-red-500/20">
-                    <Activity className="w-8 h-8 text-red-500" />
-                  </div>
+                <div className="space-y-8 text-center">
+                   <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] text-xs font-bold uppercase tracking-widest mb-2">
+                      Chemin de Vie {teaserResult.path}
+                   </div>
 
-                  <div className="space-y-2">
-                    <p className="text-xs font-black uppercase tracking-widest text-[#C9A24D]">
-                      Chemin de Vie {teaserResult.path} détecté
-                    </p>
-                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-white">
-                      ⚠️ Origine du blocage identifiée
-                    </h3>
-                  </div>
+                   <h3 className="text-3xl font-serif font-bold text-[var(--foreground)] leading-tight">
+                     "{teaserResult.punchline}"
+                   </h3>
 
-                  <div className="bg-white/5 p-8 md:p-12 rounded-[40px] border border-white/10 relative overflow-hidden group space-y-10 shadow-2xl">
-                    {/* Background Glow */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#C9A24D]/5 to-transparent opacity-50" />
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#C9A24D] to-transparent opacity-50" />
-                    
-                    {/* Description Complète - Style éditorial et aéré */}
-                    <div className="relative z-10">
-                        <p className="text-white/90 text-xl md:text-2xl leading-relaxed font-light text-center max-w-2xl mx-auto">
-                        {teaserResult.description}
-                        </p>
-                    </div>
+                   <div className="py-6 border-y border-[var(--foreground)]/5">
+                     <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
+                       {teaserResult.description}
+                     </p>
+                   </div>
 
-                    {/* Séparateur Élégant */}
-                    <div className="flex items-center justify-center gap-6 opacity-60 py-2">
-                        <div className="h-px w-16 md:w-32 bg-gradient-to-r from-transparent to-[#C9A24D]"></div>
-                        <div className="relative">
-                          <div className="absolute inset-0 bg-[#C9A24D] blur-xl opacity-50 animate-pulse"></div>
-                          <Star className="w-8 h-8 md:w-10 md:h-10 text-[#C9A24D] fill-[#C9A24D] animate-[spin_4s_linear_infinite]" />
-                        </div>
-                        <div className="h-px w-16 md:w-32 bg-gradient-to-l from-transparent to-[#C9A24D]"></div>
-                    </div>
+                   <div className="space-y-4">
+                     <button
+                       onClick={proceedToFullTest}
+                       className="w-full py-4 bg-[var(--accent)] text-white rounded-xl font-bold text-lg hover:bg-[#B9621F] transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                     >
+                       Comprendre pourquoi <ArrowRight className="w-5 h-5" />
+                     </button>
 
-                    {/* Punchline Matrix - Style Impactant "Quote" */}
-                    <div className="text-center relative py-4">
-                        <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-8xl text-[#C9A24D]/5 font-serif font-black select-none">"</span>
-                        <p className="text-3xl md:text-5xl text-[#C9A24D] font-bold leading-tight font-serif italic tracking-wide relative z-10 px-4 drop-shadow-lg">
-                          {teaserResult.punchline}
-                        </p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-6 pt-4">
-                    <button
-                      onClick={proceedToFullTest}
-                      className="w-full py-6 bg-[#C9A24D] text-[#08090F] rounded-[20px] font-black text-xl md:text-2xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(201,162,77,0.5)] flex items-center justify-center gap-4"
-                    >
-                      Comprendre ce qui me rend différent <ArrowRight className="w-6 h-6" />
-                    </button>
-                    
-                    <div className="space-y-3 pt-2">
-                      <button 
+                     <button 
                         onClick={() => {
-                          const text = `Je viens de découvrir mon blocage caché : "${teaserResult.punchline}".\n\nEst-ce que tu trouves que ça me correspond ?\n\nFais le test ici : https://votrelegende.fr`;
-                          // TikTok DM deep link often requires just opening the app or using share sheet
-                          // Standard share approach that works well on mobile
+                          const text = `Je viens de découvrir mon blocage caché : "${teaserResult.punchline}".\n\nFais le test ici : https://votrelegende.fr`;
                           if (navigator.share) {
-                            navigator.share({
-                              title: 'Mon Diagnostic',
-                              text: text,
-                              url: 'https://votrelegende.fr'
-                            }).catch(() => {});
+                            navigator.share({ title: 'Mon Diagnostic', text, url: 'https://votrelegende.fr' }).catch(() => {});
                           } else {
-                            // Fallback to clipboard
                             navigator.clipboard.writeText(text);
-                            alert("Texte copié ! Tu peux le coller dans TikTok.");
+                            alert("Copié !");
                           }
                           trackEvent('share_tiktok_dm_teaser');
                         }}
-                        className="w-full py-4 bg-gradient-to-r from-[#00f2ea]/20 to-[#ff0050]/20 border border-white/20 rounded-[20px] font-bold text-sm uppercase tracking-widest hover:opacity-80 transition-all flex items-center justify-center gap-2 text-white shadow-lg"
+                        className="w-full py-3 bg-white border border-[var(--foreground)]/10 text-[var(--text-secondary)] rounded-xl font-bold text-sm hover:bg-[var(--background)] transition-all flex items-center justify-center gap-2"
                       >
                         <Share2 className="w-4 h-4" />
-                        Envoyer en message privé
+                        Partager à un ami
                       </button>
-                      <p className="text-xs text-white/30 italic max-w-xs mx-auto">
-                        « Envoie ce résumé à quelqu’un qui te connaît bien. Il pourrait te voir différemment. »
-                      </p>
-                    </div>
-
-                    <p className="text-sm text-white/40 font-medium pt-2">
-                      Nouvelle analyse gratuite avec votre prénom
-                    </p>
-                  </div>
+                   </div>
                 </div>
               )}
             </motion.div>
           </div>
         )}
       </AnimatePresence>
-
-      {/* 1. HERO — SINGLE BLOCK FOCUS */}
-      <section className="flex-grow flex flex-col items-center justify-center px-4 md:px-8 relative pt-12 pb-32 w-full z-10">
-        <div className="w-full max-w-[1600px] text-center space-y-12 md:space-y-16">
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
-            <div className="flex flex-col items-center gap-6 mb-4">
-              <div className="inline-flex items-center gap-3 px-8 py-3 rounded-full bg-[#C9A24D] text-[#08090F] shadow-[0_0_40px_-5px_rgba(201,162,77,0.6)] animate-pulse">
-                <Zap className="w-5 h-5 fill-[#08090F]" />
-                <span className="text-sm md:text-base font-black uppercase tracking-widest">Diagnostic Flash en 10 secondes</span>
-              </div>
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold tracking-tight leading-tight">
-              Pourquoi ça bloque <br />
-              <span className="text-[#C9A24D] italic">pour toi ?</span>
-            </h1>
-            
-            <p className="max-w-2xl mx-auto text-lg md:text-2xl text-white/60 leading-relaxed font-medium">
-              Choisis le domaine où tu te sens coincé(e). <br />
-              Obtiens la réponse immédiate sur l'origine du problème.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-4 md:px-0 max-w-5xl mx-auto">
-            {ARCHETYPES.map((arch) => (
-              <motion.button
-                key={arch.id}
-                whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.08)" }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                   setSelectedArchetype(arch.id);
-                   setTimeout(() => {
-                     handleTeaserClick();
-                   }, 100);
-                }}
-                className={`p-6 md:p-8 rounded-[2rem] border transition-all flex flex-col items-center justify-center gap-4 group bg-white/5 border-white/10 text-white/70 hover:border-[#C9A24D]/50 hover:text-white hover:shadow-[0_0_30px_-10px_rgba(201,162,77,0.2)]`}
-              >
-                <arch.icon className={`w-10 h-10 md:w-12 md:h-12 transition-transform group-hover:scale-110 text-[#C9A24D]`} />
-                <span className="text-sm md:text-lg font-black uppercase tracking-widest leading-relaxed">{arch.label}</span>
-              </motion.button>
-            ))}
-          </div>
-
-          <div className="pt-4 opacity-40 text-sm font-medium">
-            <p>Sans inscription • Résultat immédiat • 100% Gratuit</p>
-          </div>
-        </div>
-      </section>
-
-      {/* BACKGROUND ELEMENTS - FIXED FULLSCREEN */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#C9A24D]/5 blur-[120px] rounded-full" />
-          <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover opacity-20">
-            <source src="/nuage.mp4" type="video/mp4" />
-          </video>
-      </div>
-
-      {/* FOOTER - PRO & COMPLETE */}
-      <footer className="relative z-10 py-16 px-4 border-t border-white/5 bg-[#08090F] text-center">
-        <div className="max-w-4xl mx-auto space-y-12">
-          
-          {/* Navigation Links */}
-          <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 text-base md:text-lg font-bold uppercase tracking-widest text-white/40">
-            <Link href="/mentions-legales" className="hover:text-[#C9A24D] transition-colors">Mentions Légales</Link>
-            <Link href="/cgv" className="hover:text-[#C9A24D] transition-colors">CGV</Link>
-            <Link href="/cgu" className="hover:text-[#C9A24D] transition-colors">CGU</Link>
-            <Link href="mailto:contact@votrelegende.com" className="hover:text-[#C9A24D] transition-colors">Contact</Link>
-          </div>
-
-          {/* Copyright & Brand */}
-          <div className="space-y-2">
-            <p className="text-[#C9A24D] font-black text-xs uppercase tracking-[0.3em]">
-              VOTRE LÉGENDE
-            </p>
-            <p className="text-white/20 text-[10px] uppercase tracking-widest">
-              © {new Date().getFullYear()} · Méthode Alignement Décision
-            </p>
-          </div>
-          
-          {/* Legal Disclaimer Toggle */}
-          <div className="border-t border-white/5 pt-8 max-w-2xl mx-auto">
-             <button 
-                onClick={() => setShowDisclaimer(!showDisclaimer)}
-                className="px-6 py-3 bg-white/5 hover:bg-white/10 text-white/40 text-xs font-bold uppercase tracking-widest rounded-full transition-all border border-white/5"
-             >
-                {showDisclaimer ? "Masquer l'avertissement" : "Lire l'avertissement légal"}
-             </button>
-
-             <AnimatePresence>
-               {showDisclaimer && (
-                 <motion.div 
-                    initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                    animate={{ opacity: 1, height: 'auto', marginTop: 24 }}
-                    exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                    className="overflow-hidden"
-                 >
-                    <div className="bg-white/5 p-6 rounded-2xl border border-white/5 text-left md:text-center">
-                      <p className="text-white/30 text-xs leading-relaxed font-medium">
-                        Ce service est conçu à des fins de divertissement, d'introspection et de développement personnel uniquement. 
-                        Les analyses numérologiques et les récits générés ne constituent en aucun cas un conseil psychologique, médical, financier ou juridique. 
-                        L'option "Roman de Vie" est une œuvre de fiction personnalisée basée sur vos données.
-                      </p>
-                    </div>
-                 </motion.div>
-               )}
-             </AnimatePresence>
-          </div>
-
-        </div>
-      </footer>
-
-      </div>
-    </>
+    </div>
   );
 }

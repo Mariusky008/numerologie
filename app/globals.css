@@ -1,22 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FAF9F7;
-  --foreground: #2C2F4A;
+  --background: #FAF8F4;
+  --foreground: #3A2E26;
+  --text-secondary: #7A6E66;
+  --accent: #D9772B;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-cream-50: #FAF9F7;
-  --color-navy-900: #2C2F4A;
-  --color-gold-400: #C9A24D;
-  --color-mauve-700: #5B4B8A;
+  --color-secondary: var(--text-secondary);
+  --color-accent: var(--accent);
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-sans), sans-serif; /* Default to sans for readability per user request */
+}
+
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif), serif;
 }
 
@@ -25,17 +31,17 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF9F7;
+  background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: #C9A24D;
+  background: var(--accent);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #5B4B8A;
+  background: #B9621F;
 }
 
-/* 3D Transform Utilities for Tarot Cards */
+/* Utilities */
 @utility perspective-1000 {
   perspective: 1000px;
 }

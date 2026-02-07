@@ -3,6 +3,14 @@ export const trackEvent = async (event: string, properties?: Record<string, any>
 
   try {
     console.log(`[Analytics] Tracking event: ${event}`, properties);
+
+    // TikTok Pixel Tracking
+    // @ts-ignore
+    if (window.ttq) {
+      // @ts-ignore
+      window.ttq.track(event, properties);
+    }
+
     // Fire and forget - don't await to avoid blocking UI
     fetch('/api/stats', {
       method: 'POST',

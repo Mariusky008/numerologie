@@ -17,7 +17,8 @@ import {
   CheckCircle2,
   Share2,
   Lock,
-  ShieldCheck
+  ShieldCheck,
+  Sparkles
 } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
 import { calculateLifePath } from '@/lib/numerology/engine';
@@ -423,15 +424,15 @@ export default function Home() {
               ) : (
                 // STEP 2: RESULT
                 <div className="space-y-8 text-center">
-                   <div className="w-12 h-12 bg-[var(--accent)]/10 rounded-full flex items-center justify-center mx-auto mb-2 animate-pulse">
-                      <Sparkles className="w-6 h-6 text-[var(--accent)]" />
+                   <div className="w-16 h-16 bg-[var(--accent)]/10 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse shadow-sm border border-[var(--accent)]/20">
+                      <Sparkles className="w-8 h-8 text-[var(--accent)]" />
                    </div>
                    
                    <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] text-xs font-bold uppercase tracking-widest mb-2">
                       Chemin de Vie {teaserResult.path}
                    </div>
 
-                   <h3 className="text-3xl font-serif font-bold text-[var(--foreground)] leading-tight">
+                   <h3 className="text-3xl md:text-4xl font-serif font-bold text-[var(--foreground)] leading-tight">
                      "{teaserResult.punchline}"
                    </h3>
 

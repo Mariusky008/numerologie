@@ -1027,17 +1027,56 @@ export default function ExperiencePsyMirror() {
                   <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/10">
                     <Bot className="w-8 h-8 text-[var(--accent)]" />
                   </div>
-                 <div>
-                   <h3 className="text-xl font-bold">L'Assistant Numérologique IA</h3>
-                   <p className="text-white/60 text-sm">Votre guide personnel 24/7</p>
-                 </div>
-               </div>
+                  <div>
+                    <h3 className="text-xl font-bold">L'Assistant Numérologique IA</h3>
+                    <p className="text-white/60 text-sm">Votre guide personnel 24/7</p>
+                  </div>
+                </div>
 
-               <div className="space-y-3 relative z-10">
-                 <FeatureRow icon={<Clock className="w-4 h-4" />} text="Disponible 24h/24 et 7j/7 pour répondre à vos doutes" />
-                 <FeatureRow icon={<Target className="w-4 h-4" />} text="Une analyse objective basée sur vos données cosmiques" />
-                 <FeatureRow icon={<MapPin className="w-4 h-4" />} text="Une feuille de route adaptée à votre rythme" />
-               </div>
+                {/* VISUAL: Chat Simulation (Active) */}
+                <div className="relative z-10 bg-white/5 backdrop-blur-sm rounded-2xl p-4 space-y-3 border border-white/10 my-4">
+                  <div className="flex gap-3">
+                    <div className="w-6 h-6 rounded-full bg-[var(--accent)] flex items-center justify-center shrink-0 mt-1">
+                      <Bot className="w-3 h-3 text-white" />
+                    </div>
+                    <div className="bg-white/10 rounded-2xl rounded-tl-none p-3 text-xs text-white/90">
+                      Je vais te poser quelques questions pour affiner mon modèle de ta personnalité. <br/><br/>
+                      <span className="font-bold text-[var(--accent)]">Pourquoi as-tu ressenti ce blocage hier ?</span>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 flex-row-reverse">
+                    <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-1">
+                      <span className="text-xs font-bold">{personalInfo.firstName ? personalInfo.firstName[0] : 'M'}</span>
+                    </div>
+                    <div className="bg-[var(--accent)]/80 rounded-2xl rounded-tr-none p-3 text-xs text-white">
+                      J'avais peur de décevoir...
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="w-6 h-6 rounded-full bg-[var(--accent)] flex items-center justify-center shrink-0 mt-1">
+                      <Bot className="w-3 h-3 text-white" />
+                    </div>
+                    <div className="bg-white/10 rounded-2xl rounded-tl-none p-3 text-xs text-white/90">
+                      Intéressant. Cela confirme ton axe de sensibilité. Creusons ça ensemble...
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4 relative z-10">
+                  <div className="bg-white/10 p-4 rounded-xl border border-white/5 text-center">
+                    <p className="text-xs font-black uppercase tracking-widest text-[var(--accent)] mb-1">PROFILAGE ACTIF</p>
+                    <p className="text-sm font-bold text-white leading-relaxed">
+                      IL VA VOUS POSER DES QUESTIONS. <br/>
+                      <span className="font-normal opacity-80">Ce n'est pas un simple chatbot. Il vous interroge activement pour comprendre vos nuances et en déduire une <span className="text-white font-bold border-b border-[var(--accent)]">ANALYSE PSYCHOLOGIQUE DE HAUTE PRÉCISION.</span></span>
+                    </p>
+                  </div>
+
+                  <div className="space-y-2 pt-2">
+                    <FeatureRow icon={<Clock className="w-4 h-4" />} text="Disponible 24h/24 et 7j/7 pour répondre à vos doutes" />
+                    <FeatureRow icon={<Target className="w-4 h-4" />} text="Une analyse objective basée sur vos données cosmiques" />
+                    <FeatureRow icon={<MapPin className="w-4 h-4" />} text="Une feuille de route adaptée à votre rythme" />
+                  </div>
+                </div>
              </div>
 
              {/* 5. How it works */}

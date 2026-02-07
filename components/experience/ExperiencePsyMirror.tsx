@@ -954,175 +954,132 @@ export default function ExperiencePsyMirror() {
             exit={{ opacity: 0, y: -20 }}
             className="w-full max-w-2xl bg-white p-6 md:p-10 rounded-[40px] shadow-2xl border border-[var(--foreground)]/5 space-y-8 relative z-10"
           >
-             {/* 1. Title */}
-             <div className="text-center space-y-2">
+             {/* 1. Title (Updated) */}
+             <div className="text-center space-y-3">
                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] text-[10px] font-black uppercase tracking-widest">
                   <Sparkles className="w-3 h-3" />
-                  Solution Recommandée
+                  Votre Plan d'Action Personnalisé
                </div>
-               <h2 className="text-3xl md:text-4xl font-serif font-bold text-[var(--foreground)] leading-tight">
-                 Votre Plan d'Action Personnalisé
+               <h2 className="text-2xl md:text-3xl font-serif font-bold text-[var(--foreground)] leading-tight">
+                 Pour avancer concrètement dans votre vie 🌱
                </h2>
-             </div>
-
-             {/* 2. Visual Gap */}
-             <div className="bg-[var(--background)] p-6 rounded-3xl border border-[var(--foreground)]/5 space-y-4">
-               <div className="space-y-2">
-                 <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-[var(--foreground)]/60">
-                   <span>Potentiel de Naissance</span>
-                   <span className="text-emerald-600">100% Alignement</span>
-                 </div>
-                 <div className="h-4 w-full bg-emerald-100 rounded-full overflow-hidden">
-                   <motion.div 
-                     initial={{ width: 0 }}
-                     animate={{ width: "100%" }}
-                     transition={{ duration: 1, ease: "easeOut" }}
-                     className="h-full bg-emerald-500"
-                   />
-                 </div>
-               </div>
-               
-               <div className="space-y-2 relative">
-                 <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-[var(--foreground)]/60">
-                   <span>Fonctionnement Actuel</span>
-                   <span className="text-red-500">Zone de Friction</span>
-                 </div>
-                 <div className="h-4 w-full bg-red-100 rounded-full overflow-hidden">
-                   <motion.div 
-                     initial={{ width: 0 }}
-                     animate={{ width: `${100 - gapScore}%` }}
-                     transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-                     className="h-full bg-red-500"
-                   />
-                 </div>
-                 
-                 {/* Gap Connector */}
-                 <motion.div 
-                   initial={{ opacity: 0 }}
-                   animate={{ opacity: 1 }}
-                   transition={{ delay: 1.5 }}
-                   className="absolute top-8 right-[10%] transform translate-x-1/2 flex flex-col items-center"
-                 >
-                   <div className="h-8 w-px bg-[var(--foreground)]/20 border-l border-dashed border-[var(--foreground)]/40"></div>
-                   <span className="bg-white px-2 py-1 rounded text-[10px] font-bold text-[var(--text-secondary)] shadow-sm border border-[var(--foreground)]/10 whitespace-nowrap">
-                     Écart à combler
-                   </span>
-                 </motion.div>
-               </div>
-             </div>
-
-             {/* 3. Simple Text */}
-             <div className="text-center">
-               <p className="text-lg text-[var(--foreground)] font-medium leading-relaxed">
-                 "L'écart que vous ressentez n'est pas une fatalité. <br/>
-                 <span className="text-[var(--text-secondary)] font-normal">C'est simplement la distance entre qui vous êtes vraiment et qui vous essayez d'être."</span>
+               <p className="text-[var(--text-secondary)] text-sm max-w-md mx-auto leading-relaxed">
+                 Accompagnement intelligent pour identifier vos blocages, poser des micro-actions et progresser chaque jour.
                </p>
              </div>
 
-             {/* 4. Coach Description */}
-             <div className="bg-[var(--foreground)] text-white p-8 rounded-3xl relative overflow-hidden space-y-6 shadow-xl">
+             {/* 5. What you get List (Moved up) */}
+             <div className="space-y-4">
+               <h3 className="text-center text-xs font-black uppercase tracking-widest text-[var(--text-secondary)]">Ce que vous obtenez</h3>
+               <div className="grid gap-3">
+                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
+                   <div className="w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 font-bold text-lg">🧠</div>
+                   <div>
+                     <h4 className="font-bold text-[var(--foreground)] text-sm">Profil psychologique affiné</h4>
+                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">L’IA pose des questions pour comprendre vos modes de pensée et comportements.</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
+                   <div className="w-8 h-8 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 font-bold text-lg">⚡</div>
+                   <div>
+                     <h4 className="font-bold text-[var(--foreground)] text-sm">Zones de friction identifiées</h4>
+                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">Découvrez où vous perdez de l’énergie et vos blocages principaux.</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
+                   <div className="w-8 h-8 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center shrink-0 font-bold text-lg">💬</div>
+                   <div>
+                     <h4 className="font-bold text-[var(--foreground)] text-sm">Questions-réponses personnalisées</h4>
+                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">L’IA vous guide pas à pas sur vos problématiques concrètes.</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
+                   <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 font-bold text-lg">📝</div>
+                   <div>
+                     <h4 className="font-bold text-[var(--foreground)] text-sm">Rituels quotidiens simples</h4>
+                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">Actions ciblées de 2 minutes pour réaligner votre trajectoire.</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
+                   <div className="w-8 h-8 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 font-bold text-lg">⏱️</div>
+                   <div>
+                     <h4 className="font-bold text-[var(--foreground)] text-sm">Guidance IA 24/7</h4>
+                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">Votre assistant reste disponible à tout moment pour ajuster vos micro-actions.</p>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             {/* Mini CTA Intermédiaire */}
+             <div className="text-center">
+                <button 
+                  onClick={() => document.getElementById('rituals-section')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="text-xs font-bold text-[var(--accent)] border-b border-[var(--accent)] hover:opacity-80 transition-opacity uppercase tracking-widest pb-0.5"
+                >
+                  Voir un exemple de rituel personnalisé ↓
+                </button>
+             </div>
+
+             {/* 6. How it works (Simplified) */}
+             <div className="space-y-4 pt-4 border-t border-[var(--foreground)]/5">
+               <h3 className="text-center text-xs font-black uppercase tracking-widest text-[var(--text-secondary)]">Comment ça marche ?</h3>
+               <div className="grid gap-3">
+                 <div className="p-3 bg-[var(--background)] rounded-xl border border-[var(--foreground)]/5 text-sm">
+                   <span className="font-bold">🔍 Analyse</span> <span className="text-[var(--text-secondary)]">→ L’IA scanne votre profil pour comprendre vos forces et habitudes.</span>
+                 </div>
+                 <div className="p-3 bg-[var(--background)] rounded-xl border border-[var(--foreground)]/5 text-sm">
+                   <span className="font-bold">🧭 Identification</span> <span className="text-[var(--text-secondary)]">→ Elle pointe vos zones de friction et blocages.</span>
+                 </div>
+                 <div className="p-3 bg-[var(--background)] rounded-xl border border-[var(--foreground)]/5 text-sm">
+                   <span className="font-bold">🎯 Guidance</span> <span className="text-[var(--text-secondary)]">→ Actions simples et personnalisées pour avancer.</span>
+                 </div>
+               </div>
+             </div>
+             
+             {/* 4. Coach Description (Simplified) */}
+             <div className="bg-[var(--foreground)] text-white p-6 rounded-3xl relative overflow-hidden space-y-4 shadow-xl">
                <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent)]/20 blur-[80px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
                
-               <div className="flex items-center gap-4 relative z-10">
-                  <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/10">
-                    <Bot className="w-8 h-8 text-[var(--accent)]" />
+               <div className="flex items-center gap-3 relative z-10">
+                  <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm border border-white/10">
+                    <Bot className="w-5 h-5 text-[var(--accent)]" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold">L'Assistant Numérologique IA</h3>
-                    <p className="text-white/60 text-sm">Votre guide personnel 24/7</p>
+                    <h3 className="font-bold">Assistant IA en action</h3>
                   </div>
                 </div>
 
-                {/* VISUAL: Chat Simulation (Active) */}
-                <div className="relative z-10 bg-white/5 backdrop-blur-sm rounded-2xl p-4 space-y-3 border border-white/10 my-4">
+                {/* VISUAL: Chat Simulation */}
+                <div className="relative z-10 bg-white/5 backdrop-blur-sm rounded-2xl p-4 space-y-3 border border-white/10 text-xs">
                   <div className="flex gap-3">
-                    <div className="w-6 h-6 rounded-full bg-[var(--accent)] flex items-center justify-center shrink-0 mt-1">
+                    <div className="w-5 h-5 rounded-full bg-[var(--accent)] flex items-center justify-center shrink-0 mt-1">
                       <Bot className="w-3 h-3 text-white" />
                     </div>
-                    <div className="bg-white/10 rounded-2xl rounded-tl-none p-3 text-xs text-white/90">
-                      Je vais te poser quelques questions pour affiner mon modèle de ta personnalité. <br/><br/>
-                      <span className="font-bold text-[var(--accent)]">Pourquoi as-tu ressenti ce blocage hier ?</span>
+                    <div className="bg-white/10 rounded-2xl rounded-tl-none p-2.5 text-white/90">
+                      Pourquoi as-tu ressenti ce blocage hier ?
                     </div>
                   </div>
                   <div className="flex gap-3 flex-row-reverse">
-                    <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-1">
-                      <span className="text-xs font-bold">{personalInfo.firstName ? personalInfo.firstName[0] : 'M'}</span>
+                    <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-1">
+                      <span className="text-[10px] font-bold">{personalInfo.firstName ? personalInfo.firstName[0] : 'M'}</span>
                     </div>
-                    <div className="bg-[var(--accent)]/80 rounded-2xl rounded-tr-none p-3 text-xs text-white">
+                    <div className="bg-[var(--accent)]/80 rounded-2xl rounded-tr-none p-2.5 text-white">
                       J'avais peur de décevoir...
                     </div>
                   </div>
                   <div className="flex gap-3">
-                    <div className="w-6 h-6 rounded-full bg-[var(--accent)] flex items-center justify-center shrink-0 mt-1">
+                    <div className="w-5 h-5 rounded-full bg-[var(--accent)] flex items-center justify-center shrink-0 mt-1">
                       <Bot className="w-3 h-3 text-white" />
                     </div>
-                    <div className="bg-white/10 rounded-2xl rounded-tl-none p-3 text-xs text-white/90">
+                    <div className="bg-white/10 rounded-2xl rounded-tl-none p-2.5 text-white/90">
                       Intéressant. Cela confirme ton axe de sensibilité. Creusons ça ensemble...
                     </div>
                   </div>
                 </div>
-
-                <div className="space-y-4 relative z-10">
-                  <div className="bg-white/10 p-4 rounded-xl border border-white/5 text-center">
-                    <p className="text-xs font-black uppercase tracking-widest text-[var(--accent)] mb-1">PROFILAGE ACTIF</p>
-                    <p className="text-sm font-bold text-white leading-relaxed">
-                      IL VA VOUS POSER DES QUESTIONS. <br/>
-                      <span className="font-normal opacity-80">Ce n'est pas un simple chatbot. Il vous interroge activement pour comprendre vos nuances et en déduire une <span className="text-white font-bold border-b border-[var(--accent)]">ANALYSE PSYCHOLOGIQUE DE HAUTE PRÉCISION.</span></span>
-                    </p>
-                  </div>
-                </div>
-             </div>
-             
-             {/* 5. What you get List (New Section from prompt) */}
-             <div className="space-y-4">
-               <h3 className="text-center text-sm font-black uppercase tracking-widest text-[var(--text-secondary)]">Ce que vous obtenez</h3>
-               <div className="grid gap-4">
-                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
-                   <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0"><CheckCircle className="w-5 h-5" /></div>
-                   <div>
-                     <h4 className="font-bold text-[var(--foreground)] text-sm">Profil psychologique affiné</h4>
-                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">L’IA vous pose des questions précises pour comprendre vos modes de pensée, vos réactions et vos schémas comportementaux.</p>
-                   </div>
-                 </div>
-                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
-                   <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0"><CheckCircle className="w-5 h-5" /></div>
-                   <div>
-                     <h4 className="font-bold text-[var(--foreground)] text-sm">Identification de vos zones de friction</h4>
-                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">Découvrez où vous perdez de l’énergie et ce qui bloque votre progression.</p>
-                   </div>
-                 </div>
-                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
-                   <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0"><CheckCircle className="w-5 h-5" /></div>
-                   <div>
-                     <h4 className="font-bold text-[var(--foreground)] text-sm">Questions-réponses personnalisées</h4>
-                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">L’IA répond à vos questionnements concrets et vous guide pas à pas.</p>
-                   </div>
-                 </div>
-                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
-                   <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0"><CheckCircle className="w-5 h-5" /></div>
-                   <div>
-                     <h4 className="font-bold text-[var(--foreground)] text-sm">Rituels quotidiens simples et concrets</h4>
-                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">Actions ciblées à réaliser en 2 minutes pour réaligner votre trajectoire.</p>
-                   </div>
-                 </div>
-                 <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
-                   <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0"><CheckCircle className="w-5 h-5" /></div>
-                   <div>
-                     <h4 className="font-bold text-[var(--foreground)] text-sm">Guidance IA 24/7</h4>
-                     <p className="text-xs text-[var(--text-secondary)] leading-relaxed">Votre assistant reste disponible en continu pour ajuster vos micro-actions et répondre à vos doutes.</p>
-                   </div>
-                 </div>
-               </div>
-             </div>
-
-             {/* 6. How it works */}
-             <div className="space-y-4 pt-4 border-t border-[var(--foreground)]/5">
-               <h3 className="text-center text-sm font-black uppercase tracking-widest text-[var(--text-secondary)]">Comment ça marche ?</h3>
-               <div className="grid gap-4">
-                 <StepRow number="1" title="Analyse" desc="L’Assistant IA scanne votre profil complet et identifie vos forces dormantes." />
-                 <StepRow number="2" title="Identification" desc="Il pointe précisément où vous perdez de l'énergie aujourd'hui." />
-                 <StepRow number="3" title="Guidance" desc="Il vous donne des actions simples pour réaligner votre trajectoire." />
-               </div>
+                
+                <p className="text-center text-xs text-white/60 italic relative z-10">
+                  Interaction active 24/7 pour produire une analyse psychologique précise et guider vos micro-ajustements quotidiens.
+                </p>
              </div>
 
              {/* 6. Target Audience */}

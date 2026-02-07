@@ -1,24 +1,36 @@
 import { sha256 } from './hash';
 
+// Declare global type to avoid TS errors
+declare global {
+  interface Window {
+    ttq?: {
+      identify: (data: Record<string, string>) => void;
+      track: (event: string, properties?: Record<string, any>) => void;
+    }
+  }
+}
+
 export const identifyUser = async (userData: { email?: string; phone?: string; id?: string }) => {
   if (typeof window === 'undefined') return;
 
   const identifyData: Record<string, string> = {};
 
-  if (userData.email) {
-    identifyData.email = await sha256(userData.email);
-  }
-  if (userData.phone) {
-    identifyData.phone_number = await sha256(userData.phone);
-  }
-  if (userData.id) {
-    identifyData.external_id = await sha256(userData.id);
-  }
+  try {
+    if (userData.email) {
+      identifyData.email = await sha256(userData.email);
+    }
+    if (userData.phone) {
+      identifyData.phone_number = await sha256(userData.phone);
+    }
+    if (userData.id) {
+      identifyData.external_id = await sha256(userData.id);
+    }
 
-  // @ts-ignore
-  if (window.ttq && Object.keys(identifyData).length > 0) {
-    // @ts-ignore
-    window.ttq.identify(identifyData);
+    if (window.ttq && Object.keys(identifyData).length > 0) {
+      window.ttq.identify(identifyData);
+    }
+  } catch (e) {
+    console.error("Identify failed", e);
   }
 };
 
@@ -29,9 +41,7 @@ export const trackEvent = async (event: string, properties?: Record<string, any>
     console.log(`[Analytics] Tracking event: ${event}`, properties);
 
     // TikTok Pixel Tracking
-    // @ts-ignore
     if (window.ttq) {
-      // @ts-ignore
       window.ttq.track(event, properties);
     }
 

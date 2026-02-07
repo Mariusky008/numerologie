@@ -1110,6 +1110,112 @@ export default function ExperiencePsyMirror() {
                </ul>
              </div>
 
+             {/* NEW SECTION: DAILY RITUAL */}
+             <div className="space-y-8 py-8 border-t border-[var(--foreground)]/5">
+                <div className="text-center space-y-3">
+                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] text-[10px] font-black uppercase tracking-widest">
+                      <Sparkles className="w-3 h-3" />
+                      Méthode Exclusive
+                   </div>
+                   <h3 className="text-2xl font-serif font-bold text-[var(--foreground)]">Ton Rituel Quotidien d’Alignement</h3>
+                   <p className="text-[var(--text-secondary)] leading-relaxed max-w-lg mx-auto text-sm">
+                     Comprendre ses schémas est une première étape. Mais ce sont les micro-ajustements répétés qui créent un vrai changement.
+                   </p>
+                </div>
+
+                <div className="bg-[var(--background)] rounded-3xl p-6 border border-[var(--foreground)]/5 space-y-6">
+                   <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-xl shadow-sm shrink-0">🧠</div>
+                      <div>
+                        <h4 className="font-bold text-[var(--foreground)]">Pas de conseils génériques.</h4>
+                        <p className="text-sm text-[var(--text-secondary)] mt-1">
+                          Chaque jour, ton coach IA personnel t’aide à recalibrer ce qui te bloque réellement avec un rituel simple, ciblé et concret.
+                        </p>
+                      </div>
+                   </div>
+
+                   <div className="space-y-3 pl-4 border-l-2 border-[var(--accent)]/20 ml-5">
+                      <div className="space-y-1">
+                        <p className="font-bold text-[var(--foreground)] text-sm">✔ Une phrase d’alignement personnalisée</p>
+                        <p className="text-xs text-[var(--text-secondary)]">pour corriger un automatisme précis dans ta façon de penser.</p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="font-bold text-[var(--foreground)] text-sm">✔ Un micro-exercice pratique (2 min)</p>
+                        <p className="text-xs text-[var(--text-secondary)]">pour agir là où tu bloques habituellement, sans te forcer.</p>
+                      </div>
+                      <div className="space-y-1">
+                        <p className="font-bold text-[var(--foreground)] text-sm">✔ Une question de prise de conscience</p>
+                        <p className="text-xs text-[var(--text-secondary)]">pour repérer ce qui s’est joué inconsciemment dans ta journée.</p>
+                      </div>
+                   </div>
+                </div>
+
+                {/* Examples Carousel / List */}
+                <div className="space-y-4">
+                  <h4 className="text-center text-xs font-black uppercase tracking-widest text-[var(--text-secondary)]">3 Exemples Concrets de Rituels</h4>
+                  
+                  <div className="grid gap-4 md:grid-cols-3">
+                     {/* Ex 1 */}
+                     <div className="bg-white p-4 rounded-2xl border border-[var(--foreground)]/5 shadow-sm space-y-3">
+                        <p className="text-[10px] font-bold text-[var(--accent)] uppercase tracking-wide">Profil “Blocage d’initiative”</p>
+                        <div className="space-y-2">
+                           <div>
+                             <p className="text-[10px] text-[var(--text-secondary)] uppercase">Phrase</p>
+                             <p className="text-xs font-medium italic">« Aujourd’hui, je choisis d’agir sans attendre d’être sûr à 100 %. »</p>
+                           </div>
+                           <div>
+                             <p className="text-[10px] text-[var(--text-secondary)] uppercase">Exercice</p>
+                             <p className="text-xs">Prends une décision sans demander de validation.</p>
+                           </div>
+                        </div>
+                     </div>
+                     
+                     {/* Ex 2 */}
+                     <div className="bg-white p-4 rounded-2xl border border-[var(--foreground)]/5 shadow-sm space-y-3">
+                        <p className="text-[10px] font-bold text-[var(--accent)] uppercase tracking-wide">Profil “Mental Dominant”</p>
+                        <div className="space-y-2">
+                           <div>
+                             <p className="text-[10px] text-[var(--text-secondary)] uppercase">Phrase</p>
+                             <p className="text-xs font-medium italic">« Je n’ai pas besoin de tout comprendre pour avancer. »</p>
+                           </div>
+                           <div>
+                             <p className="text-[10px] text-[var(--text-secondary)] uppercase">Exercice</p>
+                             <p className="text-xs">Fais une action aujourd’hui sans la rationaliser.</p>
+                           </div>
+                        </div>
+                     </div>
+
+                     {/* Ex 3 */}
+                     <div className="bg-white p-4 rounded-2xl border border-[var(--foreground)]/5 shadow-sm space-y-3">
+                        <p className="text-[10px] font-bold text-[var(--accent)] uppercase tracking-wide">Profil “Fatigue Intérieure”</p>
+                        <div className="space-y-2">
+                           <div>
+                             <p className="text-[10px] text-[var(--text-secondary)] uppercase">Phrase</p>
+                             <p className="text-xs font-medium italic">« J’écoute mon rythme au lieu de me forcer. »</p>
+                           </div>
+                           <div>
+                             <p className="text-[10px] text-[var(--text-secondary)] uppercase">Exercice</p>
+                             <p className="text-xs">Supprime volontairement une action inutile.</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div className="text-center pt-2">
+                    <p className="text-xs text-[var(--text-secondary)] italic">
+                      👉 Chaque rituel est ajusté automatiquement à ton profil, ton blocage et ta phase actuelle.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-[var(--accent)]/5 p-4 rounded-xl text-center space-y-2">
+                   <h4 className="font-bold text-[var(--foreground)] text-sm">🔐 Un cadre clair et sain</h4>
+                   <p className="text-xs text-[var(--text-secondary)] leading-relaxed max-w-md mx-auto">
+                     Ce n’est pas une promesse de résultat miracle ni une thérapie. C’est un outil d’accompagnement intelligent, basé sur ton profil réel et ton vécu.
+                   </p>
+                </div>
+             </div>
+
              {/* 7. Offer & Price */}
             <div className="text-center space-y-2 pt-2">
               <p className="text-sm font-bold text-[var(--text-secondary)] uppercase tracking-widest">Offre Spéciale</p>

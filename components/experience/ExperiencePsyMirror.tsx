@@ -18,13 +18,33 @@ import {
   User,
   MapPin,
   Calendar,
-  Share2
+  Share2,
+  Bot
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
 import { AUTO_PERCEPTION_ITEMS, BEHAVIOR_SCENARIOS, INTRO_QCM_ITEMS } from '@/lib/psy-mirror/data';
 import { ROTATING_FEEDBACKS, MODULE_B_FEEDBACKS, SYNTHESIS } from '@/lib/psy-mirror/feedbacks';
 import type { Option } from '@/lib/psy-mirror/types';
+
+const FeatureRow = ({ icon, text }: { icon: React.ReactNode, text: string }) => (
+  <div className="flex items-start gap-3">
+    <div className="mt-1 text-[var(--accent)] shrink-0">{icon}</div>
+    <p className="text-sm font-medium leading-relaxed opacity-90">{text}</p>
+  </div>
+);
+
+const StepRow = ({ number, title, desc }: { number: string, title: string, desc: string }) => (
+  <div className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[var(--foreground)]/5 shadow-sm">
+    <div className="w-8 h-8 rounded-full bg-[var(--foreground)] text-white flex items-center justify-center font-bold text-sm shrink-0">
+      {number}
+    </div>
+    <div>
+      <h4 className="font-bold text-[var(--foreground)] text-sm uppercase tracking-wide mb-1">{title}</h4>
+      <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{desc}</p>
+    </div>
+  </div>
+);
 
 const AttentionTest = dynamic(() => import('./reflex-tests/AttentionTest'), { ssr: false });
 const BreakingPointTest = dynamic(() => import('./reflex-tests/BreakingPointTest'), { ssr: false });
@@ -925,118 +945,144 @@ export default function ExperiencePsyMirror() {
           </motion.div>
         )}
 
-        {/* STEP: PAYMENT TRIGGER (SALES PAGE) */}
+        {/* STEP: PAYMENT TRIGGER (SALES PAGE - COACH IA FOCUS) */}
         {step === 'paymentTrigger' && (
           <motion.div 
             key="paymentTrigger"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="w-full max-w-2xl bg-white p-8 md:p-12 rounded-[50px] shadow-2xl border border-[var(--foreground)]/5 space-y-10 relative z-10"
+            className="w-full max-w-2xl bg-white p-6 md:p-10 rounded-[40px] shadow-2xl border border-[var(--foreground)]/5 space-y-8 relative z-10"
           >
-             {/* Header */}
-             <div className="space-y-6 text-center">
+             {/* 1. Title */}
+             <div className="text-center space-y-2">
                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] text-[10px] font-black uppercase tracking-widest">
                   <Sparkles className="w-3 h-3" />
-                  Rapport Complet + Coach IA
+                  Solution Recommandée
                </div>
                <h2 className="text-3xl md:text-4xl font-serif font-bold text-[var(--foreground)] leading-tight">
-                 Le rapport complet t’explique précisément comment utiliser ce potentiel dans ta vie.
+                 Votre Plan d'Action Personnalisé
                </h2>
-               <div className="bg-[var(--background)] p-6 rounded-3xl border border-[var(--foreground)]/5">
-                 <p className="text-[var(--text-secondary)] text-lg leading-relaxed font-light">
-                   <span className="block mb-2 font-bold text-[#D9772B] uppercase text-xs tracking-widest">⚠️ Opportunité Temporelle</span>
-                   Tu entres dans une phase charnière (Année Personnelle {cosmicData?.personalYear || 'de Transition'}). Comprendre ce blocage <strong>maintenant</strong> est crucial pour ne pas répéter ce schéma les 9 prochains mois.
-                 </p>
+             </div>
+
+             {/* 2. Visual Gap */}
+             <div className="bg-[var(--background)] p-6 rounded-3xl border border-[var(--foreground)]/5 space-y-4">
+               <div className="space-y-2">
+                 <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-[var(--foreground)]/60">
+                   <span>Potentiel de Naissance</span>
+                   <span className="text-emerald-600">100% Alignement</span>
+                 </div>
+                 <div className="h-4 w-full bg-emerald-100 rounded-full overflow-hidden">
+                   <motion.div 
+                     initial={{ width: 0 }}
+                     animate={{ width: "100%" }}
+                     transition={{ duration: 1, ease: "easeOut" }}
+                     className="h-full bg-emerald-500"
+                   />
+                 </div>
                </div>
-             </div>
-
-             {/* AI Coach Teaser */}
-             <div className="bg-[var(--foreground)] rounded-[40px] p-8 text-white relative overflow-hidden text-center space-y-6 shadow-2xl">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent)]/20 blur-[80px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-                
-                {/* Chat Simulation */}
-                <div className="relative z-10 bg-white/10 backdrop-blur-md rounded-2xl p-4 text-left space-y-3 border border-white/10 max-w-sm mx-auto transform -rotate-1 hover:rotate-0 transition-transform duration-500">
-                  <div className="flex gap-3 items-end">
-                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold">
-                      {personalInfo.firstName ? personalInfo.firstName[0] : 'M'}
-                    </div>
-                    <div className="bg-white/10 rounded-2xl rounded-bl-none p-3 text-sm text-white/90">
-                      Pourquoi je n'arrive pas à finir ce que je commence ?
-                    </div>
-                  </div>
-                  <div className="flex gap-3 items-end flex-row-reverse">
-                    <div className="w-8 h-8 rounded-full bg-[var(--accent)] flex items-center justify-center">
-                      <Sparkles className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="bg-[var(--accent)] rounded-2xl rounded-br-none p-3 text-sm text-white">
-                      En tant que Chemin de Vie {cosmicData?.pathNum}, ton besoin de liberté te pousse à...
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-2 relative z-10 pt-2">
-                   <h3 className="text-xl font-bold text-white">Inclus : Ton Coach IA Personnel</h3>
-                   <p className="text-white/70 text-sm max-w-sm mx-auto leading-relaxed">
-                     Pose-lui toutes tes questions 24/7. Il connaît ton profil par cœur et t'aide à appliquer tes conseils au quotidien.
-                   </p>
-                </div>
-                
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/60 text-[10px] font-bold uppercase tracking-widest border border-white/5">
-                   <MessageCircle className="w-3 h-3" />
-                   Accès Illimité
-                </div>
-             </div>
-
-             {/* Value Props List */}
-             <div className="space-y-4 max-w-md mx-auto">
-               <p className="text-xs font-black uppercase tracking-widest text-[var(--accent)] text-center mb-6">Ce que tu reçois immédiatement :</p>
                
-               {/* Mockup Rapport Flouté */}
-               <div className="relative w-full aspect-[4/3] bg-white rounded-xl shadow-lg border border-stone-200 overflow-hidden group mb-6">
-                 {/* Header Mockup */}
-                 <div className="absolute top-0 w-full h-8 bg-[var(--foreground)] flex items-center px-4">
-                   <div className="w-2 h-2 rounded-full bg-red-400 mr-1.5"></div>
-                   <div className="w-2 h-2 rounded-full bg-amber-400 mr-1.5"></div>
-                   <div className="w-2 h-2 rounded-full bg-green-400"></div>
+               <div className="space-y-2 relative">
+                 <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-[var(--foreground)]/60">
+                   <span>Fonctionnement Actuel</span>
+                   <span className="text-red-500">Zone de Friction</span>
                  </div>
-                 {/* Content Mockup (Blurred) */}
-                 <div className="p-8 pt-12 space-y-4 filter blur-[2px] opacity-50 select-none pointer-events-none">
-                   <div className="h-6 w-3/4 bg-stone-200 rounded"></div>
-                   <div className="space-y-2">
-                     <div className="h-3 w-full bg-stone-100 rounded"></div>
-                     <div className="h-3 w-full bg-stone-100 rounded"></div>
-                     <div className="h-3 w-5/6 bg-stone-100 rounded"></div>
-                   </div>
-                   <div className="h-24 w-full bg-stone-50 rounded border border-stone-100"></div>
+                 <div className="h-4 w-full bg-red-100 rounded-full overflow-hidden">
+                   <motion.div 
+                     initial={{ width: 0 }}
+                     animate={{ width: `${100 - gapScore}%` }}
+                     transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+                     className="h-full bg-red-500"
+                   />
                  </div>
-                 {/* Overlay Prénom */}
-                 <div className="absolute inset-0 flex items-center justify-center">
-                   <div className="bg-white/90 backdrop-blur-sm px-6 py-3 rounded-xl shadow-2xl border border-[var(--accent)]/20 transform rotate-[-2deg] group-hover:rotate-0 transition-transform duration-500">
-                     <p className="text-xs text-[var(--text-secondary)] uppercase tracking-widest font-bold mb-1">Rapport de</p>
-                     <p className="text-2xl font-serif font-bold text-[var(--foreground)]">{cosmicData?.firstName || 'Moi'}</p>
-                   </div>
+                 
+                 {/* Gap Connector */}
+                 <motion.div 
+                   initial={{ opacity: 0 }}
+                   animate={{ opacity: 1 }}
+                   transition={{ delay: 1.5 }}
+                   className="absolute top-8 right-[10%] transform translate-x-1/2 flex flex-col items-center"
+                 >
+                   <div className="h-8 w-px bg-[var(--foreground)]/20 border-l border-dashed border-[var(--foreground)]/40"></div>
+                   <span className="bg-white px-2 py-1 rounded text-[10px] font-bold text-[var(--text-secondary)] shadow-sm border border-[var(--foreground)]/10 whitespace-nowrap">
+                     Écart à combler
+                   </span>
+                 </motion.div>
+               </div>
+             </div>
+
+             {/* 3. Simple Text */}
+             <div className="text-center">
+               <p className="text-lg text-[var(--foreground)] font-medium leading-relaxed">
+                 "L'écart que vous ressentez n'est pas une fatalité. <br/>
+                 <span className="text-[var(--text-secondary)] font-normal">C'est simplement la distance entre qui vous êtes vraiment et qui vous essayez d'être."</span>
+               </p>
+             </div>
+
+             {/* 4. Coach Description */}
+             <div className="bg-[var(--foreground)] text-white p-8 rounded-3xl relative overflow-hidden space-y-6 shadow-xl">
+               <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent)]/20 blur-[80px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+               
+               <div className="flex items-center gap-4 relative z-10">
+                  <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-white/10">
+                    <Bot className="w-8 h-8 text-[var(--accent)]" />
+                  </div>
+                 <div>
+                   <h3 className="text-xl font-bold">L'Assistant Numérologique IA</h3>
+                   <p className="text-white/60 text-sm">Votre guide personnel 24/7</p>
                  </div>
                </div>
 
-               {[
-                 "Lecture de ton profil (PDF)",
-                 "Coach IA Dédié (Accès Illimité)",
-                 "Relations & décisions décodées",
-                 "Points de blocage identifiés",
-                 "Synthèse personnalisée"
-               ].map((item, i) => (
-                 <div key={i} className="flex items-center gap-4 p-4 bg-[var(--background)] rounded-2xl border border-[var(--foreground)]/5">
-                   <div className="w-6 h-6 rounded-full bg-[var(--accent)]/20 flex items-center justify-center text-[var(--accent)]">
-                     <ShieldCheck className="w-3 h-3" />
-                   </div>
-                   <span className="text-[var(--foreground)] font-medium">{item}</span>
-                 </div>
-               ))}
+               <div className="space-y-3 relative z-10">
+                 <FeatureRow icon={<Clock className="w-4 h-4" />} text="Disponible 24h/24 et 7j/7 pour répondre à vos doutes" />
+                 <FeatureRow icon={<Target className="w-4 h-4" />} text="Une analyse objective basée sur vos données cosmiques" />
+                 <FeatureRow icon={<MapPin className="w-4 h-4" />} text="Une feuille de route adaptée à votre rythme" />
+               </div>
              </div>
 
-             {/* CTA Payment */}
-             <div className="space-y-4 pt-4">
+             {/* 5. How it works */}
+             <div className="space-y-4">
+               <h3 className="text-center text-sm font-black uppercase tracking-widest text-[var(--text-secondary)]">Comment ça marche ?</h3>
+               <div className="grid gap-4">
+                 <StepRow number="1" title="Analyse" desc="Il scanne votre profil complet et identifie vos forces dormantes." />
+                 <StepRow number="2" title="Identification" desc="Il pointe précisément où vous perdez de l'énergie aujourd'hui." />
+                 <StepRow number="3" title="Guidance" desc="Il vous donne des actions simples pour réaligner votre trajectoire." />
+               </div>
+             </div>
+
+             {/* 6. Target Audience */}
+             <div className="bg-[var(--accent)]/5 p-6 rounded-3xl border border-[var(--accent)]/10 space-y-4">
+               <h3 className="font-bold text-[var(--accent)] flex items-center gap-2">
+                 <User className="w-5 h-5" /> Pour qui est-ce conçu ?
+               </h3>
+               <ul className="space-y-2 text-sm text-[var(--foreground)]/80">
+                 <li className="flex gap-2">
+                   <CheckCircle className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
+                   Ceux qui se sentent bloqués malgré leurs efforts.
+                 </li>
+                 <li className="flex gap-2">
+                   <CheckCircle className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
+                   Ceux qui voient des schémas se répéter dans leur vie.
+                 </li>
+                 <li className="flex gap-2">
+                   <CheckCircle className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
+                   Ceux qui veulent de la clarté sans passer des années en thérapie.
+                 </li>
+               </ul>
+             </div>
+
+             {/* 7. Offer & Price */}
+             <div className="text-center space-y-2 pt-2">
+               <p className="text-sm font-bold text-[var(--text-secondary)] uppercase tracking-widest">Offre de Lancement</p>
+               <div className="flex items-baseline justify-center gap-2">
+                 <span className="text-5xl font-black text-[var(--foreground)]">14€</span>
+                 <span className="text-xl text-[var(--text-secondary)] line-through decoration-red-500 decoration-2">29€</span>
+               </div>
+               <p className="text-[var(--accent)] font-medium">Accès Illimité pendant 30 jours</p>
+             </div>
+
+             {/* 8. CTA */}
+             <div className="space-y-4">
                 <button
                   onClick={() => {
                     // Save QCM answers before redirecting
@@ -1046,27 +1092,31 @@ export default function ExperiencePsyMirror() {
                     };
                     localStorage.setItem('psy_mirror_session_data', JSON.stringify(sessionData));
                     
-                    trackEvent('payment_initiated_pre_checkout');
+                    trackEvent('payment_initiated_coach_lp');
                     
                     // TikTok Standard Event
                     trackEvent('InitiateCheckout', {
                       contents: [{
-                        content_id: 'bundle_full_report',
+                        content_id: 'coach_ia_30days',
                         content_type: 'product',
-                        content_name: 'Analyse Complète + Coach IA'
+                        content_name: 'Coach IA - 30 Jours'
                       }],
-                      value: 49,
+                      value: 14,
                       currency: 'EUR'
                     });
 
-                    router.push('/miroir/checkout?plan=bundle');
+                    // Update URL to reflect the specific 14€ offer if needed, 
+                    // for now keeping generic or assuming checkout handles it via query param
+                    router.push('/miroir/checkout?plan=coach-30d');
                   }}
                   className="w-full py-6 bg-[var(--accent)] text-white rounded-[20px] font-black text-xl uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_10px_40px_-5px_rgba(185,98,31,0.5)] flex items-center justify-center gap-3"
                 >
-                  Accéder à mon analyse complète <ArrowRight className="w-6 h-6" />
+                  Démarrer mon Accompagnement <ArrowRight className="w-6 h-6" />
                 </button>
+                
+                {/* 9. Final Phrase */}
                 <div className="flex justify-center items-center gap-2 text-xs text-[var(--text-secondary)] uppercase tracking-widest opacity-60">
-                  <ShieldCheck className="w-3 h-3" /> Paiement Sécurisé
+                  <ShieldCheck className="w-3 h-3" /> Satisfait ou Remboursé
                 </div>
              </div>
           </motion.div>

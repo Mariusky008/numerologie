@@ -1236,6 +1236,11 @@ export default function ExperiencePsyMirror() {
 
             {/* 8. CTA */}
             <div className="space-y-4">
+               <div className="flex justify-center items-center gap-4 text-xs text-[var(--text-secondary)] font-medium pb-2">
+                 <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> Sans engagement</span>
+                 <span className="flex items-center gap-1"><CheckCircle className="w-3 h-3" /> Satisfait ou remboursé</span>
+               </div>
+
                <button
                  onClick={() => {
                    // Save QCM answers before redirecting
@@ -1254,7 +1259,7 @@ export default function ExperiencePsyMirror() {
                        content_type: 'product',
                        content_name: 'Coach IA - 30 Jours'
                      }],
-                     value: 29,
+                     value: 29.00,
                      currency: 'EUR'
                    });
 
@@ -1265,12 +1270,7 @@ export default function ExperiencePsyMirror() {
                >
                  Démarrer mon Accompagnement <ArrowRight className="w-6 h-6" />
                </button>
-                
-                {/* 9. Final Phrase */}
-                <div className="flex justify-center items-center gap-2 text-xs text-[var(--text-secondary)] uppercase tracking-widest opacity-60">
-                  <ShieldCheck className="w-3 h-3" /> Satisfait ou Remboursé
-                </div>
-             </div>
+            </div>
           </motion.div>
         )}
 

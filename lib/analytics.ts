@@ -42,7 +42,23 @@ export const trackEvent = async (event: string, properties?: Record<string, any>
 
     // TikTok Pixel Tracking
     if (window.ttq) {
-      window.ttq.track(event, properties);
+      // Ensure value is a number if present (Fix for "Invalid Purchase Value" error)
+      const safeProperties = { ...properties };
+      if (safeProperties.value !== undefined) {
+          if (typeof safeProperties.value === 'string') {
+             // Remove currency symbols and convert to float
+             safeProperties.value = parseFloat(safeProperties.value.replace(/[^0-9.]/g, ''));
+          } else {
+             safeProperties.value = Number(safeProperties.value);
+          }
+          
+          // Ensure it's not NaN
+          if (isNaN(safeProperties.value)) {
+              delete safeProperties.value;
+          }
+      }
+
+      window.ttq.track(event, safeProperties);
     }
 
     // Fire and forget - don't await to avoid blocking UI

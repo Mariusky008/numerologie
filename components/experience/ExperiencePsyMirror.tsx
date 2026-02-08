@@ -19,7 +19,8 @@ import {
   MapPin,
   Calendar,
   Share2,
-  Bot
+  Bot,
+  Lock
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { trackEvent } from '@/lib/analytics';
@@ -1270,6 +1271,18 @@ export default function ExperiencePsyMirror() {
                >
                  Démarrer mon Accompagnement <ArrowRight className="w-6 h-6" />
                </button>
+            </div>
+
+            <div className="pt-6 border-t border-[var(--foreground)]/5 text-center">
+              <div className="flex flex-wrap justify-center gap-4 text-[10px] text-[var(--text-secondary)]/60 font-medium">
+                <a href="/mentions-legales" target="_blank" className="hover:text-[var(--accent)] transition-colors">Mentions Légales</a>
+                <span>•</span>
+                <a href="/cgv" target="_blank" className="hover:text-[var(--accent)] transition-colors">CGV</a>
+                <span>•</span>
+                <a href="/cgu" target="_blank" className="hover:text-[var(--accent)] transition-colors">CGU</a>
+                <span>•</span>
+                <a href="/legal/cookies" target="_blank" className="hover:text-[var(--accent)] transition-colors">Confidentialité</a>
+              </div>
             </div>
           </motion.div>
         )}
